@@ -3,8 +3,8 @@ MegaAGS for Minimig-AGA_MiSTer
 
 Setup:
 ------
-- Copy MegaAGS.hdf and MegaAGS-Kickstart.rom from the Amiga directory
-  to the corresponding directory on MiSTer (/media/fat/games/Amiga).
+- Copy MegaAGS.hdf, MegaAGS-Saves.hdf and MegaAGS-Kickstart.rom from the Amiga
+  directory to the corresponding directory on MiSTer (/media/fat/games/Amiga).
 
 - Copy minimig_vadjust.dat from the config directory to the
   corresponding directory on MiSTer (/media/fat/config).
@@ -18,7 +18,8 @@ Setup:
     A600/A1200 IDE: On
     Primary Master: Enabled
                     games/Amiga/MegaAGS.hdf
-    Primary Slave: Disabled
+    Primary Slave: Enabled
+                    games/Amiga/MegaAGS-Saves.hdf
     Secondary Master: Disabled
     Secondary Slave: Disabled
   Chipset:

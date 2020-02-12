@@ -6,10 +6,11 @@
 # http://tinyurl.com/m9qjwpy
 #  -> https://mega.nz/#F!gdozjZxL!uI5SheetsAd-NYKMeRjf2A
 
-import sys
-import os
 import argparse
+import os
 import sqlite3
+import sys
+
 from lhafile import LhaFile
 import ags_util as util
 

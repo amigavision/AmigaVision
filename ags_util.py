@@ -2,14 +2,13 @@
 
 # WHDLImager utility functions
 
-import sys
-import os
-import math
-import shutil
-import stat
-
 import csv
+import math
+import os
+import shutil
 import sqlite3
+import stat
+import sys
 
 from ruamel import yaml
 from lhafile import LhaFile
@@ -139,7 +138,6 @@ def get_db(verbose):
             print("updating title database cache...")
         read_csv(csv_path, sqlite3_path)
 
-
     db = sqlite3.connect(sqlite3_path)
     db.row_factory = sqlite3.Row
     return db
@@ -204,7 +202,6 @@ def read_csv(csv_path, new_db_path):
     conn.close()
 
 # -----------------------------------------------------------------------------
-
 
 if __name__ == "__main__":
     print("not runnable")

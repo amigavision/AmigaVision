@@ -12,19 +12,14 @@
 # PAL: 5, 9, 7
 # NTSC: 5, 11, 5
 
-import sys
+import argparse
 import os
 import shutil
-import textwrap
-import argparse
 import subprocess
-
-import csv
-import sqlite3
+import sys
+import textwrap
 
 from ast import literal_eval as make_tuple
-from distutils import dir_util
-
 import ags_util as util
 
 # -----------------------------------------------------------------------------
