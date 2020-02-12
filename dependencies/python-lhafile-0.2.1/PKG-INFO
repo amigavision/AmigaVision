@@ -1,0 +1,19 @@
+Metadata-Version: 1.0
+Name: lhafile
+Version: 0.1
+Summary: LHA(.lzh) file extract interface
+Home-page: http://trac.neotitans.net/wiki/lhafile
+Author: Hidekazu Ohnishi
+Author-email: the-o@auone.jp
+License: BSD
+Download-URL: http://svn.neotitans.net/lhafile/
+Description: Extract LHA(.lzh) file extension.
+        Its interface is likely zipfile extension is included in regular
+        python distribution.
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Envrionment :: Other Environment
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS IndependentProgramming Language :: Python
+Classifier: Topic :: Software Development

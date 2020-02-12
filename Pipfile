@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pylint = "*"
+autopep8 = "*"
+
+[packages]
+ruamel-yaml = "~=0.15.89"
+lhafile = {editable = true,path = "./dependencies/python-lhafile-0.2.1"}
+
+[requires]
+python_version = "3.7"

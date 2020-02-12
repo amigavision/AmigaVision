@@ -1,0 +1,21 @@
+[fs-uae]
+accuracy = 0
+amiga_model = A1200
+chip_memory = 2048
+cpu = 68040-NOMMU
+fade_in_duration = 0
+fade_out_duration = 0
+floppy_drive_0 = $HOME/Development/AGSImager/data/cloner/cloner.adf
+floppy_drive_speed = 0
+floppy_drive_volume = 0
+hard_drive_0 = $HOME/Temp/AGSImager/MegaAGS.hdf
+hard_drive_1 = $HOME/Temp/AGSImager/clone_me
+jit_compiler = 0
+joystick_port_1 = none
+kickstart_file = Kickstart 3.1 r40.68 A1200.rom
+motherboard_ram = 32768
+save_disk = 0
+texture_filter = nearest
+viewport = * * * * => 0 0 752 574
+window_height = 574
+window_width = 752

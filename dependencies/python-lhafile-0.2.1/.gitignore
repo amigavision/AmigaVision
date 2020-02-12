@@ -1,0 +1,9 @@
+/build/
+/dist/
+/.svn/
+*~
+*.pyc
+python-lhafile-*
+python-lhafile_*
+lhafile-*
+lhafile_*

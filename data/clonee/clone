@@ -1,0 +1,10 @@
+format drive DH0: name "Amiga" quick noicons
+echo ""
+format drive DH1: name "Data" quick noicons
+echo ""
+echo "Cloning DH0: data..."
+copy clone_me:DH0/#? DH0: all clone quiet
+echo "Cloning DH1: data..."
+copy clone_me:DH1/#? DH1: all clone quiet
+echo ""
+echo "Done!"

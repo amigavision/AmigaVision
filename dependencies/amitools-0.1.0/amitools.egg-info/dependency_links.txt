@@ -1,0 +1,1 @@
+http://github.com/FrodeSolheim/python-lhafile/zipball/master#egg=lhafile-0.2.1

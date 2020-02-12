@@ -1,0 +1,11 @@
+COPYING.txt
+MANIFEST.in
+README
+lzhlib.c
+setup.py
+lhafile/__init__.py
+lhafile/lhafile.py
+lhafile.egg-info/PKG-INFO
+lhafile.egg-info/SOURCES.txt
+lhafile.egg-info/dependency_links.txt
+lhafile.egg-info/top_level.txt

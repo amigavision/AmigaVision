@@ -1,0 +1,10 @@
+--- # AGS2 Menu structure
+- Test:
+  - SnowBros
+  - SoccerKid
+#- Gamepad Support:
+#  - note: Games supporting two or more buttons.
+#  - BumpNBurnCD32
+#  - DeathMaskAGA
+#  - MeanArenas
+#  - FantasticDizzy
