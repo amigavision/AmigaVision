@@ -393,13 +393,9 @@ def build_pfs(config_base_name, verbose):
     if verbose:
         print("building PFS container...")
 
-    pfs3_bin = "data/fs/pfs3.bin"
+    pfs3_bin = "data/pfs3/pfs3.bin"
     if not util.is_file(pfs3_bin):
         raise IOError("PFS3 filesystem doesn't exist: " + pfs3_bin)
-
-    dos1_bin = "data/fs/dos1.bin"
-    if not util.is_file(dos1_bin):
-        raise IOError("PFS3 filesystem doesn't exist: " + dos1_bin)
 
     if verbose:
         print(" > estimating partition sizes...")

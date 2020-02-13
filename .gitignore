@@ -1,1 +1,3 @@
 *.pyc
+dependencies/amitools-0.1.0/build
+dependencies/amitools-0.1.0/musashi
