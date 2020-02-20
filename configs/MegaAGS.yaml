@@ -1,6 +1,6 @@
 --- # AGS2 Menu structure
 - About:
-  - note: '\n\n\n\n\n\n             (MegaAGS v20200214)'
+  - note: '\n\n\n\n\n\n             (MegaAGS v20200220)'
   - Nothing to see here:
     - note: Intentionally left blank.
 - Best-of Lists:
@@ -1149,6 +1149,7 @@
     - Quartz
     - RageV2
     - Raider
+    - ReshootR
     - ReturnToGenesis
     - RevengeOfDefender
     - RevengeOfMutantCamels2
@@ -2104,6 +2105,7 @@
     - Hybris
     - MegaTyphoon
     - Pod
+    - ReshootR
     - Silkworm
     - SuperStardust
     - Uridium2
