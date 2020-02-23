@@ -6,6 +6,9 @@ Setup:
 - Copy MegaAGS.hdf, MegaAGS-Saves.hdf and MegaAGS-Kickstart.rom from the Amiga
   directory to the corresponding directory on MiSTer (/media/fat/games/Amiga).
 
+- When updating to a new version of the main HDF image, keep your old
+  MegaAGS-Saves.hdf so any saved games are carried over.
+
 - Copy minimig_vadjust.dat from the config directory to the
   corresponding directory on MiSTer (/media/fat/config).
 
