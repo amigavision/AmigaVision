@@ -28,24 +28,31 @@ def index_whdload_archives(basedir):
                 if count % 100 == 0:
                     print(".", end="", flush=True)
                 path = os.path.join(r, file)
-                arc = LhaFile(path)
-                for n in arc.namelist():
-                    n = n.replace("\\", "/")
-                    if n.lower().endswith(".slave"):
-                        if len(n.split("/")) > 2:
-                            pass  # skip slaves beneath root
-                        else:
-                            #slave_name = n[:-6].split("/")[-1]
-                            slave_category = path[len(basedir) + 1:].split(os.sep)[0]
-                            slave_id = slave_category + "--" + n[:-6].replace("/", "--").lower()
-                            slave_ver = "v1.0"
-                            try:
-                                verstr = file[:-4].split("_")[1]
-                                if verstr.startswith("v"):
-                                    slave_ver = verstr
-                            except Exception:
-                                pass
-                            d[slave_id] = {"id": slave_id, "archive_path": path, "slave_path": n, "slave_version": slave_ver}
+                slave_category = path[len(basedir) + 1:].split(os.sep)[0]
+
+                if slave_category == "game" or slave_category == "demo":
+                    arc = LhaFile(path)
+                    for n in arc.namelist():
+                        n = n.replace("\\", "/")
+                        if n.lower().endswith(".slave"):
+                            if len(n.split("/")) > 2:
+                                pass  # skip slaves beneath root
+                            else:
+                                slave_id = slave_category + "--" + n[:-6].replace("/", "--").lower()
+                                slave_ver = "v1.0"
+                                try:
+                                    verstr = file[:-4].split("_")[1]
+                                    if verstr.startswith("v"):
+                                        slave_ver = verstr
+                                except Exception:
+                                    pass
+                                d[slave_id] = {"id": slave_id, "archive_path": path, "slave_path": n, "slave_version": slave_ver}
+
+                elif slave_category == "game-notwhdl":
+                    slave_id = slave_category + "--" + os.path.splitext(os.path.basename(path))[0].lower()
+                    if util.is_file(path.replace(".lha", ".run")):
+                        d[slave_id] = {"id": slave_id, "archive_path": path, "slave_path": None, "slave_version": None}
+
     print("\n", flush=True)
     return d
 

@@ -12,5 +12,8 @@ index:
 image:
 	@pipenv run ./ags_build.py -v -c configs/MegaAGS.yaml --all_games -o ~/Temp/AGSImager
 
+test-image:
+	@pipenv run ./ags_build.py -v -c configs/Test.yaml -o ~/Temp/AGSImager
+
 clean:
 	@pipenv --rm

@@ -33,11 +33,14 @@ def get_entry(name):
         if entry is None:
             return None
         entry = dict(entry)
+        if entry_is_notwhdl(entry):
+            return entry
         if entry_valid(entry) and entry["slave_path"].find("/") > 0:
             entry["slave_dir"] = entry["slave_path"].split("/")[0]
             entry["slave_name"] = entry["slave_path"].split("/")[1]
             entry["slave_id"] = entry["slave_name"][:-6]
-        return entry
+            return entry
+        return None
 
     n = name.lower()
     patterns = [
@@ -54,6 +57,7 @@ def get_entry(name):
         "game--{}3disk--{}3disk".format(n, n),
         "game--{}2disk--{}2disk".format(n, n),
         "game--{}%".format(n),
+        "game-notwhdl--{}%".format(n),
         "--{}%".format(n),
         "%{}%".format(n)
     ]
@@ -70,12 +74,19 @@ def get_entry(name):
 def entry_valid(entry):
     if isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "slave_path" in entry:
         return True
+    elif isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "game-notwhdl--" in id:
+        return True
     return False
 
 def entry_is_aga(entry):
     if entry_valid(entry) and "aga" in entry and entry["aga"]:
         if int(entry["aga"]) > 0:
             return True
+    return False
+
+def entry_is_notwhdl(entry):
+    if entry_valid(entry) and "game-notwhdl--" in entry["id"]:
+        return True
     return False
 
 
@@ -102,6 +113,8 @@ def get_ags2_dir():
     return os.path.join(get_boot_dir(), "AGS2")
 
 def get_whd_dir(entry):
+    if entry_is_notwhdl(entry):
+        return os.path.join(g_clone_dir, "DH1", "WHD", "N")
     p = "0-9" if entry["slave_dir"][0].isnumeric() else entry["slave_dir"][0].upper()
     if entry["id"].startswith("demo--"):
         return os.path.join(g_clone_dir, "DH1", "WHD", "D", p)
@@ -111,11 +124,14 @@ def get_whd_dir(entry):
 def get_amiga_whd_dir(entry):
     if not entry_valid(entry):
         return None
-    p = "0-9" if entry["slave_dir"][0].isnumeric() else entry["slave_dir"][0].upper()
-    if entry["id"].startswith("demo--"):
-        return "WHD:D/" + p + "/" + entry["slave_dir"]
+    if entry_is_notwhdl(entry):
+        return None
     else:
-        return "WHD:G/" + p + "/" + entry["slave_dir"]
+        p = "0-9" if entry["slave_dir"][0].isnumeric() else entry["slave_dir"][0].upper()
+        if entry["id"].startswith("demo--"):
+            return "WHD:D/" + p + "/" + entry["slave_dir"]
+        else:
+            return "WHD:G/" + p + "/" + entry["slave_dir"]
 
 def extract_entries(entries):
     unarchived = set()
@@ -125,7 +141,10 @@ def extract_entries(entries):
             unarchived.add(entry["archive_path"])
 
 def extract_whd(entry):
-    if "archive_path" in entry and util.is_file(entry["archive_path"]):
+    if entry_is_notwhdl(entry):
+        dest = get_whd_dir(entry)
+        util.lha_extract(entry["archive_path"], dest)
+    elif "archive_path" in entry and util.is_file(entry["archive_path"]):
         dest = get_whd_dir(entry)
         util.lha_extract(entry["archive_path"], dest)
         info_path = os.path.join(dest, entry["slave_dir"] + ".info")
@@ -222,34 +241,38 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False):
     util.make_dir(path)
 
     # runfile
-    whd_entrypath = get_amiga_whd_dir(entry)
-    runfile = None
-    if whd_entrypath:
-        whd_vmode = "NTSC" if entry["ntsc"] > 0 else "PAL"
-        if g_args.ntsc: whd_vmode = "NTSC"
-        whd_slave = get_whd_slavename(entry)
-        whd_cargs = "BUTTONWAIT"
-        if entry["slave_args"]:
-            whd_cargs += " " + entry["slave_args"]
-        runfile = "cd \"{}\"\n".format(whd_entrypath)
-        runfile += "IF NOT EXISTS ENV:whdlspdly\n"
-        runfile += "  echo 200 >ENV:whdlspdly\n"
-        runfile += "ENDIF\n"
-        runfile += "IF NOT EXISTS ENV:whdlqtkey\n"
-        runfile += "  echo \"\" >ENV:whdlqtkey\n"
-        runfile += "ENDIF\n"
-        runfile += "IF EXISTS ENV:whdlvmode\n"
-        runfile += "  whdload \"{}\" PRELOAD $whdlvmode {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_cargs)
-        runfile += "ELSE\n"
-        runfile += "  whdload \"{}\" PRELOAD {} {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_vmode, whd_cargs)
-        runfile += "ENDIF\n"
+    if entry_is_notwhdl(entry):
+        shutil.copyfile(entry["archive_path"].replace(".lha", ".run"), base_path + ".run")
+
     else:
-        runfile = "echo \"Title not available. Sorry!\"" + "\n" + "wait 2"
-    if runfile:
-        if util.is_file(base_path + ".run"):
-            print(" > AGS2 clash:", entry["id"], "-", base_path + ".run")
+        whd_entrypath = get_amiga_whd_dir(entry)
+        runfile = None
+        if whd_entrypath:
+            whd_vmode = "NTSC" if entry["ntsc"] > 0 else "PAL"
+            if g_args.ntsc: whd_vmode = "NTSC"
+            whd_slave = get_whd_slavename(entry)
+            whd_cargs = "BUTTONWAIT"
+            if entry["slave_args"]:
+                whd_cargs += " " + entry["slave_args"]
+            runfile = "cd \"{}\"\n".format(whd_entrypath)
+            runfile += "IF NOT EXISTS ENV:whdlspdly\n"
+            runfile += "  echo 200 >ENV:whdlspdly\n"
+            runfile += "ENDIF\n"
+            runfile += "IF NOT EXISTS ENV:whdlqtkey\n"
+            runfile += "  echo \"\" >ENV:whdlqtkey\n"
+            runfile += "ENDIF\n"
+            runfile += "IF EXISTS ENV:whdlvmode\n"
+            runfile += "  whdload \"{}\" PRELOAD $whdlvmode {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_cargs)
+            runfile += "ELSE\n"
+            runfile += "  whdload \"{}\" PRELOAD {} {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_vmode, whd_cargs)
+            runfile += "ENDIF\n"
         else:
-            open(base_path + ".run", mode="w", encoding="latin-1").write(runfile)
+            runfile = "echo \"Title not available. Sorry!\"" + "\n" + "wait 2"
+        if runfile:
+            if util.is_file(base_path + ".run"):
+                print(" > AGS2 clash:", entry["id"], "-", base_path + ".run")
+            else:
+                open(base_path + ".run", mode="w", encoding="latin-1").write(runfile)
 
     if only_script:
         return
