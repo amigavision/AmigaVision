@@ -1,0 +1,8 @@
+IF EXISTS WHDSaves:riverhigh.dat
+  copy WHDSaves:riverhigh.dat WHD:N/BridgeStrike
+EndIF
+cd WHD:N/BridgeStrike
+bs
+IF EXISTS WHD:N/BridgeStrike/riverhigh.dat
+  copy WHD:N/BridgeStrike/riverhigh.dat WHDSaves:
+EndIF

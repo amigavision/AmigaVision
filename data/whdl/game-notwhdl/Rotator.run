@@ -1,0 +1,8 @@
+IF EXISTS WHDSaves:OPTIONS.ROT
+  copy WHDSaves:OPTIONS.ROT WHD:N/Rotator
+EndIF
+cd WHD:N/Rotator
+ROTATOR3
+IF EXISTS WHD:N/Rotator/OPTIONS.ROT
+  copy WHD:N/Rotator/OPTIONS.ROT WHDSaves:
+EndIF

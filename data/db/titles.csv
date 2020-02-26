@@ -4296,4 +4296,9 @@ game--chinesekarate--chinesekarate;Chinese Karate;Chinese Karate;;;OCS/ECS;;1;;;
 game--countduckula2--countduckula2;Count Duckula II;Count Duckula II;;;OCS/ECS;;1;;;;;English;1992;The Conversion Company;Alternative;1;;v1.0;;CountDuckula2/CountDuckula2.Slave;data/whdl/game/C/CountDuckula2_v1.0_1712.lha;Game;;3104;1897
 game--playdays--playdays;Playdays;Playdays;;;OCS/ECS;;0;;;;;English;1992;Unknown;Alternative;1;;v1.0;;Playdays/Playdays.Slave;data/whdl/game/P/Playdays_v1.0_1577.lha;Game;;1084;-2
 game--wrangler--wrangler;Wrangler;Wrangler;;;OCS/ECS;;1;;;;;English;1989;Magnetic Fields;Alternative;1;;v1.0;;Wrangler/Wrangler.Slave;data/whdl/game/W/Wrangler_v1.0_2980.lha;Game;;1782;2703
-game-notwhdl--worthy;Worthy;Worthy;;;OCS/ECS;;0;1;;;;English;2018;PixelGlass;Amiga.net;1;;;;;data/whdl/game-notwhdl/Worthy.lha;Game;;6298;-2
+game-notwhdl--worthy;Worthy;Worthy;;;OCS/ECS;;0;1;;;;English;2018;PixelGlass;Amiga.net.pl;1;;;;;data/whdl/game-notwhdl/Worthy.lha;Game;;6298;-2
+game-notwhdl--bridgestrike;Bridge Strike;Bridge Strike;;;OCS/ECS;;0;;;;;English;2019;Project R3D;Amiga.net.pl;1;;;;;data/whdl/game-notwhdl/BridgeStrike.lha;Game;;-2;4380
+game-notwhdl--rotator;Rotator;Rotator;;;OCS/ECS;;0;;;;;English;2020;Midnight Banana;Psytronik;1;;;;;data/whdl/game-notwhdl/Rotator.lha;Game;;-2;4420
+game--ancientartofwar--ancientartofwar;Ancient Art of War, The;Ancient Art of War, The;;;OCS/ECS;;1;;;;;English;1990;Microids;Brøderbund;1;;v1.0;;AncientArtOfWar/AncientArtOfWar.Slave;data/whdl/game/A/AncientArtOfWar_v1.0.lha;Game;;5838;-2
+game--artdelaguerrefr--artdelaguerrefr;Art De La Guerre, L';Art De La Guerre, L';1;game--ancientartofwar--ancientartofwar;OCS/ECS;;1;;;;;French;1990;Microids;Brøderbund;1;;v1.0;;ArtDeLaGuerreFr/ArtDeLaGuerreFr.Slave;data/whdl/game/A/ArtDeLaGuerre_v1.0_Fr_2447.lha;Game;;5838;-2
+game--artedelaguerraes--artedelaguerraes;Arte De La Guerra, El;Arte De La Guerra, El;1;game--ancientartofwar--ancientartofwar;OCS/ECS;;1;;;;;Spanish;1990;Microids;Brøderbund;1;;v1.0;;ArteDeLaGuerraEs/ArteDeLaGuerraEs.Slave;data/whdl/game/A/ArteDeLaGuerra_v1.0_Es.lha;Game;;5838;-2
