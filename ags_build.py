@@ -337,12 +337,15 @@ def ags_create_autoentries():
         letter = value["title_short"][0].upper()
         if letter.isnumeric():
             letter = "0-9"
+        year = value["year"]
+        if "x" in year.lower():
+            year = "Unknown"
         if value["category"].lower() == "game":
             ags_create_entry(None, value, os.path.join(path, "[ All Games ].ags", letter + ".ags"), None, None)
-            ags_create_entry(None, value, os.path.join(path, "[ All Games, by year ].ags", value["year"] + ".ags"), None, None)
+            ags_create_entry(None, value, os.path.join(path, "[ All Games, by year ].ags", year + ".ags"), None, None)
         if g_args.all_demos and value["category"].lower() == "demo":
             ags_create_entry(None, value, os.path.join(path, "[ All Demos ].ags", letter + ".ags"), None, None)
-            ags_create_entry(None, value, os.path.join(path, "[ All Demos, by year ].ags", value["year"] + ".ags"), None, None)
+            ags_create_entry(None, value, os.path.join(path, "[ All Demos, by year ].ags", year + ".ags"), None, None)
         if value["category"].lower() == "game" and not value["issues"]:
             ags_create_entry(None, value, os.path.join(path, "Run"), None, None, True)
         if value["issues"]:
