@@ -89,6 +89,8 @@ def entry_is_notwhdl(entry):
         return True
     return False
 
+def is_amiga_devicename(str):
+    return len(str) == 3 and str[0].isalpha() and str[1].isalpha() and str[2].isnumeric()
 
 def get_whd_slavename(entry):
     if entry_valid(entry):
@@ -109,8 +111,11 @@ def get_short_slavename(name):
 def get_boot_dir():
     return os.path.join(g_clone_dir, "DH0")
 
+def get_games_dir():
+    return os.path.join(g_clone_dir, "DH1")
+
 def get_ags2_dir():
-    return os.path.join(get_boot_dir(), "AGS2")
+    return os.path.join(get_games_dir(), "AGS2")
 
 def get_whd_dir(entry):
     if entry_is_notwhdl(entry):
@@ -431,41 +436,53 @@ def build_pfs(config_base_name, verbose):
     sectors = 63
     cylinder_size = block_size * heads * sectors
     fs_overhead = 1.12
-
     num_cyls_rdb = 1
-    num_cyls_dh0 = int((fs_overhead + 0.15) * (util.get_dir_size(os.path.join(g_clone_dir, "DH0"),
-                                                                 block_size) + (30 * 1024 * 1024))) // cylinder_size
-    num_cyls_dh1 = int(fs_overhead * (util.get_dir_size(os.path.join(g_clone_dir, "DH1"), block_size) + (30 * 1024 * 1024))) // cylinder_size
-    total_cyls = num_cyls_rdb + num_cyls_dh0 + num_cyls_dh1
+    total_cyls = num_cyls_rdb
+
+    partitions = [] # (partition name, cylinders)
+    for f in sorted(os.listdir(g_clone_dir)):
+        if os.path.isdir(os.path.join(g_clone_dir, f)) and is_amiga_devicename(f):
+            cyls = int((fs_overhead + 0.15) * (util.get_dir_size(os.path.join(g_clone_dir, f), block_size) + (30 * 1024 * 1024))) // cylinder_size
+            partitions.append(("DH" + str(len(partitions)), cyls))
+            total_cyls += cyls
 
     out_hdf = os.path.join(g_out_dir, config_base_name + ".hdf")
     if util.is_file(out_hdf):
         os.remove(out_hdf)
 
-    if verbose:
-        print(" > creating pfs container...")
+    if verbose: print(" > creating pfs container...")
     r = subprocess.run(["rdbtool", out_hdf,
-                        "create", "chs={},{},{}".format(total_cyls, heads, sectors), "+", "init", "rdb_cyls={}".format(num_cyls_rdb)])
+                        "create", "chs={},{},{}".format(total_cyls + 1, heads, sectors), "+", "init", "rdb_cyls={}".format(num_cyls_rdb)])
 
-    if verbose:
-        print(" > adding filesystem...")
+    if verbose: print(" > adding filesystem...")
     r = subprocess.run(["rdbtool", out_hdf, "fsadd", pfs3_bin, "fs=PFS3"], stdout=subprocess.PIPE)
 
     if verbose:
         print(" > adding partitions...")
+
+    # add boot partition
+    part = partitions.pop(0)
+    if verbose: print("    > " + part[0])
     r = subprocess.run(["rdbtool", out_hdf,
-                        "add", "start={}".format(num_cyls_rdb), "size={}".format(num_cyls_dh0),
+                        "add", "start={}".format(num_cyls_rdb), "size={}".format(part[1]),
                         "fs=PFS3", "block_size={}".format(block_size), "max_transfer=0x0001FE00", "mask=0x7FFFFFFE",
                         "num_buffer=300", "bootable=True"], stdout=subprocess.PIPE)
-    r = subprocess.run(["rdbtool", out_hdf, "free"], stdout=subprocess.PIPE, universal_newlines=True)
 
-    free = make_tuple(r.stdout.splitlines()[0])
-    start_cyl_dh1 = int(free[0])
-    end_cyl_dh1 = int(free[1])
-    r = subprocess.run(["rdbtool", out_hdf,
-                        "add", "start={}".format(start_cyl_dh1), "end={}".format(end_cyl_dh1),
-                        "fs=PFS3", "block_size={}".format(block_size), "max_transfer=0x0001FE00",
-                        "mask=0x7FFFFFFE", "num_buffer=300"], stdout=subprocess.PIPE)
+    # add subsequent partitions
+    for part in partitions:
+        if verbose: print("    > " + part[0])
+        r = subprocess.run(["rdbtool", out_hdf, "free"], stdout=subprocess.PIPE, universal_newlines=True)
+        free = make_tuple(r.stdout.splitlines()[0])
+        free_start = int(free[0])
+        free_end = int(free[1])
+        part_start = free_start
+        part_end = part_start + part[1]
+        if part_end > free_end:
+            part_end = free_end
+        r = subprocess.run(["rdbtool", out_hdf,
+                            "add", "start={}".format(part_start), "end={}".format(part_end),
+                            "fs=PFS3", "block_size={}".format(block_size), "max_transfer=0x0001FE00",
+                            "mask=0x7FFFFFFE", "num_buffer=300"], stdout=subprocess.PIPE)
     return
 
 # -----------------------------------------------------------------------------
@@ -529,14 +546,16 @@ def main():
     parser.add_argument("-c", "--config", dest="config_file", required=True, metavar="FILE", type=lambda x: util.argparse_is_file(parser, x),  help="configuration file")
     parser.add_argument("-o", "--out_dir", dest="out_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="output directory")
     parser.add_argument("-b", "--base_hdf", dest="base_hdf", metavar="FILE", help="base HDF image")
-    parser.add_argument("--ags_dir", dest="ags_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="AGS2 configuration directory")
+    parser.add_argument("-a", "--ags_dir", dest="ags_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="AGS2 configuration directory")
+    parser.add_argument("-d", "--add_dir", dest="add_dirs", action="append", help="add dir to amiga filesystem (example 'DH1:Music::~/Amiga/Music')")
 
     parser.add_argument("--all_games", dest="all_games", action="store_true", default=False, help="include all games in database")
     parser.add_argument("--all_demos", dest="all_demos", action="store_true", default=False, help="include all demos in database")
-    parser.add_argument("--all_versions", dest="all_versions", action="store_true", default=False,
-                        help="include all non-redundant versions of titles (if --all_games)")
+    parser.add_argument("--all_versions", dest="all_versions", action="store_true", default=False, help="include all non-redundant versions of titles (if --all_games)")
+
     parser.add_argument("--ecs_versions", dest="ecs", action="store_true", default=False, help="prefer OCS/ECS versions (if --all_games)")
     parser.add_argument("--force_ntsc", dest="ntsc", action="store_true", default=False, help="force NTSC video mode")
+
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
@@ -611,18 +630,34 @@ def main():
         # apply "hotfixes"
         apply_fixes(g_clone_dir)
 
+        # copy additional directories
+        if g_args.add_dirs:
+            if g_args.verbose: print("copying additional directories...")
+            for s in g_args.add_dirs:
+                d = s.split("::")
+                if util.is_dir(d[0]):
+                    dest = os.path.join(g_clone_dir, d[1].replace(":", "/"))
+                    print(" > copying '" + d[0] +"' to '" + d[1] + "'")
+                    util.copytree(d[0], dest)
+                else:
+                    print(" > warning: '" + d[1] + "' doesn't exist")
+
+        # build PFS container
+        build_pfs(config_base_name, g_args.verbose)
+
+        # copy clone script
+        config_clonescript = os.path.join(os.path.dirname(g_args.config_file), config_base_name) + ".clonescript"
+        if util.is_file(config_clonescript):
+            if g_args.verbose: print("copying clonescript...")
+            shutil.copyfile(config_clonescript, os.path.join(g_clone_dir, "clone"))
+            open(os.path.join(g_clone_dir, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.02")
+
         # clean output directory
         for r, _, f in os.walk(g_clone_dir):
             for name in f:
                 path = os.path.join(r, name)
                 if name == ".DS_Store":
                     os.remove(path)
-
-        # build PFS container
-        build_pfs(config_base_name, g_args.verbose)
-
-        # finalize
-        util.copytree(os.path.join(data_dir, "clonee"), g_clone_dir)
         return 0
 
     # except Exception as err:
