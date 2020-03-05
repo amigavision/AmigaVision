@@ -4,6 +4,7 @@ default:
 	@echo No default action
 
 env:
+	@pip2 install -e dependencies/amitools-0.1.0
 	@pipenv install
 
 index:
