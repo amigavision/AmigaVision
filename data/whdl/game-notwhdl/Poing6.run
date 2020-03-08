@@ -1,0 +1,9 @@
+IF NOT EXISTS WHDSaves:poing6
+  makedir WHDSaves:poing6
+  copy WHD:N/Poing6/default.levels WHDSaves:poing6
+  copy WHD:N/Poing6/default.scores WHDSaves:poing6
+EndIF
+assign POING: WHDSaves:poing6
+cd WHD:N/Poing6
+poing6
+assign POING: DISMOUNT

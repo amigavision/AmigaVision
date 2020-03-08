@@ -1,0 +1,9 @@
+IF EXISTS WHDSaves:poing.scores
+  copy WHDSaves:poing.scores S:
+EndIF
+cd WHD:N/Poing
+Poing
+IF EXISTS S:poing.scores
+  copy S:poing.scores WHDSaves:
+  delete S:poing.scores QUIET
+EndIF
