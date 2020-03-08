@@ -63,8 +63,6 @@ def make_dir(path):
 def get_dir_size(start_path=".", block_size=1):
     total_size = 0
     for dirpath, dirnames, filenames in os.walk(start_path):
-        if block_size > 1:
-            total_size += len(dirnames) * block_size
         for f in filenames:
             fp = os.path.join(dirpath, f)
             total_size += math.ceil(os.path.getsize(fp) / block_size) * block_size

@@ -429,20 +429,21 @@ def build_pfs(config_base_name, verbose):
         raise IOError("PFS3 filesystem doesn't exist: " + pfs3_bin)
 
     if verbose:
-        print(" > estimating partition sizes...")
+        print(" > calculating partition sizes...")
 
     block_size = 512
     heads = 4
     sectors = 63
     cylinder_size = block_size * heads * sectors
-    fs_overhead = 1.12
+    fs_overhead = 1.1
     num_cyls_rdb = 1
     total_cyls = num_cyls_rdb
 
     partitions = [] # (partition name, cylinders)
     for f in sorted(os.listdir(g_clone_dir)):
         if os.path.isdir(os.path.join(g_clone_dir, f)) and is_amiga_devicename(f):
-            cyls = int((fs_overhead + 0.15) * (util.get_dir_size(os.path.join(g_clone_dir, f), block_size) + (30 * 1024 * 1024))) // cylinder_size
+            mb_free = 30 if f == "DH0" else 10
+            cyls = int(fs_overhead * (util.get_dir_size(os.path.join(g_clone_dir, f), block_size) + (mb_free * 1024 * 1024))) // cylinder_size
             partitions.append(("DH" + str(len(partitions)), cyls))
             total_cyls += cyls
 
