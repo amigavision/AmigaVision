@@ -61,12 +61,17 @@ def make_dir(path):
         os.makedirs(path)
 
 def get_dir_size(start_path=".", block_size=1):
-    total_size = 0
+    file_size = 0
+    path_size = 0
     for dirpath, dirnames, filenames in os.walk(start_path):
+        path = dirpath.replace(os.path.commonprefix([dirpath, start_path]), "")
+        for d in dirnames:
+            path_size += len(os.path.join(path, d))
         for f in filenames:
+            path_size += len(os.path.join(path, f))
             fp = os.path.join(dirpath, f)
-            total_size += math.ceil(os.path.getsize(fp) / block_size) * block_size
-    return total_size
+            file_size += math.ceil(os.path.getsize(fp) / block_size) * block_size
+    return (file_size, path_size, file_size + path_size)
 
 def copytree(src, dst, symlinks=False, ignore=None):
     if not os.path.exists(dst):
