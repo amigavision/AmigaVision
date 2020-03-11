@@ -1957,7 +1957,7 @@
     - ZanyGolfNTSC
 
 - Top Picks by Genre:
-  - note: Our personal top picks and categories.\n\n(Work in progress!)
+  - note: Our personal top picks, sorted by genre.
   - Action:
     - DynaBlaster
     - Hostages
@@ -2019,12 +2019,10 @@
     - PinballFntsies
     - PinballIllusions
     - SlamTilt
-    - UltimatePinballQuest
   - Platform:
     - AddamsFamily
     - BCKid
     - Flood
-    - Globdule
     - JamesPond2
     - KidChaos
     - RickDangerous
@@ -2049,7 +2047,6 @@
     - NaughtyOnes
     - Pang
     - RodLand
-    - SillyPutty
     - SnowBros
     - WizNLiz
   - Platform, Cinematic:
@@ -2060,6 +2057,8 @@
     - Benefactor
     - BubbaNStix
     - Builderland
+    - Globdule
+    - SillyPutty
     - Exile
     - Ugh
   - Puzzle:
@@ -2129,6 +2128,7 @@
     - ShufflepuckCafe
     - Speedball2
   - Strategy:
+    - BattleIsle&DataDisks
     - CelticLegends
     - Centurion
     - Dune2
