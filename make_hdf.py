@@ -4,24 +4,24 @@ import sys
 import os
 import argparse
 import subprocess
-import whdlimg_util as util
 from ast import literal_eval as make_tuple
 
+def is_file(path):
+    return os.path.isfile(path)
+
+def is_dir(path):
+    return os.path.isdir(path)
 
 def make_pfs(path, size, verbose):
     if verbose:
         print("building PFS container...")
 
-    if util.is_file(path):
+    if is_file(path):
         raise IOError("out_hdf file already exists")
 
     pfs3_bin = "input/pfs3.bin"
-    if not util.is_file(pfs3_bin):
+    if not is_file(pfs3_bin):
         raise IOError("PFS3 filesystem doesn't exist: " + pfs3_bin)
-
-    dos1_bin = "input/dos1.bin"
-    if not util.is_file(dos1_bin):
-        raise IOError("PFS3 filesystem doesn't exist: " + dos1_bin)
 
     block_size = 512
     heads = 4
