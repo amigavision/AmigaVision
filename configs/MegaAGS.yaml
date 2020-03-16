@@ -1958,7 +1958,7 @@
 
 - Top Picks by Genre:
   - note: Our personal top picks, sorted by genre.
-  - Action:
+  - Action, Misc:
     - DynaBlaster
     - Hostages
     - Paradroid90
@@ -1984,7 +1984,6 @@
     - EyeOfTheBeholder2
     - FourCrystalsOfTrazere
     - HeroQuest
-    - Perihelion
     - Rogue
     - Shadowlands
   - Adventure, Misc:
@@ -2033,7 +2032,6 @@
     - Leander
     - RuffNTumble
     - SecondSamurai
-    - ShadowOfTheBeast3
     - Switchblade
     - Switchblade2
     - Turrican2
@@ -2058,35 +2056,24 @@
     - BubbaNStix
     - Builderland
     - Globdule
+    - ShadowOfTheBeast3
     - SillyPutty
-    - Exile
     - Ugh
   - Puzzle:
     - ClikClak
     - Deflektor
     - DeviousDesigns
     - EMotion
-    - GemX
     - Lemmings
     - Logical
     - OneStepBeyond
     - PipeDream
     - PushOver
-    - Rampart
     - SpringTime
     - SuperSkweek
     - SuperTwintris
     - TetrisPro
     - Twintris
-  - Racing, Top Down:
-    - AllTerrainRacing
-    - BadLands
-    - Carnage
-    - IndyHeat
-    - NitroNTSC
-    - Skidmarks
-    - SuperCars2
-    - SuperSkidmarks
   - Racing, Into Screen:
     - JaguarXJ220
     - LamborghiniAmericanChllng
@@ -2096,6 +2083,15 @@
     - StuntCarRacer
     - TestDrive2
     - Vroom
+  - Racing, Top Down:
+    - AllTerrainRacing
+    - BadLands
+    - Carnage
+    - IndyHeat
+    - NitroNTSC
+    - Skidmarks
+    - SuperCars2
+    - SuperSkidmarks
   - Shoot'em Up:
     - Apidya
     - BattleSquadron
@@ -2106,9 +2102,9 @@
     - MegaTyphoon
     - Pod
     - Silkworm
-    - SuperStardust
     - Uridium2
   - Simulation:
+    - Floor13
     - OilImperium
     - PortsOfCall
     - RailroadTycoon
@@ -2145,6 +2141,7 @@
     - LostPatrol
     - NorthAndSouth
     - Pirates
+    - Rampart
 
 - Gameographies:
   - note: Notable developer gameographies.\n\n(Restricted to WHDL adapted games, so not necessarily complete lists.)
