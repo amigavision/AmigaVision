@@ -512,8 +512,8 @@ def apply_fixes(clone_dir):
             # Full Metal Planete
             pj(bd, "G", "F", "FullMetalPlaneteFiles"),
             pj(bd, "G", "F", "FullMetalPlaneteImage"),
-            pj(bd, "G", "F", "FullMetalPlaneteNTSCFiles"),
-            pj(bd, "G", "F", "FullMetalPlaneteNTSCImage"),
+            pj(bd, "G", "F", "FullMetalPlaneteFilesNTSC"),
+            pj(bd, "G", "F", "FullMetalPlaneteImageNTSC"),
             # Murders In Space
             pj(bd, "G", "M", "MurdersInSpaceFiles"),
             pj(bd, "G", "M", "MurdersInSpaceImage"),
