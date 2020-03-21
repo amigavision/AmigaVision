@@ -1,1 +1,1 @@
-Skip loader splash/options window.
+Don't show splash/options window.
