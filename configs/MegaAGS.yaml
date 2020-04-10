@@ -1,6 +1,6 @@
 --- # AGS2 Menu structure
 - About:
-  - note: '\n\n\n\n\n\n             (MegaAGS v20200403)'
+  - note: '\n\n\n\n\n\n             (MegaAGS v20200410)'
   - Nothing to see here:
     - note: Intentionally left blank.
 - Best-of Lists:
@@ -1173,6 +1173,7 @@
     - SpacePilot89
     - Spaceport
     - SpaceRangerArcadia
+    - Spirilon
     - Stardust
     - Starbirds
     - Starblaze
@@ -1667,7 +1668,7 @@
     - EscapeFTPOTRobotMonsters
     - ESWAT
     - Exterminator
-    - FinalFight1MB
+    - FinalFight
     - Flipit&Magnose
     - ForgottenMine
     - ForgottenWorlds
