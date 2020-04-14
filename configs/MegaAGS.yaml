@@ -1,6 +1,6 @@
 --- # AGS2 Menu structure
 - About:
-  - note: '\n\n\n\n\n\n             (MegaAGS v20200410)'
+  - note: '\n\n\n\n\n\n             (MegaAGS v20200414)'
   - Nothing to see here:
     - note: Intentionally left blank.
 - Best-of Lists:
@@ -873,6 +873,7 @@
     - ChaseHQ2
     - ChuckRock
     - ChuckRock2
+    - Commando
     - CoolSpot
     - CosmicSpacehead
     - Crackdown
@@ -927,6 +928,7 @@
     - NinjaMissionArcadia
     - NinjaWarriors
     - NorthAndSouth
+    - OscarAGA
     - Pegasus
     - PharaohsMatchArcadia
     - Premiere
@@ -1332,6 +1334,7 @@
     - BrianLarasCricket
     - BrianLarasCricket96
     - BrutalFootballAGA
+    - BrutalHomicide
     - BrutalPawsOfFury
     - Budokan
     - BugBomber
