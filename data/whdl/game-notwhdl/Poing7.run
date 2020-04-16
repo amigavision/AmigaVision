@@ -1,7 +1,7 @@
 IF NOT EXISTS WHDSaves:poing7
   makedir WHDSaves:poing7
-  copy WHD:N/Poing7/default.levels WHDSaves:poing7
-  copy WHD:N/Poing7/default.scores WHDSaves:poing7
+  ;Copy the jb1 level set, there are others available:
+  copy WHD:N/Poing7/jb1.levels WHDSaves:poing7 
 EndIF
 assign POING: WHDSaves:poing7
 cd WHD:N/Poing7
