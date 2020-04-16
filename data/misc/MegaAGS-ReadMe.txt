@@ -3,16 +3,19 @@ MegaAGS for Minimig-AGA_MiSTer
 
 Setup:
 ------
-- Copy MegaAGS.hdf, MegaAGS-Saves.hdf and MegaAGS-Kickstart.rom from the Amiga
-  directory to the corresponding directory on MiSTer (/media/fat/games/Amiga).
+- Copy MegaAGS.hdf, MegaAGS-Saves.hdf and MegaAGS-Kickstart.rom from the
+  games/Amiga directory to the corresponding directory on MiSTer.
 
 - When updating to a new version of the main HDF image, keep your old
   MegaAGS-Saves.hdf so any saved games are carried over.
 
-- Copy minimig_vadjust.dat from the config directory to the
-  corresponding directory on MiSTer (/media/fat/config).
+- Copy minimig_vadjust.dat from the config directory to the corresponding
+  directory on MiSTer. It contains viewport cropping settings to make nice
+  5x (NTSC) and 4x (PAL) scaling ratios for 1080p output resolution possible.
 
-- Load the Minimig core and set up a profile with the following settings:
+- Either copy minimig.cfg from the config directory to the corresponding
+  directory on MiSTer, or load the Minimig core and set up a profile with the
+  following settings:
 
   df0: no disk
   df1: no disk
@@ -25,31 +28,24 @@ Setup:
                     games/Amiga/MegaAGS-Saves.hdf
     Secondary Master: Disabled
     Secondary Slave: Disabled
-  Chipset:
+  CPU & Chipset:
     CPU: 68020
     D-Cache: OFF
     Chipset: AGA
-    CD32Pad: ON
-    Joy Swap: OFF
+    CD32 Pad: ON
+    Joystick Swap: OFF
   Memory:
-    Chip: 2M
-    Fast: 384M
+    CHIP: 2M
+    FAST: 384M
+    SLOW: none
     ROM: games/Amiga/MegaAGS-Kickstart.rom
-    HRTmon: Disabled
+    HRTmon: disabled
   Audio & Video:
     TV Standard: PAL
     Scandoubler FX: Off
     Video area by: Blank
     Aspect ratio: 4:3
     Stereo mix: 50%
-
-- Some games will enjoy a nice performance boost with CPU D-Cache enabled,
-  while others will not work or run too fast. Especially 3D polygon games
-  can benefit from the faster CPU, so it's worth experimenting with the
-  option on a case by case basis.
-- Read the next section for how to configure the main MiSTer video modes.
-- While a keyboard and mouse isn't strictly necessary to play most
-  action games, it is definitely recomended. Thank you for playing!
 
 
 Controls:
@@ -68,6 +64,10 @@ to both the d-pad and an extra button. Here's how:
 - Go ahead and map Right and Left Triggers and Play/Pause.
 - When asked to if you want to "setup alternative buttons", do so!
 - Map Up to X, and skip all buttons except Up with the OSD button.
+
+While a keyboard and mouse isn't strictly necessary to play most action games,
+it is definitely recommended for the full Amiga experience.
+Thank you for playing!
 
 
 Video Modes:
@@ -111,12 +111,11 @@ which if set will override the preconfigured (per-title) key.
 
 Non-working games:
 ------------------
-About 25-30 games are currently (2019-11-03) not working due to CPU features not
-yet implemented in the Minimig core. There is currently active development efforts
-to remedy this.
-
-A few more titles do not work, or are very glitchy, due to other inaccuracies.
-This will also hopefully improve over time.
+About 25-30 games are currently (2020-04-14) not working due to CPU features
+not yet implemented in the Minimig core. Over the past year compatibility has
+improved a lot, and that trend is likely to continue. A few more titles do not
+work, or are very glitchy, due to other inaccuracies. This will also hopefully
+improve over time.
 
 The menu has a special "[ Issues ]" folder where the non-working titles (known
 to us) are found. As more accurate versions of the Minimig core are released,
@@ -143,3 +142,11 @@ mouse in port 1 and joystick in port 2. If using only one joystick, enable
 the "Joy Swap" option in the Chipset menu to route the first MiSTer joypad
 to port 1. It's also worth noting that all Arcadia games make use of a
 2-button joystick.
+
+
+Performance notes:
+------------------
+Some games will enjoy a nice performance boost with CPU D-Cache enabled, while
+others will not work or run too fast. Especially 3D polygon games can benefit
+from the faster CPU, so it's worth experimenting with the option on a case by
+case basis. The D-Cache option is available in OSD -> CPU & Chipset.
