@@ -489,51 +489,10 @@ def build_pfs(config_base_name, verbose):
     return
 
 # -----------------------------------------------------------------------------
-# Copy base image, extra files, apply fixes
+# Copy base image, extra files
 
 def extract_base_image(base_hdf, dest):
     _ = subprocess.run(["xdftool", base_hdf, "read", "/", dest])
-
-# Some hotfixes for (at the time of writing) malformed installs
-def apply_fixes(clone_dir):
-    pj = os.path.join
-    bd = pj(clone_dir, "DH1", "WHD")
-    # Move files in data dir to install root
-    for d in [
-            # Chaos Strikes Back
-            pj(bd, "G", "C", "ChaosStrikesBack&DeUtil"),
-            pj(bd, "G", "C", "ChaosStrikesBack&FrUtil"),
-            pj(bd, "G", "C", "ChaosStrikesBack&EnUtil"),
-            # Cross Check
-            pj(bd, "G", "C", "CrossCheck"),
-            # Drakkhen
-            pj(bd, "G", "D", "DrakkhenImage"),
-            pj(bd, "G", "D", "DrakkhenImageNTSC"),
-            pj(bd, "G", "D", "DrakkhenImageDe"),
-            pj(bd, "G", "D", "DrakkhenImageFr"),
-            # Full Metal Planete
-            pj(bd, "G", "F", "FullMetalPlaneteFiles"),
-            pj(bd, "G", "F", "FullMetalPlaneteImage"),
-            pj(bd, "G", "F", "FullMetalPlaneteFilesNTSC"),
-            pj(bd, "G", "F", "FullMetalPlaneteImageNTSC"),
-            # Murders In Space
-            pj(bd, "G", "M", "MurdersInSpaceFiles"),
-            pj(bd, "G", "M", "MurdersInSpaceImage"),
-            # Quest For The Time Bird
-            pj(bd, "G", "Q", "QuestForTimeBirdFiles"),
-            pj(bd, "G", "Q", "QuestForTimeBirdImage"),
-            pj(bd, "G", "Q", "QueteLOiseauDuTempFrFiles"),
-            pj(bd, "G", "Q", "QueteLOiseauDuTempFrImage"),
-            # Starush
-            pj(bd, "G", "S", "StarushFiles"),
-            pj(bd, "G", "S", "StarushImage"),
-            # The Toyottes
-            pj(bd, "G", "T", "ToyottesFiles"),
-            pj(bd, "G", "T", "ToyottesImage")
-    ]:
-        if util.is_dir(pj(d, "data")):
-            for f in os.listdir(pj(d, "data")): shutil.move(pj(d, "data", f), d)
-            shutil.rmtree(pj(d, "data"), ignore_errors=True)
 
 # -----------------------------------------------------------------------------
 g_out_dir = "out"
@@ -621,7 +580,7 @@ def main():
         ags_create_autoentries()
 
         # extract whdloaders
-        if g_args.verbose: print("extracting WHDLoad archives... ({} games)".format(len(g_entries.items())))
+        if g_args.verbose: print("extracting WHDLoad installs... ({} archives)".format(len(g_entries.items())))
         extract_entries(g_entries)
 
         # copy extra files
@@ -629,9 +588,6 @@ def main():
         if util.is_dir(config_extra_dir):
             if g_args.verbose: print("copying configuration extras...")
             util.copytree(config_extra_dir, g_clone_dir)
-
-        # apply "hotfixes"
-        apply_fixes(g_clone_dir)
 
         # copy additional directories
         if g_args.add_dirs:
