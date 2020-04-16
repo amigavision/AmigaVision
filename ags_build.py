@@ -56,9 +56,11 @@ def get_entry(name):
         "game--{}4disk--{}4disk".format(n, n),
         "game--{}3disk--{}3disk".format(n, n),
         "game--{}2disk--{}2disk".format(n, n),
-        "game--{}%".format(n),
+        "demo--{}".format(n),
+        "demo--{}--{}".format(n, n),
         "game-notwhdl--{}%".format(n),
-        "--{}%".format(n),
+        "game--{}%".format(n),
+        "%--{}%".format(n),
         "%{}%".format(n)
     ]
     for p in patterns:
