@@ -59,7 +59,9 @@ def get_entry(name):
         "demo--{}".format(n),
         "demo--{}--{}".format(n, n),
         "game-notwhdl--{}%".format(n),
+        "demo-notwhdl--{}%".format(n),
         "game--{}%".format(n),
+        "demo--{}%".format(n),
         "%--{}%".format(n),
         "%{}%".format(n)
     ]
@@ -78,6 +80,8 @@ def entry_valid(entry):
         return True
     elif isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "game-notwhdl--" in id:
         return True
+    elif isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "demo-notwhdl--" in id:
+        return True
     return False
 
 def entry_is_aga(entry):
@@ -88,6 +92,8 @@ def entry_is_aga(entry):
 
 def entry_is_notwhdl(entry):
     if entry_valid(entry) and "game-notwhdl--" in entry["id"]:
+        return True
+    if entry_valid(entry) and "demo-notwhdl--" in entry["id"]:
         return True
     return False
 
