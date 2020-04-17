@@ -169,7 +169,7 @@ def extract_whd(entry):
 # -----------------------------------------------------------------------------
 # Menu yaml parsing, AGS2 tree creation
 
-def ags_make_note(entry):
+def ags_make_note(entry, add_note):
     max_w = AGS_INFO_WIDTH
     note = ""
     system = entry["hardware"]
@@ -201,6 +201,9 @@ def ags_make_note(entry):
         note += ("Hardware:   {}".format(system))[:max_w] + "\n"
         if entry["issues"]:
             note += ("Issues:     {}".format(entry["issues"]))[:max_w] + "\n"
+
+    if add_note and isinstance(add_note, str):
+            note += ("Note:       {}".format(add_note))[:max_w] + "\n"
 
     return note
 
@@ -291,13 +294,12 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False):
         return
 
     # note
-    if note:
-        if note == "not_available":
-            note = "Title:      " + name.replace("-", " ") + "\n\n"
-            note += "WHDLoader not available"
+    if note and note == "not_available":
+        note = "Title:      " + name.replace("-", " ") + "\n\n"
+        note += "WHDLoader not available"
         open(base_path + ".txt", mode="w", encoding="latin-1").write(note)
     elif entry:
-        open(base_path + ".txt", mode="w", encoding="latin-1").write(ags_make_note(entry))
+        open(base_path + ".txt", mode="w", encoding="latin-1").write(ags_make_note(entry, note))
 
     # image
     if entry and "id" in entry and util.is_file(os.path.join("data", "img", entry["id"] + ".iff")):
@@ -305,7 +307,7 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False):
     return
 
 
-def ags_create_entries(names, path, note=None, ranked_list=False):
+def ags_create_entries(entries, path, note=None, ranked_list=False):
     global g_entries
     if not path:
         return
@@ -321,7 +323,7 @@ def ags_create_entries(names, path, note=None, ranked_list=False):
 
     # collect titles
     pos = 0
-    for name in names:
+    for name in entries:
         pos += 1
         n = name
         title_note = None
@@ -339,7 +341,7 @@ def ags_create_entries(names, path, note=None, ranked_list=False):
             g_entries[e["id"]] = e
         rank = None
         if ranked_list:
-            rank = str(pos).zfill(len(str(len(names))))
+            rank = str(pos).zfill(len(str(len(entries))))
         ags_create_entry(n, e, base_dir, title_note, rank)
 
     return
@@ -386,6 +388,9 @@ def ags_create_tree(node, path=[]):
             # titles
             if isinstance(item, str):
                 entries += [item]
+            if isinstance(item, list):
+                if len(item) == 2:
+                    entries += [(item[0], item[1])]
 
             # metadata or sub-list
             if isinstance(item, dict):
@@ -395,7 +400,6 @@ def ags_create_tree(node, path=[]):
                 if "ranked_list" in item:
                     ranked_list = item["ranked_list"]
                     del item["ranked_list"]
-                # TODO: title with custom note
                 # item is a sublist (or not_available title)
                 for key, value in item.items():
                     if value == "not_available":
