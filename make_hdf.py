@@ -19,7 +19,7 @@ def make_pfs(path, size, verbose):
     if is_file(path):
         raise IOError("out_hdf file already exists")
 
-    pfs3_bin = "input/pfs3.bin"
+    pfs3_bin = "data/pfs3/pfs3.bin"
     if not is_file(pfs3_bin):
         raise IOError("PFS3 filesystem doesn't exist: " + pfs3_bin)
 

@@ -8,8 +8,8 @@ pylint = "*"
 autopep8 = "*"
 
 [packages]
-ruamel-yaml = "~=0.15.89"
-lhafile = {editable = true,path = "./dependencies/python-lhafile-0.2.1"}
+ruamel-yaml = "~=0.16.10"
+lhafile = "~=0.2.0"
 
 [requires]
 python_version = "3.7"

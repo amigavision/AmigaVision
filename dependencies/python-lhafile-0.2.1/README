@@ -1,8 +1,0 @@
-This project is an updated version of the project found at
-http://trac.neotitans.net/wiki/lhafile
-
-Changes include:
-* Support for Python 3.x.
-* Support file notes (as found in Amiga .lha files).
-* Support for archives with ISO-8859-1 filenames.
-* Fixed a bug causing crashes in lzhlib.

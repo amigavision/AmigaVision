@@ -1,7 +1,0 @@
-files
-*debhelper*
-*substvars*
-substvars
-python-lhafile/
-python3-lhafile/
-tmp/
