@@ -10,6 +10,7 @@ autopep8 = "*"
 [packages]
 ruamel-yaml = "~=0.16.10"
 lhafile = "~=0.2.0"
+pillow = "~=7.1.1"
 
 [requires]
 python_version = "3.7"
