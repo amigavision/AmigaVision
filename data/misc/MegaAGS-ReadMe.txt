@@ -13,6 +13,13 @@ Setup:
   directory on MiSTer. It contains viewport cropping settings to make nice
   5x (NTSC) and 4x (PAL) scaling ratios for 1080p output resolution possible.
 
+- To make NTSC resolutions scale properly, you need to use 0.5x scale mode.
+  If this is not already your default, add the following to your `MiSTer.ini`
+  file:
+
+  [Minimig]
+  vscale_mode=2
+   
 - Either copy minimig.cfg from the config directory to the corresponding
   directory on MiSTer, or load the Minimig core and set up a profile with the
   following settings:
