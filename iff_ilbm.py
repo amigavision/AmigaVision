@@ -169,16 +169,15 @@ def planar_data(width, height, depth, pixels):
 def next_pow2(n):
     return int(math.pow(2, math.ceil(math.log(n) / math.log(2))))
 
-def palette_data(palette, size):
+def palette_data(palette):
     p = []
-    for i in range(next_pow2(size)):
+    for i in range(len(palette) // 3):
         p.append((palette[i * 3], palette[i * 3 + 1], palette[i * 3 + 2]))
+    p.extend([(0,0,0)] * (next_pow2(len(p)) - len(p)))
     return p
 
-def ilbm(width, height, pixels, palette, palette_size=None, mode=0x29000, pack=1):
-    if not palette_size:
-        palette_size = len(palette) // 3
-    depth, bmhd, cmap, camg = header(width, height, palette_data(palette, palette_size), mode, pack)
+def ilbm(width, height, pixels, palette, mode=0x29000, pack=1):
+    depth, bmhd, cmap, camg = header(width, height, palette_data(palette), mode, pack)
     bpr, planes = planar_data(width, height, depth, pixels)
 
     rows = []
