@@ -3,10 +3,8 @@
 # AGSImager: Builder
 
 # TO DO:
-# - Custom note for title in yaml (leaf with "- heading: note")
 # - Handle archive not found
-# - Write vadjust.dat parser
-# - Index files in base hdf -> hashmap
+# - Write vadjust.dat parser/writer
 
 # vadjust borders (top, bottom, sides)
 # PAL: 5, 9, 7

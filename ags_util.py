@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# WHDLImager utility functions
+# AGSImager: Utility functions
 
 import csv
 import math
