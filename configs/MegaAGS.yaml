@@ -422,59 +422,6 @@
     - SpaceCrusade
     - Switchblade2
     - GTSoccerChallenge
-  - DenOfGeek-Underappreciated:
-    - ranked_list: True
-    - note: The Top 50 underappreciated Amiga games according to Den of Geek.
-    - Stardust
-    - NoSecondPrize
-    - DynaBlaster
-    - Qwak
-    - Roadkill
-    - SuprTennisChmps
-    - Odyssey
-    - Banshee
-    - KingsBounty
-    - Paradroid90
-    - YoJoe
-    - RuffNTumble
-    - Supremacy
-    - SpaceCrusade
-    - Nitro
-    - Jetstrike
-    - FourCrystalsOfTrazere
-    - Virocop
-    - Damocles
-    - Flood
-    - FlyHarder
-    - GemX
-    - Deuteros
-    - Bloodwych
-    - LostTreasuresOfInfocom
-    - LamborghiniAmericanChllng
-    - SabreTeam
-    - Corporation
-    - EscapeFromColditz
-    - ThunderHawkAH73M
-    - HistoryLine
-    - Cybercon3
-    - Deliverance
-    - FireForce
-    - PacificIslands
-    - RoboCop3
-    - Apocalypse
-    - Statix: not_available
-    - StormMaster
-    - Shadowlands
-    - Blob
-    - Midwinter2
-    - Cavitas
-    - Infestation
-    - Citadel
-    - BirdsOfPrey
-    - GoldOfTheAztecs
-    - Conqueror
-    - Alcatraz
-    - Resolution101
   - EAB Top 10 Exclusive:
     - ranked_list: True
     - note: The best Amiga-exclusive games according to users of the English Amiga Board.
@@ -487,7 +434,7 @@
     - DeluxeGalaga
     - Lionheart
     - Napalm: not_available
-    - Wasted-Dream: not_available
+    - Wasted-Dreams: not_available
     - Genetic-Species: not_available
     - Perihelion
     - ArabianNights
@@ -601,21 +548,6 @@
     - NavySEALs
     - Uridium2
     - YoJoe
-  - Kim Justice Top Psygnosis:
-    - ranked_list: True
-    - note: Kim Justice's top 10 favourite Psygnosis games (excluding a few non-Amiga games, including honorable mentions).
-    - Lemmings
-    - BillsTomatoGame
-    - KillingGameShow
-    - Lemmings2
-    - ShadowOfTheBeast3
-    - WizNLiz
-    - Leander
-    - Benefactor
-    - Walker
-    - BloodMoney
-    - HiredGuns
-    - SecondSamurai
   - Lemon Top 20 (Jan 2019):
     - ranked_list: True
     - note: As voted by lemonamiga.com users
@@ -663,6 +595,88 @@
     - SensibleSoccer
     - ThemePark
     - Wings
+
+- Curated Lists:
+  - note: Curated lists from around the net.
+  - DenOfGeek-Underappreciated:
+    - ranked_list: True
+    - note: The Top 50 underappreciated Amiga games according to Den of Geek.
+    - Stardust
+    - NoSecondPrize
+    - DynaBlaster
+    - Qwak
+    - Roadkill
+    - SuprTennisChmps
+    - Odyssey
+    - Banshee
+    - KingsBounty
+    - Paradroid90
+    - YoJoe
+    - RuffNTumble
+    - Supremacy
+    - SpaceCrusade
+    - Nitro
+    - Jetstrike
+    - FourCrystalsOfTrazere
+    - Virocop
+    - Damocles
+    - Flood
+    - FlyHarder
+    - GemX
+    - Deuteros
+    - Bloodwych
+    - LostTreasuresOfInfocom
+    - LamborghiniAmericanChllng
+    - SabreTeam
+    - Corporation
+    - EscapeFromColditz
+    - ThunderHawkAH73M
+    - HistoryLine
+    - Cybercon3
+    - Deliverance
+    - FireForce
+    - PacificIslands
+    - RoboCop3
+    - Apocalypse
+    - Statix: not_available
+    - StormMaster
+    - Shadowlands
+    - Blob
+    - Midwinter2
+    - Cavitas
+    - Infestation
+    - Citadel
+    - BirdsOfPrey
+    - GoldOfTheAztecs
+    - Conqueror
+    - Alcatraz
+    - Resolution101
+  - Kim Justice Platformers:
+    - note: Nine obscure euro platformers that DON'T suck, according to Kim Justice.
+    - Lionheart
+    - Odyssey
+    - Ugh
+    - NaughtyOnes
+    - KidChaos
+    - Globdule
+    - ArabianNights
+    - Lollypop
+    - TrapsNTreasures
+  - Kim Justice Top Psygnosis:
+    - ranked_list: True
+    - note: Kim Justice's top 10 favourite Psygnosis games (excluding a few non-Amiga games, including honorable mentions).
+    - Lemmings
+    - BillsTomatoGame
+    - KillingGameShow
+    - Lemmings2
+    - ShadowOfTheBeast3
+    - WizNLiz
+    - Leander
+    - Benefactor
+    - Walker
+    - BloodMoney
+    - HiredGuns
+    - SecondSamurai
   - v's Recommended Games:
     - note: From /v/'s Recommended Games Wiki
             (vsrecommendedgames.fandom.com/wiki/Amiga)
@@ -706,8 +720,8 @@
     - AnotherWorld
     - Worms
 
-- Curated Lists:
-  - note: Lists curated with specialized focus.
+- Themed Lists:
+  - note: Lists compiled with a specialized theme or focus.
   - Amiga Exclusives:
     - note: A selection of games exclusive to the Amiga platform.
     - Agony
@@ -1260,7 +1274,6 @@
     - JimPower
     - Lionheart
     - MrNutz
-    - Resolution101
     - ShadowOfTheBeast
     - ShockWave
     - SwordOfSodan
@@ -1704,7 +1717,7 @@
     - MidnightResistance
     - Moochies
     - Narc
-    - NaughtyOnesAGA
+    - NaughtyOnes
     - NewYorkWarriors1MB
     - NinjaWarriors
     - Oath
