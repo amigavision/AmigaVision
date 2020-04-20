@@ -3,6 +3,7 @@
 import array
 import math
 import struct
+import sys
 
 # -----------------------------------------------------------------------------
 # Packbits codec (https://github.com/kmike/packbits)
@@ -193,3 +194,9 @@ def ilbm(width, height, pixels, palette, mode=0x29000, pack=1):
             body_data += packbits_encode(r)
 
     return chunk("FORM", "ILBM".encode("ascii"), bmhd, cmap, camg, chunk("BODY", body_data))
+
+# -----------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    print("not runnable")
+    sys.exit(1)
