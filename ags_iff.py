@@ -39,7 +39,6 @@ def main():
     parser.add_argument("--crop", dest="crop", type=str, default="640x512", help="crop size (in high-res interlaced point size)")
     parser.add_argument("--scale", dest="scale", type=str, default="320x256", help="scale size (nearest neighbour)")
     parser.add_argument("--resample", dest="resample", type=str, default=None, help="resample size (anti aliased)")
-    #parser.add_argument("--dither", dest="dither", action="store_true", default=False, help="use error diffusion dithering")
     parser.add_argument("--center_crop", dest="center_crop", action="store_true", default=False, help="use center-crop (disable smart-crop)")
     parser.add_argument("--id", dest="screen_id", type=int, default=0x29000, help="set screen mode id")
 
@@ -76,15 +75,16 @@ def main():
             img = img.resize(resample_size, Image.ANTIALIAS)
 
         # Quantize
-        #dither = Image.FLOYDSTEINBERG if args.dither else Image.NONE
         img = img.quantize(colors=colors, method=0, kmeans=4, dither=Image.NONE)
 
         # Encode and save IFF
+        compress = 1
+        mode_id = args.id
         if args.out_iff:
             with open(args.out_iff, "wb") as f:
                 w, h = img.size
-                f.write(iff.ilbm(w, h, img.load(), img.getpalette()[:colors * 3]))
-            img.save(args.out_iff + ".png")
+                f.write(iff.ilbm(w, h, img.load(), img.getpalette()[:colors * 3]), mode_id, compress)
+            #img.save(args.out_iff + ".png")
 
         return 0
 
