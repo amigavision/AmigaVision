@@ -73,6 +73,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", "--in_image", dest="in_image", required=True, metavar="FILE", help="input image")
     parser.add_argument("-o", "--out_iff", dest="out_iff", metavar="FILE", help="output IFF image")
+    parser.add_argument("-p", "--out_png", dest="out_png", metavar="FILE", help="output PNG image")
     parser.add_argument("-c", "--colors", dest="colors", type=int, default=256, help="number of colors")
     parser.add_argument("--crop", dest="crop", type=str, default="640x512", help="crop size (in high-res interlaced point size)")
     parser.add_argument("--scale", dest="scale", type=str, default="320x256", help="scale size (nearest neighbour)")
@@ -96,7 +97,8 @@ def main():
         if args.out_iff:
             with open(args.out_iff, "wb") as f:
                 f.write(out)
-            #pil_img.save(args.out_iff + ".png")
+        if args.out_png:
+            pil_img.save(args.out_iff + ".png")
         return 0
 
     except IOError as err:
