@@ -1,4 +1,4 @@
-.PHONY: default env index image clean
+.PHONY: default env index image clean screenshots
 
 default:
 	@echo No default action
@@ -22,6 +22,9 @@ image-ntsc:
 
 test-image:
 	@pipenv run ./ags_build.py -v -c configs/Test.yaml -o ~/Temp/AGSImager
+
+screenshots:
+	@pipenv run ./make_screenshots.sh screenshots
 
 clean:
 	@pipenv --rm

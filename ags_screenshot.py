@@ -11,10 +11,10 @@
 # A CLI interface is also available. Example usage:
 #
 # Convert to 640x200 with center-crop
-# ./ags_iff.py --crop 640x400 --scale 640x200 --center_crop -i test.png -o test.iff
+# ./ags_screenshot.py --crop 640x400 --scale 640x200 --center_crop -i test.png -o test.iff
 #
 # Convert to 320x128 (squished height) with smart-crop, max 128 colors
-# ./ags_iff.py --crop 640x512 --scale 320x256 --resample 320x128 --colors 128 -i test.png -o test.iff
+# ./ags_screenshot.py --crop 640x512 --scale 320x256 --resample 320x128 --colors 128 -i test.png -o test.iff
 
 import argparse
 import os
@@ -25,7 +25,7 @@ import iff_ilbm as iff
 
 # -----------------------------------------------------------------------------
 
-def make_screenshot(path, colors, crop_sz, scale_sz, resample_sz=None, mode_id=0x29000, center_crop=False):
+def iff_screenshot(path, colors, crop_sz, scale_sz, resample_sz=None, mode_id=0x29000, center_crop=False):
     # Normalize image to full "high-res interlace" resolution before cropping,
     # by doubling size in either dimension if smaller than crop dimension
     img = Image.open(path).convert("RGB")
@@ -91,12 +91,12 @@ def main():
         if args.resample:
             resample_sz = interpret_size(args.resample)
 
-        out, pil_img = make_screenshot(args.in_image, colors, crop_sz, scale_sz, resample_sz, args.screen_id, args.center_crop)
+        out, pil_img = iff_screenshot(args.in_image, colors, crop_sz, scale_sz, resample_sz, args.screen_id, args.center_crop)
 
         if args.out_iff:
             with open(args.out_iff, "wb") as f:
                 f.write(out)
-            pil_img.save(args.out_iff + ".png")
+            #pil_img.save(args.out_iff + ".png")
         return 0
 
     except IOError as err:

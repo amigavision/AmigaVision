@@ -1,37 +1,22 @@
 #!/usr/bin/env python3
 
+# Packbit codec based on packbits.py by Mikhail Korobov (https://github.com/kmike/packbits)
+# IFF ILBM encoder based on imgtoiff.py by Per Olofsson (https://github.com/MagerValp/ArcadeGameSelector)
+
 import array
+import enum
 import math
 import struct
 import sys
 
 # -----------------------------------------------------------------------------
-# Packbits codec (https://github.com/kmike/packbits)
-#
-# Copyright (c) 2013 Mikhail Korobov
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+# Packbits codec
 
 def packbits_decode(data):
     data = bytearray(data)
     result = bytearray()
     pos = 0
+
     while pos < len(data):
         header_byte = data[pos]
         if header_byte > 127:
@@ -39,8 +24,8 @@ def packbits_decode(data):
         pos += 1
 
         if 0 <= header_byte <= 127:
-            result.extend(data[pos:pos+header_byte+1])
-            pos += header_byte+1
+            result.extend(data[pos:pos + header_byte + 1])
+            pos += header_byte + 1
         elif header_byte == -128:
             pass
         else:
@@ -49,71 +34,72 @@ def packbits_decode(data):
 
     return bytes(result)
 
-
 def packbits_encode(data):
+    class State(enum.Enum):
+        RAW = 0
+        RLE = 1
+
+    MAX_LENGTH = 127
+
     if len(data) == 0:
-        return data
+        return bytes(b'')
     if len(data) == 1:
-        return b'\x00' + data
+        return bytes(b'\x00' + data)
 
     data = bytearray(data)
     result = bytearray()
     buf = bytearray()
     pos = 0
-    repeat_count = 0
-    MAX_LENGTH = 127
-    state = 'RAW'
+    rep = 0
+    state = State.RAW
 
-    def finish_raw():
-        if len(buf) == 0:
-            return
-        result.append(len(buf)-1)
+    def raw_end():
+        if len(buf) == 0: return
+        result.append(len(buf) - 1)
         result.extend(buf)
         buf[:] = bytearray()
 
-    def finish_rle():
-        result.append(256-(repeat_count - 1))
+    def rle_end():
+        result.append(256 - (rep - 1))
         result.append(data[pos])
 
     while pos < len(data)-1:
         current_byte = data[pos]
-
-        if data[pos] == data[pos+1]:
-            if state == 'RAW':
-                finish_raw()
-                state = 'RLE'
-                repeat_count = 1
-            elif state == 'RLE':
-                if repeat_count == MAX_LENGTH:
-                    finish_rle()
-                    repeat_count = 0
-                repeat_count += 1
-
+        if data[pos] == data[pos + 1]:
+            if state == State.RAW:
+                raw_end()
+                state = State.RLE
+                rep = 1
+            elif state == State.RLE:
+                if rep == MAX_LENGTH:
+                    rle_end()
+                    rep = 0
+                rep += 1
         else:
-            if state == 'RLE':
-                repeat_count += 1
-                finish_rle()
-                state = 'RAW'
-                repeat_count = 0
-            elif state == 'RAW':
+            if state == State.RLE:
+                rep += 1
+                rle_end()
+                state = State.RAW
+                rep = 0
+            elif state == State.RAW:
                 if len(buf) == MAX_LENGTH:
-                    finish_raw()
-
+                    raw_end()
                 buf.append(current_byte)
-
         pos += 1
 
-    if state == 'RAW':
+    if state == State.RAW:
         buf.append(data[pos])
-        finish_raw()
+        raw_end()
     else:
-        repeat_count += 1
-        finish_rle()
-
+        rep += 1
+        rle_end()
     return bytes(result)
 
 # -----------------------------------------------------------------------------
 # IFF ILMB encoder
+
+def next_pow2(n):
+    return int(math.pow(2, math.ceil(math.log(n) / math.log(2))))
 
 def chunk(id, *data):
     id = bytes("{0:<4}".format(id[0:4]).encode("ascii"))
@@ -142,7 +128,8 @@ def header(width, height, palette, mode, pack):
     ))
 
     p = bytes()
-    for (r, g, b) in palette: p += struct.pack("BBB", r, g, b)
+    for (r, g, b) in palette:
+        p += struct.pack("BBB", r, g, b)
     cmap = chunk("CMAP", p)
 
     if mode is not None:
@@ -166,9 +153,6 @@ def planar_data(width, height, depth, pixels):
             for plane in range(depth):
                 planes[plane][offset] |= ((p >> plane) & 1) << xmod
     return bpr, planes
-
-def next_pow2(n):
-    return int(math.pow(2, math.ceil(math.log(n) / math.log(2))))
 
 def palette_data(palette):
     p = []
