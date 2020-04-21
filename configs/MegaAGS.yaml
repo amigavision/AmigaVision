@@ -2168,6 +2168,63 @@
 
 - Gameographies:
   - note: Notable developer gameographies.\n\n(Restricted to WHDL adapted games, so not necessarily complete lists.)
+  - "< By Composer >":
+    - note: Games with music by some notable composers.\n\n(Restricted to WHDL adapted games, so not necessarily complete lists.)
+    - Chris Hülsbeck:
+      - note: Arguably the most loved Amiga composer of all time, and also creator of the very interesting TFMX music software.
+      - AdventuresOfQuik&Silva
+      - Apidya
+      - Apprentice
+      - BadCat
+      - BattleIsle
+      - BCKid
+      - BundesligaManagerHattDe
+      - CaribbeanDisasterDe
+      - CarlLewisChallenge
+      - CircusAttractions
+      - GemX
+      - GrandMonsterSlam
+      - HardNHeavy
+      - HexumaDe
+      - HollywoodPokerPro
+      - JimPower
+      - Logistic
+      - Masterblazer
+      - MetalLaw
+      - MUDS
+      - Oxxonian
+      - RockNRoll
+      - RType
+      - SecretOfMonkeyIsland
+      - Spaceball
+      - Turrican
+      - Turrican2
+      - Turrican3
+      - XOut
+      - ZOut
+    - Karsten Obarski:
+      - note: Maker of the original Sound Tracker software, and a prolific composer in the very early days of Amiga.
+      - Amegas
+      - BrandsHatch
+      - CrystalHammerV2
+      - Dyter07
+      - FateGatesOfDawn
+      - FutureTank
+      - Larrie
+      - OilImperium
+      - Project1
+      - Sarcophaser
+      - WindowWizard
+    - Follin Brothers:
+      - note: The Amiga was the legendary brothers Tim & Geoff least favorite platform, and you can sort of tell...
+      - BionicCommando
+      - Gauntlet3
+      - GhoulsNGhosts
+      - LEDStorm
+      - Puzznic
+      - QixNTSC
+      - Renegade
+      - SlySpySecretAgent
   - Assembly Line, The:
     - note: While most known for helping out the Bitmap Bros on Xenon 2, the awesome and quirky puzzle games represent their finest work.
     - Cybercon3
@@ -2416,129 +2473,66 @@
     - TempleOfApshaiTrilogy
     - WorldGames
 
-- Gameographies, by Composer:
-  - note: Games with music by some notable composers.\n\n(Restricted to WHDL adapted games, so not necessarily complete lists.)
-  - Chris Hülsbeck:
-    - note: Arguably the most loved Amiga composer of all time, and also creator of the very interesting TFMX music software.
-    - AdventuresOfQuik&Silva
-    - Apidya
-    - Apprentice
-    - BadCat
-    - BattleIsle
-    - BCKid
-    - BundesligaManagerHattDe
-    - CaribbeanDisasterDe
-    - CarlLewisChallenge
-    - CircusAttractions
-    - GemX
-    - GrandMonsterSlam
-    - HardNHeavy
-    - HexumaDe
-    - HollywoodPokerPro
-    - JimPower
-    - Logistic
-    - Masterblazer
-    - MetalLaw
-    - MUDS
-    - Oxxonian
-    - RockNRoll
-    - RType
-    - SecretOfMonkeyIsland
-    - Spaceball
-    - Turrican
-    - Turrican2
-    - Turrican3
-    - XOut
-    - ZOut
-  - Karsten Obarski:
-    - note: Maker of the original Sound Tracker software, and a prolific composer in the very early days of Amiga.
-    - Amegas
-    - BrandsHatch
-    - CrystalHammerV2
-    - Dyter07
-    - FateGatesOfDawn
-    - FutureTank
-    - Larrie
-    - OilImperium
-    - Project1
-    - Sarcophaser
-    - WindowWizard
-  - Follin Brothers:
-    - note: The Amiga was the legendary brothers Tim & Geoff least favorite platform, and you can sort of tell...
-    - BionicCommando
-    - Gauntlet3
-    - GhoulsNGhosts
-    - LEDStorm
-    - Puzznic
-    - QixNTSC
-    - Renegade
-    - SlySpySecretAgent
-
-- '[ Demo Scene Selection ]':
-  - note: A small sample of demo scene releases.
-  - 15YearsOfFame
-  - 3DDemo2
-  - A.S.S
-  - AbsoluteInebriation
-  - Amiga30Years
-  - AprilInParis
-  - Arte
-  - BatmanVuelve
-  - BaygonAGA
-  - BrunosMusicBox3
-  - Coma
-  - CopperMaster
-  - Darkroom
-  - DayOfReckoning
-  - DesertDream
-  - Drugstore
-  - Enigma
-  - Extension
-  - FridayAtEightAGA
-  - FullmoonAGA
-  - GuardianDragon2
-  - Hardwired
-  - HisMastersNoise
-  - How2SkinACat
-  - HumanTarget
-  - Interference
-  - InTheKitchen
-  - JesusOnEs
-  - KanaalinarVoitus
-  - Lemon-Colombia
-  - LostWorld
-  - MajorRelease
-  - MaximumVelocity
-  - Megademo2Rebels
-  - Megademo7Kefrens
-  - MegademoAvenger
-  - MegademoBeastieBoys
-  - MegademoBudbrain
-  - MegademoDeathstar
-  - MegademoJoy&MGF&TJC
-  - MegademoNorthStar
-  - MegademoRedSectorInc
-  - MegademoRoyalAmigaForce
-  - MentalHangover
-  - MotionAGA
-  - MusicDisk3DMob
-  - Nexus7AGA
-  - NumbAGA
-  - PlanetMAGA
-  - PlasticPassion
-  - Punisher--Punisher
-  - RinkADinkRedux
-  - Roots2AGA
-  - Sequential
-  - SOS--SOS
-  - Spaceballs-Emperor
-  - Spaceballs-Makt
-  - [Spaceballs-Peek, "3D glasses (red-blue) recommended!"]
-  - Stateline
-  - StateOfTheArt
-  - TechnologicalDeath
-  - TechTech
-  - TEK-FutureOfLimits
-  - TerminalFuckup
-  - VoyageRazor1911
-  - WorldOfCommodore
+- '[ Demo Scene ]':
+  - note: A sample of demo scene releases.
+  - Favorites:
+    - note: Awesome or somehow significant releases according to 1.000.000 BOYS aka Megaboys.
+    - 15YearsOfFame
+    - 3DDemo2
+    - A.S.S
+    - Arte
+    - BatmanVuelve
+    - BaygonAGA
+    - BrunosMusicBox3
+    - Coma
+    - CopperMaster
+    - Darkroom
+    - DayOfReckoning
+    - DesertDream
+    - Drugstore
+    - Enigma
+    - Extension
+    - FridayAtEightAGA
+    - FullmoonAGA
+    - Hardwired
+    - HisMastersNoise
+    - How2SkinACat
+    - HumanTarget
+    - Interference
+    - InTheKitchen
+    - JesusOnEs
+    - KanaalinarVoitus
+    - Lemon-Colombia
+    - LostWorld
+    - MajorRelease
+    - MaximumVelocity
+    - Megademo2Rebels
+    - MegademoAvenger
+    - MegademoBeastieBoys
+    - MegademoBudbrain
+    - MegademoDeathstar
+    - MegademoJoy&MGF&TJC
+    - MegademoNorthStar
+    - MegademoRedSectorInc
+    - MegademoRoyalAmigaForce
+    - MentalHangover
+    - MotionAGA
+    - MusicDisk3DMob
+    - Nexus7AGA
+    - NumbAGA
+    - PlanetMAGA
+    - PlasticPassion
+    - Punisher--Punisher
+    - RinkADinkRedux
+    - Roots2AGA
+    - Sequential
+    - SOS--SOS
+    - Spaceballs-Emperor
+    - Spaceballs-Makt
+    - [Spaceballs-Peek, "3D glasses (red-blue) recommended!"]
+    - Stateline
+    - TechnologicalDeath
+    - TechTech
+    - TEK-FutureOfLimits
+    - TerminalFuckup
+    - WorldOfCommodore

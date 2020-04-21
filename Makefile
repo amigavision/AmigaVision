@@ -15,7 +15,7 @@ index:
 	@pipenv run ./ags_index.py -v
 
 image:
-	@pipenv run ./ags_build.py -v -c configs/MegaAGS.yaml --all_games -d data/extra_dirs/Music::DH2 -o ~/Temp/AGSImager
+	@pipenv run ./ags_build.py -v -c configs/MegaAGS.yaml --all_games --all_demos -d data/extra_dirs/Music::DH2 -o ~/Temp/AGSImager
 
 image-ntsc:
 	@pipenv run ./ags_build.py -v -c configs/MegaAGS.yaml --all_games --force_ntsc -d data/extra_dirs/Music::DH2 -o ~/Temp/AGSImager
