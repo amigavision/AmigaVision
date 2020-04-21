@@ -213,7 +213,7 @@ def ags_fix_filename(name):
     return name
 
 
-def ags_create_entry(name, entry, path, note, rank, only_script=False):
+def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=None):
     max_w = AGS_LIST_WIDTH
 
     # fix path name
@@ -223,6 +223,8 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False):
 
     # base name
     title = rank + ". " if rank else ""
+    if prefix:
+        title = prefix + " - " + title
 
     if note and note == "not_available":
         title += ags_fix_filename(name.replace("-", " "))
@@ -238,7 +240,10 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False):
     # prevent name clash
     title = title.strip()
     if util.is_file(os.path.join(path, title) + ".run"):
-        title += " (" + entry["hardware"].replace("/ECS", "") + ")"
+        if entry["category"] == "Demo":
+            title += " (" + entry["publisher"] + ")"
+        else:
+            title += " (" + entry["hardware"].replace("/ECS", "") + ")"
         if only_script:
             title = title.replace(" ", "_")
     if len(title) > max_w:
@@ -346,6 +351,9 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
 
 def ags_create_autoentries():
     path = get_ags2_dir()
+    d_path = get_ags2_dir()
+    if util.is_dir(os.path.join(path, "[ Demo Scene ].ags")):
+        d_path = os.path.join(path, "[ Demo Scene ].ags")
     for _, value in g_entries.items():
         letter = value["title_short"][0].upper()
         if letter.isnumeric():
@@ -357,8 +365,15 @@ def ags_create_autoentries():
             ags_create_entry(None, value, os.path.join(path, "[ All Games ].ags", letter + ".ags"), None, None)
             ags_create_entry(None, value, os.path.join(path, "[ All Games, by year ].ags", year + ".ags"), None, None)
         if g_args.all_demos and value["category"].lower() == "demo":
-            ags_create_entry(None, value, os.path.join(path, "[ All Demos ].ags", letter + ".ags"), None, None)
-            ags_create_entry(None, value, os.path.join(path, "[ All Demos, by year ].ags", year + ".ags"), None, None)
+            group = value["publisher"]
+            if not group:
+                continue
+            if group.startswith("The "):
+                group = group[4:]
+            group_letter = group[0].upper()
+            ags_create_entry(None, value, os.path.join(d_path, "[ Demos by title ].ags", letter + ".ags"), None, None)
+            ags_create_entry(None, value, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=group)
+            ags_create_entry(None, value, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
         if value["category"].lower() == "game" and not value["issues"]:
             ags_create_entry(None, value, os.path.join(path, "Run"), None, None, True)
         if value["issues"]:
@@ -368,10 +383,12 @@ def ags_create_autoentries():
         open(os.path.join(path, "[ All Games ].txt"), mode="w", encoding="latin-1").write("Browse all games alphabetically.")
     if util.is_dir(os.path.join(path, "[ All Games, by year ].ags")):
         open(os.path.join(path, "[ All Games, by year ].txt"), mode="w", encoding="latin-1").write("Browse all games by release year.")
-    if util.is_dir(os.path.join(path, "[ All Demos ].ags")):
-        open(os.path.join(path, "[ All Demos ].txt"), mode="w", encoding="latin-1").write("Browse all demos alphabetically.")
-    if util.is_dir(os.path.join(path, "[ All Demos, by year ].ags")):
-        open(os.path.join(path, "[ All Demos, by year ].txt"), mode="w", encoding="latin-1").write("Browse all demos by release year.")
+    if util.is_dir(os.path.join(d_path, "[ Demos by title ].ags")):
+        open(os.path.join(d_path, "[ Demos by title ].txt"), mode="w", encoding="latin-1").write("Browse all available demos by release title.")
+    if util.is_dir(os.path.join(d_path, "[ Demos by group ].ags")):
+        open(os.path.join(d_path, "[ Demos by group ].txt"), mode="w", encoding="latin-1").write("Browse all available demos by group.")
+    if util.is_dir(os.path.join(d_path, "[ Demos by year ].ags")):
+        open(os.path.join(d_path, "[ Demos by year ].txt"), mode="w", encoding="latin-1").write("Browse all available demos by release year.")
     if util.is_dir(os.path.join(path, "[ Issues ].ags")):
         open(os.path.join(path, "[ Issues ].txt"), mode="w", encoding="latin-1").write(
             "Titles with known issues on Minimig-AGA.\n(Please report any new or resolved issues!)")
@@ -410,6 +427,9 @@ def ags_add_all(category):
     for r in g_db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
         entry, preferred_entry = get_entry(r["id"])
         if entry:
+            if category == "Demo":
+                if entry["subcategory"] == "Musicdisk" or entry["subcategory"] == "Slideshow" or entry["subcategory"] == "Invitation":
+                    continue
             if g_args.all_versions:
                 g_entries[entry["id"]] = entry
             elif g_args.ecs is False:
