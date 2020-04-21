@@ -434,7 +434,7 @@
     - DeluxeGalaga
     - Lionheart
     - Napalm: not_available
-    - Wasted-Dreams: not_available
+    - WastedDreams
     - Genetic-Species: not_available
     - Perihelion
     - ArabianNights
@@ -638,7 +638,7 @@
     - PacificIslands
     - RoboCop3
     - Apocalypse
-    - Statix: not_available
+    - Statix
     - StormMaster
     - Shadowlands
     - Blob
@@ -2092,6 +2092,7 @@
     - PipeDream
     - PushOver
     - SpringTime
+    - Statix
     - SuperSkweek
     - SuperTwintris
     - TetrisPro

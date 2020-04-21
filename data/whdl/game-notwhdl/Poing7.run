@@ -6,4 +6,4 @@ EndIF
 assign POING: WHDSaves:poing7
 cd WHD:N/Poing7
 poing
-assign POING: DISMOUNT
+assign POING: remove

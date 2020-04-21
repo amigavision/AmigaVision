@@ -1,0 +1,7 @@
+cd WHD:N/Statix
+assign STX: ""
+FailAt 61
+Statix_Intro
+Statix_Final
+assign STX: remove
+FailAt 21
