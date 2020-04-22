@@ -1,0 +1,17 @@
+IF EXISTS WHDSaves:ChampMan93
+  copy WHDSaves:ChampMan93/#? WHD:N/ChampMan93 ALL QUIET
+EndIF
+cd WHD:N/ChampMan93
+ChampMan93
+ASK "Press enter to return to AGS..."
+IF WARN
+  Echo ""
+ELSE
+  Echo ""
+EndIF
+copy WHD:N/ChampMan93/hiscores#? WHDSaves:ChampMan93 ALL QUIET
+copy WHD:N/ChampMan93/clrecs#? WHDSaves:ChampMan93 ALL QUIET
+copy WHD:N/ChampMan93/mchfax#? WHDSaves:ChampMan93 ALL QUIET
+copy WHD:N/ChampMan93/mhst#? WHDSaves:ChampMan93 ALL QUIET
+copy WHD:N/ChampMan93/plhist#? WHDSaves:ChampMan93 ALL QUIET
+copy WHD:N/ChampMan93/svgame#? WHDSaves:ChampMan93 ALL QUIET

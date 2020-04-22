@@ -1,0 +1,9 @@
+IF EXISTS WHDSaves:USM
+  copy WHDSaves:USM/#? WHD:N/USM ALL CLONE QUIET
+EndIF
+cd WHD:N/USM
+Ultimate_Soccer_Manager
+copy WHD:N/USM/savegame#?.dat WHDSaves:USM ALL CLONE QUIET
+copy WHD:N/USM/#?.hst WHDSaves:USM ALL CLONE QUIET
+copy WHD:N/USM/#?.sve WHDSaves:USM ALL CLONE QUIET
+copy WHD:N/USM/#?.usr WHDSaves:USM ALL CLONE QUIET

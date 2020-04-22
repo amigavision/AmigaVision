@@ -1,6 +1,6 @@
 --- # AGS2 Menu structure
 - About:
-  - note: '\n\n\n\n\n\n             (MegaAGS v20200416)'
+  - note: '\n\n\n\n\n\n             (MegaAGS v20200422)'
   - Nothing to see here:
     - note: Intentionally left blank.
 - Best-of Lists:
@@ -471,7 +471,7 @@
     - Turrican2
     - Benefactor
     - Populous
-    - Ultimate-Soccer-Manager: not_available
+    - UltimateSoccerManager
     - Deflektor
     - ArcherMacLeansPool
     - Wings

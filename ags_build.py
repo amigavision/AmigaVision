@@ -375,9 +375,9 @@ def ags_create_autoentries():
             ags_create_entry(None, value, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=group)
             ags_create_entry(None, value, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
         if value["category"].lower() == "game" and not value["issues"]:
-            ags_create_entry(None, value, os.path.join(path, "Run"), None, None, True)
-        if value["issues"]:
-            ags_create_entry(None, value, os.path.join(path, "[ Issues ].ags"), None, None)
+            ags_create_entry(None, value, os.path.join(path, "Run"), None, None, only_script=True)
+        #if value["issues"]:
+        #    ags_create_entry(None, value, os.path.join(path, "[ Issues ].ags"), None, None)
 
     if util.is_dir(os.path.join(path, "[ All Games ].ags")):
         open(os.path.join(path, "[ All Games ].txt"), mode="w", encoding="latin-1").write("Browse all games alphabetically.")
@@ -472,7 +472,7 @@ def build_pfs(config_base_name, verbose):
     partitions = [] # (partition name, cylinders)
     for f in sorted(os.listdir(g_clone_dir)):
         if os.path.isdir(os.path.join(g_clone_dir, f)) and is_amiga_devicename(f):
-            mb_free = 30 if f == "DH0" else 10
+            mb_free = 50 if f == "DH0" else 50
             cyls = int(fs_overhead * (util.get_dir_size(os.path.join(g_clone_dir, f), block_size)[2] + (mb_free * 1024 * 1024))) // cylinder_size
             partitions.append(("DH" + str(len(partitions)), cyls))
             total_cyls += cyls
