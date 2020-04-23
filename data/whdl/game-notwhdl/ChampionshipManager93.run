@@ -1,9 +1,11 @@
 IF EXISTS WHDSaves:ChampMan93
   copy WHDSaves:ChampMan93/#? WHD:N/ChampMan93 ALL QUIET
+  delete WHDSaves:ChampMan93/#? ALL FORCE QUIET
 EndIF
 cd WHD:N/ChampMan93
 ChampMan93
-ASK "Press enter to return to AGS..."
+WAIT 3
+ASK "Thank you for playing! Press enter continue..."
 IF WARN
   Echo ""
 ELSE
