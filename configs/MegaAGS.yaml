@@ -20,7 +20,7 @@
     - MonkeyIsland2
     - SensibleWorldOfSoccer
     - Flashback
-    - Speedball2NTSC
+    - Speedball2
     - DesertStrike
     - Fire&Ice
     - FirstSamurai
@@ -742,7 +742,7 @@
     - Blob
     - BrianTheLion
     - CardiaxxTeam17
-    - ChaosEngine2AGA
+    - ChaosEngine2
     - CrazySueGoesOn
     - Cyberpunks
     - Cytron
@@ -750,7 +750,7 @@
     - Datastorm
     - DisposableHero
     - DojoDan
-    - EbonstarNTSC
+    - Ebonstar
     - Elfmania
     - FA18Interceptor
     - FinalCountdown
@@ -884,7 +884,7 @@
     - CapitalPunishment
     - CedricCD32
     - ChaosEngineCD32
-    - ChaosEngine2AGA
+    - ChaosEngine2
     - ChaseHQ2
     - ChuckRock
     - ChuckRock2
@@ -1303,28 +1303,28 @@
     - Settlers
     - Silkworm
     - SlamTiltAGA2MB
-    - Speedball2NTSC
+    - Speedball2
     - SuperCars2
     - SuperSkidmarksCD32
     - SWIV
     - Twintris
     - Worms2MB
-    - WormsDCAGA12MB
+    - Worms
 
   - Competetive:
     - 3DWorldTennis
     - 4DSportsBoxing
     - 4th&Inches
-    - ABCMondayNightFBNTSC
+    - ABCMondayNightFB
     - Adrenalynn
     - AdvancedSkiSimulator
     - AdvantageTennis
     - AllanBordersCricket
     - AllTerrainRacing
     - AmericanTagTeamWrestling
-    - AmigaKarateNTSC
-    - Archon2NTSC
-    - ArchonNTSC
+    - AmigaKarate
+    - Archon2
+    - Archon
     - AtomSmasher
     - BadLands
     - Ballistix
@@ -1381,7 +1381,7 @@
     - DoubleDribble
     - DrMario
     - DynaBlaster
-    - EbonstarNTSC
+    - Ebonstar
     - Elfmania
     - EmlynHughesIntlSoccer
     - EMotion
@@ -1399,7 +1399,7 @@
     - FaceOff
     - FastBreak
     - FIFAInternationalSoccer
-    - FightingSoccerNTSC
+    - FightingSoccer
     - FightinSpiritAGA
     - FinalBlow
     - Fire&Forget
@@ -1419,7 +1419,7 @@
     - GrahamGoochWCCricketSE
     - Gridiron
     - HardBall
-    - HardBall2NTSC
+    - HardBall2
     - HeartOfTheDragon4Disk
     - Historyline
     - HotRod
@@ -1457,7 +1457,7 @@
     - LabyrinthDetNyeCOMputerDk
     - LamborghiniAmericanChllng
     - LastDuel
-    - LemmingsImageNTSC
+    - Lemmings
     - Limes&Napoleon
     - Loopz
     - LordsOfWar
@@ -1489,18 +1489,18 @@
     - MortalKombat22MB
     - MrMenOlympics
     - MUDS
-    - NitroNTSC
+    - Nitro
     - NoExit
-    - NorthAndSouthImageNTSC
-    - OhNoMoreLemmingsNTSC
+    - NorthAndSouth
+    - OhNoMoreLemmings
     - Oktagon
-    - OneOnOneNTSC
+    - OneOnOne
     - OperationCombat2
     - OrientalGames
-    - OverTheNetNTSC
+    - OverTheNet
     - PanzaKickBoxing
     - PassingShot
-    - PeterBeardsleysIFNTSC
+    - PeterBeardsleysIF
     - PharaohsMatchArcadia
     - PitFighter
     - PlayerManager2ExtraAGA
@@ -1544,8 +1544,8 @@
     - Sliders
     - Sneech
     - Spaceball
-    - Speedball2NTSC
-    - SpeedballNTSC
+    - Speedball2
+    - Speedball
     - SpittingImage
     - SpyVsSpy
     - SpyVsSpy2TheIslandCaper
@@ -1555,14 +1555,14 @@
     - StreetFighter
     - StreetFighter2
     - StreetRacerCD32
-    - StreetSportsBBNTSC
+    - StreetSportsBB
     - Striker
     - Subtrade
     - SuperCars2
     - SuperGrandPrix
     - SuperLoopzAGA
-    - SuperOffRoadNTSC
-    - SuperOsWALDDk
+    - SuperOffRoad
+    - SuperOsWALD
     - SuperSkidmarksCD32
     - SuperstarIceHockey
     - SuperStreetFighter2AGA
@@ -1580,7 +1580,7 @@
     - ThomasTheTankEngine2
     - TieBreak
     - TimeLock
-    - TipOffNTSC
+    - TipOff
     - TomLandryFootballDeluxe
     - Toobin
     - TopGear2AGA
@@ -1626,7 +1626,7 @@
     - AlienBreedSpecialEdition
     - AlienBreedTAAGA
     - AlienStorm
-    - AlienSyndromeNTSC
+    - AlienSyndrome
     - AlloAllo
     - AlphaWaves
     - AlteredBeast
@@ -1636,14 +1636,14 @@
     - AuntArcticAdventure
     - AztecChallenge
     - BadCompany
-    - BadDudesNTSC
+    - BadDudes
     - Bagitman
     - BansheeAGA
     - BaseJumpers
-    - BattleSquadronNTSC
+    - BattleSquadron
     - Battletoads
     - BeastBusters
-    - BetterDeadThanAlienNTSC
+    - BetterDeadThanAlien
     - BlackShadow
     - Blasteroids
     - BlockShock
@@ -1653,7 +1653,7 @@
     - BluesBrothers
     - BonanzaBros
     - BridesOfDracula
-    - BubbleBobbleNTSC
+    - BubbleBobble
     - Cabal
     - CaptainFizz
     - Carcharodon
@@ -1677,7 +1677,7 @@
     - DogsOfWar
     - DonkTheSamuraiDuckAGA
     - DoubleDragon
-    - DoubleDragon2NTSC
+    - DoubleDragon2
     - DoubleDragon3
     - DynamiteDux
     - DynastyWars
@@ -1700,7 +1700,7 @@
     - Gauntlet2
     - Gauntlet3
     - GeminiWing
-    - GoldenAxeNTSC
+    - GoldenAxe
     - HeavyMetalHeroes
     - HellRaisers
     - HelterSkelter
@@ -1729,7 +1729,7 @@
     - Pang
     - ParasolStars
     - Phobia
-    - PipeDreamNTSC
+    - PipeDream
     - Pixie&Dixie
     - POW
     - Power
@@ -1740,7 +1740,7 @@
     - RealPopeye
     - Rebellion
     - Renegades
-    - RevengeOfMutantCamelsNTSC
+    - RevengeOfMutantCamels
     - RodLand
     - RollerCoasterRumbler
     - ScrambleSpirits
@@ -1758,7 +1758,7 @@
     - SuperCFast
     - SuperMethaneBros
     - SuperSkweek1MB
-    - SuperSpaceInvadersNTSC
+    - SuperSpaceInvaders
     - SWIV
     - SwordsOfTwilight
     - TeenageMtntHeroTurtlesCOp
@@ -1788,15 +1788,15 @@
     - AlienBreed3D2AGA
     - AlienBreed3DAGA
     - ArmourGeddon2
-    - ArmourGeddonNTSC
+    - ArmourGeddon
     - BattleChess
-    - BlueAngelsNTSC
+    - BlueAngels
     - CombatAirPatrol
     - Dominium
     - F16CombatPilot
-    - Falcon&MissionDisksNTSC
+    - Falcon&MissionDisks
     - FearsAGA
-    - FighterDuelProNTSC
+    - FighterDuelPro
     - Firepower
     - FlightSimulator2
     - FlightSimulator2&Hawaiian
@@ -1861,11 +1861,11 @@
     - CastleWarrior
     - CelticLegends
     - Chessmaster2000
-    - Chessmaster2100NTSC
+    - Chessmaster2100
     - ChessPlayer2150
     - ChessSimulator
     - ClassicBoardGames
-    - ClueMasterDetectiveNTSC
+    - ClueMasterDetective
     - ColossusChessX
     - ComputerScrabble
     - ComputerThirdReich
@@ -1879,7 +1879,7 @@
     - Eye
     - FiendishFreddysBigTopOFun
     - FractionAction
-    - FullMetalPlaneteImageNTSC
+    - FullMetalPlanete
     - GamesSummerEdition
     - GamesWinterEdition
     - Gettysburg
@@ -1894,12 +1894,12 @@
     - JockyWilsonsDartChallenge
     - JohnLowesUltimateDarts
     - Kingpin1Mb
-    - LaserSquadNTSC
+    - LaserSquad
     - LeaderBoard
     - LeaderBoardArcadia
     - LeaderBoardTD1
     - LegendOfRagnarok
-    - Links&DataDisksNTSC
+    - Links&DataDisks
     - LordsOfChaos&DataDisk
     - LordsOfTheRealm
     - MathWizard
@@ -1910,16 +1910,16 @@
     - MultiPlayerSoccerManager
     - NickFaldosChampGolf
     - Obsession
-    - OgreNTSC
+    - Ogre
     - OilImperium
     - Patrician
-    - PGAEuropeanTourAGA
+    - PGAEuropeanTour
     - PGATourGolf&TourDisk
     - PinballDreams
-    - PinballFntsiesAGA
-    - PinballIllusionsAGA
+    - PinballFntsies
+    - PinballIllusions
     - PinballMagic
-    - PinballManiaAGA
+    - PinballMania
     - PinballWizard
     - PlayerManager2
     - Pool
@@ -1934,7 +1934,7 @@
     - QuestionOfSport
     - QuiksilverPinball
     - Read&Rhyme
-    - RedLightningNTSC
+    - RedLightning
     - Revelation
     - Risk
     - RoboSport
@@ -1942,8 +1942,8 @@
     - Saint&Greavsie
     - Scrabble
     - SensibleGolf
-    - ShanghaiNTSC
-    - SlamTiltAGA2MB
+    - Shanghai
+    - SlamTilt
     - SpaceCrusade&VoyageBeyond
     - SpaceCrusade&VoyageBeyond--VoyageBeyond
     - SteelEmpire
@@ -1973,14 +1973,14 @@
     - WinterOlympics
     - WinterSupersports92
     - Winzer
-    - WorldGamesNTSC
+    - WorldGames
     - WorldTourGolf
-    - Worms2MB
-    - WormsDCAGA12MB
-    - ZanyGolfNTSC
+    - Worms
+    - WormsDC
+    - ZanyGolf
 
 - TEN x TEN:
-  - note: 10 games for every year between 1986 and 1995, with a focus on (mostly) quality titles that represent their time and place.\n\n(While the Amiga computer premiered mid-1985, it was manufactured in very small quantities and saw mostly art & productivity software releases.)
+  - note: 10 games for every year between 1986 and 1995, with the goal of giving a vertical slice of what was available at the time.\n\n(While the Amiga computer premiered mid-1985, hardware and software availability was very limited for the first months.)
   - "1986":
     - BardsTale
     - Brataccas
@@ -2070,9 +2070,9 @@
     - Walker
     - WizNLiz
   - "1994":
+    - Banshee
     - BeneathAStlSky
     - BubbaNStix
-    - ChaosEngine
     - DarkMere
     - DisposableHero
     - DreamWeb
@@ -2225,7 +2225,7 @@
     - BadLands
     - Carnage
     - IndyHeat
-    - NitroNTSC
+    - Nitro
     - Skidmarks
     - SuperCars2
     - SuperSkidmarks
@@ -2336,7 +2336,7 @@
       - GhoulsNGhosts
       - LEDStorm
       - Puzznic
-      - QixNTSC
+      - Qix
       - Renegade
       - SlySpySecretAgent
   - Assembly Line, The:
@@ -2359,7 +2359,7 @@
     - Cadaver
     - CadaverThePayoff
     - ChaosEngine
-    - ChaosEngine2AGA
+    - ChaosEngine2
     - Gods
     - MagicPockets
     - Speedball
