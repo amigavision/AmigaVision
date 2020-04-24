@@ -11,6 +11,7 @@
 # NTSC: 5, 11, 5
 
 import argparse
+import operator
 import os
 import shutil
 import subprocess
@@ -354,28 +355,30 @@ def ags_create_autoentries():
     d_path = get_ags2_dir()
     if util.is_dir(os.path.join(path, "[ Demo Scene ].ags")):
         d_path = os.path.join(path, "[ Demo Scene ].ags")
-    for _, value in g_entries.items():
-        letter = value["title_short"][0].upper()
+    for entry in sorted(g_entries.values(), key=operator.itemgetter("title")):
+        letter = entry["title_short"][0].upper()
         if letter.isnumeric():
             letter = "0-9"
-        year = value["year"]
+        year = entry["year"]
         if "x" in year.lower():
             year = "Unknown"
-        if value["category"].lower() == "game":
-            ags_create_entry(None, value, os.path.join(path, "[ All Games ].ags", letter + ".ags"), None, None)
-            ags_create_entry(None, value, os.path.join(path, "[ All Games, by year ].ags", year + ".ags"), None, None)
-        if g_args.all_demos and value["category"].lower() == "demo":
-            group = value["publisher"]
+        if entry["category"].lower() == "game":
+            ags_create_entry(None, entry, os.path.join(path, "[ All Games ].ags", letter + ".ags"), None, None)
+            ags_create_entry(None, entry, os.path.join(path, "[ All Games, by year ].ags", year + ".ags"), None, None)
+        if g_args.all_demos and entry["category"].lower() == "demo":
+            group = entry["publisher"]
             if not group:
                 continue
             if group.startswith("The "):
                 group = group[4:]
+            group = group[:AGS_LIST_WIDTH]
             group_letter = group[0].upper()
-            ags_create_entry(None, value, os.path.join(d_path, "[ Demos by title ].ags", letter + ".ags"), None, None)
-            ags_create_entry(None, value, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=group)
-            ags_create_entry(None, value, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
-        if value["category"].lower() == "game" and not value["issues"]:
-            ags_create_entry(None, value, os.path.join(path, "Run"), None, None, only_script=True)
+            ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by title ].ags", letter + ".ags"), None, None)
+            #ags_create_entry(None, value, os.path.join(d_path, "[ Demos by group ].ags", group + ".ags"), None, None)
+            ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=group)
+            ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
+        if entry["category"].lower() == "game" and not entry["issues"]:
+            ags_create_entry(None, entry, os.path.join(path, "Run"), None, None, only_script=True)
         #if value["issues"]:
         #    ags_create_entry(None, value, os.path.join(path, "[ Issues ].ags"), None, None)
 
