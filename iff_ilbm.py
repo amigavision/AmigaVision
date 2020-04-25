@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-# Packbit codec based on packbits.py by Mikhail Korobov (https://github.com/kmike/packbits)
 # IFF ILBM encoder based on imgtoiff.py by Per Olofsson (https://github.com/MagerValp/ArcadeGameSelector)
 
 import array
@@ -8,98 +7,39 @@ import enum
 import math
 import struct
 import sys
+from itertools import groupby
 
 # -----------------------------------------------------------------------------
-# Packbits codec
-
-def packbits_decode(data):
-    data = bytearray(data)
-    result = bytearray()
-    pos = 0
-
-    while pos < len(data):
-        header_byte = data[pos]
-        if header_byte > 127:
-            header_byte -= 256
-        pos += 1
-
-        if 0 <= header_byte <= 127:
-            result.extend(data[pos:pos + header_byte + 1])
-            pos += header_byte + 1
-        elif header_byte == -128:
-            pass
-        else:
-            result.extend([data[pos]] * (1 - header_byte))
-            pos += 1
-
-    return bytes(result)
-
-def packbits_encode(data):
-    class State(enum.Enum):
-        RAW = 0
-        RLE = 1
-
-    MAX_LENGTH = 127
-
-    if len(data) == 0:
-        return bytes(b'')
-    if len(data) == 1:
-        return bytes(b'\x00' + data)
-
-    data = bytearray(data)
-    result = bytearray()
-    buf = bytearray()
-    pos = 0
-    rep = 0
-    state = State.RAW
-
-    def raw_end():
-        if len(buf) == 0: return
-        result.append(len(buf) - 1)
-        result.extend(buf)
-        buf[:] = bytearray()
-
-    def rle_end():
-        result.append(256 - (rep - 1))
-        result.append(data[pos])
-
-    while pos < len(data)-1:
-        current_byte = data[pos]
-        if data[pos] == data[pos + 1]:
-            if state == State.RAW:
-                raw_end()
-                state = State.RLE
-                rep = 1
-            elif state == State.RLE:
-                if rep == MAX_LENGTH:
-                    rle_end()
-                    rep = 0
-                rep += 1
-        else:
-            if state == State.RLE:
-                rep += 1
-                rle_end()
-                state = State.RAW
-                rep = 0
-            elif state == State.RAW:
-                if len(buf) == MAX_LENGTH:
-                    raw_end()
-                buf.append(current_byte)
-        pos += 1
-
-    if state == State.RAW:
-        buf.append(data[pos])
-        raw_end()
-    else:
-        rep += 1
-        rle_end()
-    return bytes(result)
-
-# -----------------------------------------------------------------------------
-# IFF ILMB encoder
 
 def next_pow2(n):
     return int(math.pow(2, math.ceil(math.log(n) / math.log(2))))
+
+def packbits(data):
+    max_size = 127
+    out = bytes()
+    lit = bytes()
+
+    def block_sizes(length, max):
+        return [max] * divmod(length,max)[0] + [divmod(length,max)[1]]
+
+    def lit_end():
+        nonlocal out, lit
+        for i, s in enumerate(block_sizes(len(lit), max_size)):
+            if not s: continue
+            out += struct.pack("b", s - 1)
+            out += lit[i * max_size:i * max_size + max_size]
+        lit = bytes()
+
+    for length, value in [(len(list(g)), struct.pack("B", k)) for k, g in groupby(bytearray(data))]:
+        if length == 1:
+            lit += value
+        else:
+            lit_end()
+            for s in  block_sizes(length, max_size):
+                out += struct.pack("b", 1 - s)
+                out += value
+    lit_end()
+    return out
 
 def chunk(id, *data):
     id = bytes("{0:<4}".format(id[0:4]).encode("ascii"))
@@ -175,7 +115,7 @@ def ilbm(width, height, pixels, palette, mode=0x29000, pack=1):
         if pack == 0:
             body_data += r
         else:
-            body_data += packbits_encode(r)
+            body_data += packbits(r)
 
     return chunk("FORM", "ILBM".encode("ascii"), bmhd, cmap, camg, chunk("BODY", body_data))
 
