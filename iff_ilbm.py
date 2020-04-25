@@ -20,7 +20,7 @@ def packbits(data):
     lit = bytes()
 
     def block_sizes(length, max):
-        return [max] * divmod(length,max)[0] + [divmod(length,max)[1]]
+        return [max] * (length // max) + [length % max]
 
     def lit_end():
         nonlocal out, lit
