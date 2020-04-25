@@ -4,7 +4,7 @@ MegaAGS for Minimig-AGA_MiSTer
 Setup:
 ------
 - Copy MegaAGS.hdf, MegaAGS-Saves.hdf and MegaAGS-Kickstart.rom from the
-  games/Amiga directory to the corresponding directory on MiSTer.
+  Amiga directory to /games/Amiga the corresponding directory on MiSTer.
 
 - When updating to a new version of the main HDF image, keep your old
   MegaAGS-Saves.hdf so any saved games are carried over.
@@ -13,13 +13,15 @@ Setup:
   directory on MiSTer. It contains viewport cropping settings to make nice
   5x (NTSC) and 4x (PAL) scaling ratios for 1080p output resolution possible.
 
-- To make NTSC resolutions scale properly, you need to use 0.5x scale mode.
-  If this is not already your default, add the following to your `MiSTer.ini`
-  file:
+- Add the following core overrides to MiSTer.ini (these settings are further
+  explained in the "Video Modes" paragraph):
 
-  [Minimig]
+  [minimig]
+  video_mode_ntsc=8
+  video_mode_pal=9
   vscale_mode=2
-   
+  vsync_adjust=2
+
 - Either copy minimig.cfg from the config directory to the corresponding
   directory on MiSTer, or load the Minimig core and set up a profile with the
   following settings:
@@ -80,30 +82,31 @@ Thank you for playing!
 Video Modes:
 ------------
 Since many Amiga games only run properly at a 50Hz vertical refresh rate,
-make sure to have both NTSC and PAL video mode set up.
+it's important to have both NTSC and PAL video modes set up in MiSTer.ini.
 
-To set up 1080p output with 50/60Hz presets, add these platform overrides
-to MiSTer.ini. Depending on how well your display deals with slightly
-off-spec refresh frequencies and frequent mode changes you may want to
-experiment with setting vsync_adjust to 1 or 0.
+Another idiosyncracy with the Minimig core is viewport cropping. By default
+the full overscan area will be fed to the HDMI scaler, resulting in huge
+borders. Fear not! Also supplied is a minimig_vadjust.dat settings file, which
+contains crop settings for all the common resolutions. With this file copied
+to the /config directory, regular NTSC and PAL resolutions will be output at
+216 and 270 lines respectively, thus being perfectly suited for integer
+scaling at a 1080p output resolution.
+
+To also make interlaced resolutions fill the screen, however, you still need
+to enable 0.5x scale mode. In summary, these are the recommended MiSTer.ini
+settings:
 
 ```
 [minimig]
 video_mode_ntsc=8
 video_mode_pal=9
+vscale_mode=2
 vsync_adjust=2
 ```
 
-Also supplied is a minimig_vadjust.dat settings file, which contains crop
-settings for the most common resolutions. We tried to find a good compromise
-between small borders (while providing decent enough overscan for most games
-not to cut content) and a nice scaling ratio at 1080p.
-Copy the file into "/media/fat/config".
-
-The menu will boot up in PAL mode and then change video modes depending on
-the game selected. So, how you configure the video system in the OSD settings
-doesn't matter but PAL is recommended since it will minimize the number of
-video mode switches at boot.
+Depending on how well your display deals with slightly off-spec refresh
+frequencies and frequent mode changes you may need to experiment with setting
+vsync_adjust to 1 or 0, instead of the ideal setting of 2.
 
 
 Save files:
@@ -118,15 +121,11 @@ which if set will override the preconfigured (per-title) key.
 
 Non-working games:
 ------------------
-About 25-30 games are currently (2020-04-14) not working due to CPU features
-not yet implemented in the Minimig core. Over the past year compatibility has
-improved a lot, and that trend is likely to continue. A few more titles do not
-work, or are very glitchy, due to other inaccuracies. This will also hopefully
-improve over time.
-
-The menu has a special "[ Issues ]" folder where the non-working titles (known
-to us) are found. As more accurate versions of the Minimig core are released,
-this folder can work as checklist for improved game compatibility.
+About 20 games are currently not working due to CPU features not yet
+implemented in the Minimig core. Over the past year compatibility has improved
+a lot, and that trend is likely to continue. A few more titles do not work, or
+are very glitchy, due to other inaccuracies. This will also hopefully improve
+over time.
 
 
 Arcadia Systems:
