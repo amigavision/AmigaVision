@@ -926,12 +926,12 @@
     - KickOff3EuroChallenge
     - LeaderBoardArcadia
     - Leander
-    - LegendsAGA
+    - Legends
     - Lionheart
     - Lollypop
     - LostVikings
     - MagicJohnsonFstBrkArcadia
-    - MarvinsMarvellousAdvAGA
+    - MarvinsMarvellousAdv
     - MeanArenas
     - MegaTwins
     - MegaTyphoon
@@ -945,7 +945,7 @@
     - NinjaMissionArcadia
     - NinjaWarriors
     - NorthAndSouth
-    - OscarAGA
+    - Oscar
     - Pegasus
     - PharaohsMatchArcadia
     - Premiere
@@ -983,6 +983,8 @@
     - StarRay
     - StormLord
     - StreetFighter2
+    - StreetRacer
+    - SuperCauldron
     - SuperFrog
     - SuperSkidmarks
     - SuperStardust
@@ -1012,7 +1014,7 @@
     - XenonArcadia
     - XOut
     - XP8
-    - XtremeRacing&DataDisksAGA
+    - XtremeRacing
     - YoJoe
     - Ziriax
     - Zool
@@ -1284,13 +1286,13 @@
   - note: Lists of games for more than one player.
   - Best of Multiplayer:
     - note: Our top picks for multiplayer action.
-    - BattleIsle&DataDisks
+    - BattleIsle
     - ChaosEngine
     - DogsOfWar
     - DynaBlaster
-    - HiredGuns1MB
+    - HiredGuns
     - Historyline
-    - JaguarXJ220Image
+    - JaguarXJ220
     - Lotus
     - Moonstone
     - OilImperium
@@ -1302,10 +1304,10 @@
     - SensibleWorldOfSoccer9596
     - Settlers
     - Silkworm
-    - SlamTiltAGA2MB
+    - SlamTilt
     - Speedball2
     - SuperCars2
-    - SuperSkidmarksCD32
+    - SuperSkidmarks
     - SWIV
     - Twintris
     - Worms2MB
@@ -1341,23 +1343,24 @@
     - BlastaBallArcadia
     - BlueMax
     - BMXSimulator
-    - BodyBlowsAGA
-    - BodyBlowsGalacticAGA
+    - BodyBlows
+    - BodyBlowsGalactic
     - BombX
+    - Boppin
     - Botics
     - BrainBlasters
     - BrainMan
     - BrandsHatch
     - BrianLarasCricket
     - BrianLarasCricket96
-    - BrutalFootballAGA
+    - BrutalFootball
     - BrutalHomicide
     - BrutalPawsOfFury
     - Budokan
     - BugBomber
-    - BumpNBurnCD32
-    - BurnoutAGA
-    - CapitalPunishmentAGA
+    - BumpNBurn
+    - Burnout
+    - CapitalPunishment
     - Carnage
     - ChambersOfShaolin
     - Champ
@@ -1370,7 +1373,7 @@
     - CruncherFactory
     - Cyberball
     - CyberGames
-    - DangerousStreetsAGA
+    - DangerousStreets
     - DarkCentury
     - DaysOfThunder
     - Disc
@@ -1400,12 +1403,11 @@
     - FastBreak
     - FIFAInternationalSoccer
     - FightingSoccer
-    - FightinSpiritAGA
+    - FightinSpirit
     - FinalBlow
     - Fire&Forget
     - Firepower
     - FistFighter
-    - FrancoBaresiWorldCupIt
     - FullContact
     - FutureBasketball
     - FutureClassicsCollection
@@ -1420,7 +1422,7 @@
     - Gridiron
     - HardBall
     - HardBall2
-    - HeartOfTheDragon4Disk
+    - HeartOfTheDragon
     - Historyline
     - HotRod
     - HotRubber
@@ -1464,12 +1466,11 @@
     - Lotus
     - Lotus2
     - Lotus3
-    - MagicJohnsonFstBrkArcadia
     - MagicJohnsonsBasketball
     - ManchesterUnited
-    - ManchesterUnitedEurope23
+    - ManchesterUnitedEurope
     - ManchesterUnitedTheDouble
-    - ManchesterUtdPLC&Data
+    - ManchesterUnitedPLC
     - Manix
     - MarbleMadness
     - MasterAxe
@@ -1486,7 +1487,7 @@
     - MinskiesAGA
     - Moonstone
     - MortalKombat
-    - MortalKombat22MB
+    - MortalKombat2
     - MrMenOlympics
     - MUDS
     - Nitro
@@ -1503,31 +1504,31 @@
     - PeterBeardsleysIF
     - PharaohsMatchArcadia
     - PitFighter
-    - PlayerManager2ExtraAGA
+    - PlayerManager2Extra
     - Plotting
     - Pod
     - Pong
-    - PrimalRageAGA
+    - PrimalRage
     - ProBoxingSimulator
     - Projectyle
     - ProPowerBoatSimulator
     - ProSoccer2190
-    - ProTennisSimulatorImage
+    - ProTennisSimulator
     - RallyCrossChallenge
     - Rampart
     - RBI2Baseball
     - Ringside
-    - RiseOfTheRobotsAGA
+    - RiseOfTheRobots
     - RoadWarsArcadia
     - RockChallenge
     - RoketzAGA
     - RugbyTheWorldCup
     - Rushhour
     - SalmonPinkMax
-    - SensibleSoccer1MB
-    - SensibleSoccer92931MB
+    - SensibleSoccer
+    - SensibleSoccer9293
     - SensibleSoccerBulldogBlty
-    - SensibleSoccerIntEd1MB
+    - SensibleSoccerIntEd
     - SensibleWorldMoonSoccer
     - SensibleWorldOfSoccer11
     - SensibleWorldOfSoccer9596
@@ -1535,10 +1536,10 @@
     - SensibleWorldOfSoccerEuro
     - SensibleWorldOfSoccerWC98
     - Settlers
-    - ShadowFighterCD32
+    - ShadowFighter
     - ShadowWarriors
     - SierraSoccer
-    - SkidmarksAGA
+    - Skidmarks
     - SkiOrDie
     - SkyChase
     - Sliders
@@ -1554,21 +1555,21 @@
     - Stormball
     - StreetFighter
     - StreetFighter2
-    - StreetRacerCD32
+    - StreetRacer
     - StreetSportsBB
     - Striker
     - Subtrade
     - SuperCars2
     - SuperGrandPrix
-    - SuperLoopzAGA
+    - SuperLoopz
     - SuperOffRoad
     - SuperOsWALD
-    - SuperSkidmarksCD32
+    - SuperSkidmarks
     - SuperstarIceHockey
-    - SuperStreetFighter2AGA
+    - SuperStreetFighter2
     - SuperTwintris
-    - SuprStrtFtr2TrboAGA
-    - SuprTennisChmps&DataDisks
+    - SuprStrtFtr2Trbo
+    - SuprTennisChmps
     - TableHockeyArcadia
     - TableTennisSimulation
     - Taekwondo
@@ -1583,10 +1584,10 @@
     - TipOff
     - TomLandryFootballDeluxe
     - Toobin
-    - TopGear2AGA
+    - TopGear2
     - TotalFootball
     - Traders
-    - TubeWarriorsAGA
+    - TubeWarriors
     - Turbo
     - TurboRaketti2Fi
     - TurnNBurn
@@ -1603,7 +1604,7 @@
     - WayneGretzkyHockey
     - WayneGretzkyHockey2
     - WayOfTheLittleDragon
-    - WembleyIntSoccerAGA
+    - WembleyIntSoccer
     - WembleyRugbyLeague
     - WesternGames
     - WildCupSoccer
@@ -1622,9 +1623,9 @@
     - Zyconix
   - Cooperative:
     - Alcatraz
-    - AlienBreed2AGA
+    - AlienBreed2
     - AlienBreedSpecialEdition
-    - AlienBreedTAAGA
+    - AlienBreedTA
     - AlienStorm
     - AlienSyndrome
     - AlloAllo
@@ -1638,7 +1639,7 @@
     - BadCompany
     - BadDudes
     - Bagitman
-    - BansheeAGA
+    - Banshee
     - BaseJumpers
     - BattleSquadron
     - Battletoads
@@ -1648,8 +1649,7 @@
     - Blasteroids
     - BlockShock
     - BloodMoney
-    - Bloodwych&ExtendedLevels
-    - Bloodwych&ExtendedLevels--ExtendedLevels
+    - Bloodwych
     - BluesBrothers
     - BonanzaBros
     - BridesOfDracula
@@ -1658,7 +1658,7 @@
     - CaptainFizz
     - Carcharodon
     - ChaosEngine
-    - ChaosEngine2AGA
+    - ChaosEngine2
     - CJInTheUSA
     - CJsElephantAntics
     - CoolCrocTwins
@@ -1672,10 +1672,10 @@
     - DeathMaskAGA
     - DeathTrap
     - Deep
-    - DeluxeGalagaAGA
+    - DeluxeGalaga
     - DinoWars
     - DogsOfWar
-    - DonkTheSamuraiDuckAGA
+    - DonkTheSamuraiDuck
     - DoubleDragon
     - DoubleDragon2
     - DoubleDragon3
@@ -1704,14 +1704,14 @@
     - HeavyMetalHeroes
     - HellRaisers
     - HelterSkelter
-    - HiredGuns1MB
+    - HiredGuns
     - IkariWarriors
     - Joe&MacCavemanNinja
     - Kamikaze
     - Leatherneck
     - LethalXcess
     - LineOfFire
-    - Llamatron1MB
+    - Llamatron
     - LupoAlberto
     - MegaTwins
     - Mercs
@@ -1719,7 +1719,7 @@
     - Moochies
     - Narc
     - NaughtyOnes
-    - NewYorkWarriors1MB
+    - NewYorkWarriors
     - NinjaWarriors
     - Oath
     - OoopsUp
@@ -1744,9 +1744,9 @@
     - RodLand
     - RollerCoasterRumbler
     - ScrambleSpirits
-    - SecondSamuraiAGA
+    - SecondSamurai
     - Silkworm
-    - SkeletonKrewAGA
+    - SkeletonKrew
     - Skull&Crossbones
     - Slackskin&Flint
     - SmashTV
@@ -1754,29 +1754,29 @@
     - SpaceGun
     - SpellBound
     - Spherical
-    - StarushImage
+    - Starush
     - SuperCFast
     - SuperMethaneBros
-    - SuperSkweek1MB
+    - SuperSkweek
     - SuperSpaceInvaders
     - SWIV
     - SwordsOfTwilight
     - TeenageMtntHeroTurtlesCOp
     - Terminator2Arcade
-    - ThunderJawsImage
+    - ThunderJaws
     - TimeBandit
     - TinyTroops
     - TommyGun
-    - TotalCarnageAGA
+    - TotalCarnage
     - Transplant
     - Troddlers
-    - TubularWorldsAGA
+    - TubularWorlds
     - Ugh
     - UNSquadron
-    - Uridium22MB
-    - VirocopAGA
+    - Uridium2
+    - Virocop
     - WarZoneCoreDesign
-    - WatchtowerAGA
+    - Watchtower
     - Wizball
     - WizNLiz
     - Xenex
@@ -1785,8 +1785,8 @@
     - YoJoe
     - ZOut
   - Modem or Serial Link:
-    - AlienBreed3D2AGA
-    - AlienBreed3DAGA
+    - AlienBreed3D2
+    - AlienBreed3D
     - ArmourGeddon2
     - ArmourGeddon
     - BattleChess
@@ -1794,13 +1794,12 @@
     - CombatAirPatrol
     - Dominium
     - F16CombatPilot
-    - Falcon&MissionDisks
-    - FearsAGA
+    - Falcon
+    - Fears
     - FighterDuelPro
     - Firepower
     - FlightSimulator2
-    - FlightSimulator2&Hawaiian
-    - GloomAGA
+    - Gloom
     - GravityForce
     - Jet
     - Kikugi
@@ -1820,23 +1819,23 @@
     - Prince
     - RedBaron
     - RoboSport
-    - SkidmarksAGA
+    - Skidmarks
     - StuntCarRacer
-    - SuperSkidmarksCD32
-    - TornadoAGA
-    - TurboTraxArcane1MB
+    - SuperSkidmarks
+    - Tornado
+    - TurboTraxArcane
     - VroomMultiPlayer
     - WildWheels
-    - XTremeRacing&DataDisksAGA
+    - XTremeRacing
   - Taking Turns:
-    - 1869AGA
+    - "1869"
     - 3DPool
     - 7Colors
     - AmericanGladiators
     - Antago
     - AquaticGames
-    - ArcadePoolAGA
-    - ArcadeSnookerAGA
+    - ArcadePool
+    - ArcadeSnooker
     - ArcadeTriviaQuiz
     - ArcherMacLeansPool
     - Arena
@@ -1872,7 +1871,7 @@
     - CyberEmpires
     - DDayImpressions
     - DecimalDungeon
-    - DetroitAGA
+    - Detroit
     - DistantArmies
     - DragonsBreath
     - ElectronicPool
@@ -1893,14 +1892,14 @@
     - JimmyWhitesSnooker
     - JockyWilsonsDartChallenge
     - JohnLowesUltimateDarts
-    - Kingpin1Mb
+    - Kingpin
     - LaserSquad
     - LeaderBoard
     - LeaderBoardArcadia
     - LeaderBoardTD1
     - LegendOfRagnarok
     - Links&DataDisks
-    - LordsOfChaos&DataDisk
+    - LordsOfChaos
     - LordsOfTheRealm
     - MathWizard
     - MickeysMemoryChallenge
@@ -1914,7 +1913,7 @@
     - OilImperium
     - Patrician
     - PGAEuropeanTour
-    - PGATourGolf&TourDisk
+    - PGATourGolf
     - PinballDreams
     - PinballFntsies
     - PinballIllusions
@@ -1945,7 +1944,6 @@
     - Shanghai
     - SlamTilt
     - SpaceCrusade&VoyageBeyond
-    - SpaceCrusade&VoyageBeyond--VoyageBeyond
     - SteelEmpire
     - Subbuteo
     - SummerGames
@@ -1953,7 +1951,7 @@
     - SummerOlympiad
     - Tangram
     - TenPinBowlingArcadia
-    - ThomasTankEngPinballAGA
+    - ThomasTankEngPinball
     - TimeScanner
     - TournamentGolf
     - TrianGO
@@ -1965,7 +1963,7 @@
     - WackyDarts
     - Warlords
     - Waterloo
-    - WCLeaderBoard&DataDisks
+    - WCLeaderBoard
     - WhiteDeath
     - WildWestWorld
     - WinterGames
@@ -2261,7 +2259,7 @@
     - ShufflepuckCafe
     - Speedball2
   - Strategy:
-    - BattleIsle&DataDisks
+    - BattleIsle
     - CelticLegends
     - Centurion
     - Dune2
