@@ -84,7 +84,7 @@ Video Modes:
 Since many Amiga games only run properly at a 50Hz vertical refresh rate,
 it's important to have both NTSC and PAL video modes set up in MiSTer.ini.
 
-Another idiosyncracy with the Minimig core is viewport cropping. By default
+Another idiosyncrasy with the Minimig core is viewport cropping. By default
 the full overscan area will be fed to the HDMI scaler, resulting in huge
 borders. Fear not! Also supplied is a minimig_vadjust.dat settings file, which
 contains crop settings for all the common resolutions. With this file copied
