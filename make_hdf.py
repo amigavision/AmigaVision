@@ -12,7 +12,7 @@ def is_file(path):
 def is_dir(path):
     return os.path.isdir(path)
 
-def make_pfs(path, size, verbose):
+def make_pfs(path, size, bootable=False, verbose=False):
     if verbose:
         print("building PFS container...")
 
@@ -51,7 +51,8 @@ def make_pfs(path, size, verbose):
     r = subprocess.run(["rdbtool", path,
                         "add", "start={}".format(start_cyl), "end={}".format(end_cyl),
                         "fs=PFS3", "block_size={}".format(block_size), "max_transfer=0x0001FE00",
-                        "mask=0x7FFFFFFE", "num_buffer=300"], stdout=subprocess.PIPE)
+                        "mask=0x7FFFFFFE", "num_buffer=300", "bootable={}".format(bootable)],
+                        stdout=subprocess.PIPE)
     return
 
 # -----------------------------------------------------------------------------
@@ -61,6 +62,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-o", "--out_hdf", dest="out_hdf", metavar="FILE", help="output HDF")
     parser.add_argument("-s", "--size", dest="size", type=int, default=128, help="size (in megabytes)")
+    parser.add_argument("-b", "--bootable", dest="bootable", action="store_true", default=False, help="make bootable")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
@@ -69,7 +71,7 @@ def main():
         if not args.out_hdf:
             raise IOError("out_hdf argument missing")
 
-        make_pfs(args.out_hdf, args.size, args.verbose)
+        make_pfs(args.out_hdf, args.size, args.bootable, args.verbose)
 
     # except Exception as err:
     except IOError as err:
