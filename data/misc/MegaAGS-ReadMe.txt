@@ -60,7 +60,7 @@ Setup:
 Controls:
 ---------
 Amiga games were generally designed for a one button joystick, which meant
-that "up to jump" (or accelerate) is very common. And awkward. Buy have no
+that "up to jump" (or accelerate) is very common. And awkward. But, have no
 fear, with MiSTer's controller mapping it's easy to bind the up direction
 to both the d-pad and an extra button. Here's how:
 
