@@ -377,6 +377,8 @@ def ags_create_autoentries():
             #ags_create_entry(None, value, os.path.join(d_path, "[ Demos by group ].ags", group + ".ags"), None, None)
             ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=group)
             ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
+            if entry["subcategory"].lower() == "intro":
+                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, 40K & 64K ].ags"), None, None)
         if entry["category"].lower() == "game" and not entry["issues"]:
             ags_create_entry(None, entry, os.path.join(path, "Run"), None, None, only_script=True)
         #if value["issues"]:
@@ -387,11 +389,13 @@ def ags_create_autoentries():
     if util.is_dir(os.path.join(path, "[ All Games, by year ].ags")):
         open(os.path.join(path, "[ All Games, by year ].txt"), mode="w", encoding="latin-1").write("Browse all games by release year.")
     if util.is_dir(os.path.join(d_path, "[ Demos by title ].ags")):
-        open(os.path.join(d_path, "[ Demos by title ].txt"), mode="w", encoding="latin-1").write("Browse all available demos by release title.")
+        open(os.path.join(d_path, "[ Demos by title ].txt"), mode="w", encoding="latin-1").write("Browse demos by title.")
     if util.is_dir(os.path.join(d_path, "[ Demos by group ].ags")):
-        open(os.path.join(d_path, "[ Demos by group ].txt"), mode="w", encoding="latin-1").write("Browse all available demos by group.")
+        open(os.path.join(d_path, "[ Demos by group ].txt"), mode="w", encoding="latin-1").write("Browse demos by release group.")
     if util.is_dir(os.path.join(d_path, "[ Demos by year ].ags")):
-        open(os.path.join(d_path, "[ Demos by year ].txt"), mode="w", encoding="latin-1").write("Browse all available demos by release year.")
+        open(os.path.join(d_path, "[ Demos by year ].txt"), mode="w", encoding="latin-1").write("Browse demos by release year.")
+    if util.is_dir(os.path.join(d_path, "[ Demos, 40K & 64K ].ags")):
+        open(os.path.join(d_path, "[ Demos, 40K & 64K ].txt"), mode="w", encoding="latin-1").write("Browse demos in the 40KB & 64KB categories.")
     if util.is_dir(os.path.join(path, "[ Issues ].ags")):
         open(os.path.join(path, "[ Issues ].txt"), mode="w", encoding="latin-1").write(
             "Titles with known issues on Minimig-AGA.\n(Please report any new or resolved issues!)")
@@ -611,7 +615,7 @@ def main():
         ags_create_autoentries()
 
         # extract whdloaders
-        if g_args.verbose: print("extracting WHDLoad installs... ({} archives)".format(len(g_entries.items())))
+        if g_args.verbose: print("extracting {} content archives...".format(len(g_entries.items())))
         extract_entries(g_entries)
 
         # copy extra files
