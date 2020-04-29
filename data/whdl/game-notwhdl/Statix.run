@@ -1,7 +1,7 @@
 cd WHD:N/Statix
-assign STX: ""
-FailAt 61
-Statix_Intro
-Statix_Final
-assign STX: remove
-FailAt 21
+assign >NIL: STX: ""
+failat 61
+Statix_Intro >NIL:
+Statix_Final >NIL:
+assign >NIL: STX: REMOVE
+failat 21

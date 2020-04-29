@@ -282,12 +282,12 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
             runfile += "  echo \"\" >ENV:whdlqtkey\n"
             runfile += "ENDIF\n"
             runfile += "IF EXISTS ENV:whdlvmode\n"
-            runfile += "  whdload \"{}\" PRELOAD $whdlvmode {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_cargs)
+            runfile += "  whdload >NIL: \"{}\" PRELOAD $whdlvmode {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_cargs)
             runfile += "ELSE\n"
-            runfile += "  whdload \"{}\" PRELOAD {} {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_vmode, whd_cargs)
+            runfile += "  whdload >NIL: \"{}\" PRELOAD {} {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_vmode, whd_cargs)
             runfile += "ENDIF\n"
         else:
-            runfile = "echo \"Title not available. Sorry!\"" + "\n" + "wait 2"
+            runfile = "echo \"Title not available.\"" + "\n" + "wait 2"
         if runfile:
             if util.is_file(base_path + ".run"):
                 print(" > AGS2 clash:", entry["id"], "-", base_path + ".run")

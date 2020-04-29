@@ -1,1 +1,1 @@
-echo "PAL" > ENV:whdlvmode
+echo "PAL" >ENV:whdlvmode

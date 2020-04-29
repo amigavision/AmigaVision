@@ -1,2 +1,2 @@
-echo "QuitKey=282" > ENV:whdlqtkey
-echo "QuitKey=282" > ENVARC:whdlqtkey
+echo "QuitKey=282" >ENV:whdlqtkey
+echo "QuitKey=282" >ENVARC:whdlqtkey

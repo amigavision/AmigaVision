@@ -1,2 +1,2 @@
-echo "200" > ENV:whdlspdly
-echo "200" > ENVARC:whdlspdly
+echo "200" >ENV:whdlspdly
+echo "200" >ENVARC:whdlspdly

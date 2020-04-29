@@ -1,9 +1,9 @@
 IF NOT EXISTS WHDSaves:poing5
   makedir WHDSaves:poing5
-  copy WHD:N/Poing5/poing5.levels WHDSaves:poing5
-  copy WHD:N/Poing5/poing5.scores WHDSaves:poing5
-EndIF
-assign POING: WHDSaves:poing5
+  copy WHD:N/Poing5/poing5.levels WHDSaves:poing5 QUIET
+  copy WHD:N/Poing5/poing5.scores WHDSaves:poing5 QUIET
+ENDIF
+assign >NIL: POING: WHDSaves:poing5
 cd WHD:N/Poing5
-poing5
-assign POING: remove
+poing5 >NIL:
+assign >NIL: POING: REMOVE

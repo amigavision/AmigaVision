@@ -1,8 +1,8 @@
 IF EXISTS WHDSaves:worthy.dat
-  copy WHDSaves:worthy.dat WHD:N/Worthy
-EndIF
+  copy WHDSaves:worthy.dat WHD:N/Worthy QUIET
+ENDIF
 cd WHD:N/Worthy
-Worthy
+Worthy >NIL:
 IF EXISTS WHD:N/Worthy/worthy.dat
-  copy WHD:N/Worthy/worthy.dat WHDSaves:
-EndIF
+  copy WHD:N/Worthy/worthy.dat WHDSaves: QUIET
+ENDIF

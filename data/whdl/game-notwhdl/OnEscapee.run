@@ -1,13 +1,13 @@
 IF NOT EXISTS WHDSaves:OnEscapee
   makedir WHDSaves:OnEscapee
-EndIF
+ENDIF
 cd WHD:N/OnEscapeeAGAHD
-FailAt 999999
+failat 999999
 assign >NIL: OnEscapee: ""
 assign >NIL: onEsaves: WHDSaves:OnEscapee
 assign >NIL: Fonts: Fonts.def ADD
-Game
+Game >NIL:
 assign >NIL: Fonts: Fonts.def REMOVE
 assign >NIL: onEsaves: REMOVE
 assign >NIL: OnEscapee: REMOVE
-FailAt 21
+failat 21

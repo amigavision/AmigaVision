@@ -1,62 +1,23 @@
 IF EXISTS WHDSaves:WastedDreams
   IF EXISTS WHDSaves:WastedDreams/WDstatus
-    copy WHDSaves:WastedDreams/WDstatus S:
-  EndIF
-  IF EXISTS WHDSaves:WastedDreams/WDposition1
-    copy WHDSaves:WastedDreams/WDposition1 S:
-  EndIF
-  IF EXISTS WHDSaves:WastedDreams/WDposition2
-    copy WHDSaves:WastedDreams/WDposition2 S:
-  EndIF
-  IF EXISTS WHDSaves:WastedDreams/WDposition3
-    copy WHDSaves:WastedDreams/WDposition3 S:
-  EndIF
-  IF EXISTS WHDSaves:WastedDreams/WDposition4
-    copy WHDSaves:WastedDreams/WDposition4 S:
-  EndIF
-  IF EXISTS WHDSaves:WastedDreams/WDposition5
-    copy WHDSaves:WastedDreams/WDposition5 S:
-  EndIF
-  IF EXISTS WHDSaves:WastedDreams/WDposition6
-    copy WHDSaves:WastedDreams/WDposition6 S:
-  EndIF
+    copy WHDSaves:WastedDreams/WDstatus S: QUIET
+  ENDIF
+  copy WHDSaves:WastedDreams/WDposition#? S: ALL QUIET
 ELSE
   makedir WHDSaves:WastedDreams
-EndIF
+ENDIF
 IF NOT EXISTS S:WDstatus
   copy WHD:N/WastedDreams/WDstatus S:
-EndIF
+ENDIF
 
 cd WHD:N/WastedDreams
-assign WD: ""
-wasted i
-assign WD: remove
+assign >NIL: WD: ""
+wasted >NIL: i
+assign >NIL: WD: REMOVE
 
 IF EXISTS S:WDstatus
-  copy S:WDstatus WHDSaves:WastedDreams/WDstatus
+  copy S:WDstatus WHDSaves:WastedDreams/WDstatus QUIET
   delete S:WDstatus QUIET
-EndIF
-IF EXISTS S:WDposition1
-  copy S:WDposition1 WHDSaves:WastedDreams/WDposition1
-  delete S:WDposition1 QUIET
-EndIF
-IF EXISTS S:WDposition2
-  copy S:WDposition2 WHDSaves:WastedDreams/WDposition2
-  delete S:WDposition2 QUIET
-EndIF
-IF EXISTS S:WDposition3
-  copy S:WDposition3 WHDSaves:WastedDreams/WDposition3
-  delete S:WDposition3 QUIET
-EndIF
-IF EXISTS S:WDposition4
-  copy S:WDposition4 WHDSaves:WastedDreams/WDposition4
-  delete S:WDposition4 QUIET
-EndIF
-IF EXISTS S:WDposition5
-  copy S:WDposition5 WHDSaves:WastedDreams/WDposition5
-  delete S:WDposition5 QUIET
-EndIF
-IF EXISTS S:WDposition6
-  copy S:WDposition6 WHDSaves:WastedDreams/WDposition6
-  delete S:WDposition6 QUIET
-EndIF
+ENDIF
+copy S:WDposition#? WHDSaves:WastedDreams ALL QUIET
+delete S:WDposition#? ALL FORCE QUIET

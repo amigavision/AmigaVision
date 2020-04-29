@@ -1,2 +1,2 @@
-echo "QuitKey=70" > ENV:whdlqtkey
-echo "QuitKey=70" > ENVARC:whdlqtkey
+echo "QuitKey=70" >ENV:whdlqtkey
+echo "QuitKey=70" >ENVARC:whdlqtkey

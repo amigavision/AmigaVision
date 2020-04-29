@@ -1,16 +1,11 @@
 IF EXISTS WHDSaves:ChampMan93
   copy WHDSaves:ChampMan93/#? WHD:N/ChampMan93 ALL QUIET
   delete WHDSaves:ChampMan93/#? ALL FORCE QUIET
-EndIF
+ENDIF
 cd WHD:N/ChampMan93
-ChampMan93
-WAIT 3
-ASK "Thank you for playing! Press enter continue..."
-IF WARN
-  Echo ""
-ELSE
-  Echo ""
-EndIF
+ChampMan93 >NIL:
+wait 2
+requestchoice >NIL: "" "Thank you for playing!*nPress OK to save data and return." "OK"
 copy WHD:N/ChampMan93/hiscores#? WHDSaves:ChampMan93 ALL QUIET
 copy WHD:N/ChampMan93/clrecs#? WHDSaves:ChampMan93 ALL QUIET
 copy WHD:N/ChampMan93/mchfax#? WHDSaves:ChampMan93 ALL QUIET

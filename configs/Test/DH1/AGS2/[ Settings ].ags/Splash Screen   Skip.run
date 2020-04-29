@@ -1,2 +1,2 @@
-echo "0" > ENV:whdlspdly
-echo "0" > ENVARC:whdlspdly
+echo "0" >ENV:whdlspdly
+echo "0" >ENVARC:whdlspdly

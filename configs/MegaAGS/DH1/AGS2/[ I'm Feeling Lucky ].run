@@ -1,1 +1,1 @@
-pickfile d AGS:Run q c execute AGS:Run/[]
+pickfile >NIL: d AGS:Run q c execute AGS:Run/[]
