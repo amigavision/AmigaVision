@@ -413,7 +413,7 @@ demo--spasmolytic--spasmolytic;Spasmolytic;Spasmolytic;;;OCS/ECS;;0;;;;;English;
 demo--sweetrevenge--sweetrevenge;Sweet Revenge;Sweet Revenge;;;OCS/ECS;;0;;;;;English;1992;;Decay;1;;v1.0;;SweetRevenge/SweetRevenge.Slave;data/whdl/demo/S/SweetRevenge_v1.0_Decay.lha;Demo;Demo;;
 demo--sounddelight--sounddelight;Sound De Light;Sound De Light;;;OCS/ECS;;0;;;;;English;1989;;Software Of Sweden;1;;v1.01;;SoundDeLight/SoundDeLight.slave;data/whdl/demo/S/SoundDeLight_v1.01_SoftwareOfSweden.lha;Demo;Musicdisk;;
 demo--dancetrance--dancetrance;Dance Trance I;Dance Trance I;;;OCS/ECS;;0;;;;;English;1992;;Interactive;1;;v1.0;;DanceTrance/DanceTrance.Slave;data/whdl/demo/D/DanceTrance_v1.0_Interactive.lha;Demo;Musicdisk;;
-demo--darktro--darktro;Darktro;Darktro;;;OCS/ECS;;0;;;;;English;1992;;Darkness;1;;v1.0;;Darktro/Darktro.Slave;data/whdl/demo/D/Darktro_v1.0_Darkness.lha;Demo;Intro 40K;;
+demo--darktro--darktro;Darktro;Darktro;1;;OCS/ECS;;0;;;;;English;1992;;Darkness;1;;v1.0;;Darktro/Darktro.Slave;data/whdl/demo/D/Darktro_v1.0_Darkness.lha;Demo;Intro 40K;;
 demo--demonsrage--demonsrage;Demon's Rage;Demon's Rage;;;OCS/ECS;;0;;;;;English;1993;;Nerve Axis;1;;v1.01;;DemonsRage/DemonsRage.slave;data/whdl/demo/D/DemonsRage_v1.01_NerveAxis.lha;Demo;Demo;;
 demo--deliriumkronical--deliriumkronical;Delirium;Delirium;;;OCS/ECS;;0;;;;;English;1993;;Kronical;1;;v1.0;;DeliriumKronical/DeliriumKronical.Slave;data/whdl/demo/D/Delirium_v1.0_Kronical.lha;Demo;Musicdisk;;
 demo--deepcore--deepcore;Deep Core;Deep Core;;;OCS/ECS;;0;;;;;English;1992;;Balance;1;;v1.0;;Deepcore/Deepcore.Slave;data/whdl/demo/D/Deepcore_v1.0_Balance.lha;Demo;Demo;;
@@ -496,7 +496,7 @@ demo--extension--extension;Extension;Extension;;;OCS/ECS;;0;;;;;English;1993;;Py
 demo--realaga--realaga;Real;Real;;;AGA;1;0;;;;;English;1994;;Complex;1;;v1.1;;RealAGA/RealAGA.Slave;data/whdl/demo/R/Real_v1.1_Complex_AGA.lha;Demo;Demo;;
 demo--rinkadink--rinkadink;Rink A Dink;Rink A Dink;;;OCS/ECS;;0;;;;;English;1993;;Lemon;1;;v1.2;;RinkADink/RinkADink.Slave;data/whdl/demo/R/RinkADink_v1.2_Lemon.lha;Demo;Demo;;
 demo--rockbox1--rockbox1;Rock Box 1;Rock Box 1;;;OCS/ECS;;0;;;;;English;1989;;Avoid;1;;v1.0;;RockBox1/RockBox1.Slave;data/whdl/demo/R/RockBox1_v1.0_Avoid.lha;Demo;Musicdisk;;
-demo--rinkadinkredux--rinkadinkredux;Rink A Dink: REDUX;Rink A Dink: REDUX;;;OCS/ECS;;0;;;Graphical glitches;;English;2013;;Lemon;1;;v1.0;;RinkADinkRedux/RinkADinkRedux.Slave;data/whdl/demo/R/RinkADinkRedux_v1.0_Lemon.lha;Demo;Demo;;
+demo--rinkadinkredux--rinkadinkredux;Rink A Dink: REDUX;Rink A Dink: REDUX;;;OCS/ECS;;0;;;Some glitchy parts;;English;2013;;Lemon;1;;v1.0;;RinkADinkRedux/RinkADinkRedux.Slave;data/whdl/demo/R/RinkADinkRedux_v1.0_Lemon.lha;Demo;Demo;;
 demo--rainheartproject--rainheartproject;Rainheart Project;Rainheart Project;;;OCS/ECS;;0;;;;;English;1990;;BAD COMPANY;1;;v1.01;;RainheartProject/RainheartProject.slave;data/whdl/demo/R/RainheartProject_v1.01_BadCompany.lha;Demo;Musicdisk;;
 demo--revenge--revenge;Revenge;Revenge;;;OCS/ECS;;0;;;;;English;1990;;Fraxion;1;;v1.0;;Revenge/Revenge.Slave;data/whdl/demo/R/Revenge_v1.0_Fraxion.lha;Demo;Demo;;
 demo--revolutions--revolutions;Revolutions;Revolutions;;;OCS/ECS;;0;;;;;English;1990;;Amaze;1;;v1.0;;Revolutions/Revolutions.Slave;data/whdl/demo/R/Revolutions_v1.0_Amaze.lha;Demo;Musicdisk;;
@@ -1553,7 +1553,7 @@ game--hardball2ntsc--hardball2ntsc;HardBall II;Hardball II;;;OCS/ECS;;2;;;;;Engl
 game--heartofthedragon3disk--heartofthedragon3disk;Heart Of The Dragon;Heart Of The Dragon;1;game--heartofthedragon4disk--heartofthedragon4disk;OCS/ECS;;1;;;;;English;1991;Avatar Consulting;Avatar Consulting;2;;v1.1;3Disk;HeartOfTheDragon3Disk/HeartOfTheDragon3Disk.Slave;data/whdl/game/H/HeartOfTheDragon_v1.1_3Disk.lha;Game;;680;492
 game--hugo1fi--hugo1fi;Hugo: På Nye Eventyr;Hugo: På Nye Eventyr;1;game--hugo1dk--hugo1dk;OCS/ECS;;0;;;;;Finnish;1992;ITE (SilverRock);SilverRock;1;;v1.1;;Hugo1Fi/Hugo1Fi.Slave;data/whdl/game/H/Hugo1_v1.1_Fi.lha;Game;Action - Multi-Type;755;508
 game--hyperion--hyperion;Hyperion;Hyperion;;;OCS/ECS;;0;;;;;English;1992;Offence;Black Legend;1;;v1.0;;Hyperion/Hyperion.Slave;data/whdl/game/H/Hyperion_v1.0.lha;Game;;771;2573
-game--hostages--hostages;Hostages;Hostages;1;game--hostagentsc--hostagentsc;OCS/ECS;;1;;;;;English;1988;Infogrames;Infogrames;1;;v1.2;;Hostages/Hostages.Slave;data/whdl/game/H/Hostages_v1.2_0186.lha;Game;Action - Multi-Type;738;504
+game--hostages--hostages;Hostages;Hostages;;;OCS/ECS;;1;;;;;English;1988;Infogrames;Infogrames;1;;v1.2;;Hostages/Hostages.Slave;data/whdl/game/H/Hostages_v1.2_0186.lha;Game;Action - Multi-Type;738;504
 game--lemmingsholidaydemo--lemmingsholidaydemo;Holiday Lemmings 1994;Holiday Lemmings 1994;1;game--lemmingsholiday1994--lemmingsholiday1994;OCS/ECS;;0;;;;;English;1994;DMA;Psygnosis;1;;v1.1;;LemmingsHolidayDemo/LemmingsHolidayDemo.Slave;data/whdl/game/L/LemmingsHolidayDemo_v1.1.lha;Game;Action - Strategy;726;2085
 game--heroquest--heroquest;HeroQuest;HeroQuest;1;game--heroquest&returnwitchlord--heroquest&returnwitchlord;OCS/ECS;;0;;;;;English;1991;Gremlin;Gremlin;4 (taking turns);;v1.3;;HeroQuest/HeroQuest.slave;data/whdl/game/H/HeroQuest_v1.3_0127.lha;Game;RPG;698;1268
 game--heroesofthelance--heroesofthelance;Heroes Of The Lance;Heroes Of The Lance;;;OCS/ECS;;1;;;;;English;1988;U.S. Gold;SSI, U.S. Gold;1;;v1.01;;HeroesOfTheLance/HeroesOfTheLance.slave;data/whdl/game/H/HeroesOfTheLance_v1.01_0778.lha;Game;;702;2723
@@ -4379,12 +4379,12 @@ demo-notwhdl--jormas-kayrasoiro;Käyrä Soiro;Käyrä Soiro;;;OCS/ECS;;0;;;;;Eng
 demo-notwhdl--jormas-meganerellu;Megane Rellu;Megane Rellu;;;OCS/ECS;;0;;;;;English;2009;;Da Jormas;1;;;;;data/whdl/demo-notwhdl/Jormas-MeganeRellu.lha;Demo;Intro 40K;;
 demo-notwhdl--jormas-hapycarva72;HäpyCarva #72;HäpyCarva 72;;;OCS/ECS;;0;;;;;English;2015;;Da Jormas;1;;;;;data/whdl/demo-notwhdl/Jormas-HapyCarva72.lha;Demo;Demo;;
 demo-notwhdl--jormas-monomeno66;MonoMeno 66;MonoMeno 66;;;OCS/ECS;;0;;;;;English;1997;;Da Jormas;1;;;;;data/whdl/demo-notwhdl/Jormas-MonoMeno66.lha;Demo;Demo;;
-game--hostagentsc--hostagentsc;Hostages;Hostages;;;OCS/ECS;;2;;;;;English;1988;Infogrames;Infogrames;1;;v1.2;;HostageNTSC/HostageNTSC.Slave;data/whdl/game/H/Hostage_v1.2_NTSC_1173.lha;Game;Action - Multi-Type;738;504
+game--hostagentsc--hostagentsc;Hostages;Hostages;1;game--hostages--hostages;OCS/ECS;;2;;;;;English;1989;Infogrames;Infogrames;1;;v1.2;;HostageNTSC/HostageNTSC.Slave;data/whdl/game/H/Hostage_v1.2_NTSC_1173.lha;Game;Action - Multi-Type;738;504
 demo-notwhdl--altair-zenerdrive;Zener Drive;Zener Drive;1;;OCS/ECS;;0;;;Only runs on A500;;English;2017;;Altair;1;;;;;data/whdl/demo-notwhdl/Altair-ZenerDrive.lha;Demo;Intro 40K;;
 demo-notwhdl--loonies-dontbesquare;Don't Be Square;Don't Be Square;1;;OCS/ECS;;0;;;Only runs on A500;;English;2019;;Loonies;1;;;;;data/whdl/demo-notwhdl/Loonies-DontBeSquare.lha;Demo;Intro 4K;;
 demo-notwhdl--unique-interparallactic;Interparallactic;Interparallactic;;;OCS/ECS;;0;;;;;English;2015;;Unique;1;;;;;data/whdl/demo-notwhdl/Unique-Interparallactic.lha;Demo;Demo;;
 demo-notwhdl--moodsplateau-solveetcoagula;Solve et Coagula;Solve et Coagula;;;AGA;1;0;;;;;English;2014;;Moods Plateau;1;;;;;data/whdl/demo-notwhdl/MoodsPlateau-SolveEtCoagula.lha;Demo;Intro 64K;;
-demo-notwhdl--lemon-lemonade;Lemonade;Lemonade;;;OCS/ECS;;0;;;;;English;2018;;Lemon;1;;;;;data/whdl/demo-notwhdl/Lemon-Lemonade.lha;Demo;Demo;;
+demo-notwhdl--lemon-lemonade;Lemonade;Lemonade;;;OCS/ECS;;0;;;Intro part glitchy;;English;2018;;Lemon;1;;;;;data/whdl/demo-notwhdl/Lemon-Lemonade.lha;Demo;Demo;;
 demo-notwhdl--abyss-coda;Coda;Coda;;;OCS/ECS;;0;;;;;English;2019;;Abyss;1;;;;;data/whdl/demo-notwhdl/Abyss-Coda.lha;Demo;Intro 64K;;
 demo-notwhdl--offence-ahymntohipparchus;A Hymn To Hipparchus;A Hymn To Hipparchus;;;OCS/ECS;;0;;;;;English;2019;;Offence;1;;;;;data/whdl/demo-notwhdl/Offence-AHymnToHipparchus.lha;Demo;Intro 4K;;
 demo-notwhdl--rno&ghostown-boogietown;Rock Da Boogie Town;Rock Da Boogie Town;;;OCS/ECS;;0;;;;;English;2012;;RNO & Ghostown;1;;;;;data/whdl/demo-notwhdl/RNO&Ghostown-BoogieTown.lha;Demo;Demo;;
