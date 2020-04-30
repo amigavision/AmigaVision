@@ -377,8 +377,8 @@ def ags_create_autoentries():
             #ags_create_entry(None, value, os.path.join(d_path, "[ Demos by group ].ags", group + ".ags"), None, None)
             ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=group)
             ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
-            if entry["subcategory"].lower() == "intro":
-                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, 40K & 64K ].ags"), None, None)
+            if entry["subcategory"].lower().startswith("intro"):
+                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, 1-64KB ].ags"), None, None)
         if entry["category"].lower() == "game" and not entry["issues"]:
             ags_create_entry(None, entry, os.path.join(path, "Run"), None, None, only_script=True)
         #if value["issues"]:
@@ -394,8 +394,8 @@ def ags_create_autoentries():
         open(os.path.join(d_path, "[ Demos by group ].txt"), mode="w", encoding="latin-1").write("Browse demos by release group.")
     if util.is_dir(os.path.join(d_path, "[ Demos by year ].ags")):
         open(os.path.join(d_path, "[ Demos by year ].txt"), mode="w", encoding="latin-1").write("Browse demos by release year.")
-    if util.is_dir(os.path.join(d_path, "[ Demos, 40K & 64K ].ags")):
-        open(os.path.join(d_path, "[ Demos, 40K & 64K ].txt"), mode="w", encoding="latin-1").write("Browse demos in the 40KB & 64KB categories.")
+    if util.is_dir(os.path.join(d_path, "[ Demos, 1-64KB ].ags")):
+        open(os.path.join(d_path, "[ Demos, 1-64KB ].txt"), mode="w", encoding="latin-1").write("Browse demos in the 1/4/40/64KB categories.")
     if util.is_dir(os.path.join(path, "[ Issues ].ags")):
         open(os.path.join(path, "[ Issues ].txt"), mode="w", encoding="latin-1").write(
             "Titles with known issues on Minimig-AGA.\n(Please report any new or resolved issues!)")
@@ -488,7 +488,7 @@ def build_pfs(config_base_name, verbose):
     if util.is_file(out_hdf):
         os.remove(out_hdf)
 
-    if verbose: print(" > creating pfs container...")
+    if verbose: print(" > creating pfs container ({}MB)...".format((total_cyls * cylinder_size) // (1024 * 1024)))
     r = subprocess.run(["rdbtool", out_hdf,
                         "create", "chs={},{},{}".format(total_cyls + 1, heads, sectors), "+", "init", "rdb_cyls={}".format(num_cyls_rdb)])
 
