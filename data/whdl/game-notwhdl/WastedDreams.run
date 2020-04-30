@@ -20,4 +20,4 @@ IF EXISTS S:WDstatus
   delete S:WDstatus QUIET
 ENDIF
 copy S:WDposition#? WHDSaves:WastedDreams ALL QUIET
-delete S:WDposition#? ALL FORCE QUIET
+delete >NIL: S:WDposition#? ALL FORCE QUIET
