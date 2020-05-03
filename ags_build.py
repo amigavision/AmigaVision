@@ -17,7 +17,6 @@ import shutil
 import subprocess
 import sys
 import textwrap
-
 from ast import literal_eval as make_tuple
 import ags_util as util
 
