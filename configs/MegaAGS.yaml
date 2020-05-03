@@ -1,6 +1,6 @@
 --- # AGS2 Menu structure
 - About:
-  - note: '\n\n\n\n\n\n             (MegaAGS v20200425)'
+  - note: '\n\n\n\n\n\n             (MegaAGS v20200505)'
   - Nothing to see here:
     - note: Intentionally left blank.
 - Best-of Lists:
@@ -909,6 +909,7 @@
     - GhostsNGoblins
     - Giana2
     - GianaSistersSE
+    - Gods
     - GoldenAxe
     - GravityForce
     - GreatGianaSisters
