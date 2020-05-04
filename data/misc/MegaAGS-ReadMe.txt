@@ -137,7 +137,7 @@ You can explore the world's first multitasking 16-bit computer from 1985 with
 the addition of a more modern desktop from 1992.
 
 Amigas with the AGA chipset onwards (1992) is capable of using HD resolutions.
-The "HD720" monitor driver is included, and will make it possible to run the
+The HD720 monitor driver is included, and will make it possible to run the
 Amiga Workbench at 1280×720 pixels. 
 
 To change from the default 640×256 resolution to 1280×720, double-click the
@@ -147,6 +147,9 @@ prefer. The Amiga UI is designed for a 2:1 pixel ratio in general, so
 1280×360 would be the most accurate way to do that. You can also run at 
 1280×720, especially if you add a modern icon set to it that is built for 
 1×1 icons.
+
+Then, trigger the MiSTer menu, and select Audio & Video -> Aspect Ratio
+-> 16:9.
 
 
 Arcadia Systems:
