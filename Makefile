@@ -1,4 +1,4 @@
-.PHONY: default env index image clean screenshots
+.PHONY: default env index image clean screenshots sqlite
 
 default:
 	@echo No default action
@@ -25,6 +25,9 @@ test-image:
 
 screenshots:
 	@pipenv run ./make_screenshots.sh screenshots
+
+sqlite:
+	@pipenv run ./ags_index.py -v --make-sqlite
 
 clean:
 	@pipenv --rm

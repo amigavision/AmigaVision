@@ -60,11 +60,16 @@ def index_whdload_archives(basedir):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--make-sqlite", dest="make_sqlite", action="store_true", default=False, help="make sqlite db from cvs, if none none exists or if cvs is newer than existing")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
         args = parser.parse_args()
         db = util.get_db(args.verbose)
+
+        if args.make_sqlite:
+            db.close()
+            return 0
 
         arc_dir = os.path.join("data", "whdl")
         if not util.is_dir(arc_dir):
