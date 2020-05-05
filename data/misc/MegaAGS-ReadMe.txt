@@ -136,7 +136,7 @@ desktop system.
 You can explore the world's first multitasking 16-bit computer from 1985 with
 the addition of a more modern desktop from 1992.
 
-Amigas with the AGA chipset onwards (1992) is capable of using HD resolutions.
+Amiga, with the AGA chipset onwards (1992) is capable of using HD resolutions.
 The HD720 monitor driver is included, and will make it possible to run the
 Amiga Workbench at 1280×720 pixels. 
 
