@@ -377,7 +377,7 @@ def ags_create_autoentries():
             group = group[:AGS_LIST_WIDTH]
             group_letter = group[0].upper()
 
-            if entry["subcategory"].lower().startswith() == "crack":
+            if entry["subcategory"].lower().startswith("crack"):
                 ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, crack intros ].ags"), None, None, prefix=group)
             if entry["subcategory"].lower().startswith("intro"):
                 ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, 1-64KB ].ags"), None, None)
@@ -408,7 +408,7 @@ def ags_create_autoentries():
     if util.is_dir(os.path.join(d_path, "[ Demos, 1-64KB ].ags")):
         open(os.path.join(d_path, "[ Demos, 1-64KB ].txt"), mode="w", encoding="latin-1").write("Browse demos in the 1/4/40/64KB categories.")
     if util.is_dir(os.path.join(d_path, "[ Demos, crack intros ].ags")):
-        open(os.path.join(d_path, "[ Demos, crack intros ].txt"), mode="w", encoding="latin-1").write("Browse crack intros.")
+        open(os.path.join(d_path, "[ Demos, crack intros ].txt"), mode="w", encoding="latin-1").write("A glimpse into the origins of the demo scene.")
     if util.is_dir(os.path.join(path, "[ Issues ].ags")):
         open(os.path.join(path, "[ Issues ].txt"), mode="w", encoding="latin-1").write(
             "Titles with known issues on Minimig-AGA.\n(Please report any new or resolved issues!)")
