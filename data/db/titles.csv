@@ -4404,7 +4404,7 @@ game--gods1mbntsc--gods1mbntsc;Gods;Gods;1;game--godsntsc--godsntsc;OCS/ECS;;2;;
 game--gods1mb--gods1mb;Gods;Gods;1;game--godsntsc--godsntsc;OCS/ECS;;0;;;;;English;1991;Bitmap Brothers;Konami, Renegade;1;CUSTOM2=1;v3.1;1MB;Gods1MB/Gods1MB.slave;data/whdl/game/G/Gods_v3.1_1MB_0666.lha;Game;;2754;1194
 game--exileaga--exileaga;Exile;Exile;;;AGA;1;0;;;;;English;1995;Audiogenic;Audiogenic;1;;v1.0;;ExileAGA/ExileAGA.slave;data/whdl/game/E/Exile_v1.0_AGA_0885.lha;Game;;2890;381
 game--exilecd32--exilecd32;Exile;Exile;1;game--exileaga--exileaga;CD32;1;0;;;;;English;1995;Audiogenic;Audiogenic;1;;v1.0;;ExileCD32/ExileCD32.slave;data/whdl/game/E/Exile_v1.0_CD32.lha;Game;;2891;381
-game--dangerfreak--dangerfreak;Danger Freak;Danger Freak;;;OCS/ECS;;0;;;;Unplayably glitchy in-game;English;1989;Rainbow Arts;Rainbow Arts;4 (taking turns);;v1.0;;DangerFreak/DangerFreak.slave;data/whdl/game/D/DangerFreak_v1.0_0975.lha;Game;;263;303
+game--dangerfreak--dangerfreak;Danger Freak;Danger Freak;1;;OCS/ECS;;0;;;Unplayably glitchy in-game;;English;1989;Rainbow Arts;Rainbow Arts;4 (taking turns);;v1.0;;DangerFreak/DangerFreak.slave;data/whdl/game/D/DangerFreak_v1.0_0975.lha;Game;;263;303
 demo--skidrow swiv--skidrow;SWIV Crack Intro;SWIV Crack Intro;;;OCS/ECS;;0;;;;;English;1991;;Skid Row;1;;v1.0;;SkidRow SWIV/SkidRow.slave;data/whdl/demo/_cracktros/SkidRow_SWIV.lha;Demo;Crack Intro;;
 demo--ackerlight_speedball--acker;Speedball Crack Intro;Speedball Crack Intro;;;OCS/ECS;;0;;;;;English;1988;;Ackerlight;1;;v1.0;;Ackerlight_Speedball/Acker.slave;data/whdl/demo/_cracktros/Ackerlight_Speedball.lha;Demo;Crack Intro;;
 demo--silentserviceintro--silentservice;Silent Service Crack Intro;Silent Service Crack Intro;;;OCS/ECS;;0;;;;;English;1987;;High Quality Crackings;1;;v1.0;;SilentServiceIntro/SilentService.slave;data/whdl/demo/_cracktros/HighQualityCrackings_SiSer.lha;Demo;Crack Intro;;
@@ -4438,7 +4438,7 @@ demo--supermanintro--supermanintro;Superman Crack Intro;Superman Crack Intro;;;O
 demo--tischtennisintro--tischtennis;Tischtennis Crack Intro;Tischtennis Crack Intro;;;OCS/ECS;;0;;;;;English;1992;;Dytec;1;;v1.0;;TischtennisIntro/Tischtennis.slave;data/whdl/demo/_cracktros/Dytec_Tischtennis.lha;Demo;Crack Intro;;
 demo--wintergamesintro--wintergames;Winter Games Crack Intro;Winter Games Crack Intro;;;OCS/ECS;;0;;;;;English;1986;;High Quality Crackings;1;;v1.0;;WinterGamesIntro/WinterGames.slave;data/whdl/demo/_cracktros/HighQualityCrackings_WiGa.lha;Demo;Crack Intro;;
 demo--scoopexcolorado--scoopex;Colorado Crack Intro;Colorado Crack Intro;;;OCS/ECS;;0;;;;;English;1990;;Scoopex;1;;v1.0;;ScoopexColorado/Scoopex.Slave;data/whdl/demo/_cracktros/Scoopex_Colorado.lha;Demo;Crack Intro;;
-demo--anotherworldintro--anotherworld;Another World Crack Intro;Another World Crack Intro;;;OCS/ECS;;0;;;;Glitchy graphics on AGA;English;1991;;The Company;1;;v1.0;;AnotherWorldIntro/AnotherWorld.slave;data/whdl/demo/_cracktros/TheCompany_AnotherWorld.lha;Demo;Crack Intro;;
+demo--anotherworldintro--anotherworld;Another World Crack Intro;Another World Crack Intro;;;OCS/ECS;;0;;;;;English;1991;;The Company;1;;v1.0;;AnotherWorldIntro/AnotherWorld.slave;data/whdl/demo/_cracktros/TheCompany_AnotherWorld.lha;Demo;Crack Intro;;
 demo--3dworldtennisintro--3dworldtennis;3D World Tennis Crack Intro;3D World Tennis Crack Intro;;;OCS/ECS;;0;;;;;English;1992;;Copyright Destroyers Inc;1;;v1.0;;3DWorldTennisIntro/3dWorldTennis.slave;data/whdl/demo/_cracktros/CopyrightDestroyersInc_3DT.lha;Demo;Crack Intro;;
 demo--ics francogirardellihockey--ics;Franco Girardelli Hockey Crack Intro;Franco Girardelli Hockey Crack Intro;;;OCS/ECS;;0;;;;;English;1991;;ICS;1;;v1.0;;ICS FrancoGirardelliHockey/ICS.slave;data/whdl/demo/_cracktros/ICS_FrancoGirardelliHockey.lha;Demo;Crack Intro;;
 demo--birthday--birthday;Birthday;Birthday;;;OCS/ECS;;0;;;;;English;1993;;Turnips;1;;v1.0;;Birthday/Birthday.Slave;data/whdl/demo/B/Birthday_v1.0_Turnips.lha;Demo;Musicdisk;;
@@ -4450,7 +4450,7 @@ demo-notwhdl--crystal-floor13;Floor 13 Crack Intro;Floor 13 Crack Intro;;;OCS/EC
 demo-notwhdl--crystal-overdrive;Overdrive Crack Intro;Overdrive Crack Intro;;;OCS/ECS;;0;;;;;English;1993;;Crystal;1;;;;;data/whdl/demo-notwhdl/Crystal-Overdrive.lha;Demo;Crack Intro;;
 demo-notwhdl--crystal-napoleon;Napoleon Crack Intro;Napoleon Crack Intro;;;OCS/ECS;;0;;;;;English;1991;;Crystal;1;;;;;data/whdl/demo-notwhdl/Crystal-Napoleon.lha;Demo;Crack Intro;;
 demo-notwhdl--crystal-panzakickboxing;Panza Kick Boxing Crack Intro;Panza Kick Boxing Crack Intro;;;OCS/ECS;;0;;;;;English;1991;;Crystal;1;;;;;data/whdl/demo-notwhdl/Crystal-PanzaKickBoxing.lha;Demo;Crack Intro;;
-demo-notwhdl--crystal-anotherworld;Another World Crack Intro;Another World Crack Intro;;;OCS/ECS;;0;;;;Minor glitch on AGA;English;1991;;Crystal;1;;;;;data/whdl/demo-notwhdl/Crystal-AnotherWorld.lha;Demo;Crack Intro;;
+demo-notwhdl--crystal-anotherworld;Another World Crack Intro;Another World Crack Intro;;;OCS/ECS;;0;;;;;English;1991;;Crystal;1;;;;;data/whdl/demo-notwhdl/Crystal-AnotherWorld.lha;Demo;Crack Intro;;
 demo-notwhdl--crystal-scrabble;Scrabble Crack Intro;Scrabble Crack Intro;;;OCS/ECS;;0;;;;;English;1993;;Crystal;1;;;;;data/whdl/demo-notwhdl/Crystal-Scrabble.lha;Demo;Crack Intro;;
 demo-notwhdl--crystal-assassin;Assassin Crack Intro;Assassin Crack Intro;;;OCS/ECS;;0;;;;;English;1992;;Crystal;1;;;;;data/whdl/demo-notwhdl/Crystal-Assassin.lha;Demo;Crack Intro;;
 demo-notwhdl--crystal-myth;Myth Crack Intro;Myth Crack Intro;;;OCS/ECS;;0;;;;;English;1992;;Crystal;1;;;;;data/whdl/demo-notwhdl/Crystal-Myth.lha;Demo;Crack Intro;;
@@ -4469,7 +4469,7 @@ demo-notwhdl--paranoimia-heatwave;Heat Wave Crack Intro;Heat Wave Crack Intro;;;
 demo-notwhdl--paranoimia-anotherfirst;Another Amiga First Crack Intro;Another First Crack Intro;;;OCS/ECS;;0;;;Glitchy vectors on fast machines;;English;1990;;Paranoimia;1;;;;;data/whdl/demo-notwhdl/Paranoimia-AnotherFirst.lha;Demo;Crack Intro;;
 demo-notwhdl--classic-skiordie;Ski Or Die Crack Intro;Ski Or Die Crack Intro;;;OCS/ECS;;0;;;;;English;1991;;Classic;1;;;;;data/whdl/demo-notwhdl/Classic-SkiOrDie.lha;Demo;Crack Intro;;
 demo-notwhdl--classic-armourgeddon2;Armour-Geddon II Crack Intro;Armour-Geddon II Crack Intro;;;OCS/ECS;;0;;;;;English;1994;;Classic;1;;;;;data/whdl/demo-notwhdl/Classic-ArmourGeddon2.lha;Demo;Crack Intro;;
-demo-notwhdl--classic-magicfly;Magic Fly Crack Intro;Magic Fly Crack Intro;;;OCS/ECS;;0;;;Wrong palette on AGA;;English;1990;;Classic;1;;;;;data/whdl/demo-notwhdl/Classic-MagicFly.lha;Demo;Crack Intro;;
+demo-notwhdl--classic-magicfly;Magic Fly Crack Intro;Magic Fly Crack Intro;;;OCS/ECS;;0;;;;;English;1990;;Classic;1;;;;;data/whdl/demo-notwhdl/Classic-MagicFly.lha;Demo;Crack Intro;;
 demo-notwhdl--classic-ultimav;Ultima V Crack Intro;Ultima V Crack Intro;;;OCS/ECS;;0;;;;;English;1990;;Classic;1;;;;;data/whdl/demo-notwhdl/Classic-UltimaV.lha;Demo;Crack Intro;;
 demo-notwhdl--classic-aryavaiv;Arya Vaiv Crack Intro;Arya Vaiv Crack Intro;;;OCS/ECS;;0;;;;;English;1994;;Classic;1;;;;;data/whdl/demo-notwhdl/Classic-AryaVaiv.lha;Demo;Crack Intro;;
 demo-notwhdl--endlesspiracy-blockit;Block It Crack Intro;Block It Crack Intro;;;OCS/ECS;;0;;;;;English;1990;;Endless Piracy;1;;;;;data/whdl/demo-notwhdl/EndlessPiracy-BlockIt.lha;Demo;Crack Intro;;
@@ -4480,7 +4480,7 @@ demo-notwhdl--bs1&tkt-frostbyte;Frost Byte Crack Intro;Frost Byte Crack Intro;;;
 demo-notwhdl--hoodlum-dennis;Dennis Crack Intro;Dennis Crack Intro;;;OCS/ECS;;0;;;;;English;1993;;Hoodlum;1;;;;;data/whdl/demo-notwhdl/Hoodlum-Dennis.lha;Demo;Crack Intro;;
 demo-notwhdl--hoodlum-muzzy;Muzzy Crack Intro;Muzzy Crack Intro;;;OCS/ECS;;0;;;;;English;1994;;Hoodlum;1;;;;;data/whdl/demo-notwhdl/Hoodlum-Muzzy.lha;Demo;Crack Intro;;
 demo-notwhdl--hoodlum-biing;Biing Crack Intro;Biing Crack Intro;;;OCS/ECS;;0;;;;;English;1995;;Hoodlum;1;;;;;data/whdl/demo-notwhdl/Hoodlum-Biing.lha;Demo;Crack Intro;;
-demo-notwhdl--thrust-empire;Empire Crack Intro;Empire Crack Intro;;;OCS/ECS;;0;;;;Too fast on fast machines;English;1988;;Thrust;1;;;;;data/whdl/demo-notwhdl/Thrust-Empire.lha;Demo;Crack Intro;;
+demo-notwhdl--thrust-empire;Empire Crack Intro;Empire Crack Intro;;;OCS/ECS;;0;;;;;English;1988;;Thrust;1;;;;;data/whdl/demo-notwhdl/Thrust-Empire.lha;Demo;Crack Intro;;
 demo-notwhdl--redsector-plutos;Plutos Crack Intro;Plutos Crack Intro;;;OCS/ECS;;0;;;;;English;1987;;Red Sector Inc.;1;;;;;data/whdl/demo-notwhdl/RedSector-Plutos.lha;Demo;Crack Intro;;
 demo-notwhdl--prestige-superstardust;Super Stardust Crack Intro;Super Stardust Crack Intro;;;OCS/ECS;;0;;;;;English;1994;;Prestige;1;;;;;data/whdl/demo-notwhdl/Prestige-SuperStardust.lha;Demo;Crack Intro;;
 demo--megademo3nsflt--megademo3nsflt;North Star Megademo 3;North Star Megademo 3;;;OCS/ECS;;0;;;;;English;1989;;North Star & Fairlight;1;;v1.0;;Megademo3NSFLT/Megademo3NSFLT.Slave;data/whdl/demo/M/Megademo3_v1.0_NorthStar&Fairlight.lha;Demo;Demo;;
