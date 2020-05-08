@@ -306,7 +306,7 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
         open(base_path + ".txt", mode="w", encoding="latin-1").write(ags_make_note(entry, note))
 
     # image
-    if entry and "id" in entry and util.is_file(os.path.join("data", "img", entry["id"] + ".iff")):
+    if not g_args.no_img and entry and "id" in entry and util.is_file(os.path.join("data", "img", entry["id"] + ".iff")):
         shutil.copyfile(os.path.join("data", "img", entry["id"] + ".iff"), base_path + ".iff")
     return
 
@@ -564,7 +564,9 @@ def main():
     parser.add_argument("--all_games", dest="all_games", action="store_true", default=False, help="include all games in database")
     parser.add_argument("--all_demos", dest="all_demos", action="store_true", default=False, help="include all demos in database")
     parser.add_argument("--all_versions", dest="all_versions", action="store_true", default=False, help="include all non-redundant versions of titles (if --all_games)")
+    parser.add_argument("--no_autolists", dest="no_autolists", action="store_true", default=False, help="don't add any auto-lists")
 
+    parser.add_argument("--no_img", dest="no_img", action="store_true", default=False, help="don't copy screenshots")
     parser.add_argument("--ecs_versions", dest="ecs", action="store_true", default=False, help="prefer OCS/ECS versions (if --all_games)")
     parser.add_argument("--force_ntsc", dest="ntsc", action="store_true", default=False, help="force NTSC video mode")
 
@@ -627,7 +629,8 @@ def main():
         if g_args.all_demos:
             ags_add_all("Demo")
 
-        ags_create_autoentries()
+        if not g_args.no_autolists:
+            ags_create_autoentries()
 
         # extract whdloaders
         if g_args.verbose: print("extracting {} content archives...".format(len(g_entries.items())))
