@@ -23,7 +23,7 @@ image-ntsc:
 	/Applications/FS-UAE\ Launcher.app/Contents/FS-UAE.app/Contents/MacOS/fs-uae /Users/optiroc/Development/AGSImager/data/cloner/cloner.fs-uae
 
 test-image:
-	@pipenv run ./ags_build.py -v -c configs/Test.yaml --all_demos -o ~/Temp/AGSImager
+	@pipenv run ./ags_build.py -v -c configs/Test.yaml -o ~/Temp/AGSImager
 	/Applications/FS-UAE\ Launcher.app/Contents/FS-UAE.app/Contents/MacOS/fs-uae /Users/optiroc/Development/AGSImager/data/cloner/cloner-test.fs-uae
 
 screenshots:
