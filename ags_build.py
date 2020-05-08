@@ -218,8 +218,9 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
 
     # fix path name
     path_prefix = get_ags2_dir()
-    path_suffix = path.split(path_prefix + "/")[-1]
-    path = path_prefix + "/" + "/".join(list(map(ags_fix_filename, path_suffix.split("/"))))
+    if path != path_prefix:
+        path_suffix = path.split(path_prefix + "/")[-1]
+        path = path_prefix + "/" + "/".join(list(map(ags_fix_filename, path_suffix.split("/"))))
 
     # base name
     title = rank + ". " if rank else ""
@@ -312,14 +313,15 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
 
 def ags_create_entries(entries, path, note=None, ranked_list=False):
     global g_entries
-    if not path:
-        return
 
-    # make dir and note
+    # make dir
     base_dir = get_ags2_dir()
-    for d in path:
-        base_dir = os.path.join(base_dir, d[:26].strip() + ".ags")
+    if path:
+        for d in path:
+            base_dir = os.path.join(base_dir, d[:26].strip() + ".ags")
     util.make_dir(base_dir)
+
+    # make note
     if note:
         note = "\n".join([textwrap.fill(p, AGS_INFO_WIDTH) for p in note.replace("\\n", "\n").splitlines()])
         open(base_dir[:-4] + ".txt", mode="w", encoding="latin-1").write(note)
