@@ -2598,8 +2598,8 @@
 
 - '[ Demo Scene ]':
   - note: A sample of demo scene releases.
-  - Favorites:
-    - note: Awesome or somehow significant releases according to 1.000.000 BOYS aka Megaboys.
+  - All Time Favorites:
+    - note: Seminal, or somehow significant, releases according to 1.000.000 BOYS aka Megaboys.
     - 15YearsOfFame
     - 3DDemo2
     - Abyss-Coda
@@ -2672,3 +2672,15 @@
     - TerminalFuckup
     - UnitA FA18Interceptor
     - WorldOfCommodore
+  - Coding Challenges:
+    - note: Coding challenges posed to the scene.
+    - Chessboard Zoomer:
+      - Loonies-MyLuckyNumber
+      - Oxyron-LordsOfTheBoards
+      - TEK-Deadline2018Inv
+      - Tulou-ExclusiveGalore
+    - Rubber Cube:
+      - Lemon-NatsuNoGomu
+      - Loonies-Octorubber
+      - Spaceballs-Dubzilla
+      - Spaceballs-Rubzilla
