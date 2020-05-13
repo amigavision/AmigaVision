@@ -1,0 +1,5 @@
+cd WHD:N/ROM03
+assign >NIL: ROM3a: ""
+ROM3_Intro >NIL:
+wbrun >NIL: ROM_3 SYNC
+assign >NIL: ROM3a: REMOVE
