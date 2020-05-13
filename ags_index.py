@@ -30,7 +30,7 @@ def index_whdload_archives(basedir):
                 path = os.path.join(r, file)
                 slave_category = path[len(basedir) + 1:].split(os.sep)[0]
 
-                if slave_category == "game" or slave_category == "demo":
+                if slave_category in ["game", "demo", "mags"]:
                     arc = LhaFile(path)
                     for n in arc.namelist():
                         n = n.replace("\\", "/")
@@ -48,7 +48,7 @@ def index_whdload_archives(basedir):
                                     pass
                                 d[slave_id] = {"id": slave_id, "archive_path": path, "slave_path": n, "slave_version": slave_ver}
 
-                elif slave_category == "game-notwhdl" or slave_category == "demo-notwhdl":
+                elif slave_category in ["game-notwhdl", "demo-notwhdl", "mags-notwhdl"]:
                     slave_id = slave_category + "--" + os.path.splitext(os.path.basename(path))[0].lower()
                     if util.is_file(path.replace(".lha", ".run")):
                         d[slave_id] = {"id": slave_id, "archive_path": path, "slave_path": None, "slave_version": None}

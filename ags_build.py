@@ -58,6 +58,7 @@ def get_entry(name):
         "demo--{}--{}".format(n, n),
         "game-notwhdl--{}%".format(n),
         "demo-notwhdl--{}%".format(n),
+        "mags-notwhdl--{}%".format(n),
         "game--{}%".format(n),
         "demo--{}%".format(n),
         "%--{}%".format(n),
@@ -80,6 +81,8 @@ def entry_valid(entry):
         return True
     elif isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "demo-notwhdl--" in id:
         return True
+    elif isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "mags-notwhdl--" in id:
+        return True
     return False
 
 def entry_is_aga(entry):
@@ -92,6 +95,8 @@ def entry_is_notwhdl(entry):
     if entry_valid(entry) and "game-notwhdl--" in entry["id"]:
         return True
     if entry_valid(entry) and "demo-notwhdl--" in entry["id"]:
+        return True
+    if entry_valid(entry) and "mags-notwhdl--" in entry["id"]:
         return True
     return False
 
@@ -126,21 +131,26 @@ def get_ags2_dir():
 def get_whd_dir(entry):
     if entry_is_notwhdl(entry):
         return os.path.join(g_clone_dir, "DH1", "WHD", "N")
-    p = "0-9" if entry["slave_dir"][0].isnumeric() else entry["slave_dir"][0].upper()
-    if entry["id"].startswith("demo--"):
-        return os.path.join(g_clone_dir, "DH1", "WHD", "D", p)
     else:
-        return os.path.join(g_clone_dir, "DH1", "WHD", "G", p)
+        p = "0-9" if entry["slave_dir"][0].isnumeric() else entry["slave_dir"][0].upper()
+        if entry["id"].startswith("demo--"):
+            return os.path.join(g_clone_dir, "DH1", "WHD", "D", p)
+        if entry["id"].startswith("mags--"):
+            return os.path.join(g_clone_dir, "DH1", "WHD", "M", p)
+        else:
+            return os.path.join(g_clone_dir, "DH1", "WHD", "G", p)
 
 def get_amiga_whd_dir(entry):
     if not entry_valid(entry):
         return None
-    if entry_is_notwhdl(entry):
+    elif entry_is_notwhdl(entry):
         return None
     else:
         p = "0-9" if entry["slave_dir"][0].isnumeric() else entry["slave_dir"][0].upper()
         if entry["id"].startswith("demo--"):
             return "WHD:D/" + p + "/" + entry["slave_dir"]
+        elif entry["id"].startswith("mags--"):
+            return "WHD:M/" + p + "/" + entry["slave_dir"]
         else:
             return "WHD:G/" + p + "/" + entry["slave_dir"]
 
@@ -369,7 +379,7 @@ def ags_create_autoentries():
             ags_create_entry(None, entry, os.path.join(path, "[ All Games ].ags", letter + ".ags"), None, None)
             ags_create_entry(None, entry, os.path.join(path, "[ All Games, by year ].ags", year + ".ags"), None, None)
 
-        # Demos
+        # Demos / Disk Mags
         if g_args.all_demos and entry["category"].lower() == "demo":
             group = entry["publisher"]
             if not group:
@@ -379,15 +389,16 @@ def ags_create_autoentries():
             group = group[:AGS_LIST_WIDTH]
             group_letter = group[0].upper()
 
-            if entry["subcategory"].lower().startswith("crack"):
-                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, crack intros ].ags"), None, None, prefix=group)
-            if entry["subcategory"].lower().startswith("intro"):
-                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, 1-64KB ].ags"), None, None)
-
-            ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by title ].ags", letter + ".ags"), None, None)
-            #ags_create_entry(None, value, os.path.join(d_path, "[ Demos by group ].ags", group + ".ags"), None, None)
-            ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=group)
-            ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
+            if entry["subcategory"].lower().startswith("disk mag"):
+                ags_create_entry(None, entry, os.path.join(d_path, "[ Disk Magazines ].ags"), None, None)
+            else:
+                if entry["subcategory"].lower().startswith("crack"):
+                    ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, crack intros ].ags"), None, None, prefix=group)
+                if entry["subcategory"].lower().startswith("intro"):
+                    ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, 1-64KB ].ags"), None, None)
+                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by title ].ags", letter + ".ags"), None, None)
+                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=group)
+                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
 
         # Run-scripts for randomizer
         if entry["category"].lower() == "game" and not entry["issues"]:
@@ -411,6 +422,8 @@ def ags_create_autoentries():
         open(os.path.join(d_path, "[ Demos, 1-64KB ].txt"), mode="w", encoding="latin-1").write("Browse demos in the 1/4/40/64KB categories.")
     if util.is_dir(os.path.join(d_path, "[ Demos, crack intros ].ags")):
         open(os.path.join(d_path, "[ Demos, crack intros ].txt"), mode="w", encoding="latin-1").write("A glimpse into the origins of the demo scene.")
+    if util.is_dir(os.path.join(d_path, "[ Disk Magazines ].ags")):
+        open(os.path.join(d_path, "[ Disk Magazines ].txt"), mode="w", encoding="latin-1").write("A selection of scene disk magazines.")
     if util.is_dir(os.path.join(path, "[ Issues ].ags")):
         open(os.path.join(path, "[ Issues ].txt"), mode="w", encoding="latin-1").write(
             "Titles with known issues on Minimig-AGA.\n(Please report any new or resolved issues!)")
@@ -628,6 +641,7 @@ def main():
             ags_add_all("Game")
         if g_args.all_demos:
             ags_add_all("Demo")
+            ags_add_all("Mags")
 
         if not g_args.no_autolists:
             ags_create_autoentries()
