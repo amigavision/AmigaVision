@@ -1,6 +1,6 @@
 --- # AGS2 Menu structure
 - About:
-  - note: '\n\n\n\n\n\n             (MegaAGS v20200513)'
+  - note: '\n\n\n\n\n\n             (MegaAGS v20200515)'
   - Nothing to see here:
     - note: Intentionally left blank.
 - Best-of Lists:
@@ -2599,7 +2599,7 @@
 - '[ Demo Scene ]':
   - note: A sample of demo scene releases.
   - All Time Favorites:
-    - note: Seminal, or somehow significant, releases according to 1.000.000 BOYS aka Megaboys.
+    - note: Seminal, or otherwise significant, releases according to 1.000.000 BOYS aka Megaboys.
     - 15YearsOfFame
     - 3DDemo2
     - Abyss-Coda
@@ -2635,10 +2635,8 @@
     - MajorRelease
     - MaximumVelocity
     - Megademo2Rebels
-    - MegademoAvenger
     - MegademoBeastieBoys
     - MegademoBudbrain
-    - MegademoDeathstar
     - MegademoJoy&MGF&TJC
     - MegademoNorthStar
     - Megademo3NSFLT
@@ -2674,12 +2672,14 @@
     - WorldOfCommodore
   - Coding Challenges:
     - note: Coding challenges posed to the scene.
-    - Chessboard Zoomer:
+    - Checkerboard Challenge:
+      - note: Zooming checkerboard challenge at GERP 2018.
       - Loonies-MyLuckyNumber
       - Oxyron-LordsOfTheBoards
       - TEK-Deadline2018Inv
       - Tulou-ExclusiveGalore
-    - Rubber Cube:
+    - Rubber Cube Challenge:
+      - note: The rubber cube challenge of 2014.
       - Lemon-NatsuNoGomu
       - Loonies-Octorubber
       - Spaceballs-Dubzilla
