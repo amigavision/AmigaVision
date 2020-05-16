@@ -1,6 +1,6 @@
 --- # AGS2 Menu structure
 - About:
-  - note: '\n\n\n\n\n\n             (MegaAGS v20200515)'
+  - note: '\n\n\n\n\n\n             (MegaAGS v20200516)'
   - Nothing to see here:
     - note: Intentionally left blank.
 - Best-of Lists:
@@ -905,6 +905,7 @@
     - FightinSpirit
     - FireAndIceCD32
     - Flashback
+    - FlimbosQuest
     - Flink
     - FlyingSharkSE
     - GhostsNGoblins
@@ -933,6 +934,7 @@
     - Lollypop
     - LostVikings
     - MagicJohnsonFstBrkArcadia
+    - MagicPockets
     - MarvinsMarvellousAdv
     - MeanArenas
     - MegaTwins
@@ -997,6 +999,7 @@
     - TenPinBowlingArcadia
     - Thexder
     - TinToyAdventure
+    - TitusTheFox
     - Toki
     - Tony&Friends
     - TotalFootball
