@@ -4,22 +4,23 @@
 [fs-uae]
 accuracy = 0
 amiga_model = A1200
-chip_memory = 2048
 cpu = 68040-NOMMU
-fade_in_duration = 0
-fade_out_duration = 0
+jit_compiler = 1
+chip_memory = 2048
+motherboard_ram = 32768
 floppy_drive_0 = $HOME/Development/AGSImager/data/cloner/cloner.adf
 floppy_drive_speed = 0
 floppy_drive_volume = 0
+writable_floppy_images = 1
 hard_drive_0 = $HOME/Temp/AGSImager/Test.hdf
 hard_drive_1 = $HOME/Temp/AGSImager/clone_me
-jit_compiler = 1
 joystick_port_1 = none
 kickstart_file = Kickstart 3.1 r40.68 A1200.rom
-motherboard_ram = 32768
 save_disk = 0
 texture_filter = nearest
 viewport = * * * * => 0 0 640 480
 window_height = 524
 window_width = 650
 scale = integer
+fade_in_duration = 0
+fade_out_duration = 0

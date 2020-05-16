@@ -1,3 +1,6 @@
+stack 98304
+stack
+echo ""
 format drive DH0: name "Amiga" quick noicons
 echo ""
 format drive DH1: name "Games" quick noicons
