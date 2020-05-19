@@ -346,18 +346,21 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
             n = name[0]
             title_note = name[1]
 
-        e, pe = get_entry(n)
         # use preferred (fuzzy) entry
-        if not "--" in name and pe:
-            e = pe
-        if not e:
-            print(" > not_available:", n)
+        e, pe = get_entry(n)
+        if e is None and pe is None:
+            print(" > warning! no entry for '{}'".format(n))
         else:
-            g_entries[e["id"]] = e
-        rank = None
-        if ranked_list:
-            rank = str(pos).zfill(len(str(len(entries))))
-        ags_create_entry(n, e, base_dir, title_note, rank)
+            if not "--" in name and pe:
+                e = pe
+            if not e:
+                print(" > not_available:", n)
+            else:
+                g_entries[e["id"]] = e
+            rank = None
+            if ranked_list:
+                rank = str(pos).zfill(len(str(len(entries))))
+            ags_create_entry(n, e, base_dir, title_note, rank)
 
     return
 
