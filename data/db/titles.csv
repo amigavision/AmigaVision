@@ -780,7 +780,7 @@ demo--vectorballsdemo--vectorballsdemo;Vector-Balls Demo;Vector-Balls Demo;;;OCS
 demo--voyagefantasyforce--voyagefantasyforce;Voyage;Voyage;;;OCS;;0;;;;;English;1991;;Fantasy Force;1;;v1.0;;VoyageFantasyForce/VoyageFantasyForce.slave;data/whdl/demo/V/Voyage_v1.0_FantasyForce.lha;Demo;Demo;;
 demo--vaginalmassacre--vaginalmassacre;Vaginal Massacre;Vaginal Massacre;;;OCS;;0;;;;;English;1993;;UDO;1;;v1.01;;VaginalMassacre/VaginalMassacre.slave;data/whdl/demo/V/VaginalMassacre_v1.01_UDO.lha;Demo;Demo;;
 demo--vectordance--vectordance;Vector Dance;Vector Dance;;;OCS;;0;;;;;English;1991;;Cult;1;;v1.0;;Vectordance/Vectordance.Slave;data/whdl/demo/V/Vectordance_v1.0_Cult.lha;Demo;Demo;;
-demo--vectordemotristanlorach--vectordemotristanlorach;Vector All Times;Vector All Times;;;OCS;;0;;;;;English;1991;;Tristan Lorach;1;;v1.0;;VectorDemoTristanLorach/VectorDemoTristanLorach.Slave;data/whdl/demo/V/VectorDemo_v1.0_TristanLorach.lha;Demo;Demo;;
+demo--vectordemotristanlorach--vectordemotristanlorach;Natural Movement;Natural Movement;;;OCS;;0;;;;;English;1991;;Tristan Lorach;1;;v1.0;;VectorDemoTristanLorach/VectorDemoTristanLorach.Slave;data/whdl/demo/V/VectorDemo_v1.0_TristanLorach.lha;Demo;Demo;;
 demo--vectorexterminator--vectorexterminator;Vector Exterminator;Vector Exterminator;;;OCS;;0;;;;;English;1991;;Shining;1;;v1.0;;VectorExterminator/VectorExterminator.Slave;data/whdl/demo/V/VectorExterminator_v1.0_Shining.lha;Demo;Demo;;
 demo--virtualworld--virtualworld;Virtual World;Virtual World;;;OCS;;0;;;;;English;1991;;TomSoft;1;;v1.0;;VirtualWorld/VirtualWorld.Slave;data/whdl/demo/V/VirtualWorld_v1.0_TomSoft.lha;Demo;Demo;;
 demo--vectorbobdemo--vectorbobdemo;Vectorballs;Vectorballs;;;OCS;;0;;;;;English;1990;;Dual Crew;1;;v1.0;;VectorBobDemo/VectorBobDemo.slave;data/whdl/demo/V/VectorBobDemo_v1.0_DualCrew.lha;Demo;Intro 40K;;
@@ -4398,7 +4398,7 @@ demo--lostsymphony--lostsymphony;Lost Symphony;Lost Symphony;;;OCS;;0;;;;;Englis
 game-notwhdl--tinyinvaders;Tiny Invaders;Tiny Invaders;;;OCS;;0;;;;;English;2020;Pink;Abyss;1;;;;;data/whdl/game-notwhdl/TinyInvaders.lha;Game;;-2;-2
 game--westphaserfr--westphaserfr;West Phaser;West Phaser;1;game--westphaser--westphaser;OCS;;1;;1;;;French;1989;Loriciel;Loriciel;6 (taking turns);;v1.2;;WestPhaserFr/WestPhaserFr.Slave;data/whdl/game/W/WestPhaser_v1.2_Fr.lha;Game;;1690;2593
 game--leisuresuitlarry3de--leisuresuitlarry3de;Leisure Suit Larry 3: Passionate Patti In Pursuit Of The Pulsating Pectorals!;Leisure Suit Larry 3;1;game--leisuresuitlarry3--leisuresuitlarry3;OCS;;1;;;;;German;1990;Sierra;Sierra;1;;v2.0;;LeisureSuitLarry3De/LeisureSuitLarry3De.Slave;data/whdl/game/L/LeisureSuitLarry3_v2.0_De.lha;Game;Adventure - Graphic;870;675
-game--sensibleworldofsoccer2020--sensibleworldofsoccer2020;Sensible World Of Soccer 2020;SWOS 2020;;;OCS;;0;;;;Improvement v1.2 by sensiblesoccer.de;English;2020;sensiblesoccer.de;sensiblesoccer.de;64 (2 simultaneously);;v1.7;;SensibleWorldOfSoccer2020/SensibleWorldOfSoccer2020.Slave;data/whdl/game/S/SensibleWorldOfSoccer2020_v1.7.lha;Game;Sports - Soccer;-2;-2
+game--sensibleworldofsoccer2020--sensibleworldofsoccer2020;Sensible World Of Soccer 2020;SWOS 2020;;;OCS;;0;;;;Improvement by sensiblesoccer.de;English;2020;sensiblesoccer.de;sensiblesoccer.de;64 (2 simultaneously);;v1.7;;SensibleWorldOfSoccer2020/SensibleWorldOfSoccer2020.Slave;data/whdl/game/S/SensibleWorldOfSoccer2020_v1.7.lha;Game;Sports - Soccer;-2;-2
 demo--atmosphere--atmosphere;Atmosphere;Atmosphere;;;OCS;;0;;;;;English;1993;;Stone Arts;1;;v1.01;;Atmosphere/Atmosphere.slave;data/whdl/demo/A/Atmosphere_v1.01_StoneArts.lha;Demo;Demo;;
 game--gods1mbntsc--gods1mbntsc;Gods;Gods;1;game--godsntsc--godsntsc;OCS;;2;;;;;English;1991;Bitmap Brothers;Konami, Renegade;1;CUSTOM2=1;v3.1;1MB;Gods1MBNTSC/Gods1MBNTSC.slave;data/whdl/game/G/Gods_v3.1_1MB_NTSC.lha;Game;;2754;1194
 game--gods1mb--gods1mb;Gods;Gods;1;game--godsntsc--godsntsc;OCS;;0;;;;;English;1991;Bitmap Brothers;Konami, Renegade;1;CUSTOM2=1;v3.1;1MB;Gods1MB/Gods1MB.slave;data/whdl/game/G/Gods_v3.1_1MB_0666.lha;Game;;2754;1194
@@ -4484,7 +4484,6 @@ demo-notwhdl--thrust-empire;Empire Crack Intro;Empire Crack Intro;;;OCS;;0;;;;;E
 demo-notwhdl--redsector-plutos;Plutos Crack Intro;Plutos Crack Intro;;;OCS;;0;;;;;English;1987;;Red Sector Inc.;1;;;;;data/whdl/demo-notwhdl/RedSector-Plutos.lha;Demo;Crack Intro;;
 demo-notwhdl--prestige-superstardust;Super Stardust Crack Intro;Super Stardust Crack Intro;;;OCS;;0;;;;;English;1994;;Prestige;1;;;;;data/whdl/demo-notwhdl/Prestige-SuperStardust.lha;Demo;Crack Intro;;
 demo--megademo3nsflt--megademo3nsflt;North Star Megademo 3;North Star Megademo 3;;;OCS;;0;;;;;English;1989;;North Star & Fairlight;1;;v1.02;;Megademo3NSFLT/Megademo3NSFLT.slave;data/whdl/demo/M/Megademo3_v1.02_NorthStar&Fairlight.lha;Demo;Demo;;
-demo-notwhdl--virtualdreams-loshuivos;Los Huivos;Los Huivos;;;OCS;;0;;;;;English;1993;;Virtual Dreams;1;;;;;data/whdl/demo-notwhdl/VirtualDreams-LosHuivos.lha;Demo;Demo;;
 demo-notwhdl--melon-acidtrip;Acid Trip;Acid Trip;;;OCS;;0;;;;;English;1994;;Melon Dezign;1;;;;;data/whdl/demo-notwhdl/Melon-AcidTrip.lha;Demo;Demo;;
 demo-notwhdl--melon-gurumeditation;Guru Meditation;Guru Meditation;;;OCS;;0;;;;;English;1993;;Melon Dezign;1;;;;;data/whdl/demo-notwhdl/Melon-GuruMeditation.lha;Demo;Demo;;
 demo-notwhdl--melon-booo2;Booo II;Booo II;;;OCS;;0;;;;;English;1994;;Melon Dezign;1;;;;;data/whdl/demo-notwhdl/Melon-Booo2.lha;Demo;Demo;;
@@ -4630,7 +4629,7 @@ demo-notwhdl--limbo-knightrider;Knight Rider;Knight Rider;;;OCS;;0;;;;;English;1
 demo-notwhdl--pacific-2ndwave;2nd Wave;2nd Wave;;;OCS;;0;;;;;English;2014;;Pacific;1;;;;;data/whdl/demo-notwhdl/Pacific-2ndWave.lha;Demo;Demo;;
 demo-notwhdl--pacific-koobz;Koobz;Koobz;;;OCS;;0;;;;;English;2016;;Pacific;1;;;;;data/whdl/demo-notwhdl/Pacific-Koobz.lha;Demo;Intro 64K;;
 demo-notwhdl--pacific-koobz2;Koobz2;Koobz2;;;OCS;;0;;;;;English;2020;;Pacific;1;;;;;data/whdl/demo-notwhdl/Pacific-Koobz2.lha;Demo;Intro 64K;;
-demo-notwhdl--pacific-ohfive;Oh Five!;Oh Five;;;OCS;;0;;;;;English;2015;;Pacific;1;;;;;data/whdl/demo-notwhdl/Pacific-OhFive.lha;Demo;Demo;;
+demo-notwhdl--pacific-ohfive;Oh Five!;Oh Five;;;OCS;;0;;;Graphical glitches;;English;2015;;Pacific;1;;;;;data/whdl/demo-notwhdl/Pacific-OhFive.lha;Demo;Demo;;
 demo-notwhdl--yodel-stopfascism;Stop Fascism;Stop Fascism;;;OCS;;0;;;;;English;1993;;Yodel;1;;;;;data/whdl/demo-notwhdl/Yodel-StopFascism.lha;Demo;Intro 64K;;
 demo-notwhdl--yodel-compusphereiii;Compusphere III;Compusphere III;;;OCS;;0;;;;;English;1994;;Yodel;1;;;;;data/whdl/demo-notwhdl/Yodel-CompusphereIII.lha;Demo;Intro 40K;;
 demo-notwhdl--ycrew-bolkerway;Bolker Way;Bolker Way;;;OCS;;0;;;;;English;2019;;Y-Crew;1;;;;;data/whdl/demo-notwhdl/YCrew-BolkerWay.lha;Demo;Demo;;
