@@ -388,6 +388,8 @@ def ags_create_autoentries():
                 group = group[4:]
             group = group[:AGS_LIST_WIDTH]
             group_letter = group[0].upper()
+            if group_letter.isnumeric():
+                group_letter = "0-9"
 
             if entry["subcategory"].lower().startswith("disk mag"):
                 ags_create_entry(None, entry, os.path.join(d_path, "[ Disk Magazines ].ags"), None, None)
