@@ -4667,3 +4667,12 @@ demo-notwhdl--rno-fruitcake;Fruitcake;Fruitcake;;;OCS;;0;;;;;English;2006;;RNO;1
 demo-notwhdl--rno-fourskin;Four Skin;Four Skin;;;OCS;;0;;;;;English;2011;;RNO;1;;;;;data/whdl/demo-notwhdl/RNO-Fourskin.lha;Demo;Intro 4K;;
 game--gulp--gulp;Gulp!;Gulp;;;OCS;;0;;;;;English;1994;I.C.E.;I.C.E.;1;;v1.0;;Gulp/Gulp.Slave;data/whdl/game/G/Gulp_v1.0_2632.lha;Game;;2807;1954
 game--gulpcd32--gulpcd32;Gulp!;Gulp;1;game--gulp--gulp;AGA/CD32;1;0;;;;;English;1994;I.C.E.;I.C.E.;1;;v1.0;;GulpCD32/GulpCD32.Slave;data/whdl/game/G/Gulp_v1.0_CD32.lha;Game;;4106;1954
+demo-notwhdl--spaceballs-noisejesus;Noisejesus;Noisejesus;;;OCS;;0;;;;;English;2000;;Spaceballs;1;;;;;data/whdl/demo-notwhdl/Spaceballs-Noisejesus.lha;Demo;Intro 4K;;
+demo-notwhdl--cryptoburners-brainstate;brain-state-in-a-box;Brain State In A Box;;;AGA;1;0;;;;;English;1994;;Cryptoburners;1;;;;;data/whdl/demo-notwhdl/Cryptoburners-BrainState.lha;Demo;Demo;;
+demo-notwhdl--abyss-preschoolno1;Preschool #1;Preschool 1;;;OCS;;0;;;;;English;2018;;Abyss;1;;;;;data/whdl/demo-notwhdl/Abyss-PreschoolNo1.lha;Demo;Music Disk;;
+demo-notwhdl--abyss-preschoolno2;Preschool #2;Preschool 2;;;OCS;;0;;;;;English;2019;;Abyss;1;;;;;data/whdl/demo-notwhdl/Abyss-PreschoolNo2.lha;Demo;Music Disk;;
+demo-notwhdl--artwork-dawn;Dawn;Dawn;;;AGA;1;0;;;;;English;1995;;Artwork;1;;;;;data/whdl/demo-notwhdl/Artwork-Dawn.lha;Demo;Intro 4K;;
+demo-notwhdl--julietcase-cccp;CCCP;CCCP;;;AGA;1;0;;;;;English;1994;;Juliet & Case;1;;;;;data/whdl/demo-notwhdl/JulietCase-CCCP.lha;Demo;Demo;;
+demo-notwhdl--axis-headcase;Headcase;Headcase;;;AGA;1;0;;;;;English;1995;;Axis;1;;;;;data/whdl/demo-notwhdl/Axis-Headcase.lha;Demo;Intro 40K;;
+demo-notwhdl--axis-siesta;Siesta;Siesta;;;AGA;1;0;;;;;English;1995;;Axis;1;;;;;data/whdl/demo-notwhdl/Axis-Siesta.lha;Demo;Intro 40K;;
+demo-notwhdl--chryseishoodlum-rose;Rose;Rose;;;AGA;1;0;;;;;English;1995;;Chryseis & Hoodlum;1;;;;;data/whdl/demo-notwhdl/ChryseisHoodlum-Rose.lha;Demo;Intro 40K;;
