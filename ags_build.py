@@ -254,7 +254,7 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
         if entry["category"] == "Demo":
             title += " (" + entry["publisher"] + ")"
         else:
-            title += " (" + entry["hardware"].replace("/ECS", "") + ")"
+            title += " (" + entry["hardware"].replace("/ECS", "").replace("AGA/CD32", "CD32").replace("OCS/CDTV", "CDTV").replace("/", "-") + ")"
         if only_script:
             title = title.replace(" ", "_")
     if len(title) > max_w:
@@ -348,19 +348,16 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
 
         # use preferred (fuzzy) entry
         e, pe = get_entry(n)
-        if e is None and pe is None:
-            print(" > warning! no entry for '{}'".format(n))
+        if not "--" in name and pe:
+            e = pe
+        if not e and not pe:
+            print(" > no entry for '{}'".format(n))
         else:
-            if not "--" in name and pe:
-                e = pe
-            if not e:
-                print(" > not_available:", n)
-            else:
-                g_entries[e["id"]] = e
-            rank = None
-            if ranked_list:
-                rank = str(pos).zfill(len(str(len(entries))))
-            ags_create_entry(n, e, base_dir, title_note, rank)
+            g_entries[e["id"]] = e
+        rank = None
+        if ranked_list:
+            rank = str(pos).zfill(len(str(len(entries))))
+        ags_create_entry(n, e, base_dir, title_note, rank)
 
     return
 
