@@ -1,0 +1,8 @@
+IF EXISTS WHDSaves:powerglove.hof
+  copy WHDSaves:powerglove.hof WHD:N/Powerglove QUIET
+ENDIF
+cd WHD:N/Powerglove
+Powerglove >NIL:
+IF EXISTS WHD:N/Powerglove/powerglove.hof
+  copy WHD:N/Powerglove/powerglove.hof WHDSaves: QUIET
+ENDIF
