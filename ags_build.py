@@ -126,7 +126,7 @@ def get_games_dir():
     return os.path.join(g_clone_dir, "DH1")
 
 def get_ags2_dir():
-    return os.path.join(get_games_dir(), "AGS2")
+    return os.path.join(get_boot_dir(), "AGS2")
 
 def get_whd_dir(entry):
     if entry_is_notwhdl(entry):
@@ -181,9 +181,14 @@ def ags_make_note(entry, add_note):
     max_w = AGS_INFO_WIDTH
     note = ""
     system = entry["hardware"]
-    system += " (NTSC)" if entry["ntsc"] > 0 else " (PAL)"
-    system += " (MT32)" if "mt32" in entry["id"] else ""
-    system += " (Gamepad)" if entry["gamepad"] else ""
+    system += "/NTSC" if entry["ntsc"] > 0 else "/PAL"
+
+    peripherals = []
+    if entry["gamepad"]: peripherals.append("gamepad")
+    if entry["lightgun"]: peripherals.append("light gun")
+    if "mt32" in entry["id"]: peripherals.append("MT-32")
+    if peripherals:
+        system += " (" + " ,".join(peripherals) + ")"
 
     if "category" in entry and entry["category"].lower() == "game":
         note += ("Title:      {}".format(entry["title"]))[:max_w] + "\n"
@@ -203,7 +208,7 @@ def ags_make_note(entry, add_note):
         note += ("Group:      {}".format(entry["publisher"]))[:max_w] + "\n"
         note += ("Year:       {}".format(entry["year"]))[:max_w] + "\n"
         if entry["subcategory"].lower() != "demo":
-            note += ("Category:   Demo / {}".format(entry["subcategory"]))[:max_w] + "\n"
+            note += ("Category:   {}".format(entry["subcategory"]))[:max_w] + "\n"
         else:
             note += "Category:   Demo\n"
         note += ("Hardware:   {}".format(system))[:max_w] + "\n"

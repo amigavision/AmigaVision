@@ -1,4 +1,4 @@
-.PHONY: default env index image clean screenshots sqlite
+.PHONY: default env env-rm index image image-ntsc test-image screenshots sqlite clean
 
 default:
 	@echo No default action
@@ -33,4 +33,4 @@ sqlite:
 	@pipenv run ./ags_index.py -v --make-sqlite
 
 clean:
-	@pipenv --rm
+	@rm -rf ~/Temp/AGSImager/clone_me/
