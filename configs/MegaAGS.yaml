@@ -1,6 +1,6 @@
 --- # AGS2 Menu structure
 - About:
-  - note: '\n\n\n\n\n\n              (MegaAGS-20200520)'
+  - note: '\n\n\n\n\n\n              (MegaAGS-20200606)'
   - Nothing to see here:
     - note: Intentionally left blank.
 - Best-of Lists:
@@ -1341,7 +1341,6 @@
     - SuperSkidmarks
     - SWIV
     - Twintris
-    - Worms2MB
     - Worms
 
   - Competetive:
@@ -2010,8 +2009,8 @@
     - WormsDC
     - ZanyGolf
 
-- TEN x TEN:
-  - note: 10 games for every year between 1986 and 1995, with the goal of giving a vertical slice of what was available at the time.\n\n(While the Amiga computer premiered mid-1985, hardware and software availability was very limited for the first months.)
+- Decennial Spotlight:
+  - note: 10 games for every year between 1986 and 1995. Slicing across genres to find the worthwhile and/or representative titles available at the time.\n\n(While the Amiga computer premiered mid-1985, hardware and software availability was very limited for the first months.)
   - "1986":
     - BardsTale
     - Brataccas
@@ -2048,14 +2047,14 @@
   - "1989":
     - BattleSquadron
     - BloodMoney
-    - DogsOfWar
     - FutureWars
-    - GrandMonsterSlam
     - ItCameFromTheDesert
+    - NorthAndSouth
     - OilImperium
     - Populous
     - ShadowOfTheBeast
     - Silkworm
+    - SimCity
   - "1990":
     - Cadaver
     - Elvira
@@ -2095,10 +2094,10 @@
     - ChaosEngine
     - HiredGuns
     - HistoryLine
+    - IndianaJonesAtlantisAdv
     - Lionheart
     - Settlers
     - Syndicate
-    - Walker
     - WizNLiz
   - "1994":
     - Banshee
