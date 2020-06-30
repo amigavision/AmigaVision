@@ -67,7 +67,7 @@ to both the d-pad and an extra button. Here's how:
 - First, make sure to have CD32 controller mode enabled.
 - Enter "Define joystick buttons" mode
 - Map directions as usual
-- Map the first three buttons (red, Blue Yellow) to A, B and Y.
+- Map the first three buttons (red, blue and yellow) to A, B and Y.
 - The fourth button (green) is practically never used, and can be mapped
   to Select, ZL or similar.
 - Go ahead and map Right and Left Triggers and Play/Pause.
@@ -138,14 +138,14 @@ the addition of a more modern desktop from 1992.
 
 Amiga, with the AGA chipset onwards (1992) is capable of using HD resolutions.
 The HD720 monitor driver is included, and will make it possible to run the
-Amiga Workbench at 1280×720 pixels. 
+Amiga Workbench at 1280×720 pixels.
 
 To change from the default 640×256 resolution to 1280×720, double-click the
 "Amiga" disk icon, then "Prefs", then "ScreenMode" to select the resolution.
-You want to locate the ones starting with "HD720:", and pick the one you 
-prefer. The Amiga UI is designed for a 2:1 pixel ratio in general, so 
-1280×360 would be the most accurate way to do that. You can also run at 
-1280×720, especially if you add a modern icon set to it that is built for 
+You want to locate the ones starting with "HD720:", and pick the one you
+prefer. The Amiga UI is designed for a 2:1 pixel ratio in general, so
+1280×360 would be the most accurate way to do that. You can also run at
+1280×720, especially if you add a modern icon set to it that is built for
 1×1 icons.
 
 Then, trigger the MiSTer menu, and select Audio & Video -> Aspect Ratio
