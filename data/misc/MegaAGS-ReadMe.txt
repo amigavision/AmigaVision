@@ -1,30 +1,23 @@
 MegaAGS for Minimig-AGA_MiSTer
 ==============================
 
+NB! The 2020.07.01 release includes a new custom kickstart ROM and makes use
+of the new shared folder functionality for game saves.
+If upgrading from an earlier release it is recommended to remove all old files
+before upgrading.
+Also, make sure you run the latest MiSTer main and Minimig core.
+
 Setup:
 ------
-- Copy MegaAGS.hdf, MegaAGS-Saves.hdf and MegaAGS-Kickstart.rom from the
-  Amiga directory to /games/Amiga the corresponding directory on MiSTer.
+- Copy MegaAGS.hdf, MegaAGS-Kickstart.rom and the "shared" directory from
+  the Amiga directory to /games/Amiga on the MiSTer SD card.
 
-- When updating to a new version of the main HDF image, keep your old
-  MegaAGS-Saves.hdf so any saved games are carried over.
+- Copy minimig.cfg and minimig_vadjust.dat from the config directory to the
+  corresponding directory on MiSTer. The vadjust file contains viewport crop
+  settings to enable perfect 5x (NTSC) and 4x (PAL) scaling ratios at 1080p.
 
-- Copy minimig_vadjust.dat from the config directory to the corresponding
-  directory on MiSTer. It contains viewport cropping settings to make nice
-  5x (NTSC) and 4x (PAL) scaling ratios for 1080p output resolution possible.
-
-- Add the following core overrides to MiSTer.ini (these settings are further
-  explained in the "Video Modes" paragraph):
-
-  [minimig]
-  video_mode_ntsc=8
-  video_mode_pal=9
-  vscale_mode=2
-  vsync_adjust=2
-
-- Either copy minimig.cfg from the config directory to the corresponding
-  directory on MiSTer, or load the Minimig core and set up a profile with the
-  following settings:
+  If you prefer to configure the main settings manually, these are recommended
+  settings used in the bundled minimig.cfg:
 
   df0: no disk
   df1: no disk
@@ -33,8 +26,7 @@ Setup:
     A600/A1200 IDE: On
     Primary Master: Enabled
                     games/Amiga/MegaAGS.hdf
-    Primary Slave: Enabled
-                    games/Amiga/MegaAGS-Saves.hdf
+    Primary Slave: Disabled
     Secondary Master: Disabled
     Secondary Slave: Disabled
   CPU & Chipset:
@@ -55,6 +47,25 @@ Setup:
     Video area by: Blank
     Aspect ratio: 4:3
     Stereo mix: 50%
+
+- Add the following recommended core overrides to MiSTer.ini (these settings
+  are further explained in the "Video Modes" paragraph):
+
+  [minimig]
+  video_mode_ntsc=8
+  video_mode_pal=9
+  vscale_mode=2
+  vsync_adjust=2
+
+
+CPU performance notes:
+----------------------
+Some games and demos, particularily if released in 1993 or later, will enjoy
+a substantial performance improvement with CPU D-Cache enabled.
+Especially 3D polygon games can benefit from the CPU boost, while others may
+run too fast or not work at all, so it's worth experimenting with the option
+on a case by case basis.
+The CPU D-Cache option is available in OSD -> CPU & Chipset.
 
 
 Controls:
@@ -77,6 +88,17 @@ to both the d-pad and an extra button. Here's how:
 While a keyboard and mouse isn't strictly necessary to play most action games,
 it is definitely recommended for the full Amiga experience.
 Thank you for playing!
+
+
+Save files:
+-----------
+For games with save functionality you need to quit the game using the DEL key
+for the save data to be written to the SD card.
+The save directory is /games/Amiga/shared/WHDSaves.
+
+In the "[ Settings ]" menu you can choose between a few alternative quit key
+options, which if set will override the preconfigured key. The active quit
+key is displayed on the splash screen shown when a game is loading
 
 
 Video Modes:
@@ -109,16 +131,6 @@ frequencies and frequent mode changes you may need to experiment with setting
 vsync_adjust to 1 or 0, instead of the ideal setting of 2.
 
 
-Save files:
------------
-For games that save you need to quit (using the key displayed on the splash
-screen shown when a game is loading) for the changes to be actually saved to
-disk. The saves end up in "DH0:WHDSaves".
-
-In the "[ Settings ]" menu you can choose between a few quit key options,
-which if set will override the preconfigured (per-title) key.
-
-
 Non-working games:
 ------------------
 About 20 games are currently not working due to CPU features not yet
@@ -130,11 +142,11 @@ over time.
 
 Workbench:
 ----------
-From the launcher, you can hit the Esc key to exit into Workbench, the Amiga's
-desktop system.
+From the launcher, you can hit the ESC key to exit into Workbench, the AmigaOS
+graphical desktop environment.
 
 You can explore the world's first multitasking 16-bit computer from 1985 with
-the addition of a more modern desktop from 1992.
+the addition of a more modern desktop from 1992, AmigaOS 3.
 
 Amiga, with the AGA chipset onwards (1992) is capable of using HD resolutions.
 The HD720 monitor driver is included, and will make it possible to run the
@@ -145,8 +157,8 @@ To change from the default 640×256 resolution to 1280×720, double-click the
 You want to locate the ones starting with "HD720:", and pick the one you
 prefer. The Amiga UI is designed for a 2:1 pixel ratio in general, so
 1280×360 would be the most accurate way to do that. You can also run at
-1280×720, especially if you add a modern icon set to it that is built for
-1×1 icons.
+1280×720, especially if you add a modern icon set to it that is designed for
+square pixel icons.
 
 Then, trigger the MiSTer menu, and select Audio & Video -> Aspect Ratio
 -> 16:9.
@@ -172,11 +184,3 @@ mouse in port 1 and joystick in port 2. If using only one joystick, enable
 the "Joy Swap" option in the Chipset menu to route the first MiSTer joypad
 to port 1. It's also worth noting that all Arcadia games make use of a
 2-button joystick.
-
-
-Performance notes:
-------------------
-Some games will enjoy a nice performance boost with CPU D-Cache enabled, while
-others will not work or run too fast. Especially 3D polygon games can benefit
-from the faster CPU, so it's worth experimenting with the option on a case by
-case basis. The D-Cache option is available in OSD -> CPU & Chipset.

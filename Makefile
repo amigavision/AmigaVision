@@ -18,6 +18,10 @@ image:
 	@pipenv run ./ags_build.py -v -c configs/MegaAGS.yaml --all_games --all_demos -d data/extra_dirs/Music::DH2 -o ~/Temp/AGSImager
 	/Applications/FS-UAE\ Launcher.app/Contents/FS-UAE.app/Contents/MacOS/fs-uae /Users/optiroc/Development/AGSImager/data/cloner/cloner.fs-uae
 
+image-fast:
+	@pipenv run ./ags_build.py -v -c configs/MegaAGS.yaml -d data/extra_dirs/Music::DH2 -o ~/Temp/AGSImager
+	/Applications/FS-UAE\ Launcher.app/Contents/FS-UAE.app/Contents/MacOS/fs-uae /Users/optiroc/Development/AGSImager/data/cloner/cloner.fs-uae
+
 image-ntsc:
 	@pipenv run ./ags_build.py -v -c configs/MegaAGS.yaml --all_games --force_ntsc -d data/extra_dirs/Music::DH2 -o ~/Temp/AGSImager
 	/Applications/FS-UAE\ Launcher.app/Contents/FS-UAE.app/Contents/MacOS/fs-uae /Users/optiroc/Development/AGSImager/data/cloner/cloner.fs-uae
