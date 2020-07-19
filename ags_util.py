@@ -179,10 +179,10 @@ def read_csv(csv_path, new_db_path):
                "developer" TEXT,
                "publisher" TEXT,
                "players" TEXT,
-               "slave_args" TEXT,
-               "slave_version" TEXT,
-               "slave_variant" TEXT,
-               "slave_path" TEXT,
+               "subordinate_args" TEXT,
+               "subordinate_version" TEXT,
+               "subordinate_variant" TEXT,
+               "subordinate_path" TEXT,
                "archive_path" TEXT,
                "category" TEXT,
                "subcategory" TEXT,
@@ -194,11 +194,11 @@ def read_csv(csv_path, new_db_path):
         dr = csv.DictReader(f, delimiter=";")
         r = [(l["id"], l["title"], l["title_short"], l["redundant"], l["preferred_version"], l["hardware"], l["aga"], l["ntsc"],
               l["gamepad"], l["lightgun"], l["issues"], l["hack"], l["language"], l["year"], l["developer"], l["publisher"],
-              l["players"], l["slave_args"], l["slave_version"], l["slave_variant"], l["slave_path"], l["archive_path"],
+              l["players"], l["subordinate_args"], l["subordinate_version"], l["subordinate_variant"], l["subordinate_path"], l["archive_path"],
               l["category"], l["subcategory"], l["hol_id"], l["lemon_id"]) for l in dr]
         c.executemany('''INSERT INTO titles (
                            id, title, title_short, redundant, preferred_version, hardware, aga, ntsc, gamepad, lightgun, issues,
-                           hack, language, year, developer, publisher, players, slave_args, slave_version, slave_variant, slave_path,
+                           hack, language, year, developer, publisher, players, subordinate_args, subordinate_version, subordinate_variant, subordinate_path,
                            archive_path, category, subcategory, hol_id, lemon_id)
                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);''', r)
     conn.commit()

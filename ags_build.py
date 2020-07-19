@@ -33,10 +33,10 @@ def get_entry(name):
         entry = dict(entry)
         if entry_is_notwhdl(entry):
             return entry
-        if entry_valid(entry) and entry["slave_path"].find("/") > 0:
-            entry["slave_dir"] = entry["slave_path"].split("/")[0]
-            entry["slave_name"] = entry["slave_path"].split("/")[1]
-            entry["slave_id"] = entry["slave_name"][:-6]
+        if entry_valid(entry) and entry["subordinate_path"].find("/") > 0:
+            entry["subordinate_dir"] = entry["subordinate_path"].split("/")[0]
+            entry["subordinate_name"] = entry["subordinate_path"].split("/")[1]
+            entry["subordinate_id"] = entry["subordinate_name"][:-6]
             return entry
         return None
 
@@ -75,7 +75,7 @@ def get_entry(name):
     return None, None
 
 def entry_valid(entry):
-    if isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "slave_path" in entry:
+    if isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "subordinate_path" in entry:
         return True
     elif isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "game-notwhdl--" in id:
         return True
@@ -103,18 +103,18 @@ def entry_is_notwhdl(entry):
 def is_amiga_devicename(str):
     return len(str) == 3 and str[0].isalpha() and str[1].isalpha() and str[2].isnumeric()
 
-def get_whd_slavename(entry):
+def get_whd_subordinatename(entry):
     if entry_valid(entry):
-        name = entry["slave_name"]
+        name = entry["subordinate_name"]
         return name
     else:
         return None
 
-def get_short_slavename(name):
+def get_short_subordinatename(name):
     excess = len(name) - 30
     if excess > 0:
         parts = name.split(".")
-        if len(parts) == 2 and parts[1].lower() == "slave":
+        if len(parts) == 2 and parts[1].lower() == "subordinate":
             parts[0] = parts[0][:-excess]
             return ".".join(parts)
     return name
@@ -132,7 +132,7 @@ def get_whd_dir(entry):
     if entry_is_notwhdl(entry):
         return os.path.join(g_clone_dir, "DH1", "WHD", "N")
     else:
-        p = "0-9" if entry["slave_dir"][0].isnumeric() else entry["slave_dir"][0].upper()
+        p = "0-9" if entry["subordinate_dir"][0].isnumeric() else entry["subordinate_dir"][0].upper()
         if entry["id"].startswith("demo--"):
             return os.path.join(g_clone_dir, "DH1", "WHD", "D", p)
         if entry["id"].startswith("mags--"):
@@ -146,13 +146,13 @@ def get_amiga_whd_dir(entry):
     elif entry_is_notwhdl(entry):
         return None
     else:
-        p = "0-9" if entry["slave_dir"][0].isnumeric() else entry["slave_dir"][0].upper()
+        p = "0-9" if entry["subordinate_dir"][0].isnumeric() else entry["subordinate_dir"][0].upper()
         if entry["id"].startswith("demo--"):
-            return "WHD:D/" + p + "/" + entry["slave_dir"]
+            return "WHD:D/" + p + "/" + entry["subordinate_dir"]
         elif entry["id"].startswith("mags--"):
-            return "WHD:M/" + p + "/" + entry["slave_dir"]
+            return "WHD:M/" + p + "/" + entry["subordinate_dir"]
         else:
-            return "WHD:G/" + p + "/" + entry["slave_dir"]
+            return "WHD:G/" + p + "/" + entry["subordinate_dir"]
 
 def extract_entries(entries):
     unarchived = set()
@@ -168,7 +168,7 @@ def extract_whd(entry):
     elif "archive_path" in entry and util.is_file(entry["archive_path"]):
         dest = get_whd_dir(entry)
         util.lha_extract(entry["archive_path"], dest)
-        info_path = os.path.join(dest, entry["slave_dir"] + ".info")
+        info_path = os.path.join(dest, entry["subordinate_dir"] + ".info")
         if util.is_file(info_path):
             os.remove(info_path)
     else:
@@ -285,10 +285,10 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
         if whd_entrypath:
             whd_vmode = "NTSC" if entry["ntsc"] > 0 else "PAL"
             if g_args.ntsc: whd_vmode = "NTSC"
-            whd_slave = get_whd_slavename(entry)
+            whd_subordinate = get_whd_subordinatename(entry)
             whd_cargs = "BUTTONWAIT"
-            if entry["slave_args"]:
-                whd_cargs += " " + entry["slave_args"]
+            if entry["subordinate_args"]:
+                whd_cargs += " " + entry["subordinate_args"]
             runfile = "cd \"{}\"\n".format(whd_entrypath)
             runfile += "IF NOT EXISTS ENV:whdlspdly\n"
             runfile += "  echo 200 >ENV:whdlspdly\n"
@@ -297,9 +297,9 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
             runfile += "  echo \"\" >ENV:whdlqtkey\n"
             runfile += "ENDIF\n"
             runfile += "IF EXISTS ENV:whdlvmode\n"
-            runfile += "  whdload >NIL: \"{}\" PRELOAD $whdlvmode {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_cargs)
+            runfile += "  whdload >NIL: \"{}\" PRELOAD $whdlvmode {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_subordinate, whd_cargs)
             runfile += "ELSE\n"
-            runfile += "  whdload >NIL: \"{}\" PRELOAD {} {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_vmode, whd_cargs)
+            runfile += "  whdload >NIL: \"{}\" PRELOAD {} {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_subordinate, whd_vmode, whd_cargs)
             runfile += "ENDIF\n"
         else:
             runfile = "echo \"Title not available.\"" + "\n" + "wait 2"

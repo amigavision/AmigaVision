@@ -28,30 +28,30 @@ def index_whdload_archives(basedir):
                 if count % 100 == 0:
                     print(".", end="", flush=True)
                 path = os.path.join(r, file)
-                slave_category = path[len(basedir) + 1:].split(os.sep)[0]
+                subordinate_category = path[len(basedir) + 1:].split(os.sep)[0]
 
-                if slave_category in ["game", "demo", "mags"]:
+                if subordinate_category in ["game", "demo", "mags"]:
                     arc = LhaFile(path)
                     for n in arc.namelist():
                         n = n.replace("\\", "/")
-                        if n.lower().endswith(".slave"):
+                        if n.lower().endswith(".subordinate"):
                             if len(n.split("/")) > 2:
-                                pass  # skip slaves beneath root
+                                pass  # skip subordinates beneath root
                             else:
-                                slave_id = slave_category + "--" + n[:-6].replace("/", "--").lower()
-                                slave_ver = "v1.0"
+                                subordinate_id = subordinate_category + "--" + n[:-6].replace("/", "--").lower()
+                                subordinate_ver = "v1.0"
                                 try:
                                     verstr = file[:-4].split("_")[1]
                                     if verstr.startswith("v"):
-                                        slave_ver = verstr
+                                        subordinate_ver = verstr
                                 except Exception:
                                     pass
-                                d[slave_id] = {"id": slave_id, "archive_path": path, "slave_path": n, "slave_version": slave_ver}
+                                d[subordinate_id] = {"id": subordinate_id, "archive_path": path, "subordinate_path": n, "subordinate_version": subordinate_ver}
 
-                elif slave_category in ["game-notwhdl", "demo-notwhdl", "mags-notwhdl"]:
-                    slave_id = slave_category + "--" + os.path.splitext(os.path.basename(path))[0].lower()
+                elif subordinate_category in ["game-notwhdl", "demo-notwhdl", "mags-notwhdl"]:
+                    subordinate_id = subordinate_category + "--" + os.path.splitext(os.path.basename(path))[0].lower()
                     if util.is_file(path.replace(".lha", ".run")):
-                        d[slave_id] = {"id": slave_id, "archive_path": path, "slave_path": None, "slave_version": None}
+                        d[subordinate_id] = {"id": subordinate_id, "archive_path": path, "subordinate_path": None, "subordinate_version": None}
 
     print("\n", flush=True)
     return d
@@ -80,7 +80,7 @@ def main():
             if r["archive_path"] and not util.is_file(r["archive_path"]):
                 print("archive removed:", r["id"])
                 print("  >>", r["archive_path"])
-                db.cursor().execute("UPDATE titles SET archive_path=NULL,slave_path=NULL,slave_version=NULL WHERE id=?;", (r["id"],))
+                db.cursor().execute("UPDATE titles SET archive_path=NULL,subordinate_path=NULL,subordinate_version=NULL WHERE id=?;", (r["id"],))
                 print()
 
         # enumerate whdl archives, correlate with db
@@ -93,8 +93,8 @@ def main():
                 continue
             for row in rows:
                 if not row["archive_path"]:
-                    db.cursor().execute("UPDATE titles SET archive_path=?,slave_path=?,slave_version=? WHERE id=?;",
-                                        (arc["archive_path"], arc["slave_path"], arc["slave_version"], row["id"]))
+                    db.cursor().execute("UPDATE titles SET archive_path=?,subordinate_path=?,subordinate_version=? WHERE id=?;",
+                                        (arc["archive_path"], arc["subordinate_path"], arc["subordinate_version"], row["id"]))
                     print("archive added: " + arc["archive_path"] + " -> " +row["id"])
                     print()
 
