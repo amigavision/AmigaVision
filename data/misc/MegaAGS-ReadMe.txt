@@ -1,11 +1,12 @@
 MegaAGS for Minimig-AGA_MiSTer
 ==============================
 
-NB! The 2020.07.01 release includes a new custom kickstart ROM and makes use
-of the new shared folder functionality for game saves.
+Important notice: Since 2020.07.01 releases include a new custom made kickstart
+ROM and makes use of the new shared folder functionality for game data backups.
 If upgrading from an earlier release it is recommended to remove all old files
 before upgrading.
-Also, make sure you run the latest MiSTer main and Minimig core.
+
+Also, always make sure you run the latest MiSTer main and Minimig core.
 
 Setup:
 ------
@@ -94,11 +95,14 @@ Save files:
 -----------
 For games with save functionality you need to quit the game using the DEL key
 for the save data to be written to the SD card.
-The save directory is /games/Amiga/shared/WHDSaves.
+The save directory is Amiga:WHDSaves.
 
-In the "[ Settings ]" menu you can choose between a few alternative quit key
-options, which if set will override the preconfigured key. The active quit
-key is displayed on the splash screen shown when a game is loading
+In the "[ Options ]" menu there are commands that will backup and restore the
+save data to the MiSTer shared folder.
+
+In the "[ Options ]" menu you can also choose between a few alternative quit
+key options, which if set will override the preconfigured key. The active
+quit key is displayed on the splash screen shown when a game is loading
 
 
 Video Modes:
