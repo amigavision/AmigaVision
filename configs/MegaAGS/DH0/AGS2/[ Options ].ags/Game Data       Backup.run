@@ -1,0 +1,19 @@
+assign >NIL: EXISTS MiSTer:
+if NOT WARN
+  assign >NIL: EXISTS WHDSaves:
+  if NOT WARN
+    if EXISTS MiSTer:WHDSaves.lha
+      copyr MiSTer:WHDSaves.lha RAM:WHDSaves.lha CLONE SILENT
+    endif
+    cd WHDSaves:
+    echo "" >whdsaves
+    echo ""
+    lha -rxzaD r RAM:WHDSaves.lha WHDSaves:
+    copyr RAM:WHDSaves.lha MiSTer:WHDSaves.lha MOVE CLONE SILENT
+    wait 1
+  endif
+else
+  echo ""
+  echo "Shared folder not mounted. Aborting."
+  wait 2
+endif

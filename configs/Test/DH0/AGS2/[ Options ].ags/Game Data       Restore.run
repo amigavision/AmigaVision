@@ -1,0 +1,22 @@
+assign >NIL: EXISTS MiSTer:
+if NOT WARN
+  assign >NIL: EXISTS WHDSaves:
+  if NOT WARN
+    if EXISTS MiSTer:WHDSaves.lha
+      cd WHDSaves:
+      copyr MiSTer:WHDSaves.lha RAM:WHDSaves.lha CLONE SILENT
+      echo ""
+      lha -amD x RAM:WHDSaves.lha
+      copyr RAM:WHDSaves.lha DELETE SILENT
+      wait 1
+    else
+      echo ""
+      echo "No backed up game data to restore."
+      wait 2
+    endif
+  endif
+else
+  echo ""
+  echo "Shared folder not mounted. Aborting."
+  wait 2
+endif
