@@ -1,17 +1,13 @@
 MegaAGS for Minimig-AGA_MiSTer
 ==============================
 
-Important notice: Since 2020.07.01 releases include a new custom made kickstart
-ROM and makes use of the new shared folder functionality for game data backups.
-If upgrading from an earlier release it is recommended to remove all old files
-before upgrading.
-
-Also, always make sure you run the latest MiSTer main and Minimig core.
-
 Setup:
 ------
-- Copy MegaAGS.hdf, MegaAGS-Kickstart.rom and the "shared" directory from
-  the Amiga directory to /games/Amiga on the MiSTer SD card.
+- Copy MegaAGS.hdf, MegaAGS-Saves.hdf, MegaAGS-Kickstart.rom and the "shared"
+  directory from the Amiga directory to /games/Amiga on the MiSTer SD card.
+
+- When updating to a new version of the main HDF image, keep your old
+  MegaAGS-Saves.hdf so any saved games are carried over.
 
 - Copy minimig.cfg and minimig_vadjust.dat from the config directory to the
   corresponding directory on MiSTer. The vadjust file contains viewport crop
@@ -27,7 +23,8 @@ Setup:
     A600/A1200 IDE: On
     Primary Master: Enabled
                     games/Amiga/MegaAGS.hdf
-    Primary Slave: Disabled
+    Primary Slave: Enabled
+                    games/Amiga/MegaAGS-Saves.hdf
     Secondary Master: Disabled
     Secondary Slave: Disabled
   CPU & Chipset:
@@ -94,16 +91,11 @@ Thank you for playing!
 Save files:
 -----------
 For games with save functionality you need to quit the game using the DEL key
-for the save data to be written to the SD card.
-The save directory is Amiga:WHDSaves.
+for the save data to be written to "disk", and thus the SD card.
 
-In the "[ Options ]" menu there are commands that will backup and restore the
-save data to the MiSTer shared folder.
-
-In the "[ Options ]" menu you can also choose between a few alternative quit
-key options, which if set will override the preconfigured key. The active
-quit key is displayed on the splash screen shown when a game is loading
-
+In the "[ Settings ]" menu you can choose between a few alternative quit key
+options, which if set will override the preconfigured key. The active quit
+key is displayed on the splash screen shown when a game is loading
 
 Video Modes:
 ------------
@@ -122,13 +114,11 @@ To also make interlaced resolutions fill the screen, however, you still need
 to enable 0.5x scale mode. In summary, these are the recommended MiSTer.ini
 settings:
 
-```
 [minimig]
 video_mode_ntsc=8
 video_mode_pal=9
 vscale_mode=2
 vsync_adjust=2
-```
 
 Depending on how well your display deals with slightly off-spec refresh
 frequencies and frequent mode changes you may need to experiment with setting
