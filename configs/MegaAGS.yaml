@@ -864,6 +864,7 @@
     - AlienBreedSpecialEdition
     - AlienBreedTA
     - AlienFishFinger
+    - AllTerrainRacing
     - ApanoSin
     - Apidya
     - ApidyaSpecialEdition
@@ -1001,6 +1002,7 @@
     - TableHockeyArcadia
     - TenPinBowlingArcadia
     - Thexder
+    - TinyBobble
     - TinToyAdventure
     - TitusTheFox
     - Toki
@@ -1050,6 +1052,8 @@
     - note: Steer clear of US Gold and there's some decent to good arcade conversions in the Amiga library.
     - Arkanoid
     - BubbleBobble
+    - BuggyBoy
+    - EmpireStrikesBack
     - NewZealandStory
     - NinjaWarriors
     - Pang
@@ -1057,10 +1061,10 @@
     - RainbowIslands
     - RodLand
     - RType
+    - RygarAGA
     - Silkworm
     - SnowBros
-    - BuggyBoy
-    - EmpireStrikesBack
+    - TinyBobble
   - Hacks:
     - note: While not as plentiful as on console platforms, "ROM" hacks and improvements exist on Amiga too.
     - AnotherWorldLostLevel
