@@ -29,7 +29,7 @@ Setup:
     Secondary Slave: Disabled
   CPU & Chipset:
     CPU: 68020
-    D-Cache: OFF
+    D-Cache: ON
     Chipset: AGA
     CD32 Pad: ON
     Joystick Swap: OFF
@@ -58,11 +58,15 @@ Setup:
 
 CPU performance notes:
 ----------------------
-Some games and demos, particularily if released in 1993 or later, will enjoy
-a substantial performance improvement with CPU D-Cache enabled.
-Especially 3D polygon games can benefit from the CPU boost, while others may
-run too fast or not work at all, so it's worth experimenting with the option
-on a case by case basis.
+With the D-Cache option enabled the "020" CPU core will enjoy substantial
+performance improvements, on par with a 030 at 50MHz in many benchmarks.
+Since most WHDL installs include patches to counter bugs introduced when
+running games and demos on a much faster CPU than originally intended,
+having the option on is highly recommended. Not only will booting, browsing
+the menu system and running the Workbench be faster - many games will
+benefit too, especially almost any involving 3D polygon rendering.
+Still, some titles may have bugs or simply run too fast, in which case it's
+worth experimenting with turning the option off.
 The CPU D-Cache option is available in OSD -> CPU & Chipset.
 
 
