@@ -146,20 +146,22 @@ graphical desktop environment.
 You can explore the world's first multitasking 16-bit computer from 1985 with
 the addition of a more modern desktop from 1992, AmigaOS 3.
 
-Amiga, with the AGA chipset onwards (1992) is capable of using HD resolutions.
-The HD720 monitor driver is included, and will make it possible to run the
-Amiga Workbench at 1280×720 pixels.
+To change from the default 640×256 resolution to something like 1280×720 or
+1920×1080 for use with a 16:9 HD display, double-click the "Amiga" disk icon, 
+then "Prefs", then "ScreenMode" to select the resolution.
 
-To change from the default 640×256 resolution to 1280×720, double-click the
-"Amiga" disk icon, then "Prefs", then "ScreenMode" to select the resolution.
-You want to locate the ones starting with "HD720:", and pick the one you
-prefer. The Amiga UI is designed for a 2:1 pixel ratio in general, so
-1280×360 would be the most accurate way to do that. You can also run at
-1280×720, especially if you add a modern icon set to it that is designed for
-square pixel icons.
+You want to locate the ones starting with "MiSTer:", and pick the one you
+prefer.
 
-Then, trigger the MiSTer menu, and select Audio & Video -> Aspect Ratio
--> 16:9.
+If you chose a 16:9 aspect ratio resolution, trigger the MiSTer menu, and 
+select Audio & Video -> Aspect Ratio -> 16:9.
+
+
+Custom scripts:
+---------------
+If you want to run additional scripts on startup, MegaAGS looks for a file
+named Saves:Custom-Startup and runs it, so if you need to run scripts that 
+will survive upgrades of the main image, this is where to put them.
 
 
 Arcadia Systems:
