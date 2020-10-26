@@ -131,7 +131,7 @@ vsync_adjust to 1 or 0, instead of the ideal setting of 2.
 
 Non-working games:
 ------------------
-About 20 games are currently not working due to CPU features not yet
+About 10 games are currently not working due to CPU features not yet
 implemented in the Minimig core. Over the past year compatibility has improved
 a lot, and that trend is likely to continue. A few more titles do not work, or
 are very glitchy, due to other inaccuracies. This will also hopefully improve
@@ -147,20 +147,20 @@ You can explore the world's first multitasking 16-bit computer from 1985 with
 the addition of a more modern desktop from 1992, AmigaOS 3.
 
 To change from the default 640×256 resolution to something like 1280×720 or
-1920×1080 for use with a 16:9 HD display, double-click the "Amiga" disk icon, 
+1920×1080 for use with a 16:9 HD display, double-click the "Amiga" disk icon,
 then "Prefs", then "ScreenMode" to select the resolution.
 
 You want to locate the ones starting with "MiSTer:", and pick the one you
 prefer.
 
-If you chose a 16:9 aspect ratio resolution, trigger the MiSTer menu, and 
+If you chose a 16:9 aspect ratio resolution, trigger the MiSTer menu, and
 select Audio & Video -> Aspect Ratio -> 16:9.
 
 
 Custom scripts:
 ---------------
 If you want to run additional scripts on startup, MegaAGS looks for a file
-named Saves:Custom-Startup and runs it, so if you need to run scripts that 
+named Saves:Custom-Startup and runs it, so if you need to run scripts that
 will survive upgrades of the main image, this is where to put them.
 
 
