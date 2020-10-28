@@ -1,4 +1,4 @@
-stack 98304
+stack 32768
 stack
 echo ""
 format drive DH0: name "Amiga" quick noicons
