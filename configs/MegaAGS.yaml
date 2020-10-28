@@ -1,6 +1,6 @@
 --- # AGS2 Menu structure
 - About:
-  - note: '\n\n\n\n\n\n              (MegaAGS-20200928)'
+  - note: '\n\n\n\n\n\n              (MegaAGS-20201028)'
   - Nothing to see here:
     - note: Intentionally left blank.
 - Best-of Lists:
@@ -895,6 +895,7 @@
     - CosmicSpacehead
     - Crackdown
     - CrazyCars3
+    - Cyberpunks
     - Damage
     - DeathMask
     - Deliverance
@@ -944,6 +945,7 @@
     - Mercs
     - MiamiChase
     - MidnightResistance
+    - MissilesOverXerion
     - MortalKombat
     - MortalKombat2
     - MrNutz
@@ -962,6 +964,7 @@
     - PuttySquad
     - QuasarWars
     - QuikThunderRabbit
+    - Raffles
     - RainbowIslands
     - RoadKill
     - RoadWarsArcadia
@@ -1027,7 +1030,6 @@
     - XtremeRacing
     - YoJoe
     - Ziriax
-    - Zool
     - ZOut
   - Light Gun Support:
     - note: Games with light gun support.\n\n(Not available on MiSTer, most games also feature mouse control however.)
@@ -1332,6 +1334,7 @@
     - JaguarXJ220
     - Lotus
     - Moonstone
+    - Nitro
     - OilImperium
     - Pang
     - PortsOfCall
