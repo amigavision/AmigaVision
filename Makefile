@@ -4,12 +4,10 @@ default:
 	@echo No default action
 
 env:
-	@pip2 install -e dependencies/amitools-0.1.0
 	@pipenv install
 
 env-rm:
 	@pipenv --rm
-	@pip2 uninstall amitools
 
 index:
 	@pipenv run ./ags_index.py -v

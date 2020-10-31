@@ -8,9 +8,10 @@ pylint = "*"
 autopep8 = "*"
 
 [packages]
-ruamel-yaml = "~=0.16.10"
-lhafile = "~=0.2.0"
-pillow = "~=7.1.1"
+ruamel-yaml = "~=0.16.12"
+amitools = "~=0.5.0"
+lhafile = "~=0.2.2"
+pillow = "~=8.0.1"
 
 [requires]
 python_version = "3.8"

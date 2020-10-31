@@ -2,10 +2,7 @@
 
 ## dependencies
 - python3
-- python2
 - [pipenv](https://pipenv.readthedocs.io)
-
-Python 2 is unfortunately required for the Amitools dependency.
 
 ## setup environment
 - `make env`
