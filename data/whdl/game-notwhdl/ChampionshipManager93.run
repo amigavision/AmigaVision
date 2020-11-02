@@ -1,6 +1,6 @@
 IF EXISTS WHDSaves:ChampMan93
-  copy WHDSaves:ChampMan93/#? WHD:N/ChampMan93 ALL QUIET
-  delete >NIL: WHDSaves:ChampMan93/#? ALL FORCE QUIET
+  copy WHDSaves:ChampMan93/#? WHD:N/ChampMan93 ALL FORCE QUIET
+  delete >NIL: WHDSaves:ChampMan93 ALL FORCE QUIET
 ENDIF
 cd WHD:N/ChampMan93
 ChampMan93 >NIL:

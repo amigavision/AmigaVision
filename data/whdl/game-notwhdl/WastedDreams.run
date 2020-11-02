@@ -1,8 +1,8 @@
 IF EXISTS WHDSaves:WastedDreams
   IF EXISTS WHDSaves:WastedDreams/WDstatus
-    copy WHDSaves:WastedDreams/WDstatus S: QUIET
+    copy WHDSaves:WastedDreams/WDstatus S:WDstatus FORCE QUIET
   ENDIF
-  copy WHDSaves:WastedDreams/WDposition#? S: ALL QUIET
+  copy WHDSaves:WastedDreams/WDposition#? S: ALL FORCE QUIET
 ELSE
   makedir WHDSaves:WastedDreams
 ENDIF
@@ -16,8 +16,8 @@ wasted >NIL: i
 assign >NIL: WD: REMOVE
 
 IF EXISTS S:WDstatus
-  copy S:WDstatus WHDSaves:WastedDreams/WDstatus QUIET
-  delete S:WDstatus QUIET
+  copy S:WDstatus WHDSaves:WastedDreams/WDstatus FORCE QUIET
+  delete S:WDstatus FORCE QUIET
 ENDIF
-copy S:WDposition#? WHDSaves:WastedDreams ALL QUIET
-delete >NIL: S:WDposition#? ALL FORCE QUIET
+copy S:WDposition#? WHDSaves:WastedDreams ALL FORCE QUIET
+delete S:WDposition#? ALL FORCE QUIET
