@@ -14,8 +14,9 @@
 ## operation
 - `make index`
   - index WHDLoad archives in the `data/whdl` path
-- `pipenv image`
+- `make image`
   - create the Amiga HDF image and filesystem 
-
-## todo
-- Better documentation ;)
+- `make screenshots`
+  - create scaled IFF images from arbitrary PNG files placed in `screenshots` 
+- `make sqlite`
+  - create sqlite database from `data/db/titles.csv` (for easier viewing and editing)
