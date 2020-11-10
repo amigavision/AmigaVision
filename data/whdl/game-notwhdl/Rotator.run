@@ -1,6 +1,6 @@
 IF EXISTS WHDSaves:Rotator
-  copy WHDSaves:Rotator/#?OPTIONS#? WHD:N/Rotator ALL FORCE QUIET
+  copy WHDSaves:Rotator/#?OPTIONS#? WHD:N/Rotator ALL CLONE QUIET
 ENDIF
 cd WHD:N/Rotator
 ROTATOR3 >NIL:
-copy WHD:N/Rotator/#?OPTIONS#? WHDSaves:Rotator ALL FORCE QUIET
+copy WHD:N/Rotator/#?OPTIONS#? WHDSaves:Rotator ALL CLONE QUIET

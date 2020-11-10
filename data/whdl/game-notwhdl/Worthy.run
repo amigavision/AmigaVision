@@ -1,6 +1,6 @@
 IF EXISTS WHDSaves:Worthy
-  copy WHDSaves:Worthy/#?.dat WHD:N/Worthy ALL FORCE QUIET
+  copy WHDSaves:Worthy/#?.dat WHD:N/Worthy ALL CLONE QUIET
 ENDIF
 cd WHD:N/Worthy
 Worthy >NIL:
-copy WHD:N/Worthy/#?.dat WHDSaves:Worthy ALL FORCE QUIET
+copy WHD:N/Worthy/#?.dat WHDSaves:Worthy ALL CLONE QUIET
