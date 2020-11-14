@@ -157,6 +157,29 @@ If you chose a 16:9 aspect ratio resolution, trigger the MiSTer menu, and
 select Audio & Video -> Aspect Ratio -> 16:9.
 
 
+Internet:
+---------
+The Amiga was also one of the early computers to support connecting to the
+Internet. The image includes some of the basic tools:
+
+* IBrowse - web browser
+* AmFTP - FTP client
+* AmIRC - IRC client
+* AmTelnet - telnet and ssh client
+* YAM - email client
+
+As well as some supporting tools:
+* Miami - TCP/IP stack
+* AmiSSL - Updated SSL libraries that lets the Amiga connect to modern sites
+
+To connect to the internet:
+
+* Start Apps -> Network -> Miami
+* Click "Online"
+* You are now online (Choose Project -> Iconify in the menu to iconify window)
+* Start any of the other apps, e.g. IBrowse to browse the web
+
+
 Custom scripts:
 ---------------
 If you want to run additional scripts on startup, MegaAGS looks for a file
