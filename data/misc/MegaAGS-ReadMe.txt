@@ -72,10 +72,10 @@ The CPU D-Cache option is available in OSD -> CPU & Chipset.
 
 Controls:
 ---------
-Amiga games were generally designed for a one button joystick, which meant
-that "up to jump" (or accelerate) is very common. And awkward. But, have no
-fear, with MiSTer's controller mapping it's easy to bind the up direction
-to both the d-pad and an extra button. Here's how:
+Amiga games were generally designed for one button joysticks, which meant
+that "up to jump" (or accelerate) is very common. If you are using a game pad,
+you might want to use MiSTer's controller mapping to bind the up direction to
+both the D-pad and an extra button. Here's how:
 
 - First, make sure to have CD32 controller mode enabled.
 - Enter "Define joystick buttons" mode
@@ -155,6 +155,35 @@ prefer.
 
 If you chose a 16:9 aspect ratio resolution, trigger the MiSTer menu, and
 select Audio & Video -> Aspect Ratio -> 16:9.
+
+
+Internet:
+---------
+The Amiga was also one of the early computers to support connecting to the
+Internet. The image includes some of the basic tools:
+
+* IBrowse - web browser
+* AmFTP - FTP client
+* AmIRC - IRC client
+* AmTelnet - telnet and ssh client
+* YAM - email client
+
+As well as some supporting tools:
+* Miami - TCP/IP stack
+* AmiSSL - Updated SSL libraries that lets the Amiga connect to modern sites
+
+To connect to the internet:
+
+First, ensure that your core is set up with PPP support:
+Press F12 to bring up the core menu, then press right once to get the "System"
+menu. Make sure the "UART Mode" is set to "PPP".
+
+From the Amiga side, after you have booted to Workbench:
+
+* Start Apps -> Network -> Miami
+* Click "Online"
+* You are now online (Choose Project -> Iconify in the menu to iconify window)
+* Start any of the other apps, e.g. IBrowse to browse the web
 
 
 Custom scripts:
