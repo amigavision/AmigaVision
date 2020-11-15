@@ -174,6 +174,12 @@ As well as some supporting tools:
 
 To connect to the internet:
 
+First, ensure that your core is set up with PPP support:
+Press F12 to bring up the core menu, then press right once to get the "System"
+menu. Make sure the "UART Mode" is set to "PPP".
+
+From the Amiga side, after you have booted to Workbench:
+
 * Start Apps -> Network -> Miami
 * Click "Online"
 * You are now online (Choose Project -> Iconify in the menu to iconify window)
