@@ -72,10 +72,10 @@ The CPU D-Cache option is available in OSD -> CPU & Chipset.
 
 Controls:
 ---------
-Amiga games were generally designed for a one button joystick, which meant
-that "up to jump" (or accelerate) is very common. And awkward. But, have no
-fear, with MiSTer's controller mapping it's easy to bind the up direction
-to both the d-pad and an extra button. Here's how:
+Amiga games were generally designed for one button joysticks, which meant
+that "up to jump" (or accelerate) is very common. If you are using a game pad,
+you might want to use MiSTer's controller mapping to bind the up direction to
+both the D-pad and an extra button. Here's how:
 
 - First, make sure to have CD32 controller mode enabled.
 - Enter "Define joystick buttons" mode
