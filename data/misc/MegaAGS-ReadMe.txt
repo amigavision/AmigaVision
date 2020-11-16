@@ -46,6 +46,9 @@ Setup:
     Aspect ratio: 4:3
     Stereo mix: 50%
 
+- If you want internet connectivity, you also need to set "UART Mode" to "PPP"
+  on the "System" settings page (press right after opening the OSD).
+
 - Add the following recommended core overrides to MiSTer.ini (these settings
   are further explained in the "Video Modes" paragraph):
 
@@ -72,7 +75,7 @@ The CPU D-Cache option is available in OSD -> CPU & Chipset.
 
 Controls:
 ---------
-Amiga games were generally designed for one button joysticks, which meant
+Amiga games were generally designed for one button joysticks, which means
 that "up to jump" (or accelerate) is very common. If you are using a game pad,
 you might want to use MiSTer's controller mapping to bind the up direction to
 both the D-pad and an extra button. Here's how:
@@ -82,10 +85,10 @@ both the D-pad and an extra button. Here's how:
 - Map directions as usual
 - Map the first three buttons (red, blue and yellow) to A, B and Y.
 - The fourth button (green) is practically never used, and can be mapped
-  to Select, ZL or similar.
+  to Select, R2, ZL or similar.
 - Go ahead and map Right and Left Triggers and Play/Pause.
 - When asked to if you want to "setup alternative buttons", do so!
-- Map Up to X, and skip all buttons except Up with the OSD button.
+- Map Up to X, and skip all other buttons with the OSD button.
 
 While a keyboard and mouse isn't strictly necessary to play most action games,
 it is definitely recommended for the full Amiga experience.
@@ -162,15 +165,15 @@ Internet:
 The Amiga was also one of the early computers to support connecting to the
 Internet. The image includes some of the basic tools:
 
-* IBrowse - web browser
 * AmFTP - FTP client
 * AmIRC - IRC client
 * AmTelnet - telnet and ssh client
+* IBrowse - web browser
 * YAM - email client
 
 As well as some supporting tools:
 * Miami - TCP/IP stack
-* AmiSSL - Updated SSL libraries that lets the Amiga connect to modern sites
+* AmiSSL - Updated SSL libraries
 
 To connect to the internet:
 
