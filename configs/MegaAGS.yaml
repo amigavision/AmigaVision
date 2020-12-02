@@ -548,29 +548,39 @@
     - NavySEALs
     - Uridium2
     - YoJoe
-  - Lemon Top 20 (Jan 2019):
+  - Lemon Top 30 (Dec 2020):
     - ranked_list: True
     - note: As voted by lemonamiga.com users
     - SecretOfMonkeyIsland
     - MonkeyIsland2
-    - SensibleWorldOfSoccer9697
     - Settlers
-    - SimonTheSorcerer
+    - SensibleWorldOfSoccer9697
+    - Dune2
+    - Turrican2
     - SlamTilt
     - CannonFodder
-    - Turrican2
-    - Dune2
     - Lemmings
+    - SimonTheSorcerer
     - Flashback
-    - Speedball2
     - Civilization
     - UFOEnemyUnknown
+    - Ambermoon
     - Wings
+    - Speedball2
     - SensibleWorldOfSoccer9596
-    - Syndicate
-    - AnotherWorld
-    - PinballFntsies
+    - WorldCircuit
     - SensibleWorldOfSoccer
+    - AnotherWorld
+    - Syndicate
+    - Pirates
+    - CannonFodder
+    - PinballFntsies
+    - Lotus2
+    - PinballDreams
+    - EyeOfTheBeholder2
+    - IndianaJonesAtlantisAdv
+    - ChaosEngine
+    - Colonization
   - Mr Biffo Top 10:
     - note: The 10 best Amiga games according to Mr Biffo of Digitiser 2000.
     - CannonFodder
@@ -681,6 +691,7 @@
     - note: From /v/'s Recommended Games Wiki
             (vsrecommendedgames.fandom.com/wiki/Amiga)
     - Agony
+    - AnotherWorld
     - Apidya
     - ArabianNights
     - BCKid
@@ -702,7 +713,7 @@
     - RuffNTumble
     - SensibleWorldOfSoccer9697
     - ShadowFighter
-    - ShadowOfTheBeast
+    - ShadowOfTheBeast2
     - SlamTilt
     - Superfrog
     - Turrican
@@ -849,189 +860,6 @@
     - NorthAndSouth
     - OperationStealth
     - RanX
-  - Gamepad Support:
-    - note: Games supporting two or more buttons.
-    - 1943--1943
-    - Aaargh!Arcadia
-    - AfterTheWar
-    - Agony
-    - Aladdin
-    - Alien3
-    - AlienBash2
-    - AlienBreed2
-    - AlienBreed3D2
-    - AlienBreed3D
-    - AlienBreedSpecialEdition
-    - AlienBreedTA
-    - AlienFishFinger
-    - AllTerrainRacing
-    - ApanoSin
-    - Apidya
-    - ApidyaSpecialEdition
-    - ArabianNights
-    - AstroMarineCorps
-    - Badlands
-    - Banshee
-    - BattleSquadron
-    - BCKid
-    - BlackViper
-    - BlastaballArcadia
-    - Blastar
-    - BluesBrothers
-    - BrutalFootball
-    - BubbaNStix
-    - BubbleAndSqueak
-    - BubbleBobble
-    - BumpNBurn
-    - CapitalPunishment
-    - CedricCD32
-    - ChaosEngineCD32
-    - ChaosEngine2
-    - ChaseHQ2
-    - ChuckRock
-    - ChuckRock2
-    - Commando
-    - CoolSpot
-    - CosmicSpacehead
-    - Crackdown
-    - CrazyCars3
-    - Cyberpunks
-    - Damage
-    - DeathMask
-    - Deliverance
-    - DeltaCommandArcadia
-    - DeluxeGalaga
-    - Dennis
-    - DesertStrike
-    - DragonStone
-    - FantasticDizzy
-    - FightinSpirit
-    - FireAndIce
-    - Flashback
-    - FlimbosQuest
-    - Flink
-    - FlyingSharkSE
-    - GhostsNGoblins
-    - Giana2
-    - GianaSistersSE
-    - Gods
-    - GoldenAxe
-    - GravityForce
-    - GreatGianaSisters
-    - GunbeeF99
-    - Hybris
-    - Hydra
-    - Immortal
-    - IncredibleCrashDummies
-    - Intact
-    - JimPower
-    - Joe&MacCavemanNinja
-    - JohnMaddenFootball
-    - JungleStrike
-    - KickOff3
-    - KickOff3EuroChallenge
-    - LeaderBoardArcadia
-    - Leander
-    - Legends
-    - Lionheart
-    - Lollypop
-    - LostVikings
-    - MagicJohnsonFstBrkArcadia
-    - MagicPockets
-    - MarvinsMarvellousAdv
-    - MeanArenas
-    - MegaTwins
-    - MegaTyphoon
-    - Mercs
-    - MiamiChase
-    - MidnightResistance
-    - MissilesOverXerion
-    - MortalKombat
-    - MortalKombat2
-    - MrNutz
-    - NightBreedAction
-    - NinjaMissionArcadia
-    - NinjaWarriors
-    - NorthAndSouth
-    - Oscar
-    - Pegasus
-    - PharaohsMatchArcadia
-    - PinballDreams
-    - Premiere
-    - PrimalRage
-    - ProjectXSE
-    - Puggsy
-    - PuttySquad
-    - QuasarWars
-    - QuikThunderRabbit
-    - Raffles
-    - RainbowIslands
-    - RoadKill
-    - RoadWarsArcadia
-    - RType
-    - RType2
-    - Rubicon
-    - RuffNTumble
-    - RVFHonda
-    - Rygar
-    - Sarcophaser
-    - ShadowDancer
-    - ShadowFighter
-    - ShadowOfTheBeast3
-    - ShaqFu
-    - Shinobi
-    - SideWinderArcadia
-    - Silkworm
-    - SlamTilt
-    - SnowBros
-    - SolomonsKey2
-    - SpaceGun
-    - SpaceRangerArcadia
-    - SperisLegacy
-    - SphericalWorlds
-    - SpotArcadia
-    - Stardust
-    - StarRay
-    - StormLord
-    - StreetFighter2
-    - StreetRacer
-    - SuperCars2
-    - SuperCauldron
-    - SuperFrog
-    - SuperSkidmarks
-    - SuperStardust
-    - SuperStreetFighter2
-    - SuprStrtFtr2Trbo
-    - SWIV
-    - TableHockeyArcadia
-    - TenPinBowlingArcadia
-    - Thexder
-    - TinyBobble
-    - TinToyAdventure
-    - TitusTheFox
-    - Toki
-    - Tony&Friends
-    - TotalFootball
-    - TrapsNTreasures
-    - TreasureIslandDizzy
-    - Turrican
-    - Turrican2
-    - Turrican3
-    - UpScopeArcadia
-    - Virocop
-    - WatchTower
-    - Whizz
-    - WonderDog
-    - WorldDartsArcadia
-    - WorldTrophySoccerArcadia
-    - WormsDC
-    - XenonArcadia
-    - XOut
-    - XP8
-    - XtremeRacing
-    - YoJoe
-    - Ziriax
-    - ZOut
   - Light Gun Support:
     - note: Games with light gun support.\n\n(Not available on MiSTer, most games also feature mouse control however.)
     - Aliex
@@ -2526,6 +2354,7 @@
     - SuperCars2
     - SuperScrambleSimulator
   - Random Access, Storm:
+    - note: Purveyors of fine arcade conversions.
     - BigRun
     - FinalBlow
     - IndyHeat
@@ -2612,16 +2441,14 @@
     - JamesPond
     - JamesPond2
     - JamesPond3
-    - YolandaImage
+    - Yolanda
   - Westwood:
     - Battletech
     - CaliforniaGames
     - DragonStrike
     - Dune2
     - EyeOfTheBeholder
-    - EyeOfTheBeholderAGA
     - EyeOfTheBeholder2
-    - EyeOfTheBeholder2AGA
     - GoofysRailwayExpress
     - Hillsfar
     - LegendOfKyrandia
