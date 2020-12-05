@@ -537,7 +537,8 @@ def build_pfs(config_base_name, verbose):
     part = partitions.pop(0)
     if verbose: print("    > " + part[0])
     r = subprocess.run(["rdbtool", out_hdf,
-                        "add", "start={}".format(num_cyls_rdb), "size={}".format(part[1]),
+                        "add", "name={}".format(part[0]),
+                        "start={}".format(num_cyls_rdb), "size={}".format(part[1]),
                         "fs=PFS3", "block_size={}".format(block_size), "max_transfer=0x0001FE00", "mask=0x7FFFFFFE",
                         "num_buffer=300", "bootable=True"], stdout=subprocess.PIPE)
 
@@ -553,7 +554,8 @@ def build_pfs(config_base_name, verbose):
         if part_end > free_end:
             part_end = free_end
         r = subprocess.run(["rdbtool", out_hdf,
-                            "add", "start={}".format(part_start), "end={}".format(part_end),
+                            "add", "name={}".format(part[0]),
+                            "start={}".format(part_start), "end={}".format(part_end),
                             "fs=PFS3", "block_size={}".format(block_size), "max_transfer=0x0001FE00",
                             "mask=0x7FFFFFFE", "num_buffer=300"], stdout=subprocess.PIPE)
     return
