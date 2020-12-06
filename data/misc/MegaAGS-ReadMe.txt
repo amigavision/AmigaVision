@@ -7,7 +7,7 @@ Setup:
   directory from the Amiga directory to /games/Amiga on the MiSTer SD card.
 
 - When updating to a new version of the main HDF image, keep your old
-  MegaAGS-Saves.hdf so any saved games are carried over.
+  MegaAGS-Saves.hdf so any saved game data is carried over.
 
 - Copy minimig.cfg and minimig_vadjust.dat from the config directory to the
   corresponding directory on MiSTer. The vadjust file contains viewport crop
@@ -46,9 +46,6 @@ Setup:
     Aspect ratio: 4:3
     Stereo mix: 50%
 
-- If you want internet connectivity, you also need to set "UART Mode" to "PPP"
-  on the "System" settings page (press right after opening the OSD).
-
 - Add the following recommended core overrides to MiSTer.ini (these settings
   are further explained in the "Video Modes" paragraph):
 
@@ -62,14 +59,17 @@ Setup:
 CPU performance notes:
 ----------------------
 With the D-Cache option enabled the "020" CPU core will enjoy substantial
-performance improvements, on par with a 030 at 50MHz in many benchmarks.
+performance improvements - on par with a 030 at 50MHz in many benchmarks.
 Since most WHDL installs include patches to counter bugs introduced when
-running games and demos on a much faster CPU than originally intended,
-having the option on is highly recommended. Not only will booting, browsing
+running games on a much faster CPU than originally intended, having the
+option enabled is highly recommended. Not only will booting, browsing
 the menu system and running the Workbench be faster - many games will
-benefit too, especially almost any involving 3D polygon rendering.
-Still, some titles may have bugs or simply run too fast, in which case it's
-worth experimenting with turning the option off.
+benefit too. That is especially true with almost any software involving
+3D polygon rendering.
+
+Still, some titles may have bugs or simply run too fast, in which case
+it may be worth experimenting with disabling D-Cache.
+
 The CPU D-Cache option is available in OSD -> CPU & Chipset.
 
 
@@ -85,14 +85,13 @@ both the D-pad and an extra button. Here's how:
 - Map directions as usual
 - Map the first three buttons (red, blue and yellow) to A, B and Y.
 - The fourth button (green) is practically never used, and can be mapped
-  to Select, R2, ZL or similar.
-- Go ahead and map Right and Left Triggers and Play/Pause.
+  to Select, R2/ZL or similar.
+- Go ahead and map right/left triggers and play/pause.
 - When asked to if you want to "setup alternative buttons", do so!
-- Map Up to X, and skip all other buttons with the OSD button.
+- Skip all choices except "up", which should be mapped to X.
 
 While a keyboard and mouse isn't strictly necessary to play most action games,
 it is definitely recommended for the full Amiga experience.
-Thank you for playing!
 
 
 Save files:
@@ -100,9 +99,10 @@ Save files:
 For games with save functionality you need to quit the game using the DEL key
 for the save data to be written to "disk", and thus the SD card.
 
-In the "[ Settings ]" menu you can choose between a few alternative quit key
+In the "[ Options ]" menu you can choose between a few alternative quit key
 options, which if set will override the preconfigured key. The active quit
 key is displayed on the splash screen shown when a game is loading
+
 
 Video Modes:
 ------------
@@ -151,48 +151,14 @@ the addition of a more modern desktop from 1992, AmigaOS 3.
 
 To change from the default 640×256 resolution to something like 1280×720 or
 1920×1080 for use with a 16:9 HD display, double-click the "Amiga" disk icon,
-then "Prefs", then "ScreenMode" to select the resolution.
-
-You want to locate the ones starting with "MiSTer:", and pick the one you
-prefer.
-
-If you chose a 16:9 aspect ratio resolution, trigger the MiSTer menu, and
-select Audio & Video -> Aspect Ratio -> 16:9.
-
-
-Internet:
----------
-The Amiga was also one of the early computers to support connecting to the
-Internet. The image includes some of the basic tools:
-
-* AmFTP - FTP client
-* AmIRC - IRC client
-* AmTelnet - telnet and ssh client
-* IBrowse - web browser
-* YAM - email client
-
-As well as some supporting tools:
-* Miami - TCP/IP stack
-* AmiSSL - Updated SSL libraries
-
-To connect to the internet:
-
-First, ensure that your core is set up with PPP support:
-Press F12 to bring up the core menu, then press right once to get the "System"
-menu. Make sure the "UART Mode" is set to "PPP".
-
-From the Amiga side, after you have booted to Workbench:
-
-* Start Apps -> Network -> Miami
-* Click "Online"
-* You are now online (Choose Project -> Iconify in the menu to iconify window)
-* Start any of the other apps, e.g. IBrowse to browse the web
+then "Prefs", then "ScreenMode" to select the resolution. Locate the ones
+starting with "MiSTer:", and pick the one you prefer.
 
 
 Custom scripts:
 ---------------
 If you want to run additional scripts on startup, MegaAGS looks for a file
-named Saves:Custom-Startup and runs it, so if you need to run scripts that
+named Saves:custom-startup and runs it, so if you need to run scripts that
 will survive upgrades of the main image, this is where to put them.
 
 
