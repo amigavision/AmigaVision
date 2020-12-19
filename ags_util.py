@@ -161,6 +161,7 @@ def read_csv(csv_path, new_db_path):
         os.remove(new_db_path)
     conn = sqlite3.connect(new_db_path)
     c = conn.cursor()
+
     c.execute('''CREATE TABLE "titles" (
                "id" TEXT NOT NULL UNIQUE,
                "title" TEXT,
@@ -170,8 +171,11 @@ def read_csv(csv_path, new_db_path):
                "hardware" TEXT,
                "aga" INTEGER,
                "ntsc" INTEGER,
+               "pal_5x" INTEGER,
+               "v_offset" INTEGER,
                "gamepad" INTEGER,
                "lightgun" INTEGER,
+               "note" TEXT,
                "issues" TEXT,
                "hack" TEXT,
                "language" TEXT,
@@ -181,11 +185,8 @@ def read_csv(csv_path, new_db_path):
                "players" TEXT,
                "slave_args" TEXT,
                "slave_version" TEXT,
-               "slave_variant" TEXT,
                "slave_path" TEXT,
                "archive_path" TEXT,
-               "category" TEXT,
-               "subcategory" TEXT,
                "hol_id" INTEGER,
                "lemon_id" INTEGER,
                PRIMARY KEY("id"));''')
@@ -193,13 +194,14 @@ def read_csv(csv_path, new_db_path):
     with open(csv_path, "r") as f:
         dr = csv.DictReader(f, delimiter=";")
         r = [(l["id"], l["title"], l["title_short"], l["redundant"], l["preferred_version"], l["hardware"], l["aga"], l["ntsc"],
-              l["gamepad"], l["lightgun"], l["issues"], l["hack"], l["language"], l["year"], l["developer"], l["publisher"],
-              l["players"], l["slave_args"], l["slave_version"], l["slave_variant"], l["slave_path"], l["archive_path"],
-              l["category"], l["subcategory"], l["hol_id"], l["lemon_id"]) for l in dr]
+              l["pal_5x"], l["v_offset"], l["gamepad"], l["lightgun"], l["note"], l["issues"], l["hack"], l["language"], l["year"],
+              l["developer"], l["publisher"], l["players"], l["slave_args"], l["slave_version"], l["slave_path"], l["archive_path"],
+              l["hol_id"], l["lemon_id"]) for l in dr]
         c.executemany('''INSERT INTO titles (
-                           id, title, title_short, redundant, preferred_version, hardware, aga, ntsc, gamepad, lightgun, issues,
-                           hack, language, year, developer, publisher, players, slave_args, slave_version, slave_variant, slave_path,
-                           archive_path, category, subcategory, hol_id, lemon_id)
+                           id, title, title_short, redundant, preferred_version, hardware, aga, ntsc,
+                           pal_5x, v_offset, gamepad, lightgun, note, issues, hack, language, year,
+                           developer, publisher, players, slave_args, slave_version, slave_path, archive_path,
+                           hol_id, lemon_id)
                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);''', r)
     conn.commit()
     conn.close()
