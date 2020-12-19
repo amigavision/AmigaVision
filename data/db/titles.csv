@@ -1,4 +1,4 @@
-id;title;title_short;redundant;preferred_version;hardware;aga;ntsc;pal_5x;v_offset;gamepad;lightgun;note;issues;hack;language;year;developer;publisher;players;slave_args;slave_version;slave_path;archive_path;hol_id;lemon_id
+id;title;title_short;redundant;preferred_version;hardware;aga;ntsc;pal_4x;v_offset;gamepad;lightgun;note;issues;hack;language;year;developer;publisher;players;slave_args;slave_version;slave_path;archive_path;hol_id;lemon_id
 demo--8bitjungle--8bitjungle;8-Bit Jungle;8-Bit Jungle;;;OCS;;0;;;;;;;;English;2011;;Unstable Label;1;;v1.01;8BitJungle/8BitJungle.slave;data/whdl/demo/0/8BitJungle_v1.01_UnstableLabel.lha;;
 demo--3dnetanalyzer--3dnetanalyzer;3D-Net-Analyzer;3D-Net-Analyzer;;;OCS;;0;;;;;;;;English;1989;;Doctor Mabuse Orgasm Crackings;1;;v1.0;3DNetAnalyzer/3DNetAnalyzer.Slave;data/whdl/demo/0/3DNetAnalyzer_v1.0_DoctorMabuseOrgasmCrackings.lha;;
 demo--24hourefix--24hourefix;24 Hour E Fix;24 Hour E Fix;;;OCS;;0;;;;;;;;English;1992;;Quartz;1;;v1.0;24HourEFix/24HourEFix.Slave;data/whdl/demo/0/24HourEFix_v1.0_Quartz.lha;;
