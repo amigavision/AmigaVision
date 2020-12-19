@@ -3,7 +3,6 @@
 import sys
 import os
 import argparse
-import functools
 import struct
 import ags_util as util
 
