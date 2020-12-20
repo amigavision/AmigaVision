@@ -1,1 +1,0 @@
-Restore backed up game data from shared folder.

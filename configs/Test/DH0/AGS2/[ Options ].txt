@@ -1,1 +1,1 @@
-Game data, loader & video options.
+Loader & video options.
