@@ -171,7 +171,7 @@ def read_csv(csv_path, new_db_path):
                "hardware" TEXT,
                "aga" INTEGER,
                "ntsc" INTEGER,
-               "pal_4x" INTEGER,
+               "pal_5x" INTEGER,
                "v_offset" INTEGER,
                "gamepad" INTEGER,
                "lightgun" INTEGER,
@@ -194,12 +194,12 @@ def read_csv(csv_path, new_db_path):
     with open(csv_path, "r") as f:
         dr = csv.DictReader(f, delimiter=";")
         r = [(l["id"], l["title"], l["title_short"], l["redundant"], l["preferred_version"], l["hardware"], l["aga"], l["ntsc"],
-              l["pal_4x"], l["v_offset"], l["gamepad"], l["lightgun"], l["note"], l["issues"], l["hack"], l["language"], l["year"],
+              l["pal_5x"], l["v_offset"], l["gamepad"], l["lightgun"], l["note"], l["issues"], l["hack"], l["language"], l["year"],
               l["developer"], l["publisher"], l["players"], l["slave_args"], l["slave_version"], l["slave_path"], l["archive_path"],
               l["hol_id"], l["lemon_id"]) for l in dr]
         c.executemany('''INSERT INTO titles (
                            id, title, title_short, redundant, preferred_version, hardware, aga, ntsc,
-                           pal_4x, v_offset, gamepad, lightgun, note, issues, hack, language, year,
+                           pal_5x, v_offset, gamepad, lightgun, note, issues, hack, language, year,
                            developer, publisher, players, slave_args, slave_version, slave_path, archive_path,
                            hol_id, lemon_id)
                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);''', r)
