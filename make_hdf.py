@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 
+# AGSImager: HDF creation utility
+
 import sys
 import os
 import argparse
 import subprocess
 from ast import literal_eval as make_tuple
 from functools import reduce
+
+# -----------------------------------------------------------------------------
 
 def is_file(path):
     return os.path.isfile(path)

@@ -4,11 +4,6 @@
 
 # TO DO:
 # - Handle archive not found
-# - Write vadjust.dat parser/writer
-
-# vadjust borders (top, bottom, sides)
-# PAL: 5, 9, 7
-# NTSC: 5, 11, 5
 
 import argparse
 import operator

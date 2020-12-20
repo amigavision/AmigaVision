@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
+# AGSImager: vadjust.dat creation utility
+
 import sys
 import os
 import argparse
 import struct
-import ags_util as util
 
 # -----------------------------------------------------------------------------
 VADJUST_LEN = 1024

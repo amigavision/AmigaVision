@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
+# AGSImager: vadjust.dat parsing utility
+
 import sys
 import os
 import argparse
 import struct
-import ags_util as util
 
 # -----------------------------------------------------------------------------
 
@@ -23,6 +24,12 @@ modes = {
     0x0223D5E4: "PAL SuperHiRes Laced"
 }
 
+def argparse_is_file(parser, arg):
+    if not os.path.isfile(arg):
+        parser.error("File %s does not exist" % arg)
+    else:
+        return arg
+
 def read_chunks(f, length):
     while True:
         data = f.read(length)
@@ -31,7 +38,7 @@ def read_chunks(f, length):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("file", metavar="FILE", type=lambda x: util.argparse_is_file(parser, x))
+    parser.add_argument("file", metavar="FILE", type=lambda x: argparse_is_file(parser, x))
     try:
         args = parser.parse_args()
 
