@@ -187,6 +187,8 @@ def read_csv(csv_path, new_db_path):
                "slave_version" TEXT,
                "slave_path" TEXT,
                "archive_path" TEXT,
+               "category" TEXT,
+               "subcategory" TEXT,
                "hol_id" INTEGER,
                "lemon_id" INTEGER,
                PRIMARY KEY("id"));''')
@@ -196,13 +198,13 @@ def read_csv(csv_path, new_db_path):
         r = [(l["id"], l["title"], l["title_short"], l["redundant"], l["preferred_version"], l["hardware"], l["aga"], l["ntsc"],
               l["pal_5x"], l["v_offset"], l["gamepad"], l["lightgun"], l["note"], l["issues"], l["hack"], l["language"], l["year"],
               l["developer"], l["publisher"], l["players"], l["slave_args"], l["slave_version"], l["slave_path"], l["archive_path"],
-              l["hol_id"], l["lemon_id"]) for l in dr]
+              l["category"], l["subcategory"], l["hol_id"], l["lemon_id"]) for l in dr]
         c.executemany('''INSERT INTO titles (
                            id, title, title_short, redundant, preferred_version, hardware, aga, ntsc,
                            pal_5x, v_offset, gamepad, lightgun, note, issues, hack, language, year,
                            developer, publisher, players, slave_args, slave_version, slave_path, archive_path,
-                           hol_id, lemon_id)
-                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);''', r)
+                           category, subcategory, hol_id, lemon_id)
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);''', r)
     conn.commit()
     conn.close()
 
