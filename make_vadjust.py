@@ -11,12 +11,12 @@ import struct
 VADJUST_LEN = 1024
 
 # Base settings
-ntsc_h = (140, 64)
-ntsc_v = (19, 7)
+ntsc_h = (132, 56)
+pal_h  = (132, 56)
 
-pal_h = (124, 48)
-pal_v = (14, 3)
-pal_v5 = (19, 52)
+ntsc_v = (17, 9)
+pal_v5 = (17, 54)
+pal_v  = (13, 4)
 
 # mode, name, ntsc, laced
 modes = [
@@ -72,8 +72,13 @@ def main():
             v2 = 4096 - v2
             # adjust for offset
             if args.v_offset != 0:
-                v1 += args.v_offset
-                v2 += args.v_offset
+                vofs = args.v_offset
+                if v1 + vofs < 0:
+                    vofs = -v1
+                if v2 + vofs >= 4095:
+                    vofs = v2 - 4095
+                v1 += vofs
+                v2 += vofs
 
             out += struct.pack("<I", id)
             out += struct.pack("<H", h2)
