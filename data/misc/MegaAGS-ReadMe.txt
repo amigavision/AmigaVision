@@ -10,8 +10,7 @@ Setup:
   MegaAGS-Saves.hdf so any saved game data is carried over.
 
 - Copy minimig.cfg and minimig_vadjust.dat from the config directory to the
-  corresponding directory on MiSTer. The vadjust file contains viewport crop
-  settings to enable perfect 5x (NTSC) and 4x (PAL) scaling ratios at 1080p.
+  corresponding directory on MiSTer.
 
   If you prefer to configure the main settings manually, these are recommended
   settings used in the bundled minimig.cfg:
@@ -111,15 +110,18 @@ it's important to have both NTSC and PAL video modes set up in MiSTer.ini.
 
 Another idiosyncrasy with the Minimig core is viewport cropping. By default
 the full overscan area will be fed to the HDMI scaler, resulting in huge
-borders. Fear not! Also supplied is a minimig_vadjust.dat settings file, which
-contains crop settings for all the common resolutions. With this file copied
-to the /config directory, regular NTSC and PAL resolutions will be output at
-216 and 270 lines respectively, thus being perfectly suited for integer
-scaling at a 1080p output resolution.
+borders. Fear not! MegaAGS leverages the "vadjust" feature of the core to
+dynamically apply viewport settings on a per game basis. This relies on the
+shared folder to be enabled, so make sure that you copied the "shared"
+directory as described in the Setup section.
+
+With dynamic vadjust enabled most titles will enjoy a nicely centered
+viewport at a perfect 5x scale using 1080p output resolution, by cropping
+the viewport to 216 lines. Games using more than 216 active video lines will
+instead get a perfect 4x scale by applying a 270 line crop.
 
 To also make interlaced resolutions fill the screen, however, you still need
-to enable 0.5x scale mode. In summary, these are the recommended MiSTer.ini
-settings:
+to enable 0.5x scale mode. These are the recommended MiSTer.ini settings:
 
 [minimig]
 video_mode_ntsc=8
@@ -127,7 +129,7 @@ video_mode_pal=9
 vscale_mode=2
 vsync_adjust=2
 
-Depending on how well your display deals with slightly off-spec refresh
+Note: Depending on how well your display deals with slightly off-spec refresh
 frequencies and frequent mode changes you may need to experiment with setting
 vsync_adjust to 1 or 0, instead of the ideal setting of 2.
 
