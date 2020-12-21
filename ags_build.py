@@ -14,12 +14,22 @@ import sys
 import textwrap
 from ast import literal_eval as make_tuple
 import ags_util as util
+import make_vadjust as make_vadjust
 
 # -----------------------------------------------------------------------------
-# Database and path queries
 
 AGS_LIST_WIDTH = 26
 AGS_INFO_WIDTH = 48
+
+g_out_dir = "out"
+g_clone_dir = None
+g_args = None
+g_db = None
+g_entries = dict()
+g_vadjust = dict()
+
+# -----------------------------------------------------------------------------
+# Database and path queries
 
 def get_entry(name):
     def sanitize(entry):
@@ -169,6 +179,12 @@ def extract_whd(entry):
     else:
         print("whdload archive not found:", entry["id"])
 
+def create_vadjust_dats(vadjust_dict):
+    for name, settings in vadjust_dict.items():
+        data = make_vadjust.make_vadjust(settings[0], settings[1])
+        util.make_dir(os.path.join(get_ags2_dir(), "VAdjust"))
+        open(os.path.join(get_ags2_dir(), "VAdjust", name), mode="wb").write(data)
+
 # -----------------------------------------------------------------------------
 # Menu yaml parsing, AGS2 tree creation
 
@@ -212,6 +228,8 @@ def ags_make_note(entry, add_note):
 
     if add_note and isinstance(add_note, str):
             note += ("Note:       {}".format(add_note))[:max_w] + "\n"
+    elif entry["note"]:
+            note += ("Note:       {}".format(entry["note"]))[:max_w] + "\n"
 
     return note
 
@@ -224,6 +242,7 @@ def ags_fix_filename(name):
 
 
 def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=None):
+    global g_vadjust
     max_w = AGS_LIST_WIDTH
 
     # fix path name
@@ -273,17 +292,25 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
     # runfile
     if entry_is_notwhdl(entry):
         shutil.copyfile(entry["archive_path"].replace(".lha", ".run"), base_path + ".run")
-
     else:
         whd_entrypath = get_amiga_whd_dir(entry)
         runfile = None
         if whd_entrypath:
+            whd_slave = get_whd_slavename(entry)
+            # videomode
             whd_vmode = "NTSC" if entry["ntsc"] > 0 else "PAL"
             if g_args.ntsc: whd_vmode = "NTSC"
-            whd_slave = get_whd_slavename(entry)
+            # extra arguments
             whd_cargs = "BUTTONWAIT"
             if entry["slave_args"]:
                 whd_cargs += " " + entry["slave_args"]
+            # vadjust
+            vadjust_pal5x = entry["pal_5x"] == 1
+            vadjust_name = "pal5" if vadjust_pal5x else "def"
+            vadjust_vofs = util.parse_int(entry["v_offset"])
+            if vadjust_vofs is not None and entry["v_offset"] != 0: vadjust_name += "_{}".format(vadjust_vofs)
+            g_vadjust[vadjust_name] = (vadjust_pal5x, vadjust_vofs)
+
             runfile = "cd \"{}\"\n".format(whd_entrypath)
             runfile += "IF NOT EXISTS ENV:whdlspdly\n"
             runfile += "  echo 200 >ENV:whdlspdly\n"
@@ -294,8 +321,10 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
             runfile += "IF EXISTS ENV:whdlvmode\n"
             runfile += "  whdload >NIL: \"{}\" PRELOAD $whdlvmode {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_cargs)
             runfile += "ELSE\n"
+            runfile += "  setvadjust {}\n".format(vadjust_name)
             runfile += "  whdload >NIL: \"{}\" PRELOAD {} {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_vmode, whd_cargs)
             runfile += "ENDIF\n"
+            runfile += "setvadjust def\n"
         else:
             runfile = "echo \"Title not available.\"" + "\n" + "wait 2"
         if runfile:
@@ -562,11 +591,6 @@ def extract_base_image(base_hdf, dest):
     _ = subprocess.run(["xdftool", base_hdf, "read", "/", dest])
 
 # -----------------------------------------------------------------------------
-g_out_dir = "out"
-g_clone_dir = None
-g_args = None
-g_db = None
-g_entries = dict()
 
 def main():
     global g_args, g_db, g_out_dir, g_clone_dir
@@ -649,6 +673,8 @@ def main():
 
         if not g_args.no_autolists:
             ags_create_autoentries()
+
+        create_vadjust_dats(g_vadjust)
 
         # extract whdloaders
         if g_args.verbose: print("extracting {} content archives...".format(len(g_entries.items())))

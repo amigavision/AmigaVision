@@ -16,6 +16,12 @@ from lhafile import LhaFile
 # -----------------------------------------------------------------------------
 # Utility functions
 
+def parse_int(v):
+    try:
+        return int(v)
+    except ValueError:
+        return None
+
 def merge(src, dst):
     for key, value in src.items():
         if isinstance(value, dict):
