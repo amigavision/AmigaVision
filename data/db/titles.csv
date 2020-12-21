@@ -2468,7 +2468,7 @@ game--read&rhyme--read&rhyme;Read & Rhyme;Read & Rhyme;;;OCS;;0;;;;;;;;English;1
 game--redbaronde--redbaronde;Red Baron;Red Baron;1;game--redbaron--redbaron;OCS;;1;;;;;;;;German;1992;Dynamix;Dynamix;1 (2 with serial link);;v2.1;RedBaronDe/RedBaronDe.slave;data/whdl/game/R/RedBaron_v2.1_De_2068.lha;Game;;1210;890
 game--robinhoodlegendquest--robinhoodlegendquest;Robin Hood: Legend Quest;Robin Hood: Legend Quest;;;OCS;;1;;;;;;;;English;1992;Codemasters;Codemasters;1;;v1.1;RobinHoodLegendQuest/RobinHoodLegendQuest.slave;data/whdl/game/R/RobinHoodLegendQuest_v1.1.lha;Game;;1257;2180
 game--rody&masticofr--rody&masticofr;Rody & Mastico;Rody & Mastico;1;;OCS;;0;;;;;;;;French;1988;Lankhor;Lankhor;1;;v1.0;Rody&MasticoFr/Rody&MasticoFr.Slave;data/whdl/game/R/Rody&Mastico_v1.0_Fr_2424.lha;Game;;3465;-2
-game--robocop3ntsc--robocop3ntsc;RoboCop 3;RoboCop 3;1;game--robocop3--robocop3;OCS;;2;;;;;;Freezes at loading screen. Copy protected?;;English;1992;Digital Image Design (DID);Ocean;1;;v1.3;RoboCop3NTSC/RoboCop3NTSC.slave;data/whdl/game/R/RoboCop3_v1.3_NTSC_0978.lha;Game;Action - Multi-Type;1262;905
+game--robocop3ntsc--robocop3ntsc;RoboCop 3;RoboCop 3;1;game--robocop3--robocop3;OCS;;2;;;;;Copy protected;;;English;1992;Digital Image Design (DID);Ocean;1;;v1.3;RoboCop3NTSC/RoboCop3NTSC.slave;data/whdl/game/R/RoboCop3_v1.3_NTSC_0978.lha;Game;Action - Multi-Type;1262;905
 game--rotor--rotor;Rotor;Rotor;;;OCS;;1;;;;;;;;English;1989;Systematics;Arcana;1;;v1.1;Rotor/Rotor.slave;data/whdl/game/R/Rotor_v1.1.lha;Game;;1283;917
 game--ruffntumble--ruffntumble;Ruff 'n' Tumble;Ruff 'n' Tumble;;;OCS;;0;;;1;;;;;English;1994;Wunderkind;Renegade;1;CUSTOM2=1;v2.7;RuffNTumble/RuffNTumble.slave;data/whdl/game/R/RuffNTumble_v2.7_0199.lha;Game;;1292;920
 game--romead92--romead92;Rome AD92: The Pathway To Power;Rome AD92;;;OCS;;1;;;;;;;;English;1992;Millennium;Electronic Arts, Millennium;1;;v1.2;RomeAD92/RomeAD92.Slave;data/whdl/game/R/RomeAD92_v1.2_0780.lha;Game;Adventure;1281;4330
@@ -4345,7 +4345,7 @@ demo-notwhdl--jormas-kanaalinarvoitus;Kanaalin Arvoitus;Kanaalin Arvoitus;;;OCS;
 game--typhoonthompson512kntsc--typhoonthompson512kntsc;Typhoon Thompson In Search For The Sea Child;Typhoon Thompson;1;game--typhoonthompsonntsc--typhoonthompsonntsc;OCS;;2;;;;;;;;English;1989;Dan Gorlin Productions;Brøderbund;1;;v1.1;TyphoonThompson512kNTSC/TyphoonThompson512kNTSC.slave;data/whdl/game/T/TyphoonThompson_v1.1_512k_NTSC_1389.lha;Game;;1550;3521
 demo-notwhdl--spaceballs-emperor;Emperor Of The North Pole;Emperor Of The North Pole;;;OCS;;0;;;;;;;;English;2014;;Spaceballs;1;;;;data/whdl/demo-notwhdl/Spaceballs-Emperor.lha;Demo;Demo;;
 demo-notwhdl--spaceballs-goonroyale;Goon Royale;Goon Royale;1;;AGA/060;1;0;;;;;;Requires 060 CPU;;English;2019;;Spaceballs;1;;;;data/whdl/demo-notwhdl/Spaceballs-GoonRoyale.lha;Demo;Demo;;
-demo-notwhdl--spaceballs-peek;Peek;Peek;;;OCS;;0;;;;;;;;English;2018;;Spaceballs;1;;;;data/whdl/demo-notwhdl/Spaceballs-Peek.lha;Demo;Demo;;
+demo-notwhdl--spaceballs-peek;Peek;Peek;;;OCS;;0;;;;;3D glasses (red-blue) recommended!;;;English;2018;;Spaceballs;1;;;;data/whdl/demo-notwhdl/Spaceballs-Peek.lha;Demo;Demo;;
 demo-notwhdl--spaceballs-makt;Makt;Makt;;;OCS;;0;;;;;;;;English;2017;;Spaceballs;1;;;;data/whdl/demo-notwhdl/Spaceballs-Makt.lha;Demo;Demo;;
 demo-notwhdl--lemon-colombia;Colombia;Colombia;;;OCS;;0;;;;;;;;English;2020;;Lemon;1;;;;data/whdl/demo-notwhdl/Lemon-Colombia.lha;Demo;Intro 64K;;
 demo-notwhdl--lemon+tdl-blastfromthepast;Blast From The Past;Blast From The Past;;;OCS;;0;;;;;;Black screen;;English;2017;;Lemon & The Deadliners;1;;;;data/whdl/demo-notwhdl/Lemon+TDL-BlastFromThePast.lha;Demo;Demo;;
@@ -4378,7 +4378,7 @@ demo-notwhdl--jormas-meganerellu;Megane Rellu;Megane Rellu;;;OCS;;0;;;;;;;;Engli
 demo-notwhdl--jormas-hapycarva72;HäpyCarva #72;HäpyCarva 72;;;OCS;;0;;;;;;;;English;2015;;Da Jormas;1;;;;data/whdl/demo-notwhdl/Jormas-HapyCarva72.lha;Demo;Demo;;
 demo-notwhdl--jormas-monomeno66;MonoMeno 66;MonoMeno 66;;;OCS;;0;;;;;;;;English;1997;;Da Jormas;1;;;;data/whdl/demo-notwhdl/Jormas-MonoMeno66.lha;Demo;Demo;;
 game--hostagentsc--hostagentsc;Hostages;Hostages;1;game--hostages--hostages;OCS;;2;;;;;;;;English;1989;Infogrames;Infogrames;1;;v1.2;HostageNTSC/HostageNTSC.Slave;data/whdl/game/H/Hostage_v1.2_NTSC_1173.lha;Game;Action - Multi-Type;738;504
-demo-notwhdl--altair-zenerdrive;Zener Drive;Zener Drive;1;;OCS;;0;;;;;;Only runs on 68000 with 1MB chip;;English;2017;;Altair;1;;;;data/whdl/demo-notwhdl/Altair-ZenerDrive.lha;Demo;Intro 40K;;
+demo-notwhdl--altair-zenerdrive;Zener Drive;Zener Drive;1;;OCS;;0;;;;;;Only runs on 68000 with 1MB chip?;;English;2017;;Altair;1;;;;data/whdl/demo-notwhdl/Altair-ZenerDrive.lha;Demo;Intro 40K;;
 demo-notwhdl--loonies-dontbesquare;Don't Be Square;Don't Be Square;1;;OCS;;0;;;;;;Only runs on A500;;English;2019;;Loonies;1;;;;data/whdl/demo-notwhdl/Loonies-DontBeSquare.lha;Demo;Intro 4K;;
 demo-notwhdl--unique-interparallactic;Interparallactic;Interparallactic;;;OCS;;0;;;;;;;;English;2015;;Unique;1;;;;data/whdl/demo-notwhdl/Unique-Interparallactic.lha;Demo;Demo;;
 demo-notwhdl--moodsplateau-solveetcoagula;Solve et Coagula;Solve et Coagula;;;AGA;1;0;;;;;;;;English;2014;;Moods Plateau;1;;;;data/whdl/demo-notwhdl/MoodsPlateau-SolveEtCoagula.lha;Demo;Intro 64K;;
@@ -4681,7 +4681,7 @@ game--asterixchezrahazadefr--asterixchezrahazadefr;Astérix Chez Rahàzade;Asté
 demo--starlight--starlight;Starlight;Starlight;;;OCS;;0;;;;;;;;English;1994;;Mystic & TRSI;1;;v1.0;Starlight/Starlight.Slave;data/whdl/demo/S/Starlight_v1.0_Mystic&TRSI.lha;Demo;Musicdisk;;
 demo--auralillusions--auralillusions;Aural Illusions;Aural Illusions;;;OCS;;0;;;;;;;;English;1992;;Genocide;1;;v1.0;AuralIllusions/AuralIllusions.Slave;data/whdl/demo/A/AuralIllusions_v1.0_Genocide.lha;Demo;Musicdisk;;
 demo--losttrack--losttrack;Lost Track;Lost Track;;;OCS;;0;;;;;;;;English;1993;;Illusion;1;;v1.0;LostTrack/LostTrack.Slave;data/whdl/demo/L/LostTrack_v1.0_Illusion.lha;Demo;Musicdisk;;
-game-notwhdl--simcity2000;SimCity 2000;SimCity 2000;1;;AGA;;2;;;;;;Practically unplayable on any Amiga system;;English;1994;Maxis;Maxis;1;;;;data/whdl/game-notwhdl/SimCity2000.lha;Game;Simulation - Construction;-2;1188
+game-notwhdl--simcity2000;SimCity 2000;SimCity 2000;1;;AGA;;2;;;;;Practically unplayable on any Amiga system;;;English;1994;Maxis;Maxis;1;;;;data/whdl/game-notwhdl/SimCity2000.lha;Game;Simulation - Construction;-2;1188
 demo--felixdontyouwantme--felixdontyouwantme;Don't You Want My Love;Don't You Want My Love;;;OCS;;0;;;;;;;;English;1992;;Project A;1;;v1.0;FelixDontYouWantMe/FelixDontYouWantMe.Slave;data/whdl/demo/F/FelixDontYouWantMe_v1.0_ProjectA.lha;Demo;Demo;;
 demo--bohemian--bohemian;Bohemian;Bohemian;;;OCS;;0;;;;;;;;English;1993;;Vectors;1;;v1.01;Bohemian/Bohemian.slave;data/whdl/demo/B/Bohemian_v1.01_Vectors.lha;Demo;Slideshow;;
 demo--bluessymphoniesaga--bluessymphoniesaga;Blues Symphonies;Blues Symphonies;;;AGA;1;0;;;;;;;;English;1994;;Skarla;1;;v1.0;BluesSymphoniesAGA/BluesSymphoniesAGA.Slave;data/whdl/demo/B/BluesSymphonies_v1.0_Skarla_AGA.lha;Demo;Musicdisk;;
