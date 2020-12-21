@@ -214,7 +214,6 @@ def ags_make_note(entry, add_note):
             note += ("Hack Info:  {}".format(entry["hack"]))[:max_w] + "\n"
 
     elif "category" in entry and entry["category"].lower() == "demo":
-        note += "\n"
         note += ("Title:      {}".format(entry["title"]))[:max_w] + "\n"
         note += ("Group:      {}".format(entry["publisher"]))[:max_w] + "\n"
         note += ("Year:       {}".format(entry["year"]))[:max_w] + "\n"
