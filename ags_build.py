@@ -181,7 +181,10 @@ def extract_whd(entry):
 
 def create_vadjust_dats(vadjust_dict):
     for name, settings in vadjust_dict.items():
-        data = make_vadjust.make_vadjust(settings[0], settings[1])
+        # set default pal5 v-offset
+        pal5 = settings[0]
+        vofs = 22 if pal5 and settings[1] is None else settings[1]
+        data = make_vadjust.make_vadjust(pal5, vofs)
         util.make_dir(os.path.join(get_ags2_dir(), "VAdjust"))
         open(os.path.join(get_ags2_dir(), "VAdjust", name), mode="wb").write(data)
 
@@ -307,7 +310,8 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
             vadjust_pal5x = entry["pal_5x"] == 1
             vadjust_name = "pal5" if vadjust_pal5x else "def"
             vadjust_vofs = util.parse_int(entry["v_offset"])
-            if vadjust_vofs is not None and entry["v_offset"] != 0: vadjust_name += "_{}".format(vadjust_vofs)
+            if vadjust_vofs is not None:
+                vadjust_name += "_{}".format(vadjust_vofs)
             g_vadjust[vadjust_name] = (vadjust_pal5x, vadjust_vofs)
 
             runfile = "cd \"{}\"\n".format(whd_entrypath)
@@ -322,8 +326,8 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
             runfile += "ELSE\n"
             runfile += "  setvadjust {}\n".format(vadjust_name)
             runfile += "  whdload >NIL: \"{}\" PRELOAD {} {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_vmode, whd_cargs)
+            runfile += "  setvadjust def\n"
             runfile += "ENDIF\n"
-            runfile += "setvadjust def\n"
         else:
             runfile = "echo \"Title not available.\"" + "\n" + "wait 2"
         if runfile:
