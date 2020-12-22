@@ -20,6 +20,7 @@ import make_vadjust as make_vadjust
 
 AGS_LIST_WIDTH = 26
 AGS_INFO_WIDTH = 48
+PAL5_DEF_VOFFSET = 0
 
 g_out_dir = "out"
 g_clone_dir = None
@@ -181,9 +182,8 @@ def extract_whd(entry):
 
 def create_vadjust_dats(vadjust_dict):
     for name, settings in vadjust_dict.items():
-        # set default pal5 v-offset
         pal5 = settings[0]
-        vofs = 22 if pal5 and settings[1] is None else settings[1]
+        vofs = PAL5_DEF_VOFFSET if pal5 and settings[1] is None else settings[1]
         data = make_vadjust.make_vadjust(pal5, vofs)
         util.make_dir(os.path.join(get_ags2_dir(), "VAdjust"))
         open(os.path.join(get_ags2_dir(), "VAdjust", name), mode="wb").write(data)
@@ -437,9 +437,6 @@ def ags_create_autoentries():
         # Run-scripts for randomizer
         if entry["category"].lower() == "game" and not entry["issues"]:
             ags_create_entry(None, entry, os.path.join(path, "Run"), None, None, only_script=True)
-
-        #if value["issues"]:
-        #    ags_create_entry(None, value, os.path.join(path, "[ Issues ].ags"), None, None)
 
     # Notes for created directories
     if util.is_dir(os.path.join(path, "[ All Games ].ags")):
