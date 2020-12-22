@@ -117,7 +117,7 @@
     - ranked_list: True
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1991.
     - RainbowIslands
-    - LemmingsImage
+    - Lemmings
     - Speedball2
     - SimCity
     - Virus
@@ -598,7 +598,7 @@
     - Worms
     - JimmyWhitesSnooker
     - AnotherWorld
-    - LemmingsImage
+    - Lemmings
     - Speedball2
     - SecretOfMonkeyIsland
     - AlienBreed
@@ -854,7 +854,7 @@
     - FutureWars
     - Ivanhoe
     - Kult
-    - LiquidKidsImage
+    - LiquidKids
     - Lorna
     - MetalMutant
     - NorthAndSouth
@@ -1307,7 +1307,7 @@
     - IronTrackers
     - Italia1990
     - Italy1990WinnersEdition
-    - JaguarXJ220Image
+    - JaguarXJ220
     - JahangirKhansWChampSquash
     - JohnBarnesEuroFootball
     - JohnMaddenFootball
@@ -2037,14 +2037,12 @@
     - Leander
     - RuffNTumble
     - SecondSamurai
-    - Switchblade
     - Switchblade2
     - Turrican2
     - YoJoe
   - Platform, Arcade:
     - note: Arcade style, mostly single screen, platformers.
     - BaseJumpers
-    - BombJack
     - BubbleBobble
     - Fuzzball
     - NaughtyOnes
@@ -2143,7 +2141,7 @@
   - Strategy, Action:
     - CannonFodder
     - DefenderOfTheCrown
-    - LemmingsImage
+    - Lemmings
     - LostPatrol
     - NorthAndSouth
     - Pirates
@@ -2524,7 +2522,7 @@
     - SOS--SOS
     - Spaceballs-Emperor
     - Spaceballs-Makt
-    - [Spaceballs-Peek, "3D glasses (red-blue) recommended!"]
+    - Spaceballs-Peek
     - Stateline
     - Stellar-Bananamen
     - TechnologicalDeath
