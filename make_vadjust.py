@@ -2,6 +2,9 @@
 
 # AGSImager: vadjust.dat creation utility
 
+# --pal5x     create PAL viewport crops with 216 visible lines
+# --vofs <n>  adjust vertical offset (positive values move visible image up)
+
 import sys
 import os
 import argparse
@@ -14,9 +17,9 @@ VADJUST_LEN = 1024
 ntsc_h = (132, 56)
 pal_h  = (132, 56)
 
-ntsc_v = (17, 9)
-pal_v5 = (17, 54)
-pal_v  = (13, 4)
+ntsc_v = (16, 10)
+pal_v5 = (11, 60)
+pal_v  = (11, 6)
 
 # mode, name, ntsc, laced
 modes = [
@@ -91,8 +94,8 @@ def make_vadjust(pal_5x, v_offset):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-o", "--out", dest="out_vadjust", metavar="FILE", help="output file")
-    parser.add_argument("--pal5x", dest="pal_5x", action="store_true", default=False, help="make PAL crops for 5x scaling")
-    parser.add_argument("--vofs", dest="v_offset", type=int, default=0, help="vertical offset")
+    parser.add_argument("--pal5x", dest="pal_5x", action="store_true", default=False, help="create PAL viewport crops with 216 visible lines")
+    parser.add_argument("--vofs", dest="v_offset", type=int, default=0, help="adjust vertical offset (positive values move visible image up)")
 
     try:
         args = parser.parse_args()
