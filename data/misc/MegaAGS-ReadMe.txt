@@ -28,7 +28,7 @@ Setup:
     Secondary Slave: Disabled
   CPU & Chipset:
     CPU: 68020
-    D-Cache: ON
+    D-Cache: OFF
     Chipset: AGA
     CD32 Pad: ON
     Joystick Swap: OFF
@@ -57,17 +57,19 @@ Setup:
 
 CPU performance notes:
 ----------------------
-With the D-Cache option enabled the "020" CPU core will enjoy substantial
-performance improvements - on par with a 030 at 50MHz in many benchmarks.
-Since most WHDL installs include patches to counter bugs introduced when
-running games on a much faster CPU than originally intended, having the
-option enabled is highly recommended. Not only will booting, browsing
-the menu system and running the Workbench be faster - many games will
-benefit too. That is especially true with almost any software involving
-3D polygon rendering.
+The D-Cache option is essentially a turbo switch for the CPU, making it
+perform on par with a 030 at 50MHz in many benchmarks. Unfortunately running
+with it enabled introduces lots of subtle glitches in many (mostly older)
+games and demos, so it's recommended is to leave it off as default.
 
-Still, some titles may have bugs or simply run too fast, in which case
-it may be worth experimenting with disabling D-Cache.
+On the other hand some titles, mostly 3D polygon games and demos, will
+benefit greatly from the CPU boost D-Cache offers. So it's an option worth
+experimenting with on a case by case basis.
+
+Note that the glitches introduced with D-Cache on can sometimes clear up
+by turning it off while Minimig is running. Other times they seem to stick
+until reboot. The latter behavior is the case with, for example, Turrican II
+and Grand Monster Slam (and many less significant titles).
 
 The CPU D-Cache option is available in OSD -> CPU & Chipset.
 
