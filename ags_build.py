@@ -2,9 +2,6 @@
 
 # AGSImager: Builder
 
-# TO DO:
-# - Handle archive not found
-
 import argparse
 import operator
 import os
@@ -178,7 +175,7 @@ def extract_whd(entry):
         if util.is_file(info_path):
             os.remove(info_path)
     else:
-        print("whdload archive not found:", entry["id"])
+        print(" > WARNING: whdload archive not found -", entry["id"])
 
 def create_vadjust_dats(vadjust_dict):
     for name, settings in vadjust_dict.items():
