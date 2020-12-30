@@ -490,9 +490,6 @@ def ags_add_all(category):
     for r in g_db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
         entry, preferred_entry = get_entry(r["id"])
         if entry:
-            if category == "Demo":
-                if entry["subcategory"] == "Musicdisk" or entry["subcategory"] == "Slideshow" or entry["subcategory"] == "Invitation":
-                    continue
             if g_args.all_versions:
                 g_entries[entry["id"]] = entry
             elif g_args.ecs is False:

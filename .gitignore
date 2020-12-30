@@ -1,5 +1,5 @@
 *.pyc
 *.o
 *.so
-dependencies/amitools-0.1.0/build
 screenshots
+.vscode
