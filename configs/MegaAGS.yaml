@@ -2159,7 +2159,7 @@
       - BadCat
       - BattleIsle
       - BCKid
-      - BundesligaManagerHattDe
+      - BundesligaMngrHatt
       - CaribbeanDisasterDe
       - CarlLewisChallenge
       - CircusAttractions
@@ -2428,6 +2428,22 @@
     - SpaceQuest2
     - SpaceQuest3
     - SpaceQuest4
+  - Thalion:
+    - Ambermoon
+    - Amberstar
+    - ChambersOfShaolin
+    - Dragonflight
+    - EnchantedLand
+    - GhostBattle
+    - LeavinTeramis
+    - Lionheart
+    - Neuronics
+    - NoSecondPrize
+    - Tangram
+    - SevenGatesOfJambala
+    - TrexWarrior
+    - Warp
+    - WingsOfDeath
   - Travellers Tales:
     - Leander
     - Puggsy
