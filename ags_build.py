@@ -11,13 +11,13 @@ import sys
 import textwrap
 from ast import literal_eval as make_tuple
 import ags_util as util
-import make_vadjust as make_vadjust
+from make_vadjust import make_vadjust
 
 # -----------------------------------------------------------------------------
 
 AGS_LIST_WIDTH = 26
 AGS_INFO_WIDTH = 48
-PAL5_DEF_VOFFSET = 0
+VADJUST_CREATE_RANGE = True
 
 g_out_dir = "out"
 g_clone_dir = None
@@ -178,12 +178,17 @@ def extract_whd(entry):
         print(" > WARNING: whdload archive not found -", entry["id"])
 
 def create_vadjust_dats(vadjust_dict):
-    for name, settings in vadjust_dict.items():
-        pal5 = settings[0]
-        vofs = PAL5_DEF_VOFFSET if pal5 and settings[1] is None else settings[1]
-        data = make_vadjust.make_vadjust(pal5, vofs)
-        util.make_dir(os.path.join(get_ags2_dir(), "VAdjust"))
-        open(os.path.join(get_ags2_dir(), "VAdjust", name), mode="wb").write(data)
+    util.make_dir(os.path.join(get_ags2_dir(), "VAdjust"))
+    if vadjust_dict:
+        for name, settings in vadjust_dict.items():
+            pal5 = settings[0]
+            vofs = 0 if pal5 and settings[1] is None else settings[1]
+            data = make_vadjust(pal5, vofs)
+            open(os.path.join(get_ags2_dir(), "VAdjust", name), mode="wb").write(data)
+    else:
+        for i in range(-32,33):
+            open(os.path.join(get_ags2_dir(), "VAdjust", "def_{}".format(i)), mode="wb").write(make_vadjust(False, i))
+            open(os.path.join(get_ags2_dir(), "VAdjust", "pal5_{}".format(i)), mode="wb").write(make_vadjust(True, i))
 
 # -----------------------------------------------------------------------------
 # Menu yaml parsing, AGS2 tree creation
@@ -307,8 +312,9 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
             vadjust_pal5x = entry["pal_5x"] == 1
             vadjust_name = "pal5" if vadjust_pal5x else "def"
             vadjust_vofs = util.parse_int(entry["v_offset"])
-            if vadjust_vofs is not None:
-                vadjust_name += "_{}".format(vadjust_vofs)
+            if not vadjust_vofs:
+                vadjust_vofs = 0
+            vadjust_name += "_{}".format(vadjust_vofs)
             g_vadjust[vadjust_name] = (vadjust_pal5x, vadjust_vofs)
 
             runfile = "cd \"{}\"\n".format(whd_entrypath)
@@ -321,9 +327,9 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
             runfile += "IF EXISTS ENV:whdlvmode\n"
             runfile += "  whdload >NIL: \"{}\" PRELOAD $whdlvmode {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_cargs)
             runfile += "ELSE\n"
-            runfile += "  setvadjust {}\n".format(vadjust_name)
+            runfile += "  setvadjust {} {}\n".format(vadjust_vofs, "PAL5" if vadjust_pal5x else "")
             runfile += "  whdload >NIL: \"{}\" PRELOAD {} {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_vmode, whd_cargs)
-            runfile += "  setvadjust def\n"
+            runfile += "  setvadjust\n"
             runfile += "ENDIF\n"
         else:
             runfile = "echo \"Title not available.\"" + "\n" + "wait 2"
@@ -668,7 +674,10 @@ def main():
         if not g_args.no_autolists:
             ags_create_autoentries()
 
-        create_vadjust_dats(g_vadjust)
+        if VADJUST_CREATE_RANGE:
+            create_vadjust_dats(None)
+        else:
+            create_vadjust_dats(g_vadjust)
 
         # extract whdloaders
         if g_args.verbose: print("extracting {} content archives...".format(len(g_entries.items())))
