@@ -13,7 +13,7 @@ index:
 	@pipenv run ./ags_index.py -v
 
 image:
-	@pipenv run ./ags_build.py -v -c configs/MegaAGS.yaml --all_games --all_demos -d ../AGSImager-Data/extra_dirs/Music::DH2 -o ~/Temp/AGSImager
+	@pipenv run ./ags_build.py -v -c configs/MegaAGS.yaml --all_games --all_demos -d ../AGSImager-Content/extra_dirs/Music::DH2 -o ~/Temp/AGSImager
 	/Applications/FS-UAE\ Launcher.app/Contents/FS-UAE.app/Contents/MacOS/fs-uae data/cloner/cloner.fs-uae
 
 test-image:
