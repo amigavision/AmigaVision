@@ -15,6 +15,9 @@ from make_vadjust import make_vadjust
 
 # -----------------------------------------------------------------------------
 
+CONTENT_DIR = "../AGSImager-Content/"
+TITLES_DIR = CONTENT_DIR + "titles/"
+
 AGS_LIST_WIDTH = 26
 AGS_INFO_WIDTH = 48
 VADJUST_CREATE_RANGE = True
@@ -113,6 +116,13 @@ def get_whd_slavename(entry):
     else:
         return None
 
+def get_archive_path(entry):
+    if entry_valid(entry):
+        arc_path = os.path.join(TITLES_DIR, entry["archive_path"])
+        return arc_path if util.is_file(arc_path) else None
+    else:
+        return None
+
 def get_short_slavename(name):
     excess = len(name) - 30
     if excess > 0:
@@ -165,17 +175,18 @@ def extract_entries(entries):
             unarchived.add(entry["archive_path"])
 
 def extract_whd(entry):
-    if entry_is_notwhdl(entry):
-        dest = get_whd_dir(entry)
-        util.lha_extract(entry["archive_path"], dest)
-    elif "archive_path" in entry and util.is_file(entry["archive_path"]):
-        dest = get_whd_dir(entry)
-        util.lha_extract(entry["archive_path"], dest)
-        info_path = os.path.join(dest, entry["slave_dir"] + ".info")
-        if util.is_file(info_path):
-            os.remove(info_path)
+    arc_path = get_archive_path(entry)
+    if not arc_path:
+        print(" > WARNING: content archive not found -", entry["id"])
     else:
-        print(" > WARNING: whdload archive not found -", entry["id"])
+        dest = get_whd_dir(entry)
+        if entry_is_notwhdl(entry):
+            util.lha_extract(arc_path, dest)
+        else:
+            util.lha_extract(arc_path, dest)
+            info_path = os.path.join(dest, entry["slave_dir"] + ".info")
+            if util.is_file(info_path):
+                os.remove(info_path)
 
 def create_vadjust_dats(vadjust_dict):
     util.make_dir(os.path.join(get_ags2_dir(), "VAdjust"))
@@ -295,7 +306,7 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
 
     # runfile
     if entry_is_notwhdl(entry):
-        shutil.copyfile(entry["archive_path"].replace(".lha", ".run"), base_path + ".run")
+        shutil.copyfile(get_archive_path(entry).replace(".lha", ".run"), base_path + ".run")
     else:
         whd_entrypath = get_amiga_whd_dir(entry)
         runfile = None
@@ -634,7 +645,7 @@ def main():
         # extract base image
         base_hdf = g_args.base_hdf
         if not base_hdf:
-            base_hdf = "data/base/base.hdf" if not g_args.ntsc else "data/base/base_ntsc.hdf"
+            base_hdf = CONTENT_DIR + "base/base.hdf"
         if not util.is_file(base_hdf):
             raise IOError("base HDF doesn't exist: " + base_hdf)
         if g_args.verbose:
@@ -655,7 +666,7 @@ def main():
 
         base_ags2 = g_args.ags_dir
         if not base_ags2:
-            base_ags2 = "data/ags2" if not g_args.ntsc else "data/ags2_ntsc"
+            base_ags2 = "data/ags2"
         if not util.is_dir(base_ags2):
             raise IOError("AGS2 configuration directory doesn't exist: " + base_ags2)
         if g_args.verbose:

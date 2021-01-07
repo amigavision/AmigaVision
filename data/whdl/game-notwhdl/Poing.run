@@ -1,9 +1,0 @@
-IF EXISTS WHDSaves:poing.scores
-  copy WHDSaves:poing.scores S: QUIET
-ENDIF
-cd WHD:N/Poing
-Poing >NIL:
-IF EXISTS S:poing.scores
-  copy S:poing.scores WHDSaves: QUIET
-  delete S:poing.scores QUIET
-ENDIF

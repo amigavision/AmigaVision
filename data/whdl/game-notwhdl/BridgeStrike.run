@@ -1,6 +1,0 @@
-IF EXISTS WHDSaves:BridgeStrike
-  copy WHDSaves:BridgeStrike/#?.dat WHD:N/BridgeStrike ALL QUIET
-ENDIF
-cd WHD:N/BridgeStrike
-bs >NIL:
-copy WHD:N/BridgeStrike/#?.dat WHDSaves:BridgeStrike ALL QUIET

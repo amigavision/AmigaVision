@@ -14,6 +14,8 @@ import sys
 from lhafile import LhaFile
 import ags_util as util
 
+TITLES_DIR = "../AGSImager-Content/titles/"
+
 # -----------------------------------------------------------------------------
 # Make dictionary of whdload archives
 
@@ -28,7 +30,8 @@ def index_whdload_archives(basedir):
                 if count % 100 == 0:
                     print(".", end="", flush=True)
                 path = os.path.join(r, file)
-                slave_category = path[len(basedir) + 1:].split(os.sep)[0]
+                db_path = path.split(basedir)[1]
+                slave_category = db_path.split(os.sep)[0]
 
                 if slave_category in ["game", "demo", "mags"]:
                     arc = LhaFile(path)
@@ -46,12 +49,12 @@ def index_whdload_archives(basedir):
                                         slave_ver = verstr
                                 except Exception:
                                     pass
-                                d[slave_id] = {"id": slave_id, "archive_path": path, "slave_path": n, "slave_version": slave_ver}
+                                d[slave_id] = {"id": slave_id, "archive_path": db_path, "slave_path": n, "slave_version": slave_ver}
 
                 elif slave_category in ["game-notwhdl", "demo-notwhdl", "mags-notwhdl"]:
                     slave_id = slave_category + "--" + os.path.splitext(os.path.basename(path))[0].lower()
                     if util.is_file(path.replace(".lha", ".run")):
-                        d[slave_id] = {"id": slave_id, "archive_path": path, "slave_path": None, "slave_version": None}
+                        d[slave_id] = {"id": slave_id, "archive_path": db_path, "slave_path": None, "slave_version": None}
 
     print("\n", flush=True)
     return d
@@ -71,20 +74,19 @@ def main():
             db.close()
             return 0
 
-        arc_dir = os.path.join("data", "whdl")
-        if not util.is_dir(arc_dir):
-            raise IOError("whdl archive dir missing:", arc_dir)
+        if not util.is_dir(TITLES_DIR):
+            raise IOError("titles dir missing:", TITLES_DIR)
 
         # remove missing archive_paths from db
         for r in db.cursor().execute("SELECT * FROM titles"):
-            if r["archive_path"] and not util.is_file(r["archive_path"]):
+            if r["archive_path"] and not util.is_file(os.path.join(TITLES_DIR, r["archive_path"])):
                 print("archive removed:", r["id"])
                 print("  >>", r["archive_path"])
                 db.cursor().execute("UPDATE titles SET archive_path=NULL,slave_path=NULL,slave_version=NULL WHERE id=?;", (r["id"],))
                 print()
 
         # enumerate whdl archives, correlate with db
-        for _, arc in index_whdload_archives(arc_dir).items():
+        for _, arc in index_whdload_archives(TITLES_DIR).items():
             rows = db.cursor().execute("SELECT * FROM titles WHERE (id = ?) OR (id LIKE ?);", (arc["id"], arc["id"] + '--%',)).fetchall()
             if not rows:
                 print("no db entry:", arc["archive_path"])
@@ -113,7 +115,6 @@ def main():
     except IOError as err:
         print("error - {}".format(err))
         sys.exit(1)
-
 
 if __name__ == "__main__":
     sys.exit(main())

@@ -1,9 +1,0 @@
-stack >NIL: 16384
-IF EXISTS WHDSaves:AmiSaber
-  copy WHDSaves:AmiSaber/#?.score WHD:N/AmiSaber ALL CLONE QUIET
-  copy WHDSaves:AmiSaber/#?options#? WHD:N/AmiSaber ALL CLONE QUIET
-ENDIF
-cd WHD:N/AmiSaber
-AmiSaber1200 >NIL:
-copy WHD:N/AmiSaber/#?.score WHDSaves:AmiSaber ALL CLONE QUIET
-copy WHD:N/AmiSaber/#?options#? WHDSaves:AmiSaber ALL CLONE QUIET

@@ -1,8 +1,0 @@
-IF EXISTS WHDSaves:TrackerHero
-  copy WHDSaves:TrackerHero/#? WHD:N/TrackerHeroAGA/datas ALL CLONE QUIET
-ENDIF
-cd WHD:N/TrackerHeroAGA
-TrackerHeroAGA >NIL:
-IF EXISTS WHD:N/TrackerHeroAGA/datas
-  copy WHD:N/TrackerHeroAGA/datas/#? WHDSaves:TrackerHero ALL CLONE QUIET
-ENDIF

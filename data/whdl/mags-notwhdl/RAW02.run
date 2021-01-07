@@ -1,5 +1,0 @@
-cd WHD:N/RAW02
-assign >NIL: R.A.W: ""
-killaga >NIL: rawintro
-raw >NIL:
-assign >NIL: R.A.W: REMOVE

@@ -1,4 +1,0 @@
-cd WHD:N/RAW01
-assign >NIL: R.A.W: ""
-RAW >NIL:
-assign >NIL: R.A.W: REMOVE
