@@ -9,13 +9,13 @@
 
 ## prerequisities
 - A bootable HDF to use ase base (FFS formatted, all files are copied to DH0: of the output image)
-- WHDLoad archives (LhA compressed) in `data/whdl/game` and `data/whdl/demo` (all subdirectories are scanned)
+- WHDLoad archives (LhA compressed) in `TITLES_DIR/game` and `TITLES_DIR/demo` (all subdirectories are scanned)
 
 ## operation
 - `make index`
-  - index WHDLoad archives in the `data/whdl` path
+  - index WHDLoad archives in the `TITLES_DIR` path
 - `make image`
-  - create the Amiga HDF image and filesystem 
+  - create the Amiga HDF image and filesystem specified in `configs/MegaAGS.yaml`
 - `make screenshots`
   - create scaled IFF images from arbitrary PNG files placed in `screenshots` 
 - `make sqlite`
