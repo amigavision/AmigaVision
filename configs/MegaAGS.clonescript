@@ -8,10 +8,10 @@ echo ""
 format drive DH2: name "Music" quick noicons
 echo ""
 echo "Cloning DH0:..."
-copy clone_me:DH0/#? DH0: all clone quiet
+copy tmp:DH0/#? DH0: all clone quiet
 echo "Cloning DH1:..."
-copy clone_me:DH1/#? DH1: all clone quiet
+copy tmp:DH1/#? DH1: all clone quiet
 echo "Cloning DH2:..."
-copy clone_me:DH2/#? DH2: all clone quiet
+copy tmp:DH2/#? DH2: all clone quiet
 echo ""
 echo "Done!"

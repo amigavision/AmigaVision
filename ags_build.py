@@ -486,7 +486,6 @@ def ags_create_tree(node, path=[]):
             if isinstance(item, list):
                 if len(item) == 2:
                     entries += [(item[0], item[1])]
-
             # metadata or sub-list
             if isinstance(item, dict):
                 if "note" in item:
@@ -631,7 +630,7 @@ def main():
         if g_args.out_dir:
             g_out_dir = g_args.out_dir
 
-        g_clone_dir = os.path.join(g_out_dir, "clone_me")
+        g_clone_dir = os.path.join(g_out_dir, "tmp")
         if util.is_dir(g_clone_dir):
             shutil.rmtree(g_clone_dir)
         util.make_dir(os.path.join(g_clone_dir, "DH0"))
@@ -715,12 +714,22 @@ def main():
         # build PFS container
         build_pfs(config_base_name, g_args.verbose)
 
-        # copy clone script
-        config_clonescript = os.path.join(os.path.dirname(g_args.config_file), config_base_name) + ".clonescript"
-        if util.is_file(config_clonescript):
-            if g_args.verbose: print("copying clonescript...")
-            shutil.copyfile(config_clonescript, os.path.join(g_clone_dir, "clone"))
+        # set up cloner environment
+        cloner_adf = os.path.join("data", "cloner", "boot.adf")
+        cloner_cfg = os.path.join("data", "cloner", "template.fs-uae")
+        clone_script = os.path.join(os.path.dirname(g_args.config_file), config_base_name) + ".clonescript"
+        if util.is_file(cloner_adf) and util.is_file(cloner_cfg) and util.is_file(clone_script):
+            if g_args.verbose: print("copying cloner config...")
+            shutil.copyfile(cloner_adf, os.path.join(g_clone_dir, "boot.adf"))
+            # create config from template
+            with open(cloner_cfg, 'r') as f:
+                cfg = f.read().replace("<config_base_name>", config_base_name)
+                open(os.path.join(g_clone_dir, "cfg.fs-uae"), mode="w").write(cfg)
+            # copy clone script and write fs-uae metadata
+            shutil.copyfile(clone_script, os.path.join(g_clone_dir, "clone"))
             open(os.path.join(g_clone_dir, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.02")
+        else:
+            print("warning: cloner config files not found")
 
         # clean output directory
         for r, _, f in os.walk(g_clone_dir):
