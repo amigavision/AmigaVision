@@ -11,11 +11,15 @@ import ags_util as util
 
 # -----------------------------------------------------------------------------
 
-VIEWPORT_HEIGHT = 216
-REF_PAL5 = 21
+PAL5_VIEWPORT_HEIGHT = 216
+PAL5_FUDGE = 20
+PAL4_VIEWPORT_HEIGHT = 270
+PAL4_FUDGE = 16
 
 def analyze(path):
     img = Image.open(path).convert("RGB")
+    if img.height != 572:
+        print("warning: image height is not 572 (use 'full' screenshot)")
 
     # list lines containing only background color
     bgcolor = img.getpixel((0,0))
@@ -36,22 +40,34 @@ def analyze(path):
 
     top = ftop >> 1
     bottom = fbottom >> 1
-    height = bottom - top
-    margin = (VIEWPORT_HEIGHT - height) >> 1
-
     if (ftop != top << 1) or (fbottom != bottom << 1):
         print("warning: progressive bounding box not integral")
 
-    stats = (top, bottom, height, margin)
-    pal5_vofs = top - REF_PAL5
+    height = bottom - top
+    pal5_margin = (PAL5_VIEWPORT_HEIGHT - height) >> 1
+    pal4_margin = (PAL4_VIEWPORT_HEIGHT - height) >> 1
+    pal5_vofs = top - PAL5_FUDGE
+    pal4_vofs = top - PAL4_FUDGE
 
-    return (pal5_vofs, stats)
+    stats = {
+        "top": top, "bottom": bottom, "height": height,
+        "pal5_margin": pal5_margin, "pal5_vofs": pal5_vofs,
+        "pal4_margin": pal4_margin, "pal4_vofs": pal4_vofs
+    }
+
+    if pal5_margin < 0:
+        r = "mode: pal4, v_offset: {}".format(pal4_vofs)
+    else:
+        r = "mode: pal5, v_offset: {}".format(pal5_vofs)
+
+    return (stats,r)
 
 # -----------------------------------------------------------------------------
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("image", metavar="FILE", help="image")
+    parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
         args = parser.parse_args()
@@ -60,8 +76,10 @@ def main():
             raise IOError("file doesn't exist: " + args.image)
             return 1
 
-        print(analyze(args.image))
-        #print(analyze(args.image)[0])
+        (stats, r) = analyze(args.image)
+        if args.verbose:
+            print(stats,"->")
+        print(r)
         return 0
 
     # except Exception as err:
