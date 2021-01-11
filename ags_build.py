@@ -208,7 +208,10 @@ def ags_make_note(entry, add_note):
     max_w = AGS_INFO_WIDTH
     note = ""
     system = entry["hardware"]
-    system += "/NTSC" if entry["ntsc"] > 0 else "/PAL"
+
+    if entry["ntsc"] > 1: system += "/NTSC"
+    elif entry["ntsc"] == 1: system += "/PAL60"
+    else: system += "/PAL"
 
     peripherals = []
     if entry["gamepad"]: peripherals.append("gamepad")
