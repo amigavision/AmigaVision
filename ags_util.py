@@ -105,6 +105,12 @@ def copytree(src, dst, symlinks=False, ignore=None):
         else:
             shutil.copy2(s, d)
 
+def prettify_names(str):
+    last_delimiter = str.rfind(", ")
+    if last_delimiter > 0:
+        str = str[:last_delimiter] + " & " + str[last_delimiter + 2:]
+    return str
+
 # -----------------------------------------------------------------------------
 
 def yaml_write(data, path):

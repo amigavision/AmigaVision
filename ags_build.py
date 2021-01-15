@@ -233,8 +233,11 @@ def ags_make_note(entry, add_note):
             note += ("Hack Info:  {}".format(entry["hack"]))[:max_w] + "\n"
 
     elif "category" in entry and entry["category"].lower() == "demo":
+        group = util.prettify_names(entry["publisher"])
         note += ("Title:      {}".format(entry["title"]))[:max_w] + "\n"
-        note += ("Group:      {}".format(entry["publisher"]))[:max_w] + "\n"
+        note += ("Group:      {}".format(group))[:max_w] + "\n"
+        if entry["country"]:
+            note += ("Country:    {}".format(entry["country"]))[:max_w] + "\n"
         note += ("Year:       {}".format(entry["year"]))[:max_w] + "\n"
         if entry["subcategory"].lower() != "demo":
             note += ("Category:   {}".format(entry["subcategory"]))[:max_w] + "\n"
@@ -259,7 +262,7 @@ def ags_fix_filename(name):
     return name
 
 
-def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=None):
+def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=None, skip_clash=False):
     global g_vadjust
     max_w = AGS_LIST_WIDTH
 
@@ -292,6 +295,8 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
             title += " (" + entry["publisher"] + ")"
         else:
             title += " (" + entry["hardware"].replace("/ECS", "").replace("AGA/CD32", "CD32").replace("OCS/CDTV", "CDTV").replace("/", "-") + ")"
+        if skip_clash:
+            return
         if only_script:
             title = title.replace(" ", "_")
     if len(title) > max_w:
@@ -429,14 +434,11 @@ def ags_create_autoentries():
             ags_create_entry(None, entry, os.path.join(path, "[ All Games, by year ].ags", year + ".ags"), None, None)
 
         # Demos / Disk Mags
-        if g_args.all_demos and entry["category"].lower() == "demo":
-            group = entry["publisher"]
-            if not group:
-                continue
-            if group.startswith("The "):
-                group = group[4:]
-            group = group[:AGS_LIST_WIDTH]
-            group_letter = group[0].upper()
+        def add_demo(entry, sort_group, sort_country):
+            if sort_group.startswith("The "):
+                sort_group = sort_group[4:]
+            sort_group = sort_group[:AGS_LIST_WIDTH]
+            group_letter = sort_group[0].upper()
             if group_letter.isnumeric():
                 group_letter = "0-9"
 
@@ -444,12 +446,28 @@ def ags_create_autoentries():
                 ags_create_entry(None, entry, os.path.join(d_path, "[ Disk Magazines ].ags"), None, None)
             else:
                 if entry["subcategory"].lower().startswith("crack"):
-                    ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, crack intros ].ags"), None, None, prefix=group)
+                    ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, crack intros ].ags"), None, None, prefix=sort_group)
                 if entry["subcategory"].lower().startswith("intro"):
                     ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, 1-64KB ].ags"), None, None)
-                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by title ].ags", letter + ".ags"), None, None)
-                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=group)
-                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
+                group_entry = dict(entry)
+                group_entry["title_short"] = group_entry["title"]
+                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by title ].ags", letter + ".ags"), None, None, skip_clash=True)
+                ags_create_entry(None, group_entry, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=sort_group, skip_clash=True)
+                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None, skip_clash=True)
+                if sort_country:
+                    ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by country ].ags", sort_country), None, None, skip_clash=True)
+
+        if g_args.all_demos and entry["category"].lower() == "demo":
+            groups = entry["publisher"]
+            if not groups:
+                continue
+            for sort_group in groups.split(", "):
+                countries = entry["country"]
+                if not countries:
+                    add_demo(entry, sort_group, None)
+                else:
+                    for sort_country in countries.split(", "):
+                        add_demo(entry, sort_group, sort_country)
 
         # Run-scripts for randomizer
         if entry["category"].lower() == "game" and not entry["issues"]:
@@ -460,10 +478,12 @@ def ags_create_autoentries():
         open(os.path.join(path, "[ All Games ].txt"), mode="w", encoding="latin-1").write("Browse all games alphabetically.")
     if util.is_dir(os.path.join(path, "[ All Games, by year ].ags")):
         open(os.path.join(path, "[ All Games, by year ].txt"), mode="w", encoding="latin-1").write("Browse all games by release year.")
-    if util.is_dir(os.path.join(d_path, "[ Demos by title ].ags")):
-        open(os.path.join(d_path, "[ Demos by title ].txt"), mode="w", encoding="latin-1").write("Browse demos by title.")
     if util.is_dir(os.path.join(d_path, "[ Demos by group ].ags")):
         open(os.path.join(d_path, "[ Demos by group ].txt"), mode="w", encoding="latin-1").write("Browse demos by release group.")
+    if util.is_dir(os.path.join(d_path, "[ Demos by country ].ags")):
+        open(os.path.join(d_path, "[ Demos by country ].txt"), mode="w", encoding="latin-1").write("Browse demos by country of origin.")
+    if util.is_dir(os.path.join(d_path, "[ Demos by title ].ags")):
+        open(os.path.join(d_path, "[ Demos by title ].txt"), mode="w", encoding="latin-1").write("Browse demos by title.")
     if util.is_dir(os.path.join(d_path, "[ Demos by year ].ags")):
         open(os.path.join(d_path, "[ Demos by year ].txt"), mode="w", encoding="latin-1").write("Browse demos by release year.")
     if util.is_dir(os.path.join(d_path, "[ Demos, 1-64KB ].ags")):
