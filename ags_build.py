@@ -27,6 +27,7 @@ g_clone_dir = None
 g_args = None
 g_db = None
 g_entries = dict()
+g_entry_for_path = set()
 g_vadjust = dict()
 
 # -----------------------------------------------------------------------------
@@ -262,9 +263,17 @@ def ags_fix_filename(name):
     return name
 
 
-def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=None, skip_clash=False):
+def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=None):
     global g_vadjust
+    global g_entry_for_path
     max_w = AGS_LIST_WIDTH
+
+    # skip if entry already added at path
+    path_id = "{}{}".format(entry["id"], path)
+    if path_id in g_entry_for_path:
+        return
+    else:
+        g_entry_for_path.add(path_id)
 
     # fix path name
     path_prefix = get_ags2_dir()
@@ -295,8 +304,6 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
             title += " (" + entry["publisher"] + ")"
         else:
             title += " (" + entry["hardware"].replace("/ECS", "").replace("AGA/CD32", "CD32").replace("OCS/CDTV", "CDTV").replace("/", "-") + ")"
-        if skip_clash:
-            return
         if only_script:
             title = title.replace(" ", "_")
     if len(title) > max_w:
@@ -441,7 +448,6 @@ def ags_create_autoentries():
             group_letter = sort_group[0].upper()
             if group_letter.isnumeric():
                 group_letter = "0-9"
-
             if entry["subcategory"].lower().startswith("disk mag"):
                 ags_create_entry(None, entry, os.path.join(d_path, "[ Disk Magazines ].ags"), None, None)
             else:
@@ -451,11 +457,11 @@ def ags_create_autoentries():
                     ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, 1-64KB ].ags"), None, None)
                 group_entry = dict(entry)
                 group_entry["title_short"] = group_entry["title"]
-                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by title ].ags", letter + ".ags"), None, None, skip_clash=True)
-                ags_create_entry(None, group_entry, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=sort_group, skip_clash=True)
-                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None, skip_clash=True)
+                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by title ].ags", letter + ".ags"), None, None)
+                ags_create_entry(None, group_entry, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=sort_group)
+                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
                 if sort_country:
-                    ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by country ].ags", sort_country), None, None, skip_clash=True)
+                    ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by country ].ags", sort_country), None, None)
 
         if g_args.all_demos and entry["category"].lower() == "demo":
             groups = entry["publisher"]
