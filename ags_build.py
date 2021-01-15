@@ -269,7 +269,7 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
     max_w = AGS_LIST_WIDTH
 
     # skip if entry already added at path
-    path_id = "{}{}".format(entry["id"], path)
+    path_id = "{}{}".format(entry["id"] if (entry and entry["id"]) else name, path)
     if path_id in g_entry_for_path:
         return
     else:
