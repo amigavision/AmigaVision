@@ -849,7 +849,6 @@
     - AnotherWorld
     - AnotherWorldLostLevel
     - BeachVolley
-    - BestOfTheBest
     - BioChallenge
     - FuryOfTheFurries
     - FutureWars
@@ -861,6 +860,7 @@
     - MetalMutant
     - NorthAndSouth
     - OperationStealth
+    - PanzaKickBoxing
     - RanX
   - Light Gun Support:
     - note: Games with light gun support.\n\n(Not available on MiSTer, most games also feature mouse control however.)
@@ -1027,6 +1027,7 @@
     - Nucleus
     - Oath
     - OperationHarrier
+    - Outlands
     - Outzone
     - OverdriveInfacto
     - Overkill
@@ -1208,7 +1209,6 @@
     - BattleIsle&DataDisks--ALSS
     - BattleIsle&DataDisks--Moon
     - BeachVolley
-    - BestOfTheBest
     - BiplaneDuel
     - BladesOfSteel
     - BlastaBallArcadia
@@ -2015,9 +2015,9 @@
     - Universe
   - Martial Arts:
     - note: While Street Fighter style fighting games were a poor fit for Amiga, here's some notable old school martial arts games.
-    - BestOfTheBest
     - Budokan
     - IK+
+    - PanzaKickBoxing
   - Pinball:
     - note: A popular enough genre on the Amiga to deserve its own list.
     - Obsession

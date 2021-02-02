@@ -1,10 +1,10 @@
 3DGalax
 3001OConnorsFight
-ATF2
-AllTerrainRacing
+
 ActionFighter
 AddamsFamily
 AdventuresOfQuik&Silva
+AgonyNTSC
 AirSupportNTSC
 Akira
 Alcatraz
@@ -14,6 +14,7 @@ AlienBreed2AGA
 AlienBreedSpecialEdition
 AlienDrugLords
 AllNewWorldOfLemmingsAGA
+AllTerrainRacing
 AlphaWaves
 AlteredDestiny
 Ambermoon
@@ -22,7 +23,9 @@ Amiganoid
 Amnios
 AnotherWorld
 ApidyaKaiko
+Apprentice
 AquaticGames
+ArabianNights
 ArcadePoolAGA
 ArcherMacLeansPool
 ArchipelagosNTSC
@@ -30,10 +33,10 @@ ArkanoidNTSC
 ArkanoidRevengeOfDoh
 Assassin
 AssassinSpecialEdition
+ATF2
 Awesome
 AxelsMagicHammer
 
-BCKid
 BadCat
 BadCompany
 BadLands
@@ -41,14 +44,28 @@ BalanceOfPower1990Ed
 Ballistix
 Banshee
 BaseJumpers
+BatmanCapedCrusader
+BatmanTheMovie
+BattleCommand
 BattleIsle
+BattleSquadronNTSC
+Battletech
+BCKid
+BeachVolley
+BeneathAStlSky
+Benefactor
+BestOfTheBest
+BillsTomatoGameNTSC
+BioChallenge
+BlackCrypt
+BladeWarrior
+Blastar
+Blasteroids
+Blob
+BloodMoney
+BloodNet
 
 ItCameFromTheDesert
 ItCameFromTheDesert2
 
 Verify:
-AgonyNTSC
-Apprentice
-ArabianNights
-BatmanCapedCrusader
-BatmanTheMovie
