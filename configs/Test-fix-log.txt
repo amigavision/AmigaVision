@@ -64,6 +64,19 @@ Blasteroids
 Blob
 BloodMoney
 BloodNet
+Bobo
+BodyBlows
+BombJack
+Bombuzal
+Botics
+BrandsHatch
+BrianTheLion
+BubbaNStix
+BubbleBobble
+Budokan
+BuggyBoy
+Builderland
+BundesligaMngrHatt
 
 ItCameFromTheDesert
 ItCameFromTheDesert2
