@@ -217,7 +217,6 @@ def ags_make_note(entry, add_note):
     peripherals = []
     if entry["gamepad"]: peripherals.append("gamepad")
     if entry["lightgun"]: peripherals.append("light gun")
-    if "mt32" in entry["id"]: peripherals.append("MT-32")
     if peripherals:
         system += " (" + " ,".join(peripherals) + ")"
 
