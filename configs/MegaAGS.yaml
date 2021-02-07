@@ -887,6 +887,7 @@
     - BubbleBobble
     - BuggyBoy
     - EmpireStrikesBack
+    - MarbleMadness
     - NewZealandStory
     - NinjaWarriors
     - Pang
@@ -1965,21 +1966,17 @@
 
 - Top Picks by Genre:
   - note: Our personal top picks, sorted by genre.
-  - Action, Misc:
-    - DynaBlaster
-    - Hostages
-    - Paradroid90
-    - Psyborg
-    - Walker
   - Adventure, Action:
     - BladeWarrior
     - Cadaver
     - Darkmere
     - DGeneration
     - HiredGuns
+    - Hostages
     - ItCameFromTheDesert
     - KingOfChicago
     - Moonstone
+    - Paradroid90
     - RocketRanger
     - Wings
   - Adventure, RPG:
@@ -2013,8 +2010,19 @@
     - RiseOfTheDragon
     - SecretOfMonkeyIsland
     - Universe
+  - Arcade:
+    - note: Unmistakenly arcade style games that don't fit the classic categories.
+    - DogsOfWar
+    - DynaBlaster
+    - MarbleMadness
+    - Pang
+    - ParasolStars
+    - Psyborg
+    - Ugh
+    - Walker
+    - WizNLiz
   - Martial Arts:
-    - note: While Street Fighter style fighting games were a poor fit for Amiga, here's some notable old school martial arts games.
+    - note: While Street Fighter style fighting games were a poor fit for Amiga, there's some notable old school martial arts games.
     - Budokan
     - IK+
     - PanzaKickBoxing
@@ -2026,33 +2034,25 @@
     - PinballIllusions
     - SlamTilt
   - Platform:
-    - ArabianNights
     - AddamsFamily
+    - ArabianNights
     - BCKid
     - Flood
     - JamesPond2
     - KidChaos
+    - NaughtyOnes
     - RickDangerous
+    - RodLand
+    - SnowBros
     - SoccerKid
     - TrapsNTreasures
   - Platform, Action:
     - note: Run'n'gun and platform shooters.
     - Leander
     - RuffNTumble
-    - SecondSamurai
     - Switchblade2
     - Turrican2
     - YoJoe
-  - Platform, Arcade:
-    - note: Arcade style, mostly single screen, platformers.
-    - BaseJumpers
-    - BubbleBobble
-    - Fuzzball
-    - NaughtyOnes
-    - Pang
-    - RodLand
-    - SnowBros
-    - WizNLiz
   - Platform, Cinematic:
     - AnotherWorld
     - Flashback
@@ -2063,9 +2063,9 @@
     - Builderland
     - FuryOfTheFurries
     - Globdule
+    - LostVikings
     - ShadowOfTheBeast3
     - SillyPutty
-    - Ugh
   - Puzzle:
     - ClikClak
     - Deflektor
@@ -2076,6 +2076,7 @@
     - OneStepBeyond
     - PipeDream
     - PushOver
+    - Sentinel
     - SpringTime
     - Statix
     - SuperSkweek
