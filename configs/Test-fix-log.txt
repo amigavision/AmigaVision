@@ -119,6 +119,8 @@ Cytron
 
 Damocles
 Darkmere
+DarkSeed
+DarkSeedCD32
 Datastorm
 Defender2
 DefenderOfTheCrown
@@ -145,12 +147,39 @@ DynaBlaster
 Dyter07
 
 Ebonstar
+Eco
+Elfmania
+Elite
 Elvira
 Elvira2
+EMotion
+EmpireStrikesBack
+EmpireSoccer94
+Epic
+EscapeFTPOTRobotMonsters
+Extase
+Exterminator
 EyeOfTheBeholder
 EyeOfTheBeholder2
 EyeOfTheBeholder2AGA
 EyeOfTheBeholderAGA
+
+F15StrikeEagle2
+F19StealthFighter
+F29Retaliator
+FA18Interceptor
+Falcon
+FateGatesOfDawn
+FinalBlow
+FinalCountdown
+FireAndBrimstone
+FireAndIce
+FirstSamurai
+Flashback
+FlightOfTheAmazonQueen
+Flood
+Floor13
+FourCrystalsOfTrazere
 
 ItCameFromTheDesert
 ItCameFromTheDesert2
