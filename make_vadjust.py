@@ -21,21 +21,34 @@ ntsc_v = (16, 10)
 pal_v5 = (11, 60)
 pal_v  = (11, 6)
 
+
 # mode, name, ntsc, laced
 modes = [
     (0x000F25E4, "NTSC LowRes", True, False),
+    (0x000F15E4, "NTSC LowRes--", True, False),
     (0x010F25E4, "NTSC HiRes", True, False),
+    (0x000F15E4, "NTSC LowRes--", True, False),
     (0x020F25E4, "NTSC SuperHiRes", True, False),
+    (0x020F15E4, "NTSC SuperHiRes--", True, False),
     (0x001E35E4, "NTSC LowRes Laced", True, True),
+    (0x001E25E4, "NTSC LowRes Laced--", True, True),
     (0x011E35E4, "NTSC HiRes Laced", True, True),
+    (0x011E25E4, "NTSC HiRes Laced--", True, True),
     (0x021E35E4, "NTSC SuperHiRes Laced", True, True),
+    (0x021E25E4, "NTSC SuperHiRes Laced--", True, True),
     (0x0011F5E4, "PAL LowRes", False, False),
+    (0x0011E5E4, "PAL LowRes--", False, True),
     (0x0111F5E4, "PAL HiRes", False, False),
+    (0x0111E5E4, "PAL HiRes--", False, True),
     (0x0211F5E4, "PAL SuperHiRes", False, False),
+    (0x0211E5E4, "PAL SuperHiRes--", False, False),
     (0x0023D5E4, "PAL LowRes Laced", False, True),
+    (0x0023C5E4, "PAL LowRes Laced--", False, True),
     (0x0123D5E4, "PAL HiRes Laced", False, True),
-    (0x0223D5E4, "PAL SuperHiRes Laced", False, True)
-]
+    (0x0123C5E4, "PAL HiRes Laced--", False, True),
+    (0x0223D5E4, "PAL SuperHiRes Laced", False, True),
+    (0x0223C5E4, "PAL SuperHiRes Laced--", False, True)
+ ]
 
 def make_vadjust(pal_5x, v_offset):
     out = bytes()
