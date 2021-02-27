@@ -1,185 +1,185 @@
-3DGalax
-3001OConnorsFight
+  - 3DGalax
+  - 3001OConnorsFight
 
-ActionFighter
-AddamsFamily
-AdventuresOfQuik&Silva
-AgonyNTSC
-AirSupportNTSC
-Akira
-Alcatraz
-Alianator
-AlienBreed
-AlienBreed2AGA
-AlienBreedSpecialEdition
-AlienDrugLords
-AllNewWorldOfLemmingsAGA
-AllTerrainRacing
-AlphaWaves
-AlteredDestiny
-Ambermoon
-Amegas
-Amiganoid
-Amnios
-AnotherWorld
-ApidyaKaiko
-Apprentice
-AquaticGames
-ArabianNights
-ArcadePoolAGA
-ArcherMacLeansPool
-ArchipelagosNTSC
-ArkanoidNTSC
-ArkanoidRevengeOfDoh
-Assassin
-AssassinSpecialEdition
-ATF2
-Awesome
-AxelsMagicHammer
+  - ActionFighter
+  - AddamsFamily
+  - AdventuresOfQuik&Silva
+  - AgonyNTSC
+  - AirSupportNTSC
+  - Akira
+  - Alcatraz
+  - Alianator
+  - AlienBreed
+  - AlienBreed2AGA
+  - AlienBreedSpecialEdition
+  - AlienDrugLords
+  - AllNewWorldOfLemmingsAGA
+  - AllTerrainRacing
+  - AlphaWaves
+  - AlteredDestiny
+  - Ambermoon
+  - Amegas
+  - Amiganoid
+  - Amnios
+  - AnotherWorld
+  - ApidyaKaiko
+  - Apprentice
+  - AquaticGames
+  - ArabianNights
+  - ArcadePoolAGA
+  - ArcherMacLeansPool
+  - ArchipelagosNTSC
+  - ArkanoidNTSC
+  - ArkanoidRevengeOfDoh
+  - Assassin
+  - AssassinSpecialEdition
+  - ATF2
+  - Awesome
+  - AxelsMagicHammer
 
-BadCat
-BadCompany
-BadLands
-BalanceOfPower1990Ed
-Ballistix
-Banshee
-BaseJumpers
-BatmanCapedCrusader
-BatmanTheMovie
-BattleCommand
-BattleIsle
-BattleSquadronNTSC
-Battletech
-BCKid
-BeachVolley
-BeneathAStlSky
-Benefactor
-BestOfTheBest
-BillsTomatoGameNTSC
-BioChallenge
-BionicCommando
-BlackCrypt
-BladeWarrior
-Blastar
-Blasteroids
-Blob
-BloodMoney
-BloodNet
-Bobo
-BodyBlows
-BombJack
-Bombuzal
-Botics
-BrandsHatch
-BrianTheLion
-BubbaNStix
-BubbleBobble
-Budokan
-BuggyBoy
-Builderland
-BundesligaMngrHatt
+  - BadCat
+  - BadCompany
+  - BadLands
+  - BalanceOfPower1990Ed
+  - Ballistix
+  - Banshee
+  - BaseJumpers
+  - BatmanCapedCrusader
+  - BatmanTheMovie
+  - BattleCommand
+  - BattleIsle
+  - BattleSquadronNTSC
+  - Battletech
+  - BCKid
+  - BeachVolley
+  - BeneathAStlSky
+  - Benefactor
+  - BestOfTheBest
+  - BillsTomatoGameNTSC
+  - BioChallenge
+  - BionicCommando
+  - BlackCrypt
+  - BladeWarrior
+  - Blastar
+  - Blasteroids
+  - Blob
+  - BloodMoney
+  - BloodNet
+  - Bobo
+  - BodyBlows
+  - BombJack
+  - Bombuzal
+  - Botics
+  - BrandsHatch
+  - BrianTheLion
+  - BubbaNStix
+  - BubbleBobble
+  - Budokan
+  - BuggyBoy
+  - Builderland
+  - BundesligaMngrHatt
 
-Cabal
-Cadaver
-CadaverThePayoff
-CaliforniaGames
-CannonFodder
-CannonFodder2
-CannonFodder2AlienLevels
-CannonFodderCD32
-CannonFodderNewCampaign
-CannonFodderPlus
-Captive
-CardiaxxTeam17
-CaribbeanDisasterDe
-CarlLewisChallenge
-Carnage
-CarrierCommand
-CarVup
-CastleMaster
-CastleMaster
-CastleMaster2
-CastleWarrior
-CelticLegends
-Centurion
-ChaosEngine
-ChaosEngine2
-CircusAttractions
-Civilization
-ClikClak
-Colony
-CrazySue
-CrazySueGoesOn
-CruiseForACorpse
-CrystalHammerV2
-CurseOfEnchantia
-Cybercon3
-Cyberpunks
-Cytron
+  - Cabal
+  - Cadaver
+  - CadaverThePayoff
+  - CaliforniaGames
+  - CannonFodder
+  - CannonFodder2
+  - CannonFodder2AlienLevels
+  - CannonFodderCD32
+  - CannonFodderNewCampaign
+  - CannonFodderPlus
+  - Captive
+  - CardiaxxTeam17
+  - CaribbeanDisasterDe
+  - CarlLewisChallenge
+  - Carnage
+  - CarrierCommand
+  - CarVup
+  - CastleMaster
+  - CastleMaster
+  - CastleMaster2
+  - CastleWarrior
+  - CelticLegends
+  - Centurion
+  - ChaosEngine
+  - ChaosEngine2
+  - CircusAttractions
+  - Civilization
+  - ClikClak
+  - Colony
+  - CrazySue
+  - CrazySueGoesOn
+  - CruiseForACorpse
+  - CrystalHammerV2
+  - CurseOfEnchantia
+  - Cybercon3
+  - Cyberpunks
+  - Cytron
 
-Damocles
-Darkmere
-DarkSeed
-DarkSeedCD32
-Datastorm
-Defender2
-DefenderOfTheCrown
-Deflektor
-DejaVu
-DejaVu2LostInLasVegas
-Denaris
-DesertStrike
-Deuteros
-DeviousDesigns
-DGeneration
-DisposableHero
-DistantArmies
-DogsOfWar
-DojoDan
-DownhillChallenge
-DragonBreed
-DragonStrike
-DreamWeb
-DrivinForce
-Dune2
-DungeonMaster
-DynaBlaster
-Dyter07
+  - Damocles
+  - Darkmere
+  - DarkSeed
+  - DarkSeedCD32
+  - Datastorm
+  - Defender2
+  - DefenderOfTheCrown
+  - Deflektor
+  - DejaVu
+  - DejaVu2LostInLasVegas
+  - Denaris
+  - DesertStrike
+  - Deuteros
+  - DeviousDesigns
+  - DGeneration
+  - DisposableHero
+  - DistantArmies
+  - DogsOfWar
+  - DojoDan
+  - DownhillChallenge
+  - DragonBreed
+  - DragonStrike
+  - DreamWeb
+  - DrivinForce
+  - Dune2
+  - DungeonMaster
+  - DynaBlaster
+  - Dyter07
 
-Ebonstar
-Eco
-Elfmania
-Elite
-Elvira
-Elvira2
-EMotion
-EmpireStrikesBack
-EmpireSoccer94
-Epic
-EscapeFTPOTRobotMonsters
-Extase
-Exterminator
-EyeOfTheBeholder
-EyeOfTheBeholder2
-EyeOfTheBeholder2AGA
-EyeOfTheBeholderAGA
+  - Ebonstar
+  - Eco
+  - Elfmania
+  - Elite
+  - Elvira
+  - Elvira2
+  - EMotion
+  - EmpireStrikesBack
+  - EmpireSoccer94
+  - Epic
+  - EscapeFTPOTRobotMonsters
+  - Extase
+  - Exterminator
+  - EyeOfTheBeholder
+  - EyeOfTheBeholder2
+  - EyeOfTheBeholder2AGA
+  - EyeOfTheBeholderAGA
 
-F15StrikeEagle2
-F19StealthFighter
-F29Retaliator
-FA18Interceptor
-Falcon
-FateGatesOfDawn
-FinalBlow
-FinalCountdown
-FireAndBrimstone
-FireAndIce
-FirstSamurai
-Flashback
-FlightOfTheAmazonQueen
-Flood
-Floor13
-FourCrystalsOfTrazere
+  - F15StrikeEagle2
+  - F19StealthFighter
+  - F29Retaliator
+  - FA18Interceptor
+  - Falcon
+  - FateGatesOfDawn
+  - FinalBlow
+  - FinalCountdown
+  - FireAndBrimstone
+  - FireAndIce
+  - FirstSamurai
+  - Flashback
+  - FlightOfTheAmazonQueen
+  - Flood
+  - Floor13
+  - FourCrystalsOfTrazere
 
-ItCameFromTheDesert
-ItCameFromTheDesert2
+  - ItCameFromTheDesert
+  - ItCameFromTheDesert2
