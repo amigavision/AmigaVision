@@ -109,7 +109,7 @@
   - HudsonHawk
   - Hunter
   - Hybris
-  - HybrisNTSC # Decision on whether NTSC or PAL version is the canonical?
+  - HybrisNTSC # Is PAL version canonical? (but, shoot-em-up)
 
   - IK+
   - IkariWarriors
@@ -121,7 +121,7 @@
   - Indianapolis500
   - IndyHeat
   - IndyJonesLastCrusAdv
-  - IndyJonesLastCrusAdvNTSC # Decision on whether NTSC or PAL version is the canonical?
+  - IndyJonesLastCrusAdvNTSC # Is NTSC version canonical?
   - InnocentUntilCaught
   - InsectsInSpace
   - International3DTennis
@@ -175,10 +175,8 @@
   - LeisureSuitLarry3
   - Lemmings
   - Lemmings2 # Is PAL canonical?
-  - Lemmings2NTSC1MB 
   - LemmingsHoliday1993
   - LemmingsHoliday1994
-  - LemmingsImageNTSC # Is PAL canonical?
   - LemmingsNewYear9192
   - LemmingsXmasDemo1991
   - LemmingsXmasDemo1992
@@ -192,7 +190,6 @@
   - Loom
   - Lorna
   - LostPatrol 
-  - LostPatrolNTSC # Is PAL canonical?
   - LostTreasuresOfInfocom
   - LostVikings
   - Lotus
@@ -200,7 +197,7 @@
   - Lotus3
 
   - MagiclandDizzy
-  - MagicPockets # Is PAL canonical?
+  - MagicPockets # Is PAL canonical? (But, Bitmap Brothers)
   - MagicPocketsNTSC
   - ManiacMansion
   - MarbleMadness
@@ -243,9 +240,7 @@
   - NinjaRemix
   - NinjaWarriors
   - Nitro
-  - NitroNTSC # Is PAL canonical?
   - NorthAndSouth
-  - NorthAndSouthImageNTSC # Is PAL canonical?
   - NoSecondPrize
   - NuclearWar
   - NuclearWarNTSC # Is NTSC canonical?
@@ -256,7 +251,6 @@
   - Odyssey
   - OffShoreWarrior
   - OhNoMoreLemmings
-  - OhNoMoreLemmingsNTSC # Is PAL canonical?
   - OilImperium
   - OneStepBeyond
   - OperationCleanstreets
@@ -290,7 +284,7 @@
   - PipeDream
   - PipeDreamNTSC # Is NTSC canonical?
   - Pirates
-  - PlatoonNTSC # Is PAL canonical?
+  - Platoon
   - PlayerManager
   - PlayerManager2
   - PlayerManager2ExtraAGA
@@ -359,7 +353,7 @@
   - RoboCop
   - RoboCop3
   - RocketRanger
-  - RocketRangerNTSC # Is NTSC canonical?
+  - RocketRangerNTSC # Is NTSC canonical? 
   - RockNRoll
   - RockStarAteMyHamster
   - RodLand
@@ -417,8 +411,8 @@
   - SpaceTaxi3
   - Speedball
   - Speedball2
-  - Speedball2NTSC # Is PAL version canonical?
-  - SpeedballNTSC # Is PAL version canonical?
+  - Speedball2NTSC # Is PAL version canonical? (But, Bitmap Bros)
+  - SpeedballNTSC # Is PAL version canonical? (But, Bitmap Bros)
   - SperisLegacy
   - SperisLegacyAGA # Is AGA version canonical?
   - SpindizzyWorlds
@@ -445,7 +439,6 @@
   - SuperHero
   - SuperMethaneBros
   - SuperOffRoad
-  - SuperOffRoadNTSC # Is PAL version canonical?
   - SuperScrambleSimulator
   - SuperSkidmarks+CD
   - SuperSkidmarksCD32 # Which variant is canonical?
@@ -542,8 +535,8 @@
   - WormsDC
   - WormsDCAGA12MB # Is 2MB version canonical? Less loading?
   
-  - Xenon
-  - Xenon2
+  - Xenon # PAL canonical? (But, Bitmap Bros, and shoot-em-up)
+  - Xenon2 # PAL canonical? (But, Bitmap Bros, and shoot-em-up)
   - XOut
   - XOut2Disk
   - Xybots
