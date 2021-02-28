@@ -1,28 +1,100 @@
 --- # AGS2 Menu structure
 - Test:
-  - CrystalDragon # Installer seems bodged now, it used to work fine.
+  - AirborneRanger
+  - AlienBreedTA
+  - AnotherWorldLostLevel
+  - APBImage
+  - Astaroth
+  - Atomix
 
+  - BansheeAGA
+  - Barbarian2Palace
+  - BattleChess
+  - BattleChess2
+  - BeyondTheIcePalace
+  - BiplaneDuel
+  - BMXSimulator
+  - BoneCruncherEnhanced
+  - BrutalHomicide
+  - BrutalHomicide2
+  - BubbleAndSqueakAGA
+
+  - CadaverThePayoff
+  - CannonSoccer
+  - ChambersOfShaolin
+  - ChuckRock
+  - ChuckRock2CD32
+  - CivilizationAGA
+  - ClownOMania
+  - ColonizationAGA
+  - CrystalDragon # Installer seems bodged now, it used to work fine.
+  - Cubulus
+
+  - DeathSwordNTSC
+  - DizzyCollection/Disk1
+  - DizzyCollection/Disk2
+  - CrystalKingdomDizzy
+  - DizzysExcellentAdventures/Disk1 # Not sure if this is the correct format
+  - DizzysExcellentAdventures/Disk2 # Not sure if this is the correct format
+  - DuckTales
+  - Dune
+
+  - EMotion
+  - EmeraldMine2
+  - EmeraldMine3
+  - EmeraldMine
+
+  - FaeryTaleAdventure
+  - FantasticDizzyAGA
+  - FantasyWorldDizzy
+  - Fascination
+  - FernandezMustDie
+  - FinalAssault
+  - FireForce
+  - Firepower
+  - FirstContact
+  - FlinkCD32
+  - FlyHarder
+  - FlyingSharkSE
   - FormulaOneGrandPrix4Disk
   - Frenetic
   - Frontier
+  - Frontier
+  - FrontierCD32
+  - FuryOfTheFurriesCD32
   - FutureTank
   - FutureWars
   - Fuzzball
 
   - GalacticTheXmasEdition
+  - Gauntlet2
   - Gauntlet3
   - GemX
   - GhoulsNGhosts
+  - Giana2
+  - Giganoid
   - Globdule
+  - GlobduleNTSC
   - Goal
+  - Gobliiins
+  - Gobliins2
+  - Goblins3
+  - Gods
   - Gods
   - GoldenAxe
   - GoofysRailwayExpress
   - GrandMonsterSlam
+  - Gravity
+  - GreatCourts
+  - GreatCourts2
+  - GreatGianaSisters
   - Gunship2000
 
+  - Hammerfist
   - HardNHeavy
   - Harlequin
+  - Heimdall
+  - Heimdall2AGA
   - HelterSkelter
   - HeroQuest
   - HeroQuest2
@@ -33,34 +105,53 @@
   - Historyline--Intro
   - HollywoodPokerPro
   - Hostages
+  - Hostages
   - HudsonHawk
   - Hunter
   - Hybris
+  - HybrisNTSC # Decision on whether NTSC or PAL version is the canonical?
 
   - IK+
+  - IkariWarriors
   - Impossamole
   - ImpossibleMission2025
+  - IndianaJonesAtlantisAct
   - IndianaJonesAtlantisAdv
+  - IndianaJonesTempleOfDoom
   - Indianapolis500
   - IndyHeat
   - IndyJonesLastCrusAdv
+  - IndyJonesLastCrusAdvNTSC # Decision on whether NTSC or PAL version is the canonical?
   - InnocentUntilCaught
   - InsectsInSpace
   - International3DTennis
   - Interphase
+  - ItCameFromTheDesert
+  - ItCameFromTheDesert2
   - Ivanhoe
 
   - JaguarXJ220
   - JamesPond
   - JamesPond2
+  - JamesPond2AGA # Is AGA version canonical?
   - JamesPond3
+  - JamesPond3AGA # Is AGA version canonical?
   - JimmyWhitesSnooker
   - JimPower
   - JudgeDredd
+  - JumpingJackSon
   - JungleStrike
+  - JungleStrike2MB # Which version is canonical?
+  
   - K240
   - Katakis
+  - Katakis2Disk
+  - KickOff
+  - KickOff&ExtraTime2Disk
   - KickOff2
+  - KickOff216
+  - KickOff2FinalWhistle
+  - KickOff2ReturnToEurope
   - KidChaos
   - KidGloves
   - Kikstart2
@@ -75,12 +166,23 @@
   - LandGenesis
   - Larrie
   - LaserSquad
+  - LaserSquadNTSC
   - Leander
+  - Leatherneck
   - LEDStorm
+  - LegendOfFaerghailNTSC
   - LegendOfKyrandia
   - LeisureSuitLarry3
   - Lemmings
-  - Lemmings2
+  - Lemmings2 # Is PAL canonical?
+  - Lemmings2NTSC1MB 
+  - LemmingsHoliday1993
+  - LemmingsHoliday1994
+  - LemmingsImageNTSC # Is PAL canonical?
+  - LemmingsNewYear9192
+  - LemmingsXmasDemo1991
+  - LemmingsXmasDemo1992
+  - LethalXcess
   - LightCorridor
   - Lionheart
   - LiquidKids
@@ -89,15 +191,19 @@
   - Logistic
   - Loom
   - Lorna
-  - LostPatrol
+  - LostPatrol 
+  - LostPatrolNTSC # Is PAL canonical?
   - LostTreasuresOfInfocom
   - LostVikings
   - Lotus
   - Lotus2
   - Lotus3
 
-  - MagicPockets
+  - MagiclandDizzy
+  - MagicPockets # Is PAL canonical?
+  - MagicPocketsNTSC
   - ManiacMansion
+  - MarbleMadness
   - Masterblazer
   - Maya
   - MegaLoMania
@@ -110,8 +216,10 @@
   - MFTanks
   - MidnightResistance
   - Midwinter
+  - Midwinter2
   - MiG29Fulcrum
   - MightyBombJack
+  - Millennium22
   - MindWalker
   - MonkeyIsland2
   - MontyPythonsFlyCir
@@ -124,30 +232,47 @@
   - NarcoPolice
   - NathanNever
   - NaughtyOnes
+  - NaughtyOnesAGA # AGA version canonical?
   - Nebulus
+  - Nebulus2
   - Neuromancer
   - NeverMind
   - NewZealandStory
+  - NewZealandStoryDemo
   - NightShift
+  - NinjaRemix
   - NinjaWarriors
   - Nitro
+  - NitroNTSC # Is PAL canonical?
   - NorthAndSouth
+  - NorthAndSouthImageNTSC # Is PAL canonical?
   - NoSecondPrize
   - NuclearWar
-
+  - NuclearWarNTSC # Is NTSC canonical?
+  
   - Oath
+  - Obliterator
   - Obsession
+  - Odyssey
+  - OffShoreWarrior
   - OhNoMoreLemmings
+  - OhNoMoreLemmingsNTSC # Is PAL canonical?
   - OilImperium
   - OneStepBeyond
   - OperationCleanstreets
   - OperationStealth
+  - OperationThunderbolt
+  - OperationWolf
   - Oxxonian
 
+
+  - PacLand
   - Pacmania
+  - Pandora
   - Pang
   - PanzaKickBoxing
   - Paradroid90
+  - Paradroid901MB # Which version is canonical?
   - ParaglidingSimulation
   - ParasolStars
   - Perihelion
@@ -157,38 +282,60 @@
   - Phantasie3
   - PinballDreams
   - PinballFntsies
+  - PinballFntsiesAGA # Is AGA version canonical?
   - PinballIllusions
+  - PinballIllusionsAGA # Is AGA version canonical?
   - PinballPrelude
   - PioneerPlague
   - PipeDream
+  - PipeDreamNTSC # Is NTSC canonical?
   - Pirates
+  - PlatoonNTSC # Is PAL canonical?
+  - PlayerManager
+  - PlayerManager2
+  - PlayerManager2ExtraAGA
   - Plotting
   - Pod
+  - Poing
+  - Poing2
+  - Poing3
+  - Poing4
+  - Poing5
+  - Poing6
+  - Poing7
   - Populous
+  - Populous&DataDisks
   - Populous2&ChallengeGames
   - PortsOfCall
+  - PostmanPat
   - Powermonger
+  - PowermongerWW1Edition
   - Premiere
   - PrinceOfPersia
   - Project1
+  - ProjectXSE
   - Projectyle
   - ProTennisTour
   - ProTennisTour2
   - Psyborg
+  - PuffysSaga
   - Puggsy
   - PurpleSaturnDay
   - PushOver
   - Putty
   - PuttySquad
+  - PuttySquadAGA # Is AGA version canonical?
   - Puzznic
 
   - Qix
   - Quartz
   - Questron2
+  - Qwak
 
   - Racter
   - RailroadTycoon
   - RainbowIslands
+  - RallyCrossChallenge
   - Rampart
   - RanX
   - RBI2Baseball
@@ -196,21 +343,30 @@
   - RedHeat
   - RedStormRising
   - Renegade
+  - Renegades
   - Resolution101
   - RevengeOfMutantCamels
   - RevengeOfMutantCamels2
   - RickDangerous
   - RickDangerous2
+  - RickDangerous25
+  - RingsOfMedusa
   - RiseOfTheDragon
   - Roadkill
+  - RoadkillAGA # Is AGA version canonical?
   - RoadwarEuropa
+  - RobinHoodLegendQuest
   - RoboCop
   - RoboCop3
   - RocketRanger
+  - RocketRangerNTSC # Is NTSC canonical?
   - RockNRoll
+  - RockStarAteMyHamster
   - RodLand
   - Rogue
+  - Rotox
   - RType
+  - RType2
   - RuffNTumble
   - RygarAGA
 
@@ -218,9 +374,14 @@
   - Sarcophaser
   - ScoobyDoo&ScrappyDoo
   - SecondSamurai
+  - SecondSamuraiAGA # Is AGA version canonical?
   - SecretOfMonkeyIsland
+  - SensibleGolf
+  - SensibleSoccer1MB
+  - SensibleWorldOfSoccer9697
   - Sentinel
   - Settlers
+  - SevenGatesOfJambalaImage
   - ShadowFighter
   - Shadowlands
   - ShadowOfTheBeast
@@ -231,40 +392,66 @@
   - ShaqFu
   - ShockWave
   - ShufflepuckCafe
+  - SideWinder
+  - SideWinder2
   - Silkworm
   - SillyPutty
+  - SimAntHiRes
   - SimCity
+  - SimCityNTSC # Is NTSC version canonical?
+  - SimonTheSorcererAGA
   - Simulcra
   - Sinbad
   - Skidmarks
+  - SkidmarksAGA # Is AGA version canonical?
   - SlamTilt
+  - SlamTiltAGA2MB # Is AGA version canonical?
+  - SleepwalkerAGA
   - SlySpySecretAgent
   - SnowBros
   - SoccerKid
   - Spaceball
+  - SpaceCrusade&VoyageBeyond
   - SpaceHarrier2
   - Spaceport
   - SpaceTaxi3
   - Speedball
   - Speedball2
+  - Speedball2NTSC # Is PAL version canonical?
+  - SpeedballNTSC # Is PAL version canonical?
   - SperisLegacy
+  - SperisLegacyAGA # Is AGA version canonical?
   - SpindizzyWorlds
+  - SpittingImage
   - Springtime
+  - SpyVsSpy
+  - SpyVsSpy2TheIslandCaper
+  - SpyVsSpy3ArcticAntics
+  - SpyWhoLovedMe
   - Starblaze
   - Starglider
   - Starglider2
   - Statix
+  - StreetRod
+  - StreetRod2
   - StuntCarRacer
+  - StuntCarRacerTNT
   - SuperCars
   - SuperCars2
+  - SuperCars2Disk # Which variant is canonical?
+  - Superfrog
   - SuperGridRunner
   - SuperHangOn
   - SuperHero
+  - SuperMethaneBros
   - SuperOffRoad
+  - SuperOffRoadNTSC # Is PAL version canonical?
   - SuperScrambleSimulator
   - SuperSkidmarks+CD
+  - SuperSkidmarksCD32 # Which variant is canonical?
   - SuperSkweek
   - SuperStardust
+  - SuperStardustAGA # Is AGA version canonical?
   - SuperTwintris
   - SuprTennisChmps
   - Switchblade
@@ -272,15 +459,20 @@
   - SWIV
   - SwordOfSodan
   - Syndicate
+  - SyndicateAmericanRevolt
 
+  - TeenageQueen
   - TempleOfApshaiTrilogy
   - Tensai
+  - Terramex
   - TestDrive2
   - TetrisMirrorsoft
   - TetrisPro
   - TFX
   - TheirFinestHour
   - ThemePark
+  - ThreeStoogesNTSC
+  - Thunderbirds
   - ThunderHawkAH73M
   - TinyTroops
   - TitusTheFox
@@ -292,33 +484,42 @@
   - TotalEclipse
   - TotalRecall
   - TowerOfBabel
-  - TowerOfBabel
   - TrapsNTreasures
+  - TreasureIslandDizzy
   - TreasureTrap
   - TrexWarrior
+  - TurboRaketti2Fi
   - Turrican
   - Turrican2
   - Turrican3
-  - TVSportsFootball
+  - Tusker
+  - TVSportsBasketball # Is NTSC canonical?
+  - TVSportsFootball # Is NTSC canonical?
   - Twintris
   - TwinWorld
   - TyphoonThompson
 
+  - UFOEnemyUnknown
   - Ugh
   - Ultima5
   - Universe
   - Unreal
   - Untouchables
   - Uridium2
+
   - Vaxine
   - VenusTheFlytrap
   - Virocop
+  - VirocopAGA # Is AGA canonical?
   - Virus
   - Voyager
   - Vroom
+  - Vyrus
 
   - Walker
+  - WalkerDecrunched # Is Decrunched canonical? More samples?
   - Warhead
+  - WarInMiddleEarth
   - WarzoneCoreDesign
   - Waxworks
   - WCLeaderBoard
@@ -327,6 +528,7 @@
   - WIEuropeIsCarmenSandiego
   - WindowWizard
   - Wings
+  - WingsOfDeath
   - WingsOfFury
   - WITUSAIsCarmenSandiego
   - WITWIsCarmenSandiego
@@ -336,16 +538,25 @@
   - Wolfchild
   - WorldGames
   - Worms
+  - Worms2MB # Is 2MB version canonical? Less loading?
   - WormsDC
-
+  - WormsDCAGA12MB # Is 2MB version canonical? Less loading?
+  
   - Xenon
   - Xenon2
   - XOut
+  - XOut2Disk
   - Xybots
+
   - YoJoe
   - Yolanda
+  - YolandaImage
+
+  - ZakMcKracken
   - ZanyGolf
+  - ZanyGolfNTSC # Is NTSC canonical?
   - Zarathrusta
   - Zeewolf
+  - Zeewolf2
   - Zool
   - ZOut
