@@ -4,3 +4,4 @@
 *.so
 screenshots
 vadjust
+.DS_Store
