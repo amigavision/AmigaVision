@@ -3081,7 +3081,7 @@ game--brutalfootballaga--brutalfootballaga;Brutal Football;Brutal Football;;;AGA
 game--barbarian2palace--barbarian2palace;Barbarian II: The Dungeon Of Drax;Barbarian II;;;OCS;;1;;;;;;;;1989;;English;Palace;Palace;1;;v1.2;Barbarian2Palace/Barbarian2Palace.slave;game/B/Barbarian2_v1.2_Palace_2264.lha;Game;;37;119
 game--bumpnburncd32--bumpnburncd32;Bump 'n' Burn;Bump 'n' Burn;;;AGA/CD32;1;0;;;1;;;;;1994;;English;The Dome;Grandslam ;2;;v1.2;BumpNBurnCD32/BumpNBurnCD32.Slave;game/B/BumpNBurn_v1.2_CD32.lha;Game;Racing - Arcade;240;524
 game--beneathastlskyse--beneathastlskyse;Beneath A Steel Sky;Beneath A Steel Sky;1;;OCS;;0;1;26;;;;;;1994;;Swedish;Revolution;Virgin;1;;v2.1;BeneathAStlSkySe/BeneathAStlSkySe.slave;game/B/BeneathASteelSky_v2.1_Se.lha;Game;Adventure - Point & Click;90;1667
-game--biplaneduel--biplaneduel;Biplane Duel;Biplane Duel;;;OCS;;0;;;;;;;;1989;;English;Peter Mason;Peter Mason;2;;v1.0;BiplaneDuel/BiplaneDuel.Slave;game/B/BiplaneDuel_v1.0.lha;Game;;5369;1248
+game--biplaneduel--biplaneduel;Biplane Duel;Biplane Duel;;;OCS;;0;1;12;;;;;;1989;;English;Peter Mason;Peter Mason;2;;v1.0;BiplaneDuel/BiplaneDuel.Slave;game/B/BiplaneDuel_v1.0.lha;Game;;5369;1248
 game--badlands--badlands;BadLands;BadLands;;;OCS;;0;1;12;1;;;;;1990;;English;Teque;Domark, Tengen;2;;v1.2;BadLands/Badlands.slave;game/B/BadLands_v1.2_1237.lha;Game;Racing - Top-Down;15;111
 game--basketislanddemo2aga--basketislanddemo2aga;Basket Island;Basket Island;1;;AGA;1;0;;;;;;;;199X;;English;Aphasia;Syndrome;1;;v1.1;BasketIslandDemo2AGA/BasketIslandDemo2AGA.Slave;game/B/BasketIslandDemo2_v1.1_AGA.lha;Game;Sports - Basketball;-2;-2
 game--bargames--bargames;Bar Games;Bar Games;;;OCS;;1;;;;;;;;1990;;English;ArtisTech;Accolade;4 (taking turns);;v1.0;BarGames/BarGames.Slave;game/B/BarGames_v1.0_2947.lha;Game;Sports - Multi-Event;33;117
@@ -4256,8 +4256,8 @@ game--phantasm--phantasm;Phantasm;Phantasm;;;OCS;;0;;;;;;;;1988;;English;Exocet;
 game--streethockey--streethockey;Street Hockey;Street Hockey;;;OCS;;1;;;;;;;;1990;;English;Gonzo Games;Gonzo Games;1;;v1.0;StreetHockey/StreetHockey.Slave;game/S/StreetHockey_v1.0.lha;Game;;2139;2462
 game--iludicrus--iludicrus;I Ludicrus;I Ludicrus;;;OCS;;0;;;;;;;;1989;;English;CRL;Actual Screenshots, Scorpion;2;CUSTOM2=3;v1.0;ILudicrus/ILudicrus.Slave;game/I/ILudicrus_v1.0.lha;Game;;2606;1576
 game--wipeout--wipeout;Wipe Out;Wipe Out;;;OCS;;0;;;;;;;;1990;;English;Gonzo Games;Gonzo Games;2;;v1.01;WipeOut/WipeOut.slave;game/W/WipeOut_v1.01_0161.lha;Game;;1736;2493
-game--bonecruncher--bonecruncher;Bone Cruncher;Bone Cruncher;;;OCS;;1;;;;;;;;1988;;English;Tile Design;Superior Software;1;;v1.0;BoneCruncher/BoneCruncher.Slave;game/B/BoneCruncher_v1.0.lha;Game;;182;1292
-game--bonecruncherenhanced--bonecruncherenhanced;Bone Cruncher Enhanced;Bone Cruncher Enhanced;;;OCS;;1;;;;;;;Enhanced version by Ross;2018;;English;Tile Design;Superior Software;1;;v1.0;BoneCruncherEnhanced/BoneCruncherEnhanced.Slave;game/B/BoneCruncherEnhanced_v1.0.lha;Game;;182;1292
+game--bonecruncher--bonecruncher;Bone Cruncher;Bone Cruncher;;;OCS;;0;1;7;;;;;;1988;;English;Tile Design;Superior Software;1;;v1.0;BoneCruncher/BoneCruncher.Slave;game/B/BoneCruncher_v1.0.lha;Game;;182;1292
+game--bonecruncherenhanced--bonecruncherenhanced;Bone Cruncher Enhanced;Bone Cruncher Enhanced;;;OCS;;0;1;7;;;;;Enhanced version by Ross;2018;;English;Tile Design;Superior Software;1;;v1.0;BoneCruncherEnhanced/BoneCruncherEnhanced.Slave;game/B/BoneCruncherEnhanced_v1.0.lha;Game;;182;1292
 game-notwhdl--poing;Poing;Poing;;;OCS;;0;;;;;;;;1992;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing.lha;Game;;-2;3839
 game-notwhdl--poing2;Poing 2;Poing 2;;;OCS;;0;;;;;;;;1994;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing2.lha;Game;;-2;3844
 game-notwhdl--poing3;Poing 3;Poing 3;;;OCS;;0;;;;;;;;1995;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing3.lha;Game;;-2;3838
