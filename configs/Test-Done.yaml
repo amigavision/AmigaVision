@@ -1,8 +1,8 @@
 --- # AGS2 Menu structure
 - Done:
-  - 3DGalax
   - 3001OConnorsFight
-
+  - 3DGalax
+ 
   - ActionFighter
   - AddamsFamily
   - AdventuresOfQuik&Silva
@@ -46,7 +46,7 @@
   - Atomix # PAL
   - Awesome
   - AxelsMagicHammer
- 
+
   - BadCat
   - BadCompany
   - BadLands
@@ -99,7 +99,7 @@
   - BuggyBoy
   - Builderland
   - BundesligaMngrHatt
- 
+
   - Cabal
   - Cadaver
   - CadaverThePayoff
@@ -126,12 +126,15 @@
   - ChaosEngine2
   - CircusAttractions
   - Civilization
+  - Civilization # NTSC
   - ClikClak
+  - Colonization # NTSC
   - Colony
   - CrazySue
   - CrazySueGoesOn
   - CruiseForACorpse
   - CrystalHammerV2
+  - Cubulus # PAL60
   - CurseOfEnchantia
   - Cybercon3
   - Cyberpunks
@@ -162,6 +165,7 @@
   - DragonStrike
   - DreamWeb
   - DrivinForce
+  - DuckTales # NTSC
   - Dune2
   - DungeonMaster
   - DynaBlaster
@@ -193,21 +197,136 @@
   - F19StealthFighter
   - F29Retaliator
   - FA18Interceptor
+  - FaeryTaleAdventure # PAL60
   - Falcon
   - FateGatesOfDawn
+  - FernandezMustDie # PAL60
+  - FinalAssault # NTSC
   - FinalBlow
   - FinalCountdown
   - FireAndBrimstone
   - FireAndIce
+  - FireForce # PAL60
+  - Firepower # NTSC
+  - FirstContact # PAL60
   - FirstSamurai
   - Flashback
   - FlightOfTheAmazonQueen
+  - Flink # PAL60
   - Flood
   - Floor13
+  - FlyHarder # PAL60
+  - FlyingSharkSE # PAL60
+  - FormulaOneGrandPrix4Disk # NTSC
   - FourCrystalsOfTrazere
+  - FrontierCD32
+  - FuryOfTheFurries # PAL60
+  - FuryOfTheFurriesCD32 # PAL60
+  - FutureTank # PAL60
 
+  - Gauntlet2 # NTSC
+  - Gauntlet3 # PAL60
+  - Giana2 # PAL60
+  - Giganoid # PAL60
+  - Gobliiins # PAL60
+  - Gobliins2 # PAL60
+  - Goblins3 # PAL60
+  - GoldenAxe # NTSC
+  - Gravity # PAL60
+  - GreatGianaSisters # PAL60
+  - Gunship2000 # NTSC
+
+  - Hammerfist # PAL60
+  - HardNHeavy # PAL60
+  - Hillsfar # NTSC
+  - Hunter # PAL60
+  - Hybris # NTSC
+
+  - IkariWarriors  # PAL60
+  - ImpossibleMission2025 # NTSC
+  - IndianaJonesAtlantisAct # NTSC
+  - IndianaJonesAtlantisAdv # NTSC
+  - IndianaJonesTempleOfDoom # PAL60
+  - Indianapolis500 # PAL60
+  - IndyJonesLastCrusAdv # NTSC
+  - InnocentUntilCaught # PAL60
+  - InsectsInSpace # PAL60
   - ItCameFromTheDesert
+  - ItCameFromTheDesert # NTSC
   - ItCameFromTheDesert2
+  - ItCameFromTheDesert2 # NTSC
+
+  - JimmyWhitesSnooker # PAL60
+  - JumpingJackSon # PAL60
+  - JungleStrike # PAL60
+
+  - KidGloves # NTSC
+  - Kikstart2 # PAL60
+  - KingOfChicago # NTSC
+  - Klax # PAL60
+  - KnightsOfTheCrystallion # NTSC
+  - Kristal # NTSC
+  - Kult # PAL60
+
+  - LamborghiniAmericanChllng # PAL60
+  - Larrie # PAL60
+  - LaserSquad # NTSC
+  - LaserSquadNTSC
+  - Leatherneck # NTSC
+  - LegendOfFaerghailNTSC # NTSC
+  - LegendOfKyrandia # NTSC
+  - LeisureSuitLarry3 # NTSC
+  - Lemmings # NTSC
+  - Lemmings2 # NTSC
+  - LightCorridor # PAL60
+  - Loom # NTSC
+  - LostTreasuresOfInfocom # NTSC
+  - LostVikings # NTSC
+
+  - ManiacMansion # NTSC
+  - MarbleMadness # NTSC
+  - Mercenary # NTSC
+  - Mercenary3 # NTSC
+  - Midwinter # PAL60
+  - Midwinter2 # PAL60
+  - Millennium22 # PAL60
+  - MindWalker # NTSC
+  - MonkeyIsland2 # NTSC
+  - Murder # PAL60
+  - NaughtyOnes # NTSC
+  - Nebulus # PAL60
+  - Neuromancer # NTSC
+  - NinjaRemix # PAL60
+  - NuclearWar # NTSC
+
+  - Obliterator # NTSC
+  - OhNoMoreLemmings # NTSC
+  - OilImperium # PAL60
+  - OperationCleanstreets # NTSC
+  - OperationStealth # PAL60
+
+  - PacLand # PAL60
+  - Pacmania # PAL60
+  - Pandora # PAL60
+  - PanzaKickBoxing # PAL60
+  - ParaglidingSimulation # PAL60
+  - Perihelion # NTSC
+  - PGAEuropeanTour # PAL60
+  - Phantasie3 # NTSC
+  - PioneerPlague # NTSC
+  - PipeDream # NTSC
+  - Pirates # NTSC
+  - Platoon # NTSC
+  - Plotting # PAL60
+  - Populous # NTSC
+  - Populous2&ChallengeGames # NTSC
+  - PortsOfCall # NTSC
+  - Powermonger # NTSC
+  - PrinceOfPersia # NTSC
+  - Project1 # PAL60
+  - Projectyle # PAL60
+  - PurpleSaturnDay # PAL60
+  - Puzznic # PAL60
 
   - Qix # NTSC
   - Quartz # 12 PAL5
@@ -381,7 +500,7 @@
   - Unreal # 24 (NTSC)
   - Untouchables # 20 PAL5
   - Uridium2 # PAL60 (Shoot'em up)
-  
+
   - Vaxine # 4 PAL5
   - VenusTheFlytrap 
   - VirocopAGA # 21 PAL5
@@ -403,22 +522,22 @@
   - Wings # NTSC
   - WingsOfDeath # PAL60
   - WingsOfFury # NTSC
-  - WizNLiz # Actual PAL
   - WITUSAIsCarmenSandiego # NTSC
   - WITWIsCarmenSandiego # NTSC
   - Wizball # 14 PAL5
   - Wizkid # Actual PAL (although with large margins?)
+  - WizNLiz # Actual PAL
   - Wolfchild # 2 PAL5
   - WorldGames # NTSC
   - Worms2MB # -32 (PAL)
   - WormsDCAGA12MB # -10 (PAL)
-  
+
   - Xenon # NTSC
   - Xenon2 # 16 PAL5 (sadly, music is too fast in NTSC)
   - XOut # PAL60
   - XOut2Disk # PAL60
   - Xybots # PAL60
-  
+
   - YoJoe # PAL60 (makes the artwork look correct, also Hudson Soft)
   - Yolanda # -2 PAL5
 
@@ -429,5 +548,3 @@
   - Zeewolf2 # # PAL60
   - Zool # PAL
   - ZOut # 12 PAL5 (but seems to only stretch in the vertical direction?)
-
-  
