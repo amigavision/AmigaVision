@@ -190,9 +190,10 @@
 
   - StoriaAncestrale
 
-  - Ugh
-  - Ultima5
-  - Universe
+  - UFOEnemyUnknown # 30 PAL5 (British developer, music sounds correct in PAL)
+  - Ugh # PAL
+  - Ultima5 # NTSC
+  - Universe 
   - Unreal # 24 (NTSC)
   - Untouchables # 20 PAL5
   
@@ -204,7 +205,9 @@
   - Vroom # -2 PAL5
 
   - Walker # -3 PAL5
+  - WalkerDecrunched # Is Decrunched canonical? More samples? (applied PAL5 to all)
   - Warhead # -2 PAL5
+  - WarInMiddleEarth # NTSC
   - WarzoneCoreDesign # 6 PAL5
   - Waxworks # 26 PAL5
   - WCLeaderBoard # NTSC
@@ -212,6 +215,7 @@
   - WesternGames # 5 PAL5
   - WIEuropeIsCarmenSandiego # NTSC
   - Wings # NTSC
+  - WingsOfDeath # PAL60
   - WingsOfFury # NTSC
   - WizNLiz # Actual PAL
   - WITUSAIsCarmenSandiego # NTSC
@@ -222,5 +226,11 @@
   - WorldGames # NTSC
   - Worms2MB # -32 (PAL)
   - WormsDCAGA12MB # -10 (PAL)
+  
+  - Xenon # NTSC
+  - Xenon2 # 16 PAL5 (sadly, music is too fast in NTSC)
+  - XOut # PAL60
+  - XOut2Disk # PAL60
+  - Xybots # PAL60
   
   
