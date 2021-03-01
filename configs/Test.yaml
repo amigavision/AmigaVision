@@ -8,7 +8,6 @@
   - Astaroth
   - Atomix
 
-  - BansheeAGA
   - Barbarian2Palace
   - BattleChess
   - BattleChess2
@@ -18,25 +17,25 @@
   - BoneCruncherEnhanced
   - BrutalHomicide
   - BrutalHomicide2
-  - BubbleAndSqueakAGA
+  - BubbleAndSqueak
 
   - CadaverThePayoff
   - CannonSoccer
   - ChambersOfShaolin
   - ChuckRock
-  - ChuckRock2CD32
-  - CivilizationAGA
+  - ChuckRock2
+  - Civilization
   - ClownOMania
-  - ColonizationAGA
+  - Colonization
   - CrystalDragon # Installer seems bodged now, it used to work fine.
+  - CrystalKingdomDizzy
   - Cubulus
 
-  - DeathSwordNTSC
-  - DizzyCollection/Disk1
-  - DizzyCollection/Disk2
-  - CrystalKingdomDizzy
-  - DizzysExcellentAdventures/Disk1 # Not sure if this is the correct format
-  - DizzysExcellentAdventures/Disk2 # Not sure if this is the correct format
+  - DeathSword
+  - DizzyCollection--Disk1
+  - DizzyCollection--Disk2
+  - DizzysExcellentAdventures--Disk1
+  - DizzysExcellentAdventures--Disk2
   - DuckTales
   - Dune
 
@@ -46,7 +45,7 @@
   - EmeraldMine
 
   - FaeryTaleAdventure
-  - FantasticDizzyAGA
+  - FantasticDizzy
   - FantasyWorldDizzy
   - Fascination
   - FernandezMustDie
@@ -54,14 +53,14 @@
   - FireForce
   - Firepower
   - FirstContact
-  - FlinkCD32
+  - Flink
   - FlyHarder
   - FlyingSharkSE
   - FormulaOneGrandPrix4Disk
   - Frenetic
   - Frontier
-  - Frontier
   - FrontierCD32
+  - FuryOfTheFurries
   - FuryOfTheFurriesCD32
   - FutureTank
   - FutureWars
@@ -75,7 +74,6 @@
   - Giana2
   - Giganoid
   - Globdule
-  - GlobduleNTSC
   - Goal
   - Gobliiins
   - Gobliins2
@@ -95,7 +93,7 @@
   - HardNHeavy
   - Harlequin
   - Heimdall
-  - Heimdall2AGA
+  - Heimdall2
   - HelterSkelter
   - HeroQuest
   - HeroQuest2
@@ -106,11 +104,9 @@
   - Historyline--Intro
   - HollywoodPokerPro
   - Hostages
-  - Hostages
   - HudsonHawk
   - Hunter
   - Hybris
-  - HybrisNTSC # Is PAL version canonical? (but, shoot-em-up)
 
   - IK+
   - IkariWarriors
@@ -122,7 +118,6 @@
   - Indianapolis500
   - IndyHeat
   - IndyJonesLastCrusAdv
-  - IndyJonesLastCrusAdvNTSC # Is NTSC version canonical?
   - InnocentUntilCaught
   - InsectsInSpace
   - International3DTennis
@@ -142,8 +137,7 @@
   - JudgeDredd
   - JumpingJackSon
   - JungleStrike
-  - JungleStrike2MB # Which version is canonical?
-  
+
   - K240
   - Katakis
   - Katakis2Disk
@@ -175,7 +169,7 @@
   - LegendOfKyrandia
   - LeisureSuitLarry3
   - Lemmings
-  - Lemmings2 # Is PAL canonical?
+  - Lemmings2
   - LemmingsHoliday1993
   - LemmingsHoliday1994
   - LemmingsNewYear9192
@@ -190,7 +184,7 @@
   - Logistic
   - Loom
   - Lorna
-  - LostPatrol 
+  - LostPatrol
   - LostTreasuresOfInfocom
   - LostVikings
   - Lotus
@@ -198,8 +192,7 @@
   - Lotus3
 
   - MagiclandDizzy
-  - MagicPockets # Is PAL canonical? (But, Bitmap Brothers)
-  - MagicPocketsNTSC
+  - MagicPockets
   - ManiacMansion
   - MarbleMadness
   - Masterblazer
@@ -230,13 +223,11 @@
   - NarcoPolice
   - NathanNever
   - NaughtyOnes
-  - NaughtyOnesAGA # AGA version canonical?
   - Nebulus
   - Nebulus2
   - Neuromancer
   - NeverMind
   - NewZealandStory
-  - NewZealandStoryDemo
   - NightShift
   - NinjaRemix
   - NinjaWarriors
@@ -244,8 +235,7 @@
   - NorthAndSouth
   - NoSecondPrize
   - NuclearWar
-  - NuclearWarNTSC # Is NTSC canonical?
-  
+
   - Oath
   - Obliterator
   - Obsession
@@ -260,14 +250,12 @@
   - OperationWolf
   - Oxxonian
 
-
   - PacLand
   - Pacmania
   - Pandora
   - Pang
   - PanzaKickBoxing
   - Paradroid90
-  - Paradroid901MB # Which version is canonical?
   - ParaglidingSimulation
   - ParasolStars
   - Perihelion
@@ -277,13 +265,10 @@
   - Phantasie3
   - PinballDreams
   - PinballFntsies
-  - PinballFntsiesAGA # Is AGA version canonical?
   - PinballIllusions
-  - PinballIllusionsAGA # Is AGA version canonical?
   - PinballPrelude
   - PioneerPlague
   - PipeDream
-  - PipeDreamNTSC # Is NTSC canonical?
   - Pirates
   - Platoon
   - PlayerManager
@@ -309,6 +294,7 @@
   - PrinceOfPersia
   - Project1
   - ProjectXSE
+  - ProjectXSE2017
   - Projectyle
   - ProTennisTour
   - ProTennisTour2
@@ -319,7 +305,6 @@
   - PushOver
   - Putty
   - PuttySquad
-  - PuttySquadAGA # Is AGA version canonical?
   - Puzznic
 
   - Qix
@@ -348,13 +333,11 @@
   - RingsOfMedusa
   - RiseOfTheDragon
   - Roadkill
-  - RoadkillAGA # Is AGA version canonical?
   - RoadwarEuropa
   - RobinHoodLegendQuest
   - RoboCop
   - RoboCop3
   - RocketRanger
-  - RocketRangerNTSC # Is NTSC canonical? 
   - RockNRoll
   - RockStarAteMyHamster
   - RodLand
@@ -369,14 +352,13 @@
   - Sarcophaser
   - ScoobyDoo&ScrappyDoo
   - SecondSamurai
-  - SecondSamuraiAGA # Is AGA version canonical?
   - SecretOfMonkeyIsland
   - SensibleGolf
   - SensibleSoccer1MB
   - SensibleWorldOfSoccer9697
   - Sentinel
   - Settlers
-  - SevenGatesOfJambalaImage
+  - SevenGatesOfJambala
   - ShadowFighter
   - Shadowlands
   - ShadowOfTheBeast
@@ -393,15 +375,12 @@
   - SillyPutty
   - SimAntHiRes
   - SimCity
-  - SimCityNTSC # Is NTSC version canonical?
   - SimonTheSorcererAGA
   - Simulcra
   - Sinbad
   - Skidmarks
-  - SkidmarksAGA # Is AGA version canonical?
   - SlamTilt
-  - SlamTiltAGA2MB # Is AGA version canonical?
-  - SleepwalkerAGA
+  - Sleepwalker
   - SlySpySecretAgent
   - SnowBros
   - SoccerKid
@@ -412,10 +391,7 @@
   - SpaceTaxi3
   - Speedball
   - Speedball2
-  - Speedball2NTSC # Is PAL version canonical? (But, Bitmap Bros)
-  - SpeedballNTSC # Is PAL version canonical? (But, Bitmap Bros)
   - SperisLegacy
-  - SperisLegacyAGA # Is AGA version canonical?
   - SpindizzyWorlds
   - SpittingImage
   - Springtime
@@ -433,19 +409,18 @@
   - StuntCarRacerTNT
   - SuperCars
   - SuperCars2
-  - SuperCars2Disk # Which variant is canonical?
   - Superfrog
+  - SuperGemZ
   - SuperGridRunner
   - SuperHangOn
   - SuperHero
   - SuperMethaneBros
   - SuperOffRoad
   - SuperScrambleSimulator
+  - SuperSkidmarks
   - SuperSkidmarks+CD
-  - SuperSkidmarksCD32 # Which variant is canonical?
   - SuperSkweek
   - SuperStardust
-  - SuperStardustAGA # Is AGA version canonical?
   - SuperTwintris
   - SuprTennisChmps
   - Switchblade
@@ -465,7 +440,7 @@
   - TFX
   - TheirFinestHour
   - ThemePark
-  - ThreeStoogesNTSC
+  - ThreeStooges
   - Thunderbirds
   - ThunderHawkAH73M
   - TinyTroops
@@ -487,8 +462,8 @@
   - Turrican2
   - Turrican3
   - Tusker
-  - TVSportsBasketball # Is NTSC canonical?
-  - TVSportsFootball # Is NTSC canonical?
+  - TVSportsBasketball
+  - TVSportsFootball
   - Twintris
   - TwinWorld
   - TyphoonThompson
@@ -496,14 +471,13 @@
   - UFOEnemyUnknown # Not on my image?
   - Uridium2 # PAL5, but can't get it to stick. Caused by Graftgold logo screen?
 
-  - Vyrus 
+  - Vyrus
 
-  - WalkerDecrunched # Is Decrunched canonical? More samples? (applied PAL5 to all)
+  - Walker # Is Decrunched canonical? More samples? (applied PAL5 to all)
   - WarInMiddleEarth
   - WindowWizard # Doesn't launch
   - WingsOfDeath
 
-  
   - Xenon # PAL canonical? (But, Bitmap Bros, and shoot-em-up)
   - Xenon2 # PAL canonical? (But, Bitmap Bros, and shoot-em-up)
   - XOut
@@ -516,7 +490,6 @@
 
   - ZakMcKracken
   - ZanyGolf
-  - ZanyGolfNTSC # Is NTSC canonical?
   - Zarathrusta
   - Zeewolf
   - Zeewolf2
