@@ -2,7 +2,6 @@
 - Test:
   - AnotherWorldLostLevel # PAL (but can't get past copy protection?)
 
-  - BMXSimulator # PAL60
 
   - CadaverThePayoff
   - CannonSoccer
@@ -286,41 +285,10 @@
   - PuttySquad
   - Puzznic
 
-  - Racter
-  - RailroadTycoon
-  - RainbowIslands
-  - RallyCrossChallenge
-  - Rampart
-  - RanX
-  - RBI2Baseball
-  - Realms
-  - RedHeat
-  - RedStormRising
-  - Renegade
-  - Renegades
-  - Resolution101
-  - RevengeOfMutantCamels
-  - RevengeOfMutantCamels2
-  - RickDangerous
-  - RickDangerous2
-  - RickDangerous25
-  - RingsOfMedusa
-  - RiseOfTheDragon
-  - Roadkill
-  - RoadwarEuropa
-  - RobinHoodLegendQuest
-  - RoboCop
-  - RoboCop3
-  - RocketRanger
-  - RockNRoll
-  - RockStarAteMyHamster
-  - RodLand
-  - Rogue
-  - Rotox
+  - RallyCrossChallenge # 25 PAL5
+  
   - RType
   - RType2
-  - RuffNTumble
-  - RygarAGA
 
   - Skidmarks # Launches a weird dial-up thing?
   - SuperGridRunner # Not on the image?
