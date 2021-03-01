@@ -1,12 +1,7 @@
 --- # AGS2 Menu structure
 - Test:
-  - AirborneRanger
-  - AlienBreedTA
-  - AnotherWorldLostLevel
-  - APBImage
-  - ApidyaSpecialEdition
-  - Astaroth
-  - Atomix
+  - AnotherWorldLostLevel # PAL (but can't get past copy protection?)
+
 
   - Barbarian2Palace
   - BattleChess
@@ -38,7 +33,6 @@
   - DizzysExcellentAdventures--Disk2
   - DuckTales
   - Dune
-
 
   - FaeryTaleAdventure
   - FantasticDizzy
