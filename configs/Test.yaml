@@ -1,14 +1,5 @@
 --- # AGS2 Menu structure
 - Test:
-  - AnotherWorldLostLevel # PAL (but can't get past copy protection?)
-
-  - CannonFodder # Need to double check these against CannonSoccer
-  - CannonFodder2
-  - CannonFodder2AlienLevels
-  - CannonFodderCD32
-  - CannonFodderNewCampaign
-  - CannonFodderPlus
-
   - CrystalDragon # Installer seems bodged now, it used to work fine.
 
   - Fascination # Can't seem to get past the copy protection
