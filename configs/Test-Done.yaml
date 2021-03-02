@@ -102,14 +102,9 @@
 
   - Cabal
   - Cadaver
-  - CadaverThePayoff
+  - CadaverThePayoff # 0 PAL5
   - CaliforniaGames
-  - CannonFodder
-  - CannonFodder2
-  - CannonFodder2AlienLevels
-  - CannonFodderCD32
-  - CannonFodderNewCampaign
-  - CannonFodderPlus
+  - CannonSoccer # 11 PAL5
   - Captive
   - CardiaxxTeam17
   - CaribbeanDisasterDe
@@ -122,18 +117,23 @@
   - CastleWarrior
   - CelticLegends
   - Centurion
+  - ChambersOfShaolin # 7 PAL5
   - ChaosEngine
   - ChaosEngine2
+  - ChuckRock # -5 PAL5
+  - ChuckRock2 # 5 PAL5
   - CircusAttractions
   - Civilization
   - Civilization # NTSC
   - ClikClak
+  - ClownOMania # PAL
   - Colonization # NTSC
   - Colony
   - CrazySue
   - CrazySueGoesOn
   - CruiseForACorpse
   - CrystalHammerV2
+  - CrystalKingdomDizzy # PAL
   - Cubulus # PAL60
   - CurseOfEnchantia
   - Cybercon3
@@ -158,6 +158,10 @@
   - DGeneration
   - DisposableHero
   - DistantArmies
+  - DizzyCollection--Disk1 # PAL
+  - DizzyCollection--Disk2 # PAL
+  - DizzysExcellentAdventures--Disk1 # PAL
+  - DizzysExcellentAdventures--Disk2 # PAL
   - DogsOfWar
   - DojoDan
   - DownhillChallenge
@@ -166,6 +170,7 @@
   - DreamWeb
   - DrivinForce
   - DuckTales # NTSC
+  - Dune # 20 PAL5
   - Dune2
   - DungeonMaster
   - DynaBlaster
