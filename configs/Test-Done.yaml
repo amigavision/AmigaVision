@@ -338,8 +338,13 @@
   - LegendOfFaerghailNTSC # NTSC
   - LegendOfKyrandia # NTSC
   - LeisureSuitLarry3 # NTSC
-  - Lemmings # NTSC
-  - Lemmings2 # NTSC
+  - Lemmings # PAL60
+  - Lemmings2 # PAL60
+  - LemmingsHoliday1993 # PAL60
+  - LemmingsHoliday1994 # PAL60
+  - LemmingsNewYear9192 # PAL60
+  - LemmingsXmasDemo1991 # PAL60
+  - LemmingsXmasDemo1992 # PAL60
   - LightCorridor # PAL60
   - Loom # NTSC
   - LostTreasuresOfInfocom # NTSC
@@ -515,6 +520,7 @@
   - SuperCars2 # 0 PAL5
   - Superfrog # PAL
   - SuperGemZ # PAL
+  - SuperGridRunner # PAL
   - SuperHangOn # PAL60
   - SuperHero #26 PAL5
   - SuperMethaneBros # PAL
