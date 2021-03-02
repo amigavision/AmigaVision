@@ -4258,12 +4258,12 @@ game--iludicrus--iludicrus;I Ludicrus;I Ludicrus;;;OCS;;0;;;;;;;;1989;;English;C
 game--wipeout--wipeout;Wipe Out;Wipe Out;;;OCS;;0;;;;;;;;1990;;English;Gonzo Games;Gonzo Games;2;;v1.01;WipeOut/WipeOut.slave;game/W/WipeOut_v1.01_0161.lha;Game;;1736;2493
 game--bonecruncher--bonecruncher;Bone Cruncher;Bone Cruncher;;;OCS;;0;1;7;;;;;;1988;;English;Tile Design;Superior Software;1;;v1.0;BoneCruncher/BoneCruncher.Slave;game/B/BoneCruncher_v1.0.lha;Game;;182;1292
 game--bonecruncherenhanced--bonecruncherenhanced;Bone Cruncher Enhanced;Bone Cruncher Enhanced;;;OCS;;0;1;7;;;;;Enhanced version by Ross;2018;;English;Tile Design;Superior Software;1;;v1.0;BoneCruncherEnhanced/BoneCruncherEnhanced.Slave;game/B/BoneCruncherEnhanced_v1.0.lha;Game;;182;1292
-game-notwhdl--poing;Poing;Poing;;;OCS;;0;;;;;;;;1992;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing.lha;Game;;-2;3839
-game-notwhdl--poing2;Poing 2;Poing 2;;;OCS;;0;;;;;;;;1994;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing2.lha;Game;;-2;3844
-game-notwhdl--poing3;Poing 3;Poing 3;;;OCS;;0;;;;;;;;1995;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing3.lha;Game;;-2;3838
-game-notwhdl--poing5;Poing 5;Poing 5;;;OCS;;0;;;;;;;;1997;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing5.lha;Game;;-2;3842
-game-notwhdl--poing6;Poing 6;Poing 6;;;OCS;;0;;;;;;;;1998;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing6.lha;Game;;-2;3843
-game-notwhdl--poing7;Poing 7;Poing 7;;;OCS;;0;;;;;;;;2002;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing7.lha;Game;;-2;3845
+game-notwhdl--poing;Poing;Poing;;;OCS;;0;1;;;;;;;1992;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing.lha;Game;;-2;3839
+game-notwhdl--poing2;Poing 2;Poing 2;;;OCS;;0;1;;;;;;;1994;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing2.lha;Game;;-2;3844
+game-notwhdl--poing3;Poing 3;Poing 3;;;OCS;;0;1;;;;;;;1995;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing3.lha;Game;;-2;3838
+game-notwhdl--poing5;Poing 5;Poing 5;;;OCS;;0;1;;;;;;;1997;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing5.lha;Game;;-2;3842
+game-notwhdl--poing6;Poing 6;Poing 6;;;OCS;;0;1;;;;;;;1998;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing6.lha;Game;;-2;3843
+game-notwhdl--poing7;Poing 7;Poing 7;;;OCS;;0;1;;;;;;;2002;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing7.lha;Game;;-2;3845
 game--exodus3010de--exodus3010de;Exodus 3010;Exodus 3010;1;;OCS;;0;;;;;;;;1993;;German;Temet;Demonware;1;;v1.0;Exodus3010De/Exodus3010De.Slave;game/E/Exodus3010_v1.0_De_1605.lha;Game;;2893;380
 game--shadowsorcerer--shadowsorcerer;Shadow Sorcerer;Shadow Sorcerer;;;OCS;;2;;;;;;;;1991;;English;U.S. Gold;SSI;1;;v1.1;ShadowSorcerer/ShadowSorcerer.Slave;game/S/ShadowSorcerer_v1.1_0275.lha;Game;RPG;1895;3538
 game--albedofr--albedofr;Albedo;Albedo;;;OCS;;1;;;;;;;;1988;;French;Myriad;Loriciel;2;CUSTOM2=1;v1.0;AlbedoFr/AlbedoFr.slave;game/A/Albedo_v1.0_Fr.lha;Game;;3491;1523
@@ -4286,7 +4286,7 @@ demo--dancewar--dancewar;Dance War;Dance War;;;OCS;;0;;;;;;;;1994;Ireland;Englis
 game--heimdallfr--heimdallfr;Heimdall;Heimdall;1;game--heimdall--heimdall;OCS;;0;1;-2;;;;;;1991;;French;The 8th Day;Core Design, Ubi Soft, Virgin;1;;v2.2;HeimdallFr/HeimdallFr.slave;game/H/Heimdall_v2.2_Fr.lha;Game;Action RPG;684;1197
 game--heimdallde--heimdallde;Heimdall;Heimdall;1;game--heimdall--heimdall;OCS;;0;1;-2;;;;;;1991;;German;The 8th Day;Core Design, Ubi Soft, Virgin;1;;v2.2;HeimdallDe/HeimdallDe.slave;game/H/Heimdall_v2.2_De.lha;Game;Action RPG;684;1197
 game--heimdalles--heimdalles;Heimdall;Heimdall;1;game--heimdall--heimdall;OCS;;0;1;-2;;;;;;1991;;Spanish;The 8th Day;Core Design, Ubi Soft, Virgin;1;;v2.2;HeimdallEs/HeimdallEs.slave;game/H/Heimdall_v2.2_Es.lha;Game;Action RPG;684;1197
-game-notwhdl--poing4;Poing 4;Poing 4;;;OCS;;0;;;;;;;;1997;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing4.lha;Game;;-2;3837
+game-notwhdl--poing4;Poing 4;Poing 4;;;OCS;;0;1;;;;;;;1997;;English;Paul van der Valk;Paul van der Valk;2;;;;game-notwhdl/Poing4.lha;Game;;-2;3837
 game--ruffntumble512k--ruffntumble512k;Ruff 'n' Tumble;Ruff 'n' Tumble;1;game--ruffntumble--ruffntumble;OCS;;0;1;16;1;;;;;1994;;English;Wunderkind;Renegade;1;CUSTOM2=1;v2.7;RuffNTumble512k/RuffNTumble512k.slave;game/R/RuffNTumble_v2.7_512k_0199.lha;Game;;1292;920
 game-notwhdl--brutalhomicide;Brutal Homicide;Brutal Homicide;;;OCS;;0;;22;;;;;;1997;;English;Rocten Interactive;Rocten Interactive;2;;;;game-notwhdl/BrutalHomicide.lha;Game;;5520;2628
 game-notwhdl--brutalhomicide2;Brutal Homicide 2: The Future Forces;Brutal Homicide 2;;;OCS;;0;;;;;;;;1998;;English;Rocten Interactive;Rocten Interactive;2;;;;game-notwhdl/BrutalHomicide2.lha;Game;;5521;2629
