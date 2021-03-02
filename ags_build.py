@@ -318,12 +318,26 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
     base_path = os.path.join(path, title)
     util.make_dir(path)
 
-    # runfile
+    # create runfile
+    runfile = None
+
+    # vadjust
+    vadjust_pal5x = entry["pal_5x"] == 1
+    vadjust_name = "pal5" if vadjust_pal5x else "def"
+    vadjust_vofs = util.parse_int(entry["v_offset"])
+    if not vadjust_vofs:
+        vadjust_vofs = 0
+    vadjust_name += "_{}".format(vadjust_vofs)
+    g_vadjust[vadjust_name] = (vadjust_pal5x, vadjust_vofs)
+
     if entry_is_notwhdl(entry):
-        shutil.copyfile(get_archive_path(entry).replace(".lha", ".run"), base_path + ".run")
+        runfile_path = get_archive_path(entry).replace(".lha", ".run")
+        if util.is_file(runfile_path):
+            runfile = "setvadjust {} {}\n".format(vadjust_vofs, "PAL5" if vadjust_pal5x else "")
+            with open(runfile_path, 'r') as f: runfile += f.read()
+            runfile += "setvadjust\n"
     else:
         whd_entrypath = get_amiga_whd_dir(entry)
-        runfile = None
         if whd_entrypath:
             whd_slave = get_whd_slavename(entry)
             # videomode
@@ -333,14 +347,6 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
             whd_cargs = "BUTTONWAIT"
             if entry["slave_args"]:
                 whd_cargs += " " + entry["slave_args"]
-            # vadjust
-            vadjust_pal5x = entry["pal_5x"] == 1
-            vadjust_name = "pal5" if vadjust_pal5x else "def"
-            vadjust_vofs = util.parse_int(entry["v_offset"])
-            if not vadjust_vofs:
-                vadjust_vofs = 0
-            vadjust_name += "_{}".format(vadjust_vofs)
-            g_vadjust[vadjust_name] = (vadjust_pal5x, vadjust_vofs)
 
             runfile = "cd \"{}\"\n".format(whd_entrypath)
             runfile += "IF NOT EXISTS ENV:whdlspdly\n"
@@ -358,11 +364,11 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
             runfile += "ENDIF\n"
         else:
             runfile = "echo \"Title not available.\"" + "\n" + "wait 2"
-        if runfile:
-            if util.is_file(base_path + ".run"):
-                print(" > AGS2 clash:", entry["id"], "-", base_path + ".run")
-            else:
-                open(base_path + ".run", mode="w", encoding="latin-1").write(runfile)
+    if runfile:
+        if util.is_file(base_path + ".run"):
+            print(" > AGS2 clash:", entry["id"], "-", base_path + ".run")
+        else:
+            open(base_path + ".run", mode="w", encoding="latin-1").write(runfile)
 
     if only_script:
         return
