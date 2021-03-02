@@ -5,20 +5,8 @@
   - GhoulsNGhosts # This seems to work great in NTSC, but I can't make the offset stick to push it up. Leaving here, so we can experiment.
   - GreatCourts # Not on my image
 
-  - LandGenesis
-  - Leander
-  - LEDStorm
-  - LethalXcess
-  - Lionheart
-  - LiquidKids
-  - Llamatron
-  - Logical
-  - Logistic
-  - Lorna
-  - LostPatrol
-  - Lotus
-  - Lotus2
-  - Lotus3
+  - LandGenesis # Doesn't launch?
+  - LethalXcess # Works great in NTSC (and more playable, shoot'em-up), but needs alignment
 
   - MagiclandDizzy
   - MagicPockets
