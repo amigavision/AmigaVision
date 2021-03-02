@@ -304,8 +304,18 @@
   - JumpingJackSon # PAL60
   - JungleStrike # PAL60
 
+  - K240 # 0 PAL5
+  - Katakis # 0 PAL5
+  - KickOff # 4 PAL5
+  - KickOff&ExtraTime2Disk # 4 PAL5
+  - KickOff2 # 32 PAL5
+  - KickOff216 # 32 PAL5
+  - KickOff2FinalWhistle # 32 PAL5
+  - KickOff2ReturnToEurope # 32 PAL5
+  - KidChaos # 20 PAL5
   - KidGloves # NTSC
   - Kikstart2 # PAL60
+  - KillingGameShow # -4 PAL5
   - KingOfChicago # NTSC
   - Klax # PAL60
   - KnightsOfTheCrystallion # NTSC
