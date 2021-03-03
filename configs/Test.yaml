@@ -3,7 +3,6 @@
   - CrystalDragon # Installer seems bodged now, it used to work fine.
 
   - GhoulsNGhosts # This seems to work great in NTSC, but I can't make the offset stick to push it up. Leaving here, so we can experiment.
-  - GreatCourts # Not on my image
 
   - LandGenesis # Doesn't launch?
   - LethalXcess # Works great in NTSC (and more playable, shoot'em-up), but needs alignment
@@ -12,34 +11,6 @@
 
   - Oath # PAL60, but need to find a way to offset, too far down
   
-  - Pang
-  - Paradroid90
-  - ParasolStars
-  - PersonalNightmare
-  - PGATourGolf
-  - PinballDreams
-  - PinballFntsies
-  - PinballIllusions
-  - PinballPrelude
-  - PlayerManager
-  - PlayerManager2
-  - PlayerManager2ExtraAGA
-  - Pod
-  - Populous&DataDisks
-  - PostmanPat
-  - PowermongerWW1Edition
-  - Premiere
-  - ProjectXSE
-  - ProjectXSE2017
-  - ProTennisTour
-  - ProTennisTour2
-  - Psyborg
-  - PuffysSaga
-  - Puggsy
-  - PushOver
-  - Putty
-  - PuttySquad
-
   - Turrican3 # Should be PAL5, but I can't get it to "stick"?
 
   - WindowWizard # Loads a screen with some pixels in the middle, then stops
