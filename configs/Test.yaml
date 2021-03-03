@@ -4,10 +4,7 @@
 
   - GhoulsNGhosts # This seems to work great in NTSC, but I can't make the offset stick to push it up. Leaving here, so we can experiment.
 
-  - LandGenesis # Doesn't launch?
   - LethalXcess # Works great in NTSC (and more playable, shoot'em-up), but needs alignment
-
-  - MUDS # Didn't launch, will revisit later
 
   - Oath # PAL60, but need to find a way to offset, too far down
   
