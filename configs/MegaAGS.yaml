@@ -610,10 +610,10 @@
   - note: Curated lists from around the net.
   - Alex Limi's Collection:
     - note: Amiga games worth your time, according to Limi.
-    - AgonyNTSC
+    - Agony
     - AirborneRanger
     - AlienBreed
-    - AlienBreed2AGA
+    - AlienBreed2
     - AlienBreedSpecialEdition
     - AlienBreedTA
     - AllTerrainRacing
@@ -623,20 +623,19 @@
     - APBImage
     - ApidyaSpecialEdition
     - ArabianNights
-    - ArkanoidNTSC
+    - Arkanoid
     - ArkanoidRevengeOfDoh
     - Astaroth
-    - AtominoNTSC
+    - Atomino
     - Atomix
-    - BCKid
     - BadLands
     - Banshee
-    - DeathSwordNTSC
     - Barbarian2Palace
     - BattleChess
     - BattleChess2
     - BattleIsle
-    - BattleSquadronNTSC
+    - BattleSquadron
+    - BCKid
     - BeachVolley
     - Benefactor
     - BeyondTheIcePalace
@@ -648,7 +647,7 @@
     - BoneCruncherEnhanced
     - BrutalHomicide
     - BrutalHomicide2
-    - BubbleAndSqueakAGA
+    - BubbleAndSqueak
     - BubbleBobble
     - Budokan
     - BuggyBoy
@@ -664,38 +663,39 @@
     - ChaosEngine
     - ChaosEngine2
     - ChuckRock
-    - ChuckRock2CD32
-    - CivilizationAGA
+    - ChuckRock2
+    - Civilization
     - ClownOMania
-    - ColonizationAGA
+    - Colonization
     - CruiseForACorpse
     - CrystalHammerV2
+    - CrystalKingdomDizzy
     - Cubulus
+    - DeathSword
     - Defender2
     - DefenderOfTheCrown
     - DesertStrike
     - Deuteros
     - DGeneration
-    - DizzyCollection/Disk1
-    - DizzyCollection/Disk2
-    - CrystalKingdomDizzy
-    - DizzysExcellentAdventures/Disk1
-    - DizzysExcellentAdventures/Disk2
+    - DizzyCollection--Disk1
+    - DizzyCollection--Disk2
+    - DizzysExcellentAdventures--Disk1
+    - DizzysExcellentAdventures--Disk2
     - DogsOfWar
     - DragonBreed
     - DreamWeb
     - DuckTales
-    - Dune2
     - Dune
+    - Dune2
     - DynaBlaster
-    - EMotion
     - Eco
     - Elite
+    - EmeraldMine
     - EmeraldMine2
     - EmeraldMine3
-    - EmeraldMine
+    - EMotion
     - FaeryTaleAdventure
-    - FantasticDizzyAGA
+    - FantasticDizzy
     - FantasyWorldDizzy
     - Fascination
     - FernandezMustDie
@@ -706,15 +706,14 @@
     - FirstContact
     - FirstSamurai
     - Flashback
-    - FlinkCD32
+    - Flink
     - Flood
     - FlyHarder
     - FlyingSharkSE
-    - FrontierCD32
-    - FuryOfTheFurriesCD32
+    - Frontier
+    - FuryOfTheFurries
     - Gauntlet2
     - Gauntlet3
-    - GreatGianaSisters
     - Giana2
     - Giganoid
     - GlobduleNTSC
@@ -726,212 +725,212 @@
     - Gravity
     - GreatCourts
     - GreatCourts2
+    - GreatGianaSisters
     - Hammerfist
-    - Heimdall2AGA
     - Heimdall
+    - Heimdall2
     - Hostages
-    - HybrisNTSC
+    - Hybris
     - IK+
     - IkariWarriors
     - IndianaJonesAtlantisAct
     - IndianaJonesAtlantisAdv
     - IndianaJonesLastCrusAct
-    - IndyJonesLastCrusAdvNTSC
     - IndianaJonesTempleOfDoom
-    - ItCameFromTheDesert2
+    - IndyJonesLastCrusAdv
     - ItCameFromTheDesert
-    - JamesPond2AGA
-    - JamesPond3AGA
+    - ItCameFromTheDesert2
     - JamesPond
+    - JamesPond2
+    - JamesPond3
     - JumpingJackSon
-    - JungleStrike2MB
-    - Katakis2Disk
-    - KickOff&ExtraTime2Disk
-    - KickOff2ReturnToEurope
-    - KickOff2FinalWhistle
-    - KickOff216
+    - JungleStrike
+    - Katakis
     - KickOff
+    - KickOff&ExtraTime
+    - KickOff216
+    - KickOff2FinalWhistle
+    - KickOff2ReturnToEurope
     - KillingGameShow
-    - LaserSquadNTSC
+    - LaserSquad
     - Leatherneck
     - LEDStorm
-    - LegendOfFaerghailNTSC
-    - LemmingsXmasDemo1991
-    - LemmingsXmasDemo1992
+    - LegendOfFaerghail
+    - Lemmings
+    - Lemmings2
     - LemmingsHoliday1993
     - LemmingsHoliday1994
     - LemmingsNewYear9192
-    - Lemmings2
-    - Lemmings
+    - LemmingsXmasDemo1991
+    - LemmingsXmasDemo1992
     - LethalXcess
     - Lionheart
     - Logical
     - Loom
     - LostPatrol
     - LostVikings
+    - Lotus
     - Lotus2
     - Lotus3
-    - Lotus
-    - MagicPockets
     - MagiclandDizzy
+    - MagicPockets
     - MarbleMadness
     - MegaLoMania
     - Menace
-    - Midwinter2
     - Midwinter
+    - Midwinter2
     - Millennium22
     - MonkeyIsland2
     - Moonstone
-    - NaughtyOnesAGA
-    - Nebulus2
+    - NaughtyOnes
     - Nebulus
+    - Nebulus2
     - Neuromancer
-    - NewZealandStoryDemo
     - NewZealandStory
     - NinjaRemix
     - Nitro
     - NorthAndSouth
-    - NuclearWarNTSC
+    - NuclearWar
     - Obliterator
     - Odyssey
-    - OhNoMoreLemmings
     - OffShoreWarrior
+    - OhNoMoreLemmings
     - OilImperium
     - OperationThunderbolt
     - OperationWolf
     - PacLand
     - Pandora
     - Pang
-    - Paradroid901MB
+    - Paradroid90
     - ParasolStars
     - Perihelion
     - PinballDreams
-    - PinballFntsiesAGA
-    - PinballIllusionsAGA
-    - PipeDreamNTSC
+    - PinballFntsies
+    - PinballIllusions
+    - PipeDream
     - Pirates
     - PlayerManager
+    - Poing
     - Poing2
     - Poing3
     - Poing4
     - Poing5
     - Poing6
     - Poing7
-    - Poing
-    - Populous2&ChallengeGames
     - Populous&DataDisks
+    - Populous2&ChallengeGames
     - PortsOfCall
     - PostmanPat
-    - PowermongerWW1Edition
     - Powermonger
+    - PowermongerWW1Edition
     - ProjectXSE2017
     - PuffysSaga
     - Puggsy
     - PushOver
-    - PuttySquadAGA
     - Putty
+    - PuttySquad
     - Qwak
-    - RType2
-    - RType
     - RailroadTycoon
     - RainbowIslands
     - RallyCrossChallenge
     - Renegades
-    - RickDangerous25
-    - RickDangerous2
     - RickDangerous
+    - RickDangerous2
+    - RickDangerous25
     - RingsOfMedusa
-    - RoadkillAGA
+    - Roadkill
     - RobinHoodLegendQuest
-    - RockStarAteMyHamster
+    - RocketRanger
     - RockNRoll
-    - RocketRangerNTSC
+    - RockStarAteMyHamster
     - RodLand
     - Rotox
-    - RygarAGA
+    - RType
+    - RType2
+    - Rygar
     - SaintDragon
-    - SecondSamuraiAGA
+    - SecondSamurai
     - SecretOfMonkeyIsland
     - SensibleGolf
-    - SensibleSoccer1MB
+    - SensibleSoccer
     - SensibleWorldOfSoccer9697
     - Sentinel
     - Settlers
-    - SevenGatesOfJambalaImage
+    - SevenGatesOfJambala
     - ShufflepuckCafe
     - Silkworm
     - SillyPutty
-    - SimAntHiRes
-    - SimCityNTSC
-    - SimonTheSorcererAGA
+    - SimAnt
+    - SimCity
+    - SimonTheSorcerer
     - Simulcra
-    - SkidmarksAGA
-    - SlamTiltAGA2MB
-    - SleepwalkerAGA
+    - Skidmarks
+    - SlamTilt
+    - Sleepwalker
     - SpaceCrusade&VoyageBeyond
-    - Speedball2NTSC
-    - SpeedballNTSC
-    - SperisLegacyAGA
+    - Speedball
+    - Speedball2
+    - SperisLegacy
     - SpindizzyWorlds
     - SpittingImage
+    - SpyVsSpy
     - SpyVsSpy2TheIslandCaper
     - SpyVsSpy3ArcticAntics
-    - SpyVsSpy
     - SpyWhoLovedMe
-    - StreetRod2
     - StreetRod
-    - StuntCarRacerTNT
+    - StreetRod2
     - StuntCarRacer
+    - StuntCarRacerTNT
+    - SuperCars
     - SuperCars2
-    - SuperCars2Disk
+    - Superfrog
     - SuperMethaneBros
     - SuperOffRoad
-    - SuperSkidmarksCD32
-    - SuperStardustAGA
+    - SuperSkidmarks
+    - SuperStardust
     - SuperTwintris
-    - Superfrog
     - Switchblade
     - Switchblade2
     - SWIV
     - SwordOfSodan
-    - SyndicateAmericanRevolt
     - Syndicate
+    - SyndicateAmericanRevolt
     - TeenageQueen
     - Terramex
-    - ThreeStoogesNTSC
+    - ThreeStooges
     - Thunderbirds
     - Toki
     - TreasureIslandDizzy
     - TurboRaketti2Fi
+    - Turrican
     - Turrican2
     - Turrican3
-    - Turrican
     - Tusker
     - TVSportsBasketball
     - Twintris
     - UFOEnemyUnknown
     - Ugh
-    - UnrealNTSC
+    - Unreal
     - Vaxine
-    - VirocopAGA
+    - Virocop
     - Virus
     - Vyrus
-    - WalkerDecrunched
+    - Walker
     - WarInMiddleEarth
+    - Wings
     - WingsOfDeath
     - WingsOfFury
-    - Wings
-    - WormsDCAGA12MB
-    - Worms2MB
-    - XOut2Disk
-    - Xenon2NTSC
+    - Worms
+    - WormsDC
     - Xenon
+    - Xenon2
+    - XOut2
     - YolandaImage
-    - ZOut
     - ZakMcKracken
-    - ZanyGolfNTSC
-    - Zeewolf2
+    - ZanyGolf
     - Zeewolf
+    - Zeewolf2
+    - ZOut
   - DenOfGeek-Underappreciated:
     - ranked_list: True
     - note: The Top 50 underappreciated Amiga games according to Den of Geek.
