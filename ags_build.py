@@ -13,6 +13,10 @@ from ast import literal_eval as make_tuple
 import ags_util as util
 from make_vadjust import make_vadjust
 
+# TODO:
+# - make lemon image scraper
+# - title match logger
+
 # -----------------------------------------------------------------------------
 
 CONTENT_DIR = "../AGSImager-Content/"
@@ -320,50 +324,50 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
 
     # create runfile
     runfile = None
+    if get_amiga_whd_dir(entry) is not None or entry_is_notwhdl(entry):
+        # vadjust
+        vadjust_pal5x = entry["pal_5x"] == 1
+        vadjust_name = "pal5" if vadjust_pal5x else "def"
+        vadjust_vofs = util.parse_int(entry["v_offset"])
+        if not vadjust_vofs:
+            vadjust_vofs = 0
+        vadjust_name += "_{}".format(vadjust_vofs)
+        g_vadjust[vadjust_name] = (vadjust_pal5x, vadjust_vofs)
 
-    # vadjust
-    vadjust_pal5x = entry["pal_5x"] == 1
-    vadjust_name = "pal5" if vadjust_pal5x else "def"
-    vadjust_vofs = util.parse_int(entry["v_offset"])
-    if not vadjust_vofs:
-        vadjust_vofs = 0
-    vadjust_name += "_{}".format(vadjust_vofs)
-    g_vadjust[vadjust_name] = (vadjust_pal5x, vadjust_vofs)
-
-    if entry_is_notwhdl(entry):
-        runfile_path = get_archive_path(entry).replace(".lha", ".run")
-        if util.is_file(runfile_path):
-            runfile = "setvadjust {} {}\n".format(vadjust_vofs, "PAL5" if vadjust_pal5x else "")
-            with open(runfile_path, 'r') as f: runfile += f.read()
-            runfile += "setvadjust\n"
-    else:
-        whd_entrypath = get_amiga_whd_dir(entry)
-        if whd_entrypath:
-            whd_slave = get_whd_slavename(entry)
-            # videomode
-            whd_vmode = "NTSC" if entry["ntsc"] > 0 else "PAL"
-            if g_args.ntsc: whd_vmode = "NTSC"
-            # extra arguments
-            whd_cargs = "BUTTONWAIT"
-            if entry["slave_args"]:
-                whd_cargs += " " + entry["slave_args"]
-
-            runfile = "cd \"{}\"\n".format(whd_entrypath)
-            runfile += "IF NOT EXISTS ENV:whdlspdly\n"
-            runfile += "  echo 200 >ENV:whdlspdly\n"
-            runfile += "ENDIF\n"
-            runfile += "IF NOT EXISTS ENV:whdlqtkey\n"
-            runfile += "  echo \"\" >ENV:whdlqtkey\n"
-            runfile += "ENDIF\n"
-            runfile += "IF EXISTS ENV:whdlvmode\n"
-            runfile += "  whdload >NIL: \"{}\" PRELOAD $whdlvmode {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_cargs)
-            runfile += "ELSE\n"
-            runfile += "  setvadjust {} {}\n".format(vadjust_vofs, "PAL5" if vadjust_pal5x else "")
-            runfile += "  whdload >NIL: \"{}\" PRELOAD {} {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_vmode, whd_cargs)
-            runfile += "  setvadjust\n"
-            runfile += "ENDIF\n"
+        if entry_is_notwhdl(entry):
+            runfile_path = get_archive_path(entry).replace(".lha", ".run")
+            if util.is_file(runfile_path):
+                runfile = "setvadjust {} {}\n".format(vadjust_vofs, "PAL5" if vadjust_pal5x else "")
+                with open(runfile_path, 'r') as f: runfile += f.read()
+                runfile += "setvadjust\n"
         else:
-            runfile = "echo \"Title not available.\"" + "\n" + "wait 2"
+            whd_entrypath = get_amiga_whd_dir(entry)
+            if whd_entrypath:
+                whd_slave = get_whd_slavename(entry)
+                # videomode
+                whd_vmode = "NTSC" if entry["ntsc"] > 0 else "PAL"
+                if g_args.ntsc: whd_vmode = "NTSC"
+                # extra arguments
+                whd_cargs = "BUTTONWAIT"
+                if entry["slave_args"]:
+                    whd_cargs += " " + entry["slave_args"]
+                runfile = "cd \"{}\"\n".format(whd_entrypath)
+                runfile += "IF NOT EXISTS ENV:whdlspdly\n"
+                runfile += "  echo 200 >ENV:whdlspdly\n"
+                runfile += "ENDIF\n"
+                runfile += "IF NOT EXISTS ENV:whdlqtkey\n"
+                runfile += "  echo \"\" >ENV:whdlqtkey\n"
+                runfile += "ENDIF\n"
+                runfile += "IF EXISTS ENV:whdlvmode\n"
+                runfile += "  whdload >NIL: \"{}\" PRELOAD $whdlvmode {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_cargs)
+                runfile += "ELSE\n"
+                runfile += "  setvadjust {} {}\n".format(vadjust_vofs, "PAL5" if vadjust_pal5x else "")
+                runfile += "  whdload >NIL: \"{}\" PRELOAD {} {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_vmode, whd_cargs)
+                runfile += "  setvadjust\n"
+                runfile += "ENDIF\n"
+    else:
+        runfile = "echo \"Title not available.\"" + "\n" + "wait 2"
+
     if runfile:
         if util.is_file(base_path + ".run"):
             print(" > AGS2 clash:", entry["id"], "-", base_path + ".run")
@@ -466,7 +470,7 @@ def ags_create_autoentries():
                 ags_create_entry(None, group_entry, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=sort_group)
                 ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
                 if sort_country:
-                    ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by country ].ags", sort_country), None, None)
+                    ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by country ].ags", sort_country + ".ags"), None, None)
 
         if g_args.all_demos and entry["category"].lower() == "demo":
             groups = entry["publisher"]
