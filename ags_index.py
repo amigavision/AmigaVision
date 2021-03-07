@@ -2,10 +2,6 @@
 
 # AGSImager: Indexer
 
-# WHDLoad packs available at
-# http://tinyurl.com/m9qjwpy
-#  -> https://mega.nz/#F!gdozjZxL!uI5SheetsAd-NYKMeRjf2A
-
 import argparse
 import os
 import sqlite3
