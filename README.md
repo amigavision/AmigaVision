@@ -1,17 +1,20 @@
 # AGSImager
 
-## dependencies
+## Dependencies
 - python3
 - [pipenv](https://pipenv.readthedocs.io)
 
-## setup environment
+## Set up environment
 - `make env`
 
-## prerequisites
+## Prerequisites
 - A bootable HDF to use as base (FFS formatted, all files are copied to DH0: of the output image)
 - WHDLoad archives (LhA compressed) in `TITLES_DIR/game` and `TITLES_DIR/demo` (all subdirectories are scanned)
 
-## operation
+## Operations
+
+Remember to execute these from within `pipenv shell`:
+
 - `make index`
   - index WHDLoad archives in the `TITLES_DIR` path
 - `make image`
