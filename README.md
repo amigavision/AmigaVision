@@ -7,8 +7,8 @@
 ## setup environment
 - `make env`
 
-## prerequisities
-- A bootable HDF to use ase base (FFS formatted, all files are copied to DH0: of the output image)
+## prerequisites
+- A bootable HDF to use as base (FFS formatted, all files are copied to DH0: of the output image)
 - WHDLoad archives (LhA compressed) in `TITLES_DIR/game` and `TITLES_DIR/demo` (all subdirectories are scanned)
 
 ## operation
