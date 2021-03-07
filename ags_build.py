@@ -13,10 +13,6 @@ from ast import literal_eval as make_tuple
 import ags_util as util
 from make_vadjust import make_vadjust
 
-# TODO:
-# - make lemon image scraper
-# - title match logger
-
 # -----------------------------------------------------------------------------
 
 CONTENT_DIR = "../AGSImager-Content/"
