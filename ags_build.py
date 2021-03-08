@@ -13,6 +13,11 @@ from ast import literal_eval as make_tuple
 import ags_util as util
 from make_vadjust import make_vadjust
 
+# TODO:
+# - readme: explain NTSC/PAL60 difference
+# - tooling: make lemon image scraper
+# - tooling: make diagonistic title match logger
+
 # -----------------------------------------------------------------------------
 
 CONTENT_DIR = "../AGSImager-Content/"
