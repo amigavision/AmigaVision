@@ -7,33 +7,8 @@
   - game--bonecruncher--bonecruncher
   - game--bonecruncherenhanced--bonecruncherenhanced
 
-  - game--cabal--cabal
-  - game--cadaver--cadaver
-  - game--cadaverthepayoff--cadaverthepayoff
-  - game--cannonfodder--cannonfodder
-  - game--cannonfodder2--cannonfodder2
-  - game--cannonfodder2alienlevels--cannonfodder2alienlevels
-  - game--cannonfoddernewcampaign--cannonfoddernewcampaign
-  - game--cannonfodderplus--cannonfodderplus
-  - game--cannonsoccer--cannonsoccer
-  - game--carllewischallenge--carllewischallenge
-  - game--carvup--carvup
-  - game--castlemaster--castlemaster
-  - game--castlemaster2--castlemaster2
-  - game--castlewarrior--castlewarrior
-  - game--chambersofshaolin--chambersofshaolin
-  - game--chaosengine--chaosengine
-  - game--chaosenginecd32--chaosenginecd32
-  - game--chuckrock--chuckrock
-  - game--chuckrock2--chuckrock2
-  - game--circusattractions--circusattractions
-  - game--crazysue--crazysue
-  - game--crazysuegoeson--crazysuegoeson
-  - game--cruiseforacorpse--cruiseforacorpse
-  - game--crystaldragon--crystaldragon
-  - game--crystalhammerv2--crystalhammerv2
-  - game--curseofenchantiafast--curseofenchantiafast
-  - game--cybercon3--cybercon3
+  - game--crystaldragon--crystaldragon # still doesn't launch
+
   - game--dangerfreak--dangerfreak
   - game--darkmere--darkmere
   - game--darkseed--darkseed
