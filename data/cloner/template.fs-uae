@@ -13,12 +13,16 @@ writable_floppy_images = 1
 hard_drive_0 = $HOME/Temp/AGSImager/<config_base_name>.hdf
 hard_drive_1 = $HOME/Temp/AGSImager/tmp
 joystick_port_1 = none
-kickstart_file = Kickstart 3.1 r40.68 A1200.rom
+kickstart_file = $HOME/Temp/AGSImager/fs-uae/kickstart.rom
 save_disk = 0
 texture_filter = nearest
 viewport = * * * * => 0 0 640 480
 window_height = 524
 window_width = 650
+window_border = 0
 scale = integer
+smoothing = 0
+border = 0
+bezel = 0
 fade_in_duration = 0
 fade_out_duration = 0
