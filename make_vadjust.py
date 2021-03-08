@@ -5,6 +5,11 @@
 # --pal5x     create PAL viewport crops with 216 visible lines
 # --vofs <n>  adjust vertical offset (positive values move visible image up)
 
+# Max vofs before clamping:
+#   NTSC:  9 / -16
+#   PAL5: 59 / -11
+#    PAL:  5 / -11
+
 import sys
 import os
 import argparse
@@ -86,8 +91,8 @@ def make_vadjust(pal_5x, v_offset):
             vofs = v_offset
             if v1 + vofs < 0:
                 vofs = -v1
-            if v2 + vofs >= 4095:
-                vofs = v2 - 4095
+            if v2 + vofs > 4095:
+                vofs = 4095 - v2
             v1 += vofs
             v2 += vofs
 
