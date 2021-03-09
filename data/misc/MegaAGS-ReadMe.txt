@@ -3,16 +3,13 @@ MegaAGS for Minimig-AGA_MiSTer
 
 Setup:
 ------
-- Copy MegaAGS.hdf, MegaAGS-Saves.hdf, MegaAGS-Kickstart.rom and the "shared"
-  directory from the Amiga directory to /games/Amiga on the MiSTer SD card.
-
-- When updating to a new version of the main HDF image, keep your old
-  MegaAGS-Saves.hdf so any saved game data is carried over.
-
-- Copy minimig.cfg and minimig_vadjust.dat from the config directory to the
+- Copy the contents of the "games/Amiga" and "config" directories to the
   corresponding directory on MiSTer.
 
-  If you prefer to configure the main settings manually, these are recommended
+- When updating to a new version of the main HDF image do not overwrite
+  "games/Amiga/MegaAGS-Saves.hdf", so old saved game data is carried over.
+
+- If you prefer to configure the main settings manually, these are recommended
   settings used in the bundled minimig.cfg:
 
   df0: no disk
@@ -46,40 +43,63 @@ Setup:
     Stereo mix: 50%
 
 - Add the following recommended core overrides to MiSTer.ini (these settings
-  are further explained in the "Video Modes" paragraph):
+  are further explained in the next section):
 
-  [minimig]
-  video_mode_ntsc=8
-  video_mode_pal=9
-  vscale_mode=2
-  vsync_adjust=2
+[minimig]
+video_mode_ntsc=8
+video_mode_pal=9
+vscale_mode=0
+vsync_adjust=2
 
 
-CPU performance notes:
-----------------------
-The D-Cache option is essentially a turbo switch for the CPU, making it
-perform on par with a 030 at 50MHz in many benchmarks. Unfortunately running
-with it enabled introduces lots of subtle glitches in many (mostly older)
-games and demos, so it's recommended is to leave it off as default.
+Video Modes:
+------------
+Since many Amiga games only run properly at a 50Hz vertical refresh rate,
+it's important to have both NTSC and PAL video modes set up in MiSTer.ini.
 
-On the other hand some titles, mostly 3D polygon games and demos, will
-benefit greatly from the CPU boost D-Cache offers. So it's an option worth
-experimenting with on a case by case basis.
+Another idiosyncrasy with the Minimig core is viewport cropping. By default
+the full overscan area will be fed to the HDMI scaler, resulting in huge
+borders. Fear not! MegaAGS leverages the "vadjust" feature of the core to
+dynamically apply viewport settings on a per game basis. This depends on the
+"shared folder" functionality, which is automatically enabled if the
+"games/Amiga/shared" directory exists. So, make sure you copied all the
+archive contents as described in the Setup section.
 
-Note that the glitches introduced with D-Cache on can sometimes clear up
-by turning it off while Minimig is running. Other times they seem to stick
-until reboot. The latter behavior is the case with, for example, Turrican II
-and Grand Monster Slam (and many less significant titles).
+With dynamic vadjust enabled most titles will enjoy a nicely centered
+viewport at a perfect 5x scale using 1080p output resolution, by cropping
+the viewport to 216 lines. Games using more than 216 active video lines will
+instead get a perfect 4x scale by applying a 270 line crop.
 
-The CPU D-Cache option is available in OSD -> CPU & Chipset.
+Games are also individually, and with a lot of care, configured to output
+video at either 50 or 60Hz. The selected video mode is displayed in the
+game info in the launcher UI, and shows one of the following:
+
+PAL    The title is PAL exclusive or clearly runs best in PAL mode.
+NTSC   The title is either specifically an NTSC release, or was made
+       for "world" distribution and runs best at 60Hz.
+PAL60  The game is a PAL version, but in our opionion runs best at 60Hz.
+
+To enjoy vertical integer scaling and support for 50/60Hz video, again,
+these are the core overrides needed in MiSTer.ini:
+
+[minimig]
+video_mode_ntsc=8
+video_mode_pal=9
+vscale_mode=0
+vsync_adjust=2
+
+Depending on how well your display deals with slightly off-spec refresh
+frequencies and frequent mode changes you may need to experiment with setting
+vsync_adjust to 1 or 0, instead of the ideal setting of 2.
 
 
 Controls:
 ---------
-Amiga games were generally designed for one button joysticks, which means
-that "up to jump" (or accelerate) is very common. If you are using a game pad,
-you might want to use MiSTer's controller mapping to bind the up direction to
-both the D-pad and an extra button. Here's how:
+While many games supports two or more buttons, Amiga games were generally
+designed for one button joysticks. Consequently the feared "up to jump"
+(or accelerate) control scheme is very common. If you are using a gamepad,
+you might want to use MiSTer's controller mapping to bind the up direction
+to both the D-pad and an extra button. Here's how:
 
 - First, make sure to have CD32 controller mode enabled.
 - Enter "Define joystick buttons" mode
@@ -105,44 +125,23 @@ options, which if set will override the preconfigured key. The active quit
 key is displayed on the splash screen shown when a game is loading
 
 
-Video Modes:
-------------
-Since many Amiga games only run properly at a 50Hz vertical refresh rate,
-it's important to have both NTSC and PAL video modes set up in MiSTer.ini.
+CPU performance notes:
+----------------------
+The D-Cache option is essentially a turbo switch for the CPU, making it
+perform on par with a 030 at 50MHz in many benchmarks. Unfortunately running
+with it enabled introduces lots of subtle glitches in many (mostly older)
+games and demos, so it's recommended is to leave it off as default.
 
-Another idiosyncrasy with the Minimig core is viewport cropping. By default
-the full overscan area will be fed to the HDMI scaler, resulting in huge
-borders. Fear not! MegaAGS leverages the "vadjust" feature of the core to
-dynamically apply viewport settings on a per game basis. This relies on the
-shared folder to be enabled, so make sure that you copied the "shared"
-directory as described in the Setup section.
+On the other hand some titles, mostly 3D polygon games and demos, will
+benefit greatly from the CPU boost D-Cache offers. So it's an option worth
+experimenting with on a case by case basis.
 
-With dynamic vadjust enabled most titles will enjoy a nicely centered
-viewport at a perfect 5x scale using 1080p output resolution, by cropping
-the viewport to 216 lines. Games using more than 216 active video lines will
-instead get a perfect 4x scale by applying a 270 line crop.
+Note that the glitches introduced with D-Cache on can sometimes clear up
+by turning it off while Minimig is running. Other times they seem to stick
+until reboot. The latter behavior is the case with, for example, Turrican II
+and Grand Monster Slam (and many less significant titles).
 
-To also make interlaced resolutions fill the screen, however, you still need
-to enable 0.5x scale mode. These are the recommended MiSTer.ini settings:
-
-[minimig]
-video_mode_ntsc=8
-video_mode_pal=9
-vscale_mode=2
-vsync_adjust=2
-
-Note: Depending on how well your display deals with slightly off-spec refresh
-frequencies and frequent mode changes you may need to experiment with setting
-vsync_adjust to 1 or 0, instead of the ideal setting of 2.
-
-
-Non-working games:
-------------------
-About 10 games are currently not working due to CPU features not yet
-implemented in the Minimig core. Over the past year compatibility has improved
-a lot, and that trend is likely to continue. A few more titles do not work, or
-are very glitchy, due to other inaccuracies. This will also hopefully improve
-over time.
+The CPU D-Cache option is available in OSD -> CPU & Chipset.
 
 
 Workbench:
@@ -157,6 +156,15 @@ To change from the default 640×256 resolution to something like 1280×720 or
 1920×1080 for use with a 16:9 HD display, double-click the "Amiga" disk icon,
 then "Prefs", then "ScreenMode" to select the resolution. Locate the ones
 starting with "MiSTer:", and pick the one you prefer.
+
+
+Non-working games:
+------------------
+About 10 games are currently not working due to CPU features not yet
+implemented in the Minimig core. Over the past year compatibility has improved
+a lot, and that trend is likely to continue. A few more titles do not work, or
+are very glitchy, due to other inaccuracies. This will also hopefully improve
+over time.
 
 
 Custom scripts:
