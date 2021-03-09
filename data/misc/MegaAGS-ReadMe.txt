@@ -4,7 +4,7 @@ MegaAGS for Minimig-AGA_MiSTer
 Setup:
 ------
 - Copy the contents of the "games/Amiga" and "config" directories to the
-  corresponding directory on MiSTer.
+  corresponding directories on MiSTer.
 
 - When updating to a new version of the main HDF image do not overwrite
   "games/Amiga/MegaAGS-Saves.hdf", so old saved game data is carried over.
@@ -14,7 +14,7 @@ Setup:
 
   df0: no disk
   df1: no disk
-  Floppy disk turbo: Off
+  Floppy disk turbo: off
   Hard disks:
     A600/A1200 IDE: On
     Primary Master: Enabled
@@ -39,8 +39,19 @@ Setup:
     TV Standard: PAL
     Scandoubler FX: Off
     Video area by: Blank
-    Aspect ratio: 4:3
+    Aspect ratio: Original
+    Pixel Clock: Adaptive
+    Scaling: Normal
+    RTG Upscaling: Normal
     Stereo mix: 50%
+    Audio Filter: Auto(LED)
+    Model: A500
+    Paula Output: Normal
+
+  There are a few additional configurations supplied, made for booting
+  ADF floppy images. These are accessible from OSD -> Load configuration.
+  Note that a "Guru Meditation" will often appear after a configuration
+  is loaded. If so just use the OSD -> Reset function.
 
 - Add the following recommended core overrides to MiSTer.ini (these settings
   are further explained in the next section):

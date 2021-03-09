@@ -1,6 +1,6 @@
 --- # AGS2 Menu structure
 - About:
-  - note: '\n\n\n\n\n\n              (MegaAGS-20201116)'
+  - note: '\n\n\n\n\n\n              (MegaAGS-20210309)'
   - Nothing to see here:
     - note: Intentionally left blank.
 - Best-of Lists:
@@ -1261,6 +1261,7 @@
     - AnotherWorldLostLevel
     - BeachVolley
     - BioChallenge
+    - Fascination
     - FuryOfTheFurries
     - FutureWars
     - Hostages
