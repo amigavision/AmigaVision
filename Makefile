@@ -14,11 +14,11 @@ index:
 
 image:
 	@pipenv run ./ags_build.py -v -c configs/MegaAGS.yaml --all_games --all_demos -d ../AGSImager-Content/extra_dirs/Music::DH2 -o ~/Temp/AGSImager
-	~/Temp/AGSImager/fs-uae/fs-uae ~/Temp/AGSImager/tmp/cfg.fs-uae
+	fs-uae ~/Temp/AGSImager/tmp/cfg.fs-uae
 
 test-image:
 	@pipenv run ./ags_build.py -v -c configs/Test.yaml -o ~/Temp/AGSImager
-	~/Temp/AGSImager/fs-uae/fs-uae ~/Temp/AGSImager/tmp/cfg.fs-uae
+	fs-uae ~/Temp/AGSImager/tmp/cfg.fs-uae
 
 screenshots:
 	@pipenv run ./make_screenshots.sh screenshots

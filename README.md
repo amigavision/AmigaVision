@@ -13,6 +13,8 @@
 
 ## operations
 
+These assume that `fs-uae` is in the `PATH`:
+
 - `make index`
   - index WHDLoad archives in the `TITLES_DIR` path
 - `make image`
