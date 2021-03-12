@@ -14,8 +14,6 @@ import ags_util as util
 from make_vadjust import make_vadjust
 
 # TODO:
-# - readme: explain NTSC/PAL60 difference
-# - tooling: make lemon image scraper
 # - tooling: make diagonistic title match logger
 
 # -----------------------------------------------------------------------------
@@ -326,6 +324,9 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
     # create runfile
     runfile = None
     if get_amiga_whd_dir(entry) is not None or entry_is_notwhdl(entry):
+        # videomode
+        whd_vmode = "NTSC" if entry["ntsc"] > 0 else "PAL"
+        if g_args.ntsc: whd_vmode = "NTSC"
         # vadjust
         vadjust_pal5x = entry["pal_5x"] == 1
         vadjust_name = "pal5" if vadjust_pal5x else "def"
@@ -338,16 +339,15 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
         if entry_is_notwhdl(entry):
             runfile_path = get_archive_path(entry).replace(".lha", ".run")
             if util.is_file(runfile_path):
-                runfile = "setvadjust {} {}\n".format(vadjust_vofs, "PAL5" if vadjust_pal5x else "")
+                runfile = "set{}\n".format(whd_vmode.lower())
+                runfile += "setvadjust {} {}\n".format(vadjust_vofs, "PAL5" if vadjust_pal5x else "")
                 with open(runfile_path, 'r') as f: runfile += f.read()
+                runfile += "setntsc\n"
                 runfile += "setvadjust\n"
         else:
             whd_entrypath = get_amiga_whd_dir(entry)
             if whd_entrypath:
                 whd_slave = get_whd_slavename(entry)
-                # videomode
-                whd_vmode = "NTSC" if entry["ntsc"] > 0 else "PAL"
-                if g_args.ntsc: whd_vmode = "NTSC"
                 # extra arguments
                 whd_cargs = "BUTTONWAIT"
                 if entry["slave_args"]:
