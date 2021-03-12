@@ -67,6 +67,10 @@ Video Modes:
 ------------
 Since many Amiga games only run properly at a 50Hz vertical refresh rate,
 it's important to have both NTSC and PAL video modes set up in MiSTer.ini.
+Note that while the recommended core setting is PAL, Amiga (and Minimig)
+can change video modes on the fly. This is leveraged by the launcher to
+dynamically apply per-game video mode settings. However, setting the core
+option to PAL seems to benefit edge-case compatibility.
 
 Another idiosyncrasy with the Minimig core is viewport cropping. By default
 the full overscan area will be fed to the HDMI scaler, resulting in huge
