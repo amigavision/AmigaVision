@@ -18,7 +18,7 @@ These assume that `fs-uae` is in the `PATH`:
 - `make index`
   - index WHDLoad archives in the `TITLES_DIR` path
 - `make image`
-  - create the Amiga HDF image and filesystem specified in `configs/MegaAGS.yaml` — note that this may segfault when mounting drives, just run the last commmand in the makefile again if it does
+  - create the Amiga HDF image and filesystem specified in `configs/MegaAGS.yaml`
 - `make screenshots`
   - create scaled IFF images from arbitrary PNG files placed in `screenshots` 
 - `make sqlite`
