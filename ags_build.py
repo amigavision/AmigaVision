@@ -766,7 +766,7 @@ def main():
                 open(os.path.join(g_clone_dir, "cfg.fs-uae"), mode="w").write(cfg)
             # copy clone script and write fs-uae metadata
             shutil.copyfile(clone_script, os.path.join(g_clone_dir, "clone"))
-            open(os.path.join(g_clone_dir, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.02")
+            open(os.path.join(g_clone_dir, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.00")
         else:
             print("warning: cloner config files not found")
 
