@@ -85,13 +85,13 @@ def get_entry(name):
     return None, None
 
 def entry_valid(entry):
-    if isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "slave_path" in entry:
+    if not (isinstance(entry, dict)): return False
+    if not ("id" in entry and entry["id"]): return False
+    if not ("title" in entry and entry["title"]): return False
+    if not ("archive_path" in entry and entry["archive_path"]): return False
+    if "slave_path" in entry and entry["slave_path"]:
         return True
-    elif isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "game-notwhdl--" in id:
-        return True
-    elif isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "demo-notwhdl--" in id:
-        return True
-    elif isinstance(entry, dict) and "title" in entry and "archive_path" in entry and "mags-notwhdl--" in id:
+    elif "game-notwhdl--" in entry["id"] or "demo-notwhdl--" in entry["id"] or "mags-notwhdl--" in entry["id"]:
         return True
     return False
 
@@ -181,7 +181,7 @@ def extract_entries(entries):
 def extract_whd(entry):
     arc_path = get_archive_path(entry)
     if not arc_path:
-        print(" > WARNING: content archive not found -", entry["id"])
+        print(" > WARNING: content archive not found:", entry["id"])
     else:
         dest = get_whd_dir(entry)
         if entry_is_notwhdl(entry):
@@ -422,7 +422,7 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
         if not "--" in name and pe:
             e = pe
         if not e and not pe:
-            print(" > no entry for '{}'".format(n))
+            print(" > WARNING: invalid entry: {}".format(n))
         else:
             g_entries[e["id"]] = e
         rank = None
@@ -748,7 +748,7 @@ def main():
                     print(" > copying '" + d[0] +"' to '" + d[1] + "'")
                     util.copytree(d[0], dest)
                 else:
-                    print(" > warning: '" + d[1] + "' doesn't exist")
+                    print(" > WARNING: '" + d[1] + "' doesn't exist")
 
         # build PFS container
         build_pfs(config_base_name, g_args.verbose)
@@ -768,7 +768,7 @@ def main():
             shutil.copyfile(clone_script, os.path.join(g_clone_dir, "clone"))
             open(os.path.join(g_clone_dir, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.00")
         else:
-            print("warning: cloner config files not found")
+            print("WARNING: cloner config files not found")
 
         # clean output directory
         for r, _, f in os.walk(g_clone_dir):
