@@ -11,15 +11,10 @@ import sys
 import textwrap
 from ast import literal_eval as make_tuple
 import ags_util as util
+import ags_paths as paths
 from make_vadjust import make_vadjust
 
-# TODO:
-# - tooling: make diagonistic title match logger
-
 # -----------------------------------------------------------------------------
-
-CONTENT_DIR = "../AGSImager-Content/"
-TITLES_DIR = CONTENT_DIR + "titles/"
 
 AGS_LIST_WIDTH = 26
 AGS_INFO_WIDTH = 48
@@ -122,7 +117,7 @@ def get_whd_slavename(entry):
 
 def get_archive_path(entry):
     if entry_valid(entry):
-        arc_path = os.path.join(TITLES_DIR, entry["archive_path"])
+        arc_path = util.path(paths.titles(), entry["archive_path"])
         return arc_path if util.is_file(arc_path) else None
     else:
         return None
@@ -137,25 +132,25 @@ def get_short_slavename(name):
     return name
 
 def get_boot_dir():
-    return os.path.join(g_clone_dir, "DH0")
+    return util.path(g_clone_dir, "DH0")
 
 def get_games_dir():
-    return os.path.join(g_clone_dir, "DH1")
+    return util.path(g_clone_dir, "DH1")
 
 def get_ags2_dir():
-    return os.path.join(get_boot_dir(), "AGS2")
+    return util.path(get_boot_dir(), "AGS2")
 
 def get_whd_dir(entry):
     if entry_is_notwhdl(entry):
-        return os.path.join(g_clone_dir, "DH1", "WHD", "N")
+        return util.path(g_clone_dir, "DH1", "WHD", "N")
     else:
         p = "0-9" if entry["slave_dir"][0].isnumeric() else entry["slave_dir"][0].upper()
         if entry["id"].startswith("demo--"):
-            return os.path.join(g_clone_dir, "DH1", "WHD", "D", p)
+            return util.path(g_clone_dir, "DH1", "WHD", "D", p)
         if entry["id"].startswith("mags--"):
-            return os.path.join(g_clone_dir, "DH1", "WHD", "M", p)
+            return util.path(g_clone_dir, "DH1", "WHD", "M", p)
         else:
-            return os.path.join(g_clone_dir, "DH1", "WHD", "G", p)
+            return util.path(g_clone_dir, "DH1", "WHD", "G", p)
 
 def get_amiga_whd_dir(entry):
     if not entry_valid(entry):
@@ -188,22 +183,22 @@ def extract_whd(entry):
             util.lha_extract(arc_path, dest)
         else:
             util.lha_extract(arc_path, dest)
-            info_path = os.path.join(dest, entry["slave_dir"] + ".info")
+            info_path = util.path(dest, entry["slave_dir"] + ".info")
             if util.is_file(info_path):
                 os.remove(info_path)
 
 def create_vadjust_dats(vadjust_dict):
-    util.make_dir(os.path.join(get_ags2_dir(), "VAdjust"))
+    util.make_dir(util.path(get_ags2_dir(), "VAdjust"))
     if vadjust_dict:
         for name, settings in vadjust_dict.items():
             pal5 = settings[0]
             vofs = 0 if pal5 and settings[1] is None else settings[1]
             data = make_vadjust(pal5, vofs)
-            open(os.path.join(get_ags2_dir(), "VAdjust", name), mode="wb").write(data)
+            open(util.path(get_ags2_dir(), "VAdjust", name), mode="wb").write(data)
     else:
         for i in range(-32,33):
-            open(os.path.join(get_ags2_dir(), "VAdjust", "def_{}".format(i)), mode="wb").write(make_vadjust(False, i))
-            open(os.path.join(get_ags2_dir(), "VAdjust", "pal5_{}".format(i)), mode="wb").write(make_vadjust(True, i))
+            open(util.path(get_ags2_dir(), "VAdjust", "def_{}".format(i)), mode="wb").write(make_vadjust(False, i))
+            open(util.path(get_ags2_dir(), "VAdjust", "pal5_{}".format(i)), mode="wb").write(make_vadjust(True, i))
 
 # -----------------------------------------------------------------------------
 # Menu yaml parsing, AGS2 tree creation
@@ -301,7 +296,7 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
 
     # prevent name clash
     title = title.strip()
-    if util.is_file(os.path.join(path, title) + ".run"):
+    if util.is_file(util.path(path, title) + ".run"):
         if entry["category"] == "Demo":
             title += " (" + entry["publisher"] + ")"
         else:
@@ -310,15 +305,15 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
             title = title.replace(" ", "_")
     if len(title) > max_w:
         title = title[:max_w - 2].strip() + ".."
-        if util.is_file(os.path.join(path, title) + ".run"):
+        if util.is_file(util.path(path, title) + ".run"):
             suffix = 1
             while suffix <= 10:
                 title = title[:-1] + str(suffix)
                 suffix += 1
-                if not util.is_file(os.path.join(path, title) + ".run"):
+                if not util.is_file(util.path(path, title) + ".run"):
                     break
 
-    base_path = os.path.join(path, title)
+    base_path = util.path(path, title)
     util.make_dir(path)
 
     # create runfile
@@ -387,8 +382,8 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
         open(base_path + ".txt", mode="w", encoding="latin-1").write(ags_make_note(entry, note))
 
     # image
-    if not g_args.no_img and entry and "id" in entry and util.is_file(os.path.join("data", "img", entry["id"] + ".iff")):
-        shutil.copyfile(os.path.join("data", "img", entry["id"] + ".iff"), base_path + ".iff")
+    if not g_args.no_img and entry and "id" in entry and util.is_file(util.path("data", "img", entry["id"] + ".iff")):
+        shutil.copyfile(util.path("data", "img", entry["id"] + ".iff"), base_path + ".iff")
     return
 
 
@@ -399,7 +394,7 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
     base_dir = get_ags2_dir()
     if path:
         for d in path:
-            base_dir = os.path.join(base_dir, d[:26].strip() + ".ags")
+            base_dir = util.path(base_dir, d[:26].strip() + ".ags")
     util.make_dir(base_dir)
 
     # make note
@@ -435,8 +430,8 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
 def ags_create_autoentries():
     path = get_ags2_dir()
     d_path = get_ags2_dir()
-    if util.is_dir(os.path.join(path, "[ Demo Scene ].ags")):
-        d_path = os.path.join(path, "[ Demo Scene ].ags")
+    if util.is_dir(util.path(path, "[ Demo Scene ].ags")):
+        d_path = util.path(path, "[ Demo Scene ].ags")
     for entry in sorted(g_entries.values(), key=operator.itemgetter("title")):
         letter = entry["title_short"][0].upper()
         if letter.isnumeric():
@@ -447,8 +442,8 @@ def ags_create_autoentries():
 
         # Games
         if entry["category"].lower() == "game":
-            ags_create_entry(None, entry, os.path.join(path, "[ All Games ].ags", letter + ".ags"), None, None)
-            ags_create_entry(None, entry, os.path.join(path, "[ All Games, by year ].ags", year + ".ags"), None, None)
+            ags_create_entry(None, entry, util.path(path, "[ All Games ].ags", letter + ".ags"), None, None)
+            ags_create_entry(None, entry, util.path(path, "[ All Games, by year ].ags", year + ".ags"), None, None)
 
         # Demos / Disk Mags
         def add_demo(entry, sort_group, sort_country):
@@ -459,19 +454,19 @@ def ags_create_autoentries():
             if group_letter.isnumeric():
                 group_letter = "0-9"
             if entry["subcategory"].lower().startswith("disk mag"):
-                ags_create_entry(None, entry, os.path.join(d_path, "[ Disk Magazines ].ags"), None, None)
+                ags_create_entry(None, entry, util.path(d_path, "[ Disk Magazines ].ags"), None, None)
             else:
                 if entry["subcategory"].lower().startswith("crack"):
-                    ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, crack intros ].ags"), None, None, prefix=sort_group)
+                    ags_create_entry(None, entry, util.path(d_path, "[ Demos, crack intros ].ags"), None, None, prefix=sort_group)
                 if entry["subcategory"].lower().startswith("intro"):
-                    ags_create_entry(None, entry, os.path.join(d_path, "[ Demos, 1-64KB ].ags"), None, None)
+                    ags_create_entry(None, entry, util.path(d_path, "[ Demos, 1-64KB ].ags"), None, None)
                 group_entry = dict(entry)
                 group_entry["title_short"] = group_entry["title"]
-                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by title ].ags", letter + ".ags"), None, None)
-                ags_create_entry(None, group_entry, os.path.join(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=sort_group)
-                ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
+                ags_create_entry(None, entry, util.path(d_path, "[ Demos by title ].ags", letter + ".ags"), None, None)
+                ags_create_entry(None, group_entry, util.path(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=sort_group)
+                ags_create_entry(None, entry, util.path(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
                 if sort_country:
-                    ags_create_entry(None, entry, os.path.join(d_path, "[ Demos by country ].ags", sort_country + ".ags"), None, None)
+                    ags_create_entry(None, entry, util.path(d_path, "[ Demos by country ].ags", sort_country + ".ags"), None, None)
 
         if g_args.all_demos and entry["category"].lower() == "demo":
             groups = entry["publisher"]
@@ -487,29 +482,29 @@ def ags_create_autoentries():
 
         # Run-scripts for randomizer
         if entry["category"].lower() == "game" and not entry["issues"]:
-            ags_create_entry(None, entry, os.path.join(path, "Run"), None, None, only_script=True)
+            ags_create_entry(None, entry, util.path(path, "Run"), None, None, only_script=True)
 
     # Notes for created directories
-    if util.is_dir(os.path.join(path, "[ All Games ].ags")):
-        open(os.path.join(path, "[ All Games ].txt"), mode="w", encoding="latin-1").write("Browse all games alphabetically.")
-    if util.is_dir(os.path.join(path, "[ All Games, by year ].ags")):
-        open(os.path.join(path, "[ All Games, by year ].txt"), mode="w", encoding="latin-1").write("Browse all games by release year.")
-    if util.is_dir(os.path.join(d_path, "[ Demos by group ].ags")):
-        open(os.path.join(d_path, "[ Demos by group ].txt"), mode="w", encoding="latin-1").write("Browse demos by release group.")
-    if util.is_dir(os.path.join(d_path, "[ Demos by country ].ags")):
-        open(os.path.join(d_path, "[ Demos by country ].txt"), mode="w", encoding="latin-1").write("Browse demos by country of origin.")
-    if util.is_dir(os.path.join(d_path, "[ Demos by title ].ags")):
-        open(os.path.join(d_path, "[ Demos by title ].txt"), mode="w", encoding="latin-1").write("Browse demos by title.")
-    if util.is_dir(os.path.join(d_path, "[ Demos by year ].ags")):
-        open(os.path.join(d_path, "[ Demos by year ].txt"), mode="w", encoding="latin-1").write("Browse demos by release year.")
-    if util.is_dir(os.path.join(d_path, "[ Demos, 1-64KB ].ags")):
-        open(os.path.join(d_path, "[ Demos, 1-64KB ].txt"), mode="w", encoding="latin-1").write("Browse demos in the 1/4/40/64KB categories.")
-    if util.is_dir(os.path.join(d_path, "[ Demos, crack intros ].ags")):
-        open(os.path.join(d_path, "[ Demos, crack intros ].txt"), mode="w", encoding="latin-1").write("A glimpse into the origins of the demo scene.")
-    if util.is_dir(os.path.join(d_path, "[ Disk Magazines ].ags")):
-        open(os.path.join(d_path, "[ Disk Magazines ].txt"), mode="w", encoding="latin-1").write("A selection of scene disk magazines.")
-    if util.is_dir(os.path.join(path, "[ Issues ].ags")):
-        open(os.path.join(path, "[ Issues ].txt"), mode="w", encoding="latin-1").write(
+    if util.is_dir(util.path(path, "[ All Games ].ags")):
+        open(util.path(path, "[ All Games ].txt"), mode="w", encoding="latin-1").write("Browse all games alphabetically.")
+    if util.is_dir(util.path(path, "[ All Games, by year ].ags")):
+        open(util.path(path, "[ All Games, by year ].txt"), mode="w", encoding="latin-1").write("Browse all games by release year.")
+    if util.is_dir(util.path(d_path, "[ Demos by group ].ags")):
+        open(util.path(d_path, "[ Demos by group ].txt"), mode="w", encoding="latin-1").write("Browse demos by release group.")
+    if util.is_dir(util.path(d_path, "[ Demos by country ].ags")):
+        open(util.path(d_path, "[ Demos by country ].txt"), mode="w", encoding="latin-1").write("Browse demos by country of origin.")
+    if util.is_dir(util.path(d_path, "[ Demos by title ].ags")):
+        open(util.path(d_path, "[ Demos by title ].txt"), mode="w", encoding="latin-1").write("Browse demos by title.")
+    if util.is_dir(util.path(d_path, "[ Demos by year ].ags")):
+        open(util.path(d_path, "[ Demos by year ].txt"), mode="w", encoding="latin-1").write("Browse demos by release year.")
+    if util.is_dir(util.path(d_path, "[ Demos, 1-64KB ].ags")):
+        open(util.path(d_path, "[ Demos, 1-64KB ].txt"), mode="w", encoding="latin-1").write("Browse demos in the 1/4/40/64KB categories.")
+    if util.is_dir(util.path(d_path, "[ Demos, crack intros ].ags")):
+        open(util.path(d_path, "[ Demos, crack intros ].txt"), mode="w", encoding="latin-1").write("A glimpse into the origins of the demo scene.")
+    if util.is_dir(util.path(d_path, "[ Disk Magazines ].ags")):
+        open(util.path(d_path, "[ Disk Magazines ].txt"), mode="w", encoding="latin-1").write("A selection of scene disk magazines.")
+    if util.is_dir(util.path(path, "[ Issues ].ags")):
+        open(util.path(path, "[ Issues ].txt"), mode="w", encoding="latin-1").write(
             "Titles with known issues on Minimig-AGA.\n(Please report any new or resolved issues!)")
 
 def ags_create_tree(node, path=[]):
@@ -569,7 +564,7 @@ def build_pfs(config_base_name, verbose):
     if verbose:
         print("building PFS container...")
 
-    pfs3_bin = "data/pfs3/pfs3.bin"
+    pfs3_bin = util.path("data", "pfs3", "pfs3.bin")
     if not util.is_file(pfs3_bin):
         raise IOError("PFS3 filesystem doesn't exist: " + pfs3_bin)
 
@@ -586,13 +581,13 @@ def build_pfs(config_base_name, verbose):
 
     partitions = [] # (partition name, cylinders)
     for f in sorted(os.listdir(g_clone_dir)):
-        if os.path.isdir(os.path.join(g_clone_dir, f)) and is_amiga_devicename(f):
+        if util.is_dir(util.path(g_clone_dir, f)) and is_amiga_devicename(f):
             mb_free = 100 if f == "DH0" else 50
-            cyls = int(fs_overhead * (util.get_dir_size(os.path.join(g_clone_dir, f), block_size)[2] + (mb_free * 1024 * 1024))) // cylinder_size
+            cyls = int(fs_overhead * (util.get_dir_size(util.path(g_clone_dir, f), block_size)[2] + (mb_free * 1024 * 1024))) // cylinder_size
             partitions.append(("DH" + str(len(partitions)), cyls))
             total_cyls += cyls
 
-    out_hdf = os.path.join(g_out_dir, config_base_name + ".hdf")
+    out_hdf = util.path(g_out_dir, config_base_name + ".hdf")
     if util.is_file(out_hdf):
         os.remove(out_hdf)
 
@@ -669,10 +664,10 @@ def main():
         if g_args.out_dir:
             g_out_dir = g_args.out_dir
 
-        g_clone_dir = os.path.join(g_out_dir, "tmp")
+        g_clone_dir = util.path(g_out_dir, "tmp")
         if util.is_dir(g_clone_dir):
             shutil.rmtree(g_clone_dir)
-        util.make_dir(os.path.join(g_clone_dir, "DH0"))
+        util.make_dir(util.path(g_clone_dir, "DH0"))
 
         config_base_name = os.path.splitext(os.path.basename(g_args.config_file))[0]
 
@@ -683,7 +678,7 @@ def main():
         # extract base image
         base_hdf = g_args.base_hdf
         if not base_hdf:
-            base_hdf = CONTENT_DIR + "base/base.hdf"
+            base_hdf = util.path(paths.content(), "base", "base.hdf")
         if not util.is_file(base_hdf):
             raise IOError("base HDF doesn't exist: " + base_hdf)
         if g_args.verbose:
@@ -704,7 +699,7 @@ def main():
 
         base_ags2 = g_args.ags_dir
         if not base_ags2:
-            base_ags2 = "data/ags2"
+            base_ags2 = util.path("data", "ags2")
         if not util.is_dir(base_ags2):
             raise IOError("AGS2 configuration directory doesn't exist: " + base_ags2)
         if g_args.verbose:
@@ -733,7 +728,7 @@ def main():
         extract_entries(g_entries)
 
         # copy extra files
-        config_extra_dir = os.path.join(os.path.dirname(g_args.config_file), config_base_name)
+        config_extra_dir = util.path(os.path.dirname(g_args.config_file), config_base_name)
         if util.is_dir(config_extra_dir):
             if g_args.verbose: print("copying configuration extras...")
             util.copytree(config_extra_dir, g_clone_dir)
@@ -744,7 +739,7 @@ def main():
             for s in g_args.add_dirs:
                 d = s.split("::")
                 if util.is_dir(d[0]):
-                    dest = os.path.join(g_clone_dir, d[1].replace(":", "/"))
+                    dest = util.path(g_clone_dir, d[1].replace(":", "/"))
                     print(" > copying '" + d[0] +"' to '" + d[1] + "'")
                     util.copytree(d[0], dest)
                 else:
@@ -754,26 +749,30 @@ def main():
         build_pfs(config_base_name, g_args.verbose)
 
         # set up cloner environment
-        cloner_adf = os.path.join("data", "cloner", "boot.adf")
-        cloner_cfg = os.path.join("data", "cloner", "template.fs-uae")
-        clone_script = os.path.join(os.path.dirname(g_args.config_file), config_base_name) + ".clonescript"
+        cloner_adf = util.path("data", "cloner", "boot.adf")
+        cloner_cfg = util.path("data", "cloner", "template.fs-uae")
+        clone_script = util.path(os.path.dirname(g_args.config_file), config_base_name) + ".clonescript"
         if util.is_file(cloner_adf) and util.is_file(cloner_cfg) and util.is_file(clone_script):
             if g_args.verbose: print("copying cloner config...")
-            shutil.copyfile(cloner_adf, os.path.join(g_clone_dir, "boot.adf"))
+            shutil.copyfile(cloner_adf, util.path(g_clone_dir, "boot.adf"))
             # create config from template
             with open(cloner_cfg, 'r') as f:
-                cfg = f.read().replace("<config_base_name>", config_base_name)
-                open(os.path.join(g_clone_dir, "cfg.fs-uae"), mode="w").write(cfg)
+                cfg = f.read()
+                cfg = cfg.replace("<config_base_name>", config_base_name)
+                cfg = cfg.replace("$AGSTEMP", paths.tmp())
+                cfg = cfg.replace("$AGSDEST", util.path(os.getenv("AGSDEST")))
+                cfg = cfg.replace("$FSUAEROM", util.path(os.getenv("FSUAEROM")))
+                open(util.path(g_clone_dir, "cfg.fs-uae"), mode="w").write(cfg)
             # copy clone script and write fs-uae metadata
-            shutil.copyfile(clone_script, os.path.join(g_clone_dir, "clone"))
-            open(os.path.join(g_clone_dir, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.00")
+            shutil.copyfile(clone_script, util.path(g_clone_dir, "clone"))
+            open(util.path(g_clone_dir, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.00")
         else:
             print("WARNING: cloner config files not found")
 
         # clean output directory
         for r, _, f in os.walk(g_clone_dir):
             for name in f:
-                path = os.path.join(r, name)
+                path = util.path(r, name)
                 if name == ".DS_Store":
                     os.remove(path)
         return 0

@@ -4,16 +4,16 @@
 - python3
 - [pipenv](https://pipenv.readthedocs.io)
 
-## set up environment
+## set up python environment
 - `make env`
 
 ## prerequisites
-- A bootable HDF to use as base (FFS formatted, all files are copied to DH0: of the output image)
-- WHDLoad archives (LhA compressed) in `TITLES_DIR/game` and `TITLES_DIR/demo` (all subdirectories are scanned)
+- A bootable HDF to use as base (FFS formatted, all files are copied to DH0: of the output image) at `$AGSCONTENT/base/base.hdf`
+- WHDLoad archives (LhA compressed) in `$AGSCONTENT/titles/game` and `$AGSCONTENT/titles/demo` (all subdirectories are scanned)
 
 ## operations
 
-These assume that `fs-uae` is in the `PATH`:
+First have a look at the path variables in `.env` and edit if needed.
 
 - `make index`
   - index WHDLoad archives in the `TITLES_DIR` path

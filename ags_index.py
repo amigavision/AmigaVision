@@ -8,14 +8,14 @@ import sqlite3
 import sys
 
 from lhafile import LhaFile
+import ags_paths as paths
 import ags_util as util
-
-TITLES_DIR = "../AGSImager-Content/titles/"
 
 # -----------------------------------------------------------------------------
 # Make dictionary of whdload archives
 
 def index_whdload_archives(basedir):
+    basedir += os.sep
     print("enumerating archives..", end="", flush=True)
     count = 0
     d = {}
@@ -25,7 +25,7 @@ def index_whdload_archives(basedir):
                 count += 1
                 if count % 100 == 0:
                     print(".", end="", flush=True)
-                path = os.path.join(r, file)
+                path = util.path(r, file)
                 db_path = path.split(basedir)[1]
                 slave_category = db_path.split(os.sep)[0]
 
@@ -70,19 +70,20 @@ def main():
             db.close()
             return 0
 
-        if not util.is_dir(TITLES_DIR):
-            raise IOError("titles dir missing:", TITLES_DIR)
+        titles_dir = paths.titles()
+        if not util.is_dir(titles_dir):
+            raise IOError("titles dir missing:", titles_dir)
 
         # remove missing archive_paths from db
         for r in db.cursor().execute("SELECT * FROM titles"):
-            if r["archive_path"] and not util.is_file(os.path.join(TITLES_DIR, r["archive_path"])):
+            if r["archive_path"] and not util.is_file(util.path(titles_dir, r["archive_path"])):
                 print("archive removed:", r["id"])
                 print("  >>", r["archive_path"])
                 db.cursor().execute("UPDATE titles SET archive_path=NULL,slave_path=NULL,slave_version=NULL WHERE id=?;", (r["id"],))
                 print()
 
         # enumerate whdl archives, correlate with db
-        for _, arc in index_whdload_archives(TITLES_DIR).items():
+        for _, arc in index_whdload_archives(titles_dir).items():
             rows = db.cursor().execute("SELECT * FROM titles WHERE (id = ?) OR (id LIKE ?);", (arc["id"], arc["id"] + '--%',)).fetchall()
             if not rows:
                 print("no db entry:", arc["archive_path"])

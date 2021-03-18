@@ -44,6 +44,9 @@ def remove_keys(dictionary, keys):
     return d
 
 
+def path(*args):
+    return os.path.expandvars(os.path.join(*args))
+
 def is_file(path):
     return os.path.isfile(path)
 
