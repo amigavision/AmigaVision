@@ -1,0 +1,19 @@
+; $VER: Shell-Startup 40.1 (9.2.93)
+resident >NIL: C:cpr PURE
+resident >NIL: C:dr PURE
+;Prompt "%N.%S> "
+Prompt "%N> "
+Alias clear "echo *"*E[0;0H*E[J*" "
+Alias exit endcli
+Alias logout endcli
+Alias dir dr -!MN3
+Alias ls dr -!MN3
+Alias ll dr -!LMN3
+Alias cat type
+Alias hexdump type [] hex
+Alias pwd cd
+Alias cp cpr [] SILENT
+Alias mkdir cpr [] MAKEDIR SILENT
+Alias mv cpr [] MOVE CLONE SILENT
+Alias rm cpr [] DELETE
+Alias x execute

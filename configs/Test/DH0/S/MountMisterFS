@@ -1,0 +1,19 @@
+assign >NIL: EXISTS MiSTer:
+if WARN
+  version >NIL: uaehf.device 1
+  if WARN
+    mount MR0:
+    assign >NIL: EXISTS MiSTer:
+    if WARN
+      echo ""
+      echo "Warning: Shared folder could not be mounted"
+    endif
+  endif
+endif
+
+assign >NIL: EXISTS MiSTer:
+if NOT WARN
+  if NOT EXISTS MiSTer:Disk.info
+    copy >NIL: SYS:Prefs/Icons/MiSTer/Disk.info MiSTer:
+  endif
+endif

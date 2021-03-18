@@ -1,0 +1,12 @@
+.K VOFS,PAL5/S
+
+if NOT EXISTS ENV:dsblvadj
+  assign >NIL: EXISTS MiSTer:
+  if NOT WARN
+    if EXISTS AGS:VAdjust/<PAL5$DEF>_<VOFS$0>
+      copy AGS:VAdjust/<PAL5$DEF>_<VOFS$0> TO MiSTer:minimig_vadjust.dat
+    else
+      copy AGS:VAdjust/def_0 TO MiSTer:minimig_vadjust.dat
+    endif
+  endif
+endif
