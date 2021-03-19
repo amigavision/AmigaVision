@@ -1,7 +1,7 @@
 # AGSImager
 
 ## dependencies
-- python3
+- python@3.9
 - [pipenv](https://pipenv.readthedocs.io)
 
 ## set up python environment
@@ -15,8 +15,19 @@
 
 First have a look at the path variables in `.env` and edit if needed.
 
+For full usage enter `pipenv shell` and use the following commands directly:
+
+- `./ags_index.py --help`
+  - content indexing tool
+- `./ags_build.py --help`
+  - image building tool
+- `./ags_screenshot.py --help`
+  - iff image conversion tool
+
+Common usage is covered by makefile "shortuts":
+
 - `make index`
-  - index WHDLoad archives in the `TITLES_DIR` path
+  - index WHDLoad archives in the `$AGSCONTENT` path
 - `make image`
   - create the Amiga HDF image and filesystem specified in `configs/MegaAGS.yaml`
 - `make screenshots`
