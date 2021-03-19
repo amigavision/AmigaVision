@@ -107,7 +107,7 @@ def ilbm(width, height, pixels, palette, mode=0x29000, pack=1):
 
     rows = []
     for y in range(height):
-        for row in (planes[plane][y * bpr:y * bpr + bpr].tostring() for plane in range(depth)):
+        for row in (planes[plane][y * bpr:y * bpr + bpr].tobytes() for plane in range(depth)):
             rows.append(row)
 
     body_data = bytes()
