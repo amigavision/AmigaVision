@@ -63,6 +63,7 @@ def main():
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
+        paths.verify()
         args = parser.parse_args()
         db = util.get_db(args.verbose)
 

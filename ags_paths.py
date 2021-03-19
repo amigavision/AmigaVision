@@ -17,6 +17,19 @@ def titles():
 def tmp():
     return util.path(os.getenv("AGSTEMP"))
 
+def verify():
+    vars = ["AGSCONTENT", "AGSDEST", "AGSTEMP", "FSUAEBIN", "FSUAEROM"]
+    for var in vars:
+        if os.getenv(var) is None:
+            raise IOError("missing {} environment variable - check .env!".format(var))
+    if not util.is_dir(content()):
+        raise IOError("AGSCONTENT is not a directory - check .env!")
+    if not util.is_file(util.path(os.getenv("FSUAEBIN"))):
+        raise IOError("FSUAEBIN is not a file - check .env!")
+    if not util.is_file(util.path(os.getenv("FSUAEROM"))):
+        raise IOError("FSUAEROM is not a file - check .env!")
+    return True
+
 # -----------------------------------------------------------------------------
 
 if __name__ == "__main__":
