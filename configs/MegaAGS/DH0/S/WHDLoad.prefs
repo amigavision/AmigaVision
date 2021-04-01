@@ -2,4 +2,5 @@ ButtonWait
 NoFilter
 NoFlushMem
 NoNetwork
+Preload
 SavePath=WHDSaves:
