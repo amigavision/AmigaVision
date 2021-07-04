@@ -14,11 +14,11 @@
             Some duplicate entries exist, since rereleases
             and CD32 versions are considered separately.
     - Populous2&ChallengeGames
-    - SensibleWorldOfSoccer9596
+    - SWOS9596
     - CannonFodder
     - Lemmings
     - MonkeyIsland2
-    - SensibleWorldOfSoccer
+    - SWOS
     - Flashback
     - Speedball2
     - DesertStrike
@@ -448,7 +448,7 @@
   - Kim Justice Top 100:
     - ranked_list: True
     - note: Kim Justice's top 100 Amiga games of all time.
-    - SensibleWorldOfSoccer
+    - SWOS
     - Syndicate
     - Speedball2
     - ThemePark
@@ -554,7 +554,7 @@
     - SecretOfMonkeyIsland
     - MonkeyIsland2
     - Settlers
-    - SensibleWorldOfSoccer9697
+    - SWOS9697
     - Dune2
     - Turrican2
     - SlamTilt
@@ -567,9 +567,9 @@
     - Ambermoon
     - Wings
     - Speedball2
-    - SensibleWorldOfSoccer9596
+    - SWOS9596
     - WorldCircuit
-    - SensibleWorldOfSoccer
+    - SWOS
     - AnotherWorld
     - Syndicate
     - Pirates
@@ -672,7 +672,7 @@
       - SecondSamurai
       - SensibleGolf
       - SensibleSoccer
-      - SensibleWorldOfSoccer9697
+      - SWOS9697
       - Settlers
       - Silkworm
       - Skidmarks
@@ -708,7 +708,7 @@
     - Amegas
     - AnotherWorld
     - AnotherWorldLostLevel
-    - APBImage
+    - APB
     - ApidyaSpecialEdition
     - ArabianNights
     - Arkanoid
@@ -934,7 +934,7 @@
     - SecretOfMonkeyIsland
     - SensibleGolf
     - SensibleSoccer
-    - SensibleWorldOfSoccer9697
+    - SWOS9697
     - Sentinel
     - Settlers
     - SevenGatesOfJambala
@@ -1114,7 +1114,7 @@
     - Perihelion
     - ProjectXSE
     - RuffNTumble
-    - SensibleWorldOfSoccer9697
+    - SWOS9697
     - ShadowFighter
     - ShadowOfTheBeast2
     - SlamTilt
@@ -1313,8 +1313,8 @@
     - FlyingSharkSE
     - Giana2
     - ProjectXSE2017
-    - SensibleWorldOfSoccer2020
-    - SensibleWorldOfSoccer2021
+    - SWOS2020
+    - SWOS2021
     - StuntCarRacerTNT
     - TestDrive2&DataDisksNGC
     - Tony&Friends
@@ -1607,7 +1607,7 @@
     - Rampart
     - RodLand
     - SensibleGolf
-    - SensibleWorldOfSoccer9596
+    - SWOS9596
     - Settlers
     - Silkworm
     - SlamTilt
@@ -1834,11 +1834,11 @@
     - SensibleSoccerBulldogBlty
     - SensibleSoccerIntEd
     - SensibleWorldMoonSoccer
-    - SensibleWorldOfSoccer11
-    - SensibleWorldOfSoccer9596
-    - SensibleWorldOfSoccer9697
-    - SensibleWorldOfSoccerEuro
-    - SensibleWorldOfSoccerWC98
+    - SWOSv11
+    - SWOS9596
+    - SWOS9697
+    - SWOS9596ECE
+    - SWOS98
     - Settlers
     - ShadowFighter
     - ShadowWarriors
@@ -2262,7 +2262,7 @@
     - TournamentGolf
     - TrianGO
     - TrivialPursuit
-    - TrivialPursuitNewBegin
+    - TrivialPursuitANB
     - UltimateGolf
     - UniversalMilitarySim
     - VoyagesOfDiscovery
@@ -2390,7 +2390,7 @@
     - Odyssey
     - PinballIllusions
     - SensibleGolf
-    - SensibleWorldOfSoccer9596
+    - SWOS9596
     - SuperSkidmarks
     - UltimateSoccerManager
     - Virocop
@@ -2557,7 +2557,7 @@
     - ProTennisTour
     - RBI2Baseball
     - SensibleGolf
-    - SensibleWorldOfSoccer9697
+    - SWOS9697
   - Sports, Fantasy:
     - AquaticGames
     - Botics
@@ -2829,8 +2829,8 @@
     - SensibleSoccer
     - SensibleSoccerBulldogBlty
     - SensibleWorldMoonSoccer
-    - SensibleWorldOfSoccer
-    - SensibleWorldOfSoccer9697
+    - SWOS
+    - SWOS9697
     - SensibleTrainSpotting
     - Wizball
     - Wizkid

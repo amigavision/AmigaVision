@@ -376,7 +376,7 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
     # note
     if note and note == "not_available":
         note = "Title:      " + name.replace("-", " ") + "\n\n"
-        note += "WHDLoader not available"
+        note += "Content is unavailable."
         open(base_path + ".txt", mode="w", encoding="latin-1").write(note)
     elif entry:
         open(base_path + ".txt", mode="w", encoding="latin-1").write(ags_make_note(entry, note))
