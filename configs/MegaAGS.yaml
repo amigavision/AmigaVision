@@ -1266,25 +1266,6 @@
     - OperationStealth
     - PanzaKickBoxing
     - RanX
-  - Light Gun Support:
-    - note: Games with light gun support.\n\n(Not yet available on MiSTer, but most games also feature mouse control.)
-    - Aliex
-    - Capone
-    - CrazyShot
-    - Creature
-    - CyberAssault
-    - DieHard2
-    - Enforcer
-    - Firestar
-    - OperationThunderbolt
-    - OperationWolf
-    - OrbitalDestroyer
-    - POW
-    - Sideshow
-    - SkeetShoot
-    - SpaceGun
-    - TakeEmOut
-    - WestPhaser
   - Good Arcade Conversions:
     - note: Steer clear of US Gold and there's some decent to good arcade conversions in the Amiga library.
     - Arkanoid
@@ -1618,7 +1599,6 @@
     - SWIV
     - Twintris
     - Worms
-
   - Competitive:
     - 3DWorldTennis
     - 4DSportsBoxing
@@ -2283,6 +2263,89 @@
     - Worms
     - WormsDC
     - ZanyGolf
+
+- Special Hardware:
+  - note: Games with support for special hardware peripherals.
+  - Modem or Serial Link:
+    - note: Games with local and/or remote multiplayer support.
+    - AlienBreed3D2
+    - AlienBreed3D
+    - ArmourGeddon2
+    - ArmourGeddon
+    - BattleChess
+    - BlueAngels
+    - CombatAirPatrol
+    - Dominium
+    - F16CombatPilot
+    - Falcon
+    - Fears
+    - FighterDuelPro
+    - Firepower
+    - FlightSimulator2
+    - Gloom
+    - GravityForce
+    - Jet
+    - Kikugi
+    - KnightsOfTheSky
+    - Lotus2
+    - MatrixMarauders
+    - MaxRally
+    - MiG29MSuperFulcrum
+    - OverdriveTeam17
+    - Populous&DataDisks
+    - Populous&DataDisks--TFF
+    - Populous&DataDisks--TPL
+    - Populous2&ChallengeGames
+    - Populous2&ChallengeGames--TCG
+    - Powerdrome
+    - Powermonger
+    - PowermongerWW1Edition
+    - Prince
+    - RedBaron
+    - RoboSport
+    - Skidmarks
+    - StuntCarRacer
+    - SuperSkidmarks+CD
+    - Tornado
+    - TurboTraxArcane
+    - VroomMultiPlayer
+    - WildWheels
+    - XTremeRacing
+  - Light Gun:
+    - note: Games with light gun support.\n\n(Not yet available on MiSTer, but most games also feature mouse control.)
+    - Aliex
+    - Capone
+    - CrazyShot
+    - Creature
+    - CyberAssault
+    - DieHard2
+    - Enforcer
+    - Firestar
+    - OperationThunderbolt
+    - OperationWolf
+    - OrbitalDestroyer
+    - POW
+    - Sideshow
+    - SkeetShoot
+    - SpaceGun
+    - TakeEmOut
+    - WestPhaser
+  - Roland MT-32:
+    - note: Games with Roland MT-32 MIDI support.
+    - CastleOfDrBrainNTSCMT32
+    - ConquestsOfTheLongbowMT32
+    - HoyleVolume3--MT32
+    - KingsQuest5MT32
+    - KingsQuestEnhanced--MT32
+    - LeisureSuitLarry3MT32
+    - LeisureSuitLarry5MT32
+    - LeisureSuitLarryEnhndMT32
+    - MixedUpMotherGooseMT32
+    - PoliceQuest3NTSCMT32
+    - QuestForGlory2MT32
+    - SpaceQuest3MT32
+    - SpaceQuest4NTSCMT32
+    - SpaceQuestEnhanced--MT32
 
 - Decennial Spotlight:
   - note: 10 games for every year between 1986 and 1995. Cutting across genres to select the great and/or representative titles available at the time.\n\n(While the Amiga computer premiered mid-1985, hardware and software availability was very limited for the first months.)
