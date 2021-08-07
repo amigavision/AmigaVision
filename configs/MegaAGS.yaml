@@ -1,6 +1,6 @@
 --- # AGS2 Menu structure
 - About:
-  - note: '\n\n\n\n\n\n              (MegaAGS-20210707)'
+  - note: '\n\n\n\n\n\n              (MegaAGS-20210808)'
   - Nothing to see here:
     - note: Intentionally left blank.
 - Best-of Lists:
@@ -1297,6 +1297,7 @@
     - SWOS2020
     - SWOS2021
     - StuntCarRacerTNT
+    - SuperCars2AGA
     - TestDrive2&DataDisksNGC
     - Tony&Friends
     - UntouchablesSE
@@ -2978,7 +2979,6 @@
   - note: A sample of demo scene releases.
   - All Time Favorites:
     - note: Seminal, or otherwise significant, releases according to 1.000.000 BOYS aka Megaboys.
-    - 15YearsOfFame
     - 3DDemo2
     - Abyss-Coda
     - Arte
