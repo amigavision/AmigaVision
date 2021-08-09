@@ -14,25 +14,25 @@ Setup:
 
   df0: no disk
   df1: no disk
-  Floppy disk turbo: off
-  Hard disks:
+  Joystick Swap: OFF
+  Drives:
     A600/A1200 IDE: On
-    Primary Master: Enabled
+    Fast-IDE (68020): On
+    Primary Master: Fixed/HDD
                     games/Amiga/MegaAGS.hdf
-    Primary Slave: Enabled
+    Primary Slave: Fixed/HDD
                     games/Amiga/MegaAGS-Saves.hdf
     Secondary Master: Disabled
     Secondary Slave: Disabled
-  CPU & Chipset:
+    Floppy Disk Turbo: Off
+  System:
     CPU: 68020
     D-Cache: OFF
     Chipset: AGA
+    ChipRAM: 2M
+    FastRAM: 384M
+    SlowRAM: none
     CD32 Pad: ON
-    Joystick Swap: OFF
-  Memory:
-    CHIP: 2M
-    FAST: 384M
-    SLOW: none
     ROM: games/Amiga/MegaAGS-Kickstart.rom
     HRTmon: disabled
   Audio & Video:
@@ -45,7 +45,7 @@ Setup:
     RTG Upscaling: Normal
     Stereo mix: 50%
     Audio Filter: Auto(LED)
-    Model: A500
+    Model: A1200
     Paula Output: Normal
 
   There are a few additional configurations supplied, made for booting
@@ -156,7 +156,7 @@ by turning it off while Minimig is running. Other times they seem to stick
 until reboot. The latter behavior is the case with, for example, Turrican II
 and Grand Monster Slam (and many less significant titles).
 
-The CPU D-Cache option is available in OSD -> CPU & Chipset.
+The CPU D-Cache option is available in OSD -> System.
 
 
 Workbench:
