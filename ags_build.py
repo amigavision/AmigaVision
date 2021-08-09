@@ -347,6 +347,7 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
                 whd_cargs = "BUTTONWAIT"
                 if entry["slave_args"]:
                     whd_cargs += " " + entry["slave_args"]
+                whd_qtkey = "" if "QuitKey=" in whd_cargs else "$whdlqtkey"
                 runfile = "cd \"{}\"\n".format(whd_entrypath)
                 runfile += "IF NOT EXISTS ENV:whdlspdly\n"
                 runfile += "  echo 200 >ENV:whdlspdly\n"
@@ -355,10 +356,10 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
                 runfile += "  echo \"\" >ENV:whdlqtkey\n"
                 runfile += "ENDIF\n"
                 runfile += "IF EXISTS ENV:whdlvmode\n"
-                runfile += "  whdload >NIL: \"{}\" $whdlvmode {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_cargs)
+                runfile += "  whdload >NIL: \"{}\" $whdlvmode {} SplashDelay=$whdlspdly {}\n".format(whd_slave, whd_cargs, whd_qtkey)
                 runfile += "ELSE\n"
                 runfile += "  setvadjust {} {}\n".format(vadjust_vofs, "PAL5" if vadjust_pal5x else "")
-                runfile += "  whdload >NIL: \"{}\" {} {} SplashDelay=$whdlspdly $whdlqtkey\n".format(whd_slave, whd_vmode, whd_cargs)
+                runfile += "  whdload >NIL: \"{}\" {} {} SplashDelay=$whdlspdly {}\n".format(whd_slave, whd_vmode, whd_cargs, whd_qtkey)
                 runfile += "  setvadjust\n"
                 runfile += "ENDIF\n"
     else:
