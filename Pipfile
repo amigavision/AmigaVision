@@ -11,7 +11,7 @@ autopep8 = "*"
 ruamel-yaml = "~=0.17.10"
 amitools = "~=0.6.0"
 lhafile = "~=0.3.0"
-pillow = "~=8.3.0"
+pillow = "~=8.3.2"
 
 [requires]
 python_version = "3.9"
