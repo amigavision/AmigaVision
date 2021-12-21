@@ -89,6 +89,10 @@ assign INCLUDE: LIBS:include
 assign APPS: SYS:Apps
 assign Dev: APPS:Dev
 
+assign vim: SYS:Tools/vim
+assign home: S:
+path vim:
+
 path Dev:E/Bin
 assign EMODULES: Dev:E/Modules
 
@@ -120,25 +124,5 @@ resident assign REMOVE
 ;Brilliance
 setpatchmrgcop >NIL:
 
-;Custom startup file that survives upgrades of main image
-assign >NIL: exists Saves:
-if not warn
-  if exists Saves:custom-startup
-    execute Saves:custom-startup
-  endif
-endif
-
-loadwb
-
-rexxmast >NIL:
-noiconborder >NIL:
-unixdirs MULTIPARENT WILDSTAR NOCX QUIET
-
-;Minimig mouse wheel driver
-version >NIL: uaehf.device 1
-if warn
-  run >NIL: C:MinimigWheelDriver
-  SYS:Tools/FreeWheel/FreeWheel >NIL:
-endif
-
-endcli >NIL:
+loadwb DELAY
+endcli
