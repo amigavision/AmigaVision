@@ -622,6 +622,7 @@
       - Banshee
       - BattleSquadron
       - BeachVolley
+      - BillsTomatoGame
       - BloodMoney
       - BMXSimulator
       - BrutalHomicide
@@ -639,12 +640,12 @@
       - Firepower
       - Gauntlet2
       - Gauntlet3
-      - Goal
       - GreatCourts
       - GreatCourts2
       - IK+
       - IkariWarriors
       - KickOff
+      - KickOff2FinalWhistle
       - KickOff2
       - LaserSquad
       - Leatherneck
@@ -656,9 +657,11 @@
       - MarbleMadness
       - NaughtyOnes
       - Nitro
+      - NoSecondPrize
       - NorthAndSouth
       - OhNoMoreLemmings
       - OilImperium
+      - OneStepBeyond
       - OperationThunderbolt
       - Pang
       - ParasolStars
@@ -672,7 +675,7 @@
       - SecondSamurai
       - SensibleGolf
       - SensibleSoccer
-      - SWOS9697
+      - SWOS9596
       - Settlers
       - Silkworm
       - Skidmarks
@@ -689,6 +692,7 @@
       - SuperSkidmarks
       - SuperTwintris
       - SWIV
+      - TopGear2
       - TurboRaketti2Fi
       - TVSportsBasketball
       - Twintris
@@ -941,7 +945,7 @@
     - ShufflepuckCafe
     - Silkworm
     - SillyPutty
-    - SimAnt
+    - SimAntHiRes
     - SimCity
     - SimonTheSorcerer
     - Simulcra
