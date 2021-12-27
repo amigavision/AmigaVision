@@ -61,6 +61,7 @@ video_mode_ntsc=8
 video_mode_pal=9
 vscale_mode=0
 vsync_adjust=2
+custom_aspect_ratio_1=40:27
 
 
 Video Modes:
@@ -85,27 +86,28 @@ viewport at a perfect 5x scale using 1080p output resolution, by cropping
 the viewport to 216 lines. Games using more than 216 active video lines will
 instead get a perfect 4x scale by applying a 270 line crop.
 
-Games are also individually, and with a lot of care, configured to output
-video at either 50 or 60Hz. The selected video mode is displayed in the
-game info in the launcher UI, and shows one of the following:
+Now, we need to talk about Pixel Aspect Ratio (PAR). Most Amiga graphics
+were drawn targeting a roughly square pixel display, if considering standard
+low resolution mode. However, many American game were drawn using the 320x200px
+mode stretched to cover a 4:3 display, yielding distinctly narrow pixels.
+Using MiSTer's capability for setting up custom aspect ratios, it is possible
+to quickly toggle between these PARs via OSD -> Audio & Video -> Aspect ratio.
+Add the custom_aspect_ratio override to MiSTer.ini as specified above and
+you will be able to toggle between "Original" and "40:27" settings (as well
+as the fully useless "Full screen" setting).
 
-PAL    The title is PAL exclusive or clearly runs best in PAL mode.
-NTSC   The title is either specifically an NTSC release, or was made
-       for "world" distribution and runs best at 60Hz.
-PAL60  The game is a PAL version, but in our opionion runs best at 60Hz.
+"Original" will yield square pixels for full-height PAL titles, and the
+sometimes correct narrow pixels for NTSC games. "40:27" will result in square
+pixels for PAL (5X) titles and NTSC/PAL60 titles. As guidance, use these
+settings depending on what video mode the launcher UI specifies:
 
-To enjoy vertical integer scaling and support for 50/60Hz video, again,
-these are the core overrides needed in MiSTer.ini:
+PAL (4x)    Original
+PAL (5x)    40:27
+PAL60 (5x)  40:27
+NTSC (5x)   40:27 or Original depending on title
 
-[minimig]
-video_mode_ntsc=8
-video_mode_pal=9
-vscale_mode=0
-vsync_adjust=2
-
-Depending on how well your display deals with slightly off-spec refresh
-frequencies and frequent mode changes you may need to experiment with setting
-vsync_adjust to 1 or 0, instead of the ideal setting of 2.
+Again, make sure to add the Minimig core overrides in MiSTer.ini as specified
+in the previous section to enjoy the best HDMI output possible
 
 
 Controls:
