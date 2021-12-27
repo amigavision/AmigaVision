@@ -208,9 +208,11 @@ def ags_make_note(entry, add_note):
     note = ""
     system = entry["hardware"]
 
-    if entry["ntsc"] > 1: system += "/NTSC"
-    elif entry["ntsc"] == 1: system += "/PAL60"
-    else: system += "/PAL"
+    if entry["ntsc"] > 1: system += "/NTSC (5x)"
+    elif entry["ntsc"] == 1: system += "/PAL60 (5x)"
+    else:
+        if entry["pal_5x"] == 1: system += "/PAL (5x)"
+        else: system += "/PAL (4x)"
 
     peripherals = []
     if entry["gamepad"]: peripherals.append("gamepad")
