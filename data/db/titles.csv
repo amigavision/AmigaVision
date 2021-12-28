@@ -4796,3 +4796,6 @@ game--kingsquest5mt32--kingsquest5;King's Quest V: Absence Makes The Heart Go Yo
 game--supercars2aga--supercars2aga;Super Cars II AGA;Super Cars II AGA;;;AGA;1;0;;-10;1;;;;AGA version v0.85 by JOTD;2021;;English;Magnetic Fields;Gremlin;2;CUSTOM2=3;v0.85;SuperCars2AGA/SuperCars2AGA.slave;game/_hacks/SuperCars2_v0.85_AGA.lha;Game;Racing - Top-Down;2181;1018
 demo-notwhdl--nature-bayeu;Bayeu;Bayeu;;;OCS;;0;;;;;;;;2020;Sweden;English;;Nature;1;;;;demo-notwhdl/Nature-Bayeu.lha;Demo;Demo;;
 game--wiz--wiz;Wiz: Quest for the Magic Lantern;Wiz;;;OCS;;0;;;;;;;;2020;;English;Mutation Software;Mutation Software;1;;v1.2;Wiz/Wiz.Slave;game/W/Wiz_v1.2.lha;Game;;6380;4549
+demo-notwhdl--melon-welcomeintro;Welcome Intro;Welcome Intro;;;OCS;;0;;;;;;;;2021;France;English;;Melon Dezign;1;;;;demo-notwhdl/Melon-WelcomeIntro.lha;Demo;Intro;;
+game-notwhdl--karateka;Karateka;Karateka;;;OCS;;0;;;;;;;ST to Amiga port by Meynaf;1988;;English;Andromeda Software;Brøderbund;1;;;;game-notwhdl/Karateka.lha;Game;;-2;3665
+game-notwhdl--kiwitale;The Kiwi's Tale;Kiwi's Tale, The;;;OCS;;0;;;;;;;;2018;;English;Earok;Earok;2;;;;game-notwhdl/KiwiTale.lha;Game;;-2;4337
