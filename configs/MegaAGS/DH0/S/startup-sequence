@@ -133,4 +133,7 @@ if not warn
 endif
 
 loadwb DELAY
+if exists S:wb-startup
+  run >NIL: S:wb-startup
+endif
 endcli

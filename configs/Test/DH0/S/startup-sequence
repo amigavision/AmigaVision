@@ -89,6 +89,10 @@ assign INCLUDE: LIBS:include
 assign APPS: SYS:Apps
 assign Dev: APPS:Dev
 
+assign vim: SYS:Tools/vim
+assign home: S:
+path vim:
+
 path Dev:E/Bin
 assign EMODULES: Dev:E/Modules
 
@@ -128,17 +132,8 @@ if not warn
   endif
 endif
 
-loadwb
-
-rexxmast >NIL:
-noiconborder >NIL:
-unixdirs MULTIPARENT WILDSTAR NOCX QUIET
-
-;Minimig mouse wheel driver
-version >NIL: uaehf.device 1
-if warn
-  run >NIL: C:MinimigWheelDriver
-  SYS:Tools/FreeWheel/FreeWheel >NIL:
+loadwb DELAY
+if exists S:wb-startup
+  run >NIL: S:wb-startup
 endif
-
-endcli >NIL:
+endcli
