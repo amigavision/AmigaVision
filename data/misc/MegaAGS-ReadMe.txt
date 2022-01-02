@@ -101,10 +101,10 @@ sometimes correct narrow pixels for NTSC games. "40:27" will result in square
 pixels for PAL (5X) titles and NTSC/PAL60 titles. As guidance, use these
 settings depending on what video mode the launcher UI specifies:
 
-PAL (4x)    Original
-PAL (5x)    40:27
-PAL60 (5x)  40:27
-NTSC (5x)   40:27 or Original depending on title
+PAL-4X      Original
+PAL-5X      40:27
+PAL60-5X    40:27
+NTSC-5X     40:27 or Original depending on title
 
 Again, make sure to add the Minimig core overrides in MiSTer.ini as specified
 in the previous section to enjoy the best HDMI output possible

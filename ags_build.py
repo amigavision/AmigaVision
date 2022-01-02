@@ -208,17 +208,17 @@ def ags_make_note(entry, add_note):
     note = ""
     system = entry["hardware"]
 
-    if entry["ntsc"] > 1: system += "/NTSC (5x)"
-    elif entry["ntsc"] == 1: system += "/PAL60 (5x)"
+    if entry["ntsc"] > 1: system += "/NTSC-5X"
+    elif entry["ntsc"] == 1: system += "/PAL60-5X"
     else:
-        if entry["pal_5x"] == 1: system += "/PAL (5x)"
-        else: system += "/PAL (4x)"
+        if entry["pal_5x"] == 1: system += "/PAL-5X"
+        else: system += "/PAL-4X"
 
     peripherals = []
-    if entry["gamepad"]: peripherals.append("gamepad")
-    if entry["lightgun"]: peripherals.append("light gun")
+    if entry["lightgun"]: peripherals.append("Light Gun")
+    if entry["gamepad"]: peripherals.append("Gamepad")
     if peripherals:
-        system += " (" + " ,".join(peripherals) + ")"
+        system += " (" + "+".join(peripherals) + ")"
 
     if "category" in entry and entry["category"].lower() == "game":
         note += ("Title:      {}".format(entry["title"]))[:max_w] + "\n"
