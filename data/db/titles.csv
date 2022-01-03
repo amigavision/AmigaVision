@@ -4799,3 +4799,5 @@ game--wiz--wiz;Wiz: Quest for the Magic Lantern;Wiz;;;OCS;;0;;;;;;;;2020;;Englis
 demo-notwhdl--melon-welcomeintro;Welcome Intro;Welcome Intro;;;OCS;;0;;;;;;;;2021;France;English;;Melon Dezign;1;;;;demo-notwhdl/Melon-WelcomeIntro.lha;Demo;Intro;;
 game-notwhdl--karateka;Karateka;Karateka;;;OCS;;0;;;;;;;ST to Amiga port by Meynaf;1988;;English;Andromeda Software;Brøderbund;1;;;;game-notwhdl/Karateka.lha;Game;;-2;3665
 game-notwhdl--kiwitale;The Kiwi's Tale;Kiwi's Tale, The;;;OCS;;0;;;;;;;;2018;;English;Earok;Earok;2;;;;game-notwhdl/KiwiTale.lha;Game;;-2;4337
+game--andromedamission--andromedamission;Mission Andromeda;Mission Andromeda;;;OCS;;0;;;;;;;;1988;;English;Demonware;Demonware;1;;v1.0;AndromedaMission/AndromedaMission.Slave;game/A/AndromedaMission_v1.0.lha;Game;;2494;2802
+game--andromedamissionde--andromedamissionde;Mission Andromeda;Mission Andromeda;1;game--andromedamission--andromedamission;OCS;;0;;;;;;;;1988;;German;Demonware;Demonware;1;;v1.0;AndromedaMissionDe/AndromedaMissionDe.slave;game/A/AndromedaMission_v1.0_De.lha;Game;;2494;2802
