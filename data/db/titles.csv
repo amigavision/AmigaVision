@@ -1020,22 +1020,22 @@ game--manchesterunitedthedouble--manchesterunitedthedouble;Manchester United: Th
 game--mathwizard--mathwizard;Math Wizard;Math Wizard;;;OCS;;2;;;;;;;;1986;;English;Unicorn Educational Software;Unicorn Educational Software;2 (taking turns);;v1.0;MathWizard/MathWizard.Slave;game/M/MathWizard_v1.0.lha;Game;;3792;2967
 game--zeewolf2--zeewolf2;Zeewolf 2: Wild Justice;Zeewolf 2: Wild Justice;;;OCS;;1;;-2;;;;;;1995;;English;Binary Asylum;Pinnacle;1;;v5.00;Zeewolf2/Zeewolf2.Slave;game/Z/Zeewolf2_v5.00_0608.lha;Game;;1623;1164
 game--zynaps--zynaps;Zynaps;Zynaps;;;OCS;;2;;;;;;;;1988;;English;Microwish;Hewson;2 (taking turns);;v1.0;Zynaps/Zynaps.slave;game/Z/Zynaps_v1.0_0879.lha;Game;Shoot'em Up - Horizontal;1646;1171
-game--zerogravity--zerogravity;Zero Gravity;Zero Gravity;;;OCS;;1;;;;;;;;1988;;English;EAS;EAS, Microdeal;2;;v1.0;ZeroGravity/ZeroGravity.Slave;game/Z/ZeroGravity_v1.0.lha;Game;;1625;2482
-game--ziriax--ziriax;Ziriax;Ziriax;;;OCS;;0;;;1;;;;;1990;;English;The Whiz Kidz;The Software Business;1;CUSTOM3=1;v1.2;Ziriax/Ziriax.slave;game/Z/Ziriax_v1.2_3001.lha;Game;Shoot'em Up - Horizontal;1627;1641
-game--zool2--zool2;Zool 2;Zool 2;1;game--zool2aga--zool2aga;OCS;;0;;;;;;;;1993;;English;The Warp Factory;Gremlin;2 (taking turns);;v1.0;Zool2/Zool2.Slave;game/Z/Zool2_v1.0_1111.lha;Game;;1636;1169
+game--zerogravity--zerogravity;Zero Gravity;Zero Gravity;;;OCS;;1;0;;;;;;;1988;;English;EAS;EAS, Microdeal;2;;v1.0;ZeroGravity/ZeroGravity.Slave;game/Z/ZeroGravity_v1.0.lha;Game;;1625;2482
+game--ziriax--ziriax;Ziriax;Ziriax;;;OCS;;0;0;;1;;;;;1990;;English;The Whiz Kidz;The Software Business;1;CUSTOM3=1;v1.2;Ziriax/Ziriax.slave;game/Z/Ziriax_v1.2_3001.lha;Game;Shoot'em Up - Horizontal;1627;1641
+game--zool2--zool2;Zool 2;Zool 2;1;game--zool2aga--zool2aga;OCS;;0;0;;;;;;;1993;;English;The Warp Factory;Gremlin;2 (taking turns);;v1.0;Zool2/Zool2.Slave;game/Z/Zool2_v1.0_1111.lha;Game;;1636;1169
 game--zoolcd32--zoolcd32;Zool: Ninja Of The 'Nth' Dimension;Zool;1;game--zool--zool;AGA/CD32;1;0;;;1;;;;;1993;;English;Gremlin;Gremlin;1;;v2.0;ZoolCD32/ZoolCD32.slave;game/Z/Zool_v2.0_CD32.lha;Game;;1635;577
 game--zombieapocalypse2aga--zombieapocalypse2aga;Zombie Apocalypse II;Zombie Apocalypse II;;;AGA;1;0;;;;;;;;1994;;English;Vision;Acid Software;1;;v1.1;ZombieApocalypse2AGA/ZombieApocalypse2AGA.Slave;game/Z/ZombieApocalypse2_v1.1_AGA.lha;Game;;1631;1247
 game--zakmckracken--zakmckracken;Zak McKracken & The Alien Mindbenders;Zak McKracken;;;OCS;;2;;;;;;;;1988;;English;Lucasfilm;Lucasfilm;1;;v1.4;ZakMcKracken/ZakMcKracken.slave;game/Z/ZakMcKracken_v1.4_0965.lha;Game;Adventure - Point & Click;1619;1162
 game--zanygolfntsc--zanygolfntsc;Zany Golf;Zany Golf;;;OCS;;3;;;;;;;;1988;;English;Sandcastle;Electronic Arts;4 (taking turns);;v1.1;ZanyGolfNTSC/ZanyGolfNTSC.slave;game/Z/ZanyGolf_v1.1_NTSC_1482.lha;Game;Sports - Golf;1620;1163
-game--zool--zool;Zool: Ninja Of The 'Nth' Dimension;Zool;;;OCS;;0;;;;;;;;1992;;English;Gremlin;Gremlin;1;;v2.0;Zool/Zool.slave;game/Z/Zool_v2.0_2426.lha;Game;;1633;1790
+game--zool--zool;Zool: Ninja Of The 'Nth' Dimension;Zool;;;OCS;;0;0;;;;;;;1992;;English;Gremlin;Gremlin;1;;v2.0;Zool/Zool.slave;game/Z/Zool_v2.0_2426.lha;Game;;1633;1790
 game--zombifr--zombifr;Zombi;Zombi;1;;OCS;;2;;;;;;;;1989;;French;Ubi Soft;Ubi Soft;1;;v1.2;ZombiFr/ZombiFr.Slave;game/Z/Zombi_v1.2_Fr_2768.lha;Game;Adventure;1628;1166
 game--zoom--zoom;Zoom!;Zoom!;;;OCS;;2;;;;;;;;1988;;English;Discovery;Discovery;2;;v1.0a;Zoom/Zoom.Slave;game/Z/Zoom_v1.0a_1910.lha;Game;;1639;2924
-game--zool2aga--zool2aga;Zool 2;Zool 2;;;AGA;1;0;;;;;;;;1993;;English;The Warp Factory;Gremlin;2 (taking turns);;v1.0;Zool2AGA/Zool2AGA.Slave;game/Z/Zool2_v1.0_AGA_0415.lha;Game;;1637;2514
+game--zool2aga--zool2aga;Zool 2;Zool 2;;;AGA;1;0;0;;;;;;;1993;;English;The Warp Factory;Gremlin;2 (taking turns);;v1.0;Zool2AGA/Zool2AGA.Slave;game/Z/Zool2_v1.0_AGA_0415.lha;Game;;1637;2514
 game--zombi--zombi;Zombi;Zombi;;;OCS;;2;;;;;;;;1989;;English;Ubi Soft;Ubi Soft;1;;v1.2;Zombi/Zombi.slave;game/Z/Zombi_v1.2.lha;Game;Adventure;1628;1166
 game--zyconix--zyconix;Zyconix;Zyconix;;;OCS;;2;;;;;;;;1992;;English;Miracle Games;Accolade;2;;v1.1;Zyconix/Zyconix.Slave;game/Z/Zyconix_v1.1_1057.lha;Game;;1645;2513
 game--zeewolf--zeewolf;Zeewolf;Zeewolf;;;OCS;;1;;-2;;;;;;1994;;English;Binary Asylum;Empire;1;;v5.03;Zeewolf/Zeewolf.slave;game/Z/Zeewolf_v5.03_0414.lha;Game;;1622;1165
-game--zoolaga--zoolaga;Zool: Ninja Of The 'Nth' Dimension;Zool;1;game--zool--zool;AGA;1;0;;;;;;;;1993;;English;Gremlin;Gremlin;1;;v2.0;ZoolAGA/ZoolAGA.slave;game/Z/Zool_v2.0_AGA_1675.lha;Game;;1634;577
-game--zoolcd32ntsc--zoolcd32ntsc;Zool: Ninja Of The 'Nth' Dimension;Zool;1;game--zool--zool;AGA/CD32;1;3;;;;;;;;1992;;English;Gremlin;Gremlin;1;;v1.2;ZoolCD32NTSC/ZoolCD32NTSC.slave;game/Z/Zool_v1.2_CD32_NTSC.lha;Game;;1635;577
+game--zoolaga--zoolaga;Zool: Ninja Of The 'Nth' Dimension;Zool;1;game--zool--zool;AGA;1;0;0;;;;;;;1993;;English;Gremlin;Gremlin;1;;v2.0;ZoolAGA/ZoolAGA.slave;game/Z/Zool_v2.0_AGA_1675.lha;Game;;1634;577
+game--zoolcd32ntsc--zoolcd32ntsc;Zool: Ninja Of The 'Nth' Dimension;Zool;1;game--zool--zool;AGA/CD32;1;3;0;;;;;;;1992;;English;Gremlin;Gremlin;1;;v1.2;ZoolCD32NTSC/ZoolCD32NTSC.slave;game/Z/Zool_v1.2_CD32_NTSC.lha;Game;;1635;577
 game--zombide--zombide;Zombi;Zombi;1;;OCS;;2;;;;;;;;1989;;German;Ubi Soft;Ubi Soft;1;;v1.2;ZombiDe/ZombiDe.Slave;game/Z/Zombi_v1.2_De.lha;Game;Adventure;1628;1166
 game--zaxxon1mb--zaxxon1mb;Zaxxon;Zaxxon;;;OCS;;1;;;;;;;;1995;;English;Bignonia;Bignonia;2 (taking turns);;v1.1;Zaxxon1MB/Zaxxon1MB.Slave;game/Z/Zaxxon_v1.1_1MB.lha;Game;;3801;1994
 game--zaxxon512kb--zaxxon512kb;Zaxxon;Zaxxon;1;game--zaxxon1mb--zaxxon1mb;OCS;;1;;;;;;;;1995;;English;Bignonia;Bignonia;2 (taking turns);;v1.1;Zaxxon512KB/Zaxxon512KB.Slave;game/Z/Zaxxon_v1.1_512KB.lha;Game;;3801;1994
