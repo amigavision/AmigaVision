@@ -1,0 +1,14 @@
+.K VOFS,SCALE
+
+if NOT EXISTS ENV:dsblvadj
+  assign >NIL: EXISTS MiSTer:
+  if NOT WARN
+    if EXISTS AGS:vadjust/x<SCALE$d>_<VOFS$0>
+      copy AGS:vadjust/x<SCALE$d>_<VOFS$0> TO MiSTer:minimig_vadjust.dat
+    else if EXISTS AGS:vadjust/xd_<VOFS$0>
+      copy AGS:vadjust/xd_<VOFS$0> TO MiSTer:minimig_vadjust.dat
+    else
+      copy AGS:vadjust/xd_0 TO MiSTer:minimig_vadjust.dat
+    endif
+  endif
+endif

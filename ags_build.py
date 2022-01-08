@@ -18,7 +18,6 @@ from make_vadjust import make_vadjust
 
 AGS_LIST_WIDTH = 26
 AGS_INFO_WIDTH = 48
-VADJUST_CREATE_RANGE = True
 
 g_out_dir = "out"
 g_clone_dir = None
@@ -26,7 +25,6 @@ g_args = None
 g_db = None
 g_entries = dict()
 g_entry_for_path = set()
-g_vadjust = dict()
 
 # -----------------------------------------------------------------------------
 # Database and path queries
@@ -187,18 +185,12 @@ def extract_whd(entry):
             if util.is_file(info_path):
                 os.remove(info_path)
 
-def create_vadjust_dats(vadjust_dict):
-    util.make_dir(util.path(get_ags2_dir(), "VAdjust"))
-    if vadjust_dict:
-        for name, settings in vadjust_dict.items():
-            pal5 = settings[0]
-            vofs = 0 if pal5 and settings[1] is None else settings[1]
-            data = make_vadjust(pal5, vofs)
-            open(util.path(get_ags2_dir(), "VAdjust", name), mode="wb").write(data)
-    else:
-        for i in range(-32,33):
-            open(util.path(get_ags2_dir(), "VAdjust", "def_{}".format(i)), mode="wb").write(make_vadjust(False, i))
-            open(util.path(get_ags2_dir(), "VAdjust", "pal5_{}".format(i)), mode="wb").write(make_vadjust(True, i))
+def create_vadjust_dats():
+    util.make_dir(util.path(get_ags2_dir(), "vadjust"))
+    for i in range(-16,63):
+        open(util.path(get_ags2_dir(), "vadjust", "xd_{}".format(i)), mode="wb").write(make_vadjust(i))
+        open(util.path(get_ags2_dir(), "vadjust", "x5_{}".format(i)), mode="wb").write(make_vadjust(i, 5))
+        open(util.path(get_ags2_dir(), "vadjust", "x6_{}".format(i)), mode="wb").write(make_vadjust(i, 6))
 
 # -----------------------------------------------------------------------------
 # Menu yaml parsing, AGS2 tree creation
@@ -208,10 +200,15 @@ def ags_make_note(entry, add_note):
     note = ""
     system = entry["hardware"]
 
-    if entry["ntsc"] > 1: system += "/NTSC-5X"
-    elif entry["ntsc"] == 1: system += "/PAL60-5X"
+    if entry["ntsc"] > 1:
+        if entry["scale"] == 6: system += "/NTSC-6X"
+        else: system += "/NTSC-5X"
+    elif entry["ntsc"] == 1:
+        if entry["scale"] == 6: system += "/PAL60-6X"
+        else: system += "/PAL60-5X"
     else:
-        if entry["pal_5x"] == 1: system += "/PAL-5X"
+        if entry["scale"] == 6: system += "/PAL-6X"
+        elif entry["scale"] == 5: system += "/PAL-5X"
         else: system += "/PAL-4X"
 
     peripherals = []
@@ -263,7 +260,6 @@ def ags_fix_filename(name):
 
 
 def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=None):
-    global g_vadjust
     global g_entry_for_path
     max_w = AGS_LIST_WIDTH
 
@@ -325,19 +321,16 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
         whd_vmode = "NTSC" if entry["ntsc"] > 0 else "PAL"
         if g_args.ntsc: whd_vmode = "NTSC"
         # vadjust
-        vadjust_pal5x = entry["pal_5x"] == 1
-        vadjust_name = "pal5" if vadjust_pal5x else "def"
+        vadjust_scale = util.parse_int(entry["scale"])
+        if not vadjust_scale: vadjust_scale = 0
         vadjust_vofs = util.parse_int(entry["v_offset"])
-        if not vadjust_vofs:
-            vadjust_vofs = 0
-        vadjust_name += "_{}".format(vadjust_vofs)
-        g_vadjust[vadjust_name] = (vadjust_pal5x, vadjust_vofs)
+        if not vadjust_vofs: vadjust_vofs = 0
 
         if entry_is_notwhdl(entry):
             runfile_path = get_archive_path(entry).replace(".lha", ".run")
             if util.is_file(runfile_path):
                 runfile = "set{}\n".format(whd_vmode.lower())
-                runfile += "setvadjust {} {}\n".format(vadjust_vofs, "PAL5" if vadjust_pal5x else "")
+                runfile += "setvadjust {} {}\n".format(vadjust_vofs, vadjust_scale)
                 with open(runfile_path, 'r') as f: runfile += f.read()
                 runfile += "setntsc\n"
                 runfile += "setvadjust\n"
@@ -360,7 +353,7 @@ def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=No
                 runfile += "IF EXISTS ENV:whdlvmode\n"
                 runfile += "  whdload >NIL: \"{}\" $whdlvmode {} SplashDelay=$whdlspdly {}\n".format(whd_slave, whd_cargs, whd_qtkey)
                 runfile += "ELSE\n"
-                runfile += "  setvadjust {} {}\n".format(vadjust_vofs, "PAL5" if vadjust_pal5x else "")
+                runfile += "  setvadjust {} {}\n".format(vadjust_vofs, vadjust_scale)
                 runfile += "  whdload >NIL: \"{}\" {} {} SplashDelay=$whdlspdly {}\n".format(whd_slave, whd_vmode, whd_cargs, whd_qtkey)
                 runfile += "  setvadjust\n"
                 runfile += "ENDIF\n"
@@ -722,10 +715,7 @@ def main():
         if not g_args.no_autolists:
             ags_create_autoentries()
 
-        if VADJUST_CREATE_RANGE:
-            create_vadjust_dats(None)
-        else:
-            create_vadjust_dats(g_vadjust)
+        create_vadjust_dats()
 
         # extract whdloaders
         if g_args.verbose: print("extracting {} content archives...".format(len(g_entries.items())))

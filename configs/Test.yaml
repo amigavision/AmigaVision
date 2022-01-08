@@ -1,5 +1,5 @@
 --- # AGS2 Menu structure
 - Test:
-  - game--crystaldragon--crystaldragon # still doesn't launch
-  - game--dangerfreak--dangerfreak # Lots of gfx corruption
-  - game--katakis2disk--katakis2disk # Never gets past asking for data disk
+  - demo--microconcept--microconcept # both "note" and "issues"
+  - demo--coppermaster--coppermaster # 5x cropped demo
+  - demo-notwhdl--melon-fisherhawkdr # test 6x!

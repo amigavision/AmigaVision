@@ -5,13 +5,12 @@
 # --pal5x     create PAL viewport crops with 216 visible lines
 # --vofs <n>  adjust vertical offset (positive values move visible image up)
 
-# Max vofs before clamping:
-#   NTSC:  9 / -16
-#   PAL5: 59 / -11
-#    PAL:  5 / -11
+# vofs expressible range:
+#   NTSC: -16 ... 9
+#   PAL5: -11 ... 59
+#   PAL4: -11 ... 5
 
 import sys
-import os
 import argparse
 import struct
 
@@ -22,10 +21,12 @@ VADJUST_LEN = 1024
 ntsc_h = (132, 56)
 pal_h  = (132, 56)
 
-ntsc_v = (16, 10)
-pal_v5 = (11, 60)
-pal_v  = (11, 6)
+ntsc_v5 = (16, 10)
+ntsc_v6 = (16, 46)
 
+pal_v4 = (11, 6)
+pal_v5 = (11, 60)
+pal_v6 = (11, 96)
 
 # mode, name, ntsc, laced
 modes = [
@@ -55,7 +56,7 @@ modes = [
     (0x0223C5E4, "PAL SuperHiRes Laced--", False, True)
  ]
 
-def make_vadjust(pal_5x, v_offset):
+def make_vadjust(v_offset, scale_factor=0):
     out = bytes()
     if v_offset is None:
         v_offset = 0
@@ -69,17 +70,24 @@ def make_vadjust(pal_5x, v_offset):
         if ntsc:
             h1 = ntsc_h[0]
             h2 = ntsc_h[1]
-            v1 = ntsc_v[0]
-            v2 = ntsc_v[1]
+            if scale_factor == 6:
+                v1 = ntsc_v6[0]
+                v2 = ntsc_v6[1]
+            else:
+                v1 = ntsc_v5[0]
+                v2 = ntsc_v5[1]
         else:
             h1 = pal_h[0]
             h2 = pal_h[1]
-            if pal_5x:
+            if scale_factor == 5:
                 v1 = pal_v5[0]
                 v2 = pal_v5[1]
+            elif scale_factor == 6:
+                v1 = pal_v6[0]
+                v2 = pal_v6[1]
             else:
-                v1 = pal_v[0]
-                v2 = pal_v[1]
+                v1 = pal_v4[0]
+                v2 = pal_v4[1]
         # interlace adjustment
         if lace:
             v2 -= 1
@@ -112,14 +120,14 @@ def make_vadjust(pal_5x, v_offset):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-o", "--out", dest="out_vadjust", metavar="FILE", help="output file")
-    parser.add_argument("--pal5x", dest="pal_5x", action="store_true", default=False, help="create PAL viewport crops with 216 visible lines")
+    parser.add_argument("--scale", dest="scale", type=int, default=0, help="create viewport crops with forced scale factor (5 or 6)")
     parser.add_argument("--vofs", dest="v_offset", type=int, default=0, help="adjust vertical offset (positive values move visible image up)")
 
     try:
         args = parser.parse_args()
 
         if args.out_vadjust:
-            out = make_vadjust(args.pal_5x, args.v_offset)
+            out = make_vadjust(args.v_offset, args.scale)
             with open(args.out_vadjust, "wb") as f:
                 f.write(out)
         return 0
