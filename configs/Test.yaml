@@ -1,5 +1,9 @@
 --- # AGS2 Menu structure
 - Test:
-  - demo--microconcept--microconcept # both "note" and "issues"
-  - demo--coppermaster--coppermaster # 5x cropped demo
-  - demo-notwhdl--melon-fisherhawkdr # test 6x!
+  - demo-notwhdl--melon-fisherhawkdr
+  - demo-notwhdl--melon-cortez
+  - demo-notwhdl--melon-welcomeintro
+  - demo-notwhdl--lemon-colombia
+  - demo-notwhdl--offence-towardsdarkertimes
+  - demo-notwhdl--spaceballs-peek
+  - demo-notwhdl--spaceballs-makt
