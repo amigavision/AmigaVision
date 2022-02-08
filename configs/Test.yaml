@@ -2,8 +2,14 @@
 - Test:
   - demo-notwhdl--melon-fisherhawkdr
   - demo-notwhdl--melon-cortez
-  - demo-notwhdl--melon-welcomeintro
-  - demo-notwhdl--lemon-colombia
-  - demo-notwhdl--offence-towardsdarkertimes
-  - demo-notwhdl--spaceballs-peek
-  - demo-notwhdl--spaceballs-makt
+- TestWS:
+  - note: Widescreen demos
+  - Andromeda-Rule30: { scale: 6, v_offset: 48 }
+  - BaygonAGA: Melon!
+  - BrunosMusicBox3: { v_offset: 4 }
+  - Coma
+  - Nested:
+    - How2SkinACat
+    - Delphine-Collection: not_available
+    - HumanTarget
+    - Interference

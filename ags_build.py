@@ -259,9 +259,13 @@ def ags_fix_filename(name):
     return name
 
 
-def ags_create_entry(name, entry, path, note, rank, only_script=False, prefix=None):
+def ags_create_entry(name, entry, path, note=None, rank=None, only_script=False, prefix=None, options=None):
     global g_entry_for_path
     max_w = AGS_LIST_WIDTH
+
+    # apply override options
+    if isinstance(options, dict):
+        entry.update(options)
 
     # skip if entry already added at path
     path_id = "{}{}".format(entry["id"] if (entry and entry["id"]) else name, path)
@@ -404,9 +408,14 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
         pos += 1
         n = name
         title_note = None
+        options = None
         if isinstance(name, tuple) and len(name) == 2:
-            n = name[0]
-            title_note = name[1]
+            if isinstance(name[1], str):
+                n = name[0]
+                title_note = name[1]
+            if isinstance(name[1], dict):
+                n = name[0]
+                options = name[1]
 
         # use preferred (fuzzy) entry
         e, pe = get_entry(n)
@@ -419,7 +428,7 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
         rank = None
         if ranked_list:
             rank = str(pos).zfill(len(str(len(entries))))
-        ags_create_entry(n, e, base_dir, title_note, rank)
+        ags_create_entry(n, e, base_dir, note=title_note, rank=rank, options=options)
 
     return
 
@@ -438,8 +447,8 @@ def ags_create_autoentries():
 
         # Games
         if entry["category"].lower() == "game":
-            ags_create_entry(None, entry, util.path(path, "[ All Games ].ags", letter + ".ags"), None, None)
-            ags_create_entry(None, entry, util.path(path, "[ All Games, by year ].ags", year + ".ags"), None, None)
+            ags_create_entry(None, entry, util.path(path, "[ All Games ].ags", letter + ".ags"))
+            ags_create_entry(None, entry, util.path(path, "[ All Games, by year ].ags", year + ".ags"))
 
         # Demos / Disk Mags
         def add_demo(entry, sort_group, sort_country):
@@ -450,19 +459,19 @@ def ags_create_autoentries():
             if group_letter.isnumeric():
                 group_letter = "0-9"
             if entry["subcategory"].lower().startswith("disk mag"):
-                ags_create_entry(None, entry, util.path(d_path, "[ Disk Magazines ].ags"), None, None)
+                ags_create_entry(None, entry, util.path(d_path, "[ Disk Magazines ].ags"))
             else:
                 if entry["subcategory"].lower().startswith("crack"):
-                    ags_create_entry(None, entry, util.path(d_path, "[ Demos, crack intros ].ags"), None, None, prefix=sort_group)
+                    ags_create_entry(None, entry, util.path(d_path, "[ Demos, crack intros ].ags"), prefix=sort_group)
                 if entry["subcategory"].lower().startswith("intro"):
-                    ags_create_entry(None, entry, util.path(d_path, "[ Demos, 1-64KB ].ags"), None, None)
+                    ags_create_entry(None, entry, util.path(d_path, "[ Demos, 1-64KB ].ags"))
                 group_entry = dict(entry)
                 group_entry["title_short"] = group_entry["title"]
-                ags_create_entry(None, entry, util.path(d_path, "[ Demos by title ].ags", letter + ".ags"), None, None)
-                ags_create_entry(None, group_entry, util.path(d_path, "[ Demos by group ].ags", group_letter + ".ags"), None, None, prefix=sort_group)
-                ags_create_entry(None, entry, util.path(d_path, "[ Demos by year ].ags", year + ".ags"), None, None)
+                ags_create_entry(None, entry, util.path(d_path, "[ Demos by title ].ags", letter + ".ags"))
+                ags_create_entry(None, group_entry, util.path(d_path, "[ Demos by group ].ags", group_letter + ".ags"), prefix=sort_group)
+                ags_create_entry(None, entry, util.path(d_path, "[ Demos by year ].ags", year + ".ags"))
                 if sort_country:
-                    ags_create_entry(None, entry, util.path(d_path, "[ Demos by country ].ags", sort_country + ".ags"), None, None)
+                    ags_create_entry(None, entry, util.path(d_path, "[ Demos by country ].ags", sort_country + ".ags"))
 
         if g_args.all_demos and entry["category"].lower() == "demo":
             groups = entry["publisher"]
@@ -478,7 +487,7 @@ def ags_create_autoentries():
 
         # Run-scripts for randomizer
         if entry["category"].lower() == "game" and not entry["issues"]:
-            ags_create_entry(None, entry, util.path(path, "Run"), None, None, only_script=True)
+            ags_create_entry(None, entry, util.path(path, "Run"), only_script=True)
 
     # Notes for created directories
     if util.is_dir(util.path(path, "[ All Games ].ags")):
@@ -510,13 +519,13 @@ def ags_create_tree(node, path=[]):
         ranked_list = False
 
         for item in node:
-            # titles
+            # plain titles
             if isinstance(item, str):
                 entries += [item]
             if isinstance(item, list):
                 if len(item) == 2:
                     entries += [(item[0], item[1])]
-            # metadata or sub-list
+            # parse metadata or subtree
             if isinstance(item, dict):
                 if "note" in item:
                     note = str(item["note"])
@@ -524,13 +533,17 @@ def ags_create_tree(node, path=[]):
                 if "ranked_list" in item:
                     ranked_list = item["ranked_list"]
                     del item["ranked_list"]
-                # item is a sublist (or not_available title)
                 for key, value in item.items():
-                    if value == "not_available":
+                    if isinstance(value, str):
+                        # item has note
+                        entries += [(key, value)]
+                    if isinstance(value, dict):
+                        # item has override options
                         entries += [(key, value)]
                     else:
+                        # item is a subtree
                         ags_create_tree(value, path + [key])
-        ags_create_entries(entries, path, note, ranked_list)
+        ags_create_entries(entries, path, note=note, ranked_list=ranked_list)
 
 def ags_add_all(category):
     for r in g_db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
