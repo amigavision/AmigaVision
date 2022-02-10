@@ -7,9 +7,9 @@
   - Andromeda-Rule30: { scale: 6, v_offset: 48 }
   - BaygonAGA: Melon!
   - BrunosMusicBox3: { v_offset: 4 }
-  - Coma
+  - Coma: { note: COMA! }
   - Nested:
     - How2SkinACat
-    - Delphine-Collection: not_available
+    - Delphine-Collection: { note: not_available }
     - HumanTarget
     - Interference

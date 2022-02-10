@@ -259,13 +259,20 @@ def ags_fix_filename(name):
     return name
 
 
-def ags_create_entry(name, entry, path, note=None, rank=None, only_script=False, prefix=None, options=None):
+def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=None, options=None):
     global g_entry_for_path
     max_w = AGS_LIST_WIDTH
+    note = None
 
     # apply override options
     if isinstance(options, dict):
-        entry.update(options)
+        if entry and isinstance(entry, dict):
+            entry.update(options)
+        elif options["note"] and isinstance(options["note"], str):
+            note = options["note"]
+
+    if isinstance(entry, dict) and isinstance(entry["note"], str):
+        note = entry["note"]
 
     # skip if entry already added at path
     path_id = "{}{}".format(entry["id"] if (entry and entry["id"]) else name, path)
@@ -407,15 +414,10 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
     for name in entries:
         pos += 1
         n = name
-        title_note = None
         options = None
-        if isinstance(name, tuple) and len(name) == 2:
-            if isinstance(name[1], str):
-                n = name[0]
-                title_note = name[1]
-            if isinstance(name[1], dict):
-                n = name[0]
-                options = name[1]
+        if isinstance(name, tuple) and len(name) == 2 and isinstance(name[1], dict):
+            n = name[0]
+            options = name[1]
 
         # use preferred (fuzzy) entry
         e, pe = get_entry(n)
@@ -428,8 +430,7 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
         rank = None
         if ranked_list:
             rank = str(pos).zfill(len(str(len(entries))))
-        ags_create_entry(n, e, base_dir, note=title_note, rank=rank, options=options)
-
+        ags_create_entry(n, e, base_dir, rank=rank, options=options)
     return
 
 def ags_create_autoentries():
@@ -541,9 +542,6 @@ def ags_create_tree(node, path=[]):
                     ranked_list = item["ranked_list"]
                     del item["ranked_list"]
                 for key, value in item.items():
-                    if isinstance(value, str):
-                        # item has note
-                        entries += [(key, value)]
                     if isinstance(value, dict):
                         # item has override options
                         entries += [(key, value)]
