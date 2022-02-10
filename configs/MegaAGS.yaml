@@ -37,7 +37,7 @@
     - KickOff2
     - CannonFodderCD32
     - BeneathAStlSky
-    - Delphine-Collection: not_available
+    - Delphine-Collection: { unavailable: True }
     - DungeonMaster
     - Frontier
     - PinballIllusions
@@ -50,7 +50,7 @@
     - Syndicate
     - IndianaJonesAtlantisAdv
     - Gods
-    - Greatest-Collection: not_available
+    - Greatest-Collection: { unavailable: True }
     - EyeOfTheBeholder
     - ChaosEngine
     - CruiseForACorpse
@@ -62,7 +62,7 @@
     - RoboCop3
     - SecretOfMonkeyIsland
     - AlienBreed2
-    - Award-Winners-Gold: not_available
+    - Award-Winners-Gold: { unavailable: True }
     - Banshee
     - BodyBlows
     - Dune2
@@ -433,9 +433,9 @@
     - Benefactor
     - DeluxeGalaga
     - Lionheart
-    - Napalm: not_available
+    - Napalm: { unavailable: True }
     - WastedDreams
-    - Genetic-Species: not_available
+    - Genetic-Species: { unavailable: True }
     - Perihelion
     - ArabianNights
     - Twintris

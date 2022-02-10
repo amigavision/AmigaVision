@@ -89,9 +89,10 @@ def entry_valid(entry):
     return False
 
 def entry_is_aga(entry):
-    if entry_valid(entry) and "aga" in entry and entry["aga"]:
-        if int(entry["aga"]) > 0:
-            return True
+    print("is_aga:", entry)
+    if entry_valid(entry) and entry.get("aga", 0) > 0:
+        print(" > yes")
+        return True
     return False
 
 def entry_is_notwhdl(entry):
@@ -193,27 +194,27 @@ def create_vadjust_dats():
         open(util.path(get_ags2_dir(), "vadjust", "x6_{}".format(i)), mode="wb").write(make_vadjust(i, 6))
 
 # -----------------------------------------------------------------------------
-# Menu yaml parsing, AGS2 tree creation
+# Create entry and note
 
 def ags_make_note(entry, add_note):
     max_w = AGS_INFO_WIDTH
     note = ""
     system = entry["hardware"]
 
-    if entry["ntsc"] > 1:
-        if entry["scale"] == 6: system += "/NTSC-6X"
+    if entry.get("ntsc", 0) > 1:
+        if entry.get("scale", 0) == 6: system += "/NTSC-6X"
         else: system += "/NTSC-5X"
-    elif entry["ntsc"] == 1:
-        if entry["scale"] == 6: system += "/PAL60-6X"
+    elif entry.get("ntsc", 0) == 1:
+        if entry.get("scale", 0) == 6: system += "/PAL60-6X"
         else: system += "/PAL60-5X"
     else:
-        if entry["scale"] == 6: system += "/PAL-6X"
-        elif entry["scale"] == 5: system += "/PAL-5X"
+        if entry.get("scale", 0) == 6: system += "/PAL-6X"
+        elif entry.get("scale", 0) == 5: system += "/PAL-5X"
         else: system += "/PAL-4X"
 
     peripherals = []
-    if entry["lightgun"]: peripherals.append("Light Gun")
-    if entry["gamepad"]: peripherals.append("Gamepad")
+    if entry.get("lightgun", False): peripherals.append("Light Gun")
+    if entry.get("gamepad", False): peripherals.append("Gamepad")
     if peripherals:
         system += " (" + "+".join(peripherals) + ")"
 
@@ -224,31 +225,30 @@ def ags_make_note(entry, add_note):
         note += ("Year:       {}".format(entry["year"]))[:max_w] + "\n"
         note += ("Players:    {}".format(entry["players"]))[:max_w] + "\n"
         note += ("Hardware:   {}".format(system))[:max_w] + "\n"
-        if entry["issues"]:
+        if entry.get("issues"):
             note += ("Issues:     {}".format(entry["issues"]))[:max_w] + "\n"
-        elif entry["hack"]:
+        elif entry.get("hack"):
             note += ("Hack Info:  {}".format(entry["hack"]))[:max_w] + "\n"
 
     elif "category" in entry and entry["category"].lower() == "demo":
         group = util.prettify_names(entry["publisher"])
         note += ("Title:      {}".format(entry["title"]))[:max_w] + "\n"
         note += ("Group:      {}".format(group))[:max_w] + "\n"
-        if entry["country"]:
+        if entry.get("country"):
             note += ("Country:    {}".format(entry["country"]))[:max_w] + "\n"
         note += ("Year:       {}".format(entry["year"]))[:max_w] + "\n"
-        if entry["subcategory"].lower() != "demo":
+        if entry.get("subcategory", "").lower() != "demo":
             note += ("Category:   {}".format(entry["subcategory"]))[:max_w] + "\n"
         else:
             note += "Category:   Demo\n"
         note += ("Hardware:   {}".format(system))[:max_w] + "\n"
-        if entry["issues"]:
+        if entry.get("issues"):
             note += ("Issues:     {}".format(entry["issues"]))[:max_w] + "\n"
 
     if add_note and isinstance(add_note, str):
             note += ("Note:       {}".format(add_note))[:max_w] + "\n"
-    elif entry["note"]:
+    elif entry.get("note"):
             note += ("Note:       {}".format(entry["note"]))[:max_w] + "\n"
-
     return note
 
 def ags_fix_filename(name):
@@ -268,7 +268,7 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
     if isinstance(options, dict):
         if entry and isinstance(entry, dict):
             entry.update(options)
-        elif options["note"] and isinstance(options["note"], str):
+        elif "note" in options and isinstance(options["note"], str):
             note = options["note"]
 
     if isinstance(entry, dict) and isinstance(entry["note"], str):
@@ -292,7 +292,7 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
     if prefix:
         title = prefix + " - " + title
 
-    if note and note == "not_available":
+    if options and options.get("unavailable", False):
         title += ags_fix_filename(name.replace("-", " "))
     elif entry and "title_short" in entry:
         if only_script:
@@ -306,10 +306,10 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
     # prevent name clash
     title = title.strip()
     if util.is_file(util.path(path, title) + ".run"):
-        if entry["category"] == "Demo":
-            title += " (" + entry["publisher"] + ")"
+        if entry.get("category", "").lower() == "demo":
+            title += " (" + entry.get("publisher") + ")"
         else:
-            title += " (" + entry["hardware"].replace("/ECS", "").replace("AGA/CD32", "CD32").replace("OCS/CDTV", "CDTV").replace("/", "-") + ")"
+            title += " (" + entry.get("hardware", "").replace("/ECS", "").replace("AGA/CD32", "CD32").replace("OCS/CDTV", "CDTV").replace("/", "-") + ")"
         if only_script:
             title = title.replace(" ", "_")
     if len(title) > max_w:
@@ -329,12 +329,12 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
     runfile = None
     if get_amiga_whd_dir(entry) is not None or entry_is_notwhdl(entry):
         # videomode
-        whd_vmode = "NTSC" if entry["ntsc"] > 0 else "PAL"
+        whd_vmode = "NTSC" if entry.get("ntsc", 0) > 0 else "PAL"
         if g_args.ntsc: whd_vmode = "NTSC"
         # vadjust
-        vadjust_scale = util.parse_int(entry["scale"])
+        vadjust_scale = util.parse_int(entry.get("scale", 0))
         if not vadjust_scale: vadjust_scale = 0
-        vadjust_vofs = util.parse_int(entry["v_offset"])
+        vadjust_vofs = util.parse_int(entry.get("v_offset", 0))
         if not vadjust_vofs: vadjust_vofs = 0
 
         if entry_is_notwhdl(entry):
@@ -351,7 +351,7 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
                 whd_slave = get_whd_slavename(entry)
                 # extra arguments
                 whd_cargs = "BUTTONWAIT"
-                if entry["slave_args"]:
+                if entry.get("slave_args"):
                     whd_cargs += " " + entry["slave_args"]
                 whd_qtkey = "" if "QuitKey=" in whd_cargs else "$whdlqtkey"
                 runfile = "cd \"{}\"\n".format(whd_entrypath)
@@ -381,7 +381,7 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
         return
 
     # note
-    if note and note == "not_available":
+    if options and options.get("unavailable", False):
         note = "Title:      " + name.replace("-", " ") + "\n\n"
         note += "Content is unavailable."
         open(base_path + ".txt", mode="w", encoding="latin-1").write(note)
@@ -393,6 +393,8 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
         shutil.copyfile(util.path("data", "img", entry["id"] + ".iff"), base_path + ".iff")
     return
 
+# -----------------------------------------------------------------------------
+# Create entries from list
 
 def ags_create_entries(entries, path, note=None, ranked_list=False):
     global g_entries
@@ -424,7 +426,8 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
         if not "--" in name and pe:
             e = pe
         if not e and not pe:
-            print(" > WARNING: invalid entry: {}".format(n))
+            if options is None or (options and not options.get("unavailable", False)):
+                print(" > WARNING: invalid entry: {}".format(n))
         else:
             g_entries[e["id"]] = e
         rank = None
@@ -433,13 +436,16 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
         ags_create_entry(n, e, base_dir, rank=rank, options=options)
     return
 
+# -----------------------------------------------------------------------------
+# Collect entries for special folders "All Games" and "Demo Scene"
+
 def ags_create_autoentries():
     path = get_ags2_dir()
     d_path = get_ags2_dir()
     if util.is_dir(util.path(path, "[ Demo Scene ].ags")):
         d_path = util.path(path, "[ Demo Scene ].ags")
     for entry in sorted(g_entries.values(), key=operator.itemgetter("title")):
-        letter = entry["title_short"][0].upper()
+        letter = entry.get("title_short", "z")[0].upper()
         if letter.isnumeric():
             letter = "0-9"
         year = entry["year"]
@@ -447,7 +453,7 @@ def ags_create_autoentries():
             year = "Unknown"
 
         # Games
-        if entry["category"].lower() == "game":
+        if entry.get("category", "").lower() == "game":
             ags_create_entry(None, entry, util.path(path, "[ All Games ].ags", letter + ".ags"))
             ags_create_entry(None, entry, util.path(path, "[ All Games, by year ].ags", year + ".ags"))
 
@@ -459,30 +465,30 @@ def ags_create_autoentries():
             group_letter = sort_group[0].upper()
             if group_letter.isnumeric():
                 group_letter = "0-9"
-            if entry["subcategory"].lower().startswith("disk mag"):
+            if entry.get("subcategory", "").lower().startswith("disk mag"):
                 ags_create_entry(None, entry, util.path(d_path, "[ Disk Magazines ].ags"))
-            elif entry["subcategory"].lower().startswith("music disk"):
+            elif entry.get("subcategory", "").lower().startswith("music disk"):
                 ags_create_entry(None, entry, util.path(d_path, "[ Music Disks by title ].ags", letter + ".ags"))
                 ags_create_entry(None, entry, util.path(d_path, "[ Music Disks by year ].ags", year + ".ags"))
             else:
-                if entry["subcategory"].lower().startswith("crack"):
+                if entry.get("subcategory", "").lower().startswith("crack"):
                     ags_create_entry(None, entry, util.path(d_path, "[ Demos, crack intros ].ags"), prefix=sort_group)
-                if entry["subcategory"].lower().startswith("intro"):
+                if entry.get("subcategory", "").lower().startswith("intro"):
                     ags_create_entry(None, entry, util.path(d_path, "[ Demos, 1-64KB ].ags"))
                 group_entry = dict(entry)
-                group_entry["title_short"] = group_entry["title"]
+                group_entry["title_short"] = group_entry.get("title")
                 ags_create_entry(None, entry, util.path(d_path, "[ Demos by title ].ags", letter + ".ags"))
                 ags_create_entry(None, group_entry, util.path(d_path, "[ Demos by group ].ags", group_letter + ".ags"), prefix=sort_group)
                 ags_create_entry(None, entry, util.path(d_path, "[ Demos by year ].ags", year + ".ags"))
                 if sort_country:
                     ags_create_entry(None, entry, util.path(d_path, "[ Demos by country ].ags", sort_country + ".ags"))
 
-        if g_args.all_demos and entry["category"].lower() == "demo":
-            groups = entry["publisher"]
+        if g_args.all_demos and entry.get("category", "").lower() == "demo":
+            groups = entry.get("publisher")
             if not groups:
                 continue
             for sort_group in groups.split(", "):
-                countries = entry["country"]
+                countries = entry.get("country")
                 if not countries:
                     add_demo(entry, sort_group, None)
                 else:
@@ -490,7 +496,7 @@ def ags_create_autoentries():
                         add_demo(entry, sort_group, sort_country)
 
         # Run-scripts for randomizer
-        if entry["category"].lower() == "game" and not entry["issues"]:
+        if entry.get("category", "").lower() == "game" and not entry.get("issues"):
             ags_create_entry(None, entry, util.path(path, "Run"), only_script=True)
 
     # Notes for created directories
@@ -519,6 +525,9 @@ def ags_create_autoentries():
     if util.is_dir(util.path(path, "[ Issues ].ags")):
         open(util.path(path, "[ Issues ].txt"), mode="w", encoding="latin-1").write(
             "Titles with known issues on Minimig-AGA.\n(Please report any new or resolved issues!)")
+
+# -----------------------------------------------------------------------------
+# Menu yaml parsing, AGS2 tree creation
 
 def ags_create_tree(node, path=[]):
     if isinstance(node, list):

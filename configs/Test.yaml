@@ -10,6 +10,6 @@
   - Coma: { note: COMA! }
   - Nested:
     - How2SkinACat
-    - Delphine-Collection: { note: not_available }
+    - Delphine-Collection: { unavailable: True }
     - HumanTarget
     - Interference
