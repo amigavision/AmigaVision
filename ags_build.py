@@ -450,7 +450,7 @@ def ags_create_autoentries():
             ags_create_entry(None, entry, util.path(path, "[ All Games ].ags", letter + ".ags"))
             ags_create_entry(None, entry, util.path(path, "[ All Games, by year ].ags", year + ".ags"))
 
-        # Demos / Disk Mags
+        # Demos / Music Disks / Disk Mags
         def add_demo(entry, sort_group, sort_country):
             if sort_group.startswith("The "):
                 sort_group = sort_group[4:]
@@ -460,6 +460,9 @@ def ags_create_autoentries():
                 group_letter = "0-9"
             if entry["subcategory"].lower().startswith("disk mag"):
                 ags_create_entry(None, entry, util.path(d_path, "[ Disk Magazines ].ags"))
+            elif entry["subcategory"].lower().startswith("music disk"):
+                ags_create_entry(None, entry, util.path(d_path, "[ Music Disks by title ].ags", letter + ".ags"))
+                ags_create_entry(None, entry, util.path(d_path, "[ Music Disks by year ].ags", year + ".ags"))
             else:
                 if entry["subcategory"].lower().startswith("crack"):
                     ags_create_entry(None, entry, util.path(d_path, "[ Demos, crack intros ].ags"), prefix=sort_group)
@@ -508,6 +511,10 @@ def ags_create_autoentries():
         open(util.path(d_path, "[ Demos, crack intros ].txt"), mode="w", encoding="latin-1").write("A glimpse into the origins of the demo scene.")
     if util.is_dir(util.path(d_path, "[ Disk Magazines ].ags")):
         open(util.path(d_path, "[ Disk Magazines ].txt"), mode="w", encoding="latin-1").write("A selection of scene disk magazines.")
+    if util.is_dir(util.path(d_path, "[ Music Disks by title ].ags")):
+        open(util.path(d_path, "[ Music Disks by title ].txt"), mode="w", encoding="latin-1").write("Browse music disks by title.")
+    if util.is_dir(util.path(d_path, "[ Music Disks by year ].ags")):
+        open(util.path(d_path, "[ Music Disks by year ].txt"), mode="w", encoding="latin-1").write("Browse music disks by year.")
     if util.is_dir(util.path(path, "[ Issues ].ags")):
         open(util.path(path, "[ Issues ].txt"), mode="w", encoding="latin-1").write(
             "Titles with known issues on Minimig-AGA.\n(Please report any new or resolved issues!)")
