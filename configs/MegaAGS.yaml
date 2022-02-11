@@ -3115,3 +3115,19 @@
       - Loonies-Octorubber
       - Spaceballs-Dubzilla
       - Spaceballs-Rubzilla
+  - Widescreen:
+    - note: Demos specially configured to be displayed in\nfull screen 16:9 aspect ratio.\n\nSet aspect ratio to Full Screen in\nOSD -> Audio & Video -> Aspect Ratio
+    - 3LE-Drama
+    - Loonies-MyLuckyNumber: { scale: 6, v_offset: 48 }
+    - Melon-Cortez
+    - Melon-FisherhawkDr
+    - Melon-WelcomeIntro
+    - Moodsplateau-SolveEtCoagula
+    - RNO-FourSkin
+    - Spaceballs-Emperor
+    - Spaceballs-Makt
+    - Spaceballs-Noisejesus
+    - Spaceballs-Peek: { scale: 6, v_offset: 42 }
+    - Spaceballs-Straff
+    - Vectors-Mindsurfin
+    - YCrew-BolkerWay
