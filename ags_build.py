@@ -343,7 +343,7 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
                 runfile = "set{}\n".format(whd_vmode.lower())
                 runfile += "setvadjust {} {}\n".format(vadjust_vofs, vadjust_scale)
                 with open(runfile_path, 'r') as f: runfile += f.read()
-                runfile += "setntsc\n"
+                runfile += "setvmode $AGSVMode\n"
                 runfile += "setvadjust\n"
         else:
             whd_entrypath = get_amiga_whd_dir(entry)
