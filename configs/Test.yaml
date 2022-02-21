@@ -1,7 +1,11 @@
 --- # AGS2 Menu structure
 - Test:
-  - demo-notwhdl--melon-fisherhawkdr
-  - demo-notwhdl--melon-cortez
+  - Defender2
+  - DefenderOfTheCrown
+  - DesertStrike
+  - CannonFodder
+  - Settlers
+  - Hybris
 - TestWS:
   - note: Widescreen demos
   - Andromeda-Rule30: { scale: 6, v_offset: 48 }
