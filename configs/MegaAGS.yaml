@@ -3116,7 +3116,7 @@
       - Spaceballs-Dubzilla
       - Spaceballs-Rubzilla
   - Widescreen:
-    - note: Demos specially configured to be displayed in\nfull screen 16:9 aspect ratio.\n\nSet aspect ratio to Full Screen in\nOSD -> Audio & Video -> Aspect Ratio
+    - note: Demos configured to be displayed in\nfull screen 16:9 aspect ratio.\n\nSet aspect ratio to Full Screen in\nOSD -> Audio & Video -> Aspect Ratio
     - 3LE-Drama
     - Andromeda-Rule30: { scale: 6, v_offset: 62 }
     - AtomeAGA-AtomeAGA: { scale: 6, v_offset: 46 }
