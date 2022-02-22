@@ -199,7 +199,8 @@ def create_vadjust_dats():
 def ags_make_note(entry, add_note):
     max_w = AGS_INFO_WIDTH
     note = ""
-    system = entry["hardware"]
+    system = entry["hardware"].replace("/", "·")
+    aspect_ratio = "40:27"
 
     # ntsc field options:
     #   0 = PAL title that will be run at 50Hz (PAL, 4:3@4X, 40:27@5X, 16:9@6X)
@@ -208,27 +209,45 @@ def ags_make_note(entry, add_note):
     #   3 = NTSC title that will be run at 60Hz (NTSC, 40:27@5X, 16:9@6X)
     #   4 = NTSC title that will be run at 60Hz and was likely designed for narrow PAR ("Sachs NTSC", 4:3@5X, 16:9@6X)
     if entry.get("ntsc", 0) == 4:
-        if entry.get("scale", 0) == 6: system += "/NTSC [6X 16:9]"
-        else: system += "/NTSC [5X 4:3]"
+        if entry.get("scale", 0) == 6:
+            system += "·6×NTSC"
+            aspect_ratio = "16:9"
+        else:
+            system += "·5×NTSC"
+            aspect_ratio = "4:3"
     elif entry.get("ntsc", 0) == 3:
-        if entry.get("scale", 0) == 6: system += "/NTSC [6X 16:9]"
-        else: system += "/NTSC [5X 40:27]"
+        if entry.get("scale", 0) == 6:
+            system += "·6×NTSC"
+            aspect_ratio = "16:9"
+        else:
+            system += "·5×NTSC"
     elif entry.get("ntsc", 0) == 2:
-        if entry.get("scale", 0) == 6: system += "/NTSC [6X 16:9]"
-        else: system += "/NTSC [5X 40:27]"
+        if entry.get("scale", 0) == 6:
+            system += "·6×NTSC"
+            aspect_ratio = "16:9"
+        else:
+            system += "·5×NTSC"
     elif entry.get("ntsc", 0) == 1:
-        if entry.get("scale", 0) == 6: system += "/PAL60 [6X 16:9]"
-        else: system += "/PAL60 [5X 40:27]"
+        if entry.get("scale", 0) == 6:
+            system += "·6×PAL60"
+            aspect_ratio = "16:9"
+        else:
+            system += "·5×PAL60"
     else:
-        if entry.get("scale", 0) == 6: system += "/PAL [6X 16:9]"
-        elif entry.get("scale", 0) == 5: system += "/PAL [5X 40:27]"
-        else: system += "/PAL [4X 4:3]"
+        if entry.get("scale", 0) == 6:
+            system += "·6×PAL"
+            aspect_ratio = "16:9"
+        elif entry.get("scale", 0) == 5:
+            system += "·5×PAL"
+        else:
+            system += "·4×PAL"
+            aspect_ratio = "4:3"
 
-    peripherals = []
-    if entry.get("lightgun", False): peripherals.append("Light Gun")
-    if entry.get("gamepad", False): peripherals.append("Gamepad")
-    if peripherals:
-        system += " (" + "+".join(peripherals) + ")"
+    if entry.get("lightgun", False):
+        system += "·Light Gun"
+    elif entry.get("gamepad", False):
+        system += "·Game Pad"
+    system += " ({})".format(aspect_ratio)
 
     if "category" in entry and entry["category"].lower() == "game":
         note += ("Title:      {}".format(entry["title"]))[:max_w] + "\n"
