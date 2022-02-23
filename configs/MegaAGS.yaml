@@ -3120,25 +3120,39 @@
     - 3LE-Drama
     - Andromeda-Rule30: { scale: 6, v_offset: 62 }
     - AtomeAGA-AtomeAGA: { scale: 6, v_offset: 46 }
+    - Deadliners-Five: { scale: 6, v_offset: 40 }
     - DHS-CopperKaahBaahYaah: { scale: 6, v_offset: 44 }
+    - Ghostown-SushiBoyz: { scale: 6, v_offset: 62 }
     - Hologon-Hologon: { scale: 6, v_offset: 45 }
+    - Jormas-KanaalinArvoitus: { scale: 6, v_offset: 42 }
     - Lemon+TDL-TheFall: { scale: 6, v_offset: 44 }
+    - Lemon+TDL-BlastFromThePast: { scale: 6, v_offset: 52 }
     - Lemon-Lemonade: { scale: 6, v_offset: 45 }
     - Loonies-MyLuckyNumber: { scale: 6, v_offset: 48 }
+    - Loonies-Octorubber: { scale: 6, v_offset: 48 }
     - Melon-Cortez
     - Melon-FisherhawkDr
     - Melon-WelcomeIntro
-    - Moodsplateau-SolveEtCoagula
+    - MoodsPlateau-SolveEtCoagula
+    - ControlAGA--ControlAGA: { scale: 6, v_offset: 48 }
+    - Pacific-2ndWave: { scale: 6, v_offset: 8 }
+    - Pacific-Monomateria: { scale: 6, v_offset: 50 }
+    - Pacific-OhFive: { scale: 6, v_offset: 50 }
     - Retream-TheCure: { scale: 6, v_offset: 48 }
     - RNO-FourSkin
     - RNO-Fruitcake: { scale: 6, v_offset: 35 }
     - Shaft7AGA-Shaft7AGA: { scale: 6, v_offset: 44 }
+    - Spaceballs-Dubzilla: { scale: 6, v_offset: 42 }
     - Spaceballs-Emperor
     - Spaceballs-Makt
     - Spaceballs-Noisejesus
     - Spaceballs-Peek: { scale: 6, v_offset: 42 }
     - Spaceballs-Straff
     - SumeaAGA-SumeaAGA: { scale: 6, v_offset: 44 }
+    - Tek-NewWorldOrder: { scale: 6, v_offset: 46 }
+    - UpRough-15YearsOfFame: { scale: 6, v_offset: 36 }
+    - UpRough-AprilInParis: { scale: 6, v_offset: 44 }
     - Vectors-Mindsurfin
     - YCrew-BolkerWay
     - YCrew-RoyalPalms: { scale: 6, v_offset: 44 }
+    - YCrew-Vertigo: { scale: 6, v_offset: 44 }
