@@ -3116,14 +3116,19 @@
       - Spaceballs-Dubzilla
       - Spaceballs-Rubzilla
   - Widescreen:
-    - note: Demos configured to be displayed in\nfull screen 16:9 aspect ratio.\n\nSet aspect ratio to Full Screen in\nOSD -> Audio & Video -> Aspect Ratio
+    - note: Demos configured to be displayed in\nfull screen 16:9 aspect ratio.\n\nSet aspect ratio to Full Screen in\nOSD -> Audio & Video -> Aspect Ratio\n\nSome pixel cropping may occur. If you want the 4:3 versions, use the other listings.
     - 3LE-Drama
     - Andromeda-Rule30: { scale: 6, v_offset: 62 }
+    - Artwork-Dawn: { scale: 6, v_offset: 44 }
     - AtomeAGA-AtomeAGA: { scale: 6, v_offset: 46 }
+    - Axis-Headcase: { scale: 6, v_offset: 42 }
     - Deadliners-Five: { scale: 6, v_offset: 40 }
     - DHS-CopperKaahBaahYaah: { scale: 6, v_offset: 44 }
+    - Drugstore--Drugstore: { scale: 6, v_offset: 18 }
+    - FaktoryAGA--FaktoryAGA: { scale: 6, v_offset: 40 }
     - Ghostown-SushiBoyz: { scale: 6, v_offset: 62 }
     - Hologon-Hologon: { scale: 6, v_offset: 45 }
+    - ISOAGA--ISOAGA: { scale: 6, v_offset: 42 }
     - Jormas-KanaalinArvoitus: { scale: 6, v_offset: 42 }
     - Lemon+TDL-TheFall: { scale: 6, v_offset: 44 }
     - Lemon+TDL-BlastFromThePast: { scale: 6, v_offset: 52 }
