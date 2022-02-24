@@ -39,7 +39,7 @@ Setup:
     TV Standard: PAL
     Scandoubler FX: Off
     Video area by: Blank
-    Aspect ratio: Original
+    Aspect ratio: 40:27
     Pixel Clock: Adaptive
     Scaling: Normal
     RTG Upscaling: Normal
