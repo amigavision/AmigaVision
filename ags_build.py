@@ -12,7 +12,7 @@ import textwrap
 from ast import literal_eval as make_tuple
 import ags_util as util
 import ags_paths as paths
-from make_vadjust import make_vadjust
+from make_vadjust import make_vadjust, VADJUST_MIN, VADJUST_MAX
 
 # -----------------------------------------------------------------------------
 
@@ -187,11 +187,11 @@ def extract_whd(entry):
                 os.remove(info_path)
 
 def create_vadjust_dats():
-    util.make_dir(util.path(get_ags2_dir(), "vadjust"))
-    for i in range(-16,63):
-        open(util.path(get_ags2_dir(), "vadjust", "xd_{}".format(i)), mode="wb").write(make_vadjust(i))
-        open(util.path(get_ags2_dir(), "vadjust", "x5_{}".format(i)), mode="wb").write(make_vadjust(i, 5))
-        open(util.path(get_ags2_dir(), "vadjust", "x6_{}".format(i)), mode="wb").write(make_vadjust(i, 6))
+    util.make_dir(util.path(get_boot_dir(), "S", "vadjust_dat"))
+    for i in range(VADJUST_MIN, VADJUST_MAX+1):
+        open(util.path(get_boot_dir(), "S", "vadjust_dat", "xd_{}".format(i)), mode="wb").write(make_vadjust(i))
+        open(util.path(get_boot_dir(), "S", "vadjust_dat", "x5_{}".format(i)), mode="wb").write(make_vadjust(i, 5))
+        open(util.path(get_boot_dir(), "S", "vadjust_dat", "x6_{}".format(i)), mode="wb").write(make_vadjust(i, 6))
 
 # -----------------------------------------------------------------------------
 # Create entry and note
@@ -367,6 +367,7 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
         if not vadjust_scale: vadjust_scale = 0
         vadjust_vofs = util.parse_int(entry.get("v_offset", 0))
         if not vadjust_vofs: vadjust_vofs = 0
+        vadjust_vofs = min(max(vadjust_vofs, VADJUST_MIN), VADJUST_MAX)
 
         if entry_is_notwhdl(entry):
             runfile_path = get_archive_path(entry).replace(".lha", ".run")

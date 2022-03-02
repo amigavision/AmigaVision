@@ -1,11 +1,12 @@
 --- # AGS2 Menu structure
 - Test:
+  - CannonFodder
+  - CrystalHammerV2
   - Defender2
   - DefenderOfTheCrown
   - DesertStrike
-  - CannonFodder
-  - Settlers
   - Hybris
+  - Settlers
 - TestWS:
   - note: Widescreen demos
   - Andromeda-Rule30: { scale: 6, v_offset: 48 }

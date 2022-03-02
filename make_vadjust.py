@@ -15,6 +15,9 @@ import argparse
 import struct
 
 # -----------------------------------------------------------------------------
+VADJUST_MIN = -16
+VADJUST_MAX = 60
+
 VADJUST_LEN = 1024
 
 # Base settings
