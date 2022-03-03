@@ -3,8 +3,8 @@ noiconborder >NIL:
 unixdirs MULTIPARENT WILDSTAR NOCX QUIET
 
 ;Minimig mouse wheel driver
-version >NIL: uaehf.device 1
-if warn
-  run >NIL: C:MinimigWheelDriver
-  SYS:Tools/FreeWheel/FreeWheel >NIL:
-endif
+;version >NIL: uaehf.device 1
+;if warn
+;  run >NIL: C:MinimigWheelDriver
+;  SYS:Tools/FreeWheel/FreeWheel >NIL:
+;endif

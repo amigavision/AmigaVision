@@ -5,15 +5,17 @@ if NOT EXISTS ENV:dsblvadj
   if NOT WARN
     if EXISTS S:vadjust_dat/x<SCALE$d>_<VOFS$0>
       copy S:vadjust_dat/x<SCALE$d>_<VOFS$0> TO MiSTer:minimig_vadjust.dat
-      quit
+      skip DONE
     endif
     if EXISTS S:vadjust_dat/xd_<VOFS$0>
       copy S:vadjust_dat/xd_<VOFS$0> TO MiSTer:minimig_vadjust.dat
-      quit
+      skip DONE
     endif
     if EXISTS S:vadjust_dat/xd_0
       copy S:vadjust_dat/xd_0 TO MiSTer:minimig_vadjust.dat
-      quit
+      skip DONE
     endif
   endif
 endif
+
+LAB DONE
