@@ -107,7 +107,8 @@ PAL60-5X    40:27
 NTSC-5X     40:27 or Original depending on title
 
 Again, make sure to add the Minimig core overrides in MiSTer.ini as specified
-in the previous section to enjoy the best HDMI output possible
+in the previous section to enjoy the best HDMI output possible, and make sure 
+you have set MiSTer to output in 1080p resolution.
 
 
 Controls:
