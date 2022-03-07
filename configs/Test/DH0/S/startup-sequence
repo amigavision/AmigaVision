@@ -1,12 +1,15 @@
 setpatch QUIET
 version >NIL:
-addbuffers >NIL: DF0: 15
-failat 21
+resident >NIL: C:assign PURE
+
+assign >NIL: exists DF0:
+if not warn
+  addbuffers >NIL: DF0: 15
+  failat 21
+endif
 
 makedir RAM:T RAM:Clipboards RAM:ENV RAM:ENV/Sys
 copy >NIL: ENVARC: RAM:ENV ALL NOREQ
-
-resident >NIL: C:assign PURE
 
 assign >NIL: ENV: RAM:ENV
 assign >NIL: T: RAM:T

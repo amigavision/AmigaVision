@@ -17,3 +17,9 @@ if NOT WARN
     copy >NIL: SYS:Prefs/Icons/MiSTer/Disk.info MiSTer:
   endif
 endif
+
+assign >NIL: EXISTS MiSTer:
+if WARN
+  makedir RAM:MiSTer FORCE >NIL:
+  assign MiSTer: RAM:MiSTer
+endif

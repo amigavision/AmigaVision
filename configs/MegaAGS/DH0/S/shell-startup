@@ -1,7 +1,5 @@
-; $VER: Shell-Startup 40.1 (9.2.93)
 resident >NIL: C:cpr PURE
 resident >NIL: C:dr PURE
-;Prompt "%N.%S> "
 Prompt "%N> "
 Alias clear "echo *"*E[0;0H*E[J*" "
 Alias exit endcli
