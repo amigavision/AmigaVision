@@ -3126,6 +3126,7 @@
     - Deadliners-Five: { scale: 6, v_offset: 40 }
     - DHS-CopperKaahBaahYaah: { scale: 6, v_offset: 44 }
     - Drugstore: { scale: 6, v_offset: 18 }
+    - Extension: { scale: 6, v_offset: 40 }
     - FaktoryAGA: { scale: 6, v_offset: 40 }
     - Ghostown-SushiBoyz: { scale: 6, v_offset: 62 }
     - Hologon: { scale: 6, v_offset: 45 }
