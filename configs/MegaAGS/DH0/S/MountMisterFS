@@ -1,13 +1,12 @@
 assign >NIL: EXISTS MiSTer:
 if WARN
-  version >NIL: uaehf.device 1
+  IsMiSTer
   if WARN
     mount MR0:
-    assign >NIL: EXISTS MiSTer:
-    if WARN
-      echo ""
-      echo "Warning: Shared folder could not be mounted"
-    endif
+  else
+    makedir RAM:MiSTer FORCE >NIL:
+    assign MiSTer: RAM:MiSTer
+    skip DONE
   endif
 endif
 
@@ -18,8 +17,4 @@ if NOT WARN
   endif
 endif
 
-assign >NIL: EXISTS MiSTer:
-if WARN
-  makedir RAM:MiSTer FORCE >NIL:
-  assign MiSTer: RAM:MiSTer
-endif
+LAB DONE

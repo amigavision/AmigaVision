@@ -82,7 +82,7 @@ mount CON: from DEVS:KingCON-mountlist
 mount RAW: from DEVS:KingCON-mountlist
 
 ;RTG support
-version >NIL: uaehf.device 1
+ismister
 if warn
   assign Picasso96: SYS:Tools/Picasso96
   DEVS:Monitors/MiSTer
