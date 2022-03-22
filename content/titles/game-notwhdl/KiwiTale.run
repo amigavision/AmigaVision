@@ -1,0 +1,6 @@
+IF EXISTS WHDSaves:KiwiTale
+  copy WHDSaves:KiwiTale/options.#? WHD:N/KiwiTale ALL QUIET
+ENDIF
+cd WHD:N/KiwiTale
+kiwi >NIL:
+copy WHD:N/KiwiTale/options.#? WHDSaves:KiwiTale ALL QUIET

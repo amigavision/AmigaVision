@@ -1,0 +1,16 @@
+IF EXISTS WHDSaves:ChampMan93
+  copy WHDSaves:ChampMan93/#? WHD:N/ChampMan93 ALL QUIET
+  delete >NIL: WHDSaves:ChampMan93 ALL FORCE
+ENDIF
+cd WHD:N/ChampMan93
+ChampMan93 >NIL:
+wait 4
+echo ""
+ask "Thank you for playing! Press enter to save data and return..."
+echo "*"*E[0;0H*E[J* "
+copy WHD:N/ChampMan93/hiscores#? WHDSaves:ChampMan93 ALL QUIET
+copy WHD:N/ChampMan93/clrecs#? WHDSaves:ChampMan93 ALL QUIET
+copy WHD:N/ChampMan93/mchfax#? WHDSaves:ChampMan93 ALL QUIET
+copy WHD:N/ChampMan93/mhst#? WHDSaves:ChampMan93 ALL QUIET
+copy WHD:N/ChampMan93/plhist#? WHDSaves:ChampMan93 ALL QUIET
+copy WHD:N/ChampMan93/svgame#? WHDSaves:ChampMan93 ALL QUIET

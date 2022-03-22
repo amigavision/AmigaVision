@@ -1,0 +1,7 @@
+cd WHD:N/Statix
+assign >NIL: STX: ""
+failat 61
+Statix_Intro >NIL:
+Statix_Final >NIL:
+assign >NIL: STX: REMOVE
+failat 21

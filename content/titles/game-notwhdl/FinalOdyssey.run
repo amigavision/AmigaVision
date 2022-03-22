@@ -1,0 +1,9 @@
+IF EXISTS WHDSaves:FinalOdyssey
+  copy WHDSaves:FinalOdyssey/V-FO#? S: ALL CLONE QUIET
+ENDIF
+cd WHD:N/FinalOdyssey
+assign >NIL: ODYSSEY: ""
+68020 >NIL:
+assign >NIL: ODYSSEY: REMOVE
+copy S:V-FO#? WHDSaves:FinalOdyssey ALL CLONE QUIET
+delete >NIL: S:V-FO#? ALL FORCE

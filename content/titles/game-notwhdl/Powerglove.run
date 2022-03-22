@@ -1,0 +1,6 @@
+IF EXISTS WHDSaves:Powerglove
+  copy WHDSaves:Powerglove/#?.hof WHD:N/Powerglove ALL CLONE QUIET
+ENDIF
+cd WHD:N/Powerglove
+Powerglove >NIL:
+copy WHD:N/Powerglove/#?.hof WHDSaves:Powerglove ALL CLONE QUIET
