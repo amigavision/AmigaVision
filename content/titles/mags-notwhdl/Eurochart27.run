@@ -1,0 +1,7 @@
+cd WHD:N/Eurochart27
+assign >NIL: EC27a: ""
+assign >NIL: EC27b: ""
+BrianState >NIL:
+EC >NIL:
+assign >NIL: EC27a: REMOVE
+assign >NIL: EC27b: REMOVE

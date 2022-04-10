@@ -1,0 +1,7 @@
+cd WHD:N/Eurochart25
+assign >NIL: EC25a: ""
+assign >NIL: EC25b: ""
+How2ScanAKid.exe >NIL:
+EC >NIL:
+assign >NIL: EC25a: REMOVE
+assign >NIL: EC25b: REMOVE

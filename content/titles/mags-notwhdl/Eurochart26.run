@@ -1,0 +1,7 @@
+cd WHD:N/Eurochart26
+assign >NIL: EC26a: ""
+assign >NIL: EC26b: ""
+EC26Intro >NIL:
+EC >NIL:
+assign >NIL: EC26a: REMOVE
+assign >NIL: EC26b: REMOVE
