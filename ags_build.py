@@ -360,7 +360,7 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
     runfile = None
     if get_amiga_whd_dir(entry) is not None or entry_is_notwhdl(entry):
         # videomode
-        whd_vmode = "NTSC" if entry.get("ntsc", 0) > 0 else "PAL"
+        whd_vmode = "NTSC" if util.parse_int(entry.get("ntsc", 0)) > 0 else "PAL"
         if g_args.ntsc: whd_vmode = "NTSC"
         # vadjust
         vadjust_scale = util.parse_int(entry.get("scale", 0))

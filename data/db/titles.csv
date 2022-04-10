@@ -4829,8 +4829,8 @@ mags-notwhdl--eurochart07;Eurochart #07;Eurochart 07;;;OCS;;0;;;;;;;;1990;;Engli
 mags-notwhdl--eurochart08;Eurochart #08;Eurochart 08;;;OCS;;0;;;;;;;;1990;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart08.lha;Demo;Disk Magazine;;
 mags-notwhdl--eurochart09;Eurochart #09;Eurochart 09;;;OCS;;0;;;;;;;;1991;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart09.lha;Demo;Disk Magazine;;
 mags-notwhdl--eurochart10;Eurochart #10;Eurochart 10;;;OCS;;0;;;;;;;;1991;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart10.lha;Demo;Disk Magazine;;
-game--greenberet--greenberet;Green Beret;Green Beret;;;OCS;;;;;;;;;Amiga port by Dante;2022;;English;Dante Retro Dev;Dante Retro Dev;1;;v1.0;GreenBeret/GreenBeret.slave;game/G/GreenBeret_v1.0.lha;Game;;6512;4695
-game-notwhdl--tritus;Tritus;Tritus;;;OCS;;;;;;;;;;1994;;English;Davin Pearson;F1 Licenceware;3;;;;game-notwhdl/Tritus.lha;Game;;4660;1608
+game--greenberet--greenberet;Green Beret;Green Beret;;;OCS;;0;;;;;;;Amiga port by Dante;2022;;English;Dante Retro Dev;Dante Retro Dev;1;;v1.0;GreenBeret/GreenBeret.slave;game/G/GreenBeret_v1.0.lha;Game;;6512;4695
+game-notwhdl--tritus;Tritus;Tritus;;;OCS;;0;;;;;;;;1994;;English;Davin Pearson;F1 Licenceware;3;;;;game-notwhdl/Tritus.lha;Game;;4660;1608
 demo-notwhdl--ds!up-a1;aSCII eXPRESS issue #01;ASCII Express 01;;;OCS;;0;;;;;;;;2022;Sweden, Finland, Germany;English;;Divine Stylerz, Up Rough;1;;;;demo-notwhdl/dS!UP-A1.lha;Demo;Disk Magazine;;
 mags-notwhdl--eurochart11;Eurochart #11;Eurochart 11;;;OCS;;0;;;;;;;;1991;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart11.lha;Demo;Disk Magazine;;
 mags-notwhdl--eurochart12;Eurochart #12;Eurochart 12;;;OCS;;0;;;;;;;;1991;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart12.lha;Demo;Disk Magazine;;

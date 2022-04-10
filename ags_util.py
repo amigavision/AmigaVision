@@ -20,7 +20,7 @@ def parse_int(v):
     try:
         return int(v)
     except ValueError:
-        return None
+        return 0
 
 def merge(src, dst):
     for key, value in src.items():
