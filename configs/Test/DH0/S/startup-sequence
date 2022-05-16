@@ -41,6 +41,8 @@ conclip
 path >NIL: RAM: C: SYS:Utilities SYS:Rexxc SYS:System S: SYS:Prefs SYS:WBStartup SYS:Tools SYS:Tools/Commodities
 copy >NIL: SYS:Prefs/Icons/RAM/Disk.info RAM:
 
+alias clear "echo *"*E[0;0H*E[J*" "
+
 ;Mount shared folder
 execute S:MountMisterFS
 

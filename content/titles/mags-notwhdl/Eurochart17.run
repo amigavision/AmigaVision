@@ -1,2 +1,5 @@
 cd WHD:N/Eurochart17
-EuroChart_Nov92 >NIL:
+echo ""
+echo "Press left mouse button..."
+EuroChart_Nov92
+clear

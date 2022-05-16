@@ -1,7 +1,6 @@
 resident >NIL: C:cpr PURE
 resident >NIL: C:dr PURE
 Prompt "%N> "
-Alias clear "echo *"*E[0;0H*E[J*" "
 Alias exit endcli
 Alias logout endcli
 Alias dir dr -!MN3

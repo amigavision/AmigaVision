@@ -1,3 +1,6 @@
 cd WHD:N/Eurochart24
-Intro >NIL:
-EC >NIL:
+killaga Intro >NIL:
+echo ""
+echo "Press left mouse button..."
+killaga >NIL: EC
+clear

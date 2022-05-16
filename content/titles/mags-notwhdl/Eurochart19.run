@@ -1,2 +1,5 @@
 cd WHD:N/Eurochart19
-EC >NIL:
+echo ""
+echo "Press left mouse button..."
+killaga EC
+clear
