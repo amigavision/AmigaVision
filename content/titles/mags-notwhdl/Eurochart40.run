@@ -1,0 +1,4 @@
+cd WHD:N/Eurochart40
+EC40Intro.exe
+clear
+Eurochart40.exe >NIL:

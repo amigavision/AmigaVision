@@ -4835,23 +4835,41 @@ mags-notwhdl--eurochart12;Eurochart #12;Eurochart 12;;;OCS;;0;;;;;;;;1991;;Engli
 mags-notwhdl--eurochart13;Eurochart #13;Eurochart 13;;;OCS;;0;;;;;;;;1991;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart13.lha;Demo;Disk Magazine;;
 mags-notwhdl--eurochart14;Eurochart #14;Eurochart 14;;;OCS;;0;;;;;;;;1992;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart14.lha;Demo;Disk Magazine;;
 mags-notwhdl--eurochart15;Eurochart #15;Eurochart 15;;;OCS;;0;;;;;;;;1992;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart15.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart16;Eurochart #16;Eurochart 16;1;;OCS;;0;;;;;Press LMB at blank screen to start;;;1992;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart16.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart17;Eurochart #17;Eurochart 17;1;;OCS;;0;;;;;Press LMB at blank screen to start;;;1992;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart17.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart18;Eurochart #18;Eurochart 18;1;;OCS;;0;;;;;;;;1992;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart18.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart19;Eurochart #19;Eurochart 19;1;;OCS;;0;;;;;;;;1993;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart19.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart20;Eurochart #20;Eurochart 20;1;;OCS;;0;;;;;;;;1993;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart20.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart21;Eurochart #21;Eurochart 21;1;;OCS;;0;;;;;;;;1993;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart21.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart22;Eurochart #22;Eurochart 22;1;;OCS;;0;;;;;;;;1993;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart22.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart23;Eurochart #23;Eurochart 23;1;;OCS;;0;;;;;;;;1993;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart23.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart24;Eurochart #24;Eurochart 24;1;;OCS;;0;;;;;;;;1994;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart24.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart25;Eurochart #25;Eurochart 25;1;;AGA;1;0;;;;;;;;1994;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart25.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart26;Eurochart #26;Eurochart 26;1;;AGA;1;0;;;;;;;;1994;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart26.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart27;Eurochart #27;Eurochart 27;1;;AGA;1;0;;;;;;;;1995;;English;;Gunnars Farvebio, Static Bytes;1;;;;mags-notwhdl/Eurochart27.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart28;Eurochart #28;Eurochart 28;1;;AGA;1;0;;;;;;;;1996;;English;;Depth;1;;;;mags-notwhdl/Eurochart28.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart29;Eurochart #29;Eurochart 29;1;;AGA;1;0;;;;;;;;1997;;English;;Depth;1;;;;mags-notwhdl/Eurochart29.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart30;Eurochart #30;Eurochart 30;1;;AGA;1;0;;;;;;;;1997;;English;;Depth;1;;;;mags-notwhdl/Eurochart30.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart16;Eurochart #16;Eurochart 16;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1992;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart16.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart17;Eurochart #17;Eurochart 17;;;OCS;;0;;;;;;;;1992;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart17.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart18;Eurochart #18;Eurochart 18;;;OCS;;0;;;;;;;;1992;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart18.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart19;Eurochart #19;Eurochart 19;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1993;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart19.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart20;Eurochart #20;Eurochart 20;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1993;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart20.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart21;Eurochart #21;Eurochart 21;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1993;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart21.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart22;Eurochart #22;Eurochart 22;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1993;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart22.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart23;Eurochart #23;Eurochart 23;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1993;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart23.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart24;Eurochart #24;Eurochart 24;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1994;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart24.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart25;Eurochart #25;Eurochart 25;;;AGA;1;0;;;;;;;;1994;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart25.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart26;Eurochart #26;Eurochart 26;;;AGA;1;0;;;;;;;;1994;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart26.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart27;Eurochart #27;Eurochart 27;;;AGA;1;0;;;;;;;;1995;;English;;Gunnars Farvebio, Static Bytes;1;;;;mags-notwhdl/Eurochart27.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart28;Eurochart #28;Eurochart 28;;;AGA;1;0;;;;;;;;1996;;English;;Depth;1;;;;mags-notwhdl/Eurochart28.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart29;Eurochart #29;Eurochart 29;;;AGA;1;0;;;;;;;;1997;;English;;Depth;1;;;;mags-notwhdl/Eurochart29.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart30;Eurochart #30;Eurochart 30;;;AGA;1;0;;;;;;;;1997;;English;;Depth;1;;;;mags-notwhdl/Eurochart30.lha;Demo;Disk Magazine;;
 game--redzonentsc--redzonentsc;Red Zone;Red Zone;1;game--redzone--redzone;OCS;;1;;;;;;;;1992;;English;Psygnosis;Psygnosis;1;CUSTOM4=2;v3.1;RedZoneNTSC/RedZoneNTSC.slave;game/R/RedZone_v3.1_NTSC.lha;Game;Racing;1215;1808
 game--blastaball--blastaball;Blastaball;Blastaball;;;OCS;;0;;;;;;;;1987;;English;Icon Design;Mastertronic;2;;v1.0;Blastaball/Blastaball.Slave;game/B/Blastaball_v1.0_1557.lha;Game;Sports - Future/Fantasy;140;168
 game--petsciirobots--petsciirobots;Attack of the PETSCII Robots;Attack of the PETSCII Robots;;;OCS;;2;;;;;;;MSX to Amiga port by Hoffman;2021;;English;8-Bit Productions;8-Bit Productions;1;;v1.2;PETSCIIRobots/PETSCIIRobots.Slave;game/P/PETSCIIRobots_v1.2.lha;Game;;6475;4689
 demo--megademosargon--megademosargon;Megademo;Sargon Megademo;;;OCS;;0;;;;;;;;1989;Germany;English;;Sargon;1;;v1.0;MegademoSargon/MegademoSargon.Slave;demo/M/Megademo_v1.0_Sargon.lha;Demo;Demo;;
 game--lotus2cd32--lotus2cd32;Lotus Turbo Challenge 2;Lotus 2;1;game--lotus2--lotus2;AGA/CD32;1;0;5;0;;;;;;1994;;English;Magnetic Fields;Gremlin;2 (4 with serial link);CUSTOM1=1 CUSTOM2=1;v1.12;Lotus2CD32/Lotus2CD32.Slave;game/L/Lotus2_v1.12_CD32.lha;Game;Racing - Arcade;930;702
+mags-notwhdl--eurochart31;Eurochart #31;Eurochart 31;;;AGA;1;0;;;;;;;;1997;;English;;Depth;1;;;;mags-notwhdl/Eurochart31.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart32;Eurochart #32;Eurochart 32;;;AGA;1;0;;;;;;;;1997;;English;;Depth;1;;;;mags-notwhdl/Eurochart32.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart33;Eurochart #33;Eurochart 33;;;AGA;1;0;;;;;;;;1998;;English;;Depth;1;;;;mags-notwhdl/Eurochart33.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart34;Eurochart #34;Eurochart 34;;;AGA;1;0;;;;;;;;1998;;English;;Depth;1;;;;mags-notwhdl/Eurochart34.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart35;Eurochart #35;Eurochart 35;;;AGA;1;0;;;;;;;;1998;;English;;Depth;1;;;;mags-notwhdl/Eurochart35.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart36;Eurochart #36;Eurochart 36;;;AGA;1;0;;;;;;;;1999;;English;;Depth;1;;;;mags-notwhdl/Eurochart36.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart37;Eurochart #37;Eurochart 37;;;AGA;1;0;;;;;;;;1999;;English;;Depth;1;;;;mags-notwhdl/Eurochart37.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart38;Eurochart #38;Eurochart 38;;;AGA;1;0;;;;;;;;1999;;English;;Depth;1;;;;mags-notwhdl/Eurochart38.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart39;Eurochart #39;Eurochart 39;;;AGA;1;0;;;;;;;;1999;;English;;Depth, Iris;1;;;;mags-notwhdl/Eurochart39.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart40;Eurochart #40;Eurochart 40;;;AGA;1;0;;;;;;;;2000;;English;;Depth, Iris;1;;;;mags-notwhdl/Eurochart40.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart41;Eurochart #41;Eurochart 41;;;AGA;1;0;;;;;;;;2000;;English;;Depth, Iris;1;;;;mags-notwhdl/Eurochart41.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart42;Eurochart #42;Eurochart 42;;;AGA;1;0;;;;;;;;2001;;English;;Depth, Iris;1;;;;mags-notwhdl/Eurochart42.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart43;Eurochart #43;Eurochart 43;;;AGA;1;0;;;;;;;;2001;;English;;Depth, Iris;1;;;;mags-notwhdl/Eurochart43.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart44;Eurochart #44;Eurochart 44;;;AGA;1;0;;;;;;;;2002;;English;;Iris;1;;;;mags-notwhdl/Eurochart44.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart45;Eurochart #45;Eurochart 45;;;AGA;1;0;;;;;;;;2002;;English;;Iris;1;;;;mags-notwhdl/Eurochart45.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart46;Eurochart #46;Eurochart 46;;;AGA;1;0;;;;;;;;2003;;English;;Iris;1;;;;mags-notwhdl/Eurochart46.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart47;Eurochart #47;Eurochart 47;;;AGA;1;0;;;;;;;;2004;;English;;Iris;1;;;;mags-notwhdl/Eurochart47.lha;Demo;Disk Magazine;;
+mags-notwhdl--eurochart48;Eurochart #48;Eurochart 48;;;AGA;1;0;;;;;;;;2006;;English;;Iris;1;;;;mags-notwhdl/Eurochart48.lha;Demo;Disk Magazine;;

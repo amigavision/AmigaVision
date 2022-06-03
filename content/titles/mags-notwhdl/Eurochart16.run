@@ -1,5 +1,3 @@
 cd WHD:N/Eurochart16
-echo ""
-echo "Press left mouse button..."
 killaga EuroChart_Sep92
 clear
