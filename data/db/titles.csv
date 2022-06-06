@@ -4873,7 +4873,7 @@ mags-notwhdl--eurochart45;Eurochart #45;Eurochart 45;;;AGA;1;0;;;;;;;;2002;;Engl
 mags-notwhdl--eurochart46;Eurochart #46;Eurochart 46;;;AGA;1;0;;;;;;;;2003;;English;;Iris;1;;;;mags-notwhdl/Eurochart46.lha;Demo;Disk Magazine;;
 mags-notwhdl--eurochart47;Eurochart #47;Eurochart 47;;;AGA;1;0;;;;;;;;2004;;English;;Iris;1;;;;mags-notwhdl/Eurochart47.lha;Demo;Disk Magazine;;
 mags-notwhdl--eurochart48;Eurochart #48;Eurochart 48;;;AGA;1;0;;;;;;;;2006;;English;;Iris;1;;;;mags-notwhdl/Eurochart48.lha;Demo;Disk Magazine;;
-game--turrican2aga--turrican2aga;Turrican II: The Final Fight;Turrican 2 AGA;;;AGA;1;0;;-11;1;;;;AGA version v10 by Muzza;2022;;English;Factor 5;Rainbow Arts;1;;v0.2;Turrican2AGA/Turrican2AGA.slave;game/_hacks/Turrican2AGA_v0.2.lha;Game;Platform - Shooting;1535;1081
+game--turrican2aga--turrican2aga;Turrican II: The Final Fight;Turrican 2 AGA;;;AGA;1;0;5;7;1;;;;AGA version v10 by Muzza;2022;;English;Factor 5;Rainbow Arts;1;;v0.2;Turrican2AGA/Turrican2AGA.slave;game/_hacks/Turrican2AGA_v0.2.lha;Game;Platform - Shooting;1535;1081
 demo-notwhdl--fnuque-hexjunkie;Hex Junkie;Hex Junkie;;;OCS;;0;;;;;;;;2022;Denmark;English;;Fnuque;1;;;;demo-notwhdl/Fnuque-HexJunkie.lha;Demo;Intro 4K;;
 demo-notwhdl--logicoma-logicos;Logic OS;Logic OS;;;OCS;;0;5;24;;;;;;2022;UK, Denmark;English;;Logicoma, Loonies;1;;;;demo-notwhdl/Logicoma-LogicOS.lha;Demo;Intro 64K;;
 demo-notwhdl--koney-ketamuskolar;Ketamuskolar;Ketamuskolar;;;OCS;;0;;;;;;;;2022;Italy;English;;Koney;1;;;;demo-notwhdl/Koney-Ketamuskolar.lha;Demo;Intro 40K;;
