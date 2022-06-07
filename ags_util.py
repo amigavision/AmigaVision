@@ -22,6 +22,10 @@ def parse_int(v):
     except ValueError:
         return 0
 
+def parse_date(v):
+    components = v.split("-")[:3]
+    return components + [None] * (3 - len(components))
+
 def merge(src, dst):
     for key, value in src.items():
         if isinstance(value, dict):
@@ -193,7 +197,7 @@ def read_csv(csv_path, new_db_path):
                "note" TEXT,
                "issues" TEXT,
                "hack" TEXT,
-               "year" TEXT,
+               "release_date" TEXT,
                "country" TEXT,
                "language" TEXT,
                "developer" TEXT,
@@ -212,12 +216,12 @@ def read_csv(csv_path, new_db_path):
     with open(csv_path, "r") as f:
         dr = csv.DictReader(f, delimiter=";")
         r = [(l["id"], l["title"], l["title_short"], l["redundant"], l["preferred_version"], l["hardware"], l["aga"], l["ntsc"],
-              l["scale"], l["v_offset"], l["gamepad"], l["lightgun"], l["note"], l["issues"], l["hack"], l["year"], l["country"], l["language"],
-              l["developer"], l["publisher"], l["players"], l["slave_args"], l["slave_version"], l["slave_path"], l["archive_path"],
-              l["category"], l["subcategory"], l["hol_id"], l["lemon_id"]) for l in dr]
+              l["scale"], l["v_offset"], l["gamepad"], l["lightgun"], l["note"], l["issues"], l["hack"], l["release_date"],
+              l["country"], l["language"], l["developer"], l["publisher"], l["players"], l["slave_args"], l["slave_version"],
+              l["slave_path"], l["archive_path"], l["category"], l["subcategory"], l["hol_id"], l["lemon_id"]) for l in dr]
         c.executemany('''INSERT INTO titles (
                            id, title, title_short, redundant, preferred_version, hardware, aga, ntsc,
-                           scale, v_offset, gamepad, lightgun, note, issues, hack, year, country, language,
+                           scale, v_offset, gamepad, lightgun, note, issues, hack, release_date, country, language,
                            developer, publisher, players, slave_args, slave_version, slave_path, archive_path,
                            category, subcategory, hol_id, lemon_id)
                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);''', r)
