@@ -834,6 +834,18 @@ def main():
                 path = util.path(r, name)
                 if name == ".DS_Store":
                     os.remove(path)
+
+        # create title listings
+        list_dir = util.path(g_out_dir, "listings")
+        if util.is_dir(list_dir):
+            shutil.rmtree(list_dir)
+        util.make_dir(list_dir)
+        for list_def in [("Game", "games.txt"), ("Demo", "demos.txt")]:
+            content_path = util.path(get_ags2_dir(), "Run", list_def[0])
+            if util.is_dir(content_path):
+                listing = "\n".join(sorted(os.listdir(util.path(get_ags2_dir(), "Run", list_def[0]))))
+                open(util.path(list_dir, list_def[1]), mode="w", encoding="latin-1").write(listing)
+
         return 0
 
     # except Exception as err:
