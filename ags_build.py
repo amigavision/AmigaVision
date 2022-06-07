@@ -294,6 +294,7 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
     global g_entry_for_path
     max_w = AGS_LIST_WIDTH
     note = None
+    runfile_ext = "" if only_script else ".run"
 
     # apply override options
     if isinstance(options, dict):
@@ -336,21 +337,21 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
 
     # prevent name clash
     title = title.strip()
-    if util.is_file(util.path(path, title) + ".run"):
+    if util.is_file(util.path(path, title) + runfile_ext):
         if entry.get("category", "").lower() == "demo":
             title += " (" + entry.get("publisher") + ")"
         else:
             title += " (" + entry.get("hardware", "").replace("/ECS", "").replace("AGA/CD32", "CD32").replace("OCS/CDTV", "CDTV").replace("/", "-") + ")"
         if only_script:
             title = title.replace(" ", "_")
-    if len(title) > max_w:
+    if not only_script and len(title) > max_w:
         title = title[:max_w - 2].strip() + ".."
-        if util.is_file(util.path(path, title) + ".run"):
+        if util.is_file(util.path(path, title) + runfile_ext):
             suffix = 1
             while suffix <= 10:
                 title = title[:-1] + str(suffix)
                 suffix += 1
-                if not util.is_file(util.path(path, title) + ".run"):
+                if not util.is_file(util.path(path, title) + runfile_ext):
                     break
 
     base_path = util.path(path, title)
@@ -370,11 +371,11 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
         vadjust_vofs = min(max(vadjust_vofs, VADJUST_MIN), VADJUST_MAX)
 
         if entry_is_notwhdl(entry):
-            runfile_path = get_archive_path(entry).replace(".lha", ".run")
-            if util.is_file(runfile_path):
+            runfile_source_path = get_archive_path(entry).replace(".lha", ".run")
+            if util.is_file(runfile_source_path):
                 runfile = "set{}\n".format(whd_vmode.lower())
                 runfile += "setvadjust {} {}\n".format(vadjust_vofs, vadjust_scale)
-                with open(runfile_path, 'r') as f: runfile += f.read()
+                with open(runfile_source_path, 'r') as f: runfile += f.read()
                 runfile += "setvmode $AGSVMode\n"
                 runfile += "setvadjust\n"
         else:
@@ -404,10 +405,11 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
         runfile = "echo \"Title not available.\"" + "\n" + "wait 2"
 
     if runfile:
-        if util.is_file(base_path + ".run"):
-            print(" > AGS2 clash:", entry["id"], "-", base_path + ".run")
+        runfile_dest_path = base_path + runfile_ext
+        if util.is_file(runfile_dest_path):
+            print(" > AGS2 clash:", entry["id"], "-", runfile_dest_path)
         else:
-            open(base_path + ".run", mode="w", encoding="latin-1").write(runfile)
+            open(runfile_dest_path, mode="w", encoding="latin-1").write(runfile)
 
     if only_script:
         return
@@ -529,7 +531,11 @@ def ags_create_autoentries():
 
         # Run-scripts for randomizer
         if entry.get("category", "").lower() == "game" and not entry.get("issues"):
-            ags_create_entry(None, entry, util.path(path, "Run"), only_script=True)
+            ags_create_entry(None, entry, util.path(path, "Run", "Game"), only_script=True)
+        elif entry.get("category", "").lower() == "demo" and not entry.get("issues"):
+            sub = entry.get("subcategory", "").lower()
+            if sub.startswith("demo") or sub.startswith("intro") or sub.startswith("crack"):
+                ags_create_entry(None, entry, util.path(path, "Run", "Demo"), only_script=True)
 
     # Notes for created directories
     if util.is_dir(util.path(path, "[ All Games ].ags")):
