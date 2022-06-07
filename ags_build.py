@@ -253,7 +253,7 @@ def ags_make_note(entry, add_note):
         note += ("Title:      {}".format(entry["title"]))[:max_w] + "\n"
         note += ("Developer:  {}".format(entry["developer"]))[:max_w] + "\n"
         note += ("Publisher:  {}".format(entry["publisher"]))[:max_w] + "\n"
-        note += ("Year:       {}".format(entry["year"]))[:max_w] + "\n"
+        note += ("Released:   {}".format(entry["release_date"]))[:max_w] + "\n"
         note += ("Players:    {}".format(entry["players"]))[:max_w] + "\n"
         note += ("Hardware:   {}".format(system))[:max_w] + "\n"
         if entry.get("issues"):
@@ -267,7 +267,7 @@ def ags_make_note(entry, add_note):
         note += ("Group:      {}".format(group))[:max_w] + "\n"
         if entry.get("country"):
             note += ("Country:    {}".format(entry["country"]))[:max_w] + "\n"
-        note += ("Year:       {}".format(entry["year"]))[:max_w] + "\n"
+        note += ("Released:   {}".format(entry["release_date"]))[:max_w] + "\n"
         if entry.get("subcategory", "").lower() != "demo":
             note += ("Category:   {}".format(entry["subcategory"]))[:max_w] + "\n"
         else:
@@ -480,7 +480,7 @@ def ags_create_autoentries():
         letter = entry.get("title_short", "z")[0].upper()
         if letter.isnumeric():
             letter = "0-9"
-        year = entry["year"]
+        year, _, _ = util.parse_date(entry["release_date"])
         if "x" in year.lower():
             year = "Unknown"
 
