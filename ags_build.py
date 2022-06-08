@@ -373,11 +373,13 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
         if entry_is_notwhdl(entry):
             runfile_source_path = get_archive_path(entry).replace(".lha", ".run")
             if util.is_file(runfile_source_path):
-                runfile = "set{}\n".format(whd_vmode.lower())
+                runfile = "ags_notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
+                runfile += "set{}\n".format(whd_vmode.lower())
                 runfile += "setvadjust {} {}\n".format(vadjust_vofs, vadjust_scale)
                 with open(runfile_source_path, 'r') as f: runfile += f.read()
                 runfile += "setvmode $AGSVMode\n"
                 runfile += "setvadjust\n"
+                runfile += "ags_notify\n"
         else:
             whd_entrypath = get_amiga_whd_dir(entry)
             if whd_entrypath:
@@ -387,7 +389,8 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
                 if entry.get("slave_args"):
                     whd_cargs += " " + entry["slave_args"]
                 whd_qtkey = "" if "QuitKey=" in whd_cargs else "$whdlqtkey"
-                runfile = "cd \"{}\"\n".format(whd_entrypath)
+                runfile = "ags_notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
+                runfile += "cd \"{}\"\n".format(whd_entrypath)
                 runfile += "IF NOT EXISTS ENV:whdlspdly\n"
                 runfile += "  echo 200 >ENV:whdlspdly\n"
                 runfile += "ENDIF\n"
@@ -398,9 +401,13 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
                 runfile += "  whdload >NIL: \"{}\" $whdlvmode {} SplashDelay=$whdlspdly {}\n".format(whd_slave, whd_cargs, whd_qtkey)
                 runfile += "ELSE\n"
                 runfile += "  setvadjust {} {}\n".format(vadjust_vofs, vadjust_scale)
-                runfile += "  whdload >NIL: \"{}\" {} {} SplashDelay=$whdlspdly {}\n".format(whd_slave, whd_vmode, whd_cargs, whd_qtkey)
+                if only_script:
+                    runfile += "  whdload >NIL: \"{}\" {} {} SplashDelay=0 {}\n".format(whd_slave, whd_vmode, whd_cargs, whd_qtkey)
+                else:
+                    runfile += "  whdload >NIL: \"{}\" {} {} SplashDelay=$whdlspdly {}\n".format(whd_slave, whd_vmode, whd_cargs, whd_qtkey)
                 runfile += "  setvadjust\n"
                 runfile += "ENDIF\n"
+                runfile += "ags_notify\n"
     else:
         runfile = "echo \"Title not available.\"" + "\n" + "wait 2"
 

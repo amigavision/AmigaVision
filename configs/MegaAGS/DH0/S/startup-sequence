@@ -44,7 +44,8 @@ copy >NIL: SYS:Prefs/Icons/RAM/Disk.info RAM:
 alias clear "echo *"*E[0;0H*E[J*" "
 
 ;Mount shared folder
-execute S:MountMisterFS
+misterfs_mount
+ags_notify
 
 ;Launch AGS
 assign >NIL: exists Saves:
@@ -70,6 +71,10 @@ if not warn
     endif
     setvadjust
     C:bblank
+    if exists MiSTer:ags_boot
+      cpr MiSTer:ags_boot T:ags_boot MOVE CLONE SILENT
+      pickfile >NIL: f T:ags_boot q c ags_launch []
+    endif
     AGS:AGS2
     C:bblank
   endif

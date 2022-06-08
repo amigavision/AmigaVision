@@ -1,0 +1,27 @@
+.K TITLE
+
+if <TITLE$_NONE_> EQ "_NONE_"
+  skip DONE
+endif
+if <TITLE> EQ "any"
+  pickfile >NIL: d AGS:Run/Meta q c execute ags_launch []
+  skip DONE
+endif
+if <TITLE> EQ "any_game"
+  pickfile >NIL: d AGS:Run/Game q c execute AGS:Run/Game/[]
+  skip DONE
+endif
+if <TITLE> EQ "any_demo"
+  pickfile >NIL: d AGS:Run/Demo q c execute AGS:Run/Demo/[]
+  skip DONE
+endif
+if exists AGS:Run/Game/<TITLE>
+  execute AGS:Run/Game/<TITLE>
+  skip DONE
+endif
+if exists AGS:Run/Demo/<TITLE>
+  execute AGS:Run/Demo/<TITLE>
+  skip DONE
+endif
+
+LAB DONE
