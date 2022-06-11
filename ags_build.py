@@ -3,6 +3,7 @@
 # AGSImager: Builder
 
 import argparse
+import json
 import operator
 import os
 import shutil
@@ -23,7 +24,8 @@ AGS_INFO_WIDTH = 48
 class CollectedEntries:
     def __init__(self):
         self.by_id = dict()
-        self.for_path = set()
+        self.path_ids = set()
+        self.path_sort_rank = dict()
 
 # -----------------------------------------------------------------------------
 # Database and path queries
@@ -293,11 +295,11 @@ def ags_create_entry(entries: CollectedEntries, ags_path, name, entry, path, ran
         note = entry["note"]
 
     # skip if entry already added at path
-    path_id = "{}{}".format(entry["id"] if (entry and entry["id"]) else name, path)
-    if path_id in entries.for_path:
+    path_id = json.dumps({"entry_id": entry["id"] if (entry and entry["id"]) else name, "path": path})
+    if path_id in entries.path_ids:
         return
     else:
-        entries.for_path.add(path_id)
+        entries.path_ids.add(path_id)
 
     # fix path name
     path_prefix = ags_path
@@ -713,6 +715,18 @@ def main():
                     util.copytree(d[0], dest)
                 else:
                     print(" > WARNING: '" + d[1] + "' doesn't exist")
+
+        # create directory caches (TODO: apply sorting rules from collected_entries.path_sort_rank)
+        for path, dirs, files in os.walk(amiga_ags_path):
+            cache = []
+            for dir in sorted(filter(lambda d: d.endswith(".ags"), dirs)):
+                cache.append("D{}".format(dir.removesuffix(".ags")))
+            for file in sorted(filter(lambda f: f.endswith(".run"), files)):
+                cache.append("F{}".format(file.removesuffix(".run")))
+            if len(cache) > 0:
+                cachefile = "{}\n".format(len(cache))
+                for line in cache: cachefile += "{}\n".format(line)
+                open(util.path(path, ".dir"), mode="w", encoding="latin-1").write(cachefile)
 
         # build PFS container
         fs.build_pfs(util.path(out_dir, config_base_name + ".hdf"), clone_path, args.verbose)
