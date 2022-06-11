@@ -85,6 +85,7 @@ def make_pfs(path, partitions, sectors, heads, bootable, verbose):
     return
 
 # -----------------------------------------------------------------------------
+# command line interface
 
 def main():
     parser = argparse.ArgumentParser()

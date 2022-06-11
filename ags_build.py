@@ -6,12 +6,13 @@ import argparse
 import operator
 import os
 import shutil
-import subprocess
+from sqlite3 import Connection
 import sys
 import textwrap
-from ast import literal_eval as make_tuple
+
 import ags_util as util
 import ags_paths as paths
+import ags_fs as fs
 from make_vadjust import make_vadjust, VADJUST_MIN, VADJUST_MAX
 
 # -----------------------------------------------------------------------------
@@ -19,17 +20,15 @@ from make_vadjust import make_vadjust, VADJUST_MIN, VADJUST_MAX
 AGS_LIST_WIDTH = 26
 AGS_INFO_WIDTH = 48
 
-g_out_dir = "out"
-g_clone_dir = None
-g_args = None
-g_db = None
-g_entries = dict()
-g_entry_for_path = set()
+class CollectedEntries:
+    def __init__(self):
+        self.by_id = dict()
+        self.for_path = set()
 
 # -----------------------------------------------------------------------------
 # Database and path queries
 
-def get_entry(name):
+def get_entry(db, name):
     def sanitize(entry):
         if entry is None:
             return None
@@ -68,10 +67,10 @@ def get_entry(name):
         "%{}%".format(n)
     ]
     for p in patterns:
-        e = g_db.cursor().execute('SELECT * FROM titles WHERE id LIKE ?', (p.lower(),)).fetchone()
+        e = db.cursor().execute('SELECT * FROM titles WHERE id LIKE ?', (p.lower(),)).fetchone()
         entry = sanitize(e)
         if entry:
-            preferred_entry = get_entry(entry["preferred_version"]) if "preferred_version" in entry and entry["preferred_version"] else None
+            preferred_entry = get_entry(db, entry["preferred_version"]) if "preferred_version" in entry and entry["preferred_version"] else None
             if preferred_entry:
                 preferred_entry = preferred_entry[0]
             return entry, preferred_entry
@@ -104,9 +103,6 @@ def entry_is_notwhdl(entry):
         return True
     return False
 
-def is_amiga_devicename(str):
-    return len(str) == 3 and str[0].isalpha() and str[1].isalpha() and str[2].isnumeric()
-
 def get_whd_slavename(entry):
     if entry_valid(entry):
         name = entry["slave_name"]
@@ -130,26 +126,17 @@ def get_short_slavename(name):
             return ".".join(parts)
     return name
 
-def get_boot_dir():
-    return util.path(g_clone_dir, "DH0")
-
-def get_games_dir():
-    return util.path(g_clone_dir, "DH1")
-
-def get_ags2_dir():
-    return util.path(get_boot_dir(), "AGS2")
-
-def get_whd_dir(entry):
+def get_whd_dir(clone_path, entry):
     if entry_is_notwhdl(entry):
-        return util.path(g_clone_dir, "DH1", "WHD", "N")
+        return util.path(clone_path, "DH1", "WHD", "N")
     else:
         p = "0-9" if entry["slave_dir"][0].isnumeric() else entry["slave_dir"][0].upper()
         if entry["id"].startswith("demo--"):
-            return util.path(g_clone_dir, "DH1", "WHD", "D", p)
+            return util.path(clone_path, "DH1", "WHD", "D", p)
         if entry["id"].startswith("mags--"):
-            return util.path(g_clone_dir, "DH1", "WHD", "M", p)
+            return util.path(clone_path, "DH1", "WHD", "M", p)
         else:
-            return util.path(g_clone_dir, "DH1", "WHD", "G", p)
+            return util.path(clone_path, "DH1", "WHD", "G", p)
 
 def get_amiga_whd_dir(entry):
     if not entry_valid(entry):
@@ -165,19 +152,19 @@ def get_amiga_whd_dir(entry):
         else:
             return "WHD:G/" + p + "/" + entry["slave_dir"]
 
-def extract_entries(entries):
+def extract_entries(clone_path, entries):
     unarchived = set()
-    for _, entry in entries.items():
+    for entry in entries:
         if "archive_path" in entry and not entry["archive_path"] in unarchived:
-            extract_whd(entry)
+            extract_whd(clone_path, entry)
             unarchived.add(entry["archive_path"])
 
-def extract_whd(entry):
+def extract_whd(clone_path, entry):
     arc_path = get_archive_path(entry)
     if not arc_path:
         print(" > WARNING: content archive not found:", entry["id"])
     else:
-        dest = get_whd_dir(entry)
+        dest = get_whd_dir(clone_path, entry)
         if entry_is_notwhdl(entry):
             util.lha_extract(arc_path, dest)
         else:
@@ -186,12 +173,12 @@ def extract_whd(entry):
             if util.is_file(info_path):
                 os.remove(info_path)
 
-def create_vadjust_dats():
-    util.make_dir(util.path(get_boot_dir(), "S", "vadjust_dat"))
+def create_vadjust_dats(path):
+    util.make_dir(path)
     for i in range(VADJUST_MIN, VADJUST_MAX+1):
-        open(util.path(get_boot_dir(), "S", "vadjust_dat", "xd_{}".format(i)), mode="wb").write(make_vadjust(i))
-        open(util.path(get_boot_dir(), "S", "vadjust_dat", "x5_{}".format(i)), mode="wb").write(make_vadjust(i, 5))
-        open(util.path(get_boot_dir(), "S", "vadjust_dat", "x6_{}".format(i)), mode="wb").write(make_vadjust(i, 6))
+        open(util.path(path, "xd_{}".format(i)), mode="wb").write(make_vadjust(i))
+        open(util.path(path, "x5_{}".format(i)), mode="wb").write(make_vadjust(i, 5))
+        open(util.path(path, "x6_{}".format(i)), mode="wb").write(make_vadjust(i, 6))
 
 # -----------------------------------------------------------------------------
 # Create entry and note
@@ -290,8 +277,7 @@ def ags_fix_filename(name):
     return name
 
 
-def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=None, options=None):
-    global g_entry_for_path
+def ags_create_entry(entries: CollectedEntries, ags_path, name, entry, path, rank=None, only_script=False, prefix=None, options=None):
     max_w = AGS_LIST_WIDTH
     note = None
     runfile_ext = "" if only_script else ".run"
@@ -308,13 +294,13 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
 
     # skip if entry already added at path
     path_id = "{}{}".format(entry["id"] if (entry and entry["id"]) else name, path)
-    if path_id in g_entry_for_path:
+    if path_id in entries.for_path:
         return
     else:
-        g_entry_for_path.add(path_id)
+        entries.for_path.add(path_id)
 
     # fix path name
-    path_prefix = get_ags2_dir()
+    path_prefix = ags_path
     if path != path_prefix:
         path_suffix = path.split(path_prefix + "/")[-1]
         path = path_prefix + "/" + "/".join(list(map(ags_fix_filename, path_suffix.split("/"))))
@@ -362,7 +348,6 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
     if get_amiga_whd_dir(entry) is not None or entry_is_notwhdl(entry):
         # videomode
         whd_vmode = "NTSC" if util.parse_int(entry.get("ntsc", 0)) > 0 else "PAL"
-        if g_args.ntsc: whd_vmode = "NTSC"
         # vadjust
         vadjust_scale = util.parse_int(entry.get("scale", 0))
         if not vadjust_scale: vadjust_scale = 0
@@ -430,27 +415,25 @@ def ags_create_entry(name, entry, path, rank=None, only_script=False, prefix=Non
         open(base_path + ".txt", mode="w", encoding="latin-1").write(ags_make_note(entry, note))
 
     # image
-    if not g_args.no_img and entry and "id" in entry and util.is_file(util.path("data", "img", entry["id"] + ".iff")):
+    if entry and "id" in entry and util.is_file(util.path("data", "img", entry["id"] + ".iff")):
         shutil.copyfile(util.path("data", "img", entry["id"] + ".iff"), base_path + ".iff")
     return
 
 # -----------------------------------------------------------------------------
 # Create entries from list
 
-def ags_create_entries(entries, path, note=None, ranked_list=False):
-    global g_entries
-
+def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_path, entries, path, note=None, ranked_list=False):
     # make dir
-    base_dir = get_ags2_dir()
+    base_path = ags_path
     if path:
         for d in path:
-            base_dir = util.path(base_dir, d[:26].strip() + ".ags")
-    util.make_dir(base_dir)
+            base_path = util.path(base_path, d[:26].strip() + ".ags")
+    util.make_dir(base_path)
 
     # make note
     if note:
         note = "\n".join([textwrap.fill(p, AGS_INFO_WIDTH) for p in note.replace("\\n", "\n").splitlines()])
-        open(base_dir[:-4] + ".txt", mode="w", encoding="latin-1").write(note)
+        open(base_path[:-4] + ".txt", mode="w", encoding="latin-1").write(note)
 
     # collect titles
     pos = 0
@@ -463,29 +446,28 @@ def ags_create_entries(entries, path, note=None, ranked_list=False):
             options = name[1]
 
         # use preferred (fuzzy) entry
-        e, pe = get_entry(n)
+        e, pe = get_entry(db, n)
         if not "--" in name and pe:
             e = pe
         if not e and not pe:
             if options is None or (options and not options.get("unavailable", False)):
                 print(" > WARNING: invalid entry: {}".format(n))
         else:
-            g_entries[e["id"]] = e
+            collected_entries.by_id[e["id"]] = e
         rank = None
         if ranked_list:
             rank = str(pos).zfill(len(str(len(entries))))
-        ags_create_entry(n, e, base_dir, rank=rank, options=options)
+        ags_create_entry(collected_entries, ags_path, n, e, base_path, rank=rank, options=options)
     return
 
 # -----------------------------------------------------------------------------
 # Collect entries for special folders "All Games" and "Demo Scene"
 
-def ags_create_autoentries():
-    path = get_ags2_dir()
-    d_path = get_ags2_dir()
+def ags_create_autoentries(entries: CollectedEntries, path):
+    d_path = path
     if util.is_dir(util.path(path, "[ Demo Scene ].ags")):
         d_path = util.path(path, "[ Demo Scene ].ags")
-    for entry in sorted(g_entries.values(), key=operator.itemgetter("title")):
+    for entry in sorted(entries.by_id.values(), key=operator.itemgetter("title")):
         letter = entry.get("title_short", "z")[0].upper()
         if letter.isnumeric():
             letter = "0-9"
@@ -495,8 +477,8 @@ def ags_create_autoentries():
 
         # Games
         if entry.get("category", "").lower() == "game":
-            ags_create_entry(None, entry, util.path(path, "[ All Games ].ags", letter + ".ags"))
-            ags_create_entry(None, entry, util.path(path, "[ All Games, by year ].ags", year + ".ags"))
+            ags_create_entry(entries, path, None, entry, util.path(path, "[ All Games ].ags", letter + ".ags"))
+            ags_create_entry(entries, path, None, entry, util.path(path, "[ All Games, by year ].ags", year + ".ags"))
 
         # Demos / Music Disks / Disk Mags
         def add_demo(entry, sort_group, sort_country):
@@ -507,24 +489,24 @@ def ags_create_autoentries():
             if group_letter.isnumeric():
                 group_letter = "0-9"
             if entry.get("subcategory", "").lower().startswith("disk mag"):
-                ags_create_entry(None, entry, util.path(d_path, "[ Disk Magazines ].ags"))
+                ags_create_entry(entries, path, None, entry, util.path(d_path, "[ Disk Magazines ].ags"))
             elif entry.get("subcategory", "").lower().startswith("music disk"):
-                ags_create_entry(None, entry, util.path(d_path, "[ Music Disks by title ].ags", letter + ".ags"))
-                ags_create_entry(None, entry, util.path(d_path, "[ Music Disks by year ].ags", year + ".ags"))
+                ags_create_entry(entries, path, None, entry, util.path(d_path, "[ Music Disks by title ].ags", letter + ".ags"))
+                ags_create_entry(entries, path, None, entry, util.path(d_path, "[ Music Disks by year ].ags", year + ".ags"))
             else:
                 if entry.get("subcategory", "").lower().startswith("crack"):
-                    ags_create_entry(None, entry, util.path(d_path, "[ Demos, crack intros ].ags"), prefix=sort_group)
+                    ags_create_entry(entries, path, None, entry, util.path(d_path, "[ Demos, crack intros ].ags"), prefix=sort_group)
                 if entry.get("subcategory", "").lower().startswith("intro"):
-                    ags_create_entry(None, entry, util.path(d_path, "[ Demos, 1-64KB ].ags"))
+                    ags_create_entry(entries, path, None, entry, util.path(d_path, "[ Demos, 1-64KB ].ags"))
                 group_entry = dict(entry)
                 group_entry["title_short"] = group_entry.get("title")
-                ags_create_entry(None, entry, util.path(d_path, "[ Demos by title ].ags", letter + ".ags"))
-                ags_create_entry(None, group_entry, util.path(d_path, "[ Demos by group ].ags", group_letter + ".ags"), prefix=sort_group)
-                ags_create_entry(None, entry, util.path(d_path, "[ Demos by year ].ags", year + ".ags"))
+                ags_create_entry(entries, path, None, entry, util.path(d_path, "[ Demos by title ].ags", letter + ".ags"))
+                ags_create_entry(entries, path, None, group_entry, util.path(d_path, "[ Demos by group ].ags", group_letter + ".ags"), prefix=sort_group)
+                ags_create_entry(entries, path, None, entry, util.path(d_path, "[ Demos by year ].ags", year + ".ags"))
                 if sort_country:
-                    ags_create_entry(None, entry, util.path(d_path, "[ Demos by country ].ags", sort_country + ".ags"))
+                    ags_create_entry(entries, path, None, entry, util.path(d_path, "[ Demos by country ].ags", sort_country + ".ags"))
 
-        if g_args.all_demos and entry.get("category", "").lower() == "demo":
+        if entry.get("category", "").lower() == "demo":
             groups = entry.get("publisher")
             if not groups:
                 continue
@@ -538,11 +520,11 @@ def ags_create_autoentries():
 
         # Run-scripts for randomizer
         if entry.get("category", "").lower() == "game" and not entry.get("issues"):
-            ags_create_entry(None, entry, util.path(path, "Run", "Game"), only_script=True)
+            ags_create_entry(entries, path, None, entry, util.path(path, "Run", "Game"), only_script=True)
         elif entry.get("category", "").lower() == "demo" and not entry.get("issues"):
             sub = entry.get("subcategory", "").lower()
             if sub.startswith("demo") or sub.startswith("intro") or sub.startswith("crack"):
-                ags_create_entry(None, entry, util.path(path, "Run", "Demo"), only_script=True)
+                ags_create_entry(entries, path, None, entry, util.path(path, "Run", "Demo"), only_script=True)
 
     # Notes for created directories
     if util.is_dir(util.path(path, "[ All Games ].ags")):
@@ -574,7 +556,7 @@ def ags_create_autoentries():
 # -----------------------------------------------------------------------------
 # Menu yaml parsing, AGS2 tree creation
 
-def ags_create_tree(node, path=[]):
+def ags_create_tree(db: Connection, collected_entries: CollectedEntries, ags_path, node, path=[]):
     if isinstance(node, list):
         entries = []
         note = None
@@ -601,112 +583,34 @@ def ags_create_tree(node, path=[]):
                         entries += [(key, value)]
                     else:
                         # item is a subtree
-                        ags_create_tree(value, path + [key])
-        ags_create_entries(entries, path, note=note, ranked_list=ranked_list)
+                        ags_create_tree(db, collected_entries, ags_path, value, path + [key])
+        ags_create_entries(db, collected_entries, ags_path, entries, path, note=note, ranked_list=ranked_list)
 
-def ags_add_all(category):
-    for r in g_db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
-        entry, preferred_entry = get_entry(r["id"])
+def ags_add_all(db: Connection, entries: CollectedEntries, category, all_versions, prefer_ecs):
+    for r in db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
+        entry, preferred_entry = get_entry(db, r["id"])
         if entry:
-            if g_args.all_versions:
-                g_entries[entry["id"]] = entry
-            elif g_args.ecs is False:
+            if all_versions:
+                entries.by_id[entry["id"]] = entry
+            elif prefer_ecs is False:
                 if preferred_entry:
-                    g_entries[preferred_entry["id"]] = preferred_entry
+                    entries.by_id[preferred_entry["id"]] = preferred_entry
                 else:
-                    g_entries[entry["id"]] = entry
+                    entries.by_id[entry["id"]] = entry
             else:
                 if entry_is_aga(entry):
                     continue
                 if preferred_entry and entry_is_aga(preferred_entry):
-                    g_entries[entry["id"]] = entry
+                    entries.by_id[entry["id"]] = entry
                 elif preferred_entry:
-                    g_entries[preferred_entry["id"]] = preferred_entry
+                    entries.by_id[preferred_entry["id"]] = preferred_entry
                 else:
-                    g_entries[entry["id"]] = entry
+                    entries.by_id[entry["id"]] = entry
 
 # -----------------------------------------------------------------------------
-# File system output
-
-def build_pfs(config_base_name, verbose):
-    if verbose:
-        print("building PFS container...")
-
-    pfs3_bin = util.path("data", "pfs3", "pfs3.bin")
-    if not util.is_file(pfs3_bin):
-        raise IOError("PFS3 filesystem doesn't exist: " + pfs3_bin)
-
-    if verbose:
-        print(" > calculating partition sizes...")
-
-    block_size = 512
-    heads = 4
-    sectors = 63
-    cylinder_size = block_size * heads * sectors
-    fs_overhead = 1.0718
-    num_cyls_rdb = 1
-    total_cyls = num_cyls_rdb
-
-    partitions = [] # (partition name, cylinders)
-    for f in sorted(os.listdir(g_clone_dir)):
-        if util.is_dir(util.path(g_clone_dir, f)) and is_amiga_devicename(f):
-            mb_free = 100 if f == "DH0" else 50
-            cyls = int(fs_overhead * (util.get_dir_size(util.path(g_clone_dir, f), block_size)[2] + (mb_free * 1024 * 1024))) // cylinder_size
-            partitions.append(("DH" + str(len(partitions)), cyls))
-            total_cyls += cyls
-
-    out_hdf = util.path(g_out_dir, config_base_name + ".hdf")
-    if util.is_file(out_hdf):
-        os.remove(out_hdf)
-
-    if verbose: print(" > creating pfs container ({}MB)...".format((total_cyls * cylinder_size) // (1024 * 1024)))
-    r = subprocess.run(["rdbtool", out_hdf,
-                        "create", "chs={},{},{}".format(total_cyls + 1, heads, sectors), "+", "init", "rdb_cyls={}".format(num_cyls_rdb)])
-
-    if verbose: print(" > adding filesystem...")
-    r = subprocess.run(["rdbtool", out_hdf, "fsadd", pfs3_bin, "fs=PFS3"], stdout=subprocess.PIPE)
-
-    if verbose:
-        print(" > adding partitions...")
-
-    # add boot partition
-    part = partitions.pop(0)
-    if verbose: print("    > " + part[0])
-    r = subprocess.run(["rdbtool", out_hdf,
-                        "add", "name={}".format(part[0]),
-                        "start={}".format(num_cyls_rdb), "size={}".format(part[1]),
-                        "fs=PFS3", "block_size={}".format(block_size), "max_transfer=0x0001FE00", "mask=0x7FFFFFFE",
-                        "num_buffer=300", "bootable=True"], stdout=subprocess.PIPE)
-
-    # add subsequent partitions
-    for part in partitions:
-        if verbose: print("    > " + part[0])
-        r = subprocess.run(["rdbtool", out_hdf, "free"], stdout=subprocess.PIPE, universal_newlines=True)
-        free = make_tuple(r.stdout.splitlines()[0])
-        free_start = int(free[0])
-        free_end = int(free[1])
-        part_start = free_start
-        part_end = part_start + part[1]
-        if part_end > free_end:
-            part_end = free_end
-        r = subprocess.run(["rdbtool", out_hdf,
-                            "add", "name={}".format(part[0]),
-                            "start={}".format(part_start), "end={}".format(part_end),
-                            "fs=PFS3", "block_size={}".format(block_size), "max_transfer=0x0001FE00",
-                            "mask=0x7FFFFFFE", "num_buffer=300"], stdout=subprocess.PIPE)
-    return
-
-# -----------------------------------------------------------------------------
-# Copy base image, extra files
-
-def extract_base_image(base_hdf, dest):
-    _ = subprocess.run(["xdftool", base_hdf, "read", "/", dest])
-
-# -----------------------------------------------------------------------------
+# command line interface
 
 def main():
-    global g_args, g_db, g_out_dir, g_clone_dir
-
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", dest="config_file", required=True, metavar="FILE", type=lambda x: util.argparse_is_file(parser, x),  help="configuration file")
     parser.add_argument("-o", "--out_dir", dest="out_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="output directory")
@@ -714,113 +618,112 @@ def main():
     parser.add_argument("-a", "--ags_dir", dest="ags_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="AGS2 configuration directory")
     parser.add_argument("-d", "--add_dir", dest="add_dirs", action="append", help="add dir to amiga filesystem (example 'DH1:Music::~/Amiga/Music')")
 
+    parser.add_argument("--no_autolists", dest="no_autolists", action="store_true", default=False, help="don't add any auto-lists")
     parser.add_argument("--all_games", dest="all_games", action="store_true", default=False, help="include all games in database")
     parser.add_argument("--all_demos", dest="all_demos", action="store_true", default=False, help="include all demos in database")
     parser.add_argument("--all_versions", dest="all_versions", action="store_true", default=False, help="include all non-redundant versions of titles (if --all_games)")
-    parser.add_argument("--no_autolists", dest="no_autolists", action="store_true", default=False, help="don't add any auto-lists")
-
-    parser.add_argument("--no_img", dest="no_img", action="store_true", default=False, help="don't copy screenshots")
-    parser.add_argument("--ecs_versions", dest="ecs", action="store_true", default=False, help="prefer OCS/ECS versions (if --all_games)")
-    parser.add_argument("--force_ntsc", dest="ntsc", action="store_true", default=False, help="force NTSC video mode")
+    parser.add_argument("--prefer_ecs", dest="prefer_ecs", action="store_true", default=False, help="prefer OCS/ECS versions (if --all_games)")
 
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
         paths.verify()
-        g_args = parser.parse_args()
-        g_db = util.get_db(g_args.verbose)
+        args = parser.parse_args()
 
-        if g_args.out_dir:
-            g_out_dir = g_args.out_dir
+        db = util.get_db(args.verbose)
+        collected_entries = CollectedEntries()
 
-        g_clone_dir = util.path(g_out_dir, "tmp")
-        if util.is_dir(g_clone_dir):
-            shutil.rmtree(g_clone_dir)
-        util.make_dir(util.path(g_clone_dir, "DH0"))
+        if args.out_dir:
+            out_dir = args.out_dir
 
-        config_base_name = os.path.splitext(os.path.basename(g_args.config_file))[0]
+        clone_path = util.path(out_dir, "tmp")
+        amiga_boot_path = util.path(clone_path, "DH0")
+        amiga_ags_path = util.path(amiga_boot_path, "AGS2")
+
+        if util.is_dir(clone_path):
+            shutil.rmtree(clone_path)
+        util.make_dir(util.path(clone_path, "DH0"))
+
+        config_base_name = os.path.splitext(os.path.basename(args.config_file))[0]
 
         data_dir = "data"
         if not util.is_dir(data_dir):
             raise IOError("data dir doesn't exist: " + data_dir)
 
         # extract base image
-        base_hdf = g_args.base_hdf
+        base_hdf = args.base_hdf
         if not base_hdf:
             base_hdf = util.path(paths.content(), "base", "base.hdf")
         if not util.is_file(base_hdf):
             raise IOError("base HDF doesn't exist: " + base_hdf)
-        if g_args.verbose:
-            print("extracting base HDF image... ({})".format(base_hdf))
-        extract_base_image(base_hdf, get_boot_dir())
+        if args.verbose: print("extracting base HDF image... ({})".format(base_hdf))
+        fs.extract_base_image(base_hdf, amiga_boot_path)
 
         # parse menu
         menu = None
-        if g_args.verbose:
-            print("parsing menu...")
-        menu = util.yaml_load(g_args.config_file)
+        if args.verbose: print("parsing menu...")
+        menu = util.yaml_load(args.config_file)
         if not isinstance(menu, list):
-            raise ValueError("config file not a list: " + g_args.config_file)
+            raise ValueError("config file not a list: " + args.config_file)
 
         # copy base AGS2 config, create database
-        if g_args.verbose:
-            print("building AGS2 database...")
+        if args.verbose: print("building AGS2 database...")
 
-        base_ags2 = g_args.ags_dir
+        base_ags2 = args.ags_dir
         if not base_ags2:
             base_ags2 = util.path("data", "ags2")
         if not util.is_dir(base_ags2):
             raise IOError("AGS2 configuration directory doesn't exist: " + base_ags2)
-        if g_args.verbose:
+        if args.verbose:
             print(" > using configuration: " + base_ags2)
 
-        util.copytree(base_ags2, get_ags2_dir())
+        util.copytree(base_ags2, amiga_ags_path)
 
         if menu:
-            ags_create_tree(menu)
-        if g_args.all_games:
-            ags_add_all("Game")
-        if g_args.all_demos:
-            ags_add_all("Demo")
-            ags_add_all("Mags")
+            ags_create_tree(db, collected_entries, amiga_ags_path, menu)
+        if args.all_games:
+            ags_add_all(db, collected_entries, "Game", args.all_versions, args.prefer_ecs)
+        if args.all_demos:
+            ags_add_all(db, collected_entries, "Demo", args.all_versions, args.prefer_ecs)
+            ags_add_all(db, collected_entries, "Mags", args.all_versions, args.prefer_ecs)
 
-        if not g_args.no_autolists:
-            ags_create_autoentries()
+        if not args.no_autolists:
+            ags_create_autoentries(collected_entries, amiga_ags_path)
 
-        create_vadjust_dats()
+        create_vadjust_dats(util.path(amiga_boot_path, "S", "vadjust_dat"))
 
         # extract whdloaders
-        if g_args.verbose: print("extracting {} content archives...".format(len(g_entries.items())))
-        extract_entries(g_entries)
+        if args.verbose: print("extracting {} content archives...".format(len(collected_entries.by_id.items())))
+        extract_entries(clone_path, collected_entries.by_id.values())
 
         # copy extra files
-        config_extra_dir = util.path(os.path.dirname(g_args.config_file), config_base_name)
+        config_extra_dir = util.path(os.path.dirname(args.config_file), config_base_name)
         if util.is_dir(config_extra_dir):
-            if g_args.verbose: print("copying configuration extras...")
-            util.copytree(config_extra_dir, g_clone_dir)
+            if args.verbose: print("copying configuration extras...")
+            util.copytree(config_extra_dir, clone_path)
 
         # copy additional directories
-        if g_args.add_dirs:
-            if g_args.verbose: print("copying additional directories...")
-            for s in g_args.add_dirs:
+        if args.add_dirs:
+            if args.verbose: print("copying additional directories...")
+            for s in args.add_dirs:
                 d = s.split("::")
                 if util.is_dir(d[0]):
-                    dest = util.path(g_clone_dir, d[1].replace(":", "/"))
+                    dest = util.path(clone_path, d[1].replace(":", "/"))
                     print(" > copying '" + d[0] +"' to '" + d[1] + "'")
                     util.copytree(d[0], dest)
                 else:
                     print(" > WARNING: '" + d[1] + "' doesn't exist")
 
         # build PFS container
-        build_pfs(config_base_name, g_args.verbose)
+        fs.build_pfs(util.path(out_dir, config_base_name + ".hdf"), clone_path, args.verbose)
 
         # set up cloner environment
         cloner_adf = util.path("data", "cloner", "boot.adf")
         cloner_cfg = util.path("data", "cloner", "template.fs-uae")
-        clone_script = util.path(os.path.dirname(g_args.config_file), config_base_name) + ".clonescript"
+        clone_script = util.path(os.path.dirname(args.config_file), config_base_name) + ".clonescript"
         if util.is_file(cloner_adf) and util.is_file(cloner_cfg) and util.is_file(clone_script):
-            if g_args.verbose: print("copying cloner config...")
-            shutil.copyfile(cloner_adf, util.path(g_clone_dir, "boot.adf"))
+            if args.verbose: print("copying cloner config...")
+            shutil.copyfile(cloner_adf, util.path(clone_path, "boot.adf"))
             # create config from template
             with open(cloner_cfg, 'r') as f:
                 cfg = f.read()
@@ -828,29 +731,29 @@ def main():
                 cfg = cfg.replace("$AGSTEMP", paths.tmp())
                 cfg = cfg.replace("$AGSDEST", util.path(os.getenv("AGSDEST")))
                 cfg = cfg.replace("$FSUAEROM", util.path(os.getenv("FSUAEROM")))
-                open(util.path(g_clone_dir, "cfg.fs-uae"), mode="w").write(cfg)
+                open(util.path(clone_path, "cfg.fs-uae"), mode="w").write(cfg)
             # copy clone script and write fs-uae metadata
-            shutil.copyfile(clone_script, util.path(g_clone_dir, "clone"))
-            open(util.path(g_clone_dir, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.00")
+            shutil.copyfile(clone_script, util.path(clone_path, "clone"))
+            open(util.path(clone_path, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.00")
         else:
             print("WARNING: cloner config files not found")
 
         # clean output directory
-        for r, _, f in os.walk(g_clone_dir):
+        for r, _, f in os.walk(clone_path):
             for name in f:
                 path = util.path(r, name)
                 if name == ".DS_Store":
                     os.remove(path)
 
         # create title listings
-        list_dir = util.path(g_out_dir, "listings")
+        list_dir = util.path(out_dir, "listings")
         if util.is_dir(list_dir):
             shutil.rmtree(list_dir)
         util.make_dir(list_dir)
         for list_def in [("Game", "games.txt"), ("Demo", "demos.txt")]:
-            content_path = util.path(get_ags2_dir(), "Run", list_def[0])
+            content_path = util.path(amiga_ags_path, "Run", list_def[0])
             if util.is_dir(content_path):
-                listing = "\n".join(sorted(os.listdir(util.path(get_ags2_dir(), "Run", list_def[0]))))
+                listing = "\n".join(sorted(os.listdir(util.path(amiga_ags_path, "Run", list_def[0]))))
                 open(util.path(list_dir, list_def[1]), mode="w", encoding="latin-1").write(listing)
 
         return 0

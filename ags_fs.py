@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+
+# AGSImager: Native filesystem functions
+
+import os
+import sys
+import subprocess
+from ast import literal_eval as make_tuple
+import ags_util as util
+
+# -----------------------------------------------------------------------------
+
+def is_amiga_devicename(str):
+    return len(str) == 3 and str[0].isalpha() and str[1].isalpha() and str[2].isnumeric()
+
+def extract_base_image(base_hdf, dest):
+    _ = subprocess.run(["xdftool", base_hdf, "read", "/", dest])
+
+#def build_pfs(config_base_name, verbose):
+def build_pfs(hdf_path, clone_path, verbose):
+    if verbose:
+        print("building PFS container...")
+
+    pfs3_bin = util.path("data", "pfs3", "pfs3.bin")
+    if not util.is_file(pfs3_bin):
+        raise IOError("PFS3 filesystem doesn't exist: " + pfs3_bin)
+
+    if verbose:
+        print(" > calculating partition sizes...")
+
+    block_size = 512
+    heads = 4
+    sectors = 63
+    cylinder_size = block_size * heads * sectors
+    fs_overhead = 1.0718
+    num_cyls_rdb = 1
+    total_cyls = num_cyls_rdb
+
+    partitions = [] # (partition name, cylinders)
+    for f in sorted(os.listdir(clone_path)):
+        if util.is_dir(util.path(clone_path, f)) and is_amiga_devicename(f):
+            mb_free = 100 if f == "DH0" else 50
+            cyls = int(fs_overhead * (util.get_dir_size(util.path(clone_path, f), block_size)[2] + (mb_free * 1024 * 1024))) // cylinder_size
+            partitions.append(("DH" + str(len(partitions)), cyls))
+            total_cyls += cyls
+
+    if util.is_file(hdf_path):
+        os.remove(hdf_path)
+
+    if verbose: print(" > creating pfs container ({}MB)...".format((total_cyls * cylinder_size) // (1024 * 1024)))
+    r = subprocess.run(["rdbtool", hdf_path,
+                        "create", "chs={},{},{}".format(total_cyls + 1, heads, sectors), "+", "init", "rdb_cyls={}".format(num_cyls_rdb)])
+
+    if verbose: print(" > adding filesystem...")
+    r = subprocess.run(["rdbtool", hdf_path, "fsadd", pfs3_bin, "fs=PFS3"], stdout=subprocess.PIPE)
+
+    if verbose:
+        print(" > adding partitions...")
+
+    # add boot partition
+    part = partitions.pop(0)
+    if verbose: print("    > " + part[0])
+    r = subprocess.run(["rdbtool", hdf_path,
+                        "add", "name={}".format(part[0]),
+                        "start={}".format(num_cyls_rdb), "size={}".format(part[1]),
+                        "fs=PFS3", "block_size={}".format(block_size), "max_transfer=0x0001FE00", "mask=0x7FFFFFFE",
+                        "num_buffer=300", "bootable=True"], stdout=subprocess.PIPE)
+
+    # add subsequent partitions
+    for part in partitions:
+        if verbose: print("    > " + part[0])
+        r = subprocess.run(["rdbtool", hdf_path, "free"], stdout=subprocess.PIPE, universal_newlines=True)
+        free = make_tuple(r.stdout.splitlines()[0])
+        free_start = int(free[0])
+        free_end = int(free[1])
+        part_start = free_start
+        part_end = part_start + part[1]
+        if part_end > free_end:
+            part_end = free_end
+        r = subprocess.run(["rdbtool", hdf_path,
+                            "add", "name={}".format(part[0]),
+                            "start={}".format(part_start), "end={}".format(part_end),
+                            "fs=PFS3", "block_size={}".format(block_size), "max_transfer=0x0001FE00",
+                            "mask=0x7FFFFFFE", "num_buffer=300"], stdout=subprocess.PIPE)
+    return
+
+
+# -----------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    print("not runnable")
+    sys.exit(1)
