@@ -767,7 +767,7 @@ def main():
         for list_def in [("Game", "games.txt"), ("Demo", "demos.txt")]:
             content_path = util.path(amiga_ags_path, "Run", list_def[0])
             if util.is_dir(content_path):
-                listing = "\n".join(sorted(os.listdir(util.path(amiga_ags_path, "Run", list_def[0]))))
+                listing = "\n".join(util.sorted_natural(os.listdir(util.path(amiga_ags_path, "Run", list_def[0]))))
                 open(util.path(list_dir, list_def[1]), mode="w", encoding="latin-1").write(listing)
 
         return 0

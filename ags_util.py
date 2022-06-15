@@ -5,6 +5,7 @@
 import csv
 import math
 import os
+import re
 import shutil
 import sqlite3
 import stat
@@ -117,6 +118,12 @@ def prettify_names(str):
     if last_delimiter > 0:
         str = str[:last_delimiter] + " & " + str[last_delimiter + 2:]
     return str
+
+def sorted_natural(list):
+    def natural(s):
+        return [int(text) if text.isdigit() else text.lower()
+            for text in re.split(r'(\d+)', s)]
+    return sorted(list, key=natural)
 
 # -----------------------------------------------------------------------------
 
