@@ -3145,6 +3145,7 @@
     - Melon-Cortez
     - Melon-FisherhawkDr
     - Melon-WelcomeIntro
+    - ProjectXSE--Ministry: { scale: 6, v_offset: 17 }
     - MoodsPlateau-SolveEtCoagula
     - Pacific-2ndWave: { scale: 6, v_offset: 8 }
     - Pacific-Monomateria: { scale: 6, v_offset: 50 }
