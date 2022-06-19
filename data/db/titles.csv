@@ -1809,7 +1809,7 @@ game--sharkeysmoll--sharkeysmoll;Sharkey's Moll;Sharkey's Moll;;;OCS;;0;;;;;;;;1
 game--spaceport--spaceport;Spaceport;Spaceport;;;OCS;;2;;;;;;;;1987;;English;reLINE;Axxiom, reLINE;1;;v1.0;Spaceport/Spaceport.Slave;game/S/Spaceport_v1.0.lha;Game;;2042;982
 game--stegtheslug--stegtheslug;Steg The Slug;Steg The Slug;;;OCS;;1;;;;;;;;1992;;English;Big Red;Codemasters;1;;v1.1;StegTheSlug/StegTheSlug.slave;game/S/StegTheSlug_v1.1_2271.lha;Game;;2117;2182
 game--strider2--strider2;Strider II;Strider II;;;OCS;;2;;;;;;;;1990;;English;Tiertex;Capcom, U.S. Gold;1;;v1.1;Strider2/Strider2.Slave;game/S/Strider2_v1.1_0386.lha;Game;;2145;1339
-game--superseymoursavesplanet--superseymoursavesplanet;Super Seymour;Super Seymour;;;OCS;;0;;;;;;;;1992;;English;Optimus;Codemasters;1;;v1.2;SuperSeymourSavesPlanet/SuperSeymourSavesPlanet.slave;game/S/SuperSeymourSavesThePlanet_v1.2.lha;Game;;2201;1987
+game--superseymoursavesplanet--superseymoursavesplanet;Super Seymour;Super Seymour;;;OCS;;0;;;;;;;;1992;;English;Optimus;Codemasters;1;;v1.3;SuperSeymourSavesPlanet/SuperSeymourSavesPlanet.Slave;game/S/SuperSeymourSavesThePlanet_v1.3_2524.lha;Game;;2201;1987
 game--stunttrackracerntsc--stunttrackracerntsc;Stunt Track Racer;Stunt Track Racer;1;game--stuntcarracer--stuntcarracer;OCS;;3;;;;;;;;1989;;English;Geoff Crammond;MicroPlay;8 (supports  serial link);;v1.0;StuntTrackRacerNTSC/StuntTrackRacerNTSC.Slave;game/S/StuntTrackRacer_v1.0_NTSC_1142.lha;Game;Racing;2161;1014
 game--sperislegacyaga--sperislegacyaga;The Speris Legacy;Speris Legacy;;;AGA;1;0;;;1;;;;;1996;;English;Binary Emotions;Ocean, Team 17;1;;v2.0;SperisLegacyAGA/SperisLegacyAGA.slave;game/S/SperisLegacy_v2.0_AGA_1337.lha;Game;Action RPG;2055;1185
 game--shadowdancer--shadowdancer;Shadow Dancer;Shadow Dancer;;;OCS;;1;;;1;;;;;1991;;English;Images;U.S. Gold;1;CUSTOM3=1;v1.2;ShadowDancer/ShadowDancer.slave;game/S/ShadowDancer_v1.2_0202.lha;Game;;1887;952
@@ -4817,30 +4817,30 @@ game--elvirantsc--elvirantsc;Elvira: Mistress Of The Dark;Elvira;1;game--elvira-
 demo-notwhdl--lgc&lns-waytoorude;Way Too Rude;Way Too Rude;;;OCS;;0;5;26;;;;;;2020;UK, Denmark;English;;Logicoma, Loonies;1;;;;demo-notwhdl/LGC&LNS-WayTooRude.lha;Demo;Intro 64K;;
 game--tzeroripaga--tzer0ripaga;T-zer0;T-zer0;;;AGA;1;0;;;;;;;;1999;;English;Trauma Zero Team;PXL;2;;v1.0;TZeroRIPAGA/TZer0RIPAGA.Slave;game/_generic/TZer0RIPAGA.lha;Game;Shoot'em Up - Horizontal;1551;1603
 game-notwhdl--revengeofthemutantcamels1mb;Revenge Of The Mutant Camels (1MB);Revenge Of The Mutant Camels (1MB);;;OCS;;0;;;;;;;;1992;;English;Llamasoft;Llamasoft;2;;;;game-notwhdl/RevengeOfTheMutantCamels1MB.lha;Game;Shoot'em Up - Horizontal;487;-2
-mags-notwhdl--eurochart01;Eurochart #01;Eurochart 01;;;OCS;;0;;;;;;;;1989-11;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart01.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart02;Eurochart #02;Eurochart 02;;;OCS;;0;;;;;;;;1990-01;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart02.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart03;Eurochart #03;Eurochart 03;;;OCS;;0;;;;;;;;1990-03;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart03.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart04;Eurochart #04;Eurochart 04;;;OCS;;0;;;;;;;;1990-05;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart04.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart05;Eurochart #05;Eurochart 05;;;OCS;;0;;;;;;;;1990-07;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart05.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart06;Eurochart #06;Eurochart 06;;;OCS;;0;;;;;;;;1990-09;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart06.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart07;Eurochart #07;Eurochart 07;;;OCS;;0;;;;;;;;1990-10;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart07.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart08;Eurochart #08;Eurochart 08;;;OCS;;0;;;;;;;;1991-01;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart08.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart09;Eurochart #09;Eurochart 09;;;OCS;;0;;;;;;;;1991-03;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart09.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart10;Eurochart #10;Eurochart 10;;;OCS;;0;;;;;;;;1991-05;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart10.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart11;Eurochart #11;Eurochart 11;;;OCS;;0;;;;;;;;1991-07;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart11.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart12;Eurochart #12;Eurochart 12;;;OCS;;0;;;;;;;;1991-09;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart12.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart13;Eurochart #13;Eurochart 13;;;OCS;;0;;;;;;;;1991-10;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart13.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart14;Eurochart #14;Eurochart 14;;;OCS;;0;;;;;;;;1992-01;;English;;Crusaders;1;;;;mags-notwhdl/Eurochart14.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart15;Eurochart #15;Eurochart 15;;;OCS;;0;;;;;;;;1992-07;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart15.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart16;Eurochart #16;Eurochart 16;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1992-09;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart16.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart17;Eurochart #17;Eurochart 17;;;OCS;;0;;;;;;;;1992-11;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart17.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart18;Eurochart #18;Eurochart 18;;;OCS;;0;;;;;;;;1992-12;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart18.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart19;Eurochart #19;Eurochart 19;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1993-03;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart19.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart20;Eurochart #20;Eurochart 20;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1993-05;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart20.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart21;Eurochart #21;Eurochart 21;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1993-09;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart21.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart22;Eurochart #22;Eurochart 22;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1993-11;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart22.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart23;Eurochart #23;Eurochart 23;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1993-12;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart23.lha;Demo;Disk Magazine;;
-mags-notwhdl--eurochart24;Eurochart #24;Eurochart 24;;;OCS;;0;;;;;Press LMB at blank screen to start;;;1994-03;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart24.lha;Demo;Disk Magazine;;
+mags--eurochart01--eurochart01;Eurochart #01;Eurochart 01;;;OCS;;0;;;;;;;;1989-11;;English;;Crusaders;1;DATA=data CUSTOM=Nov89;v0.1;Eurochart01/Eurochart01.slave;mags/_generic/Eurochart01_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart02--eurochart02;Eurochart #02;Eurochart 02;;;OCS;;0;;;;;;;;1990-01;;English;;Crusaders;1;DATA=data CUSTOM=Crusaders-Eurochart02;v0.1;Eurochart02/Eurochart02.slave;mags/_generic/Eurochart02_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart03--eurochart03;Eurochart #03;Eurochart 03;;;OCS;;0;;;;;;;;1990-03;;English;;Crusaders;1;DATA=data CUSTOM=Crusaders-Eurochart03;v0.1;Eurochart03/Eurochart03.slave;mags/_generic/Eurochart03_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart04--eurochart04;Eurochart #04;Eurochart 04;;;OCS;;0;;;;;;;;1990-05;;English;;Crusaders;1;DATA=data CUSTOM=Crusaders-Eurochart04;v0.1;Eurochart04/Eurochart04.slave;mags/_generic/Eurochart04_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart05--eurochart05;Eurochart #05;Eurochart 05;;;OCS;;0;;;;;;;;1990-07;;English;;Crusaders;1;DATA=data;v0.1;Eurochart05/Eurochart05.slave;mags/_generic/Eurochart05_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart06--eurochart06;Eurochart #06;Eurochart 06;;;OCS;;0;;;;;;;;1990-09;;English;;Crusaders;1;DATA=data;v0.1;Eurochart06/Eurochart06.slave;mags/_generic/Eurochart06_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart07--eurochart07;Eurochart #07;Eurochart 07;;;OCS;;0;;;;;;;;1990-10;;English;;Crusaders;1;DATA=data;v0.1;Eurochart07/Eurochart07.Slave;mags/_generic/Eurochart07_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart08--eurochart08;Eurochart #08;Eurochart 08;;;OCS;;0;;;;;;;;1991-01;;English;;Crusaders;1;DATA=data;v0.1;Eurochart08/Eurochart08.Slave;mags/_generic/Eurochart08_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart09--eurochart09;Eurochart #09;Eurochart 09;;;OCS;;0;;;;;;;;1991-03;;English;;Crusaders;1;DATA=data;v0.1;Eurochart09/Eurochart09.Slave;mags/_generic/Eurochart09_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart10--eurochart10;Eurochart #10;Eurochart 10;;;OCS;;0;;;;;;;;1991-05;;English;;Crusaders;1;DATA=data;v0.1;Eurochart10/Eurochart10.slave;mags/_generic/Eurochart10_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart11--eurochart11;Eurochart #11;Eurochart 11;;;OCS;;0;;;;;;;;1991-07;;English;;Crusaders;1;DATA=data;v0.1;Eurochart11/Eurochart11.Slave;mags/_generic/Eurochart11_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart12--eurochart12;Eurochart #12;Eurochart 12;;;OCS;;0;;;;;;;;1991-09;;English;;Crusaders;1;DATA=data;v0.1;Eurochart12/Eurochart12.Slave;mags/_generic/Eurochart12_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart13--eurochart13;Eurochart #13;Eurochart 13;;;OCS;;0;;;;;;;;1991-10;;English;;Crusaders;1;DATA=data;v0.1;Eurochart13/Eurochart13.Slave;mags/_generic/Eurochart13_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart14--eurochart14;Eurochart #14;Eurochart 14;;;OCS;;0;;;;;;;;1992-01;;English;;Crusaders;1;DATA=data;v0.1;Eurochart14/Eurochart14.Slave;mags/_generic/Eurochart14_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart15--eurochart15;Eurochart #15;Eurochart 15;;;OCS;;0;;;;;;;;1992-07;;English;;Static Bytes;1;DATA=data;v0.1;Eurochart15/Eurochart15.Slave;mags/_generic/Eurochart15_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart16--eurochart16;Eurochart #16;Eurochart 16;;;OCS;;0;;;;;;;;1992-09;;English;;Static Bytes;1;DATA=data;v0.1;Eurochart16/Eurochart16.Slave;mags/_generic/Eurochart16_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart17--eurochart17;Eurochart #17;Eurochart 17;;;OCS;;0;;;;;;;;1992-11;;English;;Static Bytes;1;DATA=data;v0.1;Eurochart17/Eurochart17.Slave;mags/_generic/Eurochart17_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart18--eurochart18;Eurochart #18;Eurochart 18;;;OCS;;0;;;;;;;;1992-12;;English;;Static Bytes;1;DATA=data;v0.1;Eurochart18/Eurochart18.Slave;mags/_generic/Eurochart18_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart19--eurochart19;Eurochart #19;Eurochart 19;;;OCS;;0;;;;;;;;1993-03;;English;;Static Bytes;1;DATA=data;v0.1;Eurochart19/Eurochart19.Slave;mags/_generic/Eurochart19_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart20--eurochart20;Eurochart #20;Eurochart 20;;;OCS;;0;;;;;;;;1993-05;;English;;Static Bytes;1;DATA=data;v0.1;Eurochart20/Eurochart20.Slave;mags/_generic/Eurochart20_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart21--eurochart21;Eurochart #21;Eurochart 21;;;OCS;;0;;;;;;;;1993-09;;English;;Static Bytes;1;DATA=data;v0.1;Eurochart21/Eurochart21.Slave;mags/_generic/Eurochart21_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart22--eurochart22;Eurochart #22;Eurochart 22;;;OCS;;0;;;;;;;;1993-11;;English;;Static Bytes;1;DATA=data;v0.1;Eurochart22/Eurochart22.Slave;mags/_generic/Eurochart22_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart23--eurochart23;Eurochart #23;Eurochart 23;;;OCS;;0;;;;;;;;1993-12;;English;;Static Bytes;1;DATA=data;v0.1;Eurochart23/Eurochart23.Slave;mags/_generic/Eurochart23_v0.1.lha;Demo;Disk Magazine;;
+mags--eurochart24--eurochart24;Eurochart #24;Eurochart 24;;;OCS;;0;;;;;;;;1994-03;;English;;Static Bytes;1;DATA=data;v0.1;Eurochart24/Eurochart24.Slave;mags/_generic/Eurochart24_v0.1.lha;Demo;Disk Magazine;;
 mags-notwhdl--eurochart25;Eurochart #25;Eurochart 25;;;AGA;1;0;;;;;;;;1994-05;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart25.lha;Demo;Disk Magazine;;
 mags-notwhdl--eurochart26;Eurochart #26;Eurochart 26;;;AGA;1;0;;;;;;;;1994-11;;English;;Static Bytes;1;;;;mags-notwhdl/Eurochart26.lha;Demo;Disk Magazine;;
 mags-notwhdl--eurochart27;Eurochart #27;Eurochart 27;;;AGA;1;0;;;;;;;;1995-08;;English;;Gunnars Farvebio, Static Bytes;1;;;;mags-notwhdl/Eurochart27.lha;Demo;Disk Magazine;;
