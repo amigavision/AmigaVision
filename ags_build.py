@@ -466,7 +466,7 @@ def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_
 # Collect entries for special folders "All Games" and "Demo Scene"
 
 def ags_create_autoentries(entries: CollectedEntries, path):
-    d_path = path
+    d_path = None
     if util.is_dir(util.path(path, "[ Demo Scene ].ags")):
         d_path = util.path(path, "[ Demo Scene ].ags")
     for entry in sorted(entries.by_id.values(), key=operator.itemgetter("title")):
@@ -508,7 +508,7 @@ def ags_create_autoentries(entries: CollectedEntries, path):
                 if sort_country:
                     ags_create_entry(entries, path, None, entry, util.path(d_path, "[ Demos by country ].ags", sort_country + ".ags"))
 
-        if entry.get("category", "").lower() == "demo":
+        if entry.get("category", "").lower() == "demo" and d_path:
             groups = entry.get("publisher")
             if not groups:
                 continue
@@ -533,24 +533,27 @@ def ags_create_autoentries(entries: CollectedEntries, path):
         open(util.path(path, "[ All Games ].txt"), mode="w", encoding="latin-1").write("Browse all games alphabetically.")
     if util.is_dir(util.path(path, "[ All Games, by year ].ags")):
         open(util.path(path, "[ All Games, by year ].txt"), mode="w", encoding="latin-1").write("Browse all games by release year.")
-    if util.is_dir(util.path(d_path, "[ Demos by group ].ags")):
-        open(util.path(d_path, "[ Demos by group ].txt"), mode="w", encoding="latin-1").write("Browse demos by release group.")
-    if util.is_dir(util.path(d_path, "[ Demos by country ].ags")):
-        open(util.path(d_path, "[ Demos by country ].txt"), mode="w", encoding="latin-1").write("Browse demos by country of origin.")
-    if util.is_dir(util.path(d_path, "[ Demos by title ].ags")):
-        open(util.path(d_path, "[ Demos by title ].txt"), mode="w", encoding="latin-1").write("Browse demos by title.")
-    if util.is_dir(util.path(d_path, "[ Demos by year ].ags")):
-        open(util.path(d_path, "[ Demos by year ].txt"), mode="w", encoding="latin-1").write("Browse demos by release year.")
-    if util.is_dir(util.path(d_path, "[ Demos, 1-64KB ].ags")):
-        open(util.path(d_path, "[ Demos, 1-64KB ].txt"), mode="w", encoding="latin-1").write("Browse demos in the 1/4/40/64KB categories.")
-    if util.is_dir(util.path(d_path, "[ Demos, crack intros ].ags")):
-        open(util.path(d_path, "[ Demos, crack intros ].txt"), mode="w", encoding="latin-1").write("A glimpse into the origins of the demo scene.")
-    if util.is_dir(util.path(d_path, "[ Disk Magazines ].ags")):
-        open(util.path(d_path, "[ Disk Magazines ].txt"), mode="w", encoding="latin-1").write("A selection of scene disk magazines.")
-    if util.is_dir(util.path(d_path, "[ Music Disks by title ].ags")):
-        open(util.path(d_path, "[ Music Disks by title ].txt"), mode="w", encoding="latin-1").write("Browse music disks by title.")
-    if util.is_dir(util.path(d_path, "[ Music Disks by year ].ags")):
-        open(util.path(d_path, "[ Music Disks by year ].txt"), mode="w", encoding="latin-1").write("Browse music disks by year.")
+
+    if d_path:
+        if util.is_dir(util.path(d_path, "[ Demos by group ].ags")):
+            open(util.path(d_path, "[ Demos by group ].txt"), mode="w", encoding="latin-1").write("Browse demos by release group.")
+        if util.is_dir(util.path(d_path, "[ Demos by country ].ags")):
+            open(util.path(d_path, "[ Demos by country ].txt"), mode="w", encoding="latin-1").write("Browse demos by country of origin.")
+        if util.is_dir(util.path(d_path, "[ Demos by title ].ags")):
+            open(util.path(d_path, "[ Demos by title ].txt"), mode="w", encoding="latin-1").write("Browse demos by title.")
+        if util.is_dir(util.path(d_path, "[ Demos by year ].ags")):
+            open(util.path(d_path, "[ Demos by year ].txt"), mode="w", encoding="latin-1").write("Browse demos by release year.")
+        if util.is_dir(util.path(d_path, "[ Demos, 1-64KB ].ags")):
+            open(util.path(d_path, "[ Demos, 1-64KB ].txt"), mode="w", encoding="latin-1").write("Browse demos in the 1/4/40/64KB categories.")
+        if util.is_dir(util.path(d_path, "[ Demos, crack intros ].ags")):
+            open(util.path(d_path, "[ Demos, crack intros ].txt"), mode="w", encoding="latin-1").write("A glimpse into the origins of the demo scene.")
+        if util.is_dir(util.path(d_path, "[ Disk Magazines ].ags")):
+            open(util.path(d_path, "[ Disk Magazines ].txt"), mode="w", encoding="latin-1").write("A selection of scene disk magazines.")
+        if util.is_dir(util.path(d_path, "[ Music Disks by title ].ags")):
+            open(util.path(d_path, "[ Music Disks by title ].txt"), mode="w", encoding="latin-1").write("Browse music disks by title.")
+        if util.is_dir(util.path(d_path, "[ Music Disks by year ].ags")):
+            open(util.path(d_path, "[ Music Disks by year ].txt"), mode="w", encoding="latin-1").write("Browse music disks by year.")
+
     if util.is_dir(util.path(path, "[ Issues ].ags")):
         open(util.path(path, "[ Issues ].txt"), mode="w", encoding="latin-1").write(
             "Titles with known issues on Minimig-AGA.\n(Please report any new or resolved issues!)")
@@ -719,9 +722,9 @@ def main():
         # create directory caches (TODO: apply sorting rules from collected_entries.path_sort_rank)
         for path, dirs, files in os.walk(amiga_ags_path):
             cache = []
-            for dir in sorted(filter(lambda d: d.endswith(".ags"), dirs)):
+            for dir in util.sorted_natural(filter(lambda d: d.endswith(".ags"), dirs)):
                 cache.append("D{}".format(dir.removesuffix(".ags")))
-            for file in sorted(filter(lambda f: f.endswith(".run"), files)):
+            for file in util.sorted_natural(filter(lambda f: f.endswith(".run"), files)):
                 cache.append("F{}".format(file.removesuffix(".run")))
             if len(cache) > 0:
                 cachefile = "{}\n".format(len(cache))
@@ -760,7 +763,7 @@ def main():
                     os.remove(path)
 
         # create title listings
-        list_dir = util.path(out_dir, "listings")
+        list_dir = util.path(out_dir, "games", "Amiga", "listings")
         if util.is_dir(list_dir):
             shutil.rmtree(list_dir)
         util.make_dir(list_dir)
