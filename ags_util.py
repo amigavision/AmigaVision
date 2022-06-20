@@ -3,9 +3,9 @@
 # AGSImager: Utility functions
 
 import csv
+import functools
 import math
 import os
-import re
 import shutil
 import sqlite3
 import stat
@@ -15,7 +15,7 @@ from ruamel import yaml
 from lhafile import LhaFile
 
 # -----------------------------------------------------------------------------
-# Utility functions
+# utility functions
 
 def parse_int(v):
     try:
@@ -119,24 +119,41 @@ def prettify_names(str):
         str = str[:last_delimiter] + " & " + str[last_delimiter + 2:]
     return str
 
-def sorted_natural(list):
-    def natural(s):
-        return [int(text) if text.isdigit() else text.lower()
-            for text in re.split(r'(\d+)', s)]
-    return sorted(list, key=natural)
+# -----------------------------------------------------------------------------
+# custom directory sorting
+
+def sorted_natural(lst):
+    rom_nums = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10, "XI": 11, "XII": 12, "XIII": 13, "XIV": 14, "XV": 15}
+    alpha_order = " !\"#$%&'()*+,-./0123456789aàáâãbcçdeèéêëfghiìíîïjklmnñoòóôõpqrsßtuùúûüvwxyýÿzåäæöø:;<=>?@[\]^_`{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿Ð×Þð÷þ"
+    table_order = dict(zip(alpha_order, range(len(alpha_order))))
+
+    def rank(c):
+        if c in table_order: return table_order[c]
+        return len(table_order)
+
+    def deroman(s):
+        wl = s.replace(".", "").replace(":", "").replace(";", "").split(" ")
+        res = [wl.pop(0)]
+        for w in wl:
+            if w in rom_nums: res.append(str(rom_nums[w]))
+            else: res.append(w)
+        return " ".join(res)
+
+    def rom_comp(a, b):
+        if a == b: return 0
+        (ra, rb) = (deroman(a), deroman(b))
+        if len(ra) == 0: return -1
+        if len(rb) == 0: return 1
+        for x in zip(ra.lower(), rb.lower()):
+            (rax, rbx) = (rank(x[0]), rank(x[1]))
+            if rax == rbx: continue
+            return 1 if rax > rbx else -1
+        return 1 if len(ra) > len(rb) else -1
+
+    return sorted(lst, key=functools.cmp_to_key(rom_comp))
 
 # -----------------------------------------------------------------------------
-
-def yaml_write(data, path):
-    with open(path, 'w') as f:
-        yaml.round_trip_dump(data, f, explicit_start=True, version=(1, 2))
-
-def yaml_load(path):
-    with open(path, 'r') as f:
-        d = yaml.safe_load(f)
-    return d
-
-# -----------------------------------------------------------------------------
+# data extraction
 
 def lha_extract(arcpath, outpath):
     arc = LhaFile(arcpath)
@@ -151,6 +168,19 @@ def lha_extract(arcpath, outpath):
             open(os.path.join(outpath, dirname, basename), "wb").write(arc.read(filename))
 
 # -----------------------------------------------------------------------------
+# yaml serialization
+
+def yaml_write(data, path):
+    with open(path, 'w') as f:
+        yaml.round_trip_dump(data, f, explicit_start=True, version=(1, 2))
+
+def yaml_load(path):
+    with open(path, 'r') as f:
+        d = yaml.safe_load(f)
+    return d
+
+# -----------------------------------------------------------------------------
+# database functions
 
 def get_db(verbose):
     sqlite3_path = "data/db/titles.sqlite3"

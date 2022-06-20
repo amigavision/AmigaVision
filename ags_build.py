@@ -722,10 +722,10 @@ def main():
         # create directory caches (TODO: apply sorting rules from collected_entries.path_sort_rank)
         for path, dirs, files in os.walk(amiga_ags_path):
             cache = []
-            for dir in util.sorted_natural(filter(lambda d: d.endswith(".ags"), dirs)):
-                cache.append("D{}".format(dir.removesuffix(".ags")))
-            for file in util.sorted_natural(filter(lambda f: f.endswith(".run"), files)):
-                cache.append("F{}".format(file.removesuffix(".run")))
+            for dir in util.sorted_natural(list(map(lambda n: n.removesuffix(".ags"), filter(lambda d: d.endswith(".ags"), dirs)))):
+                cache.append("D{}".format(dir))
+            for file in util.sorted_natural(list(map(lambda n: n.removesuffix(".run"), filter(lambda f: f.endswith(".run"), files)))):
+                cache.append("F{}".format(file))
             if len(cache) > 0:
                 cachefile = "{}\n".format(len(cache))
                 for line in cache: cachefile += "{}\n".format(line)
@@ -770,9 +770,10 @@ def main():
         for list_def in [("Game", "games.txt"), ("Demo", "demos.txt")]:
             content_path = util.path(amiga_ags_path, "Run", list_def[0])
             if util.is_dir(content_path):
-                listing = "\n".join(util.sorted_natural(os.listdir(util.path(amiga_ags_path, "Run", list_def[0]))))
+                listing = "\n".join(sorted(os.listdir(util.path(amiga_ags_path, "Run", list_def[0])), key=str.casefold))
                 open(util.path(list_dir, list_def[1]), mode="w", encoding="latin-1").write(listing)
 
+        # done
         return 0
 
     # except Exception as err:
