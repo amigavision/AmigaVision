@@ -50,33 +50,37 @@ ags_notify
 ;Launch AGS
 assign >NIL: exists Saves:
 if not warn
-  assign WHDSaves: Saves:WHDSaves
+  if exists Saves:WHDSaves
+    assign WHDSaves: Saves:WHDSaves
+  endif
 endif
 
 assign >NIL: exists Games:
 if not warn
   if exists Amiga:AGS2
-    assign AGS: Amiga:AGS2
-    assign WHD: Games:WHD
-    assign >NIL: exists WHDSaves:
-    if warn
-      echo ""
-      echo ">>> Using MegaAGS.hdf for save data <<<"
-      echo ""
-      echo "Mount MegaAGS-Saves.hdf as secondary drive to enable a"
-      echo "save disk that can easily be carried over when upgrading"
-      echo "to new releases of MegaAGS."
-      wait 4
-      assign WHDSaves: SYS:WHDSaves
+    if exists Games:WHD
+      assign AGS: Amiga:AGS2
+      assign WHD: Games:WHD
+      assign >NIL: exists WHDSaves:
+      if warn
+        echo ""
+        echo ">>> Using MegaAGS.hdf for save data <<<"
+        echo ""
+        echo "Mount MegaAGS-Saves.hdf as secondary drive to enable a"
+        echo "save disk that can easily be carried over when upgrading"
+        echo "to new releases of MegaAGS."
+        wait 4
+        assign WHDSaves: SYS:WHDSaves
+      endif
+      setvadjust
+      C:bblank
+      if exists MiSTer:ags_boot
+        cpr MiSTer:ags_boot T:ags_boot MOVE CLONE SILENT
+        pickfile >NIL: f T:ags_boot q c ags_launch []
+      endif
+      AGS:AGS2
+      C:bblank
     endif
-    setvadjust
-    C:bblank
-    if exists MiSTer:ags_boot
-      cpr MiSTer:ags_boot T:ags_boot MOVE CLONE SILENT
-      pickfile >NIL: f T:ags_boot q c ags_launch []
-    endif
-    AGS:AGS2
-    C:bblank
   endif
 endif
 
@@ -89,7 +93,7 @@ mount CON: from DEVS:KingCON-mountlist
 mount RAW: from DEVS:KingCON-mountlist
 
 ;RTG support
-ismister
+is_mister
 if warn
   assign Picasso96: SYS:Tools/Picasso96
   DEVS:Monitors/MiSTer

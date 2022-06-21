@@ -1,6 +1,6 @@
 assign >NIL: EXISTS MiSTer:
 if WARN
-  IsMiSTer
+  is_mister
   if WARN
     mount MR0:
   else
