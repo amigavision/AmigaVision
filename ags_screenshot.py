@@ -17,7 +17,6 @@
 # ./ags_screenshot.py --crop 640x512 --scale 320x256 --resample 320x128 --colors 128 -i test.png -o test.iff
 
 import argparse
-import os
 import sys
 
 from PIL import Image
@@ -30,9 +29,9 @@ def iff_screenshot(path, colors, crop_sz, scale_sz, resample_sz=None, mode_id=0x
     # by doubling size in either dimension if smaller than crop dimension
     img = Image.open(path).convert("RGB")
     if img.size[0] < crop_sz[0]:
-        img = img.resize((img.size[0] * 2, img.size[1]), Image.NEAREST)
+        img = img.resize((img.size[0] * 2, img.size[1]), Image.Resampling.NEAREST)
     if img.size[1] < crop_sz[1]:
-        img = img.resize((img.size[0], img.size[1] * 2), Image.NEAREST)
+        img = img.resize((img.size[0], img.size[1] * 2), Image.Resampling.NEAREST)
 
     # Crop
     center = tuple(i // 2 for i in img.size)
@@ -44,10 +43,10 @@ def iff_screenshot(path, colors, crop_sz, scale_sz, resample_sz=None, mode_id=0x
                     int(center[0] + crop_sz[0] / 2), int(center[1] + crop_sz[1] / 2)))
 
     # Resample
-    img = img.resize(scale_sz, Image.NEAREST)
+    img = img.resize(scale_sz, Image.Resampling.NEAREST)
     if scale_sz != resample_sz:
-        img = img.resize(resample_sz, Image.ANTIALIAS)
-    img = img.quantize(colors=colors, method=0, kmeans=4, dither=Image.NONE)
+        img = img.resize(resample_sz, Image.Resampling.LANCZOS)
+    img = img.quantize(colors=colors, method=0, kmeans=4, dither=Image.Dither.NONE)
 
     # Trim palette to number of used colors
     w, h = img.size
