@@ -57,29 +57,26 @@ Setup:
   are further explained in the next section):
 
 [minimig]
-video_mode_ntsc=8
-video_mode_pal=9
-vscale_mode=0
-vsync_adjust=2
+video_mode=8
+vsync_adjust=1
 custom_aspect_ratio_1=40:27
 
 
 Video Modes:
 ------------
-Since many Amiga games only run properly at a 50Hz vertical refresh rate,
-it's important to have both NTSC and PAL video modes set up in MiSTer.ini.
-Note that while the recommended core setting is PAL, Amiga (and Minimig)
-can change video modes on the fly. This is leveraged by the launcher to
-dynamically apply per-game video mode settings. However, setting the core
-option to PAL seems to benefit edge-case compatibility.
+First, the optimal vsync_adjust setting will depend on your HDMI display.
+A setting of 2 ensures the lowest possible latency, but it may come at the
+cost of a short period of no video or audio on video mode changes - something
+Amiga games and demos do a lot. Setting vsync_adjust to 1 introduces a buffer
+that will smooth over most of these changes.
 
-Another idiosyncrasy with the Minimig core is viewport cropping. By default
-the full overscan area will be fed to the HDMI scaler, resulting in huge
-borders. Fear not! MegaAGS leverages the "vadjust" feature of the core to
-dynamically apply viewport settings on a per game basis. This depends on the
-"shared folder" functionality, which is automatically enabled if the
-"games/Amiga/shared" directory exists. So, make sure you copied all the
-archive contents as described in the Setup section.
+A unique feature of the Minimig core is arbitrary viewport cropping. By
+default the full overscan area will be fed to the HDMI scaler, resulting in
+huge borders for most content. Fear not! MegaAGS leverages the "vadjust"
+feature of the core to dynamically apply viewport settings on a per game
+basis. This depends on the "shared folder" functionality, which is enabled
+if the "games/Amiga/shared" directory exists. So, make sure you copied all
+the archive contents as described in the Setup section.
 
 With dynamic vadjust enabled most titles will enjoy a nicely centered
 viewport at a perfect 5x scale using 1080p output resolution, by cropping
@@ -88,7 +85,7 @@ instead get a perfect 4x scale by applying a 270 line crop.
 
 Now, we need to talk about Pixel Aspect Ratio (PAR). Most Amiga graphics
 were drawn targeting a roughly square pixel display, if considering standard
-low resolution mode. However, many American game were drawn using the 320x200px
+low resolution mode. However, some American game were drawn using the 320x200px
 mode stretched to cover a 4:3 display, yielding distinctly narrow pixels.
 Using MiSTer's capability for setting up custom aspect ratios, it is possible
 to quickly toggle between these PARs via OSD -> Audio & Video -> Aspect ratio.
@@ -107,7 +104,7 @@ PAL60-5X    40:27
 NTSC-5X     40:27 or Original depending on title
 
 Again, make sure to add the Minimig core overrides in MiSTer.ini as specified
-in the previous section to enjoy the best HDMI output possible, and make sure 
+in the previous section to enjoy the best HDMI output possible, and make sure
 you have set MiSTer to output in 1080p resolution.
 
 
