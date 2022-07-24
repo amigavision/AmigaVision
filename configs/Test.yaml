@@ -1,6 +1,17 @@
 --- # AGS2 Menu structure
 - Current:
   - Turrican2AGA
+  - Cadaver&ThePayoff
+  - Cadaver&ThePayoff--TPO
+  - CastleMaster&TheCrypt
+  - CastleMaster&TheCrypt--CM2
+- C1:
+  - Cadaver
+  - CastleMaster
+- C2:
+  - Cadaver&ThePayoff
+- C3:
+  - Cadaver&ThePayoff--TPO
 - Test:
   - note: Test for builder options
   - Andromeda-Rule30: { scale: 6, v_offset: 48 }
