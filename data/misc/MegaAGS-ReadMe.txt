@@ -78,10 +78,15 @@ basis. This depends on the "shared folder" functionality, which is enabled
 if the "games/Amiga/shared" directory exists. So, make sure you copied all
 the archive contents as described in the Setup section.
 
+Also note that the dynamic cropping *only* applies if you are using 1080p 
+output. Most Amiga games fit on the screen using 5× zoom in this resolution. 
+Any other resolution or analog output is *not* affected by dynamic viewport 
+cropping.
+
 With dynamic vadjust enabled most titles will enjoy a nicely centered
-viewport at a perfect 5x scale using 1080p output resolution, by cropping
+viewport at a perfect 5× scale using 1080p output resolution, by cropping
 the viewport to 216 lines. Games using more than 216 active video lines will
-instead get a perfect 4x scale by applying a 270 line crop.
+instead get a perfect 4× scale by applying a 270 line crop.
 
 Now, we need to talk about Pixel Aspect Ratio (PAR). Most Amiga graphics
 were drawn targeting a roughly square pixel display, if considering standard
@@ -95,13 +100,13 @@ as the fully useless "Full screen" setting).
 
 "Original" will yield square pixels for full-height PAL titles, and the
 sometimes correct narrow pixels for NTSC games. "40:27" will result in square
-pixels for PAL (5X) titles and NTSC/PAL60 titles. As guidance, use these
+pixels for PAL (5×) titles and NTSC/PAL60 titles. As guidance, use these
 settings depending on what video mode the launcher UI specifies:
 
-PAL-4X      Original
-PAL-5X      40:27
-PAL60-5X    40:27
-NTSC-5X     40:27 or Original depending on title
+4×PAL      Original
+5×PAL      40:27
+5×PAL60    40:27
+5×  NTSC     40:27 or Original depending on title
 
 Again, make sure to add the Minimig core overrides in MiSTer.ini as specified
 in the previous section to enjoy the best HDMI output possible, and make sure
@@ -132,12 +137,13 @@ it is definitely recommended for the full Amiga experience.
 
 Save files:
 -----------
-For games with save functionality you need to quit the game using the DEL key
-for the save data to be written to "disk", and thus the SD card.
+IMPORTANT: For games with save functionality you need to quit the game using 
+the DEL key for the save data to be written to "disk", and thus the SD card.
+You will lose your save games if you don't exit the game after saving!
 
 In the "[ Options ]" menu you can choose between a few alternative quit key
 options, which if set will override the preconfigured key. The active quit
-key is displayed on the splash screen shown when a game is loading
+key is displayed on the splash screen shown when a game is loading.
 
 
 CPU performance notes:
@@ -168,9 +174,8 @@ You can explore the world's first multitasking 16-bit computer from 1985 with
 the addition of a more modern desktop from 1992, AmigaOS 3.
 
 To change from the default 640×256 resolution to something like 1280×720 or
-1920×1080 for use with a 16:9 HD display, double-click the "Amiga" disk icon,
-then "Prefs", then "ScreenMode" to select the resolution. Locate the ones
-starting with "MiSTer:", and pick the one you prefer.
+1920×1080 for use with a 16:9 HD display, hold down the right mouse button and
+select your preferred resolution from the ScreenMode menu.
 
 
 Non-working games:
