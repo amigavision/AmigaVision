@@ -173,9 +173,10 @@ graphical desktop environment.
 You can explore the world's first multitasking 16-bit computer from 1985 with
 the addition of a more modern desktop from 1992, AmigaOS 3.
 
-To change from the default 640×256 resolution to something like 1280×720 or
+To change from the default 640×200 resolution to something like 1280×720 or
 1920×1080 for use with a 16:9 HD display, hold down the right mouse button and
-select your preferred resolution from the ScreenMode menu.
+select your preferred resolution from the ScreenMode menu. 540p is a nice,
+usable screen resolution that just doubles every pixel on a 1080p display.
 
 
 Non-working games:
