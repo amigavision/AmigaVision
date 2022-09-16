@@ -27,6 +27,17 @@ def parse_date(v):
     components = v.split("-")[:3]
     return components + [None] * (3 - len(components))
 
+def parse_date_numeric(v):
+    components = list(map(lambda s: int(s), v.lower().replace("x", "0").split("-")[:3]))
+    return components + [None] * (3 - len(components))
+
+def parse_date_int(v, sortable=False):
+    components = list(map(lambda s: s.zfill(2), v.lower().replace("x", "0").split("-")[:3]))
+    if sortable:
+        return int("".join((components + 3 * ["01"])[:3]))
+    else:
+        return int("".join(components))
+
 def merge(src, dst):
     for key, value in src.items():
         if isinstance(value, dict):
