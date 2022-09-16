@@ -4210,8 +4210,8 @@ game--solnegro--solnegro;Sol Negro;Sol Negro;;;OCS;;0;;;;;;;;1988;;Spanish;Unkno
 game--batit--batit;B.A.T.;B.A.T.;1;;OCS;;2;;;;;;;;1990;;Italian;ESP;Ubi Soft;1;;v1.5;BATIt/BATIt.Slave;game/B/BAT_v1.5_It.lha;Game;Adventure;54;128
 game--rollingthunder--rollingthunder;Rolling Thunder;Rolling Thunder;;;OCS;;1;;;1;;;;;1987;;English;Tiertex;U.S. Gold;1;CUSTOM2=2 CUSTOM3=1;v1.1;RollingThunder/RollingThunder.slave;game/R/RollingThunder_v1.1_2639.lha;Game;Platform;1277;914
 game--targhanntsc--targhanntsc;Targhan;Targhan;;;OCS;;2;;;;;;;;1989;;English;Silmarils;Gainstar, Silmarils;1;;v1.4;TarghanNTSC/TarghanNTSC.Slave;game/T/Targhan_v1.4_NTSC.lha;Game;;1315;1037
-game--metrocross--metrocross;Metro-Cross;Metro-Cross;;;OCS;;0;;;;;;;ST to Amiga port by Probe;1987;;English;Timothy Moore;U.S. Gold;1;;v1.1;MetroCross/MetroCross.Slave;game/M/MetroCross_v1.1.lha;Game;;6034;
-game--starquake--starquake;Starquake;Starquake;;;OCS;;0;;;;;;;ST to Amiga port by TOS Brothers;1988;;English;Stephen Crow;Mandarin Software;1;;v1.1;Starquake/Starquake.slave;game/S/Starquake_v1.1.lha;Game;;2111;
+game--metrocross--metrocross;Metro-Cross;Metro-Cross;;;OCS;;0;;;;;;;ST to Amiga port by Probe;2013;;English;Timothy Moore;U.S. Gold;1;;v1.1;MetroCross/MetroCross.Slave;game/M/MetroCross_v1.1.lha;Game;;6034;
+game--starquake--starquake;Starquake;Starquake;;;OCS;;0;;;;;;;ST to Amiga port by TOS Brothers;2018;;English;Stephen Crow;Mandarin Software;1;;v1.1;Starquake/Starquake.slave;game/S/Starquake_v1.1.lha;Game;;2111;
 game--testdrive2&datadisksngc--testdrive2&datadisksngc;Test Drive II: Northern Germany Challenge;Test Drive II: Northern Germany Challenge;;;OCS;;2;;;;;;;Course mod by Janusz Mombasa;2012;;English;Distinctive (D.S.I.);Accolade;1;;v1.1;TestDrive2&DataDisksNGC/TestDrive2&DataDisksNGC.slave;game/_hacks/TestDrive2&DataDisks_v1.1_NorthernGermanyChallenge.lha;Game;Racing;;
 game--area88--area88;Area 88;Area 88;;;OCS;;1;;;;;;;U.N. Squadron S.E. by Earok;2018;;English;Tiertex;U.S. Gold;2;;v1.2;Area88/Area88.slave;game/_hacks/Area88_v1.2_Hack_by_Earok.lha;Game;Shoot'em Up - Horizontal;1808;1351
 game--untouchablesse--untouchablesse;The Untouchables: Special Edition;Untouchables: SE;;;OCS;;0;5;20;;;;;Special Edition v1.0 by Earok;2017;;English;Special FX;Ocean;1;;v2.0;UntouchablesSE/UntouchablesSE.Slave;game/_hacks/UntouchablesSpecialEdition_v2.0_Hack_by_Earok.lha;Game;Action - Multi-Type;;
@@ -4790,7 +4790,7 @@ game--supercars2aga--supercars2aga;Super Cars II AGA;Super Cars II AGA;;;AGA;1;0
 demo-notwhdl--nature-bayeu;Bayeu;Bayeu;;;OCS;;0;;;;;;;;2020;Sweden;English;;Nature;1;;;;demo-notwhdl/Nature-Bayeu.lha;Demo;Demo;;
 game--wiz--wiz;Wiz: Quest for the Magic Lantern;Wiz;;;OCS;;0;;;;;;;;2020;;English;Mutation Software;Mutation Software;1;;v1.2;Wiz/Wiz.Slave;game/W/Wiz_v1.2.lha;Game;;6380;4549
 demo-notwhdl--melon-welcomeintro;Welcome Intro;Welcome Intro;;;OCS;;0;6;45;;;;;;2021;France;English;;Melon Dezign;1;;;;demo-notwhdl/Melon-WelcomeIntro.lha;Demo;Intro;;
-game-notwhdl--karateka;Karateka;Karateka;;;OCS;;0;;;;;;;ST to Amiga port by Meynaf;1988;;English;Andromeda Software;Brøderbund;1;;;;game-notwhdl/Karateka.lha;Game;;-2;3665
+game-notwhdl--karateka;Karateka;Karateka;;;OCS;;0;;;;;;;ST to Amiga port by Meynaf;2016;;English;Andromeda Software;Brøderbund;1;;;;game-notwhdl/Karateka.lha;Game;;-2;3665
 game-notwhdl--kiwitale;The Kiwi's Tale;Kiwi's Tale, The;;;OCS;;0;;;;;;;;2018;;English;Earok;Earok;2;;;;game-notwhdl/KiwiTale.lha;Game;;-2;4337
 game--andromedamission--andromedamission;Mission Andromeda;Mission Andromeda;;;OCS;;0;;;;;;;;1988;;English;Demonware;Demonware;1;;v1.0;AndromedaMission/AndromedaMission.Slave;game/A/AndromedaMission_v1.0.lha;Game;;2494;2802
 game--andromedamissionde--andromedamissionde;Mission Andromeda;Mission Andromeda;1;game--andromedamission--andromedamission;OCS;;0;;;;;;;;1988;;German;Demonware;Demonware;1;;v1.0;AndromedaMissionDe/AndromedaMissionDe.slave;game/A/AndromedaMission_v1.0_De.lha;Game;;2494;2802
@@ -4881,3 +4881,4 @@ game--turrican2agantsc--turrican2aga;Turrican II: The Final Fight;Turrican II (A
 game--moonbase--moonbase;Moonbase: Lunar Colony Simulator;Moonbase;;;OCS;;0;;;;;;;;1991;;English;Wesson;Wesson;1;;v1.0;MoonBase/MoonBase.Slave;game/M/MoonBase_v1.0_2660.lha;Game;Strategy;2505;4066
 game--starways--starways;Star Ways;Star Ways;;;OCS;;0;;;;;;;;1988;;English;Diamond;Diamond;1;;v1.0;StarWays/StarWays.Slave;game/S/StarWays_v1.0_2678.lha;Game;;2100;3352
 game--wormsavicd32--wormsavicd32;Worms (FMV Intro);Worms (FMV Intro);1;game--worms2mb--worms2mb;AGA/CD32;1;0;;-10;;;;;;1995;;English;Team 17;Ocean, Team 17;4 (taking turns);;v1.0;WormsAVICD32/WormsAVICD32.Slave;game/W/Worms_v1.0_AVI_CD32.lha;Game;Action - Strategy;1780;3382
+game-notwhdl--supersprint;Super Sprint;Super Sprint;;;AGA;1;0;;;;;;;ST to Amiga port by Meynaf;2012;;English;State of the Art;Electric Dreams;3;;;;game-notwhdl/SuperSprint.lha;Game;;5903;4298

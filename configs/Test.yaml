@@ -4,13 +4,13 @@
   - Nothing to see here:
     - note: Intentionally left blank.
 - Current:
-  - Turrican2AGA
-  - Cadaver&ThePayoff
-  - Cadaver&ThePayoff--TPO
-  - CastleMaster&TheCrypt
-  - CastleMaster&TheCrypt--CM2
-  - FuryOfTheFurries
-  - FuryOfTheFurriesCD32
+  - Karateka
+  - SuperSprint
+  - MetroCross
+  - Starquake
+  - KnightmareKonami
+  - MetalGear
+  - GreenBeret
 - Test:
   - note: Test for builder options
   - Andromeda-Rule30: { scale: 6, v_offset: 48 }
