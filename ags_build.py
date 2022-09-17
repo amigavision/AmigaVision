@@ -14,6 +14,7 @@ import textwrap
 import ags_util as util
 import ags_paths as paths
 import ags_fs as fs
+from ags_strings import strings
 from make_vadjust import make_vadjust, VADJUST_MIN, VADJUST_MAX
 
 # -----------------------------------------------------------------------------
@@ -245,36 +246,36 @@ def ags_make_note(entry, add_note):
     system += " ({})".format(aspect_ratio)
 
     if "category" in entry and entry["category"].lower() == "game":
-        note += ("Title:      {}".format(entry["title"]))[:max_w] + "\n"
-        note += ("Developer:  {}".format(entry["developer"]))[:max_w] + "\n"
-        note += ("Publisher:  {}".format(entry["publisher"]))[:max_w] + "\n"
-        note += ("Released:   {}".format(entry["release_date"]))[:max_w] + "\n"
-        note += ("Players:    {}".format(entry["players"]))[:max_w] + "\n"
-        note += ("Hardware:   {}".format(system))[:max_w] + "\n"
+        note += ("{}{}".format(strings["note"]["title"], entry["title"]))[:max_w] + "\n"
+        note += ("{}{}".format(strings["note"]["developer"], entry["developer"]))[:max_w] + "\n"
+        note += ("{}{}".format(strings["note"]["publisher"], entry["publisher"]))[:max_w] + "\n"
+        note += ("{}{}".format(strings["note"]["release_date"], entry["release_date"]))[:max_w] + "\n"
+        note += ("{}{}".format(strings["note"]["players"], entry["players"]))[:max_w] + "\n"
+        note += ("{}{}".format(strings["note"]["system"], system))[:max_w] + "\n"
         if entry.get("issues"):
-            note += ("Issues:     {}".format(entry["issues"]))[:max_w] + "\n"
+            note += ("{}{}".format(strings["note"]["issues"], entry["issues"]))[:max_w] + "\n"
         elif entry.get("hack"):
-            note += ("Hack Info:  {}".format(entry["hack"]))[:max_w] + "\n"
+            note += ("{}{}".format(strings["note"]["hack"], entry["hack"]))[:max_w] + "\n"
 
     elif "category" in entry and entry["category"].lower() == "demo":
         group = util.prettify_names(entry["publisher"])
-        note += ("Title:      {}".format(entry["title"]))[:max_w] + "\n"
-        note += ("Group:      {}".format(group))[:max_w] + "\n"
+        note += ("{}{}".format(strings["note"]["title"], entry["title"]))[:max_w] + "\n"
+        note += ("{}{}".format(strings["note"]["group"], group))[:max_w] + "\n"
         if entry.get("country"):
-            note += ("Country:    {}".format(entry["country"]))[:max_w] + "\n"
-        note += ("Released:   {}".format(entry["release_date"]))[:max_w] + "\n"
+            note += ("{}{}".format(strings["note"]["country"], entry["country"]))[:max_w] + "\n"
+        note += ("{}{}".format(strings["note"]["release_date"], entry["release_date"]))[:max_w] + "\n"
         if entry.get("subcategory", "").lower() != "demo":
-            note += ("Category:   {}".format(entry["subcategory"]))[:max_w] + "\n"
+            note += ("{}{}".format(strings["note"]["category"], entry["subcategory"]))[:max_w] + "\n"
         else:
-            note += "Category:   Demo\n"
-        note += ("Hardware:   {}".format(system))[:max_w] + "\n"
+            note += "{}Demo\n".format(strings["note"]["category"])
+        note += ("{}{}".format(strings["note"]["system"], system))[:max_w] + "\n"
         if entry.get("issues"):
-            note += ("Issues:     {}".format(entry["issues"]))[:max_w] + "\n"
+            note += ("{}{}".format(strings["note"]["issues"], entry["issues"]))[:max_w] + "\n"
 
     if add_note and isinstance(add_note, str):
-            note += ("Note:       {}".format(add_note))[:max_w] + "\n"
+            note += ("{}{}".format(strings["note"]["note"], add_note))[:max_w] + "\n"
     elif entry.get("note"):
-            note += ("Note:       {}".format(entry["note"]))[:max_w] + "\n"
+            note += ("{}{}".format(strings["note"]["note"], entry["note"]))[:max_w] + "\n"
     return note
 
 def ags_fix_filename(name):
@@ -416,8 +417,7 @@ def ags_create_entry(entries: CollectedEntries, ags_path, name, entry, path, ran
 
     # note
     if options and options.get("unavailable", False):
-        note = "Title:      " + name.replace("-", " ") + "\n\n"
-        note += "Content is unavailable."
+        note = strings["note"]["title"] + name.replace("-", " ") + "\n\n" + strings["note"]["unavailable"]
         open(base_path + ".txt", mode="w", encoding="latin-1").write(note)
     elif entry:
         open(base_path + ".txt", mode="w", encoding="latin-1").write(ags_make_note(entry, note))
@@ -472,29 +472,13 @@ def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_
 # Collect entries for special folders "All Games" and "Demo Scene"
 
 def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all_demos=False):
-    dir_allgames = "[ All Games ]"
-    dir_allgames_year = "[ All Games, by year ]"
-    dir_scene = "[ Demo Scene ]"
-    dir_demos = "[ Demos by title ]"
-    dir_demos_country = "[ Demos by country ]"
-    dir_demos_group = "[ Demos by group ]"
-    dir_demos_year = "[ Demos by year ]"
-    dir_demos_cracktro = "[ Demos, crack intros ]"
-    dir_demos_intro = "[ Demos, 1-64KB ]"
-    dir_diskmags = "[ Disk Magazines ]"
-    dir_diskmags_date = "[ Disk Magazines by date ]"
-    dir_musicdisks = "[ Music Disks by title ]"
-    dir_musicdisks_year = "[ Music Disks by year ]"
-    dir_issues = "[ Issues ]"
-
-    if all_demos:
-        d_path = util.path(path, "{}.ags".format(dir_scene))
-        util.make_dir(d_path)
+    d_path = util.path(path, "{}.ags".format(strings["dirs"]["scene"]))
+    if all_demos: util.make_dir(d_path)
 
     for entry in sorted(entries.ids(), key=operator.itemgetter("title")):
         letter = entry.get("title_short", "z")[0].upper()
         if letter.isnumeric():
-            letter = "0-9"
+            letter = "#"
         year, _, _ = util.parse_date(entry["release_date"])
         if "x" in year.lower():
             year = "Unknown"
@@ -508,30 +492,30 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
             if group_letter.isnumeric():
                 group_letter = "0-9"
             if entry.get("subcategory", "").lower().startswith("disk mag"):
-                ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(dir_diskmags)))
-                mag_path = ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(dir_diskmags_date)))
+                ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags"])))
+                mag_path = ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags_date"])))
                 if mag_path:
                     rank = util.parse_date_int(entry["release_date"], sortable=True)
                     entries.path_sort_rank["{}.run".format(mag_path)] = rank if rank else 0
             elif entry.get("subcategory", "").lower().startswith("music disk"):
-                ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(dir_musicdisks), letter + ".ags"))
-                ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(dir_musicdisks_year), year + ".ags"))
+                ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".ags"))
+                ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".ags"))
             else:
                 if entry.get("subcategory", "").lower().startswith("crack"):
-                    ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(dir_demos_cracktro)), prefix=sort_group)
+                    ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_cracktro"])), prefix=sort_group)
                 if entry.get("subcategory", "").lower().startswith("intro"):
-                    ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(dir_demos_intro)))
+                    ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_intro"])))
                 group_entry = dict(entry)
                 group_entry["title_short"] = group_entry.get("title")
-                ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(dir_demos), letter + ".ags"))
-                ags_create_entry(entries, path, None, group_entry, util.path(d_path, "{}.ags".format(dir_demos_group), group_letter + ".ags"), prefix=sort_group)
-                ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(dir_demos_year), year + ".ags"))
+                ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".ags"))
+                ags_create_entry(entries, path, None, group_entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".ags"), prefix=sort_group)
+                ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".ags"))
                 if sort_country:
-                    ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(dir_demos_country), sort_country + ".ags"))
+                    ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".ags"))
 
         if all_games and entry.get("category", "").lower() == "game":
-            ags_create_entry(entries, path, None, entry, util.path(path, "{}.ags".format(dir_allgames), letter + ".ags"))
-            ags_create_entry(entries, path, None, entry, util.path(path, "{}.ags".format(dir_allgames_year), year + ".ags"))
+            ags_create_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"))
+            ags_create_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".ags"))
 
         if all_demos and entry.get("category", "").lower() == "demo":
             groups = entry.get("publisher")
@@ -554,36 +538,12 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
                 ags_create_entry(entries, path, None, entry, util.path(path, "Run", "Demo"), only_script=True)
 
     # Notes for created directories
-    if util.is_dir(util.path(path, "{}.ags".format(dir_allgames))):
-        open(util.path(path, "{}.txt".format(dir_allgames)), mode="w", encoding="latin-1").write("Browse all games alphabetically.")
-    if util.is_dir(util.path(path, "{}.ags".format(dir_allgames_year))):
-        open(util.path(path, "{}.txt".format(dir_allgames_year)), mode="w", encoding="latin-1").write("Browse all games by release year.")
-
-    if all_demos:
-        if util.is_dir(util.path(d_path, "{}.ags".format(dir_demos_group))):
-            open(util.path(d_path, "{}.txt".format(dir_demos_group)), mode="w", encoding="latin-1").write("Browse demos by release group.")
-        if util.is_dir(util.path(d_path, "{}.ags".format(dir_demos_country))):
-            open(util.path(d_path, "{}.txt".format(dir_demos_country)), mode="w", encoding="latin-1").write("Browse demos by country of origin.")
-        if util.is_dir(util.path(d_path, "{}.ags".format(dir_demos))):
-            open(util.path(d_path, "{}.txt".format(dir_demos)), mode="w", encoding="latin-1").write("Browse demos by title.")
-        if util.is_dir(util.path(d_path, "{}.ags".format(dir_demos_year))):
-            open(util.path(d_path, "{}.txt".format(dir_demos_year)), mode="w", encoding="latin-1").write("Browse demos by release year.")
-        if util.is_dir(util.path(d_path, "{}.ags".format(dir_demos_intro))):
-            open(util.path(d_path, "{}.txt".format(dir_demos_intro)), mode="w", encoding="latin-1").write("Browse demos in the 1/4/40/64KB categories.")
-        if util.is_dir(util.path(d_path, "{}.ags".format(dir_demos_cracktro))):
-            open(util.path(d_path, "{}.txt".format(dir_demos_cracktro)), mode="w", encoding="latin-1").write("A glimpse into the origins of the demo scene.")
-        if util.is_dir(util.path(d_path, "{}.ags".format(dir_diskmags))):
-            open(util.path(d_path, "{}.txt".format(dir_diskmags)), mode="w", encoding="latin-1").write("A selection of scene disk magazines.")
-        if util.is_dir(util.path(d_path, "{}.ags".format(dir_diskmags_date))):
-            open(util.path(d_path, "{}.txt".format(dir_diskmags_date)), mode="w", encoding="latin-1").write("Disk magazines in chronological order.")
-        if util.is_dir(util.path(d_path, "{}.ags".format(dir_musicdisks))):
-            open(util.path(d_path, "{}.txt".format(dir_musicdisks)), mode="w", encoding="latin-1").write("Browse music disks by title.")
-        if util.is_dir(util.path(d_path, "{}.ags".format(dir_musicdisks_year))):
-            open(util.path(d_path, "{}.txt".format(dir_musicdisks_year)), mode="w", encoding="latin-1").write("Browse music disks by year.")
-
-    if util.is_dir(util.path(path, "{}.ags".format(dir_issues))):
-        open(util.path(path, "{}.txt".format(dir_issues)), mode="w", encoding="latin-1").write(
-            "Titles with known issues on Minimig_MiSTer.\n(Please report any new or resolved issues!)")
+    for dir in ["allgames", "allgames_year", "scene", "issues"]:
+        if util.is_dir(util.path(path, "{}.ags".format(strings["dirs"][dir]))):
+            open(util.path(path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(strings["desc"][dir])
+    for dir in ["demos", "demos_country", "demos_group", "demos_year", "demos_cracktro", "demos_intro", "diskmags", "diskmags_date", "musicdisks", "musicdisks_year"]:
+        if util.is_dir(util.path(d_path, "{}.ags".format(strings["dirs"][dir]))):
+            open(util.path(d_path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(strings["desc"][dir])
 
 # -----------------------------------------------------------------------------
 # Menu yaml parsing, AGS2 tree creation
@@ -746,11 +706,11 @@ def main():
 
         # create directory caches
         for path, dirs, files in os.walk(amiga_ags_path):
-            cd_dirs = []
+            cache = []
             cd_files = []
             cd_ranked = dict()
             for dir in util.sorted_natural(list(map(lambda n: n.removesuffix(".ags"), filter(lambda d: d.endswith(".ags"), dirs)))):
-                cd_dirs.append("D{}".format(dir))
+                cache.append("D{}".format(dir))
             for file in util.sorted_natural(list(map(lambda n: n.removesuffix(".run"), filter(lambda f: f.endswith(".run"), files)))):
                 runfile = "{}/{}.run".format(path, file)
                 if runfile in collected_entries.path_sort_rank:
@@ -758,11 +718,7 @@ def main():
                 else:
                     cd_files.append("F{}".format(file))
 
-            cd_ranked_list = []
-            if len(cd_ranked) > 0:
-                cd_ranked_list = [k for k, v in sorted(cd_ranked.items(), key=lambda a:a[1])]
-
-            cache = cd_dirs + cd_ranked_list + cd_files
+            cache += [k for k, _ in sorted(cd_ranked.items(), key=lambda a:a[1])] + cd_files
             if len(cache) > 0:
                 cachefile = "{}\n".format(len(cache))
                 for line in cache: cachefile += "{}\n".format(line)
