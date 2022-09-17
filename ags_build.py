@@ -14,6 +14,7 @@ import textwrap
 import ags_util as util
 import ags_paths as paths
 import ags_fs as fs
+import ags_imgen as imgen
 from ags_strings import strings
 from make_vadjust import make_vadjust, VADJUST_MIN, VADJUST_MAX
 
@@ -35,7 +36,7 @@ class CollectedEntries:
         return self.by_id.values()
 
 # -----------------------------------------------------------------------------
-# Database and path queries
+# database and path queries
 
 def get_entry(db, name):
     def sanitize(entry):
@@ -190,7 +191,7 @@ def create_vadjust_dats(path):
         open(util.path(path, "x6_{}".format(i)), mode="wb").write(make_vadjust(i, 6))
 
 # -----------------------------------------------------------------------------
-# Create entry and note
+# create entry and note
 
 def ags_make_note(entry, add_note):
     max_w = AGS_INFO_WIDTH
@@ -423,14 +424,20 @@ def ags_create_entry(entries: CollectedEntries, ags_path, name, entry, path, ran
         open(base_path + ".txt", mode="w", encoding="latin-1").write(ags_make_note(entry, note))
 
     # image
-    if entry and "id" in entry and util.is_file(util.path("data", "img", entry["id"] + ".iff")):
+    if entry and "image" in entry:
+        ags_create_image(base_path + ".iff", entry["image"])
+    elif entry and "id" in entry and util.is_file(util.path("data", "img", entry["id"] + ".iff")):
         shutil.copyfile(util.path("data", "img", entry["id"] + ".iff"), base_path + ".iff")
     return base_path
+
+
+def ags_create_image(path, options):
+    print("ags_create_image at {}: {}".format(path, options))
 
 # -----------------------------------------------------------------------------
 # Create entries from list
 
-def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_path, entries, path, note=None, ranked_list=False):
+def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_path, entries, path, note=None, image=None, ranked_list=False):
     # make dir
     base_path = ags_path
     if path:
@@ -438,10 +445,12 @@ def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_
             base_path = util.path(base_path, d[:26].strip() + ".ags")
     util.make_dir(base_path)
 
-    # make note
+    # make note, image
     if note:
         note = "\n".join([textwrap.fill(p, AGS_INFO_WIDTH) for p in note.replace("\\n", "\n").splitlines()])
         open(base_path[:-4] + ".txt", mode="w", encoding="latin-1").write(note)
+    if isinstance(image, dict):
+        ags_create_image(base_path[:-4] + ".iff", image)
 
     # collect titles
     pos = 0
@@ -469,7 +478,7 @@ def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_
     return
 
 # -----------------------------------------------------------------------------
-# Collect entries for special folders "All Games" and "Demo Scene"
+# collect entries for special folders ("All Games", "Demo Scene")
 
 def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all_demos=False):
     d_path = util.path(path, "{}.ags".format(strings["dirs"]["scene"]))
@@ -483,7 +492,12 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
         if "x" in year.lower():
             year = "Unknown"
 
-        # Demos / Music Disks / Disk Mags
+        # add games
+        if all_games and entry.get("category", "").lower() == "game":
+            ags_create_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"))
+            ags_create_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".ags"))
+
+        # add demos, disk mags
         def add_demo(entry, sort_group, sort_country):
             if sort_group.startswith("The "):
                 sort_group = sort_group[4:]
@@ -513,10 +527,6 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
                 if sort_country:
                     ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".ags"))
 
-        if all_games and entry.get("category", "").lower() == "game":
-            ags_create_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"))
-            ags_create_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".ags"))
-
         if all_demos and entry.get("category", "").lower() == "demo":
             groups = entry.get("publisher")
             if not groups:
@@ -529,7 +539,7 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
                     for sort_country in countries.split(", "):
                         add_demo(entry, sort_group, sort_country)
 
-        # Run-scripts for randomizer
+        # run-scripts for randomizer
         if all_games and entry.get("category", "").lower() == "game" and not entry.get("issues"):
             ags_create_entry(entries, path, None, entry, util.path(path, "Run", "Game"), only_script=True)
         elif all_demos and entry.get("category", "").lower() == "demo" and not entry.get("issues"):
@@ -537,7 +547,7 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
             if sub.startswith("demo") or sub.startswith("intro") or sub.startswith("crack"):
                 ags_create_entry(entries, path, None, entry, util.path(path, "Run", "Demo"), only_script=True)
 
-    # Notes for created directories
+    # notes for created directories
     for dir in ["allgames", "allgames_year", "scene", "issues"]:
         if util.is_dir(util.path(path, "{}.ags".format(strings["dirs"][dir]))):
             open(util.path(path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(strings["desc"][dir])
@@ -546,12 +556,13 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
             open(util.path(d_path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(strings["desc"][dir])
 
 # -----------------------------------------------------------------------------
-# Menu yaml parsing, AGS2 tree creation
+# menu yaml parsing, AGS2 tree creation
 
 def ags_create_tree(db: Connection, collected_entries: CollectedEntries, ags_path, node, path=[]):
     if isinstance(node, list):
         entries = []
         note = None
+        image = None
         ranked_list = False
 
         for item in node:
@@ -566,6 +577,9 @@ def ags_create_tree(db: Connection, collected_entries: CollectedEntries, ags_pat
                 if "note" in item:
                     note = str(item["note"])
                     del item["note"]
+                if "image" in item:
+                    image = item["image"]
+                    del item["image"]
                 if "ranked_list" in item:
                     ranked_list = item["ranked_list"]
                     del item["ranked_list"]
@@ -576,7 +590,8 @@ def ags_create_tree(db: Connection, collected_entries: CollectedEntries, ags_pat
                     else:
                         # item is a subtree
                         ags_create_tree(db, collected_entries, ags_path, value, path + [key])
-        ags_create_entries(db, collected_entries, ags_path, entries, path, note=note, ranked_list=ranked_list)
+
+        ags_create_entries(db, collected_entries, ags_path, entries, path, note=note, image=image, ranked_list=ranked_list)
 
 def ags_add_all(db: Connection, entries: CollectedEntries, category, all_versions, prefer_ecs):
     for r in db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
