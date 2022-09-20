@@ -1,6 +1,7 @@
 --- # AGS2 Menu structure
 - About:
-  - note: 'MEGA AGS 2022.09.09'
+  - note: 'MEGA AGS 2022.10.01'
+  - image: { op: "tx", str: "MEGA", size: 150 }
   - Nothing to see here:
     - note: Intentionally left blank.
 - Current:
@@ -15,7 +16,7 @@
   - note: Test for builder options
   - Andromeda-Rule30: { scale: 6, v_offset: 48 }
   - BaygonAGA: Melon!
-  - BrunosMusicBox3: { v_offset: 4 }
+  - BrunosMusicBox3: { v_offset: 4, image: { op: "tx", str: "BRUNO", size: 90 } }
   - Coma: { note: COMA! }
   - Nested:
     - How2SkinACat

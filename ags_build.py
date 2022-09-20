@@ -432,7 +432,9 @@ def ags_create_entry(entries: CollectedEntries, ags_path, name, entry, path, ran
 
 
 def ags_create_image(path, options):
-    print("ags_create_image at {}: {}".format(path, options))
+    if util.is_file(path):
+        return
+    imgen.out_iff(path, imgen.compose(options))
 
 # -----------------------------------------------------------------------------
 # Create entries from list
@@ -489,13 +491,17 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
         if letter.isnumeric():
             letter = "#"
         year, _, _ = util.parse_date(entry["release_date"])
+        year_img = year
         if "x" in year.lower():
             year = "Unknown"
+            year_img = "19XX"
 
         # add games
         if all_games and entry.get("category", "").lower() == "game":
             ags_create_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"))
+            ags_create_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".iff"), {"op":"tx", "str": letter})
             ags_create_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".ags"))
+            ags_create_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".iff"), {"op":"tx", "str": year_img, "size": 112})
 
         # add demos, disk mags
         def add_demo(entry, sort_group, sort_country):
@@ -504,7 +510,7 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
             sort_group = sort_group[:AGS_LIST_WIDTH]
             group_letter = sort_group[0].upper()
             if group_letter.isnumeric():
-                group_letter = "0-9"
+                group_letter = "#"
             if entry.get("subcategory", "").lower().startswith("disk mag"):
                 ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags"])))
                 mag_path = ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags_date"])))
@@ -513,7 +519,9 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
                     entries.path_sort_rank["{}.run".format(mag_path)] = rank if rank else 0
             elif entry.get("subcategory", "").lower().startswith("music disk"):
                 ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".ags"))
+                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".iff"), {"op":"tx", "str": letter})
                 ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".ags"))
+                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".iff"), {"op":"tx", "str": year_img, "size": 112})
             else:
                 if entry.get("subcategory", "").lower().startswith("crack"):
                     ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_cracktro"])), prefix=sort_group)
@@ -522,8 +530,11 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
                 group_entry = dict(entry)
                 group_entry["title_short"] = group_entry.get("title")
                 ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".ags"))
+                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".iff"), {"op":"tx", "str": letter})
                 ags_create_entry(entries, path, None, group_entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".ags"), prefix=sort_group)
+                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".iff"), {"op":"tx", "str": group_letter})
                 ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".ags"))
+                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".iff"), {"op":"tx", "str": year_img, "size": 112})
                 if sort_country:
                     ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".ags"))
 

@@ -2,33 +2,61 @@
 
 # AGSImager: Hardcoded banner image generator
 
+import io
 import sys
 
 from wand.color import Color
 from wand.drawing import Drawing
 from wand.image import Image
+from PIL import Image as PILImage
+import iff_ilbm as iff
 
 # -----------------------------------------------------------------------------
 
 # add gradient support for color arguments
 
-def big_letters(str, size=240, kerning=-1.0, color="#ffffff", bg_color="#000000"):
+def compose(operations):
+    img = bg()
+    for operation in operations if isinstance(operations, list) else [operations]:
+        op = operation.pop("op", "nop")
+        if op == "tx":
+            img = tx(**operation, bg=img)
+        elif op == "bg":
+            img = bg(**operation)
+    return img
+
+def bg(width=320, height=256, color="#000"):
+    return Image(width=width, height=height, background=Color(color))
+
+def tx(str, size=240, kerning=-1.0, color="#ffffff", bg="#000000"):
     try:
-        w = 320
-        h = 256
         with Drawing() as drawing:
-            img = Image(width=w, height=h, background=Color(bg_color))
+            img = bg if isinstance(bg, Image) else bg(color=bg)
             drawing.font = "content/fonts/display.otf"
             drawing.font_size = size
             drawing.fill_color = Color(color)
             drawing.text_alignment = "center"
             drawing.text_kerning = kerning
             metrics = drawing.get_font_metrics(img, str)
-            drawing.text(round(w / 2), round((h / 2) + ((metrics.ascender + (metrics.descender / 2)) / 2)), str)
+            drawing.text(round(img.width / 2), round((img.height / 2) + ((metrics.ascender + (metrics.descender / 2)) / 2)), str)
             drawing(img)
             return img
     except ValueError:
         return 0
+
+def out_iff(path, img, scale=(1, 0.5)):
+    img = PILImage.open(io.BytesIO(img.make_blob("png"))).convert("RGB")
+    img = img.resize((round(img.width * scale[0]), round(img.height * scale[1])), PILImage.Resampling.LANCZOS)
+    img = img.quantize(colors=240, method=0, kmeans=4, dither=PILImage.Dither.NONE)
+
+    w, h = img.size
+    data = img.load()
+    colors = max([data[x,y] for x in range(w) for y in range(h)]) + 1
+    pal = img.getpalette()[:colors * 3]
+    img_iff = iff.ilbm(w, h, img.load(), pal, 0x29000, 1)
+
+    with open(path, "wb") as f:
+        f.write(img_iff)
 
 #def emoji(str, size=180, color="#ffffff", bg_color="#000000"):
 #    try:
@@ -71,8 +99,14 @@ def big_letters(str, size=240, kerning=-1.0, color="#ffffff", bg_color="#000000"
 # -----------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    big_letters("A").save(filename="out_A.png")
-    big_letters("1987", size=112).save(filename="out_1987.png")
-    #emoji("😻", color="#ffffff").save("out_emoji.png")
-    #emoji_roundrect("🤮", color="#000000").save("out_emojirect.png")
+    comp = compose({"op":"tx", "str":"ASS"})
+    comp.save(filename="out_op0_wnd.png")
+    out_iff("out_op0_iff.png", comp)
+
+    operations = [{"op":"tx", "str":"ASS"}, {"op":"tx", "str":"P*SS", "size":100, "color":"#f0f"}]
+    compose(operations).save(filename="out_op1.png")
+
+    operations = [{"op":"bg", "color":"#f00"}, {"op":"tx", "str":"P*SS", "size":100, "color":"#f0f"}]
+    compose(operations).save(filename="out_op2.png")
+
     sys.exit(0)
