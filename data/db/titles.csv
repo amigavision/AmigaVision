@@ -4881,4 +4881,4 @@ game--turrican2agantsc--turrican2aga;Turrican II: The Final Fight;Turrican II (A
 game--moonbase--moonbase;Moonbase: Lunar Colony Simulator;Moonbase;;;OCS;;0;;;;;;;;1991;;English;Wesson;Wesson;1;;v1.0;MoonBase/MoonBase.Slave;game/M/MoonBase_v1.0_2660.lha;Game;Strategy;2505;4066
 game--starways--starways;Star Ways;Star Ways;;;OCS;;0;;;;;;;;1988;;English;Diamond;Diamond;1;;v1.0;StarWays/StarWays.Slave;game/S/StarWays_v1.0_2678.lha;Game;;2100;3352
 game--wormsavicd32--wormsavicd32;Worms (FMV Intro);Worms (FMV Intro);1;game--worms2mb--worms2mb;AGA/CD32;1;0;;-10;;;;;;1995;;English;Team 17;Ocean, Team 17;4 (taking turns);;v1.0;WormsAVICD32/WormsAVICD32.Slave;game/W/Worms_v1.0_AVI_CD32.lha;Game;Action - Strategy;1780;3382
-game-notwhdl--supersprint;Super Sprint;Super Sprint;;;AGA;1;0;;;;;;;ST to Amiga port by Meynaf;2012;;English;State of the Art;Electric Dreams;3;;;;game-notwhdl/SuperSprint.lha;Game;;5903;4298
+game-notwhdl--supersprint;Super Sprint;Super Sprint;;;AGA;1;0;5;28;;;;;ST to Amiga port by Meynaf;2012;;English;State of the Art;Electric Dreams;3;;;;game-notwhdl/SuperSprint.lha;Game;;5903;4298
