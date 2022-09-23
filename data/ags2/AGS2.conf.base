@@ -15,6 +15,6 @@ screenshot_x = 224
 screenshot_y = 0
 text_x = 224
 text_y = 133
-text_width = 52
+text_width = 53
 text_height = 8
 blue_button_action = back

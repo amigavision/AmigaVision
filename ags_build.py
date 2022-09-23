@@ -21,7 +21,7 @@ from make_vadjust import make_vadjust, VADJUST_MIN, VADJUST_MAX
 # -----------------------------------------------------------------------------
 
 AGS_LIST_WIDTH = 26
-AGS_INFO_WIDTH = 48
+AGS_INFO_WIDTH = 53
 
 class CollectedEntries:
     def __init__(self):
@@ -316,7 +316,7 @@ def ags_create_entry(entries: CollectedEntries, ags_path, name, entry, path, ran
         path = path_prefix + "/" + "/".join(list(map(ags_fix_filename, path_suffix.split("/"))))
 
     # base name
-    title = rank + ". " if rank else ""
+    title = rank + " " if rank else ""
     if prefix:
         title = prefix + " - " + title
 
