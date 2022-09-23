@@ -2714,7 +2714,8 @@
 
 - Gameographies:
   - note: Notable developer gameographies.\n\n(Restricted to WHDL adapted games, so not necessarily complete lists.)
-  - "< By Composer >":
+  - "[ By Composer ]":
+    - rank: 1
     - note: Games with music by notable composers.\n\n(Not necessarily complete lists.)
     - Chris Hülsbeck:
       - note: Arguably the most loved Amiga composer of all time, and also creator of the very interesting TFMX music software.

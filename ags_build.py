@@ -416,7 +416,9 @@ def ags_create_entry(entries: CollectedEntries, ags_path, name, entry, path, ran
     if only_script:
         return None
 
-    if sort_rank is not None:
+    if options and "rank" in options:
+        entries.path_sort_rank["{}.run".format(base_path)] = options["rank"]
+    elif sort_rank is not None:
         entries.path_sort_rank["{}.run".format(base_path)] = sort_rank
 
     # note
@@ -442,13 +444,17 @@ def ags_create_image(path, options):
 # -----------------------------------------------------------------------------
 # Create entries from list
 
-def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_path, entries, path, note=None, image=None, ordering=None):
+def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_path, entries, path, note=None, image=None, ordering=None, rank=None):
     # make dir
     base_path = ags_path
     if path:
         for d in path:
             base_path = util.path(base_path, d[:26].strip() + ".ags")
     util.make_dir(base_path)
+
+    # set dir sort rank
+    if rank is not None:
+        collected_entries.path_sort_rank[base_path] = rank
 
     # make note, image
     if note:
@@ -579,9 +585,10 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
 def ags_create_tree(db: Connection, collected_entries: CollectedEntries, ags_path, node, path=[]):
     if isinstance(node, list):
         entries = []
-        note = None
         image = None
+        note = None
         ordering = None
+        rank = None
 
         for item in node:
             # plain titles
@@ -593,10 +600,12 @@ def ags_create_tree(db: Connection, collected_entries: CollectedEntries, ags_pat
             # parse metadata or subtree
             if isinstance(item, dict):
                 image = item.pop("image", None)
-                if "ordering" in item:
-                    ordering = item.pop("ordering")
                 if "note" in item:
                     note = str(item.pop("note"))
+                if "ordering" in item:
+                    ordering = item.pop("ordering")
+                if "rank" in item:
+                    rank = item.pop("rank")
                 for key, value in item.items():
                     if isinstance(value, dict):
                         # item has override options
@@ -605,7 +614,7 @@ def ags_create_tree(db: Connection, collected_entries: CollectedEntries, ags_pat
                         # item is a subtree
                         ags_create_tree(db, collected_entries, ags_path, value, path + [key])
 
-        ags_create_entries(db, collected_entries, ags_path, entries, path, note=note, image=image, ordering=ordering)
+        ags_create_entries(db, collected_entries, ags_path, entries, path, note=note, image=image, ordering=ordering, rank=rank)
 
 def ags_add_all(db: Connection, entries: CollectedEntries, category, all_versions, prefer_ecs):
     for r in db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
@@ -736,18 +745,27 @@ def main():
         # create directory caches
         for path, dirs, files in os.walk(amiga_ags_path):
             cache = []
+
             cd_files = []
             cd_ranked = dict()
             for dir in util.sorted_natural(list(map(lambda n: n.removesuffix(".ags"), filter(lambda d: d.endswith(".ags"), dirs)))):
-                cache.append("D{}".format(dir))
+                dirname = "{}/{}.ags".format(path, dir)
+                if dirname in collected_entries.path_sort_rank:
+                    cd_ranked["D{}".format(dir)] = collected_entries.path_sort_rank[dirname]
+                else:
+                    cd_files.append("D{}".format(dir))
+            cache += [k for k, _ in sorted(cd_ranked.items(), key=lambda a:a[1])] + cd_files
+
+            cd_files = []
+            cd_ranked = dict()
             for file in util.sorted_natural(list(map(lambda n: n.removesuffix(".run"), filter(lambda f: f.endswith(".run"), files)))):
-                runfile = "{}/{}.run".format(path, file)
-                if runfile in collected_entries.path_sort_rank:
-                    cd_ranked["F{}".format(file)] = collected_entries.path_sort_rank[runfile]
+                filename = "{}/{}.run".format(path, file)
+                if filename in collected_entries.path_sort_rank:
+                    cd_ranked["F{}".format(file)] = collected_entries.path_sort_rank[filename]
                 else:
                     cd_files.append("F{}".format(file))
-
             cache += [k for k, _ in sorted(cd_ranked.items(), key=lambda a:a[1])] + cd_files
+
             if len(cache) > 0:
                 cachefile = "{}\n".format(len(cache))
                 for line in cache: cachefile += "{}\n".format(line)

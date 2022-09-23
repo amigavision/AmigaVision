@@ -8,6 +8,7 @@
   - TestDrive2&DataDisksNGC
 
 - Order RANKED:
+  - rank: 2
   - ordering: "ranked"
   - note: From /v/'s Recommended Games Wiki
           (vsrecommendedgames.fandom.com/wiki/Amiga)
@@ -15,15 +16,17 @@
   - ShadowOfTheBeast
 
 - Order ORDERED:
+  - rank: 3
   - ordering: "ordered"
   - note: 45 Games That Defined the AMIGA 500, according to It's a P/XEL thing.\n\n(Chronologically ordered.)
   - IK+
   - BatmanTheMovie
-  - StuntCarRacer
+  - StuntCarRacer: { rank: 0 }
   - ItCameFromTheDesert
   - Populous
 
 - Order RELEASE:
+  - rank: 1
   - ordering: "release"
   - note: By release date
   - EyeOfTheBeholder2
