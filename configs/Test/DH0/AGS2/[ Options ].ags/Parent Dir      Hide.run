@@ -1,0 +1,2 @@
+copy AGS:AGS2.conf.base TO AGS:AGS2.conf QUIET
+echo "hide_parent_dir = 1" >>AGS:AGS2.conf

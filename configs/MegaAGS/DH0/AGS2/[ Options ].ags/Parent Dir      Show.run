@@ -1,0 +1,1 @@
+copy AGS:AGS2.conf.base TO AGS:AGS2.conf QUIET

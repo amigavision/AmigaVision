@@ -1,0 +1,6 @@
+IF EXISTS ENV:whdlqtkey
+  DELETE >NIL: ENV:whdlqtkey
+ENDIF
+IF EXISTS ENVARC:whdlqtkey
+  DELETE >NIL: ENVARC:whdlqtkey
+ENDIF

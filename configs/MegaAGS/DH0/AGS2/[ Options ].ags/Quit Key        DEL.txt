@@ -1,0 +1,4 @@
+Always use DEL to quit game (default).
+
+Please note that you need to quit before
+any saved data is written to disk.

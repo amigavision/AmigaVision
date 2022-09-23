@@ -1,0 +1,3 @@
+setvadjust 0
+echo "1" >ENV:dsblvadj
+echo "1" >ENVARC:dsblvadj
