@@ -1,5 +1,0 @@
-Launch titles in forced NTSC video mode.
-
-Please note that this setting is not saved
-to disk. After a reboot games will load in
-their default video mode again.

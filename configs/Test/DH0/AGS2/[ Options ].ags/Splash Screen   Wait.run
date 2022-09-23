@@ -1,2 +1,0 @@
-echo "-1" >ENV:whdlspdly
-echo "-1" >ENVARC:whdlspdly

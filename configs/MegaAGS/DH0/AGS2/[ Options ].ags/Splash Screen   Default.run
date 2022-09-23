@@ -1,2 +1,0 @@
-echo "200" >ENV:whdlspdly
-echo "200" >ENVARC:whdlspdly

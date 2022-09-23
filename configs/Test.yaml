@@ -5,13 +5,7 @@
   - Nothing to see here:
     - note: Intentionally left blank.
 - Current:
-  - Karateka
-  - SuperSprint
-  - MetroCross
-  - Starquake
-  - KnightmareKonami
-  - MetalGear
-  - GreenBeret
+  - TestDrive2&DataDisksNGC
 - Test:
   - note: Test for builder options
   - Andromeda-Rule30: { scale: 6, v_offset: 48 }
