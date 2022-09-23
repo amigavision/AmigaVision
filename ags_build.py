@@ -287,7 +287,7 @@ def ags_fix_filename(name):
     return name
 
 
-def ags_create_entry(entries: CollectedEntries, ags_path, name, entry, path, rank=None, only_script=False, prefix=None, options=None):
+def ags_create_entry(entries: CollectedEntries, ags_path, name, entry, path, rank=None, sort_rank=None, only_script=False, prefix=None, options=None):
     max_w = AGS_LIST_WIDTH
     note = None
     runfile_ext = "" if only_script else ".run"
@@ -416,6 +416,9 @@ def ags_create_entry(entries: CollectedEntries, ags_path, name, entry, path, ran
     if only_script:
         return None
 
+    if sort_rank is not None:
+        entries.path_sort_rank["{}.run".format(base_path)] = sort_rank
+
     # note
     if options and options.get("unavailable", False):
         note = strings["note"]["title"] + name.replace("-", " ") + "\n\n" + strings["note"]["unavailable"]
@@ -439,7 +442,7 @@ def ags_create_image(path, options):
 # -----------------------------------------------------------------------------
 # Create entries from list
 
-def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_path, entries, path, note=None, image=None, ranked_list=False):
+def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_path, entries, path, note=None, image=None, ordering=None):
     # make dir
     base_path = ags_path
     if path:
@@ -473,10 +476,14 @@ def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_
                 print(" > WARNING: invalid entry: {}".format(n))
         else:
             collected_entries.by_id[e["id"]] = e
-        rank = None
-        if ranked_list:
-            rank = str(pos).zfill(len(str(len(entries))))
-        ags_create_entry(collected_entries, ags_path, n, e, base_path, rank=rank, options=options)
+
+        rank = str(pos).zfill(len(str(len(entries)))) if ordering == "ranked" else None
+
+        sort_rank = None
+        if ordering == "ordered": sort_rank = pos
+        elif ordering == "release": sort_rank = util.parse_date_int(e["release_date"], sortable=True)
+
+        ags_create_entry(collected_entries, ags_path, n, e, base_path, rank=rank, sort_rank=sort_rank, options=options)
     return
 
 # -----------------------------------------------------------------------------
@@ -574,7 +581,7 @@ def ags_create_tree(db: Connection, collected_entries: CollectedEntries, ags_pat
         entries = []
         note = None
         image = None
-        ranked_list = False
+        ordering = None
 
         for item in node:
             # plain titles
@@ -585,15 +592,11 @@ def ags_create_tree(db: Connection, collected_entries: CollectedEntries, ags_pat
                     entries += [(item[0], item[1])]
             # parse metadata or subtree
             if isinstance(item, dict):
+                image = item.pop("image", None)
+                if "ordering" in item:
+                    ordering = item.pop("ordering")
                 if "note" in item:
-                    note = str(item["note"])
-                    del item["note"]
-                if "image" in item:
-                    image = item["image"]
-                    del item["image"]
-                if "ranked_list" in item:
-                    ranked_list = item["ranked_list"]
-                    del item["ranked_list"]
+                    note = str(item.pop("note"))
                 for key, value in item.items():
                     if isinstance(value, dict):
                         # item has override options
@@ -602,7 +605,7 @@ def ags_create_tree(db: Connection, collected_entries: CollectedEntries, ags_pat
                         # item is a subtree
                         ags_create_tree(db, collected_entries, ags_path, value, path + [key])
 
-        ags_create_entries(db, collected_entries, ags_path, entries, path, note=note, image=image, ranked_list=ranked_list)
+        ags_create_entries(db, collected_entries, ags_path, entries, path, note=note, image=image, ordering=ordering)
 
 def ags_add_all(db: Connection, entries: CollectedEntries, category, all_versions, prefer_ecs):
     for r in db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):

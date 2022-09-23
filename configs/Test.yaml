@@ -6,6 +6,32 @@
     - note: Intentionally left blank.
 - Current:
   - TestDrive2&DataDisksNGC
+
+- Order RANKED:
+  - ordering: "ranked"
+  - note: From /v/'s Recommended Games Wiki
+          (vsrecommendedgames.fandom.com/wiki/Amiga)
+  - Agony
+  - ShadowOfTheBeast
+
+- Order ORDERED:
+  - ordering: "ordered"
+  - note: 45 Games That Defined the AMIGA 500, according to It's a P/XEL thing.\n\n(Chronologically ordered.)
+  - IK+
+  - BatmanTheMovie
+  - StuntCarRacer
+  - ItCameFromTheDesert
+  - Populous
+
+- Order RELEASE:
+  - ordering: "release"
+  - note: By release date
+  - EyeOfTheBeholder2
+  - Lemmings
+  - Speedball2
+  - Turrican2
+  - Worms
+
 - Test:
   - note: Test for builder options
   - Andromeda-Rule30: { scale: 6, v_offset: 48 }

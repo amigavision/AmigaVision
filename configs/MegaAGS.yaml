@@ -6,13 +6,9 @@
 - Best-of Lists:
   - note: Top games lists compiled or voted by magazines back in the day as well as contemporary outlets.
   - Amiga Lore Top 100:
-    - ranked_list: True
-    - note: Amiga Lore's aggregate review score ranking,
-            taking into account the largest publications of
-            the era from across the continent. A Metacritic
-            equivalent for the platform, if you will.
-            Some duplicate entries exist, since rereleases
-            and CD32 versions are considered separately.
+    - ordering: "ranked"
+    - note: Amiga Lore's aggregate review score ranking, taking into account the largest publications of the era from across the continent. A Metacritic equivalent for the platform, if you will.\n
+            (Some duplicate entries exist, since rereleases and CD32 versions are considered separately.)
     - Populous2&ChallengeGames
     - SWOS9596
     - CannonFodder
@@ -24,7 +20,7 @@
     - DesertStrike
     - FireAndIce
     - FirstSamurai
-    - FormulaOneGrandPrix4Disk
+    - FormulaOneGrandPrix
     - Hunter
     - JimmyWhitesSnooker
     - Lemmings2
@@ -114,7 +110,7 @@
     - Xenon2
     - LostTreasuresOfInfocom
   - Amiga Power Top 100 (1991):
-    - ranked_list: True
+    - ordering: "ranked"
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1991.
     - RainbowIslands
     - Lemmings
@@ -217,7 +213,7 @@
     - Xybots
     - GrandMonsterSlam
   - Amiga Power Top 100 (1992):
-    - ranked_list: True
+    - ordering: "ranked"
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1992.
     - RainbowIslands
     - FormulaOneGrandPrix
@@ -320,7 +316,7 @@
     - CovertAction
     - GoldenAxe
   - Amiga Power Top 100 (1993):
-    - ranked_list: True
+    - ordering: "ranked"
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1993.
     - SensibleSoccer
     - FormulaOneGrandPrix
@@ -423,7 +419,7 @@
     - Switchblade2
     - GTSoccerChallenge
   - EAB Top 10 Exclusive:
-    - ranked_list: True
+    - ordering: "ranked"
     - note: The best Amiga-exclusive games according to users of the English Amiga Board.
     - Wings
     - WormsDC
@@ -446,7 +442,7 @@
     - ShadowOfTheBeast3
     - Roadkill
   - Kim Justice Top 100:
-    - ranked_list: True
+    - ordering: "ranked"
     - note: Kim Justice's top 100 Amiga games of all time.
     - SWOS
     - Syndicate
@@ -548,39 +544,39 @@
     - NavySEALs
     - Uridium2
     - YoJoe
-  - Lemon Top 30 (Dec 2020):
-    - ranked_list: True
+  - Lemon Top 30 (Sep 2022):
+    - ordering: "ranked"
     - note: As voted by lemonamiga.com users
     - SecretOfMonkeyIsland
     - MonkeyIsland2
     - Settlers
-    - SWOS9697
     - Dune2
     - Turrican2
     - SlamTilt
-    - CannonFodder
     - Lemmings
-    - SimonTheSorcerer
-    - Flashback
-    - Civilization
-    - UFOEnemyUnknown
+    - SWOS9697
     - Ambermoon
+    - CannonFodder
+    - Civilization
+    - SWOS9596
+    - FormulaOneGrandPrix
+    - SWOS
+    - UFOEnemyUnknown
     - Wings
     - Speedball2
-    - SWOS9596
-    - WorldCircuit
-    - SWOS
-    - AnotherWorld
+    - SimonTheSorcerer
+    - Flashback
     - Syndicate
     - Pirates
-    - CannonFodder
+    - AnotherWorld
     - PinballFntsies
-    - Lotus2
     - PinballDreams
-    - EyeOfTheBeholder2
-    - IndianaJonesAtlantisAdv
     - ChaosEngine
-    - Colonization
+    - IndianaJonesAtlantisAdv
+    - CannonFodder
+    - Lotus2
+    - EyeOfTheBeholder2
+    - WormsDC
   - Mr Biffo Top 10:
     - note: The 10 best Amiga games according to Mr Biffo of Digitiser 2000.
     - CannonFodder
@@ -1026,7 +1022,7 @@
     - Zeewolf2
     - ZOut
   - DenOfGeek-Underappreciated:
-    - ranked_list: True
+    - ordering: "ranked"
     - note: The Top 50 underappreciated Amiga games according to Den of Geek.
     - Stardust
     - NoSecondPrize
@@ -1090,7 +1086,7 @@
     - Lollypop
     - TrapsNTreasures
   - Kim Justice Top Psygnosis:
-    - ranked_list: True
+    - ordering: "ordered"
     - note: Kim Justice's top 10 favourite Psygnosis games (excluding a few non-Amiga games, including honorable mentions).
     - Lemmings
     - BillsTomatoGame
@@ -1105,8 +1101,8 @@
     - HiredGuns
     - SecondSamurai
   - PIXEL thing - 45 Games:
-    - ranked_list: True
-    - note: 45 Games That Defined the AMIGA 500,\naccording to It's a P/XEL thing.\n(Chronologically ordered)
+    - ordering: "ordered"
+    - note: 45 Games That Defined the AMIGA 500, according to It's a P/XEL thing.\n\n(Chronologically ordered.)
     - IK+
     - CarrierCommand
     - ShadowOfTheBeast
