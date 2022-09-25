@@ -8,6 +8,13 @@
   - image: { op: "tx", str: "TEST", size: 112 }
   - InheritTheEarth
   - TestDrive2&DataDisksNGC
+  - AbyssDone
+  - AbyssBitmapRasters
+  - AmigatariTechnova
+  - HCopperGangHalifax
+  - FFPUnicodeAttac
+  - Melon-SaltyWater
+  - MrsBeanbag-BeSheep
 
 - Ordering Test:
   - Order RANKED:
