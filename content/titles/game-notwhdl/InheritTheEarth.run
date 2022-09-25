@@ -1,0 +1,19 @@
+IF EXISTS WHDSaves:InheritTheEarth
+  copy WHDSaves:InheritTheEarth/ite.prf S: QUIET
+  copy WHDSaves:InheritTheEarth/ite.sav RAM: QUIET
+ENDIF
+IF NOT EXISTS WHDSaves:InheritTheEarth
+  makedir >NIL: WHDSaves:InheritTheEarth
+  copy WHD:N/InheritTheEarth/init/ite.prf S: QUIET
+  copy WHD:N/InheritTheEarth/init/ite.sav RAM: QUIET
+ENDIF
+cd WHD:N/InheritTheEarth
+aga.exe >NIL:
+wait 4
+echo ""
+ask "Thank you for playing! Press enter to save data and return..."
+echo "*"*E[0;0H*E[J* "
+copy RAM:ite.sav WHDSaves:InheritTheEarth/ite.sav QUIET
+copy S:ite.prf WHDSaves:InheritTheEarth/ite.prf QUIET
+delete >NIL: RAM:ite.sav
+delete >NIL: S:ite.prf

@@ -1,39 +1,40 @@
 --- # AGS2 Menu structure
 - About:
   - note: 'MEGA AGS 2022.10.01'
-  - image: { op: "tx", str: "MEGA", size: 150 }
   - Nothing to see here:
     - note: Intentionally left blank.
+
 - Current:
+  - image: { op: "tx", str: "TEST", size: 112 }
+  - InheritTheEarth
   - TestDrive2&DataDisksNGC
 
-- Order RANKED:
-  - rank: 2
-  - ordering: "ranked"
-  - note: From /v/'s Recommended Games Wiki
-          (vsrecommendedgames.fandom.com/wiki/Amiga)
-  - Agony
-  - ShadowOfTheBeast
-
-- Order ORDERED:
-  - rank: 3
-  - ordering: "ordered"
-  - note: 45 Games That Defined the AMIGA 500, according to It's a P/XEL thing.\n\n(Chronologically ordered.)
-  - IK+
-  - BatmanTheMovie
-  - StuntCarRacer: { rank: 0 }
-  - ItCameFromTheDesert
-  - Populous
-
-- Order RELEASE:
-  - rank: 1
-  - ordering: "release"
-  - note: By release date
-  - EyeOfTheBeholder2
-  - Lemmings
-  - Speedball2
-  - Turrican2
-  - Worms
+- Ordering Test:
+  - Order RANKED:
+    - rank: 2
+    - ordering: "ranked"
+    - note: From /v/'s Recommended Games Wiki
+            (vsrecommendedgames.fandom.com/wiki/Amiga)
+    - Agony
+    - ShadowOfTheBeast
+  - Order ORDERED:
+    - rank: 3
+    - ordering: "ordered"
+    - note: 45 Games That Defined the AMIGA 500, according to It's a P/XEL thing.\n\n(Chronologically ordered.)
+    - IK+
+    - BatmanTheMovie
+    - StuntCarRacer: { rank: 0 }
+    - ItCameFromTheDesert
+    - Populous
+  - Order RELEASE:
+    - rank: 1
+    - ordering: "release"
+    - note: By release date
+    - EyeOfTheBeholder2
+    - Lemmings
+    - Speedball2
+    - Turrican2
+    - Worms
 
 - Test:
   - note: Test for builder options
