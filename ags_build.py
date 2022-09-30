@@ -599,7 +599,8 @@ def ags_create_tree(db: Connection, collected_entries: CollectedEntries, ags_pat
                     entries += [(item[0], item[1])]
             # parse metadata or subtree
             if isinstance(item, dict):
-                image = item.pop("image", None)
+                if "image" in item:
+                    image = item.pop("image")
                 if "note" in item:
                     note = str(item.pop("note"))
                 if "ordering" in item:

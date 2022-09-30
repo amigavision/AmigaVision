@@ -2413,6 +2413,7 @@
 - Decennial Spotlight:
   - note: 10 games for every year between 1986 and 1995. Cutting across genres to select the great and/or representative titles available at the time.\n\n(While the Amiga computer premiered mid-1985, hardware and software availability was very limited for the first months.)
   - "1986":
+    - image: { op: "tx", str: "’86", size: 190 }
     - BardsTale
     - Brataccas
     - DefenderOfTheCrown
@@ -2424,6 +2425,7 @@
     - Shanghai
     - Skyfox
   - "1987":
+    - image: { op: "tx", str: "’87", size: 190 }
     - Amegas
     - KingOfChicago
     - LittleComputerPeople
@@ -2435,6 +2437,7 @@
     - TerrorPods
     - TestDrive
   - "1988":
+    - image: { op: "tx", str: "’88", size: 190 }
     - BattleChess
     - BubbleBobble
     - DungeonMaster
@@ -2446,6 +2449,7 @@
     - Sentinel
     - Virus
   - "1989":
+    - image: { op: "tx", str: "’89", size: 190 }
     - BattleSquadron
     - BloodMoney
     - FutureWars
@@ -2457,6 +2461,7 @@
     - Silkworm
     - SimCity
   - "1990":
+    - image: { op: "tx", str: "’90", size: 190 }
     - Cadaver
     - Elvira
     - LostPatrol
@@ -2468,6 +2473,7 @@
     - Twintris
     - Wings
   - "1991":
+    - image: { op: "tx", str: "’91", size: 190 }
     - AnotherWorld
     - BattleIsle
     - Lotus2
@@ -2479,6 +2485,7 @@
     - Lemmings
     - Turrican2
   - "1992":
+    - image: { op: "tx", str: "’92", size: 190 }
     - Apidya
     - BCKid
     - CrazyCars3
@@ -2490,6 +2497,7 @@
     - SensibleSoccer
     - Troddlers
   - "1993":
+    - image: { op: "tx", str: "’93", size: 190 }
     - Ambermoon
     - CannonFodder
     - ChaosEngine
@@ -2501,6 +2509,7 @@
     - Syndicate
     - WizNLiz
   - "1994":
+    - image: { op: "tx", str: "’94", size: 190 }
     - Banshee
     - BeneathAStlSky
     - BubbaNStix
@@ -2512,6 +2521,7 @@
     - NaughtyOnes
     - RuffNTumble
   - "1995":
+    - image: { op: "tx", str: "’95", size: 190 }
     - BloodNet
     - Lollypop
     - Odyssey
