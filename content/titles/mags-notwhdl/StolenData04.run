@@ -1,0 +1,7 @@
+cd WHD:N/StolenData04
+assign DF0: DISMOUNT
+assign DF0: ""
+killaga >NIL: intro
+killaga >NIL: menu
+assign DF0: REMOVE
+mount DF0:
