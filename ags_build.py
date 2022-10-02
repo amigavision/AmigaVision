@@ -460,7 +460,7 @@ def ags_create_entries(db: Connection, collected_entries: CollectedEntries, ags_
     if note:
         note = "\n".join([textwrap.fill(p, AGS_INFO_WIDTH) for p in note.replace("\\n", "\n").splitlines()])
         open(base_path[:-4] + ".txt", mode="w", encoding="latin-1").write(note)
-    if isinstance(image, dict):
+    if isinstance(image, (dict, list)):
         ags_create_image(base_path[:-4] + ".iff", image)
 
     # collect titles
