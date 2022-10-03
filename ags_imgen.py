@@ -36,28 +36,28 @@ def bg(width=WIDTH, height=HEIGHT, color="#000"):
     return Image(width=width, height=height, background=Color(color))
 
 # "tx" operation: single line text
-# TODO: orientation/placement
-def tx(str, size=240, kerning=-1.0, font="display.otf", color="#ffffff", bg="#000000"):
+# halign = "center", "left", "right"
+# valign = "center", "top", "bottom"
+def tx(txt, size=240, halign="center", valign="center", kerning=-1.0, font="display.otf", color="#ffffff", bg="#000000"):
     try:
         with Drawing() as drawing:
             img = bg if isinstance(bg, Image) else bg(color=bg)
             drawing.font = "content/fonts/{}".format(font)
             drawing.font_size = size
             drawing.fill_color = Color(color)
-            drawing.text_alignment = "center"
             drawing.text_kerning = kerning
-            metrics = drawing.get_font_metrics(img, str)
-            drawing.text(round(img.width / 2), round((img.height / 2) + ((metrics.ascender + (metrics.descender / 2)) / 2)), str)
+            drawing.gravity = alignment_to_gravity(halign, valign)
+            drawing.text(0, 0, txt)
             drawing(img)
             return img
     except ValueError:
         return 0
 
 # "pi" operation: paste image from file
-# size = "fit" or number
+# scale = "fit" or number
 # halign = "center", "left", "right"
 # valign = "center", "top", "bottom"
-def pi(path, size="fit", halign="center", valign="center", mode="copy", bg="#000000"):
+def pi(path, scale="fit", halign="center", valign="center", mode="copy", bg="#000000"):
     try:
         with Drawing() as drawing:
             with Image(filename="{}{}".format(IMG_SRC_BASE, path)) as src:
@@ -66,10 +66,10 @@ def pi(path, size="fit", halign="center", valign="center", mode="copy", bg="#000
                 src_ar = src.width / src.height
 
                 (comp_width, comp_height) = (src.width, src.height)
-                if isinstance(size, float):
-                    comp_width *= size
-                    comp_height *= size
-                elif isinstance(size, str) and size == "fit":
+                if isinstance(scale, float):
+                    comp_width *= scale
+                    comp_height *= scale
+                elif isinstance(scale, str) and scale == "fit":
                     if src_ar > img_ar:
                         comp_width /= (src.width / img.width)
                         comp_height /= (src.width / img.width)
@@ -99,6 +99,29 @@ def pi(path, size="fit", halign="center", valign="center", mode="copy", bg="#000
     except ValueError:
         return 0
 
+def alignment_to_gravity(halign="center", valign="center"):
+    if isinstance(valign, str) and valign == "top":
+        if isinstance(halign, str) and halign == "left":
+            return "north_west"
+        elif isinstance(halign, str) and halign == "right":
+            return "north_east"
+        else:
+            return "north"
+    elif isinstance(valign, str) and valign == "bottom":
+        if isinstance(halign, str) and halign == "left":
+            return "south_west"
+        elif isinstance(halign, str) and halign == "right":
+            return "south_east"
+        else:
+            return "south"
+    else:
+        if isinstance(halign, str) and halign == "left":
+            return "west"
+        elif isinstance(halign, str) and halign == "right":
+            return "east"
+        else:
+            return "center"
+
 def out_png(path, img, scale=(1, 1)):
     img = PILImage.open(io.BytesIO(img.make_blob("png"))).convert("RGB")
 
@@ -116,67 +139,38 @@ def out_iff(path, img, scale=(1, 0.5)):
     with open(path, "wb") as f:
         f.write(img_iff)
 
-#def emoji(str, size=180, color="#ffffff", bg_color="#000000"):
-#    try:
-#        w = 320
-#        h = 256
-#        bg = ImageColor.getrgb(bg_color)
-#        fg = ImageColor.getrgb(color)
-#
-#        font = ImageFont.truetype("content/fonts/emoji.ttf", size)
-#        im = Image.new("RGB", (w, h), bg)
-#        d = ImageDraw.Draw(im)
-#
-#        d.text((round(w / 2), round(h / 2)), str, fill=fg, anchor="mm", font=font)
-#        return im
-#    except ValueError:
-#        return 0
-
-#def emoji_roundrect(str, size=220, sym_size=None, color="#000000", rect_color="#ffffff", bg_color="#000000"):
-#    # ImageDraw.rounded_rectangle doesn't antialias, so let's use an emoji for the shape...
-#    try:
-#        w = 320
-#        h = 256
-#        bg = ImageColor.getrgb(bg_color)
-#        fg = ImageColor.getrgb(color)
-#        rc = ImageColor.getrgb(rect_color)
-#        sym_size = sym_size if sym_size is not None else round(size * 0.75)
-#
-#        rect_font = ImageFont.truetype("content/fonts/emoji.ttf", size)
-#        font = ImageFont.truetype("content/fonts/emoji.ttf", sym_size)
-#        im = Image.new("RGB", (w, h), bg)
-#        d = ImageDraw.Draw(im)
-#
-#        d.text((round(w / 2), round(h / 2)), "🔼", fill=rc, anchor="mm", font=rect_font)
-#        d.text((round(w / 2), round(h / 2)), "🔺", fill=rc, anchor="mm", font=rect_font)
-#        d.text((round(w / 2), round(h / 2)), str, fill=fg, anchor="mm", font=font)
-#        return im
-#    except ValueError:
-#        return 0
-
 # -----------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    comp = compose({"op":"tx", "str":"ASS"})
+    comp = compose({"op":"tx", "txt":"ASS"})
     comp.save(filename="out_op0_wnd.png")
     out_iff("out_op0_iff.png", comp)
 
-    operations = [{"op":"tx", "str":"ASS"}, {"op":"tx", "str":"P*SS", "size":100, "color":"#f0f"}]
+    operations = [{"op":"tx", "txt":"ASS"}, {"op":"tx", "txt":"P*SS", "size":100, "color":"#f0f"}]
     compose(operations).save(filename="out_op1.png")
 
-    operations = [{"op":"bg", "color":"#f00"}, {"op":"tx", "str":"P*SS", "size":100, "color":"#f0f"}]
+    operations = [{"op":"bg", "color":"#f00"}, {"op":"tx", "txt":"P*SS", "size":100, "color":"#f0f"}]
     compose(operations).save(filename="out_op2.png")
 
-    operations = [{"op":"pi", "path":"chris_hülsbeck.jpg", "size":1.0}]
+    operations = [{"op":"pi", "path":"chris_hülsbeck.jpg", "scale":1.0}]
     compose(operations).save(filename="out_pi1.png")
 
-    operations = [{"op":"pi", "path":"chris_hülsbeck.jpg", "size":2.0, "halign":"right", "valign":"top"}]
+    operations = [
+        {"op":"pi", "path":"chris_hülsbeck.jpg", "scale":2.0, "halign":"right", "valign":"top"},
+        {"op":"tx", "txt":"chris!", "size":100, "color":"#f0f"}
+    ]
     compose(operations).save(filename="out_pi2.png")
 
-    operations = [{"op":"pi", "path":"chris_hülsbeck.jpg", "halign":"right"}]
+    operations = [
+        {"op":"pi", "path":"chris_hülsbeck.jpg", "halign":"right"},
+        {"op":"tx", "txt":"chrijs!", "size":100, "color":"#f0f", "halign":"left", "valign":"bottom"}
+    ]
     compose(operations).save(filename="out_pi3.png")
 
-    operations = [{"op":"pi", "path":"chris_hülsbeck_wide.png", "valign":"bottom"}]
+    operations = [
+        {"op":"pi", "path":"chris_hülsbeck_wide.png", "valign":"bottom"},
+        {"op":"tx", "txt":"chris!", "size":100, "color":"#f0f", "halign":"right", "valign":"top"}
+    ]
     compose(operations).save(filename="out_pi4.png")
 
     sys.exit(0)

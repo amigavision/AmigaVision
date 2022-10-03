@@ -5,7 +5,7 @@
     - note: Intentionally left blank.
 
 - Current:
-  - image: { op: "tx", str: "TEST", size: 112 }
+  - image: [{"op":"tx", "txt":"ASS"}, {"op":"tx", "txt":"P*SS", "size":100, "color":"#f0f"}]
   - AbyssDone
   - FFPUnicodeAttac
   - MrsBeanbag-BeSheep

@@ -512,9 +512,9 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
         # add games
         if all_games and entry.get("category", "").lower() == "game":
             ags_create_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"))
-            ags_create_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".iff"), {"op":"tx", "str": letter})
+            ags_create_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".iff"), {"op":"tx", "txt": letter})
             ags_create_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".ags"))
-            ags_create_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".iff"), {"op":"tx", "str": year_img, "size": 112})
+            ags_create_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
 
         # add demos, disk mags
         def add_demo(entry, sort_group, sort_country):
@@ -532,9 +532,9 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
                     entries.path_sort_rank["{}.run".format(mag_path)] = rank if rank else 0
             elif entry.get("subcategory", "").lower().startswith("music disk"):
                 ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".ags"))
-                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".iff"), {"op":"tx", "str": letter})
+                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".iff"), {"op":"tx", "txt": letter})
                 ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".ags"))
-                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".iff"), {"op":"tx", "str": year_img, "size": 112})
+                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
             else:
                 if entry.get("subcategory", "").lower().startswith("crack"):
                     ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_cracktro"])), prefix=sort_group)
@@ -543,11 +543,11 @@ def ags_create_autoentries(entries: CollectedEntries, path, all_games=False, all
                 group_entry = dict(entry)
                 group_entry["title_short"] = group_entry.get("title")
                 ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".ags"))
-                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".iff"), {"op":"tx", "str": letter})
+                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".iff"), {"op":"tx", "txt": letter})
                 ags_create_entry(entries, path, None, group_entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".ags"), prefix=sort_group)
-                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".iff"), {"op":"tx", "str": group_letter})
+                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".iff"), {"op":"tx", "txt": group_letter})
                 ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".ags"))
-                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".iff"), {"op":"tx", "str": year_img, "size": 112})
+                ags_create_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
                 if sort_country:
                     ags_create_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".ags"))
 
