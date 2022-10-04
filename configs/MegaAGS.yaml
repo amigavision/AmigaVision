@@ -2728,7 +2728,8 @@
     - rank: 1
     - note: Games with music by notable composers.\n\n(Not necessarily complete lists.)
     - Chris Hülsbeck:
-      - note: Arguably the most loved Amiga composer of all time, and also creator of the very interesting TFMX music software.
+      - note: Arguably the most loved Amiga composer of all time, and also creator of the quite unique TFMX music software.
+      - image: {"op":"pi", "path":"chris_hülsbeck.jpg"}
       - AdventuresOfQuik&Silva
       - Apidya
       - Apprentice
@@ -2762,6 +2763,7 @@
       - ZOut
     - Karsten Obarski:
       - note: Maker of the original Sound Tracker software, and a prolific composer in the very early days of Amiga.
+      - image: {"op":"pi", "path":"karsten_obarski.png"}
       - Amegas
       - BrandsHatch
       - CrystalHammerV2
@@ -2775,6 +2777,7 @@
       - WindowWizard
     - Follin Brothers:
       - note: The Amiga was the legendary brothers Tim & Geoff least favorite platform, and you can sort of tell...
+      - image: {"op":"pi", "path":"follin_bros.jpg"}
       - BionicCommando
       - Gauntlet3
       - GhoulsNGhosts
@@ -2783,6 +2786,29 @@
       - Qix
       - Renegade
       - SlySpySecretAgent
+    - Jochen Hippel:
+      - note: His music was for the most part primarily composed for Atari ST, but despite that (or even because of it!), it's among the best ever for Amiga.
+      - image: {"op":"pi", "path":"jochen_hippel.png"}
+      - 5thGear
+      - Amberstar
+      - Astaroth
+      - Atomix
+      - BCKid
+      - BattleValley
+      - ChambersOfShaolin
+      - Dragonflight
+      - EnchantedLand
+      - GhostBattle
+      - LeavinTeramis
+      - LethalXcess
+      - MonsterBusiness
+      - NinjaRemix
+      - PrehistoricTale
+      - RingsOfMedusa
+      - SevenGatesOfJambala
+      - Tangram
+      - Warp
+      - WingsOfDeath
   - Assembly Line, The:
     - note: While most known for helping out the Bitmap Bros on Xenon 2, the awesome and quirky puzzle games represent their finest work.
     - Cybercon3
