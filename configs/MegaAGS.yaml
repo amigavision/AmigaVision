@@ -1,6 +1,6 @@
 --- # AGS2 Menu structure
 - About:
-  - note: 'MEGA AGS 2022.09.09'
+  - note: 'MEGA AGS 2022.10.11'
   - Nothing to see here:
     - note: Intentionally left blank.
 - Best-of Lists:
@@ -2761,31 +2761,6 @@
       - Turrican3
       - XOut
       - ZOut
-    - Karsten Obarski:
-      - note: Maker of the original Sound Tracker software, and a prolific composer in the very early days of Amiga.
-      - image: {"op":"pi", "path":"karsten_obarski.png"}
-      - Amegas
-      - BrandsHatch
-      - CrystalHammerV2
-      - Dyter07
-      - FateGatesOfDawn
-      - FutureTank
-      - Larrie
-      - OilImperium
-      - Project1
-      - Sarcophaser
-      - WindowWizard
-    - Follin Brothers:
-      - note: The Amiga was the legendary brothers Tim & Geoff least favorite platform, and you can sort of tell...
-      - image: {"op":"pi", "path":"follin_bros.jpg"}
-      - BionicCommando
-      - Gauntlet3
-      - GhoulsNGhosts
-      - LEDStorm
-      - Puzznic
-      - Qix
-      - Renegade
-      - SlySpySecretAgent
     - Jochen Hippel:
       - note: His music was for the most part primarily composed for Atari ST, but despite that (or even because of it!), it's among the best ever for Amiga.
       - image: {"op":"pi", "path":"jochen_hippel.png"}
@@ -2809,8 +2784,33 @@
       - Tangram
       - Warp
       - WingsOfDeath
+    - Karsten Obarski:
+      - note: Maker of the original Sound Tracker software, and a prolific composer in the very early days of Amiga.
+      - image: {"op":"pi", "path":"karsten_obarski.png"}
+      - Amegas
+      - BrandsHatch
+      - CrystalHammerV2
+      - Dyter07
+      - FateGatesOfDawn
+      - FutureTank
+      - Larrie
+      - OilImperium
+      - Project1
+      - Sarcophaser
+      - WindowWizard
+    - Tim Follin:
+      - note: The Amiga was Tim Follin's least favorite platform, and you can sort of tell... Still, Ghouls 'n Ghosts is a masterpiece.
+      - image: {"op":"pi", "path":"tim_follin_bw.png"}
+      - BionicCommando
+      - Gauntlet3
+      - GhoulsNGhosts
+      - LEDStorm
+      - Qix
+      - Renegade
+      - SlySpySecretAgent
   - Assembly Line, The:
     - note: While most known for helping out the Bitmap Bros on Xenon 2, the awesome and quirky puzzle games represent their finest work.
+    - image: {"op":"pi", "path":"assembly_line.png"}
     - Cybercon3
     - EMotion
     - Exterminator
@@ -2820,12 +2820,14 @@
     - Xenon2
   - Bill Williams:
     - note: The Amiga's original auteur.
+    - image: {"op":"pi", "path":"bill_williams_bw.png"}
     - KnightsOfTheCrystallion
     - MindWalker
     - PioneerPlague
     - Sinbad
   - Bitmap Brothers:
     - note: The original "style over substance" game studio. Their catalogue is worth checking out for Dan Malone and Mark Coleman's exquisite pixeling style alone.
+    - image: {"op":"pi", "path":"logo/bitmap_brothers.png"}
     - Cadaver&ThePayoff
     - Cadaver&ThePayoff--TPO
     - ChaosEngine
@@ -2838,6 +2840,7 @@
     - Xenon2
   - Blue Byte:
     - note: Purveyors of fine strategy games (and tennis!).
+    - image: {"op":"pi", "path":"logo/blue_byte.png"}
     - Atomino
     - BattleIsle&DataDisks
     - BattleIsle&DataDisks--Intro
@@ -2852,6 +2855,7 @@
     - TomAndTheGhost
     - TwinWorld
   - Brøderbund:
+    - image: {"op":"pi", "path":"logo/broderbund.png"}
     - DownhillChallenge
     - PrinceOfPersia
     - ShufflepuckCafe
@@ -2861,6 +2865,7 @@
     - WITWIsCarmenSandiego
     - WingsOfFury
   - Cinemaware:
+    - image: {"op":"pi", "path":"logo/cinemaware.png"}
     - DefenderOfTheCrown
     - ItCameFromTheDesert
     - ItCameFromTheDesert2
@@ -2876,6 +2881,7 @@
     - TVSportsFootball
     - Wings
   - Delphine Software:
+    - image: {"op":"pi", "path":"logo/delphine_software.png"}
     - AnotherWorld
     - AnotherWorldLostLevel
     - BioChallenge
@@ -2886,12 +2892,14 @@
     - OperationStealth
     - ShaqFu
   - Digital Illusions:
+    - image: {"op":"pi", "path":"logo/digital_illusions.png"}
     - Amiganoid
     - Benefactor
     - PinballDreams
     - PinballFntsies
     - PinballIllusions
   - DMA Design:
+    - image: {"op":"pi", "path":"logo/dma_design.png"}
     - AllNewWorldOfLemmings
     - BloodMoney
     - HiredGuns
@@ -2901,6 +2909,7 @@
     - OhNoMoreLemmings
     - Walker
   - Factor 5:
+    - image: {"op":"pi", "path":"logo/factor_5.png"}
     - BCKid
     - Denaris
     - Katakis
@@ -2910,6 +2919,7 @@
     - Turrican2
     - Turrican3
   - Graftgold:
+    - image: {"op":"pi", "path":"logo/graftgold.png"}
     - EmpireSoccer94
     - FireAndIce
     - Paradroid90
@@ -2920,17 +2930,20 @@
     - Uridium2
     - Virocop
   - Horror Soft:
+    - image: {"op":"pi", "path":"logo/horror_soft.png"}
     - Elvira
     - Elvira2
     - PersonalNightmare
     - Waxworks
   - Llamasoft:
+    - image: {"op":"pi", "path":"logo/llamasoft.png"}
     - Defender2
     - Llamatron
     - RevengeOfMutantCamels
     - RevengeOfMutantCamels2
     - SuperGridRunner
   - Lucasfilm:
+    - image: {"op":"pi", "path":"logo/lucasfilm_games.png"}
     - Battlehawks1942
     - IndianaJonesAtlantisAct
     - IndianaJonesAtlantisAdv
@@ -2942,6 +2955,7 @@
     - TheirFinestHour
     - ZakMcKracken
   - Magnetic Fields:
+    - image: {"op":"pi", "path":"logo/magnetic_fields.png"}
     - CrystalDragon
     - KidChaos
     - Kikstart2
@@ -2953,8 +2967,21 @@
     - SuperCars
     - SuperCars2
     - SuperScrambleSimulator
+  - Ocean France:
+    - image: {"op":"pi", "path":"logo/ocean.png"}
+    - BadDudesVsDragonNinja
+    - BeachVolley
+    - Cabal
+    - Ivanhoe
+    - LiquidKids
+    - OperationWolf
+    - Pang
+    - Plotting
+    - SnowBros
+    - Toki
   - Random Access, Storm:
     - note: Purveyors of fine arcade conversions.
+    - image: {"op":"pi", "path":"logo/sales_curve.png"}
     - BigRun
     - FinalBlow
     - IndyHeat
@@ -2966,6 +2993,7 @@
     - Silkworm
     - SWIV
   - Reflections:
+    - image: {"op":"pi", "path":"logo/reflections.png"}
     - Awesome
     - Ballistix
     - BrianTheLion
@@ -2973,6 +3001,7 @@
     - ShadowOfTheBeast2
     - ShadowOfTheBeast3
   - reLINE:
+    - image: {"op":"pi", "path":"logo/reline.png"}
     - Amegas
     - CrystalHammerV2
     - Dyter07
@@ -2981,6 +3010,7 @@
     - WesternGames
     - WindowWizard
   - Sensible Software:
+    - image: {"op":"pi", "path":"logo/sensible_software.png"}
     - CannonFodder
     - CannonFodder2
     - CannonFodder2AlienLevels
@@ -2999,6 +3029,7 @@
     - Wizball
     - Wizkid
   - Sierra On-Line:
+    - image: {"op":"pi", "path":"logo/sierra.png"}
     - BlackCauldron
     - CastleOfDrBrain
     - CodeNameIceman
@@ -3031,6 +3062,7 @@
     - SpaceQuest3
     - SpaceQuest4
   - Thalion:
+    - image: {"op":"pi", "path":"logo/thalion.png"}
     - Ambermoon
     - Amberstar
     - ChambersOfShaolin
@@ -3047,9 +3079,11 @@
     - Warp
     - WingsOfDeath
   - Travellers Tales:
+    - image: {"op":"pi", "path":"logo/travellers_tales.png"}
     - Leander
     - Puggsy
   - Vectordean:
+    - image: {"op":"pi", "path":"logo/vectordean.png"}
     - AquaticGames
     - BadCompany
     - DogsOfWar
@@ -3059,6 +3093,7 @@
     - JamesPond3
     - Yolanda
   - Westwood:
+    - image: {"op":"pi", "path":"logo/westwood.png"}
     - Battletech
     - CaliforniaGames
     - DragonStrike

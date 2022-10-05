@@ -7,6 +7,7 @@
 - Current:
   - image: [{"op":"tx", "txt":"ASS"}, {"op":"tx", "txt":"P*SS", "size":100, "color":"#f0f"}]
   - AbyssDone
+  - BadDudesVsDragonNinja
   - FFPUnicodeAttac
   - MrsBeanbag-BeSheep
   - ParadoxFutureBike
@@ -63,7 +64,7 @@
   - note: Test for builder options
   - Andromeda-Rule30: { scale: 6, v_offset: 48 }
   - BaygonAGA: Melon!
-  - BrunosMusicBox3: { v_offset: 4, image: { op: "tx", str: "BRUNO", size: 90 } }
+  - BrunosMusicBox3: { v_offset: 4, image: { op: "tx", txt: "BRUNO", size: 90 } }
   - Coma: { note: COMA! }
   - Nested:
     - How2SkinACat
