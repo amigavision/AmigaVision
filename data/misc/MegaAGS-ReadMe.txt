@@ -48,11 +48,6 @@ Setup:
     Model: A1200
     Paula Output: Normal
 
-  There are a few additional configurations supplied, made for booting
-  ADF floppy images. These are accessible from OSD -> Load configuration.
-  Note that a "Guru Meditation" will often appear after a configuration
-  is loaded. If so just use the OSD -> Reset function.
-
 - Add the following recommended core overrides to MiSTer.ini (these settings
   are further explained in the next section):
 
@@ -78,9 +73,9 @@ basis. This depends on the "shared folder" functionality, which is enabled
 if the "games/Amiga/shared" directory exists. So, make sure you copied all
 the archive contents as described in the Setup section.
 
-Also note that the dynamic cropping *only* applies if you are using 1080p 
-output. Most Amiga games fit on the screen using 5× zoom in this resolution. 
-Any other resolution or analog output is *not* affected by dynamic viewport 
+Also note that the dynamic cropping *only* applies if you are using 1080p
+output. Most Amiga games fit on the screen using 5× zoom in this resolution.
+Any other resolution or analog output is *not* affected by dynamic viewport
 cropping.
 
 With dynamic vadjust enabled most titles will enjoy a nicely centered
@@ -106,7 +101,7 @@ settings depending on what video mode the launcher UI specifies:
 4×PAL      Original
 5×PAL      40:27
 5×PAL60    40:27
-5×  NTSC     40:27 or Original depending on title
+5×NTSC     40:27 or Original depending on title
 
 Again, make sure to add the Minimig core overrides in MiSTer.ini as specified
 in the previous section to enjoy the best HDMI output possible, and make sure
@@ -137,7 +132,7 @@ it is definitely recommended for the full Amiga experience.
 
 Save files:
 -----------
-IMPORTANT: For games with save functionality you need to quit the game using 
+IMPORTANT: For games with save functionality you need to quit the game using
 the DEL key for the save data to be written to "disk", and thus the SD card.
 You will lose your save games if you don't exit the game after saving!
 

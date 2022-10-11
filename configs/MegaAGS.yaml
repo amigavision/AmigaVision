@@ -7,8 +7,9 @@
   - note: Top games lists compiled or voted by magazines back in the day as well as contemporary outlets.
   - Amiga Lore Top 100:
     - ordering: "ranked"
-    - note: Amiga Lore's aggregate review score ranking, taking into account the largest publications of the era from across the continent. A Metacritic equivalent for the platform, if you will.\n
+    - note: Amiga Lore's aggregate review score ranking, taking into account the largest publications of the era from across the continent. A Metacritic equivalent for the platform, if you will.\n\n
             (Some duplicate entries exist, since rereleases and CD32 versions are considered separately.)
+    - image: {"op":"pi", "path":"list/amigalore.png"}
     - Populous2&ChallengeGames
     - SWOS9596
     - CannonFodder
@@ -112,6 +113,7 @@
   - Amiga Power Top 100 (1991):
     - ordering: "ranked"
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1991.
+    - image: {"op":"pi", "path":"list/amigapower91.jpg"}
     - RainbowIslands
     - Lemmings
     - Speedball2
@@ -215,6 +217,7 @@
   - Amiga Power Top 100 (1992):
     - ordering: "ranked"
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1992.
+    - image: {"op":"pi", "path":"list/amigapower92.jpg"}
     - RainbowIslands
     - FormulaOneGrandPrix
     - Speedball2
@@ -318,6 +321,7 @@
   - Amiga Power Top 100 (1993):
     - ordering: "ranked"
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1993.
+    - image: {"op":"pi", "path":"list/amigapower93.jpg"}
     - SensibleSoccer
     - FormulaOneGrandPrix
     - DynaBlaster
@@ -421,6 +425,7 @@
   - EAB Top 10 Exclusive:
     - ordering: "ranked"
     - note: The best Amiga-exclusive games according to users of the English Amiga Board.
+    - image: {"op":"pi", "path":"list/eab.png"}
     - Wings
     - WormsDC
     - RuffNTumble
@@ -444,6 +449,7 @@
   - Kim Justice Top 100:
     - ordering: "ranked"
     - note: Kim Justice's top 100 Amiga games of all time.
+    - image: {"op":"pi", "path":"list/kimjustice_top100.jpg"}
     - SWOS
     - Syndicate
     - Speedball2
@@ -547,6 +553,7 @@
   - Lemon Top 30 (Sep 2022):
     - ordering: "ranked"
     - note: As voted by lemonamiga.com users
+    - image: {"op":"pi", "path":"list/lemon.png"}
     - SecretOfMonkeyIsland
     - MonkeyIsland2
     - Settlers
@@ -579,6 +586,7 @@
     - WormsDC
   - Mr Biffo Top 10:
     - note: The 10 best Amiga games according to Mr Biffo of Digitiser 2000.
+    - image: {"op":"pi", "path":"list/digitiser.jpg"}
     - CannonFodder
     - SecretOfMonkeyIsland
     - JamesPond2
@@ -591,6 +599,7 @@
     - JimmyWhitesSnooker
   - retroGAMER A500 Top 10 :
     - note: From retroGAMER magazine
+    - image: {"op":"pi", "path":"list/retrogamer.jpg"}
     - Worms
     - JimmyWhitesSnooker
     - AnotherWorld
@@ -1024,6 +1033,7 @@
   - DenOfGeek-Underappreciated:
     - ordering: "ranked"
     - note: The Top 50 underappreciated Amiga games according to Den of Geek.
+    - image: {"op":"pi", "path":"list/denofgeek.jpg"}
     - Stardust
     - NoSecondPrize
     - DynaBlaster
@@ -1076,6 +1086,7 @@
     - Resolution101
   - Kim Justice Platformers:
     - note: Nine obscure euro platformers that DON'T suck, according to Kim Justice.
+    - image: {"op":"pi", "path":"list/kimjustice_platformers.jpg"}
     - Lionheart
     - Odyssey
     - Ugh
@@ -1088,6 +1099,7 @@
   - Kim Justice Top Psygnosis:
     - ordering: "ordered"
     - note: Kim Justice's top 10 favourite Psygnosis games (excluding a few non-Amiga games, including honorable mentions).
+    - image: {"op":"pi", "path":"list/kimjustice_psygnosis.jpg"}
     - Lemmings
     - BillsTomatoGame
     - KillingGameShow
@@ -1103,6 +1115,7 @@
   - PIXEL thing - 45 Games:
     - ordering: "ordered"
     - note: 45 Games That Defined the AMIGA 500, according to It's a P/XEL thing.\n\n(Chronologically ordered.)
+    - image: {"op":"pi", "path":"list/pixelthing_45games.jpg"}
     - IK+
     - CarrierCommand
     - ShadowOfTheBeast
@@ -1150,7 +1163,7 @@
     - SWOS9596ECE
   - v's Recommended Games:
     - note: From /v/'s Recommended Games Wiki
-            (vsrecommendedgames.fandom.com/wiki/Amiga)
+    - image: {"op":"pi", "path":"list/vgames.png"}
     - Agony
     - AnotherWorld
     - Apidya
@@ -1181,6 +1194,7 @@
     - Turrican2
   - Wired - Most Influential:
     - note: Top 10 most influential Amiga games according to Wired.
+    - image: {"op":"pi", "path":"list/wired.png"}
     - DefenderOfTheCrown
     - SensibleSoccer
     - Speedball2
@@ -2810,7 +2824,7 @@
       - SlySpySecretAgent
   - Assembly Line, The:
     - note: While most known for helping out the Bitmap Bros on Xenon 2, the awesome and quirky puzzle games represent their finest work.
-    - image: {"op":"pi", "path":"assembly_line.png"}
+    - image: {"op":"pi", "path":"logo/assembly_line.png"}
     - Cybercon3
     - EMotion
     - Exterminator
