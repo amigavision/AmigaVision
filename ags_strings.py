@@ -2,10 +2,6 @@
 
 # AGSImager: Strings
 
-import sys
-
-# -----------------------------------------------------------------------------
-
 strings = {
     "note": {
         "category":     "Category:   ",
@@ -55,9 +51,3 @@ strings = {
         "musicdisks_year": "Browse music disks by year."
     }
 }
-
-# -----------------------------------------------------------------------------
-
-if __name__ == "__main__":
-    print("not runnable")
-    sys.exit(1)

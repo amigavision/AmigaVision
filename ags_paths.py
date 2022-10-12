@@ -3,7 +3,6 @@
 # AGSImager: Paths
 
 import os
-import sys
 import ags_util as util
 
 # -----------------------------------------------------------------------------
@@ -29,9 +28,3 @@ def verify():
     if not util.is_file(util.path(os.getenv("FSUAEROM"))):
         raise IOError("FSUAEROM is not a file - check .env!")
     return True
-
-# -----------------------------------------------------------------------------
-
-if __name__ == "__main__":
-    print("not runnable")
-    sys.exit(1)

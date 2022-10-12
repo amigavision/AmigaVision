@@ -122,12 +122,10 @@ def alignment_to_gravity(halign="center", valign="center"):
         else:
             return "center"
 
-def out_png(path, img, scale=(1, 1)):
-    img = PILImage.open(io.BytesIO(img.make_blob("png"))).convert("RGB")
-
 def out_iff(path, img, scale=(1, 0.5)):
     img = PILImage.open(io.BytesIO(img.make_blob("png"))).convert("RGB")
-    img = img.resize((round(img.width * scale[0]), round(img.height * scale[1])), PILImage.Resampling.LANCZOS)
+    if scale != (1, 1):
+        img = img.resize((round(img.width * scale[0]), round(img.height * scale[1])), PILImage.Resampling.LANCZOS)
     img = img.quantize(colors=240, method=0, kmeans=4, dither=PILImage.Dither.NONE)
 
     w, h = img.size

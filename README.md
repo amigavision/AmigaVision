@@ -25,7 +25,7 @@ For full usage enter `pipenv shell` and use the following commands directly:
 
 - `./ags_index.py --help`
   - content indexing tool
-- `./ags_build.py --help`
+- `./ags_imager.py --help`
   - image building tool
 - `./ags_screenshot.py --help`
   - iff image conversion tool
