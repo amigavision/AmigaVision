@@ -1,12 +1,13 @@
 --- # AGS2 Menu structure
 - About:
-  - note: 'MEGA AGS 2022.10.01'
+  - note: 'MEGA AGS 2022.10.20'
   - Nothing to see here:
     - note: Intentionally left blank.
 
 - Current:
   - image: [{"op":"tx", "txt":"ASS"}, {"op":"tx", "txt":"P*SS", "size":100, "color":"#f0f"}]
   - AbyssDone
+  - Xorron2001
   - BadDudesVsDragonNinja
   - FFPUnicodeAttac
   - MrsBeanbag-BeSheep
@@ -33,15 +34,15 @@
   - StolenData04
   - StolenData05
 
-- Ordering Test:
-  - Order RANKED:
+- Ordering Tests:
+  - Ranked (2):
     - rank: 2
     - ordering: "ranked"
     - note: From /v/'s Recommended Games Wiki
             (vsrecommendedgames.fandom.com/wiki/Amiga)
     - Agony
     - ShadowOfTheBeast
-  - Order ORDERED:
+  - Ordered (3):
     - rank: 3
     - ordering: "ordered"
     - note: 45 Games That Defined the AMIGA 500, according to It's a P/XEL thing.\n\n(Chronologically ordered.)
@@ -50,7 +51,7 @@
     - StuntCarRacer: { rank: 0 }
     - ItCameFromTheDesert
     - Populous
-  - Order RELEASE:
+  - Release (1):
     - rank: 1
     - ordering: "release"
     - note: By release date
