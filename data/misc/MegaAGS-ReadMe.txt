@@ -45,14 +45,15 @@ Setup:
     RTG Upscaling: Normal
     Stereo mix: 50%
     Audio Filter: Auto(LED)
-    Model: A1200
-    Paula Output: Normal
+    Model: A500
+    Paula Output: PWM
 
 - Add the following recommended core overrides to MiSTer.ini (these settings
   are further explained in the next section):
 
 [minimig]
-video_mode=8
+video_mode_ntsc=8
+video_mode_pal=9
 vsync_adjust=1
 custom_aspect_ratio_1=40:27
 
