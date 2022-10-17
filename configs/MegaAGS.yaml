@@ -1523,11 +1523,12 @@
     - Worms
 
 - Gameographies:
-  - note: Notable developer and artist gameographies.
+  - note: Notable developer and artist gameographies.\n\n(All lists in chronological order.)
   - "[ By Composer ]":
     - rank: 1
     - note: Games with music by notable composers.\n\n(Not necessarily complete lists.)
     - Chris Hülsbeck:
+      - ordering: "release"
       - note: Arguably the most loved Amiga composer of all time, and also creator of the quite unique TFMX music software.
       - image: {"op":"pi", "path":"chris_hülsbeck.jpg"}
       - AdventuresOfQuik&Silva
@@ -1562,6 +1563,7 @@
       - XOut
       - ZOut
     - Jochen Hippel:
+      - ordering: "release"
       - note: Hippel's music was for the most part primarily composed for Atari ST, but despite that (or even because of it!), his oevre is among the best to ever grace the Amiga.
       - image: {"op":"pi", "path":"jochen_hippel.png"}
       - 5thGear
@@ -1585,6 +1587,7 @@
       - Warp
       - WingsOfDeath
     - Karsten Obarski:
+      - ordering: "release"
       - note: Maker of the original Sound Tracker software, and virtuoso composer in the very early days of Amiga.
       - image: {"op":"pi", "path":"karsten_obarski.png"}
       - Amegas
@@ -1599,6 +1602,7 @@
       - Sarcophaser
       - WindowWizard
     - Tim Follin:
+      - ordering: "release"
       - note: The Amiga was Tim Follin's least favorite platform, and you can sort of tell... Still, Ghouls 'n Ghosts is a masterpiece.
       - image: {"op":"pi", "path":"tim_follin_bw.png"}
       - BionicCommando
@@ -1609,6 +1613,7 @@
       - Renegade
       - SlySpySecretAgent
   - Assembly Line, The:
+    - ordering: "release"
     - note: While most known for helping out the Bitmap Bros on Xenon 2, the awesome and quirky puzzle games represent their finest work.
     - image: {"op":"pi", "path":"logo/assembly_line.png"}
     - Cybercon3
@@ -1619,6 +1624,7 @@
     - Vaxine
     - Xenon2
   - Bill Williams:
+    - ordering: "release"
     - note: The Amiga's original auteur.
     - image: {"op":"pi", "path":"bill_williams_bw.png"}
     - KnightsOfTheCrystallion
@@ -1626,6 +1632,7 @@
     - PioneerPlague
     - Sinbad
   - Bitmap Brothers:
+    - ordering: "release"
     - note: The original "style over substance" game studio. Their catalogue is worth checking out for Dan Malone and Mark Coleman's exquisite pixeling style alone.
     - image: {"op":"pi", "path":"logo/bitmap_brothers.png"}
     - Cadaver&ThePayoff
@@ -1639,6 +1646,7 @@
     - Xenon
     - Xenon2
   - Blue Byte:
+    - ordering: "release"
     - note: Purveyors of fine strategy games (and tennis!).
     - image: {"op":"pi", "path":"logo/blue_byte.png"}
     - Atomino
@@ -1655,6 +1663,7 @@
     - TomAndTheGhost
     - TwinWorld
   - Brøderbund:
+    - ordering: "release"
     - note: Don't get fooled by the name - Brøderbund is about as American as it gets in the Amiga library.
     - image: {"op":"pi", "path":"logo/broderbund.png"}
     - DownhillChallenge
@@ -1666,6 +1675,7 @@
     - WITWIsCarmenSandiego
     - WingsOfFury
   - Cinemaware:
+    - ordering: "release"
     - note: Pioneers of cinematic videogame storytelling.
     - image: {"op":"pi", "path":"logo/cinemaware.png"}
     - DefenderOfTheCrown
@@ -1683,6 +1693,7 @@
     - TVSportsFootball
     - Wings
   - Delphine Software:
+    - ordering: "release"
     - note: The quintessential French Touch publisher.
     - image: {"op":"pi", "path":"logo/delphine_software.png"}
     - AnotherWorld
@@ -1695,6 +1706,7 @@
     - OperationStealth
     - ShaqFu
   - Digital Illusions:
+    - ordering: "release"
     - note: The Swedish faction of famed demo group The Silents that started the Amiga pinball craze and went on to become DICE.
     - image: {"op":"pi", "path":"logo/digital_illusions.png"}
     - Amiganoid
@@ -1703,6 +1715,7 @@
     - PinballFntsies
     - PinballIllusions
   - DMA Design:
+    - ordering: "release"
     - note: From humble beginnings to Lemmings, to Grand Theft Auto.
     - image: {"op":"pi", "path":"logo/dma_design.png"}
     - AllNewWorldOfLemmings
@@ -1714,6 +1727,7 @@
     - OhNoMoreLemmings
     - Walker
   - Factor 5:
+    - ordering: "release"
     - note: Creators of the iconic Amiga ports of the Turrican series.
     - image: {"op":"pi", "path":"logo/factor_5.png"}
     - BCKid
@@ -1725,6 +1739,7 @@
     - Turrican2
     - Turrican3
   - Graftgold:
+    - ordering: "release"
     - note: The studio founded by ZX Spectrum legends Steve Turner and Andrew Braybrook that delivered both original games and arcade conversions of excellent quality.
     - image: {"op":"pi", "path":"logo/graftgold.png"}
     - EmpireSoccer94
@@ -1737,6 +1752,7 @@
     - Uridium2
     - Virocop
   - Horror Soft:
+    - ordering: "release"
     - note: The original and best developer specializing in pulp horror.
     - image: {"op":"pi", "path":"logo/horror_soft.png"}
     - Elvira
@@ -1752,6 +1768,7 @@
     - RevengeOfMutantCamels2
     - SuperGridRunner
   - Lucasfilm:
+    - ordering: "release"
     - note: The studio that defined the silver age of point and click adventure games.
     - image: {"op":"pi", "path":"logo/lucasfilm_games.png"}
     - Battlehawks1942
@@ -1765,6 +1782,7 @@
     - TheirFinestHour
     - ZakMcKracken
   - Magnetic Fields:
+    - ordering: "release"
     - note: Good games, great opening ident.
     - image: {"op":"pi", "path":"logo/magnetic_fields.png"}
     - CrystalDragon
@@ -1779,6 +1797,7 @@
     - SuperCars2
     - SuperScrambleSimulator
   - Ocean France:
+    - ordering: "release"
     - note: Noteworthy for managing to put an unmistakably french touch into arcade conversions.
     - image: {"op":"pi", "path":"logo/ocean.png"}
     - BadDudesVsDragonNinja
@@ -1792,6 +1811,7 @@
     - SnowBros
     - Toki
   - Random Access, Storm:
+    - ordering: "release"
     - note: Purveyors of fine arcade conversions.
     - image: {"op":"pi", "path":"logo/sales_curve.png"}
     - BigRun
@@ -1805,6 +1825,7 @@
     - Silkworm
     - SWIV
   - Reflections:
+    - ordering: "release"
     - note: One of the best teams under Psygnosis' wings.
     - image: {"op":"pi", "path":"logo/reflections.png"}
     - Awesome
@@ -1814,6 +1835,7 @@
     - ShadowOfTheBeast2
     - ShadowOfTheBeast3
   - reLINE:
+    - ordering: "release"
     - note: The premier West German Amiga publisher.
     - image: {"op":"pi", "path":"logo/reline.png"}
     - Amegas
@@ -1824,6 +1846,7 @@
     - WesternGames
     - WindowWizard
   - Sensible Software:
+    - ordering: "release"
     - note: Probably the Amiga developer with the most idiosyncratic style of game design.
     - image: {"op":"pi", "path":"logo/sensible_software.png"}
     - CannonFodder
@@ -1844,6 +1867,7 @@
     - Wizball
     - Wizkid
   - Sierra On-Line:
+    - ordering: "release"
     - note: The publisher that defined the golden age of adventure games.
     - image: {"op":"pi", "path":"logo/sierra.png"}
     - BlackCauldron
@@ -1878,6 +1902,7 @@
     - SpaceQuest3
     - SpaceQuest4
   - Thalion:
+    - ordering: "release"
     - note: The premier Atari ST developer.
     - image: {"op":"pi", "path":"logo/thalion.png"}
     - Ambermoon
@@ -1896,11 +1921,13 @@
     - Warp
     - WingsOfDeath
   - Travellers Tales:
+    - ordering: "release"
     - note: A short but sweet gameography from the developers who would go on to consistently push the limits of any platform they work on.
     - image: {"op":"pi", "path":"logo/travellers_tales.png"}
     - Leander
     - Puggsy
   - Vectordean:
+    - ordering: "release"
     - note: An incredibly solid list of works by a developer that gained relatively little recognition.
     - image: {"op":"pi", "path":"logo/vectordean.png"}
     - AquaticGames
@@ -1912,6 +1939,7 @@
     - JamesPond3
     - Yolanda
   - Westwood:
+    - ordering: "release"
     - note: An American PC powerhouse that poured commendable effort into the Amiga.
     - image: {"op":"pi", "path":"logo/westwood.png"}
     - Battletech
