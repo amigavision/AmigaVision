@@ -8,61 +8,42 @@
 - Hall of Fame:
   - rank: 2
   - note: Games inducted into the Megaboys Hall of Fame. Sorted by genre.
-  - Adventure, Action:
-    - BladeWarrior
-    - Cadaver
-    - Darkmere
-    - DGeneration
-    - HiredGuns
-    - Hostages
-    - ItCameFromTheDesert
-    - KingOfChicago
-    - Moonstone
-    - Paradroid90
-    - RocketRanger
-    - Wings
-  - Adventure, RPG:
-    - Ambermoon
-    - BlackCrypt
-    - Captive
-    - DungeonMaster
-    - EyeOfTheBeholderAGA
-    - EyeOfTheBeholder2AGA
-    - FourCrystalsOfTrazere
-    - HeroQuest
-    - Rogue
-    - Shadowlands
-  - Adventure, Misc:
-    - DejaVu
-    - DejaVu2LostInLasVegas
-    - Elvira
-    - Elvira2
-    - Murder
-  - Adventure, Point & Click:
-    - AlteredDestiny
-    - BeneathAStlSky
-    - DarkSeed
-    - FlightOfTheAmazonQueen
-    - IndianaJonesAtlantisAdv
-    - IndyJonesLastCrusAdv
-    - InnocentUntilCaught
-    - Loom
-    - ManiacMansion
-    - MonkeyIsland2
-    - RiseOfTheDragon
-    - SecretOfMonkeyIsland
-    - Universe
-  - Arcade:
-    - note: Unmistakably arcade style games that don't fit the classic categories.
+  - Action:
+    - CannonFodder
     - DogsOfWar
     - DynaBlaster
+    - Leander
     - MarbleMadness
     - Pang
     - ParasolStars
     - Psyborg
+    - RuffNTumble
+    - Switchblade2
+    - Turrican2
     - Ugh
     - Walker
     - WizNLiz
+    - YoJoe
+  - Adventure:
+    - AnotherWorld
+    - BladeWarrior
+    - Cadaver
+    - Darkmere
+    - DefenderOfTheCrown
+    - DGeneration
+    - Flashback
+    - HiredGuns
+    - Hostages
+    - ItCameFromTheDesert
+    - KingOfChicago
+    - LostPatrol
+    - Moonstone
+    - NorthAndSouth
+    - Paradroid90
+    - Pirates
+    - PrinceOfPersia
+    - RocketRanger
+    - Wings
   - Martial Arts:
     - note: While Street Fighter style fighting games were a poor fit for Amiga, there's some notable old school martial arts games.
     - Budokan
@@ -88,18 +69,7 @@
     - SnowBros
     - SoccerKid
     - TrapsNTreasures
-  - Platform, Action:
-    - note: Run'n'gun and platform shooters.
-    - Leander
-    - RuffNTumble
-    - Switchblade2
-    - Turrican2
-    - YoJoe
-  - Platform, Cinematic:
-    - AnotherWorld
-    - Flashback
-    - PrinceOfPersia
-  - Platform, Puzzle:
+  - Platform Puzzle:
     - Benefactor
     - BubbaNStix
     - Builderland
@@ -109,6 +79,27 @@
     - LostVikings
     - ShadowOfTheBeast3
     - SillyPutty
+  - Point & Click:
+    - AlteredDestiny
+    - BeneathAStlSky
+    - DarkSeed
+    - DejaVu
+    - DejaVu2LostInLasVegas
+    - Elvira
+    - Elvira2
+    - FlightOfTheAmazonQueen
+    - FutureWars
+    - IndianaJonesAtlantisAdv
+    - IndyJonesLastCrusAdv
+    - InnocentUntilCaught
+    - Loom
+    - ManiacMansion
+    - MonkeyIsland2
+    - Murder
+    - OperationStealth
+    - RiseOfTheDragon
+    - SecretOfMonkeyIsland
+    - Universe
   - Puzzle:
     - ClikClak
     - Deflektor
@@ -126,24 +117,34 @@
     - SuperTwintris
     - TetrisPro
     - Twintris
-  - Racing, Into Screen:
+  - Racing:
+    - AllTerrainRacing
+    - BadLands
+    - BuggyBoy
+    - Carnage
+    - IndyHeat
     - JaguarXJ220
     - LamborghiniAmericanChllng
     - Lotus
     - Lotus2
-    - BuggyBoy
-    - StuntCarRacer
-    - TestDrive2
-    - Vroom
-  - Racing, Top Down:
-    - AllTerrainRacing
-    - BadLands
-    - Carnage
-    - IndyHeat
     - Nitro
     - Skidmarks
+    - StuntCarRacer
     - SuperCars2
     - SuperSkidmarks+CD
+    - TestDrive2
+    - Vroom
+  - Role Playing:
+    - Ambermoon
+    - BlackCrypt
+    - Captive
+    - DungeonMaster
+    - EyeOfTheBeholderAGA
+    - EyeOfTheBeholder2AGA
+    - FourCrystalsOfTrazere
+    - HeroQuest
+    - Rogue
+    - Shadowlands
   - Shoot'em Up:
     - Apidya
     - BattleSquadron
@@ -162,20 +163,19 @@
     - RailroadTycoon
     - SimCity
   - Sports:
+    - AquaticGames
     - ArcadePool
     - ArcadeSnooker
+    - Botics
     - CaliforniaGames
+    - GrandMonsterSlam
+    - Projectyle
     - ProTennisTour
     - RBI2Baseball
     - SensibleGolf
-    - SWOS9697
-  - Sports, Fantasy:
-    - AquaticGames
-    - Botics
-    - GrandMonsterSlam
-    - Projectyle
     - ShufflepuckCafe
     - Speedball2
+    - SWOS9697
   - Strategy:
     - BattleIsle
     - CelticLegends
@@ -186,15 +186,8 @@
     - MegaLoMania
     - NuclearWar
     - Populous
-    - Settlers
-  - Strategy, Action:
-    - CannonFodder
-    - DefenderOfTheCrown
-    - Lemmings
-    - LostPatrol
-    - NorthAndSouth
-    - Pirates
     - Rampart
+    - Settlers
 
 - Best-of Lists:
   - note: Top games lists compiled or voted by magazines back in the day as well as contemporary outlets.
