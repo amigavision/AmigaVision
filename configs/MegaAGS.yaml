@@ -1,7 +1,7 @@
 --- # AGS2 Menu structure
 - About:
   - rank: 1
-  - note: 'MEGA AGS 2022.10.20'
+  - note: 'MEGA AGS 2022.10.22'
   - Nothing to see here:
     - note: Intentionally left blank.
 
@@ -189,7 +189,7 @@
     - Rampart
     - Settlers
 
-- Best-of Lists:
+- Charts:
   - note: Top games lists compiled or voted by magazines back in the day as well as contemporary outlets.
   - Amiga Lore Top 100:
     - ordering: "ranked"
@@ -797,8 +797,8 @@
     - ThemePark
     - Wings
 
-- Curated Lists:
-  - note: Curated lists from around the net.
+- Curated Content:
+  - note: Curated collections from around the net.
   - Alex Limi's Collection:
     - note: Amiga games worth your time, according to Alex Limi.
     - Multiplayer:
