@@ -355,7 +355,17 @@ def sanitize_name(name):
 def make_image(path, options):
     if util.is_file(path):
         return
-    imgen.out_iff(path, imgen.compose(options))
+    size = (320, 256)
+    scale = (1, 0.5)
+    if isinstance(options, dict) and "ops" in options:
+        if "size" in options:
+            size = (options["size"][0], options["size"][1])
+        if "scale" in options:
+            scale = (options["scale"][0], options["scale"][1])
+        operations = options["ops"]
+    else:
+        operations = options
+    imgen.out_iff(path, imgen.compose(operations, size=size), scale=scale)
 
 # -----------------------------------------------------------------------------
 # collect entries for special folders ("All Games", "Demo Scene")

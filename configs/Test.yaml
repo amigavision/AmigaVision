@@ -1,8 +1,16 @@
 --- # AGS2 Menu structure
 - About:
+  - rank: 1
   - note: 'MEGA AGS 2022.10.20'
   - Nothing to see here:
     - note: Intentionally left blank.
+
+- Hall of Fame:
+  - rank: 2
+  - note: Games inducted into the Megaboys Hall of Fame.\nSorted by genre.
+  - image: {"ops":{"op":"pi", "path":"top/hall_of_fame.png"}, "size":[320,128], "scale":[1,1]}
+  - Action:
+    - CannonFodder
 
 - Current:
   - image: [{"op":"tx", "txt":"ASS"}, {"op":"tx", "txt":"P*SS", "size":100, "color":"#f0f"}]

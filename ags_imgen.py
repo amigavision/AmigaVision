@@ -11,16 +11,14 @@ from wand.image import Image
 from PIL import Image as PILImage
 import iff_ilbm as iff
 
-WIDTH = 320
-HEIGHT = 256
 IMG_SRC_BASE = "data/img_src/"
 
 # -----------------------------------------------------------------------------
 
 # add gradient support for color arguments
 
-def compose(operations):
-    img = bg()
+def compose(operations, size=(320,256)):
+    img = bg(width=size[0], height=size[1])
     for operation in operations if isinstance(operations, list) else [operations]:
         op = operation.pop("op", "nop")
         if op == "tx":
@@ -32,7 +30,7 @@ def compose(operations):
     return img
 
 # "bg" operation: solid color background
-def bg(width=WIDTH, height=HEIGHT, color="#000"):
+def bg(width=320, height=256, color="#000"):
     return Image(width=width, height=height, background=Color(color))
 
 # "tx" operation: single line text

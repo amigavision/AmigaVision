@@ -7,7 +7,8 @@
 
 - Hall of Fame:
   - rank: 2
-  - note: Games inducted into the Megaboys Hall of Fame. Sorted by genre.
+  - note: Games inducted into the Megaboys Hall of Fame.\nSorted by genre.
+  - image: {"ops":{"op":"pi", "path":"top/hall_of_fame.png"}, "size":[320,128], "scale":[1,1]}
   - Action:
     - CannonFodder
     - DogsOfWar
@@ -191,6 +192,7 @@
 
 - Charts:
   - note: Top games lists compiled or voted by magazines back in the day as well as contemporary outlets.
+  - image: {"ops":{"op":"pi", "path":"top/charts.png"}, "size":[320,128], "scale":[1,1]}
   - Amiga Lore Top 100:
     - ordering: "ranked"
     - note: Amiga Lore's aggregate review score ranking, taking into account the largest publications of the era from across the continent. A Metacritic equivalent for the platform, if you will.\n\n
@@ -799,6 +801,7 @@
 
 - Curated Content:
   - note: Curated collections from around the net.
+  - image: {"ops":{"op":"pi", "path":"top/curated_content.png"}, "size":[320,128], "scale":[1,1]}
   - Alex Limi's Collection:
     - note: Amiga games worth your time, according to Alex Limi.
     - Multiplayer:
@@ -1394,6 +1397,7 @@
 
 - Decennial Spotlight:
   - note: 10 games for every year between 1986 and 1995. Cutting across genres to select the great and/or representative titles available at the time.\n\n(While the Amiga computer premiered mid-1985, hardware and software availability was very limited for the first months.)
+  - image: {"ops":{"op":"pi", "path":"top/spotlight.png"}, "size":[320,128], "scale":[1,1]}
   - "1986":
     - image: { op: "tx", txt: "’86", size: 190 }
     - BardsTale
@@ -1517,6 +1521,7 @@
 
 - Gameographies:
   - note: Notable developer and artist gameographies.\n\n(All lists in chronological order.)
+  - image: {"ops":{"op":"pi", "path":"top/gameographies.png"}, "size":[320,128], "scale":[1,1]}
   - "[ By Composer ]":
     - rank: 1
     - note: Games with music by notable composers.\n\n(Not necessarily complete lists.)
@@ -1952,6 +1957,7 @@
 
 - Focus:
   - note: Lists curated with specialized theme or focus.
+  - image: {"ops":{"op":"pi", "path":"top/focus.png"}, "size":[320,128], "scale":[1,1]}
   - Amiga Exclusives:
     - note: A selection of games exclusive to the Amiga platform.
     - Agony
