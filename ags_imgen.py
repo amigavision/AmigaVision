@@ -140,7 +140,7 @@ def out_iff(path, img, scale=(1, 0.5)):
 if __name__ == "__main__":
     comp = compose({"op":"tx", "txt":"ASS"})
     comp.save(filename="out_op0_wnd.png")
-    out_iff("out_op0_iff.png", comp)
+    out_iff("out_op0_iff", comp)
 
     operations = [{"op":"tx", "txt":"ASS"}, {"op":"tx", "txt":"P*SS", "size":100, "color":"#f0f"}]
     compose(operations).save(filename="out_op1.png")
