@@ -3,6 +3,7 @@
 ## dependencies
 - python@3.9
 - [pipenv](https://pipenv.readthedocs.io)
+- imagemagick
 - make
 
 The final step in the build process requires [FS-UAE](https://fs-uae.net) to copy all files to a PFS3-formatted HDF image. This is not an ideal setup, but as far as I know there exists no library that supports manipulation of PFS3 volumes. A consequence is that the entire file tree to be copied first needs to be created on the host filesystem, which presents issues if that filesystem imposes file name restrictions that AmigaDOS/PFS3 doesn't. 

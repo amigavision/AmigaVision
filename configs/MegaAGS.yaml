@@ -1,7 +1,7 @@
 --- # AGS2 Menu structure
 - About:
   - rank: 1
-  - note: 'MEGA AGS 2022.10.22'
+  - note: 'MEGA AGS 2022.11.11'
   - Nothing to see here:
     - note: Intentionally left blank.
 
@@ -262,7 +262,7 @@
     - PinballFntsies
     - ProjectX
     - Putty
-    - ThunderHawkAH73M
+    - Thunderhawk
     - SensibleSoccerEuro
     - SimCity
     - Starglider2
@@ -472,7 +472,7 @@
     - FA18Interceptor
     - IndyJonesLastCrusAdv
     - JamesPond2
-    - ThunderHawkAH73M
+    - Thunderhawk
     - F29Retaliator
     - NewZealandStory
     - ManchesterUnitedEurope
@@ -1252,7 +1252,7 @@
     - SabreTeam
     - Corporation
     - EscapeFromColditz
-    - ThunderHawkAH73M
+    - Thunderhawk
     - HistoryLine
     - Cybercon3
     - Deliverance
@@ -2178,16 +2178,17 @@
   - Vector Graphics:
     - note: A sampling of games with wireframe and polygonal graphics.
     - 3DGalax
-    - ATF2
-    - AlphaWaves
     - AirSupport
     - Alianator
+    - AlphaWaves
     - Archipelagos
+    - ATF2
     - CarrierCommand
     - CastleMaster
     - Cybercon3
     - Damocles
     - Eco
+    - EmpireStrikesBack
     - Epic
     - Hunter
     - Interphase
@@ -2199,11 +2200,11 @@
     - Resolution101
     - RoboCop3
     - Sentinel
+    - Starblaze
     - Starglider
     - Starglider2
-    - Starblaze
     - StuntCarRacer
-    - EmpireStrikesBack
+    - Thunderhawk
     - TotalEclipse
     - TowerOfBabel
     - TrexWarrior
