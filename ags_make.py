@@ -450,6 +450,10 @@ def make_autoentries(entries: EntryCollection, path, all_games=False, all_demos=
     for dir in ["allgames", "allgames_year", "scene", "issues"]:
         if util.is_dir(util.path(path, "{}.ags".format(strings["dirs"][dir]))):
             open(util.path(path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(strings["desc"][dir])
+            img_src = util.path("top", strings["images"][dir])
+            if util.is_file("{}{}".format(imgen.IMG_SRC_BASE, img_src)):
+                make_image(util.path(path, "{}.iff".format(strings["dirs"][dir])), {"ops":{"op":"pi", "path":img_src}, "size":[320,128], "scale":[1,1]})
+
     for dir in ["demos", "demos_country", "demos_group", "demos_year", "demos_cracktro", "demos_intro", "diskmags", "diskmags_date", "musicdisks", "musicdisks_year"]:
         if util.is_dir(util.path(d_path, "{}.ags".format(strings["dirs"][dir]))):
             open(util.path(d_path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(strings["desc"][dir])

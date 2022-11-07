@@ -2213,6 +2213,7 @@
 
 - Multiplayer:
   - note: Lists of games for more than one player.
+  - image: {"ops":{"op":"pi", "path":"top/multiplayer.png"}, "size":[320,128], "scale":[1,1]}
   - Best of Multiplayer:
     - note: Our top picks for multiplayer action.
     - BattleIsle
@@ -2907,7 +2908,8 @@
     - ZanyGolf
 
 - Special Hardware:
-  - note: Games with support for special hardware peripherals.
+  - note: Games with support for special controllers & peripherals.
+  - image: {"ops":{"op":"pi", "path":"top/peripheral.png"}, "size":[320,128], "scale":[1,1]}
   - Modem or Serial Link:
     - note: Games with local and/or remote multiplayer support.
     - AlienBreed3D2

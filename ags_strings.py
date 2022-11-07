@@ -49,5 +49,10 @@ strings = {
         "diskmags_date": "Disk magazines in chronological order.",
         "musicdisks": "Browse music disks by title.",
         "musicdisks_year": "Browse music disks by year."
+    },
+    "images": {
+        "allgames": "allgames_alpha.png",
+        "allgames_year": "allgames_year.png",
+        "scene": "demoscene.png"
     }
 }
