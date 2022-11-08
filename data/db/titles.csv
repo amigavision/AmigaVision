@@ -3441,7 +3441,7 @@ game--turbotraxarcane1mb--turbotraxarcane1mb;Turbo Trax;Turbo Trax;;;OCS;;0;;;;;
 game--trollsaga--trollsaga;Trolls;Trolls;;;AGA;1;0;;;;;;;;1993;;English;Flair;Flair;1;;v1.2;TrollsAGA/TrollsAGA.Slave;game/T/Trolls_v1.2_AGA_0996.lha;Game;;1519;2251
 game--turrican2--turrican2;Turrican II: The Final Fight;Turrican II;;;OCS;;0;5;4;1;;;;;1991;;English;Factor 5;Rainbow Arts;1;CUSTOM2=3;v2.2;Turrican2/Turrican2.Slave;game/T/Turrican2_v2.2_0029.lha;Game;Platform - Shooting;1535;1081
 game--timerunnersseries--timerunners24;Time Runners 24: Beyond All Dimensions;Time Runners 24: Beyond All Dimensions;1;;OCS;;0;;;;;;;;1994;;English;Simulmondo;Simulmondo;1;;v1.0;TimeRunnersSeries/TimeRunners24.Slave;game/T/TimeRunnersSeries_v1.0.lha;Game;;1429;3569
-game--titan--titan;Titan;Titan;;;OCS;;0;;;;;;;;1989;;English;Titus;Titus;1;;v1.4;Titan/Titan.slave;game/T/Titan_v1.4_1913.lha;Game;;1447;2466
+game--titan--titan;Titan;Titan;;;OCS;;0;;;;;;;;1989;;English;Titus;Titus;1;;v2.0;Titan/Titan.Slave;game/T/Titan_v2.0_1913.lha;Game;;1447;2466
 game--triplex--triplex;Tripple-X;Tripple-X;;;OCS;;0;;;;;;;;1989;;English;Axxiom;Axxiom;1;;v1.0;TripleX/TripleX.Slave;game/T/TripleX_v1.0_2048.lha;Game;;1510;2835
 game--tvsportsboxing--tvsportsboxing;TV Sports: Boxing;TV Sports: Boxing;;;OCS;;2;;;;;;;;1991;;English;Cinemaware;Mindscape;2;;v1.0;TVSportsBoxing/TVSportsBoxing.Slave;game/T/TVSportsBoxing_v1.0_0755.lha;Game;Sports - Boxing;1541;3508
 game--toyottesimage--toyottesimage;The Toyottes;Toyottes;;;OCS;;2;;;;;;;;1990;;English;Infogrames;Infogrames;1;DATA=data;v1.1a;ToyottesImage/ToyottesImage.Slave;game/T/Toyottes_v1.1a_Image_2623.lha;Game;;1485;3057
@@ -3944,7 +3944,7 @@ game--archonntsc--archonntsc;Archon: The Light And The Dark;Archon;;;OCS;;3;;;;;
 game--aaargh!arcadia--aaargh!arcadia;Aaargh! (Arcadia);Aaargh! (Arcadia);;;OCS/Arcadia;;2;;;1;;;;;1988;;English;Sculptured Software;Arcadia Systems;1;CUSTOM1=1;v0.1;Aaargh!Arcadia/Aaargh!Arcadia.Slave;game/A/Aaargh!_v0.1_Arcadia.lha;Game;;3176;24
 game--alienbreed3daga--alienbreed3daga;Alien Breed 3D;Alien Breed 3D;;;AGA;1;0;;;1;;;;;1995;;English;Team 17;Ocean, Team 17;1 (2 with serial link);;v1.3;AlienBreed3DAGA/AlienBreed3DAGA.slave;game/A/AlienBreed3D_v1.3_AGA_0624.lha;Game;;3235;1525
 game--astromarinecorps--astromarinecorps;Astro Marine Corps;Astro Marine Corps;;;OCS;;0;;;1;;;;;1990;;English;Creepsoft;Dinamic;1;;v1.2;AstroMarineCorps/AstroMarineCorps.Slave;game/A/AstroMarineCorps_v1.2.lha;Game;;3331;1504
-game--arena--arena;Arena;Arena;;;OCS;;2;;;;;;;;1986;;English;Psygnosis;Psygnosis;4 (taking turns);;v1.2;Arena/Arena.slave;game/A/Arena_v1.2.lha;Game;Sports - Multi-Event;3305;1542
+game--arena--arena;Arena;Arena;1;game--arenantsc--arenantsc;OCS;;2;;;;;;;;1986;;English;Psygnosis;Psygnosis;4 (taking turns);;v1.3;Arena/Arena.Slave;game/A/Arena_v1.3_1191.lha;Game;Sports - Multi-Event;3305;1542
 game--afterburnerntsc--afterburnerntsc;After Burner (Sega);After Burner (Sega);;;OCS;;3;;;;;;;;1989;;English;Weebee Games;Sega;1;;v1.4;AfterBurnerNTSC/AfterBurnerNTSC.slave;game/A/AfterBurner_v1.4_NTSC_0947.lha;Game;;3207;38
 game--apidyakaiko--apidyakaiko;Apidya;Apidya;;;OCS;;0;;;1;;;CPU core error;;1992;;English;Kaiko (A.U.D.I.O.S.);Play Byte;2;;v2.05;ApidyaKaiko/ApidyaKaiko.slave;game/A/Apidya_v2.05_Kaiko_0764.lha;Game;Shoot'em Up - Horizontal;3281;1191
 game--ambermoonde--ambermoonde;Ambermoon;Ambermoon;1;;OCS;;0;5;2;;;;;;1993;;German;Thalion;Thalion;1;;v2.2;AmbermoonDe/AmbermoonDe.Slave;game/A/Ambermoon_v2.2_De.lha;Game;RPG;3256;1485
@@ -4924,3 +4924,7 @@ game--passengersonthewind2--passengersonthewind2;Passengers On The Wind II;Passe
 game--spacepanicde--spacepanicde;Space Panic;Space Panic;;;OCS;;0;;;;;;;;1989;;German;Thomas Wittwer;TIWI Soft;1;;v1.0;SpacePanicDe/SpacePanicDe.Slave;game/S/SpacePanic_v1.0_De.lha;Game;;-2;-2
 game--epic1mb--epic1mb;Epic;Epic;;;OCS;;0;5;;;;;;;1992;;English;Digital Image Design (DID);Ocean;1;;v2.0;Epic1MB/Epic1MB.Slave;game/E/Epic_v2.0_1MB_1820.lha;Game;;2861;377
 game--bubbleghost--bubbleghost;Bubble Ghost;Bubble Ghost;;;OCS;;2;;;;;;;;1988;;English;ERE Informatique;Accolade, Infogrames;2 (taking turns);;v1.0;BubbleGhost/BubbleGhost.Slave;game/B/BubbleGhost_v1.0_0932.lha;Game;;226;200
+game--arenantsc--arenantsc;Arena;Arena;;;OCS;;3;;;;;;;;1986;;English;Psygnosis;Psygnosis;4 (taking turns);;v1.3;ArenaNTSC/ArenaNTSC.Slave;game/A/Arena_v1.3_NTSC_1190.lha;Game;Sports - Multi-Event;3305;1542
+game--famousfive--famousfive;The Famous Five: Five On A Treasure Island;Famous Five, The;;;OCS;;0;;;;;;;;1991;;English;Enigma Variations;Enigma Variations;1;;v1.0;FamousFive/FamousFive.Slave;game/F/FamousFive_v1.0.lha;Game;;495;1303
+game--monkeybusiness--monkeybusiness;Monkey Business;Monkey Business;;;OCS;;3;;;;;;;;1985;;English;Ron J. Fortier;Other Valley;1;;v1.0;MonkeyBusiness/MonkeyBusiness.Slave;game/M/MonkeyBusiness_v1.0.lha;Game;;6288;4288
+game--monkeybusinessa1000--monkeybusinessa1000;Monkey Business;Monkey Business;1;game--monkeybusiness--monkeybusiness;OCS;;3;;;;;;;;1985;;English;Ron J. Fortier;Other Valley;1;;v1.0;MonkeyBusinessA1000/MonkeyBusinessA1000.Slave;game/M/MonkeyBusiness_v1.0_A1000.lha;Game;;6288;4288
