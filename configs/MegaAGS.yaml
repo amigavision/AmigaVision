@@ -10,12 +10,15 @@
   - note: Games inducted into the Megaboys Hall of Fame.\nSorted by genre.
   - image: {"ops":{"op":"pi", "path":"top/hall_of_fame.png"}, "size":[320,128], "scale":[1,1]}
   - Action:
+    - image: {"op":"pi", "path":"hof/action.png"}
     - CannonFodder
     - DogsOfWar
     - DynaBlaster
+    - IK+
     - Leander
     - MarbleMadness
     - Pang
+    - Paradroid90
     - ParasolStars
     - Psyborg
     - RuffNTumble
@@ -26,6 +29,7 @@
     - WizNLiz
     - YoJoe
   - Adventure:
+    - image: {"op":"pi", "path":"hof/adventure.png"}
     - AnotherWorld
     - BladeWarrior
     - Cadaver
@@ -37,27 +41,21 @@
     - Hostages
     - ItCameFromTheDesert
     - KingOfChicago
-    - LostPatrol
     - Moonstone
     - NorthAndSouth
-    - Paradroid90
     - Pirates
     - PrinceOfPersia
     - RocketRanger
     - Wings
-  - Martial Arts:
-    - note: While Street Fighter style fighting games were a poor fit for Amiga, there's some notable old school martial arts games.
-    - Budokan
-    - IK+
-    - PanzaKickBoxing
   - Pinball:
-    - note: A popular enough genre on the Amiga to deserve its own list.
+    - image: {"op":"pi", "path":"hof/pinball.png"}
     - Obsession
     - PinballDreams
     - PinballFntsies
     - PinballIllusions
     - SlamTilt
   - Platform:
+    - image: {"op":"pi", "path":"hof/platform.png"}
     - AddamsFamily
     - ArabianNights
     - BCKid
@@ -71,6 +69,7 @@
     - SoccerKid
     - TrapsNTreasures
   - Platform Puzzle:
+    - image: {"op":"pi", "path":"hof/platformpuzzle.png"}
     - Benefactor
     - BubbaNStix
     - Builderland
@@ -81,6 +80,7 @@
     - ShadowOfTheBeast3
     - SillyPutty
   - Point & Click:
+    - image: {"op":"pi", "path":"hof/pointandclick.png"}
     - AlteredDestiny
     - BeneathAStlSky
     - DarkSeed
@@ -102,6 +102,7 @@
     - SecretOfMonkeyIsland
     - Universe
   - Puzzle:
+    - image: {"op":"pi", "path":"hof/puzzle.png"}
     - ClikClak
     - Deflektor
     - DeviousDesigns
@@ -119,6 +120,7 @@
     - TetrisPro
     - Twintris
   - Racing:
+    - image: {"op":"pi", "path":"hof/racing.png"}
     - AllTerrainRacing
     - BadLands
     - BuggyBoy
@@ -136,6 +138,7 @@
     - TestDrive2
     - Vroom
   - Role Playing:
+    - image: {"op":"pi", "path":"hof/roleplaying.png"}
     - Ambermoon
     - BlackCrypt
     - Captive
@@ -147,6 +150,7 @@
     - Rogue
     - Shadowlands
   - Shoot'em Up:
+    - image: {"op":"pi", "path":"hof/shootemup.png"}
     - Apidya
     - BattleSquadron
     - DisposableHero
@@ -158,12 +162,14 @@
     - Uridium2
     - ZOut
   - Simulation:
+    - image: {"op":"pi", "path":"hof/simulation.png"}
     - Floor13
     - OilImperium
     - PortsOfCall
     - RailroadTycoon
     - SimCity
   - Sports:
+    - image: {"op":"pi", "path":"hof/sports.png"}
     - AquaticGames
     - ArcadePool
     - ArcadeSnooker
@@ -178,12 +184,14 @@
     - Speedball2
     - SWOS9697
   - Strategy:
+    - image: {"op":"pi", "path":"hof/strategy.png"}
     - BattleIsle
     - CelticLegends
     - Centurion
     - Dune2
     - HistoryLine
     - LaserSquad
+    - LostPatrol
     - MegaLoMania
     - NuclearWar
     - Populous
