@@ -120,7 +120,7 @@ assign Toaster: APPS:Graphics/Toaster
 assign 3D: Toaster:3d
 assign DPaintV: APPS:Graphics/DPaintV
 assign Mline: APPS:Audio/Mline
-assign "MT-32 Editor:" "APPS:Audio/MT-32 Editor"
+assign "MT-32 Editor:" APPS:Audio/MT32Editor
 assign XORFiles: APPS:Audio/X-oR
 
 assign ST-00: APPS:Audio/ProTracker2
