@@ -3,7 +3,6 @@
 # IFF ILBM encoder based on imgtoiff.py by Per Olofsson (https://github.com/MagerValp/ArcadeGameSelector)
 
 import array
-import enum
 import math
 import struct
 import sys

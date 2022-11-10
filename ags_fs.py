@@ -3,9 +3,10 @@
 # AGSImager: Native filesystem functions
 
 import os
-import sys
 import subprocess
+import sys
 from ast import literal_eval as make_tuple
+
 import ags_util as util
 
 # -----------------------------------------------------------------------------

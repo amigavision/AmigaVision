@@ -2,11 +2,11 @@
 
 # AGSImager: analyze screenshot to decide optimum vadjust
 
-import sys
-import os
 import argparse
+import sys
 
 from PIL import Image
+
 import ags_util as util
 
 # -----------------------------------------------------------------------------

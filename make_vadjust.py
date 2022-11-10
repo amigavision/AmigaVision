@@ -10,9 +10,9 @@
 #   PAL5: -11 ... 59
 #   PAL4: -11 ... 5
 
-import sys
 import argparse
 import struct
+import sys
 
 # -----------------------------------------------------------------------------
 VADJUST_MIN = -16

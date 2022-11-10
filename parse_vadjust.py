@@ -2,10 +2,10 @@
 
 # AGSImager: vadjust.dat parsing utility
 
-import sys
-import os
 import argparse
+import os
 import struct
+import sys
 
 # -----------------------------------------------------------------------------
 

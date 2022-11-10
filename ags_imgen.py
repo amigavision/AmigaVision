@@ -5,10 +5,11 @@
 import io
 import sys
 
+from PIL import Image as PILImage
 from wand.color import Color
 from wand.drawing import Drawing
 from wand.image import Image
-from PIL import Image as PILImage
+
 import iff_ilbm as iff
 
 IMG_SRC_BASE = "data/img_src/"

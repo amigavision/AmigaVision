@@ -3,19 +3,18 @@
 # AGSImager: Make AGS entries
 
 import json
+import operator
 import shutil
-from sqlite3 import Connection
 import sys
 import textwrap
-import operator
+from sqlite3 import Connection
 
 import ags_imgen as imgen
 import ags_query as query
 import ags_util as util
-
 from ags_strings import strings
 from ags_types import EntryCollection
-from make_vadjust import VADJUST_MIN, VADJUST_MAX
+from make_vadjust import VADJUST_MAX, VADJUST_MIN
 
 AGS_INFO_WIDTH = 53
 AGS_LIST_WIDTH = 26

@@ -7,6 +7,7 @@ import os
 import sys
 
 from lhafile import LhaFile
+
 import ags_paths as paths
 import ags_util as util
 

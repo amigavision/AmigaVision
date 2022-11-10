@@ -12,17 +12,16 @@
 import argparse
 import os
 import shutil
-from sqlite3 import Connection
 import sys
+from sqlite3 import Connection
 
 import ags_paths as paths
 import ags_util as util
-
 from ags_fs import build_pfs, extract_base_image
-from ags_make import make_tree, make_autoentries
-from ags_query import get_entry, get_archive_path, get_whd_dir, entry_is_aga, entry_is_notwhdl
+from ags_make import make_autoentries, make_tree
+from ags_query import entry_is_aga, entry_is_notwhdl, get_archive_path, get_entry, get_whd_dir
 from ags_types import EntryCollection
-from make_vadjust import make_vadjust, VADJUST_MIN, VADJUST_MAX
+from make_vadjust import VADJUST_MAX, VADJUST_MIN, make_vadjust
 
 # -----------------------------------------------------------------------------
 

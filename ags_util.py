@@ -11,8 +11,8 @@ import sqlite3
 import stat
 import sys
 
-from ruamel import yaml
 from lhafile import LhaFile
+from ruamel import yaml
 
 # -----------------------------------------------------------------------------
 # utility functions

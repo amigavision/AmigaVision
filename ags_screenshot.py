@@ -20,6 +20,7 @@ import argparse
 import sys
 
 from PIL import Image
+
 import iff_ilbm as iff
 
 # -----------------------------------------------------------------------------

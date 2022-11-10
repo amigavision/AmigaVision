@@ -2,10 +2,10 @@
 
 # AGSImager: HDF creation utility
 
-import sys
-import os
 import argparse
+import os
 import subprocess
+import sys
 from ast import literal_eval as make_tuple
 from functools import reduce
 
