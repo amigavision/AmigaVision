@@ -32,7 +32,7 @@ Setup:
     ChipRAM: 2M
     FastRAM: 384M
     SlowRAM: none
-    CD32 Pad: ON
+    Joystick: CD32
     ROM: games/Amiga/MegaAGS-Kickstart.rom
     HRTmon: disabled
   Audio & Video:
