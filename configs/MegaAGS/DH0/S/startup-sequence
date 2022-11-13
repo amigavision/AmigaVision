@@ -1,15 +1,17 @@
 setpatch QUIET
 version >NIL:
-resident >NIL: C:assign PURE
 
 assign >NIL: exists DF0:
 if not warn
   addbuffers >NIL: DF0: 15
-  failat 21
 endif
 
+failat 21
 makedir RAM:T RAM:Clipboards RAM:ENV RAM:ENV/Sys
 copy >NIL: ENVARC: RAM:ENV ALL NOREQ
+
+resident >NIL: C:assign PURE
+resident >NIL: C:execute PURE
 
 assign >NIL: ENV: RAM:ENV
 assign >NIL: T: RAM:T
@@ -134,6 +136,7 @@ if not warn
 endif
 
 resident assign REMOVE
+resident execute REMOVE
 
 ;Brilliance
 setpatchmrgcop >NIL:
