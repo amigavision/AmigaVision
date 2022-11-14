@@ -3,7 +3,9 @@
   - rank: 1
   - note: 'MEGA AGS 2022.11.11'
   - Nothing to see here:
+    - rank: 1
     - note: Intentionally left blank.
+  - AmigaDealerDemo
 
 - Hall of Fame:
   - rank: 2
@@ -14,12 +16,9 @@
 
 - Current:
   - image: [{"op":"tx", "txt":"ASS"}, {"op":"tx", "txt":"P*SS", "size":100, "color":"#f0f"}]
-  - game--streetfighter--streetfighter
-  - game--streetfighter2--streetfighter2
-  - game--superstreetfighter2aga--superstreetfighter2aga
-  - game--hoversprint--hoversprint
-  - game--mikethemagicdragon--mikethemagicdragon
-  - game--gilbertescapefromdrill--gilbertescapefromdrill
+  - ArtificialDreams
+  - Hyperforce
+  - Resolution101
 
 - Ordering Tests:
   - Ranked (2):
