@@ -90,7 +90,7 @@ def make_entries(db: Connection, collection: EntryCollection, ags_path, entries,
 
         # use preferred (fuzzy) entry
         e, pe = query.get_entry(db, n)
-        if not "--" in name and pe:
+        if not "--" in n and pe is not None:
             e = pe
         if not e and not pe:
             if options is None or (options and not options.get("unavailable", False)):
