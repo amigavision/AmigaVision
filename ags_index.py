@@ -6,7 +6,7 @@ import argparse
 import os
 import sys
 
-from lhafile import LhaFile
+from lhafile import LhaFile, is_lhafile
 
 import ags_paths as paths
 import ags_util as util
@@ -26,6 +26,9 @@ def index_whdload_archives(basedir):
                 if count % 100 == 0:
                     print(".", end="", flush=True)
                 path = util.path(r, file)
+                if not is_lhafile(path):
+                    print("\n{} is not a valid lha file".format(path), flush=True)
+                    continue
                 db_path = path.split(basedir)[1]
                 slave_category = db_path.split(os.sep)[0]
 

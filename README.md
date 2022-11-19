@@ -6,9 +6,7 @@
 - imagemagick
 - make
 
-The final step in the build process requires [FS-UAE](https://fs-uae.net) to copy all files to a PFS3-formatted HDF image. This is not an ideal setup, but as far as I know there exists no library that supports manipulation of PFS3 volumes. A consequence is that the entire file tree to be copied first needs to be created on the host filesystem, which presents issues if that filesystem imposes file name restrictions that AmigaDOS/PFS3 doesn't. 
-
-macOS/APFS supports any file name possible on Amiga and is, to my knowledge, the only system AGSImager has been tested on so far. 
+The final step in the build process requires [FS-UAE](https://fs-uae.net) to copy all files to a PFS3-formatted HDF image. This is not an ideal setup, but as far as I know no library exists that supports manipulation of PFS3 volumes. As a consequence the entire file tree to be copied first needs to be created on the host filesystem.
 
 ## prerequisites
 - A bootable HDF to use as base (FFS formatted, all files are copied to DH0: of the output image) at `$AGSCONTENT/base/base.hdf`

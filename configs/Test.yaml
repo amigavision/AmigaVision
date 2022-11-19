@@ -5,8 +5,6 @@
   - Nothing to see here:
     - rank: 1
     - note: Intentionally left blank.
-  - AmigaDealerDemo
-  - game--shadowofthebeast--shadowofthebeast: { note: Latest WHDL install. Still glitchy? }
 
 - Hall of Fame:
   - rank: 2
@@ -17,8 +15,7 @@
 
 - Current:
   - image: [{"op":"tx", "txt":"ASS"}, {"op":"tx", "txt":"P*SS", "size":100, "color":"#f0f"}]
-  - ArtificialDreams
-  - Hyperforce
+  - demo--mirror--mirror
   - Resolution101
 
 - Ordering Tests:

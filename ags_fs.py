@@ -3,6 +3,7 @@
 # AGSImager: Native filesystem functions
 
 import os
+import shutil
 import subprocess
 import sys
 from ast import literal_eval as make_tuple
@@ -15,7 +16,11 @@ def is_amiga_devicename(str):
     return len(str) == 3 and str[0].isalpha() and str[1].isalpha() and str[2].isnumeric()
 
 def extract_base_image(base_hdf, dest):
-    _ = subprocess.run(["xdftool", base_hdf, "read", "/", dest])
+    tmp_dest = dest + "_unpack"
+    _ = subprocess.run(["xdftool", base_hdf, "unpack", tmp_dest, "fsuae"])
+    for f in os.listdir(tmp_dest):
+        shutil.move(os.path.join(tmp_dest, f), dest)
+    util.rm_path(tmp_dest)
 
 #def build_pfs(config_base_name, verbose):
 def build_pfs(hdf_path, clone_path, verbose):
@@ -85,6 +90,47 @@ def build_pfs(hdf_path, clone_path, verbose):
                             "mask=0x7FFFFFFE", "num_buffer=300"], stdout=subprocess.PIPE)
     return
 
+# -----------------------------------------------------------------------------
+# replace characters forbidden on some filesystems to format UAE will translate
+
+FSCHR_FORBIDDEN = [":"]
+
+FSCHR_AMIGA_TO_UAE = {
+    "\"": "%22",
+    "*": "%2a",
+    "<": "%3c",
+    ">": "%3e",
+    "?": "%3f",
+    "|": "%7e"
+}
+
+FSCHR_AMIGA_TO_UAE_LAST = {
+    " ": "%20",
+    ".": "%2e"
+}
+
+def convert_filename_a2uae(n):
+    if len(n) < 1:
+        return n
+    for char in FSCHR_FORBIDDEN:
+        n = n.replace(char, "")
+    n = n.replace("%", "%25")
+    for char, escaped in FSCHR_AMIGA_TO_UAE.items():
+        n = n.replace(char, escaped)
+    for char, escaped in FSCHR_AMIGA_TO_UAE_LAST.items():
+        if n[-1] == char:
+            n = n[:-1] + escaped
+    return n
+
+def convert_filename_uae2a(n):
+    if len(n) < 1:
+        return n
+    n = n.replace("%25", "%")
+    for char, escaped in FSCHR_AMIGA_TO_UAE.items():
+        n = n.replace(escaped, char)
+    for char, escaped in FSCHR_AMIGA_TO_UAE_LAST.items():
+        n = n.replace(escaped, char)
+    return n
 
 # -----------------------------------------------------------------------------
 

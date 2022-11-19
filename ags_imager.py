@@ -17,7 +17,7 @@ from sqlite3 import Connection
 
 import ags_paths as paths
 import ags_util as util
-from ags_fs import build_pfs, extract_base_image
+from ags_fs import build_pfs, extract_base_image, convert_filename_uae2a, convert_filename_a2uae
 from ags_make import make_autoentries, make_tree
 from ags_query import entry_is_aga, entry_is_notwhdl, get_archive_path, get_entry, get_whd_dir
 from ags_types import EntryCollection
@@ -106,8 +106,7 @@ def main():
         amiga_boot_path = util.path(clone_path, "DH0")
         amiga_ags_path = util.path(amiga_boot_path, "AGS2")
 
-        if util.is_dir(clone_path):
-            shutil.rmtree(clone_path)
+        util.rm_path(clone_path)
         util.make_dir(util.path(clone_path, "DH0"))
 
         config_base_name = os.path.splitext(os.path.basename(args.config_file))[0]
@@ -205,7 +204,7 @@ def main():
 
             if len(cache) > 0:
                 cachefile = "{}\n".format(len(cache))
-                for line in cache: cachefile += "{}\n".format(line)
+                for line in cache: cachefile += "{}\n".format(convert_filename_uae2a(line))
                 open(util.path(path, ".dir"), mode="w", encoding="latin-1").write(cachefile)
 
         # build PFS container
@@ -235,14 +234,15 @@ def main():
         # clean output directory
         for r, _, f in os.walk(clone_path):
             for name in f:
+                #if name != convert_filename_a2uae(name):
+                #    print("illegal filename: {}".format(r + "/" + name))
                 path = util.path(r, name)
                 if name == ".DS_Store":
                     os.remove(path)
 
         # create title listings
         list_dir = util.path(out_dir, "games", "Amiga", "listings")
-        if util.is_dir(list_dir):
-            shutil.rmtree(list_dir)
+        util.rm_path(list_dir)
         util.make_dir(list_dir)
         for list_def in [("Game", "games.txt"), ("Demo", "demos.txt")]:
             content_path = util.path(amiga_ags_path, "Run", list_def[0])

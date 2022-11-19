@@ -14,6 +14,8 @@ import sys
 from lhafile import LhaFile
 from ruamel import yaml
 
+from ags_fs import convert_filename_a2uae, convert_filename_uae2a
+
 # -----------------------------------------------------------------------------
 # utility functions
 
@@ -85,6 +87,12 @@ def make_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
 
+def rm_path(path):
+    if os.path.isfile(path):
+        os.remove(path)
+    elif os.path.isdir(path):
+        shutil.rmtree(path)
+
 def get_dir_size(start_path=".", block_size=1):
     file_size = 0
     path_size = 0
@@ -93,6 +101,8 @@ def get_dir_size(start_path=".", block_size=1):
         for d in dirnames:
             path_size += len(os.path.join(path, d))
         for f in filenames:
+            if f.endswith(".uaem"):
+                continue
             path_size += len(os.path.join(path, f))
             fp = os.path.join(dirpath, f)
             file_size += math.ceil(os.path.getsize(fp) / block_size) * block_size
@@ -170,8 +180,8 @@ def lha_extract(arcpath, outpath):
     arc = LhaFile(arcpath)
     for filename in [info.filename for info in arc.infolist()]:
         path = filename.replace("\\", "/")
-        dirname = os.path.dirname(path)
-        basename = os.path.basename(path)
+        dirname = convert_filename_a2uae(os.path.dirname(path))
+        basename = convert_filename_a2uae(os.path.basename(path))
         if dirname:
             make_dir(os.path.join(outpath, dirname))
         if basename:
