@@ -115,6 +115,19 @@ def main():
         if not util.is_dir(data_dir):
             raise IOError("data dir doesn't exist: " + data_dir)
 
+        # parse configuration
+        menu = None
+        if args.verbose: print("parsing menu...")
+        menu = util.yaml_load(args.config_file)
+        if not isinstance(menu, list):
+            raise ValueError("config file not a list: " + args.config_file)
+
+        runfile_template_path = util.path(os.path.dirname(args.config_file), config_base_name) + ".runfile"
+        if not util.is_file(runfile_template_path):
+            raise IOError("AGS2 runfile template doesn't exist: " + runfile_template_path)
+        with open(runfile_template_path, 'r') as f:
+            runfile_template = f.read()
+
         # extract base image
         base_hdf = args.base_hdf
         if not base_hdf:
@@ -124,16 +137,8 @@ def main():
         if args.verbose: print("extracting base HDF image... ({})".format(base_hdf))
         extract_base_image(base_hdf, amiga_boot_path)
 
-        # parse menu
-        menu = None
-        if args.verbose: print("parsing menu...")
-        menu = util.yaml_load(args.config_file)
-        if not isinstance(menu, list):
-            raise ValueError("config file not a list: " + args.config_file)
-
-        # copy base AGS2 config, create database
-        if args.verbose: print("building AGS2 database...")
-
+        # copy base AGS2 config
+        if args.verbose: print("building AGS2 tree...")
         base_ags2 = args.ags_dir
         if not base_ags2:
             base_ags2 = util.path("data", "ags2")
@@ -141,18 +146,17 @@ def main():
             raise IOError("AGS2 configuration directory doesn't exist: " + base_ags2)
         if args.verbose:
             print(" > using configuration: " + base_ags2)
-
         util.copytree(base_ags2, amiga_ags_path)
 
         # collect entries
         if menu:
-            make_tree(db, collection, amiga_ags_path, menu)
+            make_tree(db, collection, amiga_ags_path, menu, template=runfile_template)
         if args.all_games:
             add_all(db, collection, "Game", args.all_versions, args.prefer_ecs)
         if args.all_demos:
             add_all(db, collection, "Demo", args.all_versions, args.prefer_ecs)
         if args.all_games or args.all_demos:
-            make_autoentries(collection, amiga_ags_path, args.all_games, args.all_demos)
+            make_autoentries(collection, amiga_ags_path, args.all_games, args.all_demos, template=runfile_template)
 
         # extract whdloaders
         if args.verbose: print("extracting {} content archives...".format(len(collection.by_id.items())))

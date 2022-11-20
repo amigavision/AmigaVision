@@ -22,7 +22,7 @@ AGS_LIST_WIDTH = 26
 # -----------------------------------------------------------------------------
 # create entries from dictionary/tree
 
-def make_tree(db: Connection, collection: EntryCollection, ags_path, node, path=[]):
+def make_tree(db: Connection, collection: EntryCollection, ags_path, node, path=[], template=None):
     if isinstance(node, list):
         entries = []
         image = None
@@ -53,13 +53,13 @@ def make_tree(db: Connection, collection: EntryCollection, ags_path, node, path=
                         entries += [(key, value)]
                     else:
                         # item is a subtree
-                        make_tree(db, collection, ags_path, value, path + [key])
-        make_entries(db, collection, ags_path, entries, path, note=note, image=image, ordering=ordering, rank=rank)
+                        make_tree(db, collection, ags_path, value, path + [key], template=template)
+        make_entries(db, collection, ags_path, entries, path, note=note, image=image, ordering=ordering, rank=rank, template=template)
 
 # -----------------------------------------------------------------------------
 # create entries from list
 
-def make_entries(db: Connection, collection: EntryCollection, ags_path, entries, path, note=None, image=None, ordering=None, rank=None):
+def make_entries(db: Connection, collection: EntryCollection, ags_path, entries, path, note=None, image=None, template=None, ordering=None, rank=None):
     # make dir
     base_path = ags_path
     if path:
@@ -104,13 +104,13 @@ def make_entries(db: Connection, collection: EntryCollection, ags_path, entries,
         if ordering == "ordered": sort_rank = pos
         elif ordering == "release": sort_rank = util.parse_date_int(e["release_date"], sortable=True)
 
-        make_entry(collection, ags_path, n, e, base_path, rank=rank, sort_rank=sort_rank, options=options)
+        make_entry(collection, ags_path, n, e, base_path, template=template, rank=rank, sort_rank=sort_rank, options=options)
     return
 
 # -----------------------------------------------------------------------------
 # create entry
 
-def make_entry(entries: EntryCollection, ags_path, name, entry, path, rank=None, sort_rank=None, only_script=False, prefix=None, options=None):
+def make_entry(entries: EntryCollection, ags_path, name, entry, path, template=None, rank=None, sort_rank=None, only_script=False, prefix=None, options=None):
     max_w = AGS_LIST_WIDTH
     note = None
     runfile_ext = "" if only_script else ".run"
@@ -202,31 +202,23 @@ def make_entry(entries: EntryCollection, ags_path, name, entry, path, rank=None,
         else:
             whd_entrypath = query.get_amiga_whd_dir(entry)
             if whd_entrypath:
-                whd_slave = query.get_whd_slavename(entry)
-                # extra arguments
                 whd_cargs = "BUTTONWAIT"
                 if entry.get("slave_args"):
                     whd_cargs += " " + entry["slave_args"]
                 whd_qtkey = "" if "QuitKey=" in whd_cargs else "$whdlqtkey"
-                runfile = "ags_notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
-                runfile += "cd \"{}\"\n".format(whd_entrypath)
-                runfile += "IF NOT EXISTS ENV:whdlspdly\n"
-                runfile += "  echo 200 >ENV:whdlspdly\n"
-                runfile += "ENDIF\n"
-                runfile += "IF NOT EXISTS ENV:whdlqtkey\n"
-                runfile += "  echo \"\" >ENV:whdlqtkey\n"
-                runfile += "ENDIF\n"
-                runfile += "IF EXISTS ENV:whdlvmode\n"
-                runfile += "  whdload >NIL: \"{}\" $whdlvmode {} SplashDelay=$whdlspdly {}\n".format(whd_slave, whd_cargs, whd_qtkey)
-                runfile += "ELSE\n"
-                runfile += "  setvadjust {} {}\n".format(vadjust_vofs, vadjust_scale)
-                if only_script:
-                    runfile += "  whdload >NIL: \"{}\" {} {} SplashDelay=0 {}\n".format(whd_slave, whd_vmode, whd_cargs, whd_qtkey)
-                else:
-                    runfile += "  whdload >NIL: \"{}\" {} {} SplashDelay=$whdlspdly {}\n".format(whd_slave, whd_vmode, whd_cargs, whd_qtkey)
-                runfile += "  setvadjust\n"
-                runfile += "ENDIF\n"
-                runfile += "ags_notify\n"
+                whd_spdly = "0" if only_script else "$whdlspdly"
+
+                runfile = util.apply_template(template, {
+                    "TITLE": entry.get("title", "Unknown"),
+                    "PATH": whd_entrypath,
+                    "SLAVE": query.get_whd_slavename(entry),
+                    "CUST_ARGS": whd_cargs,
+                    "QUIT_KEY": whd_qtkey,
+                    "SPLASH_DELAY": whd_spdly,
+                    "VIDEO_MODE": whd_vmode,
+                    "VADJUST_VOFS": vadjust_vofs,
+                    "VADJUST_SCALE": vadjust_scale
+                })
     else:
         runfile = "echo \"Title not available.\"" + "\n" + "wait 2"
 
@@ -369,7 +361,7 @@ def make_image(path, options):
 # -----------------------------------------------------------------------------
 # collect entries for special folders ("All Games", "Demo Scene")
 
-def make_autoentries(entries: EntryCollection, path, all_games=False, all_demos=False):
+def make_autoentries(entries: EntryCollection, path, all_games=False, all_demos=False, template=None):
     d_path = util.path(path, "{}.ags".format(strings["dirs"]["scene"]))
     if all_demos: util.make_dir(d_path)
 
@@ -385,9 +377,9 @@ def make_autoentries(entries: EntryCollection, path, all_games=False, all_demos=
 
         # add games
         if all_games and entry.get("category", "").lower() == "game":
-            make_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"))
+            make_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"), template=template)
             make_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".iff"), {"op":"tx", "txt": letter})
-            make_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".ags"))
+            make_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".ags"), template=template)
             make_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
 
         # add demos, disk mags
@@ -399,31 +391,31 @@ def make_autoentries(entries: EntryCollection, path, all_games=False, all_demos=
             if group_letter.isnumeric():
                 group_letter = "#"
             if entry.get("subcategory", "").lower().startswith("disk mag"):
-                make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags"])))
-                mag_path = make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags_date"])))
+                make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags"])), template=template)
+                mag_path = make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags_date"])), template=template)
                 if mag_path:
                     rank = util.parse_date_int(entry["release_date"], sortable=True)
                     entries.path_sort_rank["{}.run".format(mag_path)] = rank if rank else 0
             elif entry.get("subcategory", "").lower().startswith("music disk"):
-                make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".ags"))
+                make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".ags"), template=template)
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".iff"), {"op":"tx", "txt": letter})
-                make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".ags"))
+                make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".ags"), template=template)
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
             else:
                 if entry.get("subcategory", "").lower().startswith("crack"):
-                    make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_cracktro"])), prefix=sort_group)
+                    make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_cracktro"])), prefix=sort_group, template=template)
                 if entry.get("subcategory", "").lower().startswith("intro"):
-                    make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_intro"])))
+                    make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_intro"])), template=template)
                 group_entry = dict(entry)
                 group_entry["title_short"] = group_entry.get("title")
-                make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".ags"))
+                make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".ags"), template=template)
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".iff"), {"op":"tx", "txt": letter})
-                make_entry(entries, path, None, group_entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".ags"), prefix=sort_group)
+                make_entry(entries, path, None, group_entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".ags"), prefix=sort_group, template=template)
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".iff"), {"op":"tx", "txt": group_letter})
-                make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".ags"))
+                make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".ags"), template=template)
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
                 if sort_country:
-                    make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".ags"))
+                    make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".ags"), template=template)
 
         if all_demos and entry.get("category", "").lower() == "demo":
             groups = entry.get("publisher")
@@ -439,11 +431,11 @@ def make_autoentries(entries: EntryCollection, path, all_games=False, all_demos=
 
         # run-scripts for randomizer
         if all_games and entry.get("category", "").lower() == "game" and not entry.get("issues"):
-            make_entry(entries, path, None, entry, util.path(path, "Run", "Game"), only_script=True)
+            make_entry(entries, path, None, entry, util.path(path, "Run", "Game"), only_script=True, template=template)
         elif all_demos and entry.get("category", "").lower() == "demo" and not entry.get("issues"):
             sub = entry.get("subcategory", "").lower()
             if sub.startswith("demo") or sub.startswith("intro") or sub.startswith("crack"):
-                make_entry(entries, path, None, entry, util.path(path, "Run", "Demo"), only_script=True)
+                make_entry(entries, path, None, entry, util.path(path, "Run", "Demo"), only_script=True, template=template)
 
     # notes for created directories
     for dir in ["allgames", "allgames_year", "scene", "issues"]:

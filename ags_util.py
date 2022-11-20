@@ -140,6 +140,11 @@ def prettify_names(str):
         str = str[:last_delimiter] + " & " + str[last_delimiter + 2:]
     return str
 
+def apply_template(template: str, dictionary: dict) -> str:
+    for k, v in dictionary.items():
+        template = template.replace("{{" + "{}".format(k) + "}}", "{}".format(v))
+    return template
+
 # -----------------------------------------------------------------------------
 # custom directory sorting
 
