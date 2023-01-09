@@ -1276,7 +1276,7 @@ game--xenon2ntsc--xenon2ntsc;Xenon 2: Megablast;Xenon 2: Megablast;;;OCS;;3;;;;;
 game--xenex--xenex;Xenex;Xenex;;;OCS;;0;4;;;;;;;1994;;English;Scorpius;Scorpius;2;;v1.0;Xenex/Xenex.Slave;game/X/Xenex_v1.0.lha;Game;;5209;2524
 game--xp8--xp8;XP8;XP8;;game--xp8aga--xp8aga;OCS;;0;;;1;;;;;1996;;English;WeatherMine;Effigy;2 (taking turns);;v2.1;XP8/XP8.slave;game/X/XP8_v2.1_0607.lha;Game;Shoot'em Up - Vertical;1612;2467
 game--xp8aga--xp8aga;XP8;XP8;;;AGA;1;0;4;;1;;;;;1996;;English;WeatherMine;Effigy;2 (taking turns);;v2.1;XP8AGA/XP8AGA.slave;game/X/XP8_v2.1_AGA.lha;Game;Shoot'em Up - Vertical;1613;1189
-game--xit--xit;X-It;X-It;;;OCS;;1;;;;;;;;1995;;Italian;Data Designs;Psygnosis;1;;v1.1;XIt/XIt.Slave;game/X/XIt_v1.1_1585.lha;Game;;1609;1154
+game--xit--xit;X-It;X-It;;;OCS;;1;;;;;;;;1995;;English;Data Designs;Psygnosis;1;;v1.1;XIt/XIt.Slave;game/X/XIt_v1.1_1585.lha;Game;;1609;1154
 game--xenon2cdtv--xenon2cdtv;Xenon 2: Megablast;Xenon 2: Megablast;1;game--xenon2ntsc--xenon2ntsc;OCS/CDTV;;0;5;16;;;;;;1989;;English;Bitmap Brothers, The Assembly Line;Image Works;2 (taking turns);;v1.7;Xenon2CDTV/Xenon2CDTV.Slave;game/X/Xenon2_v1.7_CDTV.lha;Game;Shoot'em Up - Vertical;1606;4156
 game--lemmingsxmasdemo1991--lemmingsxmasdemo1991;Xmas Lemmings 1991;Lemmings - Xmas 1991;;;OCS;;1;;;;;;;;1991;;English;DMA Design;Psygnosis;1;;v1.1;LemmingsXmasDemo1991/LemmingsXmasDemo1991.slave;game/L/LemmingsXmasDemo1991_v1.1.lha;Game;Action - Strategy;6012;-2
 game--lemmingsxmasdemo1992--lemmingsxmasdemo1992;Xmas Lemmings 1992;Lemmings - Xmas 1992;;;OCS;;1;;;;;;;;1992;;English;DMA Design;Psygnosis;1;;v1.0;LemmingsXmasDemo1992/LemmingsXmasDemo1992.Slave;game/L/LemmingsXmasDemo1992_v1.0.lha;Game;Action - Strategy;6013;-2
