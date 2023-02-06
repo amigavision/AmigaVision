@@ -9,10 +9,10 @@ autopep8 = "*"
 
 [packages]
 ruamel-yaml = "~=0.17.21"
-amitools = "~=0.6.0"
+amitools = "~=0.7.0"
 lhafile = "~=0.3.0"
-pillow = "~=9.3.0"
-Wand = "~=0.6.10"
+pillow = "~=9.4.0"
+Wand = "~=0.6.11"
 
 [requires]
-python_version = "3.10"
+python_version = "3.11"
