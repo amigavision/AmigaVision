@@ -13,7 +13,7 @@
 * Menu: New "look and feel"
 * Misc: Super Attract Mode integration
 * Misc: Added MegaAGS-Extras archive with alternative MGL based configs and video settings
-* best in class natural sorting: Turrican, Turrican II, Turrican 3 for example
+* Natural sorting: the launcher will now sort e.g. Turrican, Turrican II, Turrican 3 in that order instead of a straight ASCII sort
 
 ##2022.06.06
 
@@ -33,5 +33,6 @@
 * MT-32 MIDI game support
 * New custom 40:27 aspect ratio
 
+##2022.XX.XX
 
-
+* Introduced per-game 5×PAL dynamic crop for 1200+ games
