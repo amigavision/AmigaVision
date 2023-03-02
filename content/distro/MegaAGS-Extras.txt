@@ -8,7 +8,10 @@ The Amiga was used with RGB-based CRTs or consumer TVs, and graphics do not look
 
 **Setup:**
 
-* Copy 
+* Copy the contents of `filters/` to the identically named directory in the root of the MiSTer file system
+* Copy the contents of `presets/` to the identically named directory in the root of the MiSTer file system
+* Copy the contents of `shadow_masks/` to the identically named directory in the root of the MiSTer file system
+* Start the Amiga core, select `MegaAGS` from the scan line / shadow mask presets
 
 ## Amiga 500HD Setup
 
@@ -19,6 +22,13 @@ This is implemented as a separate MGL file and directory setup for MiSTer, letti
 It aims to recreate the setups that were common before the Amiga 600/1200 were released with hard disk support and a more modern OS.
 
 Common applications like Directory Opus, ProTracker, music players and graphics/audio problems are already included in the Apps menu in Workbench, giving you a great starting point for your own custom setup.
+
+In addition, the image includes:
+
+* MiSTer `shared/` directory support to facilitate easy sharing of files between MiSTer's file system and the Amiga file system
+* Custom patch for Kickstart 1.3 for HD support
+* PFS file system that protects against accidental file system corruption if restarted during a write operation
+* Launch menu in Workbench for common applications
 
 We default this setup to NTSC for compatibility reasons, but you can easily change it to PAL in *MiSTer's Audio & Video settings* menu for the Amiga core if you prefer that.
 
@@ -37,6 +47,13 @@ We recommend using the separate, dedicated Amiga 500 setup for ADF format game d
 This hard disk setup aims to recreate an Amiga 600HD (or an Amiga 500 Plus or Amiga 3000) with Kickstart 2.0 and Workbench 2.1. This would be the setup of an Amiga 500+/600/3000 user with a hard drive, memory expansion (and possibly an accelerator card) from around 1991-1992, common before the Amiga 1200/4000 computers that included the newer AGA graphics chipset and AmigaOS 3.0/3.1.
 
 This is implemented as a separate MGL file and directory setup for MiSTer, letting you have a separate setup that doesn't affect the main MegaAGS game/demo image.
+
+In addition, the image includes:
+
+* MiSTer `shared/` directory support to facilitate easy sharing of files between MiSTer's file system and the Amiga file system
+* Custom patch for Kickstart 1.3 for HD support
+* PFS file system that protects against accidental file system corruption if restarted during a write operation
+* Launch menu in Workbench for common applications
 
 We default this setup to NTSC for compatibility reasons, but you can easily change it to PAL in the *Workbench ScreenMode Preferences* if you prefer that.
 
