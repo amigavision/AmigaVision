@@ -1,17 +1,14 @@
-MegaAGS for Minimig-AGA_MiSTer
-==============================
+# MegaAGS for Minimig-AGA_MiSTer
 
-Setup:
-------
-- Copy the contents of the "games/Amiga" and "config" directories to the
-  corresponding directories on MiSTer.
+## Setup
 
-- When updating to a new version of the main HDF image do not overwrite
-  "games/Amiga/MegaAGS-Saves.hdf", so old saved game data is carried over.
+* Copy the contents of the "games/Amiga" and "config" directories to the corresponding directories on MiSTer.
 
-- If you prefer to configure the main settings manually, these are recommended
-  settings used in the bundled minimig.cfg:
+* When updating to a new version of the main HDF image do not overwrite `games/Amiga/MegaAGS-Saves.hdf`, so old saved game data is carried over.
 
+* If you prefer to configure the main settings manually, these are recommended settings used in the bundled minimig.cfg:
+
+```
   df0: no disk
   df1: no disk
   Joystick Swap: OFF
@@ -47,19 +44,20 @@ Setup:
     Audio Filter: Auto(LED)
     Model: A500
     Paula Output: PWM
+```
 
-- Add the following recommended core overrides to MiSTer.ini (these settings
-  are further explained in the next section):
+* Add the following recommended core overrides to MiSTer.ini (these settings are further explained in the next section):
 
+```
 [minimig]
 video_mode_ntsc=8
 video_mode_pal=9
 vsync_adjust=1
 custom_aspect_ratio_1=40:27
+```
 
+## Video Modes:
 
-Video Modes:
-------------
 First, the optimal vsync_adjust setting will depend on your HDMI display.
 A setting of 2 ensures the lowest possible latency, but it may come at the
 cost of a short period of no video or audio on video mode changes - something
@@ -99,40 +97,41 @@ sometimes correct narrow pixels for NTSC games. "40:27" will result in square
 pixels for PAL (5×) titles and NTSC/PAL60 titles. As guidance, use these
 settings depending on what video mode the launcher UI specifies:
 
+```
 4×PAL      Original
 5×PAL      40:27
 5×PAL60    40:27
 5×NTSC     40:27 or Original depending on title
+```
 
 Again, make sure to add the Minimig core overrides in MiSTer.ini as specified
 in the previous section to enjoy the best HDMI output possible, and make sure
 you have set MiSTer to output in 1080p resolution.
 
 
-Controls:
----------
+## Controls
+
 While many games supports two or more buttons, Amiga games were generally
 designed for one button joysticks. Consequently the feared "up to jump"
 (or accelerate) control scheme is very common. If you are using a gamepad,
 you might want to use MiSTer's controller mapping to bind the up direction
 to both the D-pad and an extra button. Here's how:
 
-- First, make sure to have CD32 controller mode enabled.
-- Enter "Define joystick buttons" mode
-- Map directions as usual
-- Map the first three buttons (red, blue and yellow) to A, B and Y.
-- The fourth button (green) is practically never used, and can be mapped
-  to Select, R2/ZL or similar.
-- Go ahead and map right/left triggers and play/pause.
-- When asked to if you want to "setup alternative buttons", do so!
-- Skip all choices except "up", which should be mapped to X.
+* First, make sure to have CD32 controller mode enabled.
+* Enter "Define joystick buttons" mode
+* Map directions as usual
+* Map the first three buttons (red, blue and yellow) to A, B and Y.
+* The fourth button (green) is practically never used, and can be mapped to Select, R2/ZL or similar.
+* Go ahead and map right/left triggers and play/pause.
+* When asked to if you want to "setup alternative buttons", do so!
+* Skip all choices except "up", which should be mapped to X.
 
 While a keyboard and mouse isn't strictly necessary to play most action games,
 it is definitely recommended for the full Amiga experience.
 
 
-Save files:
------------
+## Save Files:
+
 IMPORTANT: For games with save functionality you need to quit the game using
 the DEL key for the save data to be written to "disk", and thus the SD card.
 You will lose your save games if you don't exit the game after saving!
@@ -142,8 +141,8 @@ options, which if set will override the preconfigured key. The active quit
 key is displayed on the splash screen shown when a game is loading.
 
 
-CPU performance notes:
-----------------------
+## CPU performance notes
+
 The D-Cache option is essentially a turbo switch for the CPU, making it
 perform on par with a 030 at 50MHz in many benchmarks. Unfortunately running
 with it enabled introduces lots of subtle glitches in many (mostly older)
@@ -161,9 +160,9 @@ and Grand Monster Slam (and many less significant titles).
 The CPU D-Cache option is available in OSD -> System.
 
 
-Workbench:
-----------
-From the launcher, you can hit the ESC key to exit into Workbench, the AmigaOS
+## Workbench
+
+From the launcher, you can hit the `ESC` key to exit into Workbench, the AmigaOS
 graphical desktop environment.
 
 You can explore the world's first multitasking 16-bit computer from 1985 with
@@ -175,8 +174,8 @@ select your preferred resolution from the ScreenMode menu. 540p is a nice,
 usable screen resolution that just doubles every pixel on a 1080p display.
 
 
-Non-working games:
-------------------
+## Non-working games
+
 About 10 games are currently not working due to CPU features not yet
 implemented in the Minimig core. Over the past year compatibility has improved
 a lot, and that trend is likely to continue. A few more titles do not work, or
@@ -184,27 +183,29 @@ are very glitchy, due to other inaccuracies. This will also hopefully improve
 over time.
 
 
-Custom scripts:
----------------
+## Custom scripts
+
 If you want to run additional scripts on startup, MegaAGS looks for a file
-named Saves:custom-startup and runs it, so if you need to run scripts that
+named `Saves:custom-startup` and runs it, so if you need to run scripts that
 will survive upgrades of the main image, this is where to put them.
 
 
-Arcadia Systems:
-----------------
+## Arcadia Systems
+
 Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500
 based multi-game arcade system. Most titles released for the system have
 been dumped and are available on the MegaAGS image. The games are not great
-(to put it kindly), but it's a pretty interesting curiosity.
+(to put it kindly), but it's an interesting curiosity.
 
 Button mapping:
 
+```
 P1 Start:    F1
 P2 Start:    F2
 Left Coin:   F3
 Right Coin:  F4
 Config:      F5
+```
 
 Player 1 uses joystick port 1, while Amiga software universally expect
 mouse in port 1 and joystick in port 2. If using only one joystick, enable
