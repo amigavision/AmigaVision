@@ -35,6 +35,8 @@ It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to wo
 
 ## Quick Setup for MiSTer
 
+(If you are updating from a version before 2023, we *highly* recommend setting aside your `games/Amiga/MegaAGS-Saves.hdf` and doing this installation from scratch, as many things have changed)
+
 * Copy the contents of the following directories to the corresponding directories in the top level on MiSTer's file system:
 
 ```  
@@ -45,8 +47,6 @@ games
 Presets
 Shadow_Masks
 ```
-
-(If updating to a new version of the main `MegaAGS.hdf` image, *do not* overwrite `games/Amiga/MegaAGS-Saves.hdf`, this runs on a separate HD image to ensure saved game data (and any other files/apps) are carried over when you upgrade.)
 
 * Add the following recommended core overrides section to `MiSTer.ini` in the root of your MiSTer dile system -- these settings are further explained in the Video Modes section:
 
