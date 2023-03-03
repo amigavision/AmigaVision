@@ -221,15 +221,15 @@ About 10 games are currently not working due to CPU or graphics chipset features
 
 If you want to run additional scripts on startup, MegaAGS looks for a file named `Saves:custom-startup` and runs it, so if you need to run scripts that will survive upgrades of the main image, this is where to put them.
 
-## Found Bugs? Request a New Feature?
+## Found Bugs? Want to Request a New Feature?
 
-While MegaAGS has been tested for many years, the sheer volume of games and demos makes it all but certain that something has been overlooked somewhere. If you find something that doesn't work or seems like it's running with the wrong settings, or something is missing -- file a bug at https://amiga.vision.
+While MegaAGS has been tested for many years, the sheer volume of games and demos makes it all but certain that something has been overlooked somewhere. If you find something that doesn't work or seems like it's running with the wrong settings, or something is missing -- file a bug in the issue tracker at https://amiga.vision.
 
 ## Frequently Asked Questions
 
 ### What does the `Minimig` core do now that I have an `Amiga` setup?
 
-We use the `Amiga` and `Amiga 500` MGL files to launch the Minimig core with  dedicated configurations. The Minimig entry isn't used directly anymore, but it will launch (and share files with) the main Amiga setup. Just ignore it or rename it using your own [names.txt] if you want.
+We use the `Amiga` and `Amiga 500` MGL files to launch the Minimig core with  dedicated configurations. The Minimig entry isn't used directly anymore, but it will launch (and share files with) the main `Amiga` setup. Just ignore the Minimig entry or rename it using your own [names.txt] if you want.
 
 This also lets us have the `Amiga 500HD` and `Amiga 600HD` setups with separate hard disk images, shared files, etc.
 
@@ -237,11 +237,13 @@ We find this to be a more usable and cleaner setup, instead of using the core co
 
 ### Why do you have Scanline and Shadow Mask presets by default?
 
-The Amiga was used with RGB-based CRTs or consumer TVs, and graphics do not look correct without them. We have included a set of scanline and shadow mask setups for use with MiSTer to more accurately represent the graphics output of the system that we highly recommend.
+The Amiga was almost exclusively used with RGB-based CRTs or consumer TVs, and graphics do not look correct without scanlines and shadow masks. We have included a set of Amiga-specific scanline and shadow mask setups for use with MiSTer to more accurately represent the graphics output of the system that we highly recommend.
 
 Thus, the default setup is configured for this to make sure the most people see the most representative setup. Since configuring this can be intimidating to new users, we chose to have a default that we think best represents the Amiga's original look.
 
-You can of course set your own scanline and shadow mask presets in MiSTer's menus and save those configurations if you don't want to use them. 
+You can of course set your own scanline and shadow mask presets in MiSTer's menus and save those configurations if you don't want to use ours. 
+
+If you are using resolutions lower than 1080p, 1440p or 1536p, we recommend turning them off, but since most MiSTer users are on 1080p/4K TVs (or analog CRTs), they are on by default.
 
 
 ### What's "Arcadia Systems"?
