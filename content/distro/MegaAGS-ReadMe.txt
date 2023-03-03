@@ -35,11 +35,20 @@ It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to wo
 
 ## Quick Setup for MiSTer
 
-* Copy the contents of the `_Computer`, `config`, `Filters`, `games`, `Presets` and `Shadow_Masks`  directories to the corresponding directories in the top level on MiSTer's file system.
+* Copy the contents of the following directories to the corresponding directories in the top level on MiSTer's file system:
 
-* (If updating to a new version of the main HDF image, *do not* overwrite `games/Amiga/MegaAGS-Saves.hdf`, this runs on a separate HD image to ensure saved game data (and any other files/apps) are carried over when you upgrade.)
+```  
+_Computer
+config
+Filters
+games
+Presets
+Shadow_Masks
+```
 
-* Add the following recommended core overrides to MiSTer.ini -- these settings are further explained in the Video Modes section:
+(If updating to a new version of the main HDF image, *do not* overwrite `games/Amiga/MegaAGS-Saves.hdf`, this runs on a separate HD image to ensure saved game data (and any other files/apps) are carried over when you upgrade.)
+
+* Add the following recommended core overrides section to `MiSTer.ini` in the root of your MiSTer dile system -- these settings are further explained in the Video Modes section:
 
 ```
 [minimig]
@@ -47,6 +56,31 @@ video_mode_ntsc=8
 video_mode_pal=9
 vsync_adjust=1
 custom_aspect_ratio_1=40:27
+
+[Amiga]
+video_mode_ntsc=8
+video_mode_pal=9
+vsync_adjust=1
+custom_aspect_ratio_1=40:27
+
+[Amiga500]
+video_mode_ntsc=8
+video_mode_pal=9
+vsync_adjust=1
+custom_aspect_ratio_1=40:27
+
+[Amiga500HD]
+video_mode_ntsc=8
+video_mode_pal=9
+vsync_adjust=1
+custom_aspect_ratio_1=40:27
+
+[Amiga600HD]
+video_mode_ntsc=8
+video_mode_pal=9
+vsync_adjust=1
+custom_aspect_ratio_1=40:27
+
 ```
 
 * Reboot your MiSTer, you should now have two entries in the `Computer` section: 
