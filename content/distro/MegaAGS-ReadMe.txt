@@ -4,11 +4,13 @@ MegaAGS creates a highly curated collection of Amiga games and demos, as well as
 
 It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to work with emulators like UAE and on original hardware like an Amiga 1200 or CD32, usually with SD/CF card adapters.
 
-**Features:**
+## Features
 
-* Sophisticated games and demo launcher with screenshots, and can be entirely controlled using gamepads, joysticks or via keyboard.
+* Sophisticated Amiga games and demo launcher with screenshots, can be entirely controlled using gamepads, joysticks or via keyboard.
 
 * Highly curated set of games and demos, no duplication of AGA and ECS versions, with lots of genre and top lists to help you navigate the massive amount of Amiga games available.
+
+* Games are configured to run in their correct mode, games created in Europe use PAL, whereas US-made games run in NTSC for the correct aspect ratio and CPU speed. You can optionally override this in the settings.
 
 * Includes key productions from the legendary Amiga demo scene, including disk magazines sorted chronologically, making it a great companion to explore the demo scene's [UNESCO-nominated] cultural heritage artifacts.
 
@@ -22,7 +24,7 @@ It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to wo
 
 * RTG resolution support for running Workbench in modern resolutions like 1920×1080 and in 16:9 aspect ratios on MiSTer.
 
-* Uses PFS for its file system to avoid accidental corruption on write operations, which the standard FFS file system is very prone to.
+* Uses PFS as its file system to avoid accidental corruption on write operations, which the standard FFS file system is very prone to.
 
 * Includes a dedicated setup to closely mimic a stock Amiga 500 with memory expansion (use with ADF files only) for maximum compatibility with demo scene productions and any troublesome games that rely on cycle accuracy and exact hardware.
 
@@ -31,7 +33,7 @@ It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to wo
 * Includes an optional, dedicated Amiga 600HD setup that gives you a representative feel for how it was to use Workbench 2.x with an Amiga 600 or 3000 and productivity apps around 1991-1992.
 
 
-## Quick Setup
+## Quick Setup for MiSTer
 
 * Copy the contents of the `games` and `config` directories to the corresponding directories on MiSTer.
 
@@ -53,7 +55,7 @@ custom_aspect_ratio_1=40:27
 
 Enjoy!
 
-## Optional Setups
+## Optional Setups for MiSTer
 
 If you used the Amiga back in the day, you may have memories of using an Amiga 500 with a hard disk and Workbench 1.3, or maybe an Amiga 600 or 3000 with Workbench 2.x. We have included dedicated and separate setups for these in the `Extras` folder.
 
