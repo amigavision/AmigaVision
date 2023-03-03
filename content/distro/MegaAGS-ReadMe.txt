@@ -259,6 +259,11 @@ You can of course set your own scanline and shadow mask presets in MiSTer's menu
 
 If you are using resolutions lower than 1080p, 1440p or 1536p, we recommend turning them off, but since most MiSTer users are on 1080p/4K TVs (or analog CRTs), they are on by default.
 
+### I can't get the game started from its title screen! Do I ever need to use "Joystick Swap"?
+
+Unless you are using the "Arcadia Systems" games (see below), no. On the Commodore 64, games sometimes used Port 1 and sometimes Port 2 for controlling games, necessitating this setting; but since the (Commodore) Amiga shipped with a mouse and it was always plugged into port 1, the main controller is pretty much always connected to port 2. 
+
+The MiSTer core will handle these mappings for you, and joystick port configuration is pretty much never the reason you can't start or control a given game. It's way more likely that you have to hit the space bar, F1, or click a mouse button to get the game started. If you're stuck, look up the controls for a given game in an online manual -- which is always a good idea anyway, as there are often additional keyboard or mouse controls needed for a given game for full enjoyment.
 
 ### What's "Arcadia Systems"?
 
