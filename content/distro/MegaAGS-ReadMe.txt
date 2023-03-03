@@ -35,7 +35,7 @@ It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to wo
 
 ## Quick Setup for MiSTer
 
-(If you are updating from a version before 2023, we *highly* recommend setting aside your `games/Amiga/MegaAGS-Saves.hdf` and doing this installation from scratch, as many things have changed)
+(Note: If you are updating from an earlier version (especially before 2023), we *highly* recommend setting aside your `games/Amiga/MegaAGS-Saves.hdf` file and doing this installation from scratch and then adding that file back in, as many things have changed.)
 
 * Copy the contents of the following directories to the corresponding directories in the top level on MiSTer's file system:
 
