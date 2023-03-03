@@ -35,7 +35,7 @@ It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to wo
 
 ## Quick Setup for MiSTer
 
-* Copy the contents of the `games` and `config` directories to the corresponding directories on MiSTer.
+* Copy the contents of the `_Computer`, `config`, `Filters`, `games`, `Presets` and `Shadow_Masks`  directories to the corresponding directories in the top level on MiSTer's file system.
 
 * (If updating to a new version of the main HDF image, *do not* overwrite `games/Amiga/MegaAGS-Saves.hdf`, this runs on a separate HD image to ensure saved game data (and any other files/apps) are carried over when you upgrade.)
 
