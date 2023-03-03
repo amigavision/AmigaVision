@@ -118,9 +118,9 @@ While a keyboard and mouse isn't strictly necessary to play most action games, i
 
 ## Save Files
 
-**IMPORTANT:** For games with save functionality you need to quit the game using the `DEL` key for the save data to be written to "disk", and thus the SD card. You will lose your save games if you don't exit the game after saving!
+**IMPORTANT:** For games with save functionality you **MUST** quit the game using the `DEL` key for the save data to be written to "disk", and thus the SD card. You will lose your save games if you don't exit the game after saving in-game! 
 
-In the `[Options]` menu you can choose between a few alternative quit key options, which, if set, will override the preconfigured key. The active quit key is displayed on the splash screen shown when a game is loading.
+In the `[Options]` menu of the launcher you can choose between a few alternative quit key options, which, if set, will override the preconfigured key. The active quit key is displayed on the splash screen shown when a game is loading.
 
 ## Video Modes
 
@@ -223,7 +223,17 @@ If you want to run additional scripts on startup, MegaAGS looks for a file named
 
 While MegaAGS has been tested for many years, the sheer volume of games and demos makes it all but certain that something has been overlooked somewhere. If you find something that doesn't work or seems like it's running with the wrong settings, or something is missing -- file a bug at https://amiga.vision.
 
-## Arcadia Systems
+## Frequently Asked Questions
+
+### What does the `Minimig` core do now that I have an `Amiga` setup?
+
+We use the `Amiga` and `Amiga 500` MGL files to launch the Minimig core with  dedicated configurations. The Minimig entry isn't used directly anymore, but it will launch (and share files with) the main Amiga setup. Just ignore it or rename it using your own [names.txt] if you want.
+
+This also lets us have the `Amiga 500HD` and `Amiga 600HD` setups with separate hard disk images, shared files, etc.
+
+We find this to be a more usable and cleaner setup, instead of using the core configuration selectors that cannot be named, and lets you have e.g. the Amiga 500 setup easily available on the top level for use with demos and games that do not work on a "modern" Amiga setup.
+
+### What's "Arcadia Systems"?
 
 Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500 based multi-game arcade system. Most titles released for the system have been dumped and are available on the MegaAGS image. The games are not great (to put it kindly), but are an interesting curiosity.
 
@@ -242,3 +252,4 @@ Player 1 uses joystick port 1, while Amiga software universally expect mouse in 
 
 [MiSTer]:https://misterfpga.org
 [UNESCO-nominated]:http://demoscene-the-art-of-coding.net
+[names.txt]:https://github.com/MiSTer-devel/Main_MiSTer/blob/master/names.txt
