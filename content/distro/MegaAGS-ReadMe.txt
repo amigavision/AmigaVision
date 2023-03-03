@@ -18,11 +18,11 @@ Its aim is to balance preserving the historical and current output of the Amiga 
 
 * Close to 2000 per-game hand-tuned 5× zoom with Dynamic Crop settings, ensuring that games and demos make the best use of modern 1080p 16:9 displays without leaving large parts of the screen blank.
 
-* Hand-tuned scan line and shadow mask settings to get you close to that CRT look if you are using it on a modern flat panel display. Of course, the setup  also works with analog output to real CRT displays.
+* Hand-tuned scanline and shadow mask settings to get you close to that original CRT look if you are using it on a modern flat panel display. Of course, the setup also works with analog output to real CRT displays.
 
-* Shared file system volume `MiSTer:` making it trivial to transfer files to the Amiga over WiFi or wired internet, or directly using the SD card.
+* Shared file system support for `MiSTer:` making it trivial to transfer files to the Amiga over WiFi or wired internet, or directly using the SD card.
 
-* Minimalist Workbench setup with support for your own custom set of configurations, games, applications and files using the `Saves:` HD image that will survive upgrades of the main HD image.
+* Minimalist Workbench setup with support for including your own custom set of configurations, games, applications and files using the `Saves:` HD image that will survive upgrades of the main HD image.
 
 * RTG resolution support for running Workbench in modern resolutions like 1920×1080 and in 16:9 aspect ratios on MiSTer.
 
@@ -37,7 +37,7 @@ Its aim is to balance preserving the historical and current output of the Amiga 
 
 ## Quick Setup for MiSTer
 
-(Note: If you are updating from an earlier version (especially before 2023), we *highly* recommend setting aside your `games/Amiga/MegaAGS-Saves.hdf` file and doing this installation from scratch and then adding that file back in, as many things have changed.)
+(Note: If you are updating from an earlier version -- especially before 2023 -- we *highly* recommend setting aside your `games/Amiga/MegaAGS-Saves.hdf` file and doing this installation from scratch and then adding that file back in, as many things have changed.)
 
 * Copy the contents of the following directories to the corresponding directories in the top level on MiSTer's file system:
 
@@ -50,37 +50,37 @@ Presets
 Shadow_Masks
 ```
 
-* Add the following recommended core overrides section to the bottom of your `MiSTer.ini` file in the root of your MiSTer file system -- these settings are further explained in the Video Modes section:
+* Paste the following recommended core settings to the bottom of your `MiSTer.ini` file in the root of your MiSTer file system -- these settings are further explained in the Video Modes section:
 
 ```
 [minimig]
 video_mode_ntsc=8
 video_mode_pal=9
-vsync_adjust=1
+vsync_adjust=1 ; You can set this to 2 if your display can handle it
 custom_aspect_ratio_1=40:27
 
 [Amiga]
 video_mode_ntsc=8
 video_mode_pal=9
-vsync_adjust=1
+vsync_adjust=1 ; You can set this to 2 if your display can handle it
 custom_aspect_ratio_1=40:27
 
 [Amiga500]
 video_mode_ntsc=8
 video_mode_pal=9
-vsync_adjust=1
+vsync_adjust=1 ; You can set this to 2 if your display can handle it
 custom_aspect_ratio_1=40:27
 
 [Amiga500HD]
 video_mode_ntsc=8
 video_mode_pal=9
-vsync_adjust=1
+vsync_adjust=1 ; You can set this to 2 if your display can handle it
 custom_aspect_ratio_1=40:27
 
 [Amiga600HD]
 video_mode_ntsc=8
 video_mode_pal=9
-vsync_adjust=1
+vsync_adjust=1 ; You can set this to 2 if your display can handle it
 custom_aspect_ratio_1=40:27
 
 ```
@@ -98,7 +98,7 @@ custom_aspect_ratio_1=40:27
 If you used the Amiga back in the day, you may have memories of using an Amiga 500 with a hard disk and Workbench 1.3, or maybe an Amiga 600 or 3000 with Workbench 2.x. We have included dedicated and separate setups for these in the `Extras` folder.
 
 * Copy the contents of `Amiga 500 HD Setup` and/or `Amiga 600 HD Setup` to their respective directories on the MiSTer
-* You will now have separate `Amiga 500HD` and/or `Amiga600HD` launch items in the `Computer` section. These are fully configured to support shared drives, PFS, RTC clocks, etc.
+* You will now have separate `Amiga 500HD` and/or `Amiga600HD` launch items in the `Computer` section. These are fully configured to support shared drives, PFS file systems (even on 1.3!), RTC clock, etc.
 
 There are `ReadMe` files that go into more detail about these setups.
 
