@@ -48,7 +48,7 @@ Presets
 Shadow_Masks
 ```
 
-* Add the following recommended core overrides section to `MiSTer.ini` in the root of your MiSTer dile system -- these settings are further explained in the Video Modes section:
+* Add the following recommended core overrides section to `MiSTer.ini` in the root of your MiSTer file system -- these settings are further explained in the Video Modes section:
 
 ```
 [minimig]
