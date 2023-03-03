@@ -14,7 +14,7 @@ It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to wo
 
 * Includes key productions from the legendary Amiga demo scene, including disk magazines sorted chronologically, making it a great companion to explore the demo scene's [UNESCO-nominated] cultural heritage artifacts.
 
-* Close to 2000 per-game hand-tuned 5× zoom with dynamic crop settings, ensuring that they make the best use of modern 1080p 16:9 displays.
+* Close to 2000 per-game hand-tuned 5× zoom with dynamic crop settings, ensuring that games and demos make the best use of modern 1080p 16:9 displays without leaving large parts of the screen blank.
 
 * Hand-tuned scan line and shadow mask settings to get you close to that CRT look if you are using it on a modern flat panel display. Of course, the setup  also works with analog output to real CRT displays.
 
