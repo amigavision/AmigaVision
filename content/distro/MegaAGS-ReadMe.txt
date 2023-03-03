@@ -35,7 +35,7 @@ It is specifically aimed for use with [MiSTer] FPGA devices, but also works in e
 
 * Copy the contents of the `games` and `config` directories to the corresponding directories on MiSTer.
 
-* If updating to a new version of the main HDF image, *do not* overwrite `games/Amiga/MegaAGS-Saves.hdf`, this runs on a separate HD image to ensure saved game data (and any other files/apps) are carried over.
+* (If updating to a new version of the main HDF image, *do not* overwrite `games/Amiga/MegaAGS-Saves.hdf`, this runs on a separate HD image to ensure saved game data (and any other files/apps) are carried over when you upgrade.)
 
 * Add the following recommended core overrides to MiSTer.ini -- these settings are further explained in the Video Modes section:
 
@@ -46,6 +46,12 @@ video_mode_pal=9
 vsync_adjust=1
 custom_aspect_ratio_1=40:27
 ```
+
+* Reboot your MiSTer, you should now have two entries in the `Computer` section: 
+  * `Amiga` for the main MegaAGS setup -- you'll be using this one 99% of the time.
+  * `Amiga 500` for a stock Amiga 500 hardware setup with no hard drive to use with ADF floppy disk images for any troublesome demos or games that don't work with the main setup.
+
+Enjoy!
 
 ## Optional Setups
 
