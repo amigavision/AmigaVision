@@ -211,7 +211,7 @@ From the launcher, you can hit the `ESC` key to exit into Workbench, the AmigaOS
 
 You can explore the world's first multitasking 16-bit computer from 1985 with the addition of a more modern desktop from 1992, AmigaOS 3.
 
-To change from the default 640×200 resolution to something like 1280×720 or 1920×1080 for use with a 16:9 HD display, hold down the right mouse button and select your preferred resolution from the ScreenMode menu. 540p is a nice, usable screen resolution that doubles every pixel on a 1080p 16:9 display.
+To change from the default 640×200 resolution to something like 1280×720 or 1920×1080 for use with a 16:9 HD display, hold down the right mouse button and select your preferred resolution from the ScreenMode menu. 540p is a nice compromise, a very usable screen resolution that doubles every pixel on a modern 1080p/4K 16:9 display.
 
 
 ## Non-working Games
@@ -223,9 +223,17 @@ About 10 games are currently not working due to CPU or graphics chipset features
 
 If you want to run additional scripts on startup, MegaAGS looks for a file named `Saves:custom-startup` and runs it, so if you need to run scripts that will survive upgrades of the main image, this is where to put them.
 
+As an example, here's what you would add to `Saves:custom-startup` if you wanted to make changes to screen resolution, colors, pointers or any other Workbench setting copied from `ENV:Sys/` (which is where Workbench settings are stored temporarily) to `Saves:Custom/Prefs-Env/` before rebooting:
+
+```
+copy >NIL: Saves:Custom/Prefs-Env ENV:Sys/
+```
+
+This will take the setting you copied to `Saves:Custom/Prefs-Env` and put them in RAM: when booting the image, so you can keep your own settings even when replacing the `MegaAGS.hdf` file with a future version. You can also install new apps/games to Saves: and add `Assign` statements etc to the `Saves:` drive, or do anything else you want to keep permanent after upgrading.
+
 ## Found Bugs? Want to Request a New Feature?
 
-While MegaAGS has been tested for many years, the sheer volume of games and demos makes it all but certain that something has been overlooked somewhere. If you find something that doesn't work or seems like it's running with the wrong settings, or something is missing -- file a bug in the issue tracker at https://amiga.vision.
+While MegaAGS has been tested for many years, the sheer volume of games and demos makes it all but certain that something has been overlooked somewhere. If you find something that doesn't work or seems like it's running with the wrong settings, or something is missing -- tell us about it in the issue tracker at https://amiga.vision.
 
 ## Frequently Asked Questions
 
