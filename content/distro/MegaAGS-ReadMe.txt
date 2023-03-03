@@ -2,7 +2,7 @@
 
 MegaAGS creates a highly curated collection of Amiga games and demos, as well as a minimal Workbench setup with useful utilities and apps.
 
-It is specifically aimed for use with [MiSTer] FPGA devices, but also works in emulators like UAE and on original hardware like Amiga 1200 or CD32 with SD/CF card adapters.
+It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to work with emulators like UAE and on original hardware like an Amiga 1200 or CD32, usually with SD/CF card adapters.
 
 **Features:**
 
@@ -107,17 +107,17 @@ Next, let's talk about Pixel Aspect Ratio (PAR). Most Amiga graphics were drawn 
 5×NTSC     40:27 or Original depending on title
 ```
 
-Generally, if you leave it on the default setting (40:27), most Amiga games will appear in the correct aspect ratio.
+Generally, if you leave it on the default setting (40:27), most popular Amiga games will appear in the correct aspect ratio.
 
 Again, make sure to add the Minimig core overrides in MiSTer.ini as specified in the setup section to enjoy the best HDMI output possible, and make sure you have set MiSTer to output in 1080p resolution.
 
 ## CPU performance notes
 
-The D-Cache option is essentially a turbo switch for the CPU, making it perform on par with a Motorola 68030 at 50MHz in many benchmarks. Unfortunately, running with it enabled introduces lots of subtle glitches in many (mostly older) games and demos, so it's recommended is to leave it off as default.
+The D-Cache option is essentially a turbo switch for the CPU, making it perform on par with an accelerated Amiga with a Motorola 68030 CPU at 50MHz in many benchmarks. Unfortunately, running with it enabled introduces lots of subtle glitches in many (mostly older) games and demos, so it's recommended is to leave it *OFF* by default.
 
-On the other hand some titles, mostly 3D polygon games and demos, will benefit greatly from the CPU boost D-Cache offers. So it's an option worth experimenting with on a case by case basis.
+On the other hand, some titles -- mostly 3D polygon games and demos -- will benefit greatly from the CPU boost D-Cache offers. So it's an option worth experimenting with on a case by case basis.
 
-Note that the glitches introduced with D-Cache on can sometimes clear up by turning it off while Minimig is running. Other times they seem to stick until reboot. The latter behavior is the case with, for example, Turrican II and Grand Monster Slam (and many less significant titles).
+Note that the glitches introduced with D-Cache on can sometimes clear up by turning it off while the Amiga core is running. Other times they seem to stick until reboot. The latter behavior is the case with, for example, Turrican II and Grand Monster Slam (and many less significant titles).
 
 The CPU D-Cache option is available in `OSD -> System`.
 
