@@ -91,6 +91,8 @@ custom_aspect_ratio_1=40:27
 
 ## Optional Setups for MiSTer
 
+(You can probably skip this section if you were not an Amiga user back in the day or unless you have a special interest in computing history :)
+
 If you used the Amiga back in the day, you may have memories of using an Amiga 500 with a hard disk and Workbench 1.3, or maybe an Amiga 600 or 3000 with Workbench 2.x. We have included dedicated and separate setups for these in the `Extras` folder.
 
 * Copy the contents of `Amiga 500 HD Setup` and/or `Amiga 600 HD Setup` to their respective directories on the MiSTer
