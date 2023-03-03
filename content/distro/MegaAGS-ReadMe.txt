@@ -6,7 +6,7 @@ It is specifically aimed for use with [MiSTer] FPGA devices, but also works in e
 
 **Features:**
 
-* Sophisticated games and demo launcher with screenshots that can be entirely controlled using gamepads, joysticks or via keyboard.
+* Sophisticated games and demo launcher with screenshots, and can be entirely controlled using gamepads, joysticks or via keyboard.
 
 * Highly curated set of games and demos, no duplication of AGA and ECS versions, with lots of genre and top lists to help you navigate the massive amount of Amiga games available.
 
@@ -23,6 +23,13 @@ It is specifically aimed for use with [MiSTer] FPGA devices, but also works in e
 * RTG resolution support for running Workbench in modern resolutions like 1920×1080 and in 16:9 aspect ratios on MiSTer.
 
 * Uses PFS for its file system to avoid accidental corruption on write operations, which the standard FFS file system is very prone to.
+
+* Includes a dedicated setup to closely mimic a stock Amiga 500 with memory expansion (use with ADF files only) for maximum compatibility with demo scene productions and any troublesome games that rely on cycle accuracy and exact hardware.
+
+* Includes an optional, dedicated Amiga 500HD setup that gives you a representative feel for how it was to use Workbench 1.3 with a hard disk and productivity apps around 1989.
+
+* Includes an optional, dedicated Amiga 600HD setup that gives you a representative feel for how it was to use Workbench 2.x with an Amiga 600 or 3000 around 1991-1992.
+
 
 ## Quick Setup
 
@@ -87,9 +94,9 @@ If you prefer to configure the main settings manually instead of using the inclu
 
 ## Video Modes
 
-First, the optimal `vsync_adjust` setting will depend on your HDMI display. A setting of 2 ensures the lowest possible latency, but it may come at the cost of a short period of no video or audio on video mode changes - something Amiga games and demos do a lot. Setting vsync_adjust to 1 introduces a buffer that will smooth over most of these changes, although it will add a frame of lag.
+The optimal `vsync_adjust` setting in `MiSTer.ini` will depend on your HDMI display. A setting of `2` ensures the lowest possible latency, but it may come at the cost of a short period of no video or audio on video mode changes - something Amiga games and demos do a lot. Setting `vsync_adjust` to `1` introduces a buffer that will smooth over most of these changes, although it will add a frame of lag.
 
-A unique feature of the Amiga/Minimig core on MiSTer is arbitrary viewport cropping. By default the full overscan area will be fed to the HDMI scaler, resulting in huge borders for most content. But fear not! MegaAGS leverages the `vadjust` feature of the core to dynamically apply viewport settings on a per-game basis. This depends on MiSTer's "shared folder" functionality, which is enabled in MegaAGS if the "games/Amiga/shared" directory exists. So, make sure you copied all the archive contents as described in the Setup section.
+A unique feature of the Amiga/Minimig core on MiSTer is the ability to do viewport cropping. By default the full overscan area will be fed to the HDMI scaler, resulting in huge borders for most content. But fear not! MegaAGS leverages the `vadjust` feature of the core to dynamically apply viewport settings on a per-game basis. This depends on MiSTer's "shared folder" functionality, which is enabled in MegaAGS if the "games/Amiga/shared" directory exists. So, make sure you copied all the archive contents as described in the Setup section.
 
 Also note that the dynamic cropping *only* applies if you are using 1080p output. Most Amiga games fit on the screen using 5× zoom in this resolution. Any other resolution or analog output is *not* affected by dynamic viewport cropping.
 
@@ -163,6 +170,9 @@ About 10 games are currently not working due to CPU features not yet implemented
 
 If you want to run additional scripts on startup, MegaAGS looks for a file named `Saves:custom-startup` and runs it, so if you need to run scripts that will survive upgrades of the main image, this is where to put them.
 
+## Found a bug? Requesting a new feature?
+
+While MegaAGS has been tested for many years, the sheer volume of games and demos makes it all but certain that something has been overlooked somewhere. If you find something that doesn't work or seems like it's running with the wrong settings, or something is missing -- file a bug at https://amiga.vision.
 
 ## Arcadia Systems
 
