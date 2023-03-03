@@ -233,6 +233,15 @@ This also lets us have the `Amiga 500HD` and `Amiga 600HD` setups with separate 
 
 We find this to be a more usable and cleaner setup, instead of using the core configuration selectors that cannot be named, and lets you have e.g. the Amiga 500 setup easily available on the top level for use with demos and games that do not work on a "modern" Amiga setup.
 
+### Why do you have Scanline and Shadow Mask presets by default?
+
+The Amiga was used with RGB-based CRTs or consumer TVs, and graphics do not look correct without them. We have included a set of scanline and shadow mask setups for use with MiSTer to more accurately represent the graphics output of the system that we highly recommend.
+
+Thus, the default setup is configured for this to make sure the most people see the most representative setup. Since configuring this can be intimidating to new users, we chose to have a default that we think best represents the Amiga's original look.
+
+You can of course set your own scanline and shadow mask presets in MiSTer's menus and save those configurations if you don't want to use them. 
+
+
 ### What's "Arcadia Systems"?
 
 Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500 based multi-game arcade system. Most titles released for the system have been dumped and are available on the MegaAGS image. The games are not great (to put it kindly), but are an interesting curiosity.
