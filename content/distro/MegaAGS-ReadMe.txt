@@ -8,13 +8,13 @@ It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to wo
 
 * Sophisticated and performant Amiga games and demo launcher with screenshots included, can be entirely controlled using gamepads, joysticks or via keyboard.
 
-* Highly curated and tested set of games and demos, no duplication of AGA and ECS versions, with lots of genre and top lists to help you navigate the massive amount of Amiga games available.
+* Highly curated and tested settings for games and demos, no duplication of AGA and ECS versions, with lots of genre and top lists to help you navigate the massive amount of Amiga games available.
 
-* Games are configured to run in their correct mode, games created in Europe use PAL, whereas US-made games run in NTSC for the correct aspect ratio and CPU speed. You can optionally override this in the settings.
+* Games are configured to run in their correct mode, games created in Europe use PAL with 5× Dynamic Crop where appropriate, whereas US-made games run in NTSC for the correct aspect ratio and CPU speed. You can optionally override this in the settings.
 
 * Includes key productions from the legendary Amiga demo scene, including disk magazines sorted chronologically, making it a great companion to explore the demo scene's [UNESCO-nominated] cultural heritage artifacts.
 
-* Close to 2000 per-game hand-tuned 5× zoom with dynamic crop settings, ensuring that games and demos make the best use of modern 1080p 16:9 displays without leaving large parts of the screen blank.
+* Close to 2000 per-game hand-tuned 5× zoom with Dynamic Crop settings, ensuring that games and demos make the best use of modern 1080p 16:9 displays without leaving large parts of the screen blank.
 
 * Hand-tuned scan line and shadow mask settings to get you close to that CRT look if you are using it on a modern flat panel display. Of course, the setup  also works with analog output to real CRT displays.
 
