@@ -48,6 +48,7 @@ Filters
 games
 Presets
 Shadow_Masks
+
 ```
 
 * Paste the following recommended core settings to the bottom of your `MiSTer.ini` file in the root of your MiSTer file system -- these settings are further explained in the Video Modes section:
@@ -145,6 +146,7 @@ Next, let's talk about Pixel Aspect Ratio (PAR). Most Amiga graphics were drawn 
 5×PAL      40:27
 5×PAL60    40:27
 5×NTSC     40:27 or Original depending on title
+
 ```
 
 Generally, if you leave it on the default setting (40:27), most popular Amiga games will appear in the correct aspect ratio.
@@ -168,41 +170,42 @@ The CPU D-Cache option is available in `OSD -> System`.
 For reference, if you prefer to configure the main settings manually instead of using the included config files, these are the recommended settings used:
 
 ```
-  df0: no disk
-  df1: no disk
-  Joystick Swap: OFF
-  Drives:
-    A600/A1200 IDE: On
-    Fast-IDE (68020): On
-    Primary Master: Fixed/HDD
-                    games/Amiga/MegaAGS.hdf
-    Primary Slave: Fixed/HDD
-                    games/Amiga/MegaAGS-Saves.hdf
-    Secondary Master: Disabled
-    Secondary Slave: Disabled
-    Floppy Disk Turbo: Off
-  System:
-    CPU: 68020
-    D-Cache: OFF
-    Chipset: AGA
-    ChipRAM: 2M
-    FastRAM: 384M
-    SlowRAM: none
-    Joystick: CD32
-    ROM: games/Amiga/MegaAGS-Kickstart.rom
-    HRTmon: disabled
-  Audio & Video:
-    TV Standard: PAL
-    Scandoubler FX: Off
-    Video area by: Blank
-    Aspect ratio: 40:27
-    Pixel Clock: Adaptive
-    Scaling: Normal
-    RTG Upscaling: Normal
-    Stereo mix: 50%
-    Audio Filter: Auto(LED)
-    Model: A500
-    Paula Output: PWM
+df0: no disk
+df1: no disk
+Joystick Swap: OFF
+Drives:
+  A600/A1200 IDE: On
+  Fast-IDE (68020): On
+  Primary Master: Fixed/HDD
+                  games/Amiga/MegaAGS.hdf
+  Primary Slave: Fixed/HDD
+                  games/Amiga/MegaAGS-Saves.hdf
+  Secondary Master: Disabled
+  Secondary Slave: Disabled
+  Floppy Disk Turbo: Off
+System:
+  CPU: 68020
+  D-Cache: OFF
+  Chipset: AGA
+  ChipRAM: 2M
+  FastRAM: 384M
+  SlowRAM: none
+  Joystick: CD32
+  ROM: games/Amiga/MegaAGS-Kickstart.rom
+  HRTmon: disabled
+Audio & Video:
+  TV Standard: PAL
+  Scandoubler FX: Off
+  Video area by: Blank
+  Aspect ratio: 40:27
+  Pixel Clock: Adaptive
+  Scaling: Normal
+  RTG Upscaling: Normal
+  Stereo mix: 50%
+  Audio Filter: Auto(LED)
+  Model: A500
+  Paula Output: PWM
+
 ```
 
 ## Workbench
@@ -227,6 +230,7 @@ As an example, here's what you would add to `Saves:custom-startup` if you wanted
 
 ```
 copy >NIL: Saves:Custom/Prefs-Env ENV:Sys/
+
 ```
 
 This will take the setting you copied to `Saves:Custom/Prefs-Env` and put them in RAM: when booting the image, so you can keep your own settings even when replacing the `MegaAGS.hdf` file with a future version. You can also install new apps/games to Saves: and add `Assign` statements etc to the `Saves:` drive, or do anything else you want to keep permanent after upgrading.
@@ -268,6 +272,7 @@ P2 Start:    F2
 Left Coin:   F3
 Right Coin:  F4
 Config:      F5
+
 ```
 
 Player 1 uses joystick port 1, while Amiga software universally expect mouse in port 1 and joystick in port 2. If using only one joystick, enable the "Joy Swap" option in the Chipset menu to route the first MiSTer joypad to port 1. It's also worth noting that all Arcadia games make use of a 2-button joystick.
