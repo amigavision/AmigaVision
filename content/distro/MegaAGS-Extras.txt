@@ -8,9 +8,9 @@ The Amiga was used with RGB-based CRTs or consumer TVs, and graphics do not look
 
 **Setup:**
 
-* Copy the contents of `filters/` to the identically named directory in the root of the MiSTer file system
-* Copy the contents of `presets/` to the identically named directory in the root of the MiSTer file system
-* Copy the contents of `shadow_masks/` to the identically named directory in the root of the MiSTer file system
+* Copy the contents of `Filters/` to the identically named directory in the root of the MiSTer file system
+* Copy the contents of `Presets/` to the identically named directory in the root of the MiSTer file system
+* Copy the contents of `Shadow_Masks/` to the identically named directory in the root of the MiSTer file system
 * Start the Amiga core, select `MegaAGS` from the scan line / shadow mask presets
 
 ## Amiga 500HD Setup
