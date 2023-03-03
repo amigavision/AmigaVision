@@ -87,7 +87,7 @@ custom_aspect_ratio_1=40:27
   * `Amiga` for the main MegaAGS setup -- you'll be using this one 99% of the time.
   * `Amiga 500` for a stock Amiga 500 hardware setup with no hard drive to use with ADF floppy disk images for any troublesome demos or games that don't work with the main setup.
 
-Enjoy!
+* Launch `Amiga` and enjoy! Don't forget to check out the sections below on controller mapping and video modes once it's up and running.
 
 ## Optional Setups for MiSTer
 
