@@ -126,7 +126,7 @@ In the `[Options]` menu of the launcher you can choose between a few alternative
 
 ## Video Modes
 
-The optimal `vsync_adjust` setting in `MiSTer.ini` will depend on your HDMI display. A setting of `2` ensures the lowest possible latency, but it may come at the cost of a short period of no video or audio on video mode changes - something Amiga games and demos do a lot. Setting `vsync_adjust` to `1` introduces a buffer that will smooth over most of these changes, although it will add a frame of lag.
+The optimal `vsync_adjust` setting in `MiSTer.ini` will depend on your HDMI display. A setting of `2` ensures the lowest possible latency, but it may come at the cost of a short period of no video or audio on video mode changes -- something Amiga games and demos do a lot. Setting `vsync_adjust` to `1` introduces a buffer that will smooth over most of these changes, although it will add a frame of latency.
 
 A unique feature of the Amiga/Minimig core on MiSTer is the ability to do viewport cropping. By default the full overscan area will be fed to the HDMI scaler, resulting in huge borders for most content. But fear not! MegaAGS leverages the `vadjust` feature of the core to dynamically apply viewport settings on a per-game basis. This depends on MiSTer's "shared folder" functionality, which is enabled in MegaAGS if the "games/Amiga/shared" directory exists. So, make sure you copied all the archive contents as described in the Setup section.
 
@@ -214,7 +214,7 @@ To change from the default 640×200 resolution to something like 1280×720 or 19
 
 ## Non-working Games
 
-About 10 games are currently not working due to CPU features not yet implemented in the Minimig core. Over the past year compatibility has improved a lot, and that trend is likely to continue. A few more titles do not work, or are very glitchy, due to other inaccuracies. This will also hopefully improve over time.
+About 10 games are currently not working due to CPU or graphics chipset features not yet implemented in MiSTer's Minimig core. Over the past years compatibility has improved a lot, and that trend is likely to continue. A few titles do not work, or are very glitchy, due to other inaccuracies. This will also hopefully improve over time. The launcher will specify when a game is known not to work in the `Notes` section of a given game.
 
 
 ## Custom Scripts
