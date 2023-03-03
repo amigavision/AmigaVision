@@ -1,16 +1,18 @@
 # MegaAGS Amiga Setup
 
-MegaAGS creates a highly curated collection of Amiga games and demos, as well as a minimal Workbench setup with useful utilities and apps.
+MegaAGS creates a carefully curated collection of Amiga games and demos, as well as a minimal Workbench setup with useful utilities and apps, and wraps it all in a user-friendly launcher.
 
 It has many features specifically for use with [MiSTer] FPGA devices, but also aims to work with emulators like UAE and on original AGA-compatible hardware like an Amiga 1200/4000 or CD32, usually with SD/CF card adapters.
 
+Its aim is to balance preserving the historical and current output of the Amiga games and demo scene as accurately as possible, while still being easy to use for people new to the Amiga computer.
+
 ## Features
 
-* Sophisticated and performant Amiga games and demo launcher with screenshots included, can be entirely controlled using gamepads, joysticks or via keyboard.
+* Sophisticated and performant Amiga games and demo launcher with screenshots included, can be entirely controlled using gamepads, joysticks or via keyboard. This lets you quickly and easily experience the best of what the system has to offer.
 
-* Highly curated and tested settings for games and demos, no duplication of AGA and ECS versions, with lots of genre and top lists to help you navigate the massive amount of Amiga games available.
+* Carefully curated and well-tested settings for games and demos, no duplication of AGA and ECS versions, with lots of genre and top lists to help you navigate the massive amount of Amiga games available.
 
-* Games are configured to run in their correct mode, games created in Europe use PAL with 5× Dynamic Crop where appropriate, whereas US-made games run in NTSC for the correct aspect ratio and CPU speed. You can optionally override this in the settings.
+* Games are configured to run in their correct modes, games created in Europe use PAL with 5× Dynamic Crop where appropriate, whereas US-made games run in NTSC for the correct aspect ratio and CPU speed. You can optionally override this in the settings.
 
 * Includes key productions from the legendary Amiga demo scene, including disk magazines sorted chronologically, making it a great companion to explore the demo scene's [UNESCO-nominated] cultural heritage artifacts.
 
@@ -18,9 +20,9 @@ It has many features specifically for use with [MiSTer] FPGA devices, but also a
 
 * Hand-tuned scan line and shadow mask settings to get you close to that CRT look if you are using it on a modern flat panel display. Of course, the setup  also works with analog output to real CRT displays.
 
-* Shared file system volume `MiSTer:` making it trivial to transfer files to the Amiga over WiFi or wired internet, or directly on an SD card.
+* Shared file system volume `MiSTer:` making it trivial to transfer files to the Amiga over WiFi or wired internet, or directly using the SD card.
 
-* Minimalist Workbench setup with support for including your own custom set of configurations, games, applications and files using the `Saves:` HD image that will survive upgrades of the main HD image.
+* Minimalist Workbench setup with support for your own custom set of configurations, games, applications and files using the `Saves:` HD image that will survive upgrades of the main HD image.
 
 * RTG resolution support for running Workbench in modern resolutions like 1920×1080 and in 16:9 aspect ratios on MiSTer.
 
