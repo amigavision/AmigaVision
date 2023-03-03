@@ -46,7 +46,7 @@ Presets
 Shadow_Masks
 ```
 
-(If updating to a new version of the main HDF image, *do not* overwrite `games/Amiga/MegaAGS-Saves.hdf`, this runs on a separate HD image to ensure saved game data (and any other files/apps) are carried over when you upgrade.)
+(If updating to a new version of the main `MegaAGS.hdf` image, *do not* overwrite `games/Amiga/MegaAGS-Saves.hdf`, this runs on a separate HD image to ensure saved game data (and any other files/apps) are carried over when you upgrade.)
 
 * Add the following recommended core overrides section to `MiSTer.ini` in the root of your MiSTer dile system -- these settings are further explained in the Video Modes section:
 
@@ -100,7 +100,7 @@ There are `ReadMe` files that go into more detail about these setups.
 
 These are *not* meant to be used for games or demos, but instead for giving you a basic setup that lets you run productivity apps like you did back in the day. For games and demos, we recommend the `Amiga` (main MegaAGS setup) and `Amiga 500` (for use with ADF files) instead.
 
-## Gamepad/joystick mapping for MiSTer
+## Gamepad/Joystick Mapping for MiSTer
 
 While many games supports two or more buttons, Amiga games were generally designed for one button joysticks. Consequently "up to jump" (or accelerate) control scheme is very common. If you are using a gamepad, you might want to use MiSTer's controller mapping to bind the up direction to both the D-pad and an extra button. Here's how:
 
@@ -147,7 +147,7 @@ Generally, if you leave it on the default setting (40:27), most popular Amiga ga
 
 Again, make sure to add the Minimig core overrides in MiSTer.ini as specified in the setup section to enjoy the best HDMI output possible, and make sure you have set MiSTer to output in 1080p resolution.
 
-## CPU performance notes
+## CPU Performance Notes
 
 The D-Cache option is essentially a turbo switch for the CPU, making it perform on par with an accelerated Amiga with a Motorola 68030 CPU at 50MHz in many benchmarks. Unfortunately, running with it enabled introduces lots of subtle glitches in many (mostly older) games and demos, so it's recommended is to leave it *OFF* by default.
 
@@ -210,16 +210,16 @@ You can explore the world's first multitasking 16-bit computer from 1985 with th
 To change from the default 640×200 resolution to something like 1280×720 or 1920×1080 for use with a 16:9 HD display, hold down the right mouse button and select your preferred resolution from the ScreenMode menu. 540p is a nice, usable screen resolution that doubles every pixel on a 1080p 16:9 display.
 
 
-## Non-working games
+## Non-working Games
 
 About 10 games are currently not working due to CPU features not yet implemented in the Minimig core. Over the past year compatibility has improved a lot, and that trend is likely to continue. A few more titles do not work, or are very glitchy, due to other inaccuracies. This will also hopefully improve over time.
 
 
-## Custom scripts
+## Custom Scripts
 
 If you want to run additional scripts on startup, MegaAGS looks for a file named `Saves:custom-startup` and runs it, so if you need to run scripts that will survive upgrades of the main image, this is where to put them.
 
-## Found a bug? Requesting a new feature?
+## Found Bugs? Request a New Feature?
 
 While MegaAGS has been tested for many years, the sheer volume of games and demos makes it all but certain that something has been overlooked somewhere. If you find something that doesn't work or seems like it's running with the wrong settings, or something is missing -- file a bug at https://amiga.vision.
 
