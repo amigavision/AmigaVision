@@ -2,13 +2,13 @@
 
 MegaAGS creates a highly curated collection of Amiga games and demos, as well as a minimal Workbench setup with useful utilities and apps.
 
-It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to work with emulators like UAE and on original hardware like an Amiga 1200 or CD32, usually with SD/CF card adapters.
+It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to work with emulators like UAE and on original AGA-compatible hardware like an Amiga 1200/4000 or CD32, usually with SD/CF card adapters.
 
 ## Features
 
-* Sophisticated Amiga games and demo launcher with screenshots, can be entirely controlled using gamepads, joysticks or via keyboard.
+* Sophisticated and performant Amiga games and demo launcher with screenshots included, can be entirely controlled using gamepads, joysticks or via keyboard.
 
-* Highly curated set of games and demos, no duplication of AGA and ECS versions, with lots of genre and top lists to help you navigate the massive amount of Amiga games available.
+* Highly curated and tested set of games and demos, no duplication of AGA and ECS versions, with lots of genre and top lists to help you navigate the massive amount of Amiga games available.
 
 * Games are configured to run in their correct mode, games created in Europe use PAL, whereas US-made games run in NTSC for the correct aspect ratio and CPU speed. You can optionally override this in the settings.
 
