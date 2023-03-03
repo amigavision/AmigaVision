@@ -28,7 +28,7 @@ It is specifically aimed for use with [MiSTer] FPGA devices, but also works in e
 
 * Includes an optional, dedicated Amiga 500HD setup that gives you a representative feel for how it was to use Workbench 1.3 with a hard disk and productivity apps around 1989.
 
-* Includes an optional, dedicated Amiga 600HD setup that gives you a representative feel for how it was to use Workbench 2.x with an Amiga 600 or 3000 around 1991-1992.
+* Includes an optional, dedicated Amiga 600HD setup that gives you a representative feel for how it was to use Workbench 2.x with an Amiga 600 or 3000 and productivity apps around 1991-1992.
 
 
 ## Quick Setup
@@ -47,7 +47,18 @@ vsync_adjust=1
 custom_aspect_ratio_1=40:27
 ```
 
-## Manual configuration
+## Optional Setups
+
+If you used the Amiga back in the day, you may have memories of using an Amiga 500 with a hard disk and Workbench 1.3, or maybe an Amiga 600 or 3000 with Workbench 2.x. We have included dedicated and separate setups for these in the `Extras` folder.
+
+* Copy the contents of `Amiga 500 HD Setup` and/or `Amiga 600 HD Setup` to their respective directories on the MiSTer
+* You will now have separate `Amiga 500HD` and/or `Amiga600HD` launch items in the `Computer` section. These are fully configured to support shared drives, PFS, RTC clocks, etc.
+
+There are `ReadMe` files that go into more detail about these setups.
+
+These are *not* meant to be used for games or demos, but instead for giving you a basic setup that lets you run productivity apps like you did back in the day. For games and demos, we recommend the `Amiga` (main MegaAGS setup) and `Amiga 500` (for use with ADF files) instead.
+
+## Manual Configuration
 
 (You can skip this section if you followed the instructions above)
 
