@@ -2,7 +2,7 @@
 
 MegaAGS creates a highly curated collection of Amiga games and demos, as well as a minimal Workbench setup with useful utilities and apps.
 
-It is specifically aimed for use with [MiSTer] FPGA devices, but also aims to work with emulators like UAE and on original AGA-compatible hardware like an Amiga 1200/4000 or CD32, usually with SD/CF card adapters.
+It has many features specifically for use with [MiSTer] FPGA devices, but also aims to work with emulators like UAE and on original AGA-compatible hardware like an Amiga 1200/4000 or CD32, usually with SD/CF card adapters.
 
 ## Features
 
