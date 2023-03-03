@@ -62,7 +62,7 @@ These are *not* meant to be used for games or demos, but instead for giving you 
 
 (You can skip this section if you followed the instructions above)
 
-If you prefer to configure the main settings manually instead of using the included config files, these are recommended settings used in the bundled minimig.cfg:
+If you prefer to configure the main settings manually instead of using the included config files, these are recommended settings used:
 
 ```
   df0: no disk
@@ -101,7 +101,6 @@ If you prefer to configure the main settings manually instead of using the inclu
     Model: A500
     Paula Output: PWM
 ```
-
 
 ## Video Modes
 
