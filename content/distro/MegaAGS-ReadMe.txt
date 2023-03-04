@@ -155,7 +155,7 @@ Again, make sure to add the Minimig core overrides in MiSTer.ini as specified in
 
 ## CPU Performance Notes
 
-The D-Cache option is essentially a turbo switch for the CPU, making it perform on par with an accelerated Amiga with a Motorola 68030 CPU at 50MHz in many benchmarks. Unfortunately, running with it enabled introduces lots of subtle glitches in many (mostly older) games and demos, so it's recommended is to leave it *OFF* by default.
+The D-Cache option in MiSTer's Amiga core is essentially a turbo switch for the CPU, making it perform on par with an accelerated Amiga with a Motorola 68030 CPU at 50MHz in many benchmarks. Unfortunately, running with it enabled introduces lots of subtle glitches in many (mostly older) games and demos, so it's recommended is to leave it *OFF* by default.
 
 The CPU D-Cache option is available in the `OSD` under the `System` menu.
 
@@ -192,7 +192,7 @@ System:
   FastRAM: 384M
   SlowRAM: none
   Joystick: CD32
-  ROM: games/Amiga/MegaAGS-Kickstart.rom (or whatever your 3.1.x ROM is called)
+  ROM: games/Amiga/MegaAGS-Kickstart.rom (or whatever your 3.1 ROM is called)
   HRTmon: disabled
 Audio & Video:
   TV Standard: PAL
@@ -242,11 +242,11 @@ While MegaAGS has been tested for many years, the sheer volume of games and demo
 
 ## Frequently Asked Questions
 
-### What does the `Minimig` core do now that I have an `Amiga` setup?
+### What does the `Minimig` entry do now that I have an `Amiga` setup?
 
 We use the `Amiga` and `Amiga 500` MGL files to launch the Minimig core with  dedicated configurations. The Minimig entry isn't used directly anymore, but it will launch (and share files with) the main `Amiga` setup. Just ignore the Minimig entry or rename it using your own [names.txt] if you want.
 
-This also lets us have the `Amiga 500HD` and `Amiga 600HD` setups with separate hard disk images, shared files, etc.
+This also lets us have the `Amiga 500HD` and `Amiga 600HD` setups with separate hard disk images, shared files directory, etc.
 
 We find this to be a more usable and cleaner setup, instead of using the core configuration selectors that cannot be named, and lets you have e.g. the Amiga 500 setup easily available on the top level for use with demos and games that do not work on a "modern" Amiga HD-based setup.
 
