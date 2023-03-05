@@ -4,7 +4,7 @@
 
 ## 2023.03.03
 
-* Content: Up to date with whdload.de as of 2022.11.11
+* Content: Up to date with [WHDLoad] as of 2022.11.11
 * Content: Lots of new disk magazines and demos
 * Menu: significantly faster load times when entering lists
 * Menu: Jump-to-letter using keyboard
@@ -36,3 +36,5 @@
 ## 2022.XX.XX
 
 * Introduced per-game 5×PAL dynamic crop for 1200+ games
+
+[WHDLoad]:http://whdload.de/news.html
