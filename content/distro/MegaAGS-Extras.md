@@ -67,5 +67,3 @@ We have included several larger sizes of pre-formatted PFS `MegaAGS-Saves.hdf` f
 The main MegaAGS image will check for `Saves:custom-startup` and execute that when found. This lets you e.g. copy any custom settings to `ENV:` as part of the startup, so you can have your own Workbench, Directory Opus and custom application installs on a separate hard drive that survives upgrades to the main MegaAGS image.
 
 Note that these are contained in a 7zip archive file to make sure they don't take any additional space in the main archive. Only unpack these if you intend to use them, as they will take up several gigabytes of storage if you do.
-
-Pick the 
