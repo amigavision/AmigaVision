@@ -1,5 +1,7 @@
 # AGSImager
 
+Amiga HDF image builder using WHDL or custom installs, using the [Arcade Game Selector] launcher as a front-end.
+
 ## Dependencies
 - python@3.9
 - [pipenv](https://pipenv.readthedocs.io)
@@ -39,4 +41,5 @@ Common usage is covered by makefile "shortcuts":
   - Create scaled IFF images from arbitrary PNG files placed in `screenshots` 
 - `make sqlite`
   - Create SQLite database from `data/db/titles.csv` (for easier viewing and editing)
- 
+
+[Arcade Game Selector]:https://github.com/MagerValp/ArcadeGameSelector
