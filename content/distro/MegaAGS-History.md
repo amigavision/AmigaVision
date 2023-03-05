@@ -8,19 +8,20 @@
 * Content: Lots of new disk magazines and demos
 * Menu: significantly faster load times when entering lists
 * Menu: Jump-to-letter using keyboard
-* Menu: Go to parent list using secondary/blue/B button from a gamepad/joystick
+* Menu: Go to parent list using secondary/blue/B button from a gamepad/joystick (you can enable the old behaviour with an explicit "Back" entry in `Options`)
 * Menu: Support for chronological sorting (not dynamic, but pre-set in certain lists like "Disk magazines, by release date")
+* Menu: Natural sorting: the launcher will now sort e.g. Turrican, Turrican II, Turrican 3 in that order instead of a straight ASCII sort
 * Menu: New "look and feel"
 * Misc: Super Attract Mode integration
-* Misc: Added MegaAGS-Extras archive with alternative MGL based configs and video settings
-* Natural sorting: the launcher will now sort e.g. Turrican, Turrican II, Turrican 3 in that order instead of a straight ASCII sort
+* Misc: Added `MegaAGS-Extras` archive with alternative MGL based configs and video settings
 
 ## 2022.06.06
 
 * Experimental MiST & CD32 hardware compatibility
 * Joystick/gamepad support for selecting game options from WHDLoad dialog
 * Eurochart #1-48 disk magazines added
-* More (and fixed) 5×PAL settings, WHDLoad game updates
+* Additional (and updated/fixed) 5×PAL settings
+* [WHDLoad] updates
 
 ## 2022.03.03
 
