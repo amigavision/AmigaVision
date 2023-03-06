@@ -195,6 +195,15 @@ This will take the setting you copied to `Saves:Custom/Prefs-Env` and put them i
 
 While MegaAGS has been tested for many years, the sheer volume of games and demos makes it all but certain that something has been overlooked somewhere. If you find something that doesn't work or seems like it's running with the wrong settings, or something is missing -- tell us about it in the issue tracker at https://amiga.vision.
 
+## Credits
+
+* [David Lindecrantz] -- Creator, main developer
+* [Alex Limi] -- Contributor, developer
+* [Per Olofsson] -- Creator of [AGS], the launcher software
+* [Ben Squibb] -- Improvements to AGS to enable hi-res launcher with thumbnail cycling + IFF conversion of hi-res thumbnails
+* LamerDeluxe — MT-32 support
+* [Frode Solheim] -- Creator of OpenRetro.org, thumbnails used with kind permission
+
 ## Frequently Asked Questions
 
 ### What does the `Minimig` entry do now that I have an `Amiga` setup?
@@ -285,3 +294,10 @@ Audio & Video:
 [UNESCO-nominated]:http://demoscene-the-art-of-coding.net
 [names.txt]:https://github.com/MiSTer-devel/Main_MiSTer/blob/master/names.txt
 [Demo scene]:https://en.wikipedia.org/wiki/Demoscene
+[AGS]:https://github.com/MagerValp/ArcadeGameSelector
+
+[David Lindecrantz]:https://github.com/Optiroc
+[Alex Limi]:https://limi.dev
+[Per Olofsson]:https://github.com/MagerValp
+[Ben Squibb]:https://github.com/stat-mat
+[Frode Solheim]:https://github.com/FrodeSolheim
