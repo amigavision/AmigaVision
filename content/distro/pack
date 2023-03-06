@@ -8,6 +8,6 @@ else
   arc_name="MegaAGS-$date_str.7z"
   cp MegaAGS-ReadMe.md MegaAGS-ReadMe.txt
   cp MegaAGS-Extras.md MegaAGS-Extras.txt
-  7z a -xr'!.*' -mx=7 -myx=5 $arc_name MegaAGS-ReadMe.txt MegaAGS-Extras.txt MegaAGS-History.txt MegaAGS-Extras.7z config/ games/;
+  7z a -xr'!.*' -mx=7 -myx=5 $arc_name MegaAGS-ReadMe.txt MegaAGS-Extras.txt MegaAGS-History.txt MegaAGS-Extras.7z config/ games/ _Computer/  Filters/ Presets/ Shadow_Masks/;
   rm MegaAGS-ReadMe.txt MegaAGS-Extras.txt
 fi
