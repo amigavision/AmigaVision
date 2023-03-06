@@ -164,51 +164,6 @@ On the other hand, some titles -- mostly 3D polygon games and demos -- will bene
 Note that the glitches introduced with D-Cache on can sometimes clear up by turning it off while the Amiga core is running. Other times they seem to stick until reboot. The latter behavior is the case with, for example, Turrican II and Grand Monster Slam (and many less significant titles). Whenever making changes to the System settings in the OSD, we recommend re-loading the core.
 
 
-## Manual Configuration
-
-(You can skip this section if you followed the earlier instructions)
-
-For reference, if you prefer to configure the main settings manually instead of using the included config files, these are the recommended settings used:
-
-```
-df0: no disk
-df1: no disk
-Joystick Swap: OFF
-Drives:
-  A600/A1200 IDE: On
-  Fast-IDE (68020): On
-  Primary Master: Fixed/HDD
-                  games/Amiga/MegaAGS.hdf
-  Primary Slave: Fixed/HDD
-                  games/Amiga/MegaAGS-Saves.hdf
-  Secondary Master: Disabled
-  Secondary Slave: Disabled
-  Floppy Disk Turbo: Off
-System:
-  CPU: 68020
-  D-Cache: OFF
-  Chipset: AGA
-  ChipRAM: 2M
-  FastRAM: 384M
-  SlowRAM: none
-  Joystick: CD32
-  ROM: games/Amiga/MegaAGS-Kickstart.rom (or whatever your 3.1 ROM is called)
-  HRTmon: disabled
-Audio & Video:
-  TV Standard: PAL
-  Scandoubler FX: Off
-  Video area by: Blank
-  Aspect ratio: 40:27
-  Pixel Clock: Adaptive
-  Scaling: Normal
-  RTG Upscaling: Normal
-  Stereo mix: 50%
-  Audio Filter: Auto(LED)
-  Model: A500
-  Paula Output: PWM
-
-```
-
 ## Workbench
 
 From the launcher, you can hit the `ESC` key to exit into Workbench, the AmigaOS graphical desktop environment.
@@ -283,6 +238,48 @@ Config:      F5
 
 Player 1 uses joystick port 1, while Amiga software universally expect mouse in port 1 and joystick in port 2. If using only one joystick, enable the "Joy Swap" option in the Chipset menu to route the first MiSTer joypad to port 1. It's also worth noting that all Arcadia games make use of a 2-button joystick.
 
+### What are the details of the MiSTer configuration?
+
+If you prefer to configure the main settings manually instead of using the included config files, these are the recommended settings:
+
+```
+df0: no disk
+df1: no disk
+Joystick Swap: OFF
+Drives:
+  A600/A1200 IDE: On
+  Fast-IDE (68020): On
+  Primary Master: Fixed/HDD
+                  games/Amiga/MegaAGS.hdf
+  Primary Slave: Fixed/HDD
+                  games/Amiga/MegaAGS-Saves.hdf
+  Secondary Master: Disabled
+  Secondary Slave: Disabled
+  Floppy Disk Turbo: Off
+System:
+  CPU: 68020
+  D-Cache: OFF
+  Chipset: AGA
+  ChipRAM: 2M
+  FastRAM: 384M
+  SlowRAM: none
+  Joystick: CD32
+  ROM: games/Amiga/MegaAGS-Kickstart.rom (or whatever your 3.1 ROM is called)
+  HRTmon: disabled
+Audio & Video:
+  TV Standard: PAL
+  Scandoubler FX: Off
+  Video area by: Blank
+  Aspect ratio: 40:27
+  Pixel Clock: Adaptive
+  Scaling: Normal
+  RTG Upscaling: Normal
+  Stereo mix: 50%
+  Audio Filter: Auto(LED)
+  Model: A500
+  Paula Output: PWM
+
+```
 
 [MiSTer]:https://misterfpga.org
 [UNESCO-nominated]:http://demoscene-the-art-of-coding.net
