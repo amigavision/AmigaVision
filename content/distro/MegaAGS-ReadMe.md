@@ -10,7 +10,7 @@ Its aim is to balance preservation of the historical and current output of the A
 
 * Sophisticated and performant Amiga games and demo launcher with screenshots included, can be entirely controlled using gamepads, joysticks or via keyboard. This lets you quickly and easily experience the best of what the system has to offer.
 
-* Close to 2000 per-game hand-tuned 5× integer scaling with Dynamic Crop settings, ensuring that games and demos make the best use of modern 1080p and 4K 16:9 displays without leaving large parts of the screen blank.
+* Close to 2000 hand-tuned, per-game 5× integer scaling with Dynamic Crop settings, ensuring that games and demos make the best use of modern 1080p and 4K 16:9 displays without leaving large parts of the screen blank.
 
 * Carefully curated and well-tested settings for games and demos, no duplication of AGA and ECS versions, with lots of genre and top lists to help you navigate the massive amount of Amiga games available.
 
