@@ -12,7 +12,7 @@ Its aim is to balance preservation of the historical and current output of the A
 
 * Close to 2000 hand-tuned, per-game 5× integer scaling with Dynamic Crop settings, ensuring that games and demos make the best use of modern 1080p and 4K 16:9 displays without leaving large parts of the screen blank.
 
-* Carefully curated and well-tested settings for games and demos, no duplication of AGA and ECS versions, with lots of genre and top lists to help you navigate the massive amount of Amiga games available.
+* Carefully curated and well-tested settings for games and demos, no duplication of AGA and ECS versions, with lots of genre and top lists to help you navigate the massive amount of Amiga games available. We take special care to run every game at the correct aspect ratio and CPU speed.
 
 * Games are configured to run in their correct modes, games created in Europe use PAL with 5× Dynamic Crop where appropriate, whereas US-made games run in NTSC for the correct aspect ratio and CPU speed. You can optionally override this in the settings.
 
