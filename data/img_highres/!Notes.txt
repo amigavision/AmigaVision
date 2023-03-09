@@ -1,0 +1,47 @@
+Duplicates based on Slave Path
+------------------------------
+
+game--populous2&challengegames--populous2&challengegames
+game--historyline--historyline--intro
+game--historyline--historyline--outro
+game--battleisle&datadisks--battleisle&datadisks--intro
+game--battleisle&datadisks--battleisle&datadisks--alss
+game--battleisle&datadisks--battleisle&datadisks--moon
+game--populous&datadisks--populous&datadisks--tpl
+game--populous&datadisks--populous&datadisks--tff
+game--utopia&newworlds--utopia&newworlds--tnw
+game--might&magic3--might&magic3--intro
+game--harddrivin2--harddrivin2--editor
+game--deconstructionaga--deconstructionaga--editor
+game--epic&missiondisk--epic&missiondisk--xm
+game--racedrivin--racedrivin--intro
+game--goldrunner2&scenerydisks--goldrunner2&scenerydisks--sd1
+game--goldrunner2&scenerydisks--goldrunner2&scenerydisks--sd2
+game--realmsofarkania--realmsofarkania--chared
+game--settlers--settlers--intro
+game--chaosstrikesback&enutil--chaosstrikesback--util
+game--strippoker2+&datadisk1--strippoker2+&datadisk1--dd1
+game--genesia--genesia--cfg
+game--storiaancestrale--storiaancestrale--ch2
+game--storiaancestrale--storiaancestrale--ch4
+
+Notes
+-----
+
+All box art images end with the suffix "-1.iff"
+All title screens end with the suffix "-2.iff"
+The first in-game screen shot ends with the suffix "-3.iff"
+
+Some games might not have box art or title screen. Therefore, sometimes the
+first image may end in "-2.iff" or even "-3.iff".
+
+Additionally, some games don't have less than 5 in-game screenshots, but
+these will always start with the "-3.iff" suffix.
+
+CD32 games have been excluded because there's no 100% reliable way to link
+the data together between the two platforms (Amiga and CD32) in the OpenRetro
+database.
+
+Because of the way in which the OpenRetro database has a parent record per
+chipset, it does not provide separate screenshots for different languages,
+which means it has the same English images for all versions.
