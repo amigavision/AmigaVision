@@ -1,0 +1,4 @@
+# MG Stripe (Magenta Green)
+v2
+2,1
+53d,23d

@@ -12,6 +12,7 @@
 import argparse
 import os
 import shutil
+import subprocess
 import sys
 from sqlite3 import Connection
 
@@ -238,8 +239,6 @@ def main():
         # clean output directory
         for r, _, f in os.walk(clone_path):
             for name in f:
-                #if name != convert_filename_a2uae(name):
-                #    print("illegal filename: {}".format(r + "/" + name))
                 path = util.path(r, name)
                 if name == ".DS_Store":
                     os.remove(path)
@@ -253,6 +252,12 @@ def main():
             if util.is_dir(content_path):
                 listing = "\n".join(sorted(os.listdir(util.path(amiga_ags_path, "Run", list_def[0])), key=str.casefold))
                 open(util.path(list_dir, list_def[1]), mode="w", encoding="latin-1").write(listing)
+
+        # run post-build script
+        post_build_sh_path = util.path(os.path.dirname(args.config_file), config_base_name) + ".sh"
+        if util.is_file(post_build_sh_path):
+            r = subprocess.call(["sh", post_build_sh_path])
+            if r != 0: return r
 
         # done
         return 0
