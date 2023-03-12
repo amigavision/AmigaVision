@@ -384,7 +384,7 @@ demo--soundofsilents--soundofsilents;Sound Of Silents;Sound Of Silents;;;OCS;;0;
 demo--statusquofast--statusquofast;Status Quo;Status Quo;1;;OCS;;0;;;;;;;;1992;Poland;English;;Mad Elks;1;;v1.0;StatusQuoFast/StatusQuoFast.Slave;demo/S/StatusQuo_v1.0_Fast_MadElks.lha;Demo;Demo;;
 demo--soundengine--soundengine;Sound Engine;Sound Engine;;;OCS;;0;;;;;;;;1990;Norway;English;;Absence;1;;v1.01;SoundEngine/SoundEngine.Slave;demo/S/SoundEngine_v1.01_Absence.lha;Demo;Music Disk;;
 demo--bestofgrubi--bestofgrubi;Sounddisk 2: The Best of Grubi;Sounddisk 2;;;OCS;;0;;;;;;;;1991;Switzerland;English;;Brainstorm;1;;v1.0;BestOfGrubi/BestOfGrubi.Slave;demo/B/BestOfGrubi_v1.0_Brainstorm.lha;Demo;Music Disk;;
-demo--melodies--melodies;Scoopex Melodies;Scoopex Melodies;;;OCS;;0;;;;;;;;1994;France, Denmark;English;;Scoopex;1;;v1.1;Melodies/Melodies.Slave;demo/M/Melodies_v1.1_Scoopex.lha;Demo;Music Disk;;
+demo--melodies--melodies;Scoopex Melodies;Scoopex Melodies;;;OCS;;0;;;;;;;;1994;France, Denmark;English;;Scoopex;1;;v1.2;Melodies/Melodies.slave;demo/M/Melodies_v1.2_Scoopex.lha;Demo;Music Disk;;
 demo--sozzledsomersault--sozzledsomersault;Sozzled Somersault;Sozzled Somersault;;;OCS;;0;;;;;;;;1993;Sweden;English;;The Silents;1;;v1.0;SozzledSomersault/SozzledSomersault.Slave;demo/S/SozzledSomersault_v1.0_Silents.lha;Demo;Demo;;
 demo--shakkalakkaaga--shakkalakkaaga;Shakka Lakka;Shakka Lakka;;;AGA;1;0;;;;;;;;1994;Germany;English;;Digital;1;;v1.0;ShakkaLakkaAGA/ShakkaLakkaAGA.Slave;demo/S/ShakkaLakka_v1.0_Digital_AGA.lha;Demo;Demo;;
 demo--sensenmann--sensenmann;Sensenmann;Sensenmann;;;OCS;;0;;;;;;;;1989;Germany;English;;United Forces;1;;v1.0;Sensenmann/Sensenmann.Slave;demo/S/Sensenmann_v1.0_UnitedForces.lha;Demo;Demo;;
@@ -3126,7 +3126,7 @@ game--badcat--badcat;Bad Cat;Bad Cat;;;OCS;;0;5;;;;;;;1987;;English;Rainbow Arts
 game--barbarianpsygnosis--barbarianpsygnosis;Barbarian (Psygnosis);Barbarian (Psygnosis);;;OCS;;2;;;;;;;;1987;;English;Psygnosis;Psygnosis;1;;v2.0;BarbarianPsygnosis/BarBarianPsygnosis.Slave;game/B/Barbarian_v2.0_Psygnosis_1011.lha;Game;;35;1218
 game--banditkings--banditkings;Bandit Kings Of Ancient China;Bandit Kings Of Ancient China;;;OCS;;1;;-4;;;;;;1991;;English;Infogrames;Infogrames, Koei;7 (taking turns);;v1.0;BanditKings/BanditKings.Slave;game/B/BanditKingsOfAncientChina_v1.0_2794.lha;Game;;25;1654
 game--battleships--battleships;Battleships;Battleships;1;game--battleshipntsc--battleshipntsc;OCS;;2;;;;;;;;1987;;English;Elite;Elite, Epyx;2 (taking turns);;v2.1;Battleships/Battleships.slave;game/B/Battleships_v2.1_3003.lha;Game;;75;140
-game--bubbledizzy--bubbledizzy;Bubble Dizzy;Bubble Dizzy;;;OCS;;0;;;;;;;;1992;;English;Optimus;Codemasters;1;;v1.1;BubbleDizzy/BubbleDizzy.slave;game/B/BubbleDizzy_v1.1_1644.lha;Game;;225;327
+game--bubbledizzy--bubbledizzy;Bubble Dizzy;Bubble Dizzy;;;OCS;;0;;;;;;;;1992;;English;Optimus;Codemasters;1;;v1.2;BubbleDizzy/BubbleDizzy.slave;game/B/BubbleDizzy_v1.2_1644.lha;Game;;225;327
 game--beavers--beavers;Beavers;Beavers;;;OCS;;2;;;;;;;;1993;;English;Arc Developments;Grandslam ;1;;v2.0;Beavers/Beavers.Slave;game/B/Beavers_v2.0_2575.lha;Game;;87;1717
 game--blackvipercd32--introcd32;Black Viper;Black Viper;1;game--blackviperaga--blackviperaga;AGA/CD32;1;0;;;1;;;;;1996;;English;Light Shock;neo;1;;v1.1;BlackViperCD32/IntroCD32.Slave;game/B/BlackViper_v1.1_CD32.lha;Game;Racing - Arcade;135;226
 game--burntimeagade--burntimeagade;Burntime;Burntime;1;game--burntime--burntime;AGA;1;0;;;;;;;;1994;;German;Max Design;Max Design;2 (taking turns);;v1.2;BurntimeAGADe/BurntimeAGADe.Slave;game/B/Burntime_v1.2_AGA_De_2348.lha;Game;Action RPG;252;2174
@@ -4864,14 +4864,14 @@ game--blastaball--blastaball;Blastaball;Blastaball;;;OCS;;0;;;;;;;;1987;;English
 game--petsciirobots--petsciirobots;Attack of the PETSCII Robots;Attack of the PETSCII Robots;;;OCS;;2;;;;;;;;2021;;English;8-Bit Productions;8-Bit Productions;1;;v1.2;PETSCIIRobots/PETSCIIRobots.Slave;game/P/PETSCIIRobots_v1.2.lha;Game;;6475;4689
 demo--megademosargon--megademosargon;Megademo;Sargon Megademo;;;OCS;;0;;;;;;;;1989;Germany;English;;Sargon;1;;v1.0;MegademoSargon/MegademoSargon.Slave;demo/M/Megademo_v1.0_Sargon.lha;Demo;Demo;;
 game--lotus2cd32--lotus2cd32;Lotus Turbo Challenge 2;Lotus 2;1;game--lotus2--lotus2;AGA/CD32;1;0;5;0;;;;;;1994;;English;Magnetic Fields;Gremlin;2 (4 with serial link);CUSTOM1=1 CUSTOM2=1;v1.12;Lotus2CD32/Lotus2CD32.Slave;game/L/Lotus2_v1.12_CD32.lha;Game;Racing - Arcade;930;702
-game--turrican2aga--turrican2aga;Turrican II: The Final Fight;Turrican II (AGA);;;AGA;1;0;5;7;1;;;;AGA version v11 by Muzza;2022;;English;Factor 5;Rainbow Arts;1;;v1.0;Turrican2AGA/Turrican2AGA.slave;game/_hacks/Turrican2AGA_v1.0.lha;Game;Platform - Shooting;1535;1081
+game--turrican2aga--turrican2aga;Turrican II: The Final Fight;Turrican II (AGA);;;AGA;1;0;5;7;1;;;;AGA version v11 by Muzza;2022;;English;Factor 5;Rainbow Arts;1;;v1.18;Turrican2AGA/Turrican2AGA.slave;game/_hacks/Turrican2AGA_v1.18.lha;Game;Platform - Shooting;1535;1081
 demo-notwhdl--fnuque-hexjunkie;Hex Junkie;Hex Junkie;;;OCS;;0;;;;;;;;2022;Denmark;English;;Fnuque;1;;;;demo-notwhdl/Fnuque-HexJunkie.lha;Demo;Intro 4K;;
 demo-notwhdl--logicoma-logicos;Logic OS;Logic OS;;;OCS;;0;5;24;;;;;;2022;UK, Denmark;English;;Logicoma, Loonies;1;;;;demo-notwhdl/Logicoma-LogicOS.lha;Demo;Intro 64K;;
 demo-notwhdl--koney-ketamuskolar;Ketamuskolar;Ketamuskolar;;;OCS;;0;;;;;;;;2022;Italy;English;;Koney;1;;;;demo-notwhdl/Koney-Ketamuskolar.lha;Demo;Intro 40K;;
 demo-notwhdl--nihirashi-nh05thered;NH-05: The Red;The Red;;;OCS;;0;;-8;;;;;;2022;Georgia;English;;Nihirashi;1;;;;demo-notwhdl/Nihirashi-NH05TheRed.lha;Demo;Demo;;
 game--streetcatntsc--streetcatntsc;Street Cat;Street Cat;1;game--badcat--badcat;OCS;;3;;;;;;;;1987;;English;Rainbow Arts;Euro Gold Starline, GO!, Rainbow Arts;4 (taking turns);;v1.0;StreetCatNTSC/StreetCatNTSC.Slave;game/S/StreetCat_v1.0_NTSC.lha;Game;;2135;2596
 game--preycd32--preycd32;Prey: An Alien Encounter;Prey: An Alien Encounter;;;AGA/CD32;1;0;;;;;;;;1994;;English;KirkMoreno Multimedia;Almathera;1;;v1.0;PreyCD32/PreyCD32.Slave;game/P/Prey_v1.0_CD32.lha;Game;;1146;536
-game--turrican2agantsc--turrican2aga;Turrican II: The Final Fight;Turrican II (AGA);1;game--turrican2aga--turrican2aga;AGA;1;3;5;0;1;;;;AGA version v11 by Muzza;2022;;English;Factor 5;Rainbow Arts;1;;v1.0;Turrican2AGANTSC/Turrican2AGA.slave;game/_hacks/Turrican2AGA_v1.0_NTSC.lha;Game;Platform - Shooting;1535;1081
+game--turrican2agantsc--turrican2aga;Turrican II: The Final Fight;Turrican II (AGA);1;game--turrican2aga--turrican2aga;AGA;1;3;5;0;1;;;;AGA version v11 by Muzza;2022;;English;Factor 5;Rainbow Arts;1;;;;;Game;Platform - Shooting;1535;1081
 game--moonbase--moonbase;Moonbase: Lunar Colony Simulator;Moonbase;;;OCS;;0;;;;;;;;1991;;English;Wesson;Wesson;1;;v1.0;MoonBase/MoonBase.Slave;game/M/MoonBase_v1.0_2660.lha;Game;Strategy;2505;4066
 game--starways--starways;Star Ways;Star Ways;;;OCS;;0;;;;;;;;1988;;English;Diamond;Diamond;1;;v1.0;StarWays/StarWays.Slave;game/S/StarWays_v1.0_2678.lha;Game;;2100;3352
 game--wormsavicd32--wormsavicd32;Worms (FMV Intro);Worms (FMV Intro);1;game--worms2mb--worms2mb;AGA/CD32;1;0;;-10;;;;;;1995;;English;Team 17;Ocean, Team 17;4 (taking turns);;v1.0;WormsAVICD32/WormsAVICD32.Slave;game/W/Worms_v1.0_AVI_CD32.lha;Game;Action - Strategy;1780;3382
@@ -4957,3 +4957,10 @@ game--swos2223--swos2223;Sensible World Of Soccer 2023;SWOS 2023;;;OCS;;0;4;;;;;
 game--regentde--regentde;Regent;Regent;;;OCS;;0;;;;;;;;1992;;German;Martin Economic Simulations;Linel;4 (taking turns);;v1.0;RegentDe/RegentDe.slave;game/R/Regent_v1.0_De.lha;Game;;1220;3279
 game--magica--magica;Magica;Magica;;;OCS;;0;;;;;;;;2020;;English;Juan J. Martinez;Juan J. Martinez;1;;v1.01;Magica/Magica.slave;game/M/Magica_v1.01.lha;Game;;6858;4472
 game--rocketattack--rocketattack;Rocket Attack;Rocket Attack;;;OCS;;0;;;;;;;;1987;;English;JCR;Softgang;2 (taking turns);;v1.0;RocketAttack/RocketAttack.slave;game/R/RocketAttack_v1.0.lha;Game;;1268;1809
+game--potpanic--potpanic;Pot Panic;Pot Panic;;;OCS;;0;;;;;;;;1991;;English;Kingsoft;Kingsoft;2;;v1.0;PotPanic/PotPanic.slave;game/P/PotPanic_v1.0_1776.lha;Game;;1114;4171
+game--detector--detector;Detector;Detector;;;OCS;;0;;;;;;;;1988;;English;Amiga Artists;Time Warp;2 (taking turns);;v1.0;Detector/Detector.slave;game/D/Detector_v1.0.lha;Game;;336;1981
+game--cricketcaptain--cricketcaptain;Cricket Captain;Cricket Captain;;;OCS;;0;;;;;;;;1989;;English;D&H Games;D&H Games ;2;;v1.0;CricketCaptain/CricketCaptain.slave;game/C/CricketCaptain_v1.0_1244.lha;Game;Sports;3124;1388
+demo--twilightzone--twilightzone;Twilight Zone;Twilight Zone;;;OCS;;0;;;;;;;;1992;Germany;English;;Shining 8;1;;;;;Demo;Demo;;
+demo--mindoftraces--mindoftraces;Mind of Traces;Mind of Traces;;;OCS;;0;;;;;;;;1992;Germany;English;;Shining 8;1;;;;;Demo;Slide Show;;
+demo--megademo2wot--megademo2wot;Mega-Demo-Disk 2;Wings of Tomorrow MDD 2;;;OCS;;0;;;;;;;;1989;Sweden;English;;Wings of Tomorrow;1;;;;;Demo;Demo;;
+demo--allweneedismusic5--allweneedismusic5;All We Need Is Music 5;All We Need Is Music 5;;;OCS;;0;;;;;;;;1990;Germany;English;;Cyborg Power Systems;1;;;;;Demo;Music Disk;;
