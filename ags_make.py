@@ -7,6 +7,7 @@ import operator
 import shutil
 import sys
 import textwrap
+from pathlib import Path
 from sqlite3 import Connection
 
 import ags_imgen as imgen
@@ -247,8 +248,14 @@ def make_entry(entries: EntryCollection, ags_path, name, entry, path, template=N
     # image
     if entry and "image" in entry:
         make_image(base_path + ".iff", entry["image"])
-    elif entry and "id" in entry and util.is_file(util.path("data", "img", entry["id"] + ".iff")):
-        shutil.copyfile(util.path("data", "img", entry["id"] + ".iff"), base_path + ".iff")
+    elif entry and "id" in entry:
+        img_list = [Path(util.path("data", "img", entry["id"] + ".iff"))]
+        img_list += list(Path(util.path("data", "img")).rglob(entry["id"] + "-[0-9].iff"))
+        for img_path in img_list:
+            src_path = str(img_path.resolve())
+            if util.is_file(src_path):
+                dst_path = base_path + img_path.stem.rsplit(entry["id"], 1)[-1] + ".iff"
+                shutil.copyfile(src_path, dst_path)
     return base_path
 
 # -----------------------------------------------------------------------------
