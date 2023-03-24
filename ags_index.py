@@ -62,12 +62,18 @@ def index_whdload_archives(basedir):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--make-sqlite", dest="make_sqlite", action="store_true", default=False, help="make sqlite db from cvs, if none none exists or if cvs is newer than existing")
+    parser.add_argument("--make-sqlite", dest="make_sqlite", action="store_true", default=False, help="make sqlite db from cvs (if none exists or if cvs is newer than existing)")
+    parser.add_argument("--make-csv", dest="make_csv", action="store_true", default=False, help="make csv from sqlite db")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
         paths.verify()
         args = parser.parse_args()
+
+        if args.make_csv:
+            util.write_csv()
+            return 0
+
         db = util.get_db(args.verbose)
 
         if args.make_sqlite:

@@ -26,3 +26,6 @@ screenshots:
 
 sqlite:
 	@pipenv run ./ags_index.py -v --make-sqlite
+
+csv:
+	@pipenv run ./ags_index.py -v --make-csv

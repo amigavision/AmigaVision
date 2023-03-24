@@ -228,14 +228,34 @@ def get_db(verbose):
     return db
 
 
-def write_csv(conn, csv_path):
+def write_csv():
+    sqlite3_path = "data/db/titles.sqlite3"
+    csv_path = "data/db/titles.csv"
+
+    if not is_file(sqlite3_path):
+        raise IOError("SQLite database doesn't exist: " + sqlite3_path)
+
+    csv.register_dialect("megaags",
+        delimiter=';',
+        doublequote=True,
+        escapechar=None,
+        lineterminator='\n',
+        quotechar='"',
+        quoting=0,
+        skipinitialspace=False,
+        strict=False
+    )
+
+    conn = sqlite3.connect(sqlite3_path)
     c = conn.cursor()
     c.execute("SELECT * FROM titles ORDER BY 'id' ASC")
     with open(csv_path, "w") as f:
-        csv_out = csv.writer(f, delimiter=";")
+        csv_out = csv.writer(f, dialect="megaags")
         csv_out.writerow([d[0] for d in c.description])
         for result in c:
             csv_out.writerow(result)
+    conn.close()
+    csv.unregister_dialect("megaags")
 
 
 def read_csv(csv_path, new_db_path):
@@ -243,7 +263,6 @@ def read_csv(csv_path, new_db_path):
         os.remove(new_db_path)
     conn = sqlite3.connect(new_db_path)
     c = conn.cursor()
-
     c.execute('''CREATE TABLE "titles" (
                "id" TEXT NOT NULL UNIQUE,
                "title" TEXT,
@@ -275,7 +294,6 @@ def read_csv(csv_path, new_db_path):
                "hol_id" INTEGER,
                "lemon_id" INTEGER,
                PRIMARY KEY("id"));''')
-
     with open(csv_path, "r") as f:
         dr = csv.DictReader(f, delimiter=";")
         r = [(l["id"], l["title"], l["title_short"], l["redundant"], l["preferred_version"], l["hardware"], l["aga"], l["ntsc"],

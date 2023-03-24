@@ -41,5 +41,7 @@ Common usage is covered by makefile "shortcuts":
   - Create scaled IFF images from arbitrary PNG files placed in `screenshots` 
 - `make sqlite`
   - Create SQLite database from `data/db/titles.csv` (for easier viewing and editing)
+- `make csv`
+  - Output the contents of SQLite database to `data/db/titles.csv` (for committing to version control)
 
 [Arcade Game Selector]:https://github.com/MagerValp/ArcadeGameSelector
