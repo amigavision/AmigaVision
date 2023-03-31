@@ -817,94 +817,94 @@
     - note: Amiga games worth your time, according to Alex Limi.
     - Multiplayer:
       - note: Show only the multiplayer games.
-      - AlienBreedSpecialEdition: {"short_name":"[2P] Alien Breed Special Edition"}
-      - AlienBreedTA: {"short_name":"[2P] Alien Breed Tower Assault"}
-      - AlienBreed2: {"short_name":"[2P] Alien Breed 2"}
-      - AllTerrainRacing: {"short_name":"[6P] All Terrain Racing"}
-      - ApidyaSpecialEdition: {"short_name":"[2P] Apidya SE"}
-      - BadLands: {"short_name":"[2P] BadLands"}
-      - Banshee: {"short_name":"[2P] Banshee"}
-      - BattleSquadron: {"short_name":"[2P] Battle Squadron"}
-      - BeachVolley: {"short_name":"[2P] Beach Volley"}
-      - BloodMoney: {"short_name":"[2P] Blood Money"}
-      - BrutalHomicide: {"short_name":"[2P] Brutal Homicide"}
-      - BrutalHomicide2: {"short_name":"[2P] Brutal Homicide 2"}
-      - BubbleBobble: {"short_name":"[2P] Bubble Bobble"}
-      - ChambersOfShaolin: {"short_name":"[2P] Chambers of Shaolin"}
-      - ChaosEngine: {"short_name":"[2P] Chaos Engine"}
-      - ChaosEngine2: {"short_name":"[2P] Chaos Engine 2"}
-      - DogsOfWar: {"short_name":"[2P] Dogs of War"}
-      - DynaBlaster: {"short_name":"[5P] Dyna Blaster"}
-      - EMotion: {"short_name":"[2P] E-Motion"}
-      - EmeraldMine: {"short_name":"[2P] Emerald Mine"}
-      - EmeraldMine2: {"short_name":"[2P] Emerald Mine 2"}
-      - EmeraldMine3: {"short_name":"[2P] Emerald Mine 3"}
-      - Firepower: {"short_name":"[2P] Fire Power"}
-      - Gauntlet2: {"short_name":"[4P] Gauntlet II"}
-      - Gauntlet3: {"short_name":"[2P] Gauntlet III"}
-      - GreatCourts: {"short_name":"[4P] Great Courts"}
-      - GreatCourts2: {"short_name":"[4P] Great Courts 2"}
-      - IK+: {"short_name":"[2P] IK+"}
-      - IkariWarriors: {"short_name":"[2P] Ikari Warriors"}
-      - IndyHeat: {"short_name":"[3P] Indy Heat"} 
-      - KickOff: {"short_name":"[2P] Kick Off"}
-      - KickOff2FinalWhistle: {"short_name":"[4P] Kick Off 2: Final Whistle"}
-      - LaserSquad: {"short_name":"[2P] Laser Squad"}
-      - Leatherneck: {"short_name":"[4P] Leatherneck"}
-      - Lemmings: {"short_name":"[2P] Lemmings"}
-      - LethalXcess: {"short_name":"[2P] Lethal Xcess"}
-      - Lotus: {"short_name":"[2P] Lotus Esprit Turbo Challenge"}
-      - Lotus2: {"short_name":"[2P] Lotus 2"}
-      - Lotus3: {"short_name":"[2P] Lotus 3"}
-      - MarbleMadness: {"short_name":"[2P] Marble Madness"}
-      - NaughtyOnes: {"short_name":"[2P] Naughty Ones"}
-      - Nitro: {"short_name":"[3P] Nitro"}
-      - NorthAndSouth: {"short_name":"[2P] North & South"}
-      - OhNoMoreLemmings: {"short_name":"[2P] Oh No! More Lemmings"}
-      - OilImperium: {"short_name":"[4P] Oil Imperium"}
-      - OperationThunderbolt: {"short_name":"[2P] Operation Thunderbolt"}
-      - Pang: {"short_name":"[2P] Pang"}
-      - ParasolStars: {"short_name":"[2P] Parasol Stars"}
-      - PortsOfCall: {"short_name":"[4P] Ports of Call"}
-      - PuffysSaga: {"short_name":"[2P] Puffy's Saga"}
-      - Qwak: {"short_name":"[2P] Qwak"}
-      - RallyCrossChallenge: {"short_name":"[4P] Rally Cross Challenge"}
-      - Rampart: {"short_name":"[2P] Rampart"}
-      - Renegades: {"short_name":"[2P] Renegades"}
-      - RodLand: {"short_name":"[2P] Rod-Land"}
-      - SecondSamurai: {"short_name":"[2P] Second Samurai"}
-      - SensibleGolf: {"short_name":"[72P] Sensible Golf"}
-      - SensibleSoccer: {"short_name":"[2P] Sensible Soccer"}
-      - SWOS9596: {"short_name":"[2P] Sensible World of Soccer 95/96"}
-      - Settlers: {"short_name":"[2P] Settlers"}
-      - Silkworm: {"short_name":"[2P] Silkworm"}
-      - Skidmarks: {"short_name":"[4P] Skidmarks"}
-      - SpaceCrusade&VoyageBeyond: {"short_name":"[3P] Space Crusade"}
-      - Speedball: {"short_name":"[2P] Speedball"}
-      - Speedball2: {"short_name":"[2P] Speedball 2"}
-      - SpittingImage: {"short_name":"[2P] Spitting Image"}
-      - SpyVsSpy: {"short_name":"[2P] Spy vs. Spy"}
-      - SpyVsSpy2TheIslandCaper: {"short_name":"[2P] Spy vs. Spy II"}
-      - SpyVsSpy3ArcticAntics: {"short_name":"[2P] Spy vs. Spy III"}
-      - SuperCars2: {"short_name":"[2P] Super Cars II"}
-      - SuperMethaneBros: {"short_name":"[2P] Super Methane Bros"}
-      - SuperOffRoad: {"short_name":"[3P] Super Off Road"}
-      - SuperSkidmarks: {"short_name":"[4P] Super Skidmarks"}
-      - SuperTwintris: {"short_name":"[2P] Super Twintris"}
-      - SWIV: {"short_name":"[2P] SWIV"}
-      - TinyBobble: {"short_name":"[2P] Tiny Bobble"}
-      - TopGear2: {"short_name":"[2P] Top Gear 2"}
-      - TurboRaketti2Fi: {"short_name":"[2P] TurboRaketti II"}
-      - TVSportsBasketball: {"short_name":"[4P] TV Sports Basketball"}
-      - Twintris: {"short_name":"[2P] Twintris"}
-      - Ugh: {"short_name":"[2P] Ugh!"}
-      - Virocop: {"short_name":"[2P] Virocop"}
-      - WizNLiz: {"short_name":"[2P] Wiz 'n' Liz"}
-      - Worms: {"short_name":"[4P] Worms"} 
-      - WormsDC: {"short_name":"[8P] Worms Director's Cut"}
-      - YoJoe: {"short_name":"[2P] Yo! Joe"}
-      - ZanyGolf: {"short_name":"[4P] Zany Golf"}
-      - ZOut: {"short_name":"[2P] Z-Out"}
+      - AlienBreedSpecialEdition: {title_short:"[2P] Alien Breed Special Edition"}
+      - AlienBreedTA: {title_short:"[2P] Alien Breed Tower Assault"}
+      - AlienBreed2: {title_short:"[2P] Alien Breed 2"}
+      - AllTerrainRacing: {title_short:"[6P] All Terrain Racing"}
+      - ApidyaSpecialEdition: {title_short:"[2P] Apidya SE"}
+      - BadLands: {title_short:"[2P] BadLands"}
+      - Banshee: {title_short:"[2P] Banshee"}
+      - BattleSquadron: {title_short:"[2P] Battle Squadron"}
+      - BeachVolley: {title_short:"[2P] Beach Volley"}
+      - BloodMoney: {title_short:"[2P] Blood Money"}
+      - BrutalHomicide: {title_short:"[2P] Brutal Homicide"}
+      - BrutalHomicide2: {title_short:"[2P] Brutal Homicide 2"}
+      - BubbleBobble: {title_short:"[2P] Bubble Bobble"}
+      - ChambersOfShaolin: {title_short:"[2P] Chambers of Shaolin"}
+      - ChaosEngine: {title_short:"[2P] Chaos Engine"}
+      - ChaosEngine2: {title_short:"[2P] Chaos Engine 2"}
+      - DogsOfWar: {title_short:"[2P] Dogs of War"}
+      - DynaBlaster: {title_short:"[5P] Dyna Blaster"}
+      - EMotion: {title_short:"[2P] E-Motion"}
+      - EmeraldMine: {title_short:"[2P] Emerald Mine"}
+      - EmeraldMine2: {title_short:"[2P] Emerald Mine 2"}
+      - EmeraldMine3: {title_short:"[2P] Emerald Mine 3"}
+      - Firepower: {title_short:"[2P] Fire Power"}
+      - Gauntlet2: {title_short:"[4P] Gauntlet II"}
+      - Gauntlet3: {title_short:"[2P] Gauntlet III"}
+      - GreatCourts: {title_short:"[4P] Great Courts"}
+      - GreatCourts2: {title_short:"[4P] Great Courts 2"}
+      - IK+: {title_short:"[2P] IK+"}
+      - IkariWarriors: {title_short:"[2P] Ikari Warriors"}
+      - IndyHeat: {title_short:"[3P] Indy Heat"} 
+      - KickOff: {title_short:"[2P] Kick Off"}
+      - KickOff2FinalWhistle: {title_short:"[4P] Kick Off 2: Final Whistle"}
+      - LaserSquad: {title_short:"[2P] Laser Squad"}
+      - Leatherneck: {title_short:"[4P] Leatherneck"}
+      - Lemmings: {title_short:"[2P] Lemmings"}
+      - LethalXcess: {title_short:"[2P] Lethal Xcess"}
+      - Lotus: {title_short:"[2P] Lotus Esprit Turbo Challenge"}
+      - Lotus2: {title_short:"[2P] Lotus 2"}
+      - Lotus3: {title_short:"[2P] Lotus 3"}
+      - MarbleMadness: {title_short:"[2P] Marble Madness"}
+      - NaughtyOnes: {title_short:"[2P] Naughty Ones"}
+      - Nitro: {title_short:"[3P] Nitro"}
+      - NorthAndSouth: {title_short:"[2P] North & South"}
+      - OhNoMoreLemmings: {title_short:"[2P] Oh No! More Lemmings"}
+      - OilImperium: {title_short:"[4P] Oil Imperium"}
+      - OperationThunderbolt: {title_short:"[2P] Operation Thunderbolt"}
+      - Pang: {title_short:"[2P] Pang"}
+      - ParasolStars: {title_short:"[2P] Parasol Stars"}
+      - PortsOfCall: {title_short:"[4P] Ports of Call"}
+      - PuffysSaga: {title_short:"[2P] Puffy's Saga"}
+      - Qwak: {title_short:"[2P] Qwak"}
+      - RallyCrossChallenge: {title_short:"[4P] Rally Cross Challenge"}
+      - Rampart: {title_short:"[2P] Rampart"}
+      - Renegades: {title_short:"[2P] Renegades"}
+      - RodLand: {title_short:"[2P] Rod-Land"}
+      - SecondSamurai: {title_short:"[2P] Second Samurai"}
+      - SensibleGolf: {title_short:"[72P] Sensible Golf"}
+      - SensibleSoccer: {title_short:"[2P] Sensible Soccer"}
+      - SWOS9596: {title_short:"[2P] Sensible World of Soccer 95/96"}
+      - Settlers: {title_short:"[2P] Settlers"}
+      - Silkworm: {title_short:"[2P] Silkworm"}
+      - Skidmarks: {title_short:"[4P] Skidmarks"}
+      - SpaceCrusade&VoyageBeyond: {title_short:"[3P] Space Crusade"}
+      - Speedball: {title_short:"[2P] Speedball"}
+      - Speedball2: {title_short:"[2P] Speedball 2"}
+      - SpittingImage: {title_short:"[2P] Spitting Image"}
+      - SpyVsSpy: {title_short:"[2P] Spy vs. Spy"}
+      - SpyVsSpy2TheIslandCaper: {title_short:"[2P] Spy vs. Spy II"}
+      - SpyVsSpy3ArcticAntics: {title_short:"[2P] Spy vs. Spy III"}
+      - SuperCars2: {title_short:"[2P] Super Cars II"}
+      - SuperMethaneBros: {title_short:"[2P] Super Methane Bros"}
+      - SuperOffRoad: {title_short:"[3P] Super Off Road"}
+      - SuperSkidmarks: {title_short:"[4P] Super Skidmarks"}
+      - SuperTwintris: {title_short:"[2P] Super Twintris"}
+      - SWIV: {title_short:"[2P] SWIV"}
+      - TinyBobble: {title_short:"[2P] Tiny Bobble"}
+      - TopGear2: {title_short:"[2P] Top Gear 2"}
+      - TurboRaketti2Fi: {title_short:"[2P] TurboRaketti II"}
+      - TVSportsBasketball: {title_short:"[4P] TV Sports Basketball"}
+      - Twintris: {title_short:"[2P] Twintris"}
+      - Ugh: {title_short:"[2P] Ugh!"}
+      - Virocop: {title_short:"[2P] Virocop"}
+      - WizNLiz: {title_short:"[2P] Wiz 'n' Liz"}
+      - Worms: {title_short:"[4P] Worms"} 
+      - WormsDC: {title_short:"[8P] Worms Director's Cut"}
+      - YoJoe: {title_short:"[2P] Yo! Joe"}
+      - ZanyGolf: {title_short:"[4P] Zany Golf"}
+      - ZOut: {title_short:"[2P] Z-Out"}
     - AdventuresOfRobinHood
     - Agony
     - AirborneRanger
