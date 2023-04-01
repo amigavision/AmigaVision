@@ -10,7 +10,7 @@ This is implemented as a separate MGL file and directory setup for MiSTer, letti
 
 It aims to recreate the setups that were common before the Amiga 600/1200 were released with hard disk support and a more modern OS.
 
-Common applications like Directory Opus, ProTracker, music players and graphics/audio problems are already included in the Apps menu in Workbench, giving you a great starting point for your own custom setup.
+Common applications like Directory Opus, ProTracker, music players and graphics/audio applications are already included in the Apps menu in Workbench, giving you a great starting point for your own custom setup.
 
 In addition, the image includes:
 
@@ -46,7 +46,7 @@ In addition, the image includes:
 
 We default this setup to NTSC for compatibility reasons, but you can easily change it to PAL in the *Workbench ScreenMode Preferences* if you prefer that.
 
-Common applications like Directory Opus, ProTracker, music players and graphics/audio problems are already included in the Apps menu in Workbench, giving you a great starting point for your own custom setup.
+Common applications like Directory Opus, ProTracker, music players and graphics/audio applications are already included in the Apps menu in Workbench, giving you a great starting point for your own custom setup.
 
 The default setup enables the faster CPU by default since this setup isn't really meant to be used for games that require cycle accurate CPU compatibility. You can switch the CPU to 68000 in the MiSTer core menu for the Amiga core if you want the orignal A500+/A600 speed instead of something that resembles an Amiga 3000.
 
