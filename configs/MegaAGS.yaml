@@ -1,7 +1,7 @@
 --- # AGS2 Menu structure
 - About:
   - rank: 1
-  - note: 'MEGA AGS 2023.04.05'
+  - note: "MEGA AGS 2023.04.05"
   - Nothing to see here:
     - rank: 1
     - note: Intentionally left blank.
@@ -11,9 +11,9 @@
 - Hall of Fame:
   - rank: 2
   - note: Games inducted into the Megaboys Hall of Fame.\nSorted by genre.
-  - image: {"ops":{"op":"pi", "path":"top/hall_of_fame.png"}, "size":[320,128], "scale":[1,1]}
+  - image: { ops: { op: "pi", path: "top/hall_of_fame.png" }, size: [320, 128], scale: [1, 1] }
   - Action:
-    - image: {"op":"pi", "path":"hof/action.png"}
+    - image: { op: "pi", path: "hof/action.png" }
     - CannonFodder
     - DogsOfWar
     - DynaBlaster
@@ -32,7 +32,7 @@
     - WizNLiz
     - YoJoe
   - Adventure:
-    - image: {"op":"pi", "path":"hof/adventure.png"}
+    - image: { op: "pi", path: "hof/adventure.png" }
     - AnotherWorld
     - BladeWarrior
     - Cadaver
@@ -51,14 +51,14 @@
     - RocketRanger
     - Wings
   - Pinball:
-    - image: {"op":"pi", "path":"hof/pinball.png"}
+    - image: { op: "pi", path: "hof/pinball.png" }
     - Obsession
     - PinballDreams
     - PinballFntsies
     - PinballIllusions
     - SlamTilt
   - Platform:
-    - image: {"op":"pi", "path":"hof/platform.png"}
+    - image: { op: "pi", path: "hof/platform.png" }
     - AddamsFamily
     - ArabianNights
     - BCKid
@@ -72,7 +72,7 @@
     - SoccerKid
     - TrapsNTreasures
   - Platform Puzzle:
-    - image: {"op":"pi", "path":"hof/platformpuzzle.png"}
+    - image: { op: "pi", path: "hof/platformpuzzle.png" }
     - Benefactor
     - BubbaNStix
     - Builderland
@@ -83,7 +83,7 @@
     - ShadowOfTheBeast3
     - SillyPutty
   - Point & Click:
-    - image: {"op":"pi", "path":"hof/pointandclick.png"}
+    - image: { op: "pi", path: "hof/pointandclick.png" }
     - AlteredDestiny
     - BeneathAStlSky
     - DarkSeed
@@ -105,7 +105,7 @@
     - SecretOfMonkeyIsland
     - Universe
   - Puzzle:
-    - image: {"op":"pi", "path":"hof/puzzle.png"}
+    - image: { op: "pi", path: "hof/puzzle.png" }
     - ClikClak
     - Deflektor
     - DeviousDesigns
@@ -123,7 +123,7 @@
     - TetrisPro
     - Twintris
   - Racing:
-    - image: {"op":"pi", "path":"hof/racing.png"}
+    - image: { op: "pi", path: "hof/racing.png" }
     - AllTerrainRacing
     - BadLands
     - BuggyBoy
@@ -141,7 +141,7 @@
     - TestDrive2
     - Vroom
   - Role Playing:
-    - image: {"op":"pi", "path":"hof/roleplaying.png"}
+    - image: { op: "pi", path: "hof/roleplaying.png" }
     - Ambermoon
     - BlackCrypt
     - Captive
@@ -153,7 +153,7 @@
     - Rogue
     - Shadowlands
   - Shoot'em Up:
-    - image: {"op":"pi", "path":"hof/shootemup.png"}
+    - image: { op: "pi", path: "hof/shootemup.png" }
     - Apidya
     - BattleSquadron
     - DisposableHero
@@ -165,14 +165,14 @@
     - Uridium2
     - ZOut
   - Simulation:
-    - image: {"op":"pi", "path":"hof/simulation.png"}
+    - image: { op: "pi", path: "hof/simulation.png" }
     - Floor13
     - OilImperium
     - PortsOfCall
     - RailroadTycoon
     - SimCity
   - Sports:
-    - image: {"op":"pi", "path":"hof/sports.png"}
+    - image: { op: "pi", path: "hof/sports.png" }
     - AquaticGames
     - ArcadePool
     - ArcadeSnooker
@@ -187,7 +187,7 @@
     - Speedball2
     - SWOS9697
   - Strategy:
-    - image: {"op":"pi", "path":"hof/strategy.png"}
+    - image: { op: "pi", path: "hof/strategy.png" }
     - BattleIsle
     - CelticLegends
     - Centurion
@@ -203,12 +203,12 @@
 
 - Charts:
   - note: Top games lists compiled or voted by magazines back in the day as well as contemporary outlets.
-  - image: {"ops":{"op":"pi", "path":"top/charts.png"}, "size":[320,128], "scale":[1,1]}
+  - image: { ops: { op: "pi", path: "top/charts.png" }, size: [320, 128], scale: [1, 1] }
   - Amiga Lore Top 100:
     - ordering: "ranked"
     - note: Amiga Lore's aggregate review score ranking, taking into account the largest publications of the era from across the continent. A Metacritic equivalent for the platform, if you will.\n\n
             (Some duplicate entries exist, since rereleases and CD32 versions are considered separately.)
-    - image: {"op":"pi", "path":"list/amigalore.png"}
+    - image: { op: "pi", path: "list/amigalore.png" }
     - Populous2&ChallengeGames
     - SWOS9596
     - CannonFodder
@@ -312,7 +312,7 @@
   - Amiga Power Top 100 (1991):
     - ordering: "ranked"
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1991.
-    - image: {"op":"pi", "path":"list/amigapower91.jpg"}
+    - image: { op: "pi", path: "list/amigapower91.jpg" }
     - RainbowIslands
     - Lemmings
     - Speedball2
@@ -416,7 +416,7 @@
   - Amiga Power Top 100 (1992):
     - ordering: "ranked"
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1992.
-    - image: {"op":"pi", "path":"list/amigapower92.jpg"}
+    - image: { op: "pi", path: "list/amigapower92.jpg" }
     - RainbowIslands
     - FormulaOneGrandPrix
     - Speedball2
@@ -520,7 +520,7 @@
   - Amiga Power Top 100 (1993):
     - ordering: "ranked"
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1993.
-    - image: {"op":"pi", "path":"list/amigapower93.jpg"}
+    - image: { op: "pi", path: "list/amigapower93.jpg" }
     - SensibleSoccer
     - FormulaOneGrandPrix
     - DynaBlaster
@@ -624,7 +624,7 @@
   - EAB Top 10 Exclusive:
     - ordering: "ranked"
     - note: The best Amiga-exclusive games according to users of the English Amiga Board.
-    - image: {"op":"pi", "path":"list/eab.png"}
+    - image: { op: "pi", path: "list/eab.png" }
     - Wings
     - WormsDC
     - RuffNTumble
@@ -648,7 +648,7 @@
   - Kim Justice Top 100:
     - ordering: "ranked"
     - note: Kim Justice's top 100 Amiga games of all time.
-    - image: {"op":"pi", "path":"list/kimjustice_top100.jpg"}
+    - image: { op: "pi", path: "list/kimjustice_top100.jpg" }
     - SWOS
     - Syndicate
     - Speedball2
@@ -752,7 +752,7 @@
   - Lemon Top 30 (Sep 2022):
     - ordering: "ranked"
     - note: As voted by lemonamiga.com users
-    - image: {"op":"pi", "path":"list/lemon.png"}
+    - image: { op: "pi", path: "list/lemon.png" }
     - SecretOfMonkeyIsland
     - MonkeyIsland2
     - Settlers
@@ -785,7 +785,7 @@
     - WormsDC
   - Mr Biffo Top 10:
     - note: The 10 best Amiga games according to Mr Biffo of Digitiser 2000.
-    - image: {"op":"pi", "path":"list/digitiser.jpg"}
+    - image: { op: "pi", path: "list/digitiser.jpg" }
     - CannonFodder
     - SecretOfMonkeyIsland
     - JamesPond2
@@ -798,7 +798,7 @@
     - JimmyWhitesSnooker
   - retroGAMER A500 Top 10 :
     - note: From retroGAMER magazine
-    - image: {"op":"pi", "path":"list/retrogamer.jpg"}
+    - image: { op: "pi", path: "list/retrogamer.jpg" }
     - Worms
     - JimmyWhitesSnooker
     - AnotherWorld
@@ -812,99 +812,99 @@
 
 - Curated Content:
   - note: Curated collections from around the net.
-  - image: {"ops":{"op":"pi", "path":"top/curated_content.png"}, "size":[320,128], "scale":[1,1]}
+  - image: { ops: { op: "pi", path: "top/curated_content.png" }, size: [320, 128], scale: [1, 1] }
   - Alex Limi's Collection:
     - note: Amiga games worth your time, according to Alex Limi.
     - Multiplayer:
       - note: Show only the multiplayer games.
-      - AlienBreedSpecialEdition: {title_short:"[2P] Alien Breed Special Edition"}
-      - AlienBreedTA: {title_short:"[2P] Alien Breed Tower Assault"}
-      - AlienBreed2: {title_short:"[2P] Alien Breed 2"}
-      - AllTerrainRacing: {title_short:"[6P] All Terrain Racing"}
-      - ApidyaSpecialEdition: {title_short:"[2P] Apidya SE"}
-      - BadLands: {title_short:"[2P] BadLands"}
-      - Banshee: {title_short:"[2P] Banshee"}
-      - BattleSquadron: {title_short:"[2P] Battle Squadron"}
-      - BeachVolley: {title_short:"[2P] Beach Volley"}
-      - BloodMoney: {title_short:"[2P] Blood Money"}
-      - BrutalHomicide: {title_short:"[2P] Brutal Homicide"}
-      - BrutalHomicide2: {title_short:"[2P] Brutal Homicide 2"}
-      - BubbleBobble: {title_short:"[2P] Bubble Bobble"}
-      - ChambersOfShaolin: {title_short:"[2P] Chambers of Shaolin"}
-      - ChaosEngine: {title_short:"[2P] Chaos Engine"}
-      - ChaosEngine2: {title_short:"[2P] Chaos Engine 2"}
-      - DogsOfWar: {title_short:"[2P] Dogs of War"}
-      - DynaBlaster: {title_short:"[5P] Dyna Blaster"}
-      - EMotion: {title_short:"[2P] E-Motion"}
-      - EmeraldMine: {title_short:"[2P] Emerald Mine"}
-      - EmeraldMine2: {title_short:"[2P] Emerald Mine 2"}
-      - EmeraldMine3: {title_short:"[2P] Emerald Mine 3"}
-      - Firepower: {title_short:"[2P] Fire Power"}
-      - Gauntlet2: {title_short:"[4P] Gauntlet II"}
-      - Gauntlet3: {title_short:"[2P] Gauntlet III"}
-      - GreatCourts: {title_short:"[4P] Great Courts"}
-      - GreatCourts2: {title_short:"[4P] Great Courts 2"}
-      - IK+: {title_short:"[2P] IK+"}
-      - IkariWarriors: {title_short:"[2P] Ikari Warriors"}
-      - IndyHeat: {title_short:"[3P] Indy Heat"}
-      - KickOff: {title_short:"[2P] Kick Off"}
-      - KickOff2FinalWhistle: {title_short:"[4P] Kick Off 2: Final Whistle"}
-      - LaserSquad: {title_short:"[2P] Laser Squad"}
-      - Leatherneck: {title_short:"[4P] Leatherneck"}
-      - Lemmings: {title_short:"[2P] Lemmings"}
-      - LethalXcess: {title_short:"[2P] Lethal Xcess"}
-      - Lotus: {title_short:"[2P] Lotus Esprit Turbo Challenge"}
-      - Lotus2: {title_short:"[2P] Lotus 2"}
-      - Lotus3: {title_short:"[2P] Lotus 3"}
-      - MarbleMadness: {title_short:"[2P] Marble Madness"}
-      - NaughtyOnes: {title_short:"[2P] Naughty Ones"}
-      - Nitro: {title_short:"[3P] Nitro"}
-      - NorthAndSouth: {title_short:"[2P] North & South"}
-      - OhNoMoreLemmings: {title_short:"[2P] Oh No! More Lemmings"}
-      - OilImperium: {title_short:"[4P] Oil Imperium"}
-      - OperationThunderbolt: {title_short:"[2P] Operation Thunderbolt"}
-      - Pang: {title_short:"[2P] Pang"}
-      - ParasolStars: {title_short:"[2P] Parasol Stars"}
-      - PortsOfCall: {title_short:"[4P] Ports of Call"}
-      - PuffysSaga: {title_short:"[2P] Puffy's Saga"}
-      - Qwak: {title_short:"[2P] Qwak"}
-      - RallyCrossChallenge: {title_short:"[4P] Rally Cross Challenge"}
-      - Rampart: {title_short:"[2P] Rampart"}
-      - Renegades: {title_short:"[2P] Renegades"}
-      - RodLand: {title_short:"[2P] Rod-Land"}
-      - SecondSamurai: {title_short:"[2P] Second Samurai"}
-      - SensibleGolf: {title_short:"[72P] Sensible Golf"}
-      - SensibleSoccer: {title_short:"[2P] Sensible Soccer"}
-      - SWOS9596: {title_short:"[2P] Sensible World of Soccer 95/96"}
-      - Settlers: {title_short:"[2P] Settlers"}
-      - Silkworm: {title_short:"[2P] Silkworm"}
-      - Skidmarks: {title_short:"[4P] Skidmarks"}
-      - SpaceCrusade&VoyageBeyond: {title_short:"[3P] Space Crusade"}
-      - Speedball: {title_short:"[2P] Speedball"}
-      - Speedball2: {title_short:"[2P] Speedball 2"}
-      - SpittingImage: {title_short:"[2P] Spitting Image"}
-      - SpyVsSpy: {title_short:"[2P] Spy vs. Spy"}
-      - SpyVsSpy2TheIslandCaper: {title_short:"[2P] Spy vs. Spy II"}
-      - SpyVsSpy3ArcticAntics: {title_short:"[2P] Spy vs. Spy III"}
-      - SuperCars2: {title_short:"[2P] Super Cars II"}
-      - SuperMethaneBros: {title_short:"[2P] Super Methane Bros"}
-      - SuperOffRoad: {title_short:"[3P] Super Off Road"}
-      - SuperSkidmarks: {title_short:"[4P] Super Skidmarks"}
-      - SuperTwintris: {title_short:"[2P] Super Twintris"}
-      - SWIV: {title_short:"[2P] SWIV"}
-      - TinyBobble: {title_short:"[2P] Tiny Bobble"}
-      - TopGear2: {title_short:"[2P] Top Gear 2"}
-      - TurboRaketti2Fi: {title_short:"[2P] TurboRaketti II"}
-      - TVSportsBasketball: {title_short:"[4P] TV Sports Basketball"}
-      - Twintris: {title_short:"[2P] Twintris"}
-      - Ugh: {title_short:"[2P] Ugh!"}
-      - Virocop: {title_short:"[2P] Virocop"}
-      - WizNLiz: {title_short:"[2P] Wiz 'n' Liz"}
-      - Worms: {title_short:"[4P] Worms"}
-      - WormsDC: {title_short:"[8P] Worms Director's Cut"}
-      - YoJoe: {title_short:"[2P] Yo! Joe"}
-      - ZanyGolf: {title_short:"[4P] Zany Golf"}
-      - ZOut: {title_short:"[2P] Z-Out"}
+      - AlienBreedSpecialEdition: { title_short: "[2P] Alien Breed Special Edition" }
+      - AlienBreedTA: { title_short: "[2P] Alien Breed Tower Assault" }
+      - AlienBreed2: { title_short: "[2P] Alien Breed 2" }
+      - AllTerrainRacing: { title_short: "[6P] All Terrain Racing" }
+      - ApidyaSpecialEdition: { title_short: "[2P] Apidya SE" }
+      - BadLands: { title_short: "[2P] BadLands" }
+      - Banshee: { title_short: "[2P] Banshee" }
+      - BattleSquadron: { title_short: "[2P] Battle Squadron" }
+      - BeachVolley: { title_short: "[2P] Beach Volley" }
+      - BloodMoney: { title_short: "[2P] Blood Money" }
+      - BrutalHomicide: { title_short: "[2P] Brutal Homicide" }
+      - BrutalHomicide2: { title_short: "[2P] Brutal Homicide 2" }
+      - BubbleBobble: { title_short: "[2P] Bubble Bobble" }
+      - ChambersOfShaolin: { title_short: "[2P] Chambers of Shaolin" }
+      - ChaosEngine: { title_short: "[2P] Chaos Engine" }
+      - ChaosEngine2: { title_short: "[2P] Chaos Engine 2" }
+      - DogsOfWar: { title_short: "[2P] Dogs of War" }
+      - DynaBlaster: { title_short: "[5P] Dyna Blaster" }
+      - EMotion: { title_short: "[2P] E-Motion" }
+      - EmeraldMine: { title_short: "[2P] Emerald Mine" }
+      - EmeraldMine2: { title_short: "[2P] Emerald Mine 2" }
+      - EmeraldMine3: { title_short: "[2P] Emerald Mine 3" }
+      - Firepower: { title_short: "[2P] Fire Power" }
+      - Gauntlet2: { title_short: "[4P] Gauntlet II" }
+      - Gauntlet3: { title_short: "[2P] Gauntlet III" }
+      - GreatCourts: { title_short: "[4P] Great Courts" }
+      - GreatCourts2: { title_short: "[4P] Great Courts 2" }
+      - IK+: { title_short: "[2P] IK+" }
+      - IkariWarriors: { title_short: "[2P] Ikari Warriors" }
+      - IndyHeat: { title_short: "[3P] Indy Heat" }
+      - KickOff: { title_short: "[2P] Kick Off" }
+      - KickOff2FinalWhistle: { title_short: "[4P] Kick Off 2: Final Whistle" }
+      - LaserSquad: { title_short: "[2P] Laser Squad" }
+      - Leatherneck: { title_short: "[4P] Leatherneck" }
+      - Lemmings: { title_short: "[2P] Lemmings" }
+      - LethalXcess: { title_short: "[2P] Lethal Xcess" }
+      - Lotus: { title_short: "[2P] Lotus Esprit Turbo Challenge" }
+      - Lotus2: { title_short: "[2P] Lotus 2" }
+      - Lotus3: { title_short: "[2P] Lotus 3" }
+      - MarbleMadness: { title_short: "[2P] Marble Madness" }
+      - NaughtyOnes: { title_short: "[2P] Naughty Ones" }
+      - Nitro: { title_short: "[3P] Nitro" }
+      - NorthAndSouth: { title_short: "[2P] North & South" }
+      - OhNoMoreLemmings: { title_short: "[2P] Oh No! More Lemmings" }
+      - OilImperium: { title_short: "[4P] Oil Imperium" }
+      - OperationThunderbolt: { title_short: "[2P] Operation Thunderbolt" }
+      - Pang: { title_short: "[2P] Pang" }
+      - ParasolStars: { title_short: "[2P] Parasol Stars" }
+      - PortsOfCall: { title_short: "[4P] Ports of Call" }
+      - PuffysSaga: { title_short: "[2P] Puffy's Saga" }
+      - Qwak: { title_short: "[2P] Qwak" }
+      - RallyCrossChallenge: { title_short: "[4P] Rally Cross Challenge" }
+      - Rampart: { title_short: "[2P] Rampart" }
+      - Renegades: { title_short: "[2P] Renegades" }
+      - RodLand: { title_short: "[2P] Rod-Land" }
+      - SecondSamurai: { title_short: "[2P] Second Samurai" }
+      - SensibleGolf: { title_short: "[72P] Sensible Golf" }
+      - SensibleSoccer: { title_short: "[2P] Sensible Soccer" }
+      - SWOS9596: { title_short: "[2P] Sensible World of Soccer 95/96" }
+      - Settlers: { title_short: "[2P] Settlers" }
+      - Silkworm: { title_short: "[2P] Silkworm" }
+      - Skidmarks: { title_short: "[4P] Skidmarks" }
+      - SpaceCrusade&VoyageBeyond: { title_short: "[3P] Space Crusade" }
+      - Speedball: { title_short: "[2P] Speedball" }
+      - Speedball2: { title_short: "[2P] Speedball 2" }
+      - SpittingImage: { title_short: "[2P] Spitting Image" }
+      - SpyVsSpy: { title_short: "[2P] Spy vs. Spy" }
+      - SpyVsSpy2TheIslandCaper: { title_short: "[2P] Spy vs. Spy II" }
+      - SpyVsSpy3ArcticAntics: { title_short: "[2P] Spy vs. Spy III" }
+      - SuperCars2: { title_short: "[2P] Super Cars II" }
+      - SuperMethaneBros: { title_short: "[2P] Super Methane Bros" }
+      - SuperOffRoad: { title_short: "[3P] Super Off Road" }
+      - SuperSkidmarks: { title_short: "[4P] Super Skidmarks" }
+      - SuperTwintris: { title_short: "[2P] Super Twintris" }
+      - SWIV: { title_short: "[2P] SWIV" }
+      - TinyBobble: { title_short: "[2P] Tiny Bobble" }
+      - TopGear2: { title_short: "[2P] Top Gear 2" }
+      - TurboRaketti2Fi: { title_short: "[2P] TurboRaketti II" }
+      - TVSportsBasketball: { title_short: "[4P] TV Sports Basketball" }
+      - Twintris: { title_short: "[2P] Twintris" }
+      - Ugh: { title_short: "[2P] Ugh!" }
+      - Virocop: { title_short: "[2P] Virocop" }
+      - WizNLiz: { title_short: "[2P] Wiz 'n' Liz" }
+      - Worms: { title_short: "[4P] Worms" }
+      - WormsDC: { title_short: "[8P] Worms Director's Cut" }
+      - YoJoe: { title_short: "[2P] Yo! Joe" }
+      - ZanyGolf: { title_short: "[4P] Zany Golf" }
+      - ZOut: { title_short: "[2P] Z-Out" }
     - AdventuresOfRobinHood
     - Agony
     - AirborneRanger
@@ -1227,7 +1227,7 @@
   - DenOfGeek-Underappreciated:
     - ordering: "ranked"
     - note: The Top 50 underappreciated Amiga games according to Den of Geek.
-    - image: {"op":"pi", "path":"list/denofgeek.jpg"}
+    - image: { op: "pi", path: "list/denofgeek.jpg" }
     - Stardust
     - NoSecondPrize
     - DynaBlaster
@@ -1280,7 +1280,7 @@
     - Resolution101
   - Kim Justice Platformers:
     - note: Nine obscure euro platformers that DON'T suck, according to Kim Justice.
-    - image: {"op":"pi", "path":"list/kimjustice_platformers.jpg"}
+    - image: { op: "pi", path: "list/kimjustice_platformers.jpg" }
     - Lionheart
     - Odyssey
     - Ugh
@@ -1293,7 +1293,7 @@
   - Kim Justice Top Psygnosis:
     - ordering: "ordered"
     - note: Kim Justice's top 10 favourite Psygnosis games (excluding a few non-Amiga games, including honorable mentions).
-    - image: {"op":"pi", "path":"list/kimjustice_psygnosis.jpg"}
+    - image: { op: "pi", path: "list/kimjustice_psygnosis.jpg" }
     - Lemmings
     - BillsTomatoGame
     - KillingGameShow
@@ -1309,7 +1309,7 @@
   - PIXEL thing - 45 Games:
     - ordering: "ordered"
     - note: 45 Games That Defined the AMIGA 500, according to It's a P/XEL thing.\n\n(Chronologically ordered.)
-    - image: {"op":"pi", "path":"list/pixelthing_45games.jpg"}
+    - image: { op: "pi", path: "list/pixelthing_45games.jpg" }
     - IK+
     - CarrierCommand
     - ShadowOfTheBeast
@@ -1357,7 +1357,7 @@
     - SWOS9596ECE
   - Racketboy Shmup Essentials:
     - note: The Commodore Amiga Shmup Library Essentials, according to The Knives and Herr Schatten of Racketboy.com.
-    - image: {"op":"pi", "path":"list/racketboy_shmups.jpg"}
+    - image: { op: "pi", path: "list/racketboy_shmups.jpg" }
     - Apidya
     - BattleSquadron
     - Uridium2
@@ -1365,7 +1365,7 @@
     - DeluxeGalaga
   - v's Recommended Games:
     - note: From /v/'s Recommended Games Wiki
-    - image: {"op":"pi", "path":"list/vgames.png"}
+    - image: { op: "pi", path: "list/vgames.png" }
     - Agony
     - AnotherWorld
     - Apidya
@@ -1396,7 +1396,7 @@
     - Turrican2
   - Wired - Most Influential:
     - note: Top 10 most influential Amiga games according to Wired.
-    - image: {"op":"pi", "path":"list/wired.png"}
+    - image: { op: "pi", path: "list/wired.png" }
     - DefenderOfTheCrown
     - SensibleSoccer
     - Speedball2
@@ -1410,7 +1410,7 @@
 
 - Decennial Spotlight:
   - note: 10 games for every year between 1986 and 1995. Cutting across genres to select the great and/or representative titles available at the time.\n\n(While the Amiga computer premiered mid-1985, hardware and software availability was very limited for the first months.)
-  - image: {"ops":{"op":"pi", "path":"top/spotlight.png"}, "size":[320,128], "scale":[1,1]}
+  - image: { ops: { op: "pi", path: "top/spotlight.png" }, size: [320, 128], scale: [1, 1] }
   - "1986":
     - image: { op: "tx", txt: "’86", size: 190 }
     - BardsTale
@@ -1534,14 +1534,14 @@
 
 - Gameographies:
   - note: Notable developer and artist gameographies.\n\n(All lists in chronological order.)
-  - image: {"ops":{"op":"pi", "path":"top/gameographies.png"}, "size":[320,128], "scale":[1,1]}
+  - image: { ops: { op: "pi", path: "top/gameographies.png" }, size: [320, 128], scale: [1, 1] }
   - "[ By Composer ]":
     - rank: 1
     - note: Games with music by notable composers.\n\n(Not necessarily complete lists.)
     - Chris Hülsbeck:
       - ordering: "release"
       - note: Arguably the most loved Amiga composer of all time, and also creator of the quite unique TFMX music software.
-      - image: {"op":"pi", "path":"chris_hülsbeck.jpg"}
+      - image: { op: "pi", path: "chris_hülsbeck.jpg" }
       - AdventuresOfQuik&Silva
       - Apidya
       - Apprentice
@@ -1576,7 +1576,7 @@
     - Jochen Hippel:
       - ordering: "release"
       - note: Hippel's music was for the most part primarily composed for Atari ST, but despite that (or even because of it!), his oevre is among the best to ever grace the Amiga.
-      - image: {"op":"pi", "path":"jochen_hippel.png"}
+      - image: { op: "pi", path: "jochen_hippel.png" }
       - 5thGear
       - Amberstar
       - Astaroth
@@ -1600,7 +1600,7 @@
     - Karsten Obarski:
       - ordering: "release"
       - note: Maker of the original Sound Tracker software, and virtuoso composer in the very early days of Amiga.
-      - image: {"op":"pi", "path":"karsten_obarski.png"}
+      - image: { op: "pi", path: "karsten_obarski.png" }
       - Amegas
       - BrandsHatch
       - CrystalHammerV2
@@ -1615,7 +1615,7 @@
     - Tim Follin:
       - ordering: "release"
       - note: The Amiga was Tim Follin's least favorite platform, and you can sort of tell... Still, Ghouls 'n Ghosts is a masterpiece.
-      - image: {"op":"pi", "path":"tim_follin_bw.png"}
+      - image: { op: "pi", path: "tim_follin_bw.png" }
       - BionicCommando
       - Gauntlet3
       - GhoulsNGhosts
@@ -1626,7 +1626,7 @@
   - Assembly Line, The:
     - ordering: "release"
     - note: While most known for helping out the Bitmap Bros on Xenon 2, the awesome and quirky puzzle games represent their finest work.
-    - image: {"op":"pi", "path":"logo/assembly_line.png"}
+    - image: { op: "pi", path: "logo/assembly_line.png" }
     - Cybercon3
     - EMotion
     - Exterminator
@@ -1637,7 +1637,7 @@
   - Bill Williams:
     - ordering: "release"
     - note: The Amiga's original auteur.
-    - image: {"op":"pi", "path":"bill_williams_bw.png"}
+    - image: { op: "pi", path: "bill_williams_bw.png" }
     - KnightsOfTheCrystallion
     - MindWalker
     - PioneerPlague
@@ -1645,7 +1645,7 @@
   - Bitmap Brothers:
     - ordering: "release"
     - note: The original "style over substance" game studio. Their catalogue is worth checking out for Dan Malone and Mark Coleman's exquisite pixeling style alone.
-    - image: {"op":"pi", "path":"logo/bitmap_brothers.png"}
+    - image: { op: "pi", path: "logo/bitmap_brothers.png" }
     - Cadaver&ThePayoff
     - Cadaver&ThePayoff--TPO
     - ChaosEngine
@@ -1659,7 +1659,7 @@
   - Blue Byte:
     - ordering: "release"
     - note: Purveyors of fine strategy games (and tennis!).
-    - image: {"op":"pi", "path":"logo/blue_byte.png"}
+    - image: { op: "pi", path: "logo/blue_byte.png" }
     - Atomino
     - BattleIsle&DataDisks
     - BattleIsle&DataDisks--Intro
@@ -1676,7 +1676,7 @@
   - Brøderbund:
     - ordering: "release"
     - note: Don't get fooled by the name - Brøderbund is about as American as it gets in the Amiga library.
-    - image: {"op":"pi", "path":"logo/broderbund.png"}
+    - image: { op: "pi", path: "logo/broderbund.png" }
     - DownhillChallenge
     - PrinceOfPersia
     - ShufflepuckCafe
@@ -1688,7 +1688,7 @@
   - Cinemaware:
     - ordering: "release"
     - note: Pioneers of cinematic videogame storytelling.
-    - image: {"op":"pi", "path":"logo/cinemaware.png"}
+    - image: { op: "pi", path: "logo/cinemaware.png" }
     - DefenderOfTheCrown
     - ItCameFromTheDesert
     - ItCameFromTheDesert2
@@ -1706,7 +1706,7 @@
   - Delphine Software:
     - ordering: "release"
     - note: The quintessential French Touch publisher.
-    - image: {"op":"pi", "path":"logo/delphine_software.png"}
+    - image: { op: "pi", path: "logo/delphine_software.png" }
     - AnotherWorld
     - AnotherWorldLostLevel
     - BioChallenge
@@ -1719,7 +1719,7 @@
   - Digital Illusions:
     - ordering: "release"
     - note: The Swedish faction of famed demo group The Silents that started the Amiga pinball craze and went on to become DICE.
-    - image: {"op":"pi", "path":"logo/digital_illusions.png"}
+    - image: { op: "pi", path: "logo/digital_illusions.png" }
     - Amiganoid
     - Benefactor
     - PinballDreams
@@ -1728,7 +1728,7 @@
   - DMA Design:
     - ordering: "release"
     - note: From humble beginnings to Lemmings, to Grand Theft Auto.
-    - image: {"op":"pi", "path":"logo/dma_design.png"}
+    - image: { op: "pi", path: "logo/dma_design.png" }
     - AllNewWorldOfLemmings
     - BloodMoney
     - HiredGuns
@@ -1740,7 +1740,7 @@
   - Factor 5:
     - ordering: "release"
     - note: Creators of the iconic Amiga ports of the Turrican series.
-    - image: {"op":"pi", "path":"logo/factor_5.png"}
+    - image: { op: "pi", path: "logo/factor_5.png" }
     - BCKid
     - Denaris
     - Katakis
@@ -1752,7 +1752,7 @@
   - Graftgold:
     - ordering: "release"
     - note: The studio founded by ZX Spectrum legends Steve Turner and Andrew Braybrook that delivered both original games and arcade conversions of excellent quality.
-    - image: {"op":"pi", "path":"logo/graftgold.png"}
+    - image: { op: "pi", path: "logo/graftgold.png" }
     - EmpireSoccer94
     - FireAndIce
     - Paradroid90
@@ -1765,14 +1765,14 @@
   - Horror Soft:
     - ordering: "release"
     - note: The original and best developer specializing in pulp horror.
-    - image: {"op":"pi", "path":"logo/horror_soft.png"}
+    - image: { op: "pi", path: "logo/horror_soft.png" }
     - Elvira
     - Elvira2
     - PersonalNightmare
     - Waxworks
   - Llamasoft:
     - note: Jeff Minter is the Yak.
-    - image: {"op":"pi", "path":"logo/llamasoft.png"}
+    - image: { op: "pi", path: "logo/llamasoft.png" }
     - Defender2
     - Llamatron
     - RevengeOfMutantCamels
@@ -1781,7 +1781,7 @@
   - Lucasfilm:
     - ordering: "release"
     - note: The studio that defined the silver age of point and click adventure games.
-    - image: {"op":"pi", "path":"logo/lucasfilm_games.png"}
+    - image: { op: "pi", path: "logo/lucasfilm_games.png" }
     - Battlehawks1942
     - IndianaJonesAtlantisAct
     - IndianaJonesAtlantisAdv
@@ -1795,7 +1795,7 @@
   - Magnetic Fields:
     - ordering: "release"
     - note: Good games, great opening ident.
-    - image: {"op":"pi", "path":"logo/magnetic_fields.png"}
+    - image: { op: "pi", path: "logo/magnetic_fields.png" }
     - CrystalDragon
     - KidChaos
     - Kikstart2
@@ -1810,7 +1810,7 @@
   - Ocean France:
     - ordering: "release"
     - note: Noteworthy for managing to put an unmistakably french touch into arcade conversions.
-    - image: {"op":"pi", "path":"logo/ocean.png"}
+    - image: { op: "pi", path: "logo/ocean.png" }
     - BadDudesVsDragonNinja
     - BeachVolley
     - Cabal
@@ -1824,7 +1824,7 @@
   - Random Access, Storm:
     - ordering: "release"
     - note: Purveyors of fine arcade conversions.
-    - image: {"op":"pi", "path":"logo/sales_curve.png"}
+    - image: { op: "pi", path: "logo/sales_curve.png" }
     - BigRun
     - FinalBlow
     - IndyHeat
@@ -1838,7 +1838,7 @@
   - Reflections:
     - ordering: "release"
     - note: One of the best teams under Psygnosis' wings.
-    - image: {"op":"pi", "path":"logo/reflections.png"}
+    - image: { op: "pi", path: "logo/reflections.png" }
     - Awesome
     - Ballistix
     - BrianTheLion
@@ -1848,7 +1848,7 @@
   - reLINE:
     - ordering: "release"
     - note: The premier West German Amiga publisher.
-    - image: {"op":"pi", "path":"logo/reline.png"}
+    - image: { op: "pi", path: "logo/reline.png" }
     - Amegas
     - CrystalHammerV2
     - Dyter07
@@ -1859,7 +1859,7 @@
   - Sensible Software:
     - ordering: "release"
     - note: Probably the Amiga developer with the most idiosyncratic style of game design.
-    - image: {"op":"pi", "path":"logo/sensible_software.png"}
+    - image: { op: "pi", path: "logo/sensible_software.png" }
     - CannonFodder
     - CannonFodder2
     - CannonFodder2AlienLevels
@@ -1880,7 +1880,7 @@
   - Sierra On-Line:
     - ordering: "release"
     - note: The publisher that defined the golden age of adventure games.
-    - image: {"op":"pi", "path":"logo/sierra.png"}
+    - image: { op: "pi", path: "logo/sierra.png" }
     - BlackCauldron
     - CastleOfDrBrain
     - CodeNameIceman
@@ -1915,7 +1915,7 @@
   - Thalion:
     - ordering: "release"
     - note: The premier Atari ST developer.
-    - image: {"op":"pi", "path":"logo/thalion.png"}
+    - image: { op: "pi", path: "logo/thalion.png" }
     - Ambermoon
     - Amberstar
     - ChambersOfShaolin
@@ -1934,13 +1934,13 @@
   - Travellers Tales:
     - ordering: "release"
     - note: A short but sweet gameography from the developers who would go on to consistently push the limits of any platform they work on.
-    - image: {"op":"pi", "path":"logo/travellers_tales.png"}
+    - image: { op: "pi", path: "logo/travellers_tales.png" }
     - Leander
     - Puggsy
   - Vectordean:
     - ordering: "release"
     - note: An incredibly solid list of works by a developer that gained relatively little recognition.
-    - image: {"op":"pi", "path":"logo/vectordean.png"}
+    - image: { op: "pi", path: "logo/vectordean.png" }
     - AquaticGames
     - BadCompany
     - DogsOfWar
@@ -1952,7 +1952,7 @@
   - Westwood:
     - ordering: "release"
     - note: An American PC powerhouse that poured commendable effort into the Amiga.
-    - image: {"op":"pi", "path":"logo/westwood.png"}
+    - image: { op: "pi", path: "logo/westwood.png" }
     - Battletech
     - CaliforniaGames
     - DragonStrike
@@ -1970,7 +1970,7 @@
 
 - Focus:
   - note: Lists curated with specialized theme or focus.
-  - image: {"ops":{"op":"pi", "path":"top/focus.png"}, "size":[320,128], "scale":[1,1]}
+  - image: { ops: { op: "pi", path: "top/focus.png" }, size: [320, 128], scale: [1, 1] }
   - Amiga Exclusives:
     - note: A selection of games exclusive to the Amiga platform.
     - Agony
@@ -2229,7 +2229,7 @@
 
 - Multiplayer:
   - note: Lists of games for more than one player.
-  - image: {"ops":{"op":"pi", "path":"top/multiplayer.png"}, "size":[320,128], "scale":[1,1]}
+  - image: { ops: { op: "pi", path: "top/multiplayer.png" }, size: [320, 128], scale: [1, 1] }
   - Best of Multiplayer:
     - note: Our top picks for multiplayer action.
     - BattleIsle
@@ -2925,7 +2925,7 @@
 
 - Special Hardware:
   - note: Games with support for special controllers & peripherals.
-  - image: {"ops":{"op":"pi", "path":"top/peripheral.png"}, "size":[320,128], "scale":[1,1]}
+  - image: { ops: { op: "pi", path: "top/peripheral.png" }, size: [320, 128], scale: [1, 1] }
   - Modem or Serial Link:
     - note: Games with local and/or remote multiplayer support.
     - AlienBreed3D2
@@ -3007,7 +3007,7 @@
     - SpaceQuest4NTSCMT32
     - SpaceQuestEnhanced--MT32
 
-- '[ Demo Scene ]':
+- "[ Demo Scene ]":
   - note: A sample of demo scene releases.
   - All Time Favorites:
     - note: Seminal, or otherwise significant, releases according to 1.000.000 BOYS aka Megaboys.
