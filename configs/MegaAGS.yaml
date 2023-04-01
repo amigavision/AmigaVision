@@ -1,7 +1,7 @@
 --- # AGS2 Menu structure
 - About:
   - rank: 1
-  - note: 'MEGA AGS 2022.11.22'
+  - note: 'MEGA AGS 2023.04.05'
   - Nothing to see here:
     - rank: 1
     - note: Intentionally left blank.
@@ -846,7 +846,7 @@
       - GreatCourts2: {title_short:"[4P] Great Courts 2"}
       - IK+: {title_short:"[2P] IK+"}
       - IkariWarriors: {title_short:"[2P] Ikari Warriors"}
-      - IndyHeat: {title_short:"[3P] Indy Heat"} 
+      - IndyHeat: {title_short:"[3P] Indy Heat"}
       - KickOff: {title_short:"[2P] Kick Off"}
       - KickOff2FinalWhistle: {title_short:"[4P] Kick Off 2: Final Whistle"}
       - LaserSquad: {title_short:"[2P] Laser Squad"}
@@ -900,7 +900,7 @@
       - Ugh: {title_short:"[2P] Ugh!"}
       - Virocop: {title_short:"[2P] Virocop"}
       - WizNLiz: {title_short:"[2P] Wiz 'n' Liz"}
-      - Worms: {title_short:"[4P] Worms"} 
+      - Worms: {title_short:"[4P] Worms"}
       - WormsDC: {title_short:"[8P] Worms Director's Cut"}
       - YoJoe: {title_short:"[2P] Yo! Joe"}
       - ZanyGolf: {title_short:"[4P] Zany Golf"}
