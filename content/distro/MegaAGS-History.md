@@ -4,18 +4,18 @@
 
 ## 2023.04.05
 
-* New, dedicated `Amiga` and `Amiga 500` setups for ease of switching on MiSTer, this lets you have the best of both worlds: Easy HD-based games/demo setup, and a cycle-accurate floppy-based Amiga 500 for running ADF games and demos when needed.
-* Optional `Amiga 500HD` and `Amiga 600HD` setups for those of you looking to explore Workbench 1.3 and 2.x as period-accurate HD setups — these both support the MiSTer shared drive and use the PFS file system for robustness
-* Content: Up to date with [WHDLoad] as of 2023.03.03
-* Content: Lots of new disk magazines and demos
-* Menu: significantly faster load times when entering lists
-* Menu: Jump-to-letter using keyboard
-* Menu: Go to parent list using secondary/blue/B button from a gamepad/joystick (you can enable the old behaviour with an explicit "Back" entry in `Options`)
-* Menu: Support for chronological sorting (not dynamic, but pre-set in certain lists like "Disk magazines, by release date")
-* Menu: Natural sorting: the launcher will now sort e.g. Turrican, Turrican II, Turrican 3 in that order instead of a straight ASCII sort
-* Menu: New "look and feel"
-* Misc: Super Attract Mode integration
-* Misc: Added `MegaAGS-Extras` archive with alternative MGL based configs and PFS-formatted `Saves` HDF images in various sizes
+* This new version makes use of MiSTer's recently introduced `MGL` support to supply convenient, dedicated `Amiga` and `Amiga 500` setups for ease of switching on MiSTer. This lets you have the best of both worlds: An everyday, easy HD-based games/demo setup, as well as a cycle-accurate floppy-based Amiga 500 for running ADF games and demos when necessary.
+* New, optional `Amiga 500HD` and `Amiga 600HD` setups are included for those of you looking to explore Workbench 1.3 and 2.x as period-accurate HD setups — these both support the MiSTer shared drive and use the PFS file system for robustness. See the `Extras` part if you are interested in these.
+* Up to date with the latest WHDLoad games and demos as of 2023.03.03.
+* Lots of new disk magazines and demos.
+* Significantly faster load times when entering lists in the launcher.
+* Jump-to-letter using keyboard in the launcher.
+* Launcher now supports going to the parent list using secondary/blue/B button from a gamepad/joystick, or using backspace on the keyboard. You can enable the old behaviour with an explicit "Back" entry in `Options` if you prefer the old behavior.
+* Launcher supports chronological sorting, pre-set in certain lists like "Disk magazines, by release date", which is a great way to follow the history of the Amiga demo scene in the 90s, as written by the demo scene members.
+* Natural sorting: the launcher will now sort e.g. Turrican, Turrican II, Turrican 3 in that order instead of a straight ASCII sort.
+* New "look and feel" for the launcher.
+* MiSTer Super Attract Mode integration added.
+* `MegaAGS-Extras` section added, with alternative MGL based configs and convenient PFS-formatted `Saves` HDF images in various sizes. See the dedicated documentation included for more detail.
 
 ## 2022.06.06
 
