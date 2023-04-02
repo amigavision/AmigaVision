@@ -2,9 +2,11 @@
 
 (This is a partial version history reconstructed from earlier releases, some features may be missing)
 
-## 2023.03.03
+## 2023.04.05
 
-* Content: Up to date with [WHDLoad] as of 2022.11.11
+* New, dedicated `Amiga` and `Amiga 500` setups for ease of switching on MiSTer, this lets you have the best of both worlds: Easy HD-based games/demo setup, and a cycle-accurate floppy-based Amiga 500 for running ADF games and demos when needed.
+* Optional `Amiga 500HD` and `Amiga 600HD` setups for those of you looking to explore Workbench 1.3 and 2.x as period-accurate HD setups — these both support the MiSTer shared drive and use the PFS file system for robustness
+* Content: Up to date with [WHDLoad] as of 2023.03.03
 * Content: Lots of new disk magazines and demos
 * Menu: significantly faster load times when entering lists
 * Menu: Jump-to-letter using keyboard
@@ -13,7 +15,7 @@
 * Menu: Natural sorting: the launcher will now sort e.g. Turrican, Turrican II, Turrican 3 in that order instead of a straight ASCII sort
 * Menu: New "look and feel"
 * Misc: Super Attract Mode integration
-* Misc: Added `MegaAGS-Extras` archive with alternative MGL based configs and video settings
+* Misc: Added `MegaAGS-Extras` archive with alternative MGL based configs and PFS-formatted `Saves` HDF images in various sizes
 
 ## 2022.06.06
 
@@ -34,8 +36,8 @@
 * MT-32 MIDI game support
 * New custom 40:27 aspect ratio
 
-## 2022.XX.XX
+## 2021.03.13
 
-* Introduced per-game 5×PAL dynamic crop for 1200+ games
+* Introduced per-game 5×PAL dynamic crop for 1200+ games, see https://amiga.vision/5x for full details
 
 [WHDLoad]:http://whdload.de/news.html
