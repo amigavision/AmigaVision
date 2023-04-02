@@ -2,6 +2,10 @@
 
 In addition to the main setup, we include some additional images and convenience functions that may be of interest to the Amiga connoisseur.
 
+## `menu.png`
+
+A rendering of a classic wood-paneled teenager's room with an Amiga monitor, joystick and some computer manuals and floppies as a frame for the MiSTer menu. Drop it into to the root of your MiSTer file system for maximum nostalgia when booting up your device. Rendering by Ralf Ostertag (2010), licensed under Creative Commons.
+
 ## Amiga 500HD Setup
 
 This hard disk setup aims to recreate an Amiga 500 with Kickstart/Workbench 1.3, the setup of an Amiga 500/1000/2000 power user from around 1989. Think Amiga 500 with a GVP HD8+ or A590 attached, supplying a hard disk and memory expansion.
