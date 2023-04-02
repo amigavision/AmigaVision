@@ -105,6 +105,7 @@ assign INCLUDE: LIBS:include
 assign APPS: SYS:Apps
 assign Dev: APPS:Dev
 
+assign CSH: SYS:Tools/csh
 assign vim: SYS:Tools/vim
 assign home: S:
 path vim:
