@@ -41,3 +41,23 @@
 * Introduced per-game 5×PAL dynamic crop for 1200+ games, see https://amiga.vision/5x for full details
 
 [WHDLoad]:http://whdload.de/news.html
+
+## 2020.11.16
+
+* RTG support for high-resolution graphics up to 1920×1080 in Workbench
+* WHDLoad updates
+
+## 2020.05.16
+
+* Disk Mag category added
+* Crack Intro category added
+* WHDLoad updates
+
+## 2020.05.05
+
+* Support for the HD720 graphics driver, up to 720p using the original AGA chipset
+* WHDLoad updates
+
+## 2019.10.09
+
+* Initial release of MegaAGS
