@@ -4,7 +4,7 @@ In addition to the main setup, we include some additional images and convenience
 
 ## Custom MiSTer background image
 
-A rendering of a classic wood-paneled teenager's room with an Amiga monitor, joystick and some computer manuals and floppies as a frame for the MiSTer menu. Drop `menu.png` into to the root of your MiSTer file system for maximum nostalgia when booting up your device. Rendering by Ralf Ostertag (2010), licensed under Creative Commons.
+A rendering of a classic wood-paneled teenager's room with the legendary Commodore 1084 monitor, joystick and some computer manuals and floppies as a frame for the MiSTer menu. Drop `menu.png` into to the root of your MiSTer file system for maximum nostalgia when booting up your device. Rendering by Ralf Ostertag (2010), licensed under Creative Commons.
 
 ## Custom fonts for the MiSTer OSD 
 
@@ -46,11 +46,11 @@ We recommend using the separate, dedicated Amiga 500 setup for ADF format game d
 
 **Quick setup:**
 
-* Copy MGL file to /_Computer
-* Copy config file to /config
-* Copy the A500HD directory and its contents to /games
+* Copy MGL file to `/_Computer`
+* Copy config files to `/config`
+* Copy the A500HD directory and its contents to `/games`
 * Cold reboot the MiSTer
-* You now have a dedicated entry for "Amiga 500HD" in the MiSTer menu
+* You now have a dedicated entry for `Amiga 500HD` in the MiSTer menu
 
 ## Amiga 600HD Setup
 
@@ -75,11 +75,11 @@ We recommend using the separate, dedicated Amiga 500 setup for ADF format game d
 
 **Quick setup:**
 
-* Copy MGL file to /_Computer
-* Copy config file to /config
-* Copy the A600HD directory and its contents to /games
+* Copy MGL file to `/_Computer`
+* Copy config files to `/config`
+* Copy the A600HD directory and its contents to `/games`
 * Cold reboot the MiSTer
-* You now have a dedicated entry for "Amiga 600HD" in the MiSTer menu
+* You now have a dedicated entry for `Amiga 600HD` in the MiSTer menu
 
 # Empty PFS Save Images
 
@@ -87,4 +87,4 @@ We have included several larger sizes of pre-formatted PFS `MegaAGS-Saves.hdf` f
 
 The main MegaAGS image will check for `Saves:custom-startup` and execute that when found. This lets you e.g. copy any custom settings to `ENV:` as part of the startup, so you can have your own Workbench, Directory Opus and custom application installs on a separate hard drive that survives upgrades to the main MegaAGS image.
 
-Note that these are contained in a 7zip archive file to make sure they don't take any additional space in the main archive. Only unpack these if you intend to use them, as they will take up several gigabytes of storage if you do.
+Note that these are contained in a 7zip archive file to make sure they don't take any additional space in the main archive. Only unpack these if you intend to use them, as they will take up quite a bit of storage if you do.
