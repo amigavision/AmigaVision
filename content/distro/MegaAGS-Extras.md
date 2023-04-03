@@ -2,9 +2,9 @@
 
 In addition to the main setup, we include some additional images and convenience functions that may be of interest to the Amiga connoisseur.
 
-## `menu.png`
+## Custom MiSTer background image
 
-A rendering of a classic wood-paneled teenager's room with an Amiga monitor, joystick and some computer manuals and floppies as a frame for the MiSTer menu. Drop it into to the root of your MiSTer file system for maximum nostalgia when booting up your device. Rendering by Ralf Ostertag (2010), licensed under Creative Commons.
+A rendering of a classic wood-paneled teenager's room with an Amiga monitor, joystick and some computer manuals and floppies as a frame for the MiSTer menu. Drop `menu.png` into to the root of your MiSTer file system for maximum nostalgia when booting up your device. Rendering by Ralf Ostertag (2010), licensed under Creative Commons.
 
 ## Custom fonts for the MiSTer OSD 
 
