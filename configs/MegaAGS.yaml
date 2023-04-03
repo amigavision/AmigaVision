@@ -816,11 +816,11 @@
   - Alex Limi's Collection:
     - note: Amiga games worth your time, according to Alex Limi.
     - Multiplayer:
+      - ordering: "ordered"
       - note: Show only the multiplayer games.
+      - AlienBreed2: { title_short: "[2P] Alien Breed 2" }
       - AlienBreedSpecialEdition: { title_short: "[2P] Alien Breed Special Edition" }
       - AlienBreedTA: { title_short: "[2P] Alien Breed Tower Assault" }
-      - AlienBreed2: { title_short: "[2P] Alien Breed 2" }
-      - AllTerrainRacing: { title_short: "[6P] All Terrain Racing" }
       - ApidyaSpecialEdition: { title_short: "[2P] Apidya SE" }
       - BadLands: { title_short: "[2P] BadLands" }
       - Banshee: { title_short: "[2P] Banshee" }
@@ -834,23 +834,16 @@
       - ChaosEngine: { title_short: "[2P] Chaos Engine" }
       - ChaosEngine2: { title_short: "[2P] Chaos Engine 2" }
       - DogsOfWar: { title_short: "[2P] Dogs of War" }
-      - DynaBlaster: { title_short: "[5P] Dyna Blaster" }
-      - EMotion: { title_short: "[2P] E-Motion" }
       - EmeraldMine: { title_short: "[2P] Emerald Mine" }
       - EmeraldMine2: { title_short: "[2P] Emerald Mine 2" }
       - EmeraldMine3: { title_short: "[2P] Emerald Mine 3" }
+      - EMotion: { title_short: "[2P] E-Motion" }
       - Firepower: { title_short: "[2P] Fire Power" }
-      - Gauntlet2: { title_short: "[4P] Gauntlet II" }
       - Gauntlet3: { title_short: "[2P] Gauntlet III" }
-      - GreatCourts: { title_short: "[4P] Great Courts" }
-      - GreatCourts2: { title_short: "[4P] Great Courts 2" }
       - IK+: { title_short: "[2P] IK+" }
       - IkariWarriors: { title_short: "[2P] Ikari Warriors" }
-      - IndyHeat: { title_short: "[3P] Indy Heat" }
       - KickOff: { title_short: "[2P] Kick Off" }
-      - KickOff2FinalWhistle: { title_short: "[4P] Kick Off 2: Final Whistle" }
       - LaserSquad: { title_short: "[2P] Laser Squad" }
-      - Leatherneck: { title_short: "[4P] Leatherneck" }
       - Lemmings: { title_short: "[2P] Lemmings" }
       - LethalXcess: { title_short: "[2P] Lethal Xcess" }
       - Lotus: { title_short: "[2P] Lotus Esprit Turbo Challenge" }
@@ -858,28 +851,20 @@
       - Lotus3: { title_short: "[2P] Lotus 3" }
       - MarbleMadness: { title_short: "[2P] Marble Madness" }
       - NaughtyOnes: { title_short: "[2P] Naughty Ones" }
-      - Nitro: { title_short: "[3P] Nitro" }
       - NorthAndSouth: { title_short: "[2P] North & South" }
       - OhNoMoreLemmings: { title_short: "[2P] Oh No! More Lemmings" }
-      - OilImperium: { title_short: "[4P] Oil Imperium" }
       - OperationThunderbolt: { title_short: "[2P] Operation Thunderbolt" }
       - Pang: { title_short: "[2P] Pang" }
       - ParasolStars: { title_short: "[2P] Parasol Stars" }
-      - PortsOfCall: { title_short: "[4P] Ports of Call" }
       - PuffysSaga: { title_short: "[2P] Puffy's Saga" }
       - Qwak: { title_short: "[2P] Qwak" }
-      - RallyCrossChallenge: { title_short: "[4P] Rally Cross Challenge" }
       - Rampart: { title_short: "[2P] Rampart" }
       - Renegades: { title_short: "[2P] Renegades" }
       - RodLand: { title_short: "[2P] Rod-Land" }
       - SecondSamurai: { title_short: "[2P] Second Samurai" }
-      - SensibleGolf: { title_short: "[72P] Sensible Golf" }
       - SensibleSoccer: { title_short: "[2P] Sensible Soccer" }
-      - SWOS9596: { title_short: "[2P] Sensible World of Soccer 95/96" }
       - Settlers: { title_short: "[2P] Settlers" }
       - Silkworm: { title_short: "[2P] Silkworm" }
-      - Skidmarks: { title_short: "[4P] Skidmarks" }
-      - SpaceCrusade&VoyageBeyond: { title_short: "[3P] Space Crusade" }
       - Speedball: { title_short: "[2P] Speedball" }
       - Speedball2: { title_short: "[2P] Speedball 2" }
       - SpittingImage: { title_short: "[2P] Spitting Image" }
@@ -888,23 +873,39 @@
       - SpyVsSpy3ArcticAntics: { title_short: "[2P] Spy vs. Spy III" }
       - SuperCars2: { title_short: "[2P] Super Cars II" }
       - SuperMethaneBros: { title_short: "[2P] Super Methane Bros" }
-      - SuperOffRoad: { title_short: "[3P] Super Off Road" }
-      - SuperSkidmarks: { title_short: "[4P] Super Skidmarks" }
       - SuperTwintris: { title_short: "[2P] Super Twintris" }
       - SWIV: { title_short: "[2P] SWIV" }
+      - SWOS9596: { title_short: "[2P] Sensible World of Soccer 95/96" }
       - TinyBobble: { title_short: "[2P] Tiny Bobble" }
       - TopGear2: { title_short: "[2P] Top Gear 2" }
       - TurboRaketti2Fi: { title_short: "[2P] TurboRaketti II" }
-      - TVSportsBasketball: { title_short: "[4P] TV Sports Basketball" }
       - Twintris: { title_short: "[2P] Twintris" }
       - Ugh: { title_short: "[2P] Ugh!" }
       - Virocop: { title_short: "[2P] Virocop" }
       - WizNLiz: { title_short: "[2P] Wiz 'n' Liz" }
-      - Worms: { title_short: "[4P] Worms" }
-      - WormsDC: { title_short: "[8P] Worms Director's Cut" }
       - YoJoe: { title_short: "[2P] Yo! Joe" }
-      - ZanyGolf: { title_short: "[4P] Zany Golf" }
       - ZOut: { title_short: "[2P] Z-Out" }
+      - IndyHeat: { title_short: "[3P] Indy Heat" }
+      - Nitro: { title_short: "[3P] Nitro" }
+      - SpaceCrusade&VoyageBeyond: { title_short: "[3P] Space Crusade" }
+      - SuperOffRoad: { title_short: "[3P] Super Off Road" }
+      - Gauntlet2: { title_short: "[4P] Gauntlet II" }
+      - GreatCourts: { title_short: "[4P] Great Courts" }
+      - GreatCourts2: { title_short: "[4P] Great Courts 2" }
+      - KickOff2FinalWhistle: { title_short: "[4P] Kick Off 2: Final Whistle" }
+      - Leatherneck: { title_short: "[4P] Leatherneck" }
+      - OilImperium: { title_short: "[4P] Oil Imperium" }
+      - PortsOfCall: { title_short: "[4P] Ports of Call" }
+      - RallyCrossChallenge: { title_short: "[4P] Rally Cross Challenge" }
+      - Skidmarks: { title_short: "[4P] Skidmarks" }
+      - SuperSkidmarks: { title_short: "[4P] Super Skidmarks" }
+      - TVSportsBasketball: { title_short: "[4P] TV Sports Basketball" }
+      - Worms: { title_short: "[4P] Worms" }
+      - ZanyGolf: { title_short: "[4P] Zany Golf" }
+      - DynaBlaster: { title_short: "[5P] Dyna Blaster" }
+      - AllTerrainRacing: { title_short: "[6P] All Terrain Racing" }
+      - WormsDC: { title_short: "[8P] Worms Director's Cut" }
+      - SensibleGolf: { title_short: "[72P] Sensible Golf" }
     - AdventuresOfRobinHood
     - Agony
     - AirborneRanger
