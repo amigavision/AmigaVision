@@ -6,6 +6,23 @@ In addition to the main setup, we include some additional images and convenience
 
 A rendering of a classic wood-paneled teenager's room with an Amiga monitor, joystick and some computer manuals and floppies as a frame for the MiSTer menu. Drop it into to the root of your MiSTer file system for maximum nostalgia when booting up your device. Rendering by Ralf Ostertag (2010), licensed under Creative Commons.
 
+## Custom fonts for the MiSTer OSD 
+
+To complete the Amiga look using the menu background above, you probably want the fonts to match.
+
+We have included a custom font that looks like Topaz from both AmigaOS 1.3 and 2.0 for use in the MiSTer menu. To use these, edit `MiSTer.ini` to have *one* of the following values for the `font` property, depending on which one you prefer:
+
+```
+font=fonts/Topaz13.pf
+font=fonts/Topaz20.pf
+```
+
+There's also a custom font from Optiroc that mimics the classic Sega AM2 look with special treatments for loading progress bars, and is also a great option you should check out:
+
+```
+font=fonts/OptirocAM2.pf
+```
+
 ## Amiga 500HD Setup
 
 This hard disk setup aims to recreate an Amiga 500 with Kickstart/Workbench 1.3, the setup of an Amiga 500/1000/2000 power user from around 1989. Think Amiga 500 with a GVP HD8+ or A590 attached, supplying a hard disk and memory expansion.
