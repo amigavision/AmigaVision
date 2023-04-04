@@ -871,7 +871,7 @@
       - SpyVsSpy: { title_short: "[2P] Spy vs. Spy" }
       - SpyVsSpy2TheIslandCaper: { title_short: "[2P] Spy vs. Spy II" }
       - SpyVsSpy3ArcticAntics: { title_short: "[2P] Spy vs. Spy III" }
-      - SuperCars2: { title_short: "[2P] Super Cars II" }
+      - SuperCars2AGA: { title_short: "[2P] Super Cars II" }
       - SuperMethaneBros: { title_short: "[2P] Super Methane Bros" }
       - SuperTwintris: { title_short: "[2P] Super Twintris" }
       - SWIV: { title_short: "[2P] SWIV" }
@@ -1171,7 +1171,7 @@
     - StuntCarRacer
     - StuntCarRacerTNT
     - SuperCars
-    - SuperCars2
+    - SuperCars2AGA
     - Superfrog
     - SuperMethaneBros
     - SuperOffRoad
