@@ -10,7 +10,7 @@ A rendering of a classic wood-paneled teenager's room with the legendary Commodo
 
 To complete the Amiga look using the menu background above, you probably want the fonts to match.
 
-We have included a custom font that looks like Topaz from both AmigaOS 1.3 and 2.0 for use in the MiSTer menu. To use these, edit `MiSTer.ini` to have *one* of the following values for the `font` property, depending on which one you prefer:
+We have included a custom font that looks like Topaz from both AmigaOS 1.3 and 2.0 for use in the MiSTer menu. To use these, copy the files to MiSTer's `fonts/` directory, and edit `MiSTer.ini` to have *one* of the following values for the `font` property, depending on which one you prefer:
 
 ```
 font=fonts/Topaz13.pf
