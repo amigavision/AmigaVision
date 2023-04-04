@@ -61,7 +61,6 @@ This is implemented as a separate MGL file and directory setup for MiSTer, letti
 In addition, the image includes:
 
 * MiSTer `shared/` directory support to facilitate easy sharing of files between MiSTer's file system and the Amiga file system
-* Custom patch for Kickstart 1.3 for HD support
 * PFS file system that protects against accidental file system corruption if restarted during a write operation
 * Launch menu in Workbench for common applications
 
