@@ -224,6 +224,18 @@ You can of course set your own scanline and shadow mask presets in MiSTer's menu
 
 If you are using resolutions lower than 1080p, 1440p or 1536p, we recommend turning them off, but since most MiSTer users are on 1080p/4K TVs (or analog CRTs), they are on by default.
 
+### Should I worry about Amiga viruses?
+
+In short: No. 
+
+Viruses on the Amiga were quite common, and some retail games even shipped with infected disks in the box. 
+
+Even though we don't control what's being used as inputs to the script that create the MegaAGS image, pretty much all games and demos run inside WHDL containers, you can think of them as "virtualization for the Amiga". Their job is to insulate the game from the rest of the system, reset CPU vectors, and other system state preservation. So even if a game or demo contains a virus, it cannot stay resident in memory, and will not spread to the rest of the system outside of the sandbox it has been given.
+
+If you want to check the state of a given setup, or whether you have viruses in memory, just run the included VirusZ scanner in the System folder. Again, if you see virus warnings inside of WHDLoad containers, it's nothing to worry about.
+
+We check all files that are under our control for viruses before release.
+
 ### I can't get the game started from its title screen! Do I ever need to use "Joystick Swap"?
 
 Unless you are using the "Arcadia Systems" games (see below), no. On the Commodore 64, games sometimes used Port 1 and sometimes Port 2 for controlling games, necessitating this setting; but since the (Commodore) Amiga shipped with a mouse and it was always plugged into port 1, the main controller is pretty much always connected to port 2. 
