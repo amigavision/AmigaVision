@@ -230,7 +230,7 @@ In short: No.
 
 Viruses on the Amiga were quite common, and some retail games even shipped with infected disks in the box. 
 
-Even though we don't control what's being used as inputs to the script that create the MegaAGS image, pretty much all games and demos run inside WHDL containers, you can think of them as "virtualization for the Amiga". Their job is to insulate the game from the rest of the system, reset CPU vectors, and other system state preservation. So even if a game or demo contains a virus, it cannot stay resident in memory, and will not spread to the rest of the system outside of the sandbox it has been given.
+Even though we don't control what's being used as inputs to the script that creates the MegaAGS image, pretty much all games and demos run inside WHDL containers, you can think of them as "virtualization for the Amiga". Their job is to insulate the game from the rest of the system, reset CPU vectors, and other system state preservation. So even if a game or demo contains a virus, it cannot stay resident in memory, and will not spread to the rest of the system outside of the sandbox it has been given.
 
 If you want to check the state of a given setup, or whether you have viruses in memory, just run the included VirusZ scanner in the System folder. Again, if you see virus warnings inside of WHDLoad containers, it's nothing to worry about.
 
