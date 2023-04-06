@@ -6,7 +6,7 @@
 
 * This new version makes use of MiSTer's recently introduced `MGL` support to supply convenient, dedicated `Amiga` and `Amiga 500` setups for ease of switching on MiSTer. This lets you have the best of both worlds: An everyday, easy HD-based games/demo setup, as well as a cycle-accurate floppy-based Amiga 500 for running ADF games and demos when necessary.
 * New, optional `Amiga 500HD` and `Amiga 600HD` setups are included for those of you looking to explore Workbench 1.3 and 2.x as period-accurate HD setups — these both support the MiSTer shared drive and use the PFS file system for robustness. See the `Extras` part if you are interested in these.
-* Up to date with the latest WHDLoad games and demos as of 2023.03.03.
+* Up to date with the latest WHDLoad recipes for games and demos as of 2023.03.03.
 * Lots of new disk magazines and demos.
 * Significantly faster load times when entering lists in the launcher.
 * Jump-to-letter using keyboard in the launcher.
