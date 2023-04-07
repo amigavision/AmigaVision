@@ -4219,12 +4219,12 @@ game--countduckula2--countduckula2;Count Duckula II;Count Duckula II;;;OCS;;2;;;
 game--playdays--playdays;Playdays;Playdays;;;OCS;;0;;;;;;;;1992;;English;Unknown;Alternative;1;;v1.0;Playdays/Playdays.Slave;game/P/Playdays_v1.0_1577.lha;Game;;1084;-2
 game--wrangler--wrangler;Wrangler;Wrangler;;;OCS;;2;;;;;;;;1989;;English;Magnetic Fields;Alternative;1;;v1.0;Wrangler/Wrangler.Slave;game/W/Wrangler_v1.0_2980.lha;Game;;1782;2703
 game--worthy--worthy;Worthy;Worthy;;;OCS;;0;;;1;;;;;2018;;English;PixelGlass;Amiga.net.pl;1;;v1.0;Worthy/Worthy.slave;game/W/Worthy_v1.0.lha;Game;;6298;-2
-game-notwhdl--bridgestrike;Bridge Strike;Bridge Strike;;;OCS;;0;;;;;;;;2019;;English;Project R3D;Amiga.net.pl;1;;;;game-notwhdl/BridgeStrike.lha;Game;;-2;4380
+game-notwhdl--bridgestrike;Bridge Strike;Bridge Strike;;;OCS;;0;;;;;;;;2019;;English;Project R3D;CDLabel;1;;;;game-notwhdl/BridgeStrike.lha;Game;;-2;4380
 game-notwhdl--rotator;Rotator;Rotator;;;OCS;;0;;;;;;;;2020;;English;Midnight Banana;Psytronik;1;;;;game-notwhdl/Rotator.lha;Game;;-2;4420
 game--ancientartofwar--ancientartofwar;The Ancient Art of War;Ancient Art of War;;;OCS;;2;;;;;;;;1990;;English;Microids;Brøderbund;1;;v1.1;AncientArtOfWar/AncientArtOfWar.slave;game/A/AncientArtOfWar_v1.1.lha;Game;;5838;-2
 game--artdelaguerrefr--artdelaguerrefr;L'Art De La Guerre;Art De La Guerre;;game--ancientartofwar--ancientartofwar;OCS;;2;;;;;;;;1990;;French;Microids;Brøderbund;1;;v1.1;ArtDeLaGuerreFr/ArtDeLaGuerreFr.slave;game/A/ArtDeLaGuerre_v1.1_Fr_2447.lha;Game;;5838;-2
 game--artedelaguerraes--artedelaguerraes;El Arte De La Guerra;Arte De La Guerra;;game--ancientartofwar--ancientartofwar;OCS;;2;;;;;;;;1990;;Spanish;Microids;Brøderbund;1;;v1.1;ArteDeLaGuerraEs/ArteDeLaGuerraEs.slave;game/A/ArteDeLaGuerra_v1.1_Es.lha;Game;;5838;-2
-game-notwhdl--tanksfurry;Tanks Furry;Tanks Furry;;;OCS;;0;4;;;;Exit game from main menu;;;2016;;English;Project R3D;Amiga.net.pl;4;;;;game-notwhdl/TanksFurry.lha;Game;;-2;3663
+game-notwhdl--tanksfurry;Tanks Furry;Tanks Furry;;;OCS;;0;4;;;;Exit game from main menu;;;2016;;English;Project R3D;CDLabel;4;;;;game-notwhdl/TanksFurry.lha;Game;;-2;3663
 game-notwhdl--trackerheroaga;Tracker Hero;Tracker Hero;;;AGA;1;0;;;1;;;;;2010;;English;GUS Entertainment;GUS Entertainment;1;;;;game-notwhdl/TrackerHeroAGA.lha;Game;;5776;4278
 game--finalbattlefr--finalbattlefr;The Final Battle;Final Battle;1;game--finalbattle--finalbattle;OCS;;0;;;;;;;;1990;;French;Silicon;P.S.S.;1;;v1.2;FinalBattleFr/FinalBattleFr.Slave;game/F/FinalBattle_v1.2_Fr.lha;Game;Adventure;535;2390
 game--cosmoranger--cosmoranger;Cosmo Ranger: S.O.L. AD 2000;Cosmo Ranger;1;game--cosmorangerntsc--cosmorangerntsc;OCS;;0;;;;;;;;1989;;English;Turtle Byte;Turtle Byte;1;;v1.1;CosmoRanger/CosmoRanger.Slave;game/C/CosmoRanger_v1.1.lha;Game;;3101;3001
@@ -4986,3 +4986,4 @@ game--billiardssimulator--billiardssimulator;Billiards Simulator;Billiards Simul
 game--billiards2simulator--billiards2simulator;Billiards II Simulator;Billiards II Simulator;;;OCS;;0;5;16;;;;;;1989;;English;Infogrames;Infogrames;2 (taking turns);;v1.0;Billiards2Simulator/Billiards2Simulator.slave;game/B/Billiards2Simulator_v1.0_1865.lha;Game;;117;1678
 game--ageofrock--ageofrock;The Age Of Rock;Age Of Rock;;;OCS;;0;4;;;;;;;1991;;English;Andreas Spreen;Andreas Spreen;3;;v0.01;AgeOfRock/AgeOfRock.slave;game/_generic/AgeOfRock_v0.01.lha;Game;;5598;4263
 game--cybersphereplus--cybersphereplus;Cybersphere Plus;Cybersphere Plus;;;OCS;;0;4;;;;;;;1995;;English;Psycon;Psycon;2;;v0.01;CyberspherePlus/CyberspherePlus.slave;game/_generic/CyberspherePlus_v0.01.lha;Game;;6110;4117
+game--zgr3d--zgred;ZGR3D;ZGR3D;;;OCS;;0;4;;;;;;;2020;;English;Project R3D;CDLabel;1;DATA=data CUSTOM=zgred;v0.1;ZGR3D/zgred.slave;game/_generic/ZGR3D_v0.1.lha;Game;;-2;4428
