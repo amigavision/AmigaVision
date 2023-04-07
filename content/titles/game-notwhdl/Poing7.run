@@ -1,9 +1,10 @@
-IF NOT EXISTS WHDSaves:poing7
-  makedir WHDSaves:poing7
-  copy WHD:N/Poing7/jb1.levels WHDSaves:poing7 QUIET
-  rename WHDSaves:poing7/jb1.levels WHDSaves:poing7/default.levels QUIET
+IF EXISTS WHDSaves:Poing714
+  copy WHDSaves:Poing714/#?.levels WHD:N/Poing7 ALL QUIET
+  copy WHDSaves:Poing714/#?.scores WHD:N/Poing7 ALL QUIET
 ENDIF
-assign >NIL: POING: WHDSaves:poing7
 cd WHD:N/Poing7
+assign >NIL: POING: ""
 poing >NIL:
 assign >NIL: POING: REMOVE
+copy WHD:N/Poing7/#?.levels WHDSaves:Poing714 ALL QUIET
+copy WHD:N/Poing7/#?.scores WHDSaves:Poing714 ALL QUIET
