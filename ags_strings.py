@@ -38,7 +38,7 @@ strings = {
         "allgames": "Browse all games alphabetically.",
         "allgames_year": "Browse all games alphabetically.",
         "scene": "A sample of demo scene releases.",
-        "issues": "Titles with known issues on Minimig_MiSTer.\n(Please report any new or resolved issues!)",
+        "issues": "Titles with known issues on MiSTer.\n(Please report any new or resolved issues!)",
         "demos": "Browse demos by title.",
         "demos_country": "Browse demos by country of origin.",
         "demos_group": "Browse demos by release group.",
