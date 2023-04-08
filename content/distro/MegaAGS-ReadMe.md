@@ -92,6 +92,10 @@ custom_aspect_ratio_1=40:27
 
 * Launch the `Amiga` entry and enjoy! Don't forget to check out the sections below -- especially on save files, controller mappings and video modes once the basic setup is up and running.
 
+**NOTE:** If you use `names.txt` to rename cores (or pull it down via the `update_all` script), you may end up with *two* entries that *both* say `Amiga` after this. The entry without a date listed is AmigaVision. 
+
+To fix this duplication, edit `names.txt` and give the `Minimig` core a different name — e.g. use `Commodore Amiga` for that entry instead, and you can use that for any setups unrelated to AmigaVision, if you so desire.
+
 ## Optional Setups for MiSTer
 
 (You can probably skip this section if you were not an Amiga user back in the day or unless you have a special interest in computing history :)
