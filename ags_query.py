@@ -2,8 +2,6 @@
 
 # AGSImager: Query entries and paths
 
-import hashlib
-import struct
 import sys
 
 import ags_paths as paths
@@ -97,12 +95,6 @@ def get_archive_path(entry):
     if entry_is_valid(entry):
         arc_path = util.path(paths.titles(), entry["archive_path"])
         return arc_path if util.is_file(arc_path) else None
-    else:
-        return None
-
-def get_hash(entry):
-    if entry_is_valid(entry):
-        return struct.unpack("<I", bytes(hashlib.md5(entry["id"].encode("utf-8")).digest())[0:4])[0]
     else:
         return None
 
