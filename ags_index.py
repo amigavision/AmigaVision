@@ -10,9 +10,9 @@ from lhafile import LhaFile, is_lhafile
 
 import ags_paths as paths
 import ags_util as util
+from ags_query import get_hash
 
 # -----------------------------------------------------------------------------
-# Make dictionary of whdload archives
 
 def index_whdload_archives(basedir):
     basedir += os.sep
@@ -58,6 +58,19 @@ def index_whdload_archives(basedir):
     print("\n", flush=True)
     return d
 
+def has_hash_collision(db):
+    hashes = dict()
+    for r in db.cursor().execute("SELECT * FROM titles"):
+        entry = dict(r)
+        hash = get_hash(entry)
+        if hash in hashes:
+            print("WARNING: hash collision encountered ({})".format(hash))
+            print(" > " + entry["id"])
+            print(" > " + hashes[hash]["id"])
+            return True
+        hashes[hash] = entry
+    return False
+
 # -----------------------------------------------------------------------------
 
 def main():
@@ -75,6 +88,10 @@ def main():
             return 0
 
         db = util.get_db(args.verbose)
+
+        if has_hash_collision(db):
+            db.close()
+            return 1
 
         if args.make_sqlite:
             db.close()
