@@ -246,6 +246,10 @@ Unless you are using the "Arcadia Systems" games (see below), no. On the Commodo
 
 The MiSTer core will handle these mappings for you, and joystick port configuration is pretty much never the reason you can't start or control a given game. It's way more likely that you have to hit the space bar, F1, or click a mouse button to get the game started. If you're stuck, look up the controls for a given game in an online manual -- which is always a good idea anyway, as there are often additional keyboard or mouse controls needed for a given game for full enjoyment.
 
+### Does AmigaVision work with Kickstart 3.2?
+
+While the standard AmigaVision setup expects Kickstart 3.1 — which was the last release from Commodore — we have had reports of it working if you replace `icon.library` and `workbench.library` with their respective Workbench 3.2 versions. The recommended and tested setup is still Kickstart 3.1.
+
 ### What's "Arcadia Systems"?
 
 Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500 based multi-game arcade system. Most titles released for the system have been dumped and are available on the MegaAGS image. The games are not great (to put it kindly), but are an interesting curiosity.
