@@ -244,7 +244,7 @@ If they do match, launching should work without issues, assuming you don't have 
 
 ### What does the `Minimig` entry do now that I have an `Amiga` setup?
 
-We use the `Amiga` and `Amiga 500` MGL files to launch the Minimig core with  dedicated configurations. The Minimig entry isn't used directly anymore, but it will launch (and share files with) the main `Amiga` setup. Just ignore the Minimig entry or rename it using your own [names.txt] if you want.
+We use the `Amiga` and `Amiga 500` MGL files to launch the Minimig core with  dedicated configurations. The Minimig entry isn't used directly anymore. Just ignore the Minimig entry or rename it using your own [names.txt] if you want. You can also use this core for Amiga setups unrelated to MegaAGS.
 
 This also lets us have the `Amiga 500HD` and `Amiga 600HD` setups with separate hard disk images, shared files directory, etc.
 
