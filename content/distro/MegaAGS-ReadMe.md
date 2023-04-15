@@ -208,6 +208,38 @@ While MegaAGS has been tested for many years, the sheer volume of games and demo
 * LamerDeluxe — MT-32 support
 * [Frode Solheim] -- Creator of [OpenRetro.org], thumbnails used with kind permission
 
+## Troubleshooting
+
+### I get a bunch of errors when starting up!
+
+Unfortunately, there's a lot of variables in what could go wrong, but one useful thing to verify is to make sure the HDF file didn't get corrupted on its way to the MiSTer. It's a large file, and there's a lot that can go wrong along the way. The reasons for this happening are legion, but among them:
+
+* You are using FTP to transfer the file, but your FTP client defaults to ASCII instead of binary transfers.
+* You are using SMB/Samba, but the implementation of your OS isn't great, and might abort mid-write.
+* Your SD card has issues writing the file — very common with cheap or old SD cards.
+
+Let's make sure the image made it over to the MiSTer intact.
+
+The easiest — but a little bit time-consuming, since the DE-10 nano doesn't have the fastest CPU — is to compare SHA-1 checksums. MiSTer, Windows, Mac and Linux all have these tools installed by default, but you have to issue some command line instructions to make it work.
+
+1. Do a new, clean transfer of the HDF file to MiSTer — ideally not over the network, but if that's your only option, go for it. The reason why you need to do this again is that if the Amiga does any writes to the HDF during earlier attempts to launch it, the checksum will be different, and useless for this purpose.
+2. Do a clean boot of your MiSTer, and press the F9 key on a keyboard connected to it. This will let you log in to the terminal. Username is `root`, and password is `1` unless you have changed it in the past.
+3. Run the following command, which will take 5-10 minutes to complete: `shasum /media/fat/games/Amiga/MegaAGS.hdf`
+4. It will report back a checksum, you will compare this to the checksum on your computer.
+
+Depending on what operating system you are on, you will do one of the following:
+
+* **If you are on macOS:** Open the Terminal, and run the command: `shasum /path/to/MegaAGS.hdf`. Compare this to the checksum you got on the MiSTer.
+
+* **If you are on Windows:** Open PowerShell, and run the command: `Get-FileHash C:\path\to\MegaAGS.hdf -Algorithm SHA1`. Compare this to the checksum you got on the MiSTer.
+
+* **If you are on Linux:** Open a terminal, and run the command: `shasum /path/to/MegaAGS.hdf`. Compare this to the checksum you got on the MiSTer.
+
+If these checksums do not match, something is wrong with either the way you transfer your file, or your SD card. 
+
+If they do match, launching should work without issues, assuming you don't have a bad HDF file on your computer.
+
+
 ## Frequently Asked Questions
 
 ### What does the `Minimig` entry do now that I have an `Amiga` setup?
