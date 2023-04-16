@@ -21,6 +21,30 @@ AGS_INFO_WIDTH = 53
 AGS_LIST_WIDTH = 26
 
 # -----------------------------------------------------------------------------
+
+def sanitize_name(name):
+    name = name.replace("/", "-").replace("\\", "-").replace(": ", " ").replace(":", " ")
+    name = name.replace(" [AGA]", "")
+    if name[0] == '(':
+        name = name.replace('(', '[', 1).replace(')', ']', 1)
+    return name
+
+def make_image(path, options):
+    if util.is_file(path):
+        return
+    size = (320, 256)
+    scale = (1, 0.5)
+    if isinstance(options, dict) and "ops" in options:
+        if "size" in options:
+            size = (options["size"][0], options["size"][1])
+        if "scale" in options:
+            scale = (options["scale"][0], options["scale"][1])
+        operations = options["ops"]
+    else:
+        operations = options
+    imgen.out_iff(path, imgen.compose(operations, size=size), scale=scale)
+
+# -----------------------------------------------------------------------------
 # create entries from dictionary/tree
 
 def make_tree(db: Connection, collection: EntryCollection, ags_path, node, path=[], template=None):
@@ -256,6 +280,29 @@ def make_entry(entries: EntryCollection, ags_path, name, entry, path, template=N
             if util.is_file(src_path):
                 dst_path = base_path + img_path.stem.rsplit(entry["id"], 1)[-1] + ".iff"
                 shutil.copyfile(src_path, dst_path)
+
+    # title metadata
+    if query.entry_is_valid(entry):
+        metadata = dict()
+        meta_title = sanitize_name(entry["title_short"])
+        if len(meta_title) > max_w:
+            meta_title = meta_title.replace(", The", "")
+        if len(title) > max_w:
+            meta_title = meta_title[:max_w - 2].strip() + ".."
+        if meta_title != title: metadata["title"] = meta_title
+        if entry["category"] and entry["category"] != "Game":
+            if entry.get("subcategory", "").lower().startswith("music disk"):
+                metadata["category"] = "Music Disk"
+            elif entry.get("subcategory", "").lower().startswith("disk mag"):
+                metadata["category"] = "Disk Magazine"
+            else:
+                metadata["category"] = entry["category"]
+        if "title" in metadata or "category" in metadata:
+            if not "title" in metadata: metadata["title"] = meta_title
+            tmd = metadata["title"]
+            if "category" in metadata: tmd += "\n{}".format(metadata["category"])
+            open(base_path + ".tmd", mode="w", encoding="latin-1").write(tmd)
+
     return base_path
 
 # -----------------------------------------------------------------------------
@@ -340,30 +387,6 @@ def make_note(entry, add_note):
     elif entry.get("note"):
             note += ("{}{}".format(strings["note"]["note"], entry["note"]))[:max_w] + "\n"
     return note
-
-# -----------------------------------------------------------------------------
-
-def sanitize_name(name):
-    name = name.replace("/", "-").replace("\\", "-").replace(": ", " ").replace(":", " ")
-    name = name.replace(" [AGA]", "")
-    if name[0] == '(':
-        name = name.replace('(', '[', 1).replace(')', ']', 1)
-    return name
-
-def make_image(path, options):
-    if util.is_file(path):
-        return
-    size = (320, 256)
-    scale = (1, 0.5)
-    if isinstance(options, dict) and "ops" in options:
-        if "size" in options:
-            size = (options["size"][0], options["size"][1])
-        if "scale" in options:
-            scale = (options["scale"][0], options["scale"][1])
-        operations = options["ops"]
-    else:
-        operations = options
-    imgen.out_iff(path, imgen.compose(operations, size=size), scale=scale)
 
 # -----------------------------------------------------------------------------
 # collect entries for special folders ("All Games", "Demo Scene")
