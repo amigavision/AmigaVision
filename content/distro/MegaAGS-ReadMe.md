@@ -246,6 +246,12 @@ This also lets us have the `Amiga 500HD` and `Amiga 600HD` setups with separate 
 
 We find this to be a more usable and cleaner setup, instead of using the core configuration selectors that cannot be named, and lets you have e.g. the Amiga 500 setup easily available on the top level for use with demos and games that do not work on a "modern" Amiga HD-based setup.
 
+### Why are there two `Amiga` entries in my menu?
+
+If you are using the `update_all` script, it may download a file called `names.txt` that renames the "Minimig" core to "Amiga". You can edit this file in the root of your MiSTer filesystem to be "Commodore Amiga", or remove it if you are fine with it being called "Minimig". See also the previous question for why we chose this setup.
+
+If you absollutely want to avoid having a separate "Minimig" entry altogether, some people rename the config files from the Amiga 500 setup to be Minimig instead, and move the HDF into the Amiga folder, and then name the Minimig core "Amiga 500" in `names.txt`.
+
 ### Why do you have Scanline and Shadow Mask presets by default?
 
 The Amiga was almost exclusively used with RGB-based CRTs or consumer TVs, and graphics do not look correct without scanlines and shadow masks. We have included a set of Amiga-specific scanline and shadow mask setups for use with MiSTer to more accurately represent the graphics output of the system that we highly recommend.
