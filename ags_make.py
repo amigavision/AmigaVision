@@ -275,6 +275,9 @@ def make_entry(entries: EntryCollection, ags_path, name, entry, path, template=N
     elif entry and "id" in entry:
         img_list = [Path(util.path("data", "img", entry["id"] + ".iff"))]
         img_list += list(Path(util.path("data", "img")).rglob(entry["id"] + "-[0-9].iff"))
+        # Switch with these to get high-res thumbnails, ignores #1 (box art) and only includes first 4 screenshots:
+        # img_list = [Path(util.path("data", "img_highres", entry["id"] + ".iff"))]
+        # img_list += list(Path(util.path("data", "img_highres")).rglob(entry["id"] + "-[2-5].iff"))
         for img_path in img_list:
             src_path = str(img_path.resolve())
             if util.is_file(src_path):
