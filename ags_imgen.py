@@ -10,6 +10,8 @@ from wand.color import Color
 from wand.drawing import Drawing
 from wand.image import Image
 
+import ags_paths as paths
+import ags_util as util
 import iff_ilbm as iff
 
 IMG_SRC_BASE = "data/img_src/"
@@ -38,10 +40,13 @@ def bg(width=320, height=256, color="#000"):
 # halign = "center", "left", "right"
 # valign = "center", "top", "bottom"
 def tx(txt, size=240, halign="center", valign="center", kerning=-1.0, font="display.otf", color="#ffffff", bg="#000000"):
+    font_path = util.path(paths.content(), "fonts", font)
+    if not util.is_file(font_path):
+        raise IOError("font file doesn't exist: " + font_path)
     try:
         with Drawing() as drawing:
             img = bg if isinstance(bg, Image) else bg(color=bg)
-            drawing.font = "content/fonts/{}".format(font)
+            drawing.font = font_path
             drawing.font_size = size
             drawing.fill_color = Color(color)
             drawing.text_kerning = kerning
