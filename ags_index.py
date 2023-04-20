@@ -107,12 +107,25 @@ def main():
                     print("archive added: " + arc["archive_path"] + " -> " +row["id"])
                     print()
 
-        # list more missing stuff
+        # list missing content
         if args.verbose:
+            missing_archives = []
+            missing_images = []
             for r in db.cursor().execute("SELECT * FROM titles"):
+                if not r["archive_path"]:
+                    missing_archives.append(r["id"])
                 if not util.is_file("data/img/" + r["id"] + ".iff"):
-                    print("missing image:", r["id"])
-                    print()
+                    missing_images.append(r["id"])
+            if len(missing_archives) > 0:
+                print("titles missing archives:")
+                for id in missing_archives:
+                    print("  >> {}".format(id))
+                print()
+            if len(missing_images) > 0:
+                print("titles missing images:")
+                for id in missing_images:
+                    print("  >> {}".format(id))
+                print()
 
         db.commit()
         db.close()
