@@ -127,9 +127,10 @@ def make_entries(db: Connection, collection: EntryCollection, ags_path, entries,
 
         sort_rank = None
         if ordering == "ordered": sort_rank = pos
-        elif ordering == "release": sort_rank = util.parse_date_int(e["release_date"], sortable=True)
+        elif ordering == "release" and e and "release_date" in e: sort_rank = util.parse_date_int(e["release_date"], sortable=True)
 
-        make_entry(collection, ags_path, n, e, base_path, template=template, rank=rank, sort_rank=sort_rank, options=options)
+        if e or (options and options.get("unavailable", True)):
+            make_entry(collection, ags_path, n, e, base_path, template=template, rank=rank, sort_rank=sort_rank, options=options)
     return
 
 # -----------------------------------------------------------------------------
