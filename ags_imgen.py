@@ -41,9 +41,9 @@ def bg(width=320, height=256, color="#000"):
 # valign = "center", "top", "bottom"
 def tx(txt, size=240, halign="center", valign="center", kerning=-1.0, font="display.otf", color="#ffffff", bg="#000000"):
     font_path = util.path(paths.content(), "fonts", font)
-    if not util.is_file(font_path):
-        raise IOError("font file doesn't exist: " + font_path)
     try:
+        if not util.is_file(font_path):
+            raise IOError("font file doesn't exist: " + font_path)
         with Drawing() as drawing:
             img = bg if isinstance(bg, Image) else bg(color=bg)
             drawing.font = font_path
@@ -54,8 +54,9 @@ def tx(txt, size=240, halign="center", valign="center", kerning=-1.0, font="disp
             drawing.text(0, 0, txt)
             drawing(img)
             return img
-    except ValueError:
-        return 0
+    except:
+        print(" > WARNING: ags_imgen text rendering failed for '{}'".format(txt))
+        return bg if isinstance(bg, Image) else bg(color=bg)
 
 # "pi" operation: paste image from file
 # scale = "fit" or number
