@@ -11,18 +11,19 @@ Its aim is to balance preservation of the historical and current output of the [
 1. [Features](#features)
 2. [Save Files](#save-files)
 3. [Setup for Amiga hardware](#setup-for-amiga-hardware)
-4. [Setup for MiSTer](#setup-for-mister)
-5. [Optional Setups](#optional-setups)
-6. [MiSTer: Gamepad & Joystick Mapping](#mister-gamepad--joystick-mapping)
-7. [MiSTer: Video Modes](#mister-video-modes)
-8. [MiSTer: CPU Performance Notes](#mister-cpu-performance-notes)
-9. [Workbench](#workbench)
-10. [Non-working Games](#non-working-games)
-11. [Custom Scripts](#custom-scripts)
-12. [Bug Reports & Feature Requests](#bug-reports--feature-requests)
-13. [Credits](#credits)
-14. [Troubleshooting](#troubleshooting)
-15. [Frequently Asked Questions](#frequently-asked-questions)
+4. [Setup for emulators](#setup-for-emulators)
+5. [Setup for MiSTer](#setup-for-mister)
+6. [Optional Setups](#optional-setups)
+7. [MiSTer: Gamepad & Joystick Mapping](#mister-gamepad--joystick-mapping)
+8. [MiSTer: Video Modes](#mister-video-modes)
+9. [MiSTer: CPU Performance Notes](#mister-cpu-performance-notes)
+10. [Workbench](#workbench)
+11. [Non-working Games](#non-working-games)
+12. [Custom Scripts](#custom-scripts)
+13. [Bug Reports & Feature Requests](#bug-reports--feature-requests)
+14. [Credits](#credits)
+15. [Troubleshooting](#troubleshooting)
+16. [Frequently Asked Questions](#frequently-asked-questions)
 
 ## Features
 
@@ -81,6 +82,16 @@ Save files are located in `DH0:WHDSaves` — and are usually small enough that a
 We support single-button Amiga/C64 joysticks, as well as four-button CD32 gamepads, and probably Sega Mega Drive (aka. Sega Genesis) gamepads as well — although we haven't personally tested this.
 
 Many WHDLoad games have been patched to support multiple buttons, so check for those options when starting a game.
+
+## Setup for emulators
+
+We recommend — and include a setup for — the [FS-UAE] Amiga emulator, which supports Mac, Windows and Linux.
+
+1. Download and install [FS-UAE].
+2. Copy the `games/Amiga` directory to your preferred location.
+3. Double-click the `MegaAGS.fs-uae` file to run the setup with the preferred settings. You can of course also add a shortcut to this file to your Windows start menu, or as an alias in the Mac's Applications folder.
+
+For any additional configuration or customizations, consult the FS-UAE documentation.
 
 ## Setup for MiSTer
 
@@ -412,6 +423,7 @@ Audio & Video:
 [AGS]:https://github.com/MagerValp/ArcadeGameSelector
 [Balena Etcher]:https://www.balena.io/etcher
 [Win32 Disk Imager]:https://win32diskimager.org
+[FS-UAE]:https://fs-uae.net
 
 [David Lindecrantz]:https://github.com/Optiroc
 [Alex Limi]:https://limi.dev
