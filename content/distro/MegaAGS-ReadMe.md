@@ -57,6 +57,8 @@ Its aim is to balance preservation of the historical and current output of the [
 
 ## Save Files
 
+Before we start, a quick note on save files:
+
 **IMPORTANT:** For games with save functionality you **MUST** quit the game using the `DEL` key to ensure the save data will be written to "disk", and thus the SD card. You *will* lose your save games if you don't exit the game *after* also saving in-game! 
 
 In the `[Options]` menu of the launcher you can choose between a few alternative quit key options if the `DEL` key doesn't work for you. If set, it will override the preconfigured default Quit key. The active Quit key is displayed on the splash screen shown when a game is loading.
