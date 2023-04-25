@@ -112,27 +112,9 @@ Shadow_Masks
 * Paste the following recommended core settings to the bottom of your `MiSTer.ini` file in the root of your MiSTer file system -- these settings are further explained in the Video Modes section. It's especially important to explicity define resolutions for both PAL and NTSC, and not rely on the automatic fallback that MiSTer has available:
 
 ```
-[Amiga]
-video_mode_ntsc=8
-video_mode_pal=9
-vsync_adjust=1 ; You can set this to 2 if your display can handle it
-custom_aspect_ratio_1=40:27
-bootscreen=0
-
-[Amiga500]
-video_mode_ntsc=8
-video_mode_pal=9
-vsync_adjust=1 ; You can set this to 2 if your display can handle it
-custom_aspect_ratio_1=40:27
-bootscreen=0
-
-[Amiga500HD]
-video_mode_ntsc=8
-video_mode_pal=9
-vsync_adjust=1 ; You can set this to 2 if your display can handle it
-custom_aspect_ratio_1=40:27
-bootscreen=0
-
+[Amiga]+
+[Amiga500]+
+[Amiga500HD]+
 [Amiga600HD]
 video_mode_ntsc=8
 video_mode_pal=9
