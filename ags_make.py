@@ -208,9 +208,11 @@ def make_entry(entries: EntryCollection, ags_path, name, entry, path, template=N
     if query.get_amiga_whd_dir(entry) is not None or query.entry_is_notwhdl(entry):
         # videomode
         whd_vmode = "NTSC" if util.parse_int(entry.get("ntsc", 0)) > 0 else "PAL"
-        # vadjust
+        # vadjust scale
         vadjust_scale = util.parse_int(entry.get("scale", 0))
+        vadjust_scale = "S" if util.parse_int(entry.get("ntsc", 0)) == 4 else vadjust_scale
         if not vadjust_scale: vadjust_scale = 0
+        # vadjust vertical shift
         vadjust_vofs = util.parse_int(entry.get("v_offset", 0))
         if not vadjust_vofs: vadjust_vofs = 0
         vadjust_vofs = min(max(vadjust_vofs, VADJUST_MIN), VADJUST_MAX)
@@ -316,7 +318,7 @@ def make_note(entry, add_note):
     max_w = AGS_INFO_WIDTH
     note = ""
     system = entry["hardware"].replace("/", "·")
-    aspect_ratio = "40:27"
+    aspect_ratio = None
 
     if entry.get("ntsc", 0) == 4:
         if entry.get("scale", 0) == 6:
@@ -324,7 +326,6 @@ def make_note(entry, add_note):
             aspect_ratio = "16:9"
         else:
             system += "·5×NTSC"
-            aspect_ratio = "4:3"
     elif entry.get("ntsc", 0) == 3:
         if entry.get("scale", 0) == 6:
             system += "·6×NTSC"
@@ -351,13 +352,13 @@ def make_note(entry, add_note):
             system += "·5×PAL"
         else:
             system += "·4×PAL"
-            aspect_ratio = "4:3"
 
     if entry.get("lightgun", False):
         system += "·Light Gun"
     elif entry.get("gamepad", False):
         system += "·Game Pad"
-    system += " ({})".format(aspect_ratio)
+    if aspect_ratio:
+        system += " ({})".format(aspect_ratio)
 
     if "category" in entry and entry["category"].lower() == "game":
         note += ("{}{}".format(strings["note"]["title"], entry["title"]))[:max_w] + "\n"

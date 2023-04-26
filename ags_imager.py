@@ -3,11 +3,11 @@
 # AGSImager
 
 # ntsc field options:
-#   0 = PAL title that will be run at 50Hz (PAL, 4:3@4X, 40:27@5X, 16:9@6X)
-#   1 = PAL title that will be run at 60Hz (PAL60, 40:27@5X, 16:9@6X)
-#   2 = "World" title that will be run at 60Hz (NTSC, 40:27@5X, 16:9@6X)
-#   3 = NTSC title that will be run at 60Hz (NTSC, 40:27@5X, 16:9@6X)
-#   4 = NTSC title that will be run at 60Hz and was likely designed for narrow PAR ("Sachs NTSC", 4:3@5X, 16:9@6X)
+#   0 = PAL title that will be run at 50Hz (PAL, 16:15 PAR @ 4X or 5X, 1:1 PAR @ 6X)
+#   1 = PAL title that will be run at 60Hz (PAL60, 16:15 PAR @ 5X, 1:1 PAR @ 6X)
+#   2 = "World" title that will be run at 60Hz (NTSC, 16:15 PAR @ 5X, 1:1 PAR @ 6X)
+#   3 = NTSC title that will be run at 60Hz (NTSC, 16:15 PAR @ 5X, 1:1 PAR @ 6X)
+#   4 = NTSC title that will be run at 60Hz and was likely designed for narrow PAR ("Sachs NTSC", 5:6 PAR @ 5X)
 
 import argparse
 import os
@@ -71,9 +71,10 @@ def extract_entry(clone_path, entry):
 def make_vadjust_dats(path):
     util.make_dir(path)
     for i in range(VADJUST_MIN, VADJUST_MAX+1):
-        open(util.path(path, "xd_{}".format(i)), mode="wb").write(make_vadjust(i))
-        open(util.path(path, "x5_{}".format(i)), mode="wb").write(make_vadjust(i, 5))
-        open(util.path(path, "x6_{}".format(i)), mode="wb").write(make_vadjust(i, 6))
+        open(util.path(path, "xd_{}".format(i)), mode="wb").write(make_vadjust(v_shift=i))
+        open(util.path(path, "x5_{}".format(i)), mode="wb").write(make_vadjust(scale=5, v_shift=i))
+        open(util.path(path, "x6_{}".format(i)), mode="wb").write(make_vadjust(scale=6, v_shift=i))
+        open(util.path(path, "xS_{}".format(i)), mode="wb").write(make_vadjust(scale=5, v_shift=i, sachs=True))
 
 # -----------------------------------------------------------------------------
 # command line interface
