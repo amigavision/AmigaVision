@@ -22,8 +22,9 @@ def extract_base_image(base_hdf, dest):
         shutil.move(os.path.join(tmp_dest, f), dest)
     util.rm_path(tmp_dest)
 
-#def build_pfs(config_base_name, verbose):
 def build_pfs(hdf_path, clone_path, verbose):
+    FS_OVERHEAD = 1.0718 # filesystem size fudge factor
+
     if verbose:
         print("building PFS container...")
 
@@ -34,11 +35,11 @@ def build_pfs(hdf_path, clone_path, verbose):
     if verbose:
         print(" > calculating partition sizes...")
 
+    num_buffers = 128
     block_size = 512
     heads = 4
     sectors = 63
     cylinder_size = block_size * heads * sectors
-    fs_overhead = 1.0718
     num_cyls_rdb = 1
     total_cyls = num_cyls_rdb
 
@@ -46,7 +47,7 @@ def build_pfs(hdf_path, clone_path, verbose):
     for f in sorted(os.listdir(clone_path)):
         if util.is_dir(util.path(clone_path, f)) and is_amiga_devicename(f):
             mb_free = 100 if f == "DH0" else 50
-            cyls = int(fs_overhead * (util.get_dir_size(util.path(clone_path, f), block_size)[2] + (mb_free * 1024 * 1024))) // cylinder_size
+            cyls = int(FS_OVERHEAD * (util.get_dir_size(util.path(clone_path, f), block_size)[2] + (mb_free * 1024 * 1024))) // cylinder_size
             partitions.append(("DH" + str(len(partitions)), cyls))
             total_cyls += cyls
 
@@ -54,8 +55,13 @@ def build_pfs(hdf_path, clone_path, verbose):
         os.remove(hdf_path)
 
     if verbose: print(" > creating pfs container ({}MB)...".format((total_cyls * cylinder_size) // (1024 * 1024)))
-    r = subprocess.run(["rdbtool", hdf_path,
-                        "create", "chs={},{},{}".format(total_cyls + 1, heads, sectors), "+", "init", "rdb_cyls={}".format(num_cyls_rdb)])
+    r = subprocess.run([
+        "rdbtool", hdf_path,
+        "create",
+        "chs={},{},{}".format(total_cyls + 1, heads, sectors),
+        "+", "init",
+        "rdb_cyls={}".format(num_cyls_rdb)
+    ])
 
     if verbose: print(" > adding filesystem...")
     r = subprocess.run(["rdbtool", hdf_path, "fsadd", pfs3_bin, "fs=PFS3"], stdout=subprocess.PIPE)
@@ -66,11 +72,19 @@ def build_pfs(hdf_path, clone_path, verbose):
     # add boot partition
     part = partitions.pop(0)
     if verbose: print("    > " + part[0])
-    r = subprocess.run(["rdbtool", hdf_path,
-                        "add", "name={}".format(part[0]),
-                        "start={}".format(num_cyls_rdb), "size={}".format(part[1]),
-                        "fs=PFS3", "block_size={}".format(block_size), "max_transfer=0x0001FE00", "mask=0x7FFFFFFE",
-                        "num_buffer=300", "bootable=True"], stdout=subprocess.PIPE)
+    r = subprocess.run([
+        "rdbtool", hdf_path,
+        "add", "name={}".format(part[0]),
+        "start={}".format(num_cyls_rdb),
+        "size={}".format(part[1]),
+        "fs=PFS3",
+        "block_size={}".format(block_size),
+        "max_transfer=0x0001FE00",
+        "mask=0x7FFFFFFE",
+        "num_buffer={}".format(num_buffers),
+        "bootable=True",
+        "pri=1"
+    ], stdout=subprocess.PIPE)
 
     # add subsequent partitions
     for part in partitions:
@@ -83,11 +97,17 @@ def build_pfs(hdf_path, clone_path, verbose):
         part_end = part_start + part[1]
         if part_end > free_end:
             part_end = free_end
-        r = subprocess.run(["rdbtool", hdf_path,
-                            "add", "name={}".format(part[0]),
-                            "start={}".format(part_start), "end={}".format(part_end),
-                            "fs=PFS3", "block_size={}".format(block_size), "max_transfer=0x0001FE00",
-                            "mask=0x7FFFFFFE", "num_buffer=300"], stdout=subprocess.PIPE)
+        r = subprocess.run([
+            "rdbtool", hdf_path,
+            "add", "name={}".format(part[0]),
+            "start={}".format(part_start),
+            "end={}".format(part_end),
+            "fs=PFS3",
+            "block_size={}".format(block_size),
+            "max_transfer=0x0001FE00",
+            "mask=0x7FFFFFFE",
+            "num_buffer={}".format(num_buffers)
+        ], stdout=subprocess.PIPE)
     return
 
 # -----------------------------------------------------------------------------
