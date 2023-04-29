@@ -60,7 +60,8 @@ def build_pfs(hdf_path, clone_path, verbose):
         "create",
         "chs={},{},{}".format(total_cyls + 1, heads, sectors),
         "+", "init",
-        "rdb_cyls={}".format(num_cyls_rdb)
+        "rdb_cyls={}".format(num_cyls_rdb),
+        "rdb_flags=0x2"
     ])
 
     if verbose: print(" > adding filesystem...")

@@ -8,10 +8,11 @@ pylint = "*"
 autopep8 = "*"
 
 [packages]
-ruamel-yaml = "~=0.17.21"
-amitools = "~=0.7.0"
+#amitools = {editable = true,path = "../amitools"}
+amitools = {ref = "fix-dosenv", git = "https://github.com/Optiroc/amitools.git"}
 lhafile = "~=0.3.0"
-pillow = "~=9.4.0"
+pillow = "~=9.5.0"
+ruamel-yaml = "~=0.17.21"
 Wand = "~=0.6.11"
 
 [requires]
