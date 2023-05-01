@@ -15,11 +15,9 @@ Air Mail
 Alpha Waves
 Amazing Spider-Man, The
 Ambermoon Arcade
-Amberstar
 American Poker
 Anatomic Man
 Antago
-Apano Sin
 AQUABYSS
 Arabian Nights
 Arabian Nights
@@ -43,7 +41,6 @@ Barre l'intrus
 Battle Command
 Battle Duel: Striving for GloryECSAGARTG
 Battle Isle
-Beneath A Steel SkyCD32
 Big Game Fishing
 Big Red AdventureAGACD-ROM
 Billiards Simulator
@@ -51,14 +48,12 @@ Black Viper
 Black ViperAGACD32CD-ROM
 Blue and the Gray, The
 Blue Escape
-Bobo
 Brian the LionCD32
 1994, Psygnosis
 Brides of Dracula
 Brus Lii
 Brutal: Paws of FuryCD32
 Brutal: Paws Of Fury
-BurntimeAGA
 Cadaver
 Cadaver: The Pay Off
 Caesar
@@ -74,7 +69,6 @@ Center Court 2AGA
 Centerbase: Science-Fiction Simulation
 Chaos Engine, TheCD32
 Charge of the Light Brigade, The
-Chess Player 2150
 Chess Simulator
 Classic Board GamesCDTV
 Clever & Smart
@@ -113,15 +107,12 @@ E.S.S. - European Space Simulator
 Eagle's Rider
 Elf
 Elvira: The Arcade Game
-Enemy 2: Missing in Action
-Enemy: Tempest of Violence
 España: The Games '92
 European Championship 1992
 European Superleague
 Exile
 Exodus: The Last WarAGARTGCD-ROM
-Eye of the Beholder
-Eye of the BeholderAGA
+Eye of the Beholder (may be missing languages, check! German (exists), French, Italian should be supported in the AGA version)
 Eye of the Storm
 Face-Off
 Fantastic Dizzy
@@ -142,7 +133,7 @@ Fightin' Spirit
 Fightin' SpiritCD32
 Final Odyssey: Theseus verses the MinotaurECSAGACD-ROM
 Fireball
-Flight of the Amazon Queen
+Flight of the Amazon Queen (May be missing languages; should have German (exists), French (exists), Italian)
 Flood
 Flyers
 Football Champ
@@ -156,7 +147,6 @@ Fury of the Furries
 Galactic Empire
 Gazza II
 Gazza's Super Soccer
-Genesia
 Genetic SpeciesAGARTGCD-ROM
 Global Effect
 Go Player
@@ -181,8 +171,8 @@ HeroQuest II: Legacy of Sorasil CD32
 Hill Street Blues
 Hired Guns
 Hook
-Humans II, The: The Jurassic Levels
-Humans, TheCD32
+Humans II, The: The Jurassic Levels (Languages may be missing; German (exists), French, Italian)
+Humans, The (Languages may be missing; German (exists), French (exists), Italian, Spanish)
 Hydrocis
 I Play: 3D Soccer
 IK+CD32
@@ -198,11 +188,8 @@ InerSex v2.0
 Infestation
 Insanity Fight
 International Championship Athletics
-Ishar 2: Messengers of Doom
-Ishar 2: Messengers of DoomAGA
-Ishar 3: The Seven Gates of InfinityAGA
-Ishar: Legend of the FortressAGA
-Ishar: Legend of the Fortress
+Ishar 2: Messengers of Doom (Languages may be missing; Spanish (exists), German, French)
+Ishar: Legend of the Fortress (Languages may be missing; German (exists), French (exists), Italian)
 Jaguar XJ220
 Jahangir Khan's World Championship Squash
 John Barnes European Football
@@ -232,7 +219,6 @@ Magic Roller
 Manchester United Europe
 Manchester United: Premier League Champions
 Manchester United: The Official Computer Game
-Manhattan Dealers
 Manix
 Marvin's Marvellous AdventureCD32
 Marvin's Marvellous AdventureAGA
@@ -243,8 +229,6 @@ Maze Hunter
 Meesterbrein: Een Geheugenspel voor alle leeftijden
 Megablast
 Merchant Colony
-Metal Mutant
-Mewilo
 Mickey's Runaway Zoo
 MicroProse Golf
 Mighty Bombjack
@@ -286,12 +270,10 @@ Quest for the Time-Bird, The
 Rally ChampionshipsAGA
 Rally Championships
 Ramses
-Ranx
 Ravanelli Junior
 Realms
 Red MarsAGARTGCD-ROM
 ReunionAGA
-Reunion
 Right Way
 RISK
 Robinson's RequiemAGA
@@ -301,7 +283,7 @@ Rorke's Drift
 Rules of Engagement 2
 Sabre TeamCD32
 Sabre Team
-Safari Guns
+Safari Guns (Languages may be missing; German, French (exists))
 Sensible Soccer v1.0
 Sensible Soccer v1.1 - European ChampionsCD32
 Sensible Soccer v1.1 - European Champions
@@ -313,9 +295,6 @@ Shogo: Mobile Armor DivisionRTGPPCCD-ROM
 Shuttle: The Space Flight Simulator
 Sierra Soccer: World Challenge Edition
 Silverman y la Isla Esmeralda
-Simon the SorcererCD32
-Simon the Sorcerer
-Simon the SorcererAGA
 Simon the Sorcerer II: the Lion, the Wizard and the WardrobeAGARTGPPCCD-ROMPegasos
 Skweek
 Sleeping Gods Lie
@@ -342,13 +321,11 @@ Swords & Galleons
 SyndicateCD32
 Syndicate
 Tankkk
-Targhan
 TeenAgentECSAGA
 Teller, The
 Tennis Cup
 Theme Park
 Theme ParkAGA
-Time
 Time Runners 01: Gateways in Time
 Time Runners 02: The Space Stone
 Time Runners 03: The Big Run
@@ -389,7 +366,7 @@ Turn It
 UFO: Enemy Unknown
 UFO: Enemy UnknownAGA
 UFO: Enemy UnknownCD32
-Ultimate Body BlowsCD32
+Ultimate Body BlowsCD32	
 Universe
 UniverseCD32
 Universe 3
@@ -403,7 +380,6 @@ Warriors of Releyne
 Wasted DreamsECSAGACD-ROM
 Where Time Stood Still
 Wild Life
-Wing CommanderAGACD32
 Winter Olympics: Lillehammer '94
 Wizkid: The Story Of Wizball II
 World Cup USA 94
