@@ -32,27 +32,24 @@ Balade au Pays de Big Ben
 Ball Game, The
 Balls
 Bambino fait un Puzzle
-BansheeCD32
-BansheeAGA
+Banshee
 Barbarian II
 Baron Baldric: A Grave Adventure
 Barravento: O Mestre da Capoeira
 Barre l'intrus
 Battle Command
-Battle Duel: Striving for GloryECSAGARTG
+Battle Duel: Striving for Glory
 Battle Isle
 Big Game Fishing
-Big Red AdventureAGACD-ROM
+Big Red Adventure
 Billiards Simulator
 Black Viper
-Black ViperAGACD32CD-ROM
 Blue and the Gray, The
 Blue Escape
-Brian the LionCD32
+Brian the Lion
 1994, Psygnosis
 Brides of Dracula
 Brus Lii
-Brutal: Paws of FuryCD32
 Brutal: Paws Of Fury
 Cadaver
 Cadaver: The Pay Off
@@ -61,20 +58,19 @@ Campaign
 Captain Fizz Meets the Blaster-Trons
 Carrier Command
 Castle Master
-Cedric and the Lost SceptreCD32CD-ROM
-Cedric and the Lost SceptreECSAGA
+Cedric and the Lost Sceptre
 Celtic Legends
-Center CourtECSAGA
-Center Court 2AGA
+Center Court
+Center Court 2
 Centerbase: Science-Fiction Simulation
-Chaos Engine, TheCD32
+Chaos Engine
 Charge of the Light Brigade, The
 Chess Simulator
 Classic Board GamesCDTV
 Clever & Smart
 Cohort II: Fighting for Rome
 Cohort: Fighting for Rome
-ColonizationECSAGA
+Colonization
 Combat Air Patrol
 Complete Chess System, The
 Conqueror
@@ -85,24 +81,23 @@ Crime Does Not Pay
 Cuba 1898
 Cuento de Navidad: A Christmas Carol
 Darkmere: The Nightmare's Begun
-Defender of the Crown IICD32CDTV
-Descent: Freespace - The Great WarRTGPPCCD-ROMPegasos
-Desert Racing of BarDosAGARTGCD-ROM
+Defender of the Crown II
+Descent: Freespace - The Great War
+Desert Racing of BarDos
 Deuteros: The Next Millennium
 Dick Tracy
-DiggersAGA
+Diggers
 Dog Fight
 Dominium
 Donald's Alphabet Chase
 Down at the Trolls
 Dragon Cave
-DragonstoneCD32
 Dragonstone
 Dune II: The Battle for Arrakis
 Dungeon Master II: The Legend of Skullkeep
 Dylan Dog: The Murderers
 Dylan Dog: Through the Looking Glass
-DynatechAGA
+Dynatech
 E.S.S. - European Space Simulator
 Eagle's Rider
 Elf
@@ -111,27 +106,22 @@ España: The Games '92
 European Championship 1992
 European Superleague
 Exile
-Exodus: The Last WarAGARTGCD-ROM
+Exodus: The Last War
 Eye of the Beholder (may be missing languages, check! German (exists), French, Italian should be supported in the AGA version)
 Eye of the Storm
 Face-Off
 Fantastic Dizzy
-Fantastic DizzyAGA
-Fantasy FlyerECSAGA
+Fantasy Flyer
 Fate: Gates of Dawn
 Federation of Free Traders
 Federation Quest 1: BSS Jane Seymour
-Feeble files, TheAGARTGPPCCD-ROMPegasos
+Feeble Files
 Fields of Glory
-Fields of GloryCD32
-Fields of GloryAGA
 FIFA International Soccer
 Fighter Bomber
 Fighter Command
-Fightin' SpiritAGA
 Fightin' Spirit
-Fightin' SpiritCD32
-Final Odyssey: Theseus verses the MinotaurECSAGACD-ROM
+Final Odyssey: Theseus verses the Minotaur
 Fireball
 Flight of the Amazon Queen (May be missing languages; should have German (exists), French (exists), Italian)
 Flood
@@ -139,7 +129,7 @@ Flyers
 Football Champ
 Football Director II v2
 Fort Apache
-Foundation: GoldAGARTGCD-ROM
+Foundation: Gold
 Freddy Hardest in South Manhattan
 Furtum Sacrum Adventure
 Furtum Sacrum: Dark Time
@@ -147,7 +137,7 @@ Fury of the Furries
 Galactic Empire
 Gazza II
 Gazza's Super Soccer
-Genetic SpeciesAGARTGCD-ROM
+Genetic Species
 Global Effect
 Go Player
 Goal!
@@ -158,16 +148,13 @@ GP Tennis Manager
 Graham Taylors Soccer Challenge
 Grand Prix 500 2
 Great Napoleonic Battles
-Gulp!CD32
 Gulp!
-Gunbee F-99: The Kidnapping of Lady AkikoAGA
+Gunbee F-99: The Kidnapping of Lady Akiko
 Heimdall 2: Into the Hall of Worlds
-Heimdall 2: Into the Hall of WorldsAGA
-Heretic IIECSAGARTGCD-ROM
-Heroes of GorluthCD32CD-ROM
+Heretic II
+Heroes of Gorluth
 HeroQuest
 HeroQuest II: Legacy of Sorasil
-HeroQuest II: Legacy of Sorasil CD32
 Hill Street Blues
 Hired Guns
 Hook
@@ -175,12 +162,9 @@ Humans II, The: The Jurassic Levels (Languages may be missing; German (exists), 
 Humans, The (Languages may be missing; German (exists), French (exists), Italian, Spanish)
 Hydrocis
 I Play: 3D Soccer
-IK+CD32
 IK+
 Imperator: Master of Rome
 Impérial v2
-Impossible Mission 2025: The Special EditionAGA
-Impossible Mission 2025: The Special EditionCD32
 Impossible Mission 2025: The Special Edition
 In 80 Days Around the World
 In the Dead of Night
@@ -193,9 +177,7 @@ Ishar: Legend of the Fortress (Languages may be missing; German (exists), French
 Jaguar XJ220
 Jahangir Khan's World Championship Squash
 John Barnes European Football
-John Barnes European FootballCD32
 Jungle Book, The
-Jurassic ParkAGA
 Jurassic Park
 K240
 Kargon
@@ -204,12 +186,11 @@ Kick Off 3: European Challenge
 Kingmaker: The Quest for the Crown
 Kult
 Labyrinth
-Land of GenesisAGACD-ROM
+Land of Genesis
 Legend of Billy the Kid, The
 Legend of Rome
 Legend of the Lost, The
-LegendsAGA
-LegendsCD32
+Legends
 Little Red Riding Hood
 Logik
 Lords of Chaos
@@ -220,8 +201,7 @@ Manchester United Europe
 Manchester United: Premier League Champions
 Manchester United: The Official Computer Game
 Manix
-Marvin's Marvellous AdventureCD32
-Marvin's Marvellous AdventureAGA
+Marvin's Marvellous Adventure
 Master of the Town
 Match Pairs
 Maxwell Mouse and the Missing Game Mystery
@@ -235,97 +215,87 @@ Mighty Bombjack
 Mikro Mortal Tennis
 Mini Legión
 Minos
-MoonbasesAGARTGCD-ROM
+Moonbases
 Mot
 Mr. Nutz: Hoppin' Mad
 Murders in Space
 Murders in Venice
 Night Breed: The Interactive Movie
-Nightlong: Union City ConspiracyAGARTGPPCCD-ROM
+Nightlong: Union City Conspiracy
 Nippon Safes Inc.
 No Excuses
 North & South
 Oliver & Company
-OnEscapeeAGARTGCD-ROM
+OnEscapee
 Oxyd
 Oxyd Magnum!
 Pairs
 Paladin 2
 Paragliding Simulation
 Paranoia Complex
-PaybackAGARTGCD-ROM
+Payback
 Penthouse Hot Numbers Deluxe
 Pinomania
 Plan 9 from Outer Space
 Power Drive
-Power DriveCD32
 Power Labyrint
 Predator 2
 Premier Manager II
 Prison
-Projekt: LilaCD32CD-ROM
+Projekt: Lila
 Pushover
 Quadralien
 Quest for the Time-Bird, The
-Rally ChampionshipsAGA
 Rally Championships
 Ramses
 Ravanelli Junior
 Realms
-Red MarsAGARTGCD-ROM
-ReunionAGA
+Red Mars
+Reunion
 Right Way
 RISK
-Robinson's RequiemAGA
+Robinson's Requiem
 RoboCop 3
 Rome AD92: The Pathway To Power
 Rorke's Drift
 Rules of Engagement 2
-Sabre TeamCD32
 Sabre Team
 Safari Guns (Languages may be missing; German, French (exists))
 Sensible Soccer v1.0
-Sensible Soccer v1.1 - European ChampionsCD32
 Sensible Soccer v1.1 - European Champions
-Sensible Soccer v1.2 - International EditionCD32
 Sensible Soccer v1.2 - International Edition
-Shadow of the Third Moon, TheAGARTGCD-ROM
+Shadow of the Third Moon
 Shadow Sorcerer
 Shogo: Mobile Armor DivisionRTGPPCCD-ROM
 Shuttle: The Space Flight Simulator
 Sierra Soccer: World Challenge Edition
 Silverman y la Isla Esmeralda
-Simon the Sorcerer II: the Lion, the Wizard and the WardrobeAGARTGPPCCD-ROMPegasos
+Simon the Sorcerer II: the Lion, the Wizard and the Wardrobe 
 Skweek
 Sleeping Gods Lie
 Smart
-Soccer KidAGA
-Soccer KidCD32
 Soccer Kid
-Soccer SuperstarsCD32
+Soccer Superstars
 Soko
 Son Shu-Shi
 Space Crusade
 Space Rescue
 Steel Empire
-Strangers, TheAGACD-ROM
+Strangers
 Striker Manager
-Strip FighterAGARTGCD-ROM
+Strip Fighter
 Strip Poker LiveCDTV
-Subwar 2050CD32
-Subwar 2050AGA
+Subwar 2050
 Super Kikstart
 Super Skweek
 Swibble Dibble
 Swords & Galleons
-SyndicateCD32
 Syndicate
 Tankkk
-TeenAgentECSAGA
+TeenAgent
 Teller, The
 Tennis Cup
 Theme Park
-Theme ParkAGA
 Time Runners 01: Gateways in Time
 Time Runners 02: The Space Stone
 Time Runners 03: The Big Run
@@ -364,29 +334,25 @@ Transarctica
 Tumbler Street
 Turn It
 UFO: Enemy Unknown
-UFO: Enemy UnknownAGA
-UFO: Enemy UnknownCD32
-Ultimate Body BlowsCD32	
+Ultimate Body Blows
 Universe
-UniverseCD32
 Universe 3
-Uropa²: The Ulterior ColonyECSAGACD-ROM
+Uropa²: The Ulterior Colony
 Utopia: The Creation of a Nation
 Vader
 Visa Pour Hyde Park
 Voyager
 War in the Gulf
 Warriors of Releyne
-Wasted DreamsECSAGACD-ROM
+Wasted Dreams
 Where Time Stood Still
 Wild Life
 Winter Olympics: Lillehammer '94
 Wizkid: The Story Of Wizball II
 World Cup USA 94
-WormsCD32
 Worms
-Xenon 2: MegablastCDTV
+Xenon 2: Megablast
 Xiphos
-Zdzislav: Hero of the Galaxy 3DAGA
+Zdzislav: Hero of the Galaxy 3D
 Zing, The
-ZodesAGA
+Zodes
