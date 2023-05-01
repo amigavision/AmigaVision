@@ -275,35 +275,6 @@ TeenAgent
 Teller
 Tennis Cup
 Theme Park
-Time Runners 01: Gateways in Time
-Time Runners 02: The Space Stone
-Time Runners 03: The Big Run
-Time Runners 04: The Castle of Fear
-Time Runners 05: The Black Knight
-Time Runners 07: In the Land of the Invaders
-Time Runners 08: The Impregnable Fortress
-Time Runners 09: The Time Demon
-Time Runners 10: The Time Sentry
-Time Runners 11: The Steel City
-Time Runners 12: A Target for the Cyborg
-Time Runners 13: Cyberkiller
-Time Runners 14: Toraxid - War Star
-Time Runners 15: At the Speed of Light
-Time Runners 16: The Galaxy Emperor
-Time Runners 17: The Living Labyrinth
-Time Runners 18: The Killer Shadow
-Time Runners 19: The Nightmare Prince
-Time Runners 20: The Mountains of Death
-Time Runners 21: The Black Dragon's Curse
-Time Runners 22: The Eternal Damned
-Time Runners 23: The Time Monarch
-Time Runners 24: Beyond All Dimensions
-Time Runners 25: The Lost Planet Earth
-Time Runners 26: The Time Warrior
-Time Runners 27: Red Night
-Time Runners 28: Beyond the End
-Time Runners 29: The Last Revelation
-Time Runners 30: The Final Duel
 Tom and the Ghost
 Total Pattern
 Totaltetris
