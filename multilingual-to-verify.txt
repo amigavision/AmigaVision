@@ -1,4 +1,4 @@
-Games that are supposed to be translated, but that show no sign of such, so will need investigation:
+Games that are supposed to be translated, but that show no sign of such, or partial translations exist — so will need further investigation:
 
 Addams Family
 Battle Duel: Striving for Glory
@@ -10,6 +10,18 @@ Hired Guns
 IK+
 Syndicate
 Xenon 2: Megablast
+
+Eye of the Beholder (may be missing languages, check! German (exists), French, Italian should be supported in the AGA version)
+
+Flight of the Amazon Queen (May be missing languages; should have German (exists), French (exists), Italian)
+
+Humans II: The Jurassic Levels (Languages may be missing; German (exists), French, Italian)
+
+Humans (Languages may be missing; German (exists), French (exists), Italian, Spanish)
+
+Ishar 2: Messengers of Doom (Languages may be missing; Spanish (exists), German, French)
+
+
 
 _____________________________________
 
@@ -106,7 +118,6 @@ European Championship 1992
 European Superleague
 Exile
 Exodus: The Last War
-Eye of the Beholder (may be missing languages, check! German (exists), French, Italian should be supported in the AGA version)
 Eye of the Storm
 Face-Off
 Fantastic Dizzy
@@ -121,7 +132,6 @@ Fighter Bomber
 Fighter Command
 Final Odyssey: Theseus verses the Minotaur
 Fireball
-Flight of the Amazon Queen (May be missing languages; should have German (exists), French (exists), Italian)
 Flyers
 Football Champ
 Football Director II v2
@@ -151,8 +161,6 @@ HeroQuest
 HeroQuest II: Legacy of Sorasil
 Hill Street Blues
 Hook
-Humans II: The Jurassic Levels (Languages may be missing; German (exists), French, Italian)
-Humans (Languages may be missing; German (exists), French (exists), Italian, Spanish)
 Hydrocis
 I Play: 3D Soccer
 Imperator: Master of Rome
@@ -164,8 +172,6 @@ InerSex v2.0
 Infestation
 Insanity Fight
 International Championship Athletics
-Ishar 2: Messengers of Doom (Languages may be missing; Spanish (exists), German, French)
-Ishar: Legend of the Fortress (Languages may be missing; German (exists), French (exists), Italian)
 Jahangir Khan's World Championship Squash
 John Barnes European Football
 Jungle Book
@@ -247,10 +253,8 @@ Rome AD92: The Pathway To Power
 Rorke's Drift
 Rules of Engagement 2
 Sabre Team
-Safari Guns (Languages may be missing; German, French (exists))
 Shadow of the Third Moon
 Shadow Sorcerer
-Shogo: Mobile Armor DivisionRTGPPCCD-ROM
 Shuttle: The Space Flight Simulator
 Sierra Soccer: World Challenge Edition
 Silverman y la Isla Esmeralda
@@ -265,7 +269,7 @@ Steel Empire
 Strangers
 Striker Manager
 Strip Fighter
-Strip Poker LiveCDTV
+Strip Poker Live
 Subwar 2050
 Super Kikstart
 Super Skweek
