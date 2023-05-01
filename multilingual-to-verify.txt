@@ -1,6 +1,6 @@
 Games that are supposed to be translated, but that show no sign of such, so will need investigation:
 
-Addams Family, The
+Addams Family
 Battle Duel: Striving for Glory
 Battle Isle
 Carrier Command
@@ -28,7 +28,7 @@ Advanced Galactic Empire
 Advantage Tennis
 Air Mail
 Alpha Waves
-Amazing Spider-Man, The
+Amazing Spider-Man
 Ambermoon Arcade
 American Poker
 Anatomic Man
@@ -41,7 +41,7 @@ Baba Yaga
 Baby Jo in 'Going Home'
 Backgammon Royale
 Balade au Pays de Big Ben
-Ball Game, The
+Ball Game
 Balls
 Bambino fait un Puzzle
 Barbarian II
@@ -53,7 +53,7 @@ Big Game Fishing
 Big Red Adventure
 Billiards Simulator
 Black Viper
-Blue and the Gray, The
+Blue and the Gray
 Blue Escape
 Brian the Lion
 Brides of Dracula
@@ -68,14 +68,14 @@ Celtic Legends
 Center Court
 Center Court 2
 Centerbase: Science-Fiction Simulation
-Charge of the Light Brigade, The
+Charge of the Light Brigade
 Chess Simulator
 Classic Board Games
 Clever & Smart
 Cohort II: Fighting for Rome
 Cohort: Fighting for Rome
 Combat Air Patrol
-Complete Chess System, The
+Complete Chess System
 Conqueror
 Cosmic Spacehead
 Cosmo Ranger: SOL AD 2000
@@ -151,8 +151,8 @@ HeroQuest
 HeroQuest II: Legacy of Sorasil
 Hill Street Blues
 Hook
-Humans II, The: The Jurassic Levels (Languages may be missing; German (exists), French, Italian)
-Humans, The (Languages may be missing; German (exists), French (exists), Italian, Spanish)
+Humans II: The Jurassic Levels (Languages may be missing; German (exists), French, Italian)
+Humans (Languages may be missing; German (exists), French (exists), Italian, Spanish)
 Hydrocis
 I Play: 3D Soccer
 Imperator: Master of Rome
@@ -168,7 +168,7 @@ Ishar 2: Messengers of Doom (Languages may be missing; Spanish (exists), German,
 Ishar: Legend of the Fortress (Languages may be missing; German (exists), French (exists), Italian)
 Jahangir Khan's World Championship Squash
 John Barnes European Football
-Jungle Book, The
+Jungle Book
 Jurassic Park
 K240
 Kargon
@@ -177,9 +177,9 @@ Kingmaker: The Quest for the Crown
 Kult
 Labyrinth
 Land of Genesis
-Legend of Billy the Kid, The
+Legend of Billy the Kid
 Legend of Rome
-Legend of the Lost, The
+Legend of the Lost
 Legends
 Little Red Riding Hood
 Logik
@@ -232,7 +232,7 @@ Premier Manager II
 Prison
 Projekt: Lila
 Quadralien
-Quest for the Time-Bird, The
+Quest for the Time-Bird
 Rally Championships
 Ramses
 Ravanelli Junior
@@ -273,7 +273,7 @@ Swibble Dibble
 Swords & Galleons
 Tankkk
 TeenAgent
-Teller, The
+Teller
 Tennis Cup
 Theme Park
 Time Runners 01: Gateways in Time
@@ -330,5 +330,5 @@ Winter Olympics: Lillehammer '94
 World Cup USA 94
 Xiphos
 Zdzislav: Hero of the Galaxy 3D
-Zing, The
+Zing
 Zodes
