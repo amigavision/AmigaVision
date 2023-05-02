@@ -41,6 +41,9 @@ Robinson's Requiem AGA: Does not run
 Shadow Sorcerer
 Skweek
 Syndicate
+Tennis Cup
+Toyottes
+Universe 3
 Xenon 2: Megablast
 
 Eye of the Beholder (may be missing languages, check! German (exists) — French, Italian should be supported in the AGA version)
@@ -52,40 +55,3 @@ Humans (Languages may be missing; German (exists), French (exists) — Italian, 
 Humans II: The Jurassic Levels (Languages may be missing; German (exists) — French, Italian are missing)
 
 Rally Championships claims to support English, German, French, Italian, Spanish, Portuguese, Dutch, Polish — but everything seems to be in English
-
-_____________________________________
-
-Games that still need to be verified:
-
-Tankkk
-TeenAgent
-Teller
-Tennis Cup
-Theme Park
-Tom and the Ghost
-Total Pattern
-Totaltetris
-Tower FRA
-Toyottes
-Transarctica
-Tumbler Street
-Turn It
-Ultimate Body Blows
-Universe
-Universe 3
-Uropa²: The Ulterior Colony
-Utopia: The Creation of a Nation
-Vader
-Visa Pour Hyde Park
-Voyager
-War in the Gulf
-Warriors of Releyne
-Wasted Dreams
-Where Time Stood Still
-Wild Life
-Winter Olympics: Lillehammer '94
-World Cup USA 94
-Xiphos
-Zdzislav: Hero of the Galaxy 3D
-Zing
-Zodes
