@@ -21,6 +21,8 @@ Diggers
 Dylan Dog: The Murderers: Does not run
 Exile
 Exile AGA
+Fighter Bomber
+Final Odyssey: Does not run
 Hired Guns
 IK+
 Syndicate
@@ -37,28 +39,6 @@ _____________________________________
 
 Games that still need to be verified:
 
-E.S.S. - European Space Simulator
-Face-Off
-Fantastic Dizzy
-Fantasy Flyer
-Fate: Gates of Dawn
-Federation of Free Traders
-Federation Quest 1: BSS Jane Seymour
-Feeble Files
-Fields of Glory
-FIFA International Soccer
-Fighter Bomber
-Fighter Command
-Final Odyssey: Theseus verses the Minotaur
-Fireball
-Flyers
-Football Champ
-Football Director II v2
-Fort Apache
-Foundation: Gold
-Freddy Hardest in South Manhattan
-Furtum Sacrum Adventure
-Furtum Sacrum: Dark Time
 Galactic Empire
 Gazza II
 Gazza's Super Soccer
