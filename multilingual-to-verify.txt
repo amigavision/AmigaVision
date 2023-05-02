@@ -27,63 +27,24 @@ Grand Prix 500 2
 Hired Guns
 IK+
 Jungle Book
+Land of Genesis: Does not run
+Marvin's Marvellous Adventure
+Megablast
+OnEscapee
 Syndicate
 Xenon 2: Megablast
 
-Eye of the Beholder (may be missing languages, check! German (exists), French, Italian should be supported in the AGA version)
+Eye of the Beholder (may be missing languages, check! German (exists) — French, Italian should be supported in the AGA version)
 
-Flight of the Amazon Queen (May be missing languages; should have German (exists), French (exists), Italian)
+Flight of the Amazon Queen (May be missing languages; should have German (exists), French (exists) — Italian (missing))
 
-Humans (Languages may be missing; German (exists), French (exists), Italian, Spanish)
+Humans (Languages may be missing; German (exists), French (exists) — Italian, Spanish are missing)
 
-Humans II: The Jurassic Levels (Languages may be missing; German (exists), French, Italian)
+Humans II: The Jurassic Levels (Languages may be missing; German (exists) — French, Italian are missing)
 _____________________________________
 
 Games that still need to be verified:
 
-
-Labyrinth
-Land of Genesis
-Legend of Billy the Kid
-Legend of Rome
-Legend of the Lost
-Legends
-Little Red Riding Hood
-Logik
-Lords of Chaos
-Lost on Parrot Island
-M.U.D.S. - Mean Ugly Dirty Sport
-Magic Roller
-Manchester United Europe
-Manchester United: Premier League Champions
-Manchester United: The Official Computer Game
-Manix
-Marvin's Marvellous Adventure
-Master of the Town
-Match Pairs
-Maxwell Mouse and the Missing Game Mystery
-Maze Hunter
-Meesterbrein: Een Geheugenspel voor alle leeftijden
-Megablast
-Merchant Colony
-Mickey's Runaway Zoo
-MicroProse Golf
-Mighty Bombjack
-Mikro Mortal Tennis
-Mini Legión
-Minos
-Moonbases
-Mot
-Mr. Nutz: Hoppin' Mad
-Murders in Space
-Murders in Venice
-Night Breed: The Interactive Movie
-Nightlong: Union City Conspiracy
-No Excuses
-Oliver & Company
-OnEscapee
-Oxyd
-Oxyd Magnum!
 Pairs
 Paladin 2
 Paragliding Simulation
