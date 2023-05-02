@@ -2,12 +2,47 @@
 
 # AGSImager
 
-# ntsc field options:
+# Database fields:
+#
+# id: Unique title identifier
+# title: Full title (displayed in info box)
+# title_short: Short title (displayed in list)
+# redundant: Exclude from image
+# preferred_version: Use this version instead if fuzzy (document behavior further!)
+# hardware:
+# aga: Title is AGA only
+# ntsc: Video mode and pixel aspect ratio
 #   0 = PAL title that will be run at 50Hz (PAL, 16:15 PAR @ 4X or 5X, 1:1 PAR @ 6X)
 #   1 = PAL title that will be run at 60Hz (PAL60, 16:15 PAR @ 5X, 1:1 PAR @ 6X)
 #   2 = "World" title that will be run at 60Hz (NTSC, 16:15 PAR @ 5X, 1:1 PAR @ 6X)
 #   3 = NTSC title that will be run at 60Hz (NTSC, 16:15 PAR @ 5X, 1:1 PAR @ 6X)
 #   4 = NTSC title that will be run at 60Hz and was likely designed for narrow PAR ("Sachs NTSC", 5:6 PAR @ 5X)
+# scale: Viewport integer scale factor at 1080p (PAL: 4-6, NTSC: 5-6)
+# v_offset: Viewport vertical offset (lower value -> screen is shifted downwards)
+#   Expressible range (higher values allowed but have no effect):
+#   - NTSC: -16...9
+#   - PAL5: -11...59
+#   - PAL4: -11...5
+# killaga: Use killaga hack when invoking whdload
+# gamepad: Title supports more than one button
+# lightgun: Title supports light gun
+# note: Extra text displayed in info box as "Note:"
+# issues: Extra text displayed in info box as "Issues:"
+# hack: Extra text displayed in info box as "Hack info:"
+# release_date: Release date (YYYY or YYYY-MM-DD)
+# country: Country of origin (comma separated list)
+# language: Languages supported (comma separated list)
+# developer: Developer (comma separated list)
+# publisher: Publisher (comma separated list)
+# players: Number of players supported (displayed in info box)
+# slave_args: Extra arguments passed in whdl invokation
+# slave_version: WHDL install version (set by ags_index)
+# slave_path: Path to WHDL slave in archive (set by ags_index)
+# archive_path: th to WHDL install archive (set by ags_index)
+# category: TEXT
+# subcategory: TEXT
+# hol_id: Hall of Light ID
+# lemon_id: Lemon Amiga ID
 
 import argparse
 import os
