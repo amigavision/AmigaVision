@@ -7,8 +7,14 @@ Battle Duel: Striving for Glory
 Battle Command
 Battle Isle
 Black Viper
+Campaign
 Carrier Command
+Center Court
+Center Court 2
 Chaos Engine
+Chess Simulator
+Classic Board Games
+Cosmo Ranger: SOL AD 2000
 Defender of the Crown II
 Hired Guns
 IK+
@@ -26,30 +32,6 @@ _____________________________________
 
 Games that still need to be verified:
 
-Caesar
-Campaign
-Captain Fizz Meets the Blaster-Trons
-Castle Master
-Cedric and the Lost Sceptre
-Celtic Legends
-Center Court
-Center Court 2
-Centerbase: Science-Fiction Simulation
-Charge of the Light Brigade
-Chess Simulator
-Classic Board Games
-Clever & Smart
-Cohort II: Fighting for Rome
-Cohort: Fighting for Rome
-Combat Air Patrol
-Complete Chess System
-Conqueror
-Cosmic Spacehead
-Cosmo Ranger: SOL AD 2000
-Cover Girl Strip Poker
-Crime Does Not Pay
-Cuba 1898
-Cuento de Navidad: A Christmas Carol
 Darkmere: The Nightmare's Begun
 Descent: Freespace - The Great War
 Desert Racing of BarDos
