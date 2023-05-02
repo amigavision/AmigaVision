@@ -4994,3 +4994,4 @@ game--boxx4--boxx4;Boxx4;Boxx4;;;OCS;;0;;;;;;;;;2023;;English;Retroguru;Retrogur
 demo--scoopexutsonix--scoopexutsonix;Uncle Tom Sonix;Uncle Tom Sonix;;;OCS;;0;;;;;;;;;2012-03-23;Sweden;English;;Scoopex;1;DATA=data;v0.1;ScoopexUTSonix/ScoopexUTSonix.slave;demo/_generic/ScoopexUTSonix_v0.1.lha;Demo;Demo;;
 game--maxrallyaga--maxrallyaga;MAX Rally;MAX Rally;;;AGA;1;0;;;;;;;;;1998;;English;Fortress;Fortress;2 (4 with serial link);;v1.2;MaxRallyAGA/MaxRallyAGA.slave;game/M/MaxRally_v1.2_AGA.lha;Game;Racing - Top-Down;2426;2659
 game--moonbasefr--moonbasefr;Moonbase: Lunar Colony Simulator;Moonbase;1;;OCS;;0;;;;;;;;;1991;;French;Wesson;Wesson;1;;v1.1;MoonBaseFr/MoonBaseFr.slave;game/M/MoonBase_v1.1_Fr.lha;Game;Strategy;2505;4066
+game-notwhdl--dynatechaga;Dynatech;Dynatech;;;AGA;1;;;;;;;;;;1992;;German;Eleven;Magic Bytes;2;;;;game-notwhdl/DynatechAGA.lha;Game;;467;2976
