@@ -55,32 +55,19 @@ import ags_paths as paths
 import ags_util as util
 from ags_fs import build_pfs, extract_base_image, convert_filename_uae2a, convert_filename_a2uae
 from ags_make import make_autoentries, make_tree
-from ags_query import entry_is_aga, entry_is_notwhdl, get_archive_path, get_entry, get_whd_dir
+from ags_query import entry_is_notwhdl, get_archive_path, get_entry, get_whd_dir
 from ags_types import EntryCollection
 from make_vadjust import VADJUST_MAX, VADJUST_MIN, make_vadjust
 
 # -----------------------------------------------------------------------------
 
-def add_all(db: Connection, entries: EntryCollection, category, all_versions, prefer_ecs):
+def add_all(db: Connection, entries: EntryCollection, category):
     for r in db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
         entry, preferred_entry = get_entry(db, r["id"])
-        if entry:
-            if all_versions:
-                entries.by_id[entry["id"]] = entry
-            elif prefer_ecs is False:
-                if preferred_entry:
-                    entries.by_id[preferred_entry["id"]] = preferred_entry
-                else:
-                    entries.by_id[entry["id"]] = entry
-            else:
-                if entry_is_aga(entry):
-                    continue
-                if preferred_entry and entry_is_aga(preferred_entry):
-                    entries.by_id[entry["id"]] = entry
-                elif preferred_entry:
-                    entries.by_id[preferred_entry["id"]] = preferred_entry
-                else:
-                    entries.by_id[entry["id"]] = entry
+        if preferred_entry:
+            entries.by_id[preferred_entry["id"]] = preferred_entry
+        elif entry:
+            entries.by_id[entry["id"]] = entry
 
 def extract_entries(clone_path, entries):
     unarchived = set()
@@ -124,8 +111,6 @@ def main():
 
     parser.add_argument("--all_games", dest="all_games", action="store_true", default=False, help="include all games in database")
     parser.add_argument("--all_demos", dest="all_demos", action="store_true", default=False, help="include all demos in database")
-    parser.add_argument("--all_versions", dest="all_versions", action="store_true", default=False, help="include all non-redundant versions of titles (if --all_games)")
-    parser.add_argument("--prefer_ecs", dest="prefer_ecs", action="store_true", default=False, help="prefer OCS/ECS versions (if --all_games)")
 
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
@@ -189,9 +174,9 @@ def main():
         if menu:
             make_tree(db, collection, amiga_ags_path, menu, template=runfile_template)
         if args.all_games:
-            add_all(db, collection, "Game", args.all_versions, args.prefer_ecs)
+            add_all(db, collection, "Game")
         if args.all_demos:
-            add_all(db, collection, "Demo", args.all_versions, args.prefer_ecs)
+            add_all(db, collection, "Demo")
         if args.all_games or args.all_demos:
             make_autoentries(collection, amiga_ags_path, args.all_games, args.all_demos, template=runfile_template)
 
