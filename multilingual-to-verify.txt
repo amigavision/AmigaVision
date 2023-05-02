@@ -31,6 +31,13 @@ Land of Genesis: Does not run
 Marvin's Marvellous Adventure
 Megablast
 OnEscapee
+Paranoia Complex
+Plan 9 from Outer Space
+Predator 2
+Prison: Does not run
+Reunion
+RISK
+Robinson's Requiem AGA: Does not run
 Syndicate
 Xenon 2: Megablast
 
@@ -41,39 +48,13 @@ Flight of the Amazon Queen (May be missing languages; should have German (exists
 Humans (Languages may be missing; German (exists), French (exists) — Italian, Spanish are missing)
 
 Humans II: The Jurassic Levels (Languages may be missing; German (exists) — French, Italian are missing)
+
+Rally Championships claims to support English, German, French, Italian, Spanish, Portuguese, Dutch, Polish — but everything seems to be in English
+
 _____________________________________
 
 Games that still need to be verified:
 
-Pairs
-Paladin 2
-Paragliding Simulation
-Paranoia Complex
-Payback
-Penthouse Hot Numbers Deluxe
-Pinomania
-Plan 9 from Outer Space
-Power Drive
-Power Labyrint
-Predator 2
-Premier Manager II
-Prison
-Projekt: Lila
-Quadralien
-Quest for the Time-Bird
-Rally Championships
-Ramses
-Ravanelli Junior
-Realms
-Red Mars
-Reunion
-Right Way
-RISK
-Robinson's Requiem
-RoboCop 3
-Rome AD92: The Pathway To Power
-Rorke's Drift
-Rules of Engagement 2
 Sabre Team
 Shadow of the Third Moon
 Shadow Sorcerer
