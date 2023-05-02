@@ -113,11 +113,10 @@ def make_entries(db: Connection, collection: EntryCollection, ags_path, entries,
             n = name[0]
             options = name[1]
 
-        # use preferred (fuzzy) entry
+        # use preferred entry if found, except when name was ID-like
         e, pe = query.get_entry(db, n)
-        if not "--" in n and pe is not None:
-            e = pe
-        if not e and not pe:
+        if pe and query.name_is_fuzzy(n): e = pe
+        if not e:
             if options is None or (options and not options.get("unavailable", False)):
                 print(" > WARNING: invalid entry: {}".format(n))
         else:

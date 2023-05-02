@@ -8,7 +8,7 @@
 # title: Full title (displayed in info box)
 # title_short: Short title (displayed in list)
 # redundant: Exclude in add_all operations
-# preferred_version: Use this version instead if title is fuzzy matched (document behavior further!)
+# preferred_version: Use this version instead if title is fuzzy matched (i.e. not using precise name in yaml config)
 # hardware: Hardware the title was originally targeting (OCS, OCS/CD, OCS/CDTV, AGA, AGA/CD, AGA/CD32, etc)
 # aga: Title is AGA only
 # ntsc: Video mode and pixel aspect ratio

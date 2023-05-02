@@ -28,6 +28,7 @@ def get_entry(db, name):
         "{}".format(n),
         "game--{}".format(n),
         "game--{}--{}".format(n, n),
+        "game--{}files--{}files".format(n, n),
         "game--{}ntsc--{}ntsc".format(n, n),
         "game--{}2mb--{}2mb".format(n, n),
         "game--{}1mb--{}1mb".format(n, n),
@@ -51,9 +52,7 @@ def get_entry(db, name):
         e = db.cursor().execute('SELECT * FROM titles WHERE id LIKE ?', (p.lower(),)).fetchone()
         entry = sanitize(e)
         if entry:
-            preferred_entry = get_entry(db, entry["preferred_version"]) if "preferred_version" in entry and entry["preferred_version"] else None
-            if preferred_entry:
-                preferred_entry = preferred_entry[0]
+            (preferred_entry, _) = get_entry(db, entry["preferred_version"]) if entry.get("preferred_version", None) else (None, None)
             return entry, preferred_entry
     return None, None
 
@@ -69,11 +68,12 @@ def entry_is_valid(entry):
     return False
 
 def entry_is_aga(entry):
-    print("is_aga:", entry)
     if entry_is_valid(entry) and entry.get("aga", 0) > 0:
-        print(" > yes")
         return True
     return False
+
+def name_is_fuzzy(name):
+    return not "--" in name
 
 def entry_is_notwhdl(entry):
     if entry_is_valid(entry) and "game-notwhdl--" in entry["id"]:
