@@ -251,6 +251,13 @@ def make_entry(entries: EntryCollection, ags_path, name, entry, path, template=N
         runfile = "echo \"Title not available.\"" + "\n" + "wait 2"
 
     if runfile:
+        if entry and util.parse_int(entry.get("killaga", 0)) > 0:
+            runfile_tmp = ""
+            for line in runfile.splitlines():
+                if "whdload >NIL: " in line:
+                    line = line.replace('"', '') .replace('whdload >NIL: ', 'killaga "whdload ') + '" >NIL:'
+                runfile_tmp += line + "\n"
+            runfile = runfile_tmp
         runfile_dest_path = base_path + runfile_ext
         if util.is_file(runfile_dest_path):
             print(" > AGS2 clash:", entry["id"], "-", runfile_dest_path)
