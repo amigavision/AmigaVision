@@ -16,6 +16,9 @@ Chess Simulator
 Classic Board Games
 Cosmo Ranger: SOL AD 2000
 Defender of the Crown II
+Dick Tracy (Disctinctive): Does not run
+Diggers
+Dylan Dog: The Murderers: Does not run
 Hired Guns
 IK+
 Syndicate
@@ -32,20 +35,6 @@ _____________________________________
 
 Games that still need to be verified:
 
-Darkmere: The Nightmare's Begun
-Descent: Freespace - The Great War
-Desert Racing of BarDos
-Dick Tracy
-Diggers
-Dog Fight
-Dominium
-Donald's Alphabet Chase
-Down at the Trolls
-Dragon Cave
-Dragonstone
-Dylan Dog: The Murderers
-Dylan Dog: Through the Looking Glass
-Dynatech
 E.S.S. - European Space Simulator
 Eagle's Rider
 Elf
