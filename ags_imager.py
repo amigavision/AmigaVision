@@ -7,9 +7,9 @@
 # id: Unique title identifier
 # title: Full title (displayed in info box)
 # title_short: Short title (displayed in list)
-# redundant: Exclude from image
-# preferred_version: Use this version instead if fuzzy (document behavior further!)
-# hardware:
+# redundant: Exclude in add_all operations
+# preferred_version: Use this version instead if title is fuzzy matched (document behavior further!)
+# hardware: Hardware the title was originally targeting (OCS, OCS/CD, OCS/CDTV, AGA, AGA/CD, AGA/CD32, etc)
 # aga: Title is AGA only
 # ntsc: Video mode and pixel aspect ratio
 #   0 = PAL title that will be run at 50Hz (PAL, 16:15 PAR @ 4X or 5X, 1:1 PAR @ 6X)
@@ -39,8 +39,8 @@
 # slave_version: WHDL install version (set by ags_index)
 # slave_path: Path to WHDL slave in archive (set by ags_index)
 # archive_path: th to WHDL install archive (set by ags_index)
-# category: TEXT
-# subcategory: TEXT
+# category: Category/genre (only used for demo scene auto-lists at the moment)
+# subcategory: Subcategory/genre (only used for demo scene auto-lists at the moment)
 # hol_id: Hall of Light ID
 # lemon_id: Lemon Amiga ID
 
