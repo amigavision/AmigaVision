@@ -38,6 +38,8 @@ Prison: Does not run
 Reunion
 RISK
 Robinson's Requiem AGA: Does not run
+Shadow Sorcerer
+Skweek
 Syndicate
 Xenon 2: Megablast
 
@@ -55,29 +57,6 @@ _____________________________________
 
 Games that still need to be verified:
 
-Sabre Team
-Shadow of the Third Moon
-Shadow Sorcerer
-Shuttle: The Space Flight Simulator
-Sierra Soccer: World Challenge Edition
-Silverman y la Isla Esmeralda
-Skweek
-Sleeping Gods Lie
-Smart
-Soccer Superstars
-Soko
-Son Shu-Shi
-Space Rescue
-Steel Empire
-Strangers
-Striker Manager
-Strip Fighter
-Strip Poker Live
-Subwar 2050
-Super Kikstart
-Super Skweek
-Swibble Dibble
-Swords & Galleons
 Tankkk
 TeenAgent
 Teller
