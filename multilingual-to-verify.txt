@@ -4,7 +4,9 @@ Addams Family
 Amazing Spider-Man
 Antago
 Battle Duel: Striving for Glory
+Battle Command
 Battle Isle
+Black Viper
 Carrier Command
 Chaos Engine
 Defender of the Crown II
@@ -24,28 +26,6 @@ _____________________________________
 
 Games that still need to be verified:
 
-Baba Yaga
-Baby Jo in 'Going Home'
-Backgammon Royale
-Balade au Pays de Big Ben
-Ball Game
-Balls
-Bambino fait un Puzzle
-Barbarian II
-Baron Baldric: A Grave Adventure
-Barravento: O Mestre da Capoeira
-Barre l'intrus
-Battle Command
-Big Game Fishing
-Big Red Adventure
-Billiards Simulator
-Black Viper
-Blue and the Gray
-Blue Escape
-Brian the Lion
-Brides of Dracula
-Brus Lii
-Brutal: Paws Of Fury
 Caesar
 Campaign
 Captain Fizz Meets the Blaster-Trons
