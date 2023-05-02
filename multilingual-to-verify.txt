@@ -23,6 +23,7 @@ Exile
 Exile AGA
 Fighter Bomber
 Final Odyssey: Does not run
+Grand Prix 500 2
 Hired Guns
 IK+
 Syndicate
@@ -39,22 +40,6 @@ _____________________________________
 
 Games that still need to be verified:
 
-Galactic Empire
-Gazza II
-Gazza's Super Soccer
-Genetic Species
-Global Effect
-Go Player
-Goal!
-Gold Mine
-Goliath: The Game Of The Demons
-Goofy's Railway Express
-GP Tennis Manager
-Graham Taylors Soccer Challenge
-Grand Prix 500 2
-Great Napoleonic Battles
-Gulp!
-Gunbee F-99: The Kidnapping of Lady Akiko
 Heroes of Gorluth
 HeroQuest
 HeroQuest II: Legacy of Sorasil
