@@ -26,6 +26,7 @@ Final Odyssey: Does not run
 Grand Prix 500 2
 Hired Guns
 IK+
+Jungle Book
 Syndicate
 Xenon 2: Megablast
 
@@ -40,31 +41,7 @@ _____________________________________
 
 Games that still need to be verified:
 
-Heroes of Gorluth
-HeroQuest
-HeroQuest II: Legacy of Sorasil
-Hill Street Blues
-Hook
-Hydrocis
-I Play: 3D Soccer
-Imperator: Master of Rome
-Impérial v2
-Impossible Mission 2025: The Special Edition
-In 80 Days Around the World
-In the Dead of Night
-InerSex v2.0
-Infestation
-Insanity Fight
-International Championship Athletics
-Jahangir Khan's World Championship Squash
-John Barnes European Football
-Jungle Book
-Jurassic Park
-K240
-Kargon
-Kick Off 3: European Challenge
-Kingmaker: The Quest for the Crown
-Kult
+
 Labyrinth
 Land of Genesis
 Legend of Billy the Kid
