@@ -888,6 +888,7 @@
       - Nitro: { title_short: "[3P] Nitro" }
       - SpaceCrusade&VoyageBeyond: { title_short: "[3P] Space Crusade" }
       - SuperOffRoad: { title_short: "[3P] Super Off Road" }
+      - BaseJumpers: { title_short: "[4P] Base Jumpers" }
       - Gauntlet2: { title_short: "[4P] Gauntlet II" }
       - GreatCourts: { title_short: "[4P] Great Courts" }
       - GreatCourts2: { title_short: "[4P] Great Courts 2" }
@@ -926,6 +927,7 @@
     - BadLands
     - Banshee
     - Barbarian2Palace
+    - BaseJumpers
     - BattleChess
     - BattleChess2
     - BattleIsle
