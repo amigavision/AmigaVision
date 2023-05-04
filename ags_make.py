@@ -186,7 +186,12 @@ def make_entry(entries: EntryCollection, ags_path, name, entry, path, template=N
         if entry.get("category", "").lower() == "demo":
             title += " (" + entry.get("publisher") + ")"
         else:
-            title += " (" + entry.get("hardware", "").replace("/ECS", "").replace("AGA/CD32", "CD32").replace("OCS/CDTV", "CDTV").replace("/", "-") + ")"
+            # add language prefix and/or hardware info
+            languages = query.get_languagues(entry)
+            if len(languages) == 1:
+                title = title.rstrip() + " [" + util.language_code(languages[0]).upper() + "]"
+            if util.is_file(util.path(path, title) + runfile_ext):
+                title = title.rstrip() + " (" + query.get_hardware_short(entry) + ")"
         if only_script:
             title = title.replace(" ", "_")
     if not only_script and len(title) > max_w:
@@ -372,6 +377,7 @@ def make_note(entry, add_note):
         note += ("{}{}".format(strings["note"]["publisher"], entry["publisher"]))[:max_w] + "\n"
         note += ("{}{}".format(strings["note"]["release_date"], entry["release_date"]))[:max_w] + "\n"
         note += ("{}{}".format(strings["note"]["players"], entry["players"]))[:max_w] + "\n"
+        note += ("{}{}".format(strings["note"]["language"], entry["language"]))[:max_w] + "\n"
         note += ("{}{}".format(strings["note"]["system"], system))[:max_w] + "\n"
         if entry.get("issues"):
             note += ("{}{}".format(strings["note"]["issues"], entry["issues"]))[:max_w] + "\n"
@@ -418,10 +424,14 @@ def make_autoentries(entries: EntryCollection, path, all_games=False, all_demos=
 
         # add games
         if all_games and entry.get("category", "").lower() == "game":
-            make_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"), template=template)
-            make_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".iff"), {"op":"tx", "txt": letter})
-            make_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".ags"), template=template)
-            make_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
+            if query.has_english_language(entry):
+                make_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"), template=template)
+                make_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".iff"), {"op":"tx", "txt": letter})
+                make_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".ags"), template=template)
+                make_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
+            for language in query.get_languagues(entry):
+                if language.lower() != "english":
+                    make_entry(entries, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_nonenglish"]), language + ".ags"), template=template)
 
         # add demos, disk mags
         def add_demo(entry, sort_group, sort_country):
@@ -459,15 +469,15 @@ def make_autoentries(entries: EntryCollection, path, all_games=False, all_demos=
                     make_entry(entries, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".ags"), template=template)
 
         if all_demos and entry.get("category", "").lower() == "demo":
-            groups = entry.get("publisher")
+            groups = query.get_publishers(entry)
             if not groups:
                 continue
-            for sort_group in groups.split(", "):
-                countries = entry.get("country")
+            for sort_group in groups:
+                countries = query.get_countries(entry)
                 if not countries:
                     add_demo(entry, sort_group, None)
                 else:
-                    for sort_country in countries.split(", "):
+                    for sort_country in countries:
                         add_demo(entry, sort_group, sort_country)
 
         # run-scripts for randomizer

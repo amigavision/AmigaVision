@@ -116,12 +116,12 @@ def main():
                     missing_archives.append(r["id"])
                 if not util.is_file("data/img/" + r["id"] + ".iff"):
                     missing_images.append(r["id"])
-            if len(missing_archives) > 0:
+            if missing_archives:
                 print("titles missing archives:")
                 for id in missing_archives:
                     print("  >> {}".format(id))
                 print()
-            if len(missing_images) > 0:
+            if missing_images:
                 print("titles missing images:")
                 for id in missing_images:
                     print("  >> {}".format(id))

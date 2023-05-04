@@ -10,6 +10,7 @@ strings = {
         "group":        "Group:      ",
         "hack":         "Hack Info:  ",
         "issues":       "Issues:     ",
+        "language":     "Language:   ",
         "note":         "Note:       ",
         "players":      "Players:    ",
         "publisher":    "Publisher:  ",

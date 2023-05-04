@@ -64,10 +64,10 @@ from make_vadjust import VADJUST_MAX, VADJUST_MIN, make_vadjust
 def add_all(db: Connection, entries: EntryCollection, category):
     for r in db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
         entry, preferred_entry = get_entry(db, r["id"])
+        if entry:
+            entries.by_id[entry["id"]] = entry
         if preferred_entry:
             entries.by_id[preferred_entry["id"]] = preferred_entry
-        elif entry:
-            entries.by_id[entry["id"]] = entry
 
 def extract_entries(clone_path, entries):
     unarchived = set()
@@ -228,7 +228,7 @@ def main():
                     cd_files.append("F{}".format(file))
             cache += [k for k, _ in sorted(cd_ranked.items(), key=lambda a:a[1])] + cd_files
 
-            if len(cache) > 0:
+            if cache:
                 cachefile = "{}\n".format(len(cache))
                 for line in cache: cachefile += "{}\n".format(convert_filename_uae2a(line))
                 open(util.path(path, ".dir"), mode="w", encoding="latin-1").write(cachefile)
@@ -285,7 +285,10 @@ def main():
 
     # except Exception as err:
     except IOError as err:
-        print("error - {}".format(err))
+        print("io error - {}".format(err))
+        sys.exit(1)
+    except ValueError as err:
+        print("value error - {}".format(err))
         sys.exit(1)
 
 if __name__ == "__main__":

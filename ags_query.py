@@ -72,9 +72,6 @@ def entry_is_aga(entry):
         return True
     return False
 
-def name_is_fuzzy(name):
-    return not "--" in name
-
 def entry_is_notwhdl(entry):
     if entry_is_valid(entry) and "game-notwhdl--" in entry["id"]:
         return True
@@ -83,6 +80,28 @@ def entry_is_notwhdl(entry):
     if entry_is_valid(entry) and "mags-notwhdl--" in entry["id"]:
         return True
     return False
+
+def name_is_fuzzy(name):
+    return not "--" in name
+
+def has_english_language(entry):
+    return "english" in entry.get("language", "").lower()
+
+def get_languagues(entry):
+    return list(filter(None, entry.get("language", "").split(", ")))
+
+def get_countries(entry):
+    return list(filter(None, entry.get("country", "").split(", ")))
+
+def get_publishers(entry):
+    return list(filter(None, entry.get("publisher", "").split(", ")))
+
+def get_hardware_short(entry):
+    hardware = entry.get("hardware", "")
+    if hardware:
+        return hardware.replace("/ECS", "").replace("AGA/CD32", "CD32").replace("OCS/CDTV", "CDTV").replace("/", "-")
+    else:
+        return ""
 
 def get_whd_slavename(entry):
     if entry_is_valid(entry):

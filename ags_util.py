@@ -146,7 +146,25 @@ def apply_template(template: str, dictionary: dict) -> str:
     return template
 
 # -----------------------------------------------------------------------------
-# custom directory sorting
+# misc
+
+def language_code(lang: str):
+    codes = {
+        "danish": "da",
+        "english": "en",
+        "czech": "cs",
+        "french": "fr",
+        "fremen": "fm",
+        "german": "de",
+        "italian": "it",
+        "polish": "pl",
+        "spanish": "es",
+        "swedish": "sv",
+    }
+    if lang.lower() in codes:
+        return codes[lang.lower()]
+    else:
+        raise ValueError("no language code for: " + lang)
 
 def sorted_natural(lst):
     rom_nums = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10, "XI": 11, "XII": 12, "XIII": 13, "XIV": 14, "XV": 15}
