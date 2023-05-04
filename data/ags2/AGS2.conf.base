@@ -21,4 +21,3 @@ blue_button_action = back
 favs_path = WHDSaves:Favorites/
 favs_name = Favorites
 favs_empty = Favorites_empty.txt
-hide_parent_dir = 1
