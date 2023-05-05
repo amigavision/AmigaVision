@@ -159,6 +159,7 @@ def language_code(lang: str):
         "fremen": "fm",
         "french": "fr",
         "german": "de",
+        "greek": "el",
         "hungarian": "hu",
         "italian": "it",
         "japanese": "ja",
