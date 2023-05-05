@@ -150,13 +150,19 @@ def apply_template(template: str, dictionary: dict) -> str:
 
 def language_code(lang: str):
     codes = {
-        "danish": "da",
-        "english": "en",
+        "croatian": "hr",
         "czech": "cs",
-        "french": "fr",
+        "danish": "da",
+        "dutch": "nl",
+        "english": "en",
+        "finnish": "fi",
         "fremen": "fm",
+        "french": "fr",
         "german": "de",
+        "hungarian": "hu",
         "italian": "it",
+        "japanese": "ja",
+        "norwegian": "no",
         "polish": "pl",
         "spanish": "es",
         "swedish": "sv",
