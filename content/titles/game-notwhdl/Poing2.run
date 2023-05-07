@@ -1,7 +1,7 @@
 IF EXISTS WHDSaves:poing2.scores
   copy WHDSaves:poing2.scores S: QUIET
 ENDIF
-cd WHD:N/Poing2
+ags_cd N/Poing2
 Poing22 >NIL:
 IF EXISTS S:poing2.scores
   copy S:poing2.scores WHDSaves: QUIET

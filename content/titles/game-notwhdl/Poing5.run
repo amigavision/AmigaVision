@@ -4,6 +4,6 @@ IF NOT EXISTS WHDSaves:poing5
   copy WHD:N/Poing5/poing5.scores WHDSaves:poing5 QUIET
 ENDIF
 assign >NIL: POING: WHDSaves:poing5
-cd WHD:N/Poing5
+ags_cd N/Poing5
 poing5 >NIL:
 assign >NIL: POING: REMOVE

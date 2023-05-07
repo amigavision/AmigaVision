@@ -10,6 +10,8 @@ class EntryCollection:
         self.path_ids = set()
         # runfile_path: int
         self.path_sort_rank = dict()
+        # list of entries with overrides
+        self.overridden_entries = []
 
     def ids(self):
         return self.by_id.values()

@@ -1,4 +1,4 @@
-cd WHD:N/ROM04
+ags_cd N/ROM04
 assign >NIL: ROM4a: ""
 wbrun >NIL: Rom_4 SYNC
 assign >NIL: ROM4a: REMOVE

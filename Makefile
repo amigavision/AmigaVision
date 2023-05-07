@@ -1,5 +1,5 @@
 include .env
-.PHONY: default env env-rm index image test-image screenshots sqlite clean
+.PHONY: default env env-rm index image pocket-image test-image test-dry screenshots sqlite clean
 
 default:
 	@echo No default action
@@ -14,12 +14,19 @@ index:
 	@pipenv run ./ags_index.py -v
 
 image:
-	@pipenv run ./ags_imager.py -v -c configs/MegaAGS.yaml --all_games --all_demos -d ${AGSCONTENT}/extra_dirs/Music::DH2 -o ${AGSDEST}
+	@pipenv run ./ags_imager.py -v -c configs/MegaAGS.yaml --all-games --all-demos -d ${AGSCONTENT}/extra_dirs/Music::DH2 -o ${AGSDEST}
+	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
+
+pocket-image:
+	@pipenv run ./ags_imager.py -v -c configs/MegaAGS.yaml --auto-lists -d ${AGSCONTENT}/extra_dirs_pocket/Music::DH2 -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 
 test-image:
-	@pipenv run ./ags_imager.py -v -c configs/Test.yaml -o ${AGSDEST}
+	@pipenv run ./ags_imager.py -v -c configs/Test.yaml --auto-lists -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
+
+test-dry:
+	@pipenv run ./ags_imager.py -v -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
 
 screenshots:
 	@pipenv run ./make_screenshots.sh screenshots

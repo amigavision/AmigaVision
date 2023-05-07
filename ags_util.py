@@ -2,6 +2,7 @@
 
 # AGSImager: Utility functions
 
+import argparse
 import csv
 import functools
 import math
@@ -14,7 +15,7 @@ import sys
 from lhafile import LhaFile
 from ruamel import yaml
 
-from ags_fs import convert_filename_a2uae, convert_filename_uae2a
+from ags_fs import convert_filename_a2uae
 
 # -----------------------------------------------------------------------------
 # utility functions
@@ -62,32 +63,32 @@ def remove_keys(dictionary, keys):
     return d
 
 
-def path(*args):
+def path(*args) -> str:
     return os.path.expandvars(os.path.join(*args))
 
-def is_file(path):
+def is_file(path: str):
     return os.path.isfile(path)
 
-def is_dir(path):
+def is_dir(path: str):
     return os.path.isdir(path)
 
-def argparse_is_file(parser, arg):
+def argparse_is_file(parser: argparse.ArgumentParser, arg: str):
     if not os.path.isfile(arg):
         parser.error("File %s does not exist" % arg)
     else:
         return arg
 
-def argparse_is_dir(parser, arg):
+def argparse_is_dir(parser: argparse.ArgumentParser, arg: str):
     if not os.path.isdir(arg):
         parser.error("Directory %s does not exist" % arg)
     else:
         return arg
 
-def make_dir(path):
+def make_dir(path: str):
     if not os.path.exists(path):
         os.makedirs(path)
 
-def rm_path(path):
+def rm_path(path: str):
     if os.path.isfile(path):
         os.remove(path)
     elif os.path.isdir(path):
@@ -108,7 +109,7 @@ def get_dir_size(start_path=".", block_size=1):
             file_size += math.ceil(os.path.getsize(fp) / block_size) * block_size
     return (file_size, path_size, file_size + path_size)
 
-def copytree(src, dst, symlinks=False, ignore=None):
+def copytree(src: str, dst: str, symlinks=False, ignore=None):
     if not os.path.exists(dst):
         os.makedirs(dst)
         shutil.copystat(src, dst)
@@ -134,11 +135,11 @@ def copytree(src, dst, symlinks=False, ignore=None):
         else:
             shutil.copy2(s, d)
 
-def prettify_names(str):
-    last_delimiter = str.rfind(", ")
+def prettify_names(name: str):
+    last_delimiter = name.rfind(", ")
     if last_delimiter > 0:
-        str = str[:last_delimiter] + " & " + str[last_delimiter + 2:]
-    return str
+        name = name[:last_delimiter] + " & " + name[last_delimiter + 2:]
+    return name
 
 def apply_template(template: str, dictionary: dict) -> str:
     for k, v in dictionary.items():
@@ -221,11 +222,11 @@ def lha_extract(arcpath, outpath):
 # -----------------------------------------------------------------------------
 # yaml serialization
 
-def yaml_write(data, path):
+def yaml_write(data, path: str):
     with open(path, 'w') as f:
         yaml.round_trip_dump(data, f, explicit_start=True, version=(1, 2))
 
-def yaml_load(path):
+def yaml_load(path: str):
     with open(path, 'r') as f:
         d = yaml.safe_load(f)
     return d
@@ -233,7 +234,7 @@ def yaml_load(path):
 # -----------------------------------------------------------------------------
 # database functions
 
-def get_db(verbose):
+def get_db(verbose: bool):
     sqlite3_path = "data/db/titles.sqlite3"
     csv_path = "data/db/titles.csv"
 

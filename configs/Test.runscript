@@ -1,5 +1,5 @@
 ags_notify TITLE="{{TITLE}}"
-cd "{{PATH}}"
+ags_cd "{{PATH}}"
 IF NOT EXISTS ENV:whdlspdly
   echo 200 >ENV:whdlspdly
 ENDIF

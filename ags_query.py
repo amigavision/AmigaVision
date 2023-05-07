@@ -3,6 +3,7 @@
 # AGSImager: Query entries and paths
 
 import sys
+from typing import Tuple
 
 import ags_paths as paths
 import ags_util as util
@@ -87,7 +88,7 @@ def name_is_fuzzy(name):
 def has_english_language(entry):
     return "english" in entry.get("language", "").lower()
 
-def get_languagues(entry):
+def get_languages(entry):
     return list(filter(None, entry.get("language", "").split(", ")))
 
 def get_countries(entry):
@@ -96,12 +97,32 @@ def get_countries(entry):
 def get_publishers(entry):
     return list(filter(None, entry.get("publisher", "").split(", ")))
 
-def get_hardware_short(entry):
+def get_hardware_short(entry) -> str:
     hardware = entry.get("hardware", "")
     if hardware:
         return hardware.replace("/ECS", "").replace("AGA/CD32", "CD32").replace("OCS/CDTV", "CDTV").replace("/", "-")
     else:
         return ""
+
+def get_runscript_paths(entry) -> Tuple[str | None, str | None]:
+    if not (isinstance(entry, dict)):
+        return (None, None)
+    if entry.get("issues"):
+        return (util.path("Run", "Problematic"), None)
+    elif entry.get("category", "").lower() == "game":
+        return (util.path("Run", "Game"), util.path("RunQuiet", "Game"))
+    elif entry.get("category", "").lower() == "demo":
+        sub = entry.get("subcategory", "").lower()
+        if sub.startswith("music disk"):
+            return (util.path("Run", "MusicDisk"), None)
+        elif sub.startswith("disk mag"):
+            return (util.path("Run", "DiskMag"), None)
+        elif sub.startswith("demo") or sub.startswith("intro") or sub.startswith("crack"):
+            return (util.path("Run", "Demo"), util.path("RunQuiet", "Demo"))
+        else:
+            return (util.path("Run", "SlideShow"), None)
+    else:
+        return (util.path("Run", "Misc"), None)
 
 def get_whd_slavename(entry):
     if entry_is_valid(entry):
@@ -146,11 +167,11 @@ def get_amiga_whd_dir(entry):
     else:
         p = "0-9" if entry["slave_dir"][0].isnumeric() else entry["slave_dir"][0].upper()
         if entry["id"].startswith("demo--"):
-            return "WHD:D/" + p + "/" + entry["slave_dir"]
+            return "D/" + p + "/" + entry["slave_dir"]
         elif entry["id"].startswith("mags--"):
-            return "WHD:M/" + p + "/" + entry["slave_dir"]
+            return "M/" + p + "/" + entry["slave_dir"]
         else:
-            return "WHD:G/" + p + "/" + entry["slave_dir"]
+            return "G/" + p + "/" + entry["slave_dir"]
 
 # -----------------------------------------------------------------------------
 

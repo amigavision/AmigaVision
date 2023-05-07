@@ -1,4 +1,4 @@
-cd WHD:N/Statix
+ags_cd N/Statix
 assign >NIL: STX: ""
 failat 61
 Statix_Intro >NIL:

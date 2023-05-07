@@ -17,6 +17,13 @@
   - image: [{ op: "tx", txt: "ASS" }, { op: "tx", txt: "P*SS", size: 100, color: "#f0f" }]
   - ProximaHopscotch
   - SuperDeliveryBoyHS
+  - game--anotherworldfr--anotherworldfr
+  - game--anotherworld--anotherworld
+  - game--anotherworldit--anotherworldit
+  - game--anotherworldlostlevel--anotherworldlostlevel
+  - demo--anotherworldintro--anotherworld
+  - demo-notwhdl--crystal-anotherworld
+  - game--legendofthelost--legendofthelost
 
 - Ordering Tests:
   - Ranked (2):

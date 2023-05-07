@@ -7,7 +7,7 @@ IF NOT EXISTS WHDSaves:InheritTheEarth
   copy WHD:N/InheritTheEarth/init/ite.prf S: QUIET
   copy WHD:N/InheritTheEarth/init/ite.sav RAM: QUIET
 ENDIF
-cd WHD:N/InheritTheEarth
+ags_cd N/InheritTheEarth
 aga.exe >NIL:
 wait 4
 echo ""

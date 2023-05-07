@@ -2,6 +2,12 @@
 
 # AGSImager
 
+# TODO: Graphics: allgames_nonenglish.png
+
+# TODO: Pocket config: Array of yaml files passed in arguments, simple concatentation
+
+# TODO: Rename "Games:" to "Data:". Put at bottom. For split image call them "Data 1", "Data 2", etc.
+
 # Database fields:
 #
 # id: Unique title identifier
@@ -53,21 +59,21 @@ from sqlite3 import Connection
 
 import ags_paths as paths
 import ags_util as util
-from ags_fs import build_pfs, extract_base_image, convert_filename_uae2a, convert_filename_a2uae
-from ags_make import make_autoentries, make_tree
+from ags_fs import build_pfs, extract_base_image, convert_filename_uae2a
+from ags_make import make_autoentries, make_runscripts, make_tree
 from ags_query import entry_is_notwhdl, get_archive_path, get_entry, get_whd_dir
 from ags_types import EntryCollection
 from make_vadjust import VADJUST_MAX, VADJUST_MIN, make_vadjust
 
 # -----------------------------------------------------------------------------
 
-def add_all(db: Connection, entries: EntryCollection, category):
+def add_all(db: Connection, c: EntryCollection, category: str) -> None:
     for r in db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
         entry, preferred_entry = get_entry(db, r["id"])
         if entry:
-            entries.by_id[entry["id"]] = entry
+            c.by_id[entry["id"]] = entry
         if preferred_entry:
-            entries.by_id[preferred_entry["id"]] = preferred_entry
+            c.by_id[preferred_entry["id"]] = preferred_entry
 
 def extract_entries(clone_path, entries):
     unarchived = set()
@@ -104,13 +110,15 @@ def make_vadjust_dats(path):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", dest="config_file", required=True, metavar="FILE", type=lambda x: util.argparse_is_file(parser, x),  help="configuration file")
-    parser.add_argument("-o", "--out_dir", dest="out_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="output directory")
-    parser.add_argument("-b", "--base_hdf", dest="base_hdf", metavar="FILE", help="base HDF image")
-    parser.add_argument("-a", "--ags_dir", dest="ags_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="AGS2 configuration directory")
-    parser.add_argument("-d", "--add_dir", dest="add_dirs", action="append", help="add dir to amiga filesystem (example 'DH1:Music::~/Amiga/Music')")
+    parser.add_argument("-o", "--out-dir", dest="out_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="output directory")
+    parser.add_argument("-b", "--base-hdf", dest="base_hdf", metavar="FILE", help="base HDF image")
+    parser.add_argument("-a", "--ags-dir", dest="ags_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="AGS2 configuration directory")
+    parser.add_argument("-d", "--add-dir", dest="add_dirs", action="append", help="add dir to amiga filesystem (example 'DH1:Music::~/Amiga/Music')")
 
-    parser.add_argument("--all_games", dest="all_games", action="store_true", default=False, help="include all games in database")
-    parser.add_argument("--all_demos", dest="all_demos", action="store_true", default=False, help="include all demos in database")
+    parser.add_argument("--all-games", dest="all_games", action="store_true", default=False, help="include all games in database")
+    parser.add_argument("--all-demos", dest="all_demos", action="store_true", default=False, help="include all demos in database")
+    parser.add_argument("--auto-lists", dest="auto_lists", action="store_true", default=False, help="create automatic lists")
+    parser.add_argument("--only-ags-tree", dest="only_ags_tree", action="store_true", default=False, help="only generate AGS tree")
 
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
@@ -144,20 +152,21 @@ def main():
         if not isinstance(menu, list):
             raise ValueError("config file not a list: " + args.config_file)
 
-        runfile_template_path = util.path(os.path.dirname(args.config_file), config_base_name) + ".runfile"
-        if not util.is_file(runfile_template_path):
-            raise IOError("AGS2 runfile template doesn't exist: " + runfile_template_path)
-        with open(runfile_template_path, 'r') as f:
-            runfile_template = f.read()
+        runscript_template_path = util.path(os.path.dirname(args.config_file), config_base_name) + ".runscript"
+        if not util.is_file(runscript_template_path):
+            raise IOError("AGS2 run script template doesn't exist: " + runscript_template_path)
+        with open(runscript_template_path, 'r') as f:
+            runscript_template = f.read()
 
         # extract base image
-        base_hdf = args.base_hdf
+        base_hdf: str | None = args.base_hdf
         if not base_hdf:
             base_hdf = util.path(paths.content(), "base", "base.hdf")
         if not util.is_file(base_hdf):
             raise IOError("base HDF doesn't exist: " + base_hdf)
-        if args.verbose: print("extracting base HDF image... ({})".format(base_hdf))
-        extract_base_image(base_hdf, amiga_boot_path)
+        if not args.only_ags_tree:
+            if args.verbose: print("extracting base HDF image... ({})".format(base_hdf))
+            extract_base_image(base_hdf, amiga_boot_path)
 
         # copy base AGS2 config
         if args.verbose: print("building AGS2 tree...")
@@ -172,17 +181,21 @@ def main():
 
         # collect entries
         if menu:
-            make_tree(db, collection, amiga_ags_path, menu, template=runfile_template)
+            make_tree(db, collection, amiga_ags_path, menu, template=runscript_template)
         if args.all_games:
             add_all(db, collection, "Game")
         if args.all_demos:
             add_all(db, collection, "Demo")
-        if args.all_games or args.all_demos:
-            make_autoentries(collection, amiga_ags_path, args.all_games, args.all_demos, template=runfile_template)
+        if args.all_games or args.all_demos or args.auto_lists:
+            make_autoentries(collection, amiga_ags_path, args.all_games | args.auto_lists, args.all_demos | args.auto_lists)
+
+        # generate run scripts
+        make_runscripts(collection, amiga_ags_path, template=runscript_template)
 
         # extract whdloaders
-        if args.verbose: print("extracting {} content archives...".format(len(collection.by_id.items())))
-        extract_entries(clone_path, collection.ids())
+        if not args.only_ags_tree:
+            if args.verbose: print("extracting {} content archives...".format(len(collection.by_id.items())))
+            extract_entries(clone_path, collection.ids())
 
         make_vadjust_dats(util.path(amiga_boot_path, "S", "vadjust_dat"))
 
@@ -193,7 +206,7 @@ def main():
             util.copytree(config_extra_dir, clone_path)
 
         # copy additional directories
-        if args.add_dirs:
+        if not args.only_ags_tree and args.add_dirs:
             if args.verbose: print("copying additional directories...")
             for s in args.add_dirs:
                 d = s.split("::")
@@ -234,28 +247,30 @@ def main():
                 open(util.path(path, ".dir"), mode="w", encoding="latin-1").write(cachefile)
 
         # build PFS container
-        build_pfs(util.path(out_dir, config_base_name + ".hdf"), clone_path, args.verbose)
+        if not args.only_ags_tree:
+            build_pfs(util.path(out_dir, config_base_name + ".hdf"), clone_path, args.verbose)
 
         # set up cloner environment
-        cloner_adf = util.path("data", "cloner", "boot.adf")
-        cloner_cfg = util.path("data", "cloner", "template.fs-uae")
-        clone_script = util.path(os.path.dirname(args.config_file), config_base_name) + ".clonescript"
-        if util.is_file(cloner_adf) and util.is_file(cloner_cfg) and util.is_file(clone_script):
-            if args.verbose: print("copying cloner config...")
-            shutil.copyfile(cloner_adf, util.path(clone_path, "boot.adf"))
-            # create config from template
-            with open(cloner_cfg, 'r') as f:
-                cfg = f.read()
-                cfg = cfg.replace("<config_base_name>", config_base_name)
-                cfg = cfg.replace("$AGSTEMP", paths.tmp())
-                cfg = cfg.replace("$AGSDEST", util.path(os.getenv("AGSDEST")))
-                cfg = cfg.replace("$FSUAEROM", util.path(os.getenv("FSUAEROM")))
-                open(util.path(clone_path, "cfg.fs-uae"), mode="w").write(cfg)
-            # copy clone script and write fs-uae metadata
-            shutil.copyfile(clone_script, util.path(clone_path, "clone"))
-            open(util.path(clone_path, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.00")
-        else:
-            print("WARNING: cloner config files not found")
+        if not args.only_ags_tree:
+            cloner_adf = util.path("data", "cloner", "boot.adf")
+            cloner_cfg = util.path("data", "cloner", "template.fs-uae")
+            clone_script = util.path(os.path.dirname(args.config_file), config_base_name) + ".clonescript"
+            if util.is_file(cloner_adf) and util.is_file(cloner_cfg) and util.is_file(clone_script):
+                if args.verbose: print("copying cloner config...")
+                shutil.copyfile(cloner_adf, util.path(clone_path, "boot.adf"))
+                # create config from template
+                with open(cloner_cfg, 'r') as f:
+                    cfg = f.read()
+                    cfg = cfg.replace("<config_base_name>", config_base_name)
+                    cfg = cfg.replace("$AGSTEMP", paths.tmp())
+                    cfg = cfg.replace("$AGSDEST", util.path(os.getenv("AGSDEST")))
+                    cfg = cfg.replace("$FSUAEROM", util.path(os.getenv("FSUAEROM")))
+                    open(util.path(clone_path, "cfg.fs-uae"), mode="w").write(cfg)
+                # copy clone script and write fs-uae metadata
+                shutil.copyfile(clone_script, util.path(clone_path, "clone"))
+                open(util.path(clone_path, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.00")
+            else:
+                print("WARNING: cloner config files not found")
 
         # clean output directory
         for r, _, f in os.walk(clone_path):
@@ -269,7 +284,7 @@ def main():
         util.rm_path(list_dir)
         util.make_dir(list_dir)
         for list_def in [("Game", "games.txt"), ("Demo", "demos.txt")]:
-            content_path = util.path(amiga_ags_path, "Run", list_def[0])
+            content_path = util.path(amiga_ags_path, "RunQuiet", list_def[0])
             if util.is_dir(content_path):
                 listing = "\n".join(sorted(os.listdir(util.path(amiga_ags_path, "Run", list_def[0])), key=str.casefold))
                 open(util.path(list_dir, list_def[1]), mode="w", encoding="latin-1").write(listing)

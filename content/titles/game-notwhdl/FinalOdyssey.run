@@ -1,7 +1,7 @@
 IF EXISTS WHDSaves:FinalOdyssey
   copy WHDSaves:FinalOdyssey/V-FO#? S: ALL CLONE QUIET
 ENDIF
-cd WHD:N/FinalOdyssey
+ags_cd N/FinalOdyssey
 assign >NIL: ODYSSEY: ""
 68020 >NIL:
 assign >NIL: ODYSSEY: REMOVE

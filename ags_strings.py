@@ -20,9 +20,10 @@ strings = {
         "unavailable":  "Content is unavailable."
     },
     "dirs": {
-        "allgames": "[ All Games ]",
+        "allgames": "[ All Games - By Title ]",
         "allgames_year": "[ All Games - By Year ]",
         "allgames_nonenglish": "[ All Games - Non-English ]",
+        "unique_nonenglish": "[ No English Version ]", # TODO: Better title?
         "scene": "[ Demo Scene ]",
         "issues": "[ Issues ]",
         "demos": "[ Demos - By Title ]",
@@ -39,6 +40,8 @@ strings = {
     "desc": {
         "allgames": "Browse all games alphabetically.",
         "allgames_year": "Browse all games alphabetically.",
+        "allgames_nonenglish": "Browse all non-English games.",
+        "unique_nonenglish": "All games that never had an English release", # TODO: Better description?
         "scene": "A sample of demo scene releases.",
         "issues": "Titles with known issues on MiSTer.\n(Please report any new or resolved issues!)",
         "demos": "Browse demos by title.",
@@ -55,6 +58,7 @@ strings = {
     "images": {
         "allgames": "allgames_alpha.png",
         "allgames_year": "allgames_year.png",
+        "allgames_nonenglish": "allgames_nonenglish.png",
         "scene": "demoscene.png"
     }
 }
