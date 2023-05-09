@@ -36,7 +36,7 @@ def make_canonical_name(entry) -> str | None:
     if entry.get("category", "").lower() == "game":
         languages = list(map(lambda s: util.language_code(s), query.get_languages(entry)))
         meta += "[" + ",".join(languages) + "]"
-    return "{} {}".format(name, meta)
+    return "{} {}".format(name, meta).replace(" ", "_")
 
 def sanitize_name(name: str) -> str:
     name = name.replace("/", "-").replace("\\", "-").replace(": ", " ").replace(":", " ")

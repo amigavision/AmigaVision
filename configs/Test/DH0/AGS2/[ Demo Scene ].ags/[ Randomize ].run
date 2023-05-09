@@ -1,1 +1,1 @@
-pickfile >NIL: d AGS:Run/Demo q c execute AGS:Run/Demo/[]
+pickfile >NIL: d AGS:RunQuiet/Demo q c execute AGS:RunQuiet/Demo/[]
