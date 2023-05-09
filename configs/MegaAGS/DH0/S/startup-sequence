@@ -1,4 +1,3 @@
-idefix
 setpatch QUIET
 version >NIL:
 
@@ -59,12 +58,12 @@ if not warn
   endif
 endif
 
-assign >NIL: exists Games:
+assign >NIL: exists Data:
 if not warn
   if exists Amiga:AGS2
-    if exists Games:WHD
+    if exists Data:WHD
       assign AGS: Amiga:AGS2
-      assign WHD0: Games:WHD
+      assign WHD0: Data:WHD
       assign >NIL: exists WHDSaves:
       if warn
         echo ""

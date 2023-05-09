@@ -3,7 +3,7 @@ stack
 echo ""
 format drive DH0: name "Amiga" quick noicons
 echo ""
-format drive DH1: name "Games" quick noicons
+format drive DH1: name "Data" quick noicons
 echo ""
 format drive DH2: name "Music" quick noicons
 echo ""
