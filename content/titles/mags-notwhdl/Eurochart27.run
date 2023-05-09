@@ -1,4 +1,4 @@
-cd WHD:N/Eurochart27
+ags_cd N/Eurochart27
 assign >NIL: EC27a: ""
 assign >NIL: EC27b: ""
 BrianState >NIL:

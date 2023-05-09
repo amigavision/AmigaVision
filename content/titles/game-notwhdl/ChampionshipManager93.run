@@ -2,7 +2,7 @@ IF EXISTS WHDSaves:ChampMan93
   copy WHDSaves:ChampMan93/#? WHD:N/ChampMan93 ALL QUIET
   delete >NIL: WHDSaves:ChampMan93 ALL FORCE
 ENDIF
-cd WHD:N/ChampMan93
+ags_cd N/ChampMan93
 ChampMan93 >NIL:
 wait 4
 echo ""

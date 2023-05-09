@@ -10,7 +10,7 @@ IF NOT EXISTS S:WDstatus
   copy WHD:N/WastedDreams/WDstatus S:
 ENDIF
 
-cd WHD:N/WastedDreams
+ags_cd N/WastedDreams
 assign >NIL: WD: ""
 wasted >NIL: i
 assign >NIL: WD: REMOVE

@@ -12,10 +12,10 @@ import ags_util as util
 
 # -----------------------------------------------------------------------------
 
-def is_amiga_devicename(str):
-    return len(str) == 3 and str[0].isalpha() and str[1].isalpha() and str[2].isnumeric()
+def is_amiga_devicename(name: str):
+    return len(name) == 3 and name[0].isalpha() and name[1].isalpha() and name[2].isnumeric()
 
-def extract_base_image(base_hdf, dest):
+def extract_base_image(base_hdf: str, dest: str):
     tmp_dest = dest + "_unpack"
     _ = subprocess.run(["xdftool", base_hdf, "unpack", tmp_dest, "fsuae"])
     for f in os.listdir(tmp_dest):

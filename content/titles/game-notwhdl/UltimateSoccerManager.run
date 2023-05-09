@@ -1,7 +1,7 @@
 IF EXISTS WHDSaves:USM
   copy WHDSaves:USM/#? WHD:N/USM ALL CLONE QUIET
 ENDIF
-cd WHD:N/USM
+ags_cd N/USM
 Ultimate_Soccer_Manager >NIL:
 copy WHD:N/USM/savegame#?.dat WHDSaves:USM ALL CLONE QUIET
 copy WHD:N/USM/#?.hst WHDSaves:USM ALL CLONE QUIET
