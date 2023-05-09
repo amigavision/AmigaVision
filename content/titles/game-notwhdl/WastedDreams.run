@@ -1,3 +1,4 @@
+ags_cd N/WastedDreams
 IF EXISTS WHDSaves:WastedDreams
   IF EXISTS WHDSaves:WastedDreams/WDstatus
     copy WHDSaves:WastedDreams/WDstatus S: QUIET
@@ -7,10 +8,9 @@ ELSE
   makedir WHDSaves:WastedDreams
 ENDIF
 IF NOT EXISTS S:WDstatus
-  copy WHD:N/WastedDreams/WDstatus S:
+  copy WDstatus S:
 ENDIF
 
-ags_cd N/WastedDreams
 assign >NIL: WD: ""
 wasted >NIL: i
 assign >NIL: WD: REMOVE

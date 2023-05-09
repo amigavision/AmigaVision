@@ -1,16 +1,17 @@
+ags_cd N/ChampMan94
 IF EXISTS WHDSaves:ChampMan94
-  copy WHDSaves:ChampMan94/#? WHD:N/ChampMan94 ALL QUIET
+  copy WHDSaves:ChampMan94/#? "" ALL QUIET
   delete >NIL: WHDSaves:ChampMan94 ALL FORCE
 ENDIF
-ags_cd N/ChampMan94
 champman93 >NIL:
+ags_cd N/ChampMan94
 wait 4
 echo ""
 ask "Thank you for playing! Press enter to save data and return..."
 echo "*"*E[0;0H*E[J* "
-copy WHD:N/ChampMan94/hiscores#? WHDSaves:ChampMan94 ALL QUIET
-copy WHD:N/ChampMan94/clrecs#? WHDSaves:ChampMan94 ALL QUIET
-copy WHD:N/ChampMan94/mchfax#? WHDSaves:ChampMan94 ALL QUIET
-copy WHD:N/ChampMan94/mhst#? WHDSaves:ChampMan94 ALL QUIET
-copy WHD:N/ChampMan94/plhist#? WHDSaves:ChampMan94 ALL QUIET
-copy WHD:N/ChampMan94/svgame#? WHDSaves:ChampMan94 ALL QUIET
+copy hiscores#? WHDSaves:ChampMan94 ALL QUIET
+copy clrecs#? WHDSaves:ChampMan94 ALL QUIET
+copy mchfax#? WHDSaves:ChampMan94 ALL QUIET
+copy mhst#? WHDSaves:ChampMan94 ALL QUIET
+copy plhist#? WHDSaves:ChampMan94 ALL QUIET
+copy svgame#? WHDSaves:ChampMan94 ALL QUIET

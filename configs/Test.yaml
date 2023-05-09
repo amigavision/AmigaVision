@@ -1,7 +1,7 @@
 --- # AGS2 Menu structure
 - About:
   - rank: 1
-  - note: 'MEGA AGS 2022.11.22'
+  - note: 'MEGA AGS 202X'
   - Nothing to see here:
     - rank: 1
     - note: Intentionally left blank.
@@ -15,15 +15,9 @@
 
 - Current:
   - image: [{ op: "tx", txt: "ASS" }, { op: "tx", txt: "P*SS", size: 100, color: "#f0f" }]
-  - ProximaHopscotch
-  - SuperDeliveryBoyHS
-  - game--anotherworldfr--anotherworldfr
-  - game--anotherworld--anotherworld
-  - game--anotherworldit--anotherworldit
-  - game--anotherworldlostlevel--anotherworldlostlevel
-  - demo--anotherworldintro--anotherworld
-  - demo-notwhdl--crystal-anotherworld
-  - game--legendofthelost--legendofthelost
+  - game--crystaldragon--crystaldragon
+  - game--genesia--genesia
+  - game--genesia--genesia--cfg
 
 - Ordering Tests:
   - Ranked (2):

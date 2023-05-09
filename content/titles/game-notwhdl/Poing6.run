@@ -1,9 +1,9 @@
-IF NOT EXISTS WHDSaves:poing6
-  makedir WHDSaves:poing6
-  copy WHD:N/Poing6/default.levels WHDSaves:poing6 QUIET
-  copy WHD:N/Poing6/default.scores WHDSaves:poing6 QUIET
-ENDIF
-assign >NIL: POING: WHDSaves:poing6
 ags_cd N/Poing6
+IF NOT EXISTS WHDSaves:Poing6
+  makedir WHDSaves:Poing6
+  copy default.levels WHDSaves:Poing6 QUIET
+  copy default.scores WHDSaves:Poing6 QUIET
+ENDIF
+assign >NIL: POING: WHDSaves:Poing6
 poing6 >NIL:
 assign >NIL: POING: REMOVE

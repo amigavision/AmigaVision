@@ -1,9 +1,10 @@
-IF EXISTS WHDSaves:poing3.scores
-  copy WHDSaves:poing3.scores S: QUIET
-ENDIF
 ags_cd N/Poing3
+IF EXISTS WHDSaves:Poing3
+  copy WHDSaves:Poing3/poing3.scores S: QUIET
+ENDIF
 Poing3 >NIL:
+ags_cd N/Poing3
 IF EXISTS S:poing3.scores
-  copy S:poing3.scores WHDSaves: QUIET
+  copy S:poing3.scores#? WHDSaves:Poing3 ALL QUIET
   delete S:poing3.scores QUIET
 ENDIF

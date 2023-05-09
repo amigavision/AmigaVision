@@ -1,13 +1,13 @@
+ags_cd N/InheritTheEarth
 IF EXISTS WHDSaves:InheritTheEarth
   copy WHDSaves:InheritTheEarth/ite.prf S: QUIET
   copy WHDSaves:InheritTheEarth/ite.sav RAM: QUIET
 ENDIF
 IF NOT EXISTS WHDSaves:InheritTheEarth
   makedir >NIL: WHDSaves:InheritTheEarth
-  copy WHD:N/InheritTheEarth/init/ite.prf S: QUIET
-  copy WHD:N/InheritTheEarth/init/ite.sav RAM: QUIET
+  copy init/ite.prf S: QUIET
+  copy init/ite.sav RAM: QUIET
 ENDIF
-ags_cd N/InheritTheEarth
 aga.exe >NIL:
 wait 4
 echo ""
