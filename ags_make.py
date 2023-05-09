@@ -22,10 +22,11 @@ AGS_LIST_WIDTH = 26
 
 # -----------------------------------------------------------------------------
 
-def make_canonical_name(entry) -> str | None:
+def make_canonical_name(entry, title_short=None) -> str | None:
     if not (isinstance(entry, dict)):
         return None
-    name = sanitize_name(entry["title_short"])
+    name = title_short if title_short else entry["title_short"]
+    name = sanitize_name(name)
     meta = ""
     # add group name for demos
     if entry.get("category", "").lower() == "demo":
@@ -170,17 +171,24 @@ def make_entry(
         rank=None, sort_rank=None, prefix=None, options=None, template=None
     ):
     max_w = AGS_LIST_WIDTH
-    note = None
     runfile_ext = ".run"
+    note = None
+
+    if entry:
+        entry = entry.copy()
 
     if isinstance(entry, dict) and isinstance(entry["note"], str):
         note = entry["note"]
+
+    if isinstance(entry, dict) and isinstance(entry["title_short"], str):
+        title_script = entry["title_short"]
+    else:
+        title_script = None
 
     # apply override options
     has_overrides = False
     if isinstance(options, dict):
         if entry and isinstance(entry, dict):
-            # TODO: Check if override affects run script
             if "scale" in options or "v_offset" in options or "slave_args" in options:
                 has_overrides = True
             entry.update(options)
@@ -245,7 +253,7 @@ def make_entry(
             raise IOError("run script template not passed")
         runfile = make_runscript(entry, template, False)
     else:
-        runfile = "execute \"AGS:{}/{}\"".format(query.get_runscript_paths(entry)[0], make_canonical_name(entry))
+        runfile = "execute \"AGS:{}/{}\"".format(query.get_runscript_paths(entry)[0], make_canonical_name(entry, title_short=title_script))
 
     if runfile:
         runfile_dest_path = base_path + runfile_ext
