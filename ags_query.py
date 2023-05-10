@@ -149,15 +149,15 @@ def get_short_slavename(name):
 
 def get_whd_dir(clone_path, entry):
     if entry_is_notwhdl(entry):
-        return util.path(clone_path, "DH1", "WHD", "N")
+        return util.path(clone_path, "DH0", "WHD", "N")
     else:
         p = "0-9" if entry["slave_dir"][0].isnumeric() else entry["slave_dir"][0].upper()
         if entry["id"].startswith("demo--"):
-            return util.path(clone_path, "DH1", "WHD", "D", p)
+            return util.path(clone_path, "DH0", "WHD", "D", p)
         if entry["id"].startswith("mags--"):
-            return util.path(clone_path, "DH1", "WHD", "M", p)
+            return util.path(clone_path, "DH0", "WHD", "M", p)
         else:
-            return util.path(clone_path, "DH1", "WHD", "G", p)
+            return util.path(clone_path, "DH0", "WHD", "G", p)
 
 def get_amiga_whd_dir(entry):
     if not entry_is_valid(entry):

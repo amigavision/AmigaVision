@@ -54,26 +54,23 @@ if not warn
   endif
 endif
 
-assign >NIL: exists Data:
-if not warn
-  if exists Amiga:AGS2
-    if exists Data:WHD
-      assign AGS: Amiga:AGS2
-      assign WHD0: Data:WHD
-      assign >NIL: exists WHDSaves:
-      if warn
-        echo ""
-        echo ">>> Using MegaAGS.hdf for save data <<<"
-        echo ""
-        echo "Mount MegaAGS-Saves.hdf as secondary drive to enable a"
-        echo "save disk that can easily be carried over when upgrading"
-        echo "to new releases of MegaAGS."
-        wait 4
-        assign WHDSaves: SYS:WHDSaves
-      endif
-      setvadjust
-      AGS:AGS2
+if exists Amiga:AGS2
+  if exists Amiga:WHD
+    assign AGS: Amiga:AGS2
+    assign WHD0: Amiga:WHD
+    assign >NIL: exists WHDSaves:
+    if warn
+      echo ""
+      echo ">>> Using MegaAGS.hdf for save data <<<"
+      echo ""
+      echo "Mount MegaAGS-Saves.hdf as secondary drive to enable a"
+      echo "save disk that can easily be carried over when upgrading"
+      echo "to new releases of MegaAGS."
+      wait 4
+      assign WHDSaves: SYS:WHDSaves
     endif
+    setvadjust
+    AGS:AGS2
   endif
 endif
 
@@ -111,8 +108,8 @@ assign "MT-32 Editor:" APPS:Audio/MT32Editor
 assign XORFiles: APPS:Audio/X-oR
 
 assign ST-00: APPS:Audio/ProTracker2
-assign >NIL: exists Music:
-if not warn
+if exists Amiga:Music
+  assign Music: Amiga:Music
   if exists Music:Samples
     assign ST-01: Music:Samples/ST-01
     assign ST-02: Music:Samples/ST-02

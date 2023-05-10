@@ -204,10 +204,10 @@ def main():
             if args.verbose: print("copying additional directories...")
             for s in args.add_dirs:
                 d = s.split("::")
-                if util.is_dir(d[0]):
-                    dest = util.path(clone_path, d[1].replace(":", "/"))
-                    print(" > copying '" + d[0] +"' to '" + d[1] + "'")
-                    util.copytree(d[0], dest)
+                if util.is_dir(d[1]):
+                    dest = util.path(clone_path, d[0].replace(":", "/"))
+                    print(" > copying '" + d[1] + "' to '"  + d[0] + "'")
+                    util.copytree(d[1], dest)
                 else:
                     print(" > WARNING: '" + d[1] + "' doesn't exist")
 
