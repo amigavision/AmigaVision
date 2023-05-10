@@ -100,14 +100,14 @@ def get_dir_size(start_path=".", block_size=1):
     for dirpath, dirnames, filenames in os.walk(start_path):
         path = dirpath.replace(os.path.commonprefix([dirpath, start_path]), "")
         for d in dirnames:
-            path_size += len(os.path.join(path, d))
+            path_size += 1 + (math.ceil(len(os.path.join(path, d)) / block_size) * block_size)
         for f in filenames:
             if f.endswith(".uaem"):
                 continue
-            path_size += len(os.path.join(path, f))
+            path_size += 1 + (math.ceil(len(os.path.join(path, f)) / block_size) * block_size)
             fp = os.path.join(dirpath, f)
             file_size += math.ceil(os.path.getsize(fp) / block_size) * block_size
-    return (file_size, path_size, file_size + path_size)
+    return file_size + path_size
 
 def copytree(src: str, dst: str, symlinks=False, ignore=None):
     if not os.path.exists(dst):

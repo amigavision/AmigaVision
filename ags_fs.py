@@ -23,7 +23,8 @@ def extract_base_image(base_hdf: str, dest: str):
     util.rm_path(tmp_dest)
 
 def build_pfs(hdf_path, clone_path, verbose):
-    FS_OVERHEAD = 1.0718 # filesystem size fudge factor
+    FS_OVERHEAD = 1.05 # filesystem size fudge factor
+    SECTOR_SIZE = 512 # fixed
 
     if verbose:
         print("building PFS container...")
@@ -39,15 +40,15 @@ def build_pfs(hdf_path, clone_path, verbose):
     block_size = 512
     heads = 4
     sectors = 63
-    cylinder_size = block_size * heads * sectors
+    cylinder_size = SECTOR_SIZE * heads * sectors
     num_cyls_rdb = 1
     total_cyls = num_cyls_rdb
 
     partitions = [] # (partition name, cylinders)
     for f in sorted(os.listdir(clone_path)):
         if util.is_dir(util.path(clone_path, f)) and is_amiga_devicename(f):
-            mb_free = 100 if f == "DH0" else 50
-            cyls = int(FS_OVERHEAD * (util.get_dir_size(util.path(clone_path, f), block_size)[2] + (mb_free * 1024 * 1024))) // cylinder_size
+            mb_free = 120 if f == "DH0" else 80
+            cyls = int(FS_OVERHEAD * (util.get_dir_size(util.path(clone_path, f), block_size) + (mb_free * 1024 * 1024))) // cylinder_size
             partitions.append(("DH" + str(len(partitions)), cyls))
             total_cyls += cyls
 
@@ -55,6 +56,7 @@ def build_pfs(hdf_path, clone_path, verbose):
         os.remove(hdf_path)
 
     if verbose: print(" > creating pfs container ({}MB)...".format((total_cyls * cylinder_size) // (1024 * 1024)))
+    if verbose: print(" > drive geometry: {} cylinders, {} heads, {} sectors".format(total_cyls + 1, heads, sectors))
     r = subprocess.run([
         "rdbtool", hdf_path,
         "create",
@@ -65,7 +67,11 @@ def build_pfs(hdf_path, clone_path, verbose):
     ])
 
     if verbose: print(" > adding filesystem...")
-    r = subprocess.run(["rdbtool", hdf_path, "fsadd", pfs3_bin, "fs=PFS3"], stdout=subprocess.PIPE)
+    r = subprocess.run([
+        "rdbtool", hdf_path,
+        "fsadd", pfs3_bin,
+        "fs=PFS3"
+    ], stdout=subprocess.PIPE)
 
     if verbose:
         print(" > adding partitions...")
