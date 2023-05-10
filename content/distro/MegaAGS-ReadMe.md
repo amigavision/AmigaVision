@@ -120,6 +120,7 @@ Shadow_Masks
 +[Amiga600HD]
 video_mode_ntsc=8
 video_mode_pal=9
+vscale_mode=0
 vsync_adjust=1 ; You can set this to 2 if your display can handle it
 custom_aspect_ratio_1=40:27
 bootscreen=0
