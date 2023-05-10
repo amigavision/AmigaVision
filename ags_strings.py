@@ -41,7 +41,7 @@ strings = {
         "allgames": "Browse all games alphabetically.",
         "allgames_year": "Browse all games alphabetically.",
         "allgames_nonenglish": "Browse all non-English games.",
-        "unique_nonenglish": "All games that never had an English release", # TODO: Better description?
+        "unique_nonenglish": "The Amiga games scene had a fair amount of games local to their country that never got English versions. Explore those releases here.",
         "scene": "A sample of demo scene releases.",
         "issues": "Titles with known issues on MiSTer.\n(Please report any new or resolved issues!)",
         "demos": "Browse demos by title.",
