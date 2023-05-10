@@ -14,11 +14,11 @@ index:
 	@pipenv run ./ags_index.py -v
 
 image:
-	@pipenv run ./ags_imager.py -v -c configs/MegaAGS.yaml --all-games --all-demos -d DH0:Music::${AGSCONTENT}/extra_dirs/Music -o ${AGSDEST}
+	@pipenv run ./ags_imager.py -v -c configs/MegaAGS.yaml --all-games --all-demos -d DH1:Music::${AGSCONTENT}/extra_dirs/Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 
 pocket-image:
-	@pipenv run ./ags_imager.py -v -c configs/MegaAGS-Pocket.yaml --auto-lists -d DH0:Music::${AGSCONTENT}/extra_dirs_pocket/Music -o ${AGSDEST}
+	@pipenv run ./ags_imager.py -v -c configs/MegaAGS-Pocket.yaml --auto-lists -d DH1:Music::${AGSCONTENT}/extra_dirs_pocket/Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 
 test-image:

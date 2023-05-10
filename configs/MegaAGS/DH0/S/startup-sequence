@@ -1,3 +1,4 @@
+loadmodule DEVS:scsi.device
 setpatch QUIET
 version >NIL:
 
@@ -58,27 +59,30 @@ if not warn
   endif
 endif
 
-if exists Amiga:AGS2
-  if exists Amiga:WHD
-    assign AGS: Amiga:AGS2
-    assign WHD0: Amiga:WHD
-    assign >NIL: exists WHDSaves:
-    if warn
-      echo ""
-      echo ">>> Using MegaAGS.hdf for save data <<<"
-      echo ""
-      echo "Mount MegaAGS-Saves.hdf as secondary drive to enable a"
-      echo "save disk that can easily be carried over when upgrading"
-      echo "to new releases of MegaAGS."
-      wait 4
-      assign WHDSaves: SYS:WHDSaves
+assign >NIL: exists Data:
+if not warn
+  if exists Amiga:AGS2
+    if exists Data:WHD
+      assign AGS: Amiga:AGS2
+      assign WHD0: Data:WHD
+      assign >NIL: exists WHDSaves:
+      if warn
+        echo ""
+        echo ">>> Using MegaAGS.hdf for save data <<<"
+        echo ""
+        echo "Mount MegaAGS-Saves.hdf as secondary drive to enable a"
+        echo "save disk that can easily be carried over when upgrading"
+        echo "to new releases of MegaAGS."
+        wait 4
+        assign WHDSaves: SYS:WHDSaves
+      endif
+      setvadjust
+      if exists MiSTer:ags_boot
+        cpr MiSTer:ags_boot T:ags_boot MOVE CLONE SILENT
+        pickfile >NIL: f T:ags_boot q c ags_launch []
+      endif
+      AGS:AGS2
     endif
-    setvadjust
-    if exists MiSTer:ags_boot
-      cpr MiSTer:ags_boot T:ags_boot MOVE CLONE SILENT
-      pickfile >NIL: f T:ags_boot q c ags_launch []
-    endif
-    AGS:AGS2
   endif
 endif
 
@@ -123,12 +127,15 @@ assign "MT-32 Editor:" APPS:Audio/MT32Editor
 assign XORFiles: APPS:Audio/X-oR
 
 assign ST-00: APPS:Audio/ProTracker2
-if exists Amiga:Music
-  assign Music: Amiga:Music
-  if exists Music:Samples
-    assign ST-01: Music:Samples/ST-01
-    assign ST-02: Music:Samples/ST-02
-    assign ST-03: Music:Samples/ST-03
+assign >NIL: exists Data:
+if not warn
+  if exists Data:Music
+    assign Music: Data:Music
+    if exists Music:Samples
+      assign ST-01: Music:Samples/ST-01
+      assign ST-02: Music:Samples/ST-02
+      assign ST-03: Music:Samples/ST-03
+    endif
   endif
 endif
 
