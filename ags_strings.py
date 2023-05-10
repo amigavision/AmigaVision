@@ -39,7 +39,7 @@ strings = {
     },
     "desc": {
         "allgames": "Browse all games alphabetically.",
-        "allgames_year": "Browse all games alphabetically.",
+        "allgames_year": "Browse all games chronologically.",
         "allgames_nonenglish": "Browse all non-English games.",
         "unique_nonenglish": "The Amiga games scene had a fair amount of games local to their country that never got English versions. Explore those releases here.",
         "scene": "A sample of demo scene releases.",

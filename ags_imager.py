@@ -4,8 +4,6 @@
 
 # TODO: Pocket config: Array of yaml files passed in arguments, simple concatentation
 
-# TODO: Rename "Games:" to "Data:". Put at bottom. For split image call them "Data 1", "Data 2", etc.
-
 # Database fields:
 #
 # id: Unique title identifier

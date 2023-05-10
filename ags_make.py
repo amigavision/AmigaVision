@@ -46,6 +46,9 @@ def sanitize_name(name: str) -> str:
         name = name.replace('(', '[', 1).replace(')', ']', 1)
     return name.strip()
 
+def wrap_note(text: str) -> str:
+    return "\n".join([textwrap.fill(p, AGS_INFO_WIDTH) for p in text.replace("\\n", "\n").splitlines()])
+
 def make_image(path, options):
     if util.is_file(path):
         return
@@ -124,7 +127,7 @@ def make_entries(
 
     # make note, image
     if note:
-        note = "\n".join([textwrap.fill(p, AGS_INFO_WIDTH) for p in note.replace("\\n", "\n").splitlines()])
+        note = wrap_note(note)
         open(base_path[:-4] + ".txt", mode="w", encoding="latin-1").write(note)
     if isinstance(image, (dict, list)):
         make_image(base_path[:-4] + ".iff", image)
@@ -562,18 +565,18 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
     # notes and images for created directories
     for dir in ["allgames", "allgames_year", "allgames_nonenglish", "scene", "issues"]:
         if util.is_dir(util.path(path, "{}.ags".format(strings["dirs"][dir]))):
-            open(util.path(path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(strings["desc"][dir])
+            open(util.path(path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(wrap_note(strings["desc"][dir]))
             img_src = util.path("top", strings["images"][dir])
             if util.is_file("{}{}".format(imgen.IMG_SRC_BASE, img_src)):
                 make_image(util.path(path, "{}.iff".format(strings["dirs"][dir])), {"ops":{"op":"pi", "path":img_src}, "size":[320,128], "scale":[1,1]})
 
     for dir in ["demos", "demos_country", "demos_group", "demos_year", "demos_cracktro", "demos_intro", "diskmags", "diskmags_date", "musicdisks", "musicdisks_year"]:
         if util.is_dir(util.path(d_path, "{}.ags".format(strings["dirs"][dir]))):
-            open(util.path(d_path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(strings["desc"][dir])
+            open(util.path(d_path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(wrap_note(strings["desc"][dir]))
 
     for dir in ["unique_nonenglish"]:
         if util.is_dir(util.path(ne_path, "{}.ags".format(strings["dirs"][dir]))):
-            open(util.path(d_path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(strings["desc"][dir])
+            open(util.path(ne_path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(wrap_note(strings["desc"][dir]))
 
 # -----------------------------------------------------------------------------
 
