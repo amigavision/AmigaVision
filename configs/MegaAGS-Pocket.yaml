@@ -1,7 +1,7 @@
 --- # AGS2 Menu structure
 - About:
   - rank: 1
-  - note: "MEGA AGS 2023.05.XX"
+  - note: "MEGA AGS POCKET LiTE 2023.05.XX"
   - Nothing to see here:
     - rank: 1
     - note: Intentionally left blank.
@@ -9,4 +9,3 @@
 
 - !include configs/Lists/Games.yaml
 - !include configs/Lists/Demos.yaml
-- !include configs/Lists/DemosWidescreen.yaml

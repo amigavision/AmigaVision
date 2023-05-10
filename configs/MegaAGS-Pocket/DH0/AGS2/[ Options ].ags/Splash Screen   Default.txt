@@ -1,0 +1,2 @@
+Show and automatically close
+splash/options window.

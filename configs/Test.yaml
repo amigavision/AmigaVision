@@ -56,3 +56,7 @@
     - Delphine-Collection: { unavailable: True }
     - HumanTarget
     - Interference
+
+- "[ Demo Scene ]":
+  - note: A sample of demo scene releases.
+  - !include configs/Lists/DemosWidescreen.yaml

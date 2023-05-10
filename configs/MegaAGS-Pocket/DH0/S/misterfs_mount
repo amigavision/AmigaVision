@@ -1,0 +1,2 @@
+makedir RAM:MiSTer FORCE >NIL:
+assign MiSTer: RAM:MiSTer

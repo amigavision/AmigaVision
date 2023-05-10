@@ -222,14 +222,21 @@ def lha_extract(arcpath, outpath):
 # -----------------------------------------------------------------------------
 # yaml serialization
 
+def constr_include(loader, node):
+    value = loader.construct_scalar(node)
+    with open(value, 'r') as f:
+        d = yaml.safe_load(f)
+    return d
+
+yaml.SafeConstructor.add_constructor(u'!include', constr_include)
+
 def yaml_write(data, path: str):
     with open(path, 'w') as f:
         yaml.round_trip_dump(data, f, explicit_start=True, version=(1, 2))
 
 def yaml_load(path: str):
     with open(path, 'r') as f:
-        d = yaml.safe_load(f)
-    return d
+        return yaml.safe_load(f)
 
 # -----------------------------------------------------------------------------
 # database functions

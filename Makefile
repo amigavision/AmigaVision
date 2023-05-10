@@ -18,7 +18,7 @@ image:
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 
 pocket-image:
-	@pipenv run ./ags_imager.py -v -c configs/MegaAGS.yaml --auto-lists -d ${AGSCONTENT}/extra_dirs_pocket/Music::DH2 -o ${AGSDEST}
+	@pipenv run ./ags_imager.py -v -c configs/MegaAGS-Pocket.yaml --auto-lists -d ${AGSCONTENT}/extra_dirs_pocket/Music::DH2 -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 
 test-image:

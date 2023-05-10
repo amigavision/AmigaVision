@@ -2,8 +2,6 @@
 
 # AGSImager
 
-# TODO: Pocket config: Array of yaml files passed in arguments, simple concatentation
-
 # Database fields:
 #
 # id: Unique title identifier
