@@ -23,8 +23,9 @@ def extract_base_image(base_hdf: str, dest: str):
     util.rm_path(tmp_dest)
 
 def build_pfs(hdf_path, clone_path, verbose):
-    FS_OVERHEAD = 1.05 # filesystem size fudge factor
+    FS_OVERHEAD = 1.06 # filesystem size fudge factor
     SECTOR_SIZE = 512 # fixed
+    BLOCK_SIZE = 512 # amiga only support RDBs with a 512 byte block size
 
     if verbose:
         print("building PFS container...")
@@ -37,7 +38,6 @@ def build_pfs(hdf_path, clone_path, verbose):
         print(" > calculating partition sizes...")
 
     num_buffers = 128
-    block_size = 512
     heads = 4
     sectors = 63
     cylinder_size = SECTOR_SIZE * heads * sectors
@@ -48,7 +48,7 @@ def build_pfs(hdf_path, clone_path, verbose):
     for f in sorted(os.listdir(clone_path)):
         if util.is_dir(util.path(clone_path, f)) and is_amiga_devicename(f):
             mb_free = 120 if f == "DH0" else 80
-            cyls = int(FS_OVERHEAD * (util.get_dir_size(util.path(clone_path, f), block_size) + (mb_free * 1024 * 1024))) // cylinder_size
+            cyls = int(FS_OVERHEAD * (util.get_dir_size(util.path(clone_path, f), BLOCK_SIZE) + (mb_free * 1024 * 1024))) // cylinder_size
             partitions.append(("DH" + str(len(partitions)), cyls))
             total_cyls += cyls
 
@@ -85,7 +85,7 @@ def build_pfs(hdf_path, clone_path, verbose):
         "start={}".format(num_cyls_rdb),
         "size={}".format(part[1]),
         "fs=PFS3",
-        "block_size={}".format(block_size),
+        "bs={}".format(BLOCK_SIZE),
         "max_transfer=0x0001FE00",
         "mask=0x7FFFFFFE",
         "num_buffer={}".format(num_buffers),
@@ -110,7 +110,7 @@ def build_pfs(hdf_path, clone_path, verbose):
             "start={}".format(part_start),
             "end={}".format(part_end),
             "fs=PFS3",
-            "block_size={}".format(block_size),
+            "bs={}".format(BLOCK_SIZE),
             "max_transfer=0x0001FE00",
             "mask=0x7FFFFFFE",
             "num_buffer={}".format(num_buffers)
