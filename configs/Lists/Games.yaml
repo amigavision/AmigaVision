@@ -196,8 +196,7 @@ Charts:
 - image: { ops: { op: "pi", path: "top/charts.png" }, size: [320, 128], scale: [1, 1] }
 - Amiga Lore Top 100:
   - ordering: "ranked"
-  - note: Amiga Lore's aggregate review score ranking, taking into account the largest publications of the era from across the continent. A Metacritic equivalent for the platform, if you will.\n\n
-          (Some duplicate entries exist, since rereleases and CD32 versions are considered separately.)
+  - note: Amiga Lore's aggregate review score ranking, taking into account the largest publications of the era from across the continent. A Metacritic equivalent for the platform, if you will.\n\n(Some duplicate entries exist, since rereleases and CD32 versions are considered separately.)
   - image: { op: "pi", path: "list/amigalore.png" }
   - Populous2&ChallengeGames
   - SWOS9596
