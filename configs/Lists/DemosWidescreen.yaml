@@ -13,6 +13,7 @@
     - Extension: { scale: 6, v_offset: 40 }
     - FaktoryAGA: { scale: 6, v_offset: 40 }
     - Ghostown-SushiBoyz: { scale: 6, v_offset: 62 }
+    - Hardwired: { scale: 6, v_offset: 28 }
     - Hologon: { scale: 6, v_offset: 45 }
     - ISOAGA: { scale: 6, v_offset: 42 }
     - Jormas-KanaalinArvoitus: { scale: 6, v_offset: 42 }
