@@ -1,4 +1,8 @@
-loadmodule DEVS:scsi.device
+version scsi.device >NIL: 43
+if WARN
+  loadmodule DEVS:scsi.device REVERSE
+endif
+
 setpatch QUIET
 version >NIL:
 
