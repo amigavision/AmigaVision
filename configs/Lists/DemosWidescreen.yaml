@@ -7,11 +7,13 @@
     - AtomeAGA: { scale: 6, v_offset: 46 }
     - Axis-Headcase: { scale: 6, v_offset: 42 }
     - ControlAGA: { scale: 6, v_offset: 48 }
+    - Coda: { scale: 6, v_offset: 60 }
     - Deadliners-Five: { scale: 6, v_offset: 40 }
     - DHS-CopperKaahBaahYaah: { scale: 6, v_offset: 44 }
     - Drugstore: { scale: 6, v_offset: 18 }
     - Extension: { scale: 6, v_offset: 40 }
     - FaktoryAGA: { scale: 6, v_offset: 40 }
+    - FullmoonAGA: { scale: 6, v_offset: 22 }
     - Ghostown-SushiBoyz: { scale: 6, v_offset: 62 }
     - Hardwired: { scale: 6, v_offset: 28 }
     - Hologon: { scale: 6, v_offset: 45 }
