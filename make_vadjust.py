@@ -3,9 +3,11 @@
 # AGSImager: vadjust.dat creation utility
 
 # v_shift expressible range:
-#   NTSC: -16 ... 9
-#   PAL5: -11 ... 59
-#   PAL4: -11 ... 5
+#   NTSC-5X: -16 ... 9
+#   NTSC-6X: -16 ... 45
+#   PAL-4X:  -11 ... 5
+#   PAL-5X:  -11 ... 59
+#   PAL-6X:  -11 ... 95
 
 # Pixel aspect ratios to support:
 # 1:1   = 1.0
@@ -52,7 +54,7 @@ import sys
 
 # -----------------------------------------------------------------------------
 VADJUST_MIN = -16
-VADJUST_MAX = 60
+VADJUST_MAX = 96
 
 VADJUST_LEN = 1024
 
