@@ -20,9 +20,11 @@
 # scale: Viewport integer scale factor at 1080p (PAL: 4-6, NTSC: 5-6)
 # v_offset: Viewport vertical offset (lower value -> screen is shifted downwards)
 #   Expressible range (higher values allowed but have no effect):
-#   - NTSC: -16...9
-#   - PAL5: -11...59
-#   - PAL4: -11...5
+#   NTSC-5X: -16 ... 9
+#   NTSC-6X: -16 ... 45
+#   PAL-4X:  -11 ... 5
+#   PAL-5X:  -11 ... 59
+#   PAL-6X:  -11 ... 95
 # killaga: Use killaga hack when invoking whdload
 # gamepad: Title supports more than one button
 # lightgun: Title supports light gun
