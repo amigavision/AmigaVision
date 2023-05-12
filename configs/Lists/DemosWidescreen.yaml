@@ -7,7 +7,7 @@
     - AtomeAGA: { scale: 6, v_offset: 46 }
     - Axis-Headcase: { scale: 6, v_offset: 42 }
     - ControlAGA: { scale: 6, v_offset: 48 }
-    - Coda: { scale: 6, v_offset: 60 }
+    - Coda: { scale: 6, v_offset: 73 }
     - Deadliners-Five: { scale: 6, v_offset: 40 }
     - DHS-CopperKaahBaahYaah: { scale: 6, v_offset: 44 }
     - Drugstore: { scale: 6, v_offset: 18 }
