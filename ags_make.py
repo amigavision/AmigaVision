@@ -22,11 +22,10 @@ AGS_LIST_WIDTH = 26
 
 # -----------------------------------------------------------------------------
 
-def make_canonical_name(entry, title_short=None) -> str | None:
+def make_canonical_name(entry) -> str | None:
     if not (isinstance(entry, dict)):
         return None
-    name = title_short if title_short else entry["title_short"]
-    name = sanitize_name(name)
+    name = sanitize_name(entry["title_short"])
     meta = ""
     # add group name for demos
     if entry.get("category", "").lower() == "demo":
@@ -102,18 +101,12 @@ def make_tree(
                     else:
                         # item is a subtree
                         make_tree(db, collection, ags_path, value, path + [key], template=template)
-        make_entries(
-            db, collection, ags_path, entries, path,
-            note=note, image=image, ordering=ordering, rank=rank, template=template
-        )
+        make_entries(db, collection, ags_path, entries, path, note=note, image=image, ordering=ordering, rank=rank, template=template)
 
 # -----------------------------------------------------------------------------
 # create entries from list
 
-def make_entries(
-        db: Connection, collection: EntryCollection, ags_path, entries, path,
-        note=None, image=None, ordering=None, rank=None, template=None
-    ):
+def make_entries(db: Connection, collection: EntryCollection, ags_path, entries, path, note=None, image=None, ordering=None, rank=None, template=None):
     # make dir
     base_path = ags_path
     if path:
@@ -143,63 +136,55 @@ def make_entries(
             options = name[1]
 
         # use preferred entry if found, except when name was ID-like
-        e, pe = query.get_entry(db, n)
-        if pe and query.name_is_fuzzy(n): e = pe
-        if not e:
+        entry, pref_entry = query.get_entry(db, n)
+        if pref_entry and query.name_is_fuzzy(n): entry = pref_entry
+        if not entry:
             if options is None or (options and not options.get("unavailable", False)):
                 print(" > WARNING: invalid entry: {}".format(n))
-        else:
-            collection.by_id[e["id"]] = e
+            else:
+                disp_name = n.replace("-", " ")
+                entry = { "id": n, "title": disp_name, "title_short": disp_name, "unavailable": True }
+        if entry:
+            collection.by_id[entry["id"]] = entry
 
         rank = str(pos).zfill(len(str(len(entries)))) if ordering == "ranked" else None
 
         sort_rank = None
         if ordering == "ordered":
             sort_rank = pos
-        elif ordering == "release" and e and "release_date" in e:
-            sort_rank = util.parse_date_int(e["release_date"], sortable=True)
+        elif ordering == "release" and entry and "release_date" in entry:
+            sort_rank = util.parse_date_int(entry["release_date"], sortable=True)
 
-        if e or (options and options.get("unavailable", True)):
-            make_entry(
-                collection, ags_path, n, e, base_path,
-                rank=rank, sort_rank=sort_rank, options=options, template=template
-            )
+        make_entry(collection, ags_path, entry, base_path, rank=rank, sort_rank=sort_rank, options=options, template=template)
     return
 
 # -----------------------------------------------------------------------------
 # create entry
 
-def make_entry(
-        collection: EntryCollection, ags_path, name, entry, path,
-        rank=None, sort_rank=None, prefix=None, options=None, template=None
-    ):
+def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, sort_rank=None, prefix=None, options=None, template=None):
     max_w = AGS_LIST_WIDTH
     runfile_ext = ".run"
     note = None
 
-    if entry:
-        entry = entry.copy()
+    if not isinstance(entry, dict):
+        raise ValueError("make_entry(): no entry dict")
 
-    if isinstance(entry, dict) and isinstance(entry["note"], str):
+    entry = entry.copy()
+
+    if entry.get("note", None):
         note = entry["note"]
-
-    if isinstance(entry, dict) and isinstance(entry["title_short"], str):
-        title_script = entry["title_short"]
-    else:
-        title_script = None
 
     # apply override options
     has_overrides = False
     if isinstance(options, dict):
-        if entry and isinstance(entry, dict):
-            if "scale" in options or "v_offset" in options or "slave_args" in options:
-                has_overrides = True
-            entry.update(options)
-        elif "note" in options and isinstance(options["note"], str):
-            note = options["note"]
+        if "id" in options or "title_short" in options:
+            raise ValueError("make_entry(): illegal key(s) in override options ({})".format(str(options)))
+        if "scale" in options or "v_offset" in options or "slave_args" in options:
+            has_overrides = True
+        entry.update(options)
 
     # skip if entry already added at path
-    path_id = json.dumps({"entry_id": entry["id"] if (entry and entry["id"]) else name, "path": path})
+    path_id = json.dumps({"entry_id": entry["id"], "path": path})
     if path_id in collection.path_ids:
         return
     else:
@@ -217,16 +202,12 @@ def make_entry(
         title = prefix + " - " + title
 
     # prettify name
-    if options and options.get("unavailable", False):
-        title += sanitize_name(name.replace("-", " "))
-    elif entry and "title_short" in entry:
-        title += sanitize_name(entry["title_short"])
-        if len(title) > max_w: title = title.replace(", The", "")
-    else:
-        title += name
+    disp_name = entry["disp_name"] if "disp_name" in entry else entry["title_short"]
+    title += sanitize_name(disp_name)
 
-    # prevent name clash
+    # shorten name and prevent name clashes
     title = title.strip()
+    if len(title) > max_w: title = title.replace(", The", "")
     if util.is_file(util.path(path, title) + runfile_ext):
         if entry.get("category", "").lower() == "demo":
             title += " (" + entry.get("publisher") + ")"
@@ -256,7 +237,7 @@ def make_entry(
             raise IOError("run script template not passed")
         runfile = make_runscript(entry, template, False)
     else:
-        runfile = "execute \"AGS:{}/{}\"".format(query.get_runscript_paths(entry)[0], make_canonical_name(entry, title_short=title_script))
+        runfile = "execute \"AGS:{}/{}\"".format(query.get_runscript_paths(entry)[0], make_canonical_name(entry))
 
     if runfile:
         runfile_dest_path = base_path + runfile_ext
@@ -273,7 +254,7 @@ def make_entry(
 
     # make note
     if options and options.get("unavailable", False):
-        note = strings["note"]["title"] + name.replace("-", " ") + "\n\n" + strings["note"]["unavailable"]
+        note = strings["note"]["title"] + entry["title"] + "\n\n" + strings["note"]["unavailable"]
         open(base_path + ".txt", mode="w", encoding="latin-1").write(note)
     elif entry:
         open(base_path + ".txt", mode="w", encoding="latin-1").write(make_note(entry, note))
@@ -492,6 +473,8 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
     ne_path = util.path(path, "{}.ags".format(strings["dirs"]["allgames_nonenglish"]))
 
     for entry in sorted(c.ids(), key=operator.itemgetter("title")):
+        if entry.get("unavailable", False):
+            continue
         letter = entry.get("title_short", "z")[0].upper()
         if letter.isnumeric():
             letter = "#"
@@ -504,16 +487,16 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
         # add games
         if all_games and entry.get("category", "").lower() == "game":
             if query.has_english_language(entry):
-                make_entry(c, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"))
+                make_entry(c, path, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"))
                 make_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".iff"), {"op":"tx", "txt": letter})
-                make_entry(c, path, None, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".ags"))
+                make_entry(c, path, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".ags"))
                 make_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
             for language in query.get_languages(entry):
                 if language.lower() != "english":
-                    make_entry(c, path, None, entry, util.path(ne_path, language + ".ags"))
+                    make_entry(c, path, entry, util.path(ne_path, language + ".ags"))
                     # TODO: Add country image
             if not "english" in entry.get("language", "").lower() and not entry.get("preferred_version", None):
-                make_entry(c, ne_path, None, entry, util.path(ne_path, "{}.ags".format(strings["dirs"]["unique_nonenglish"])))
+                make_entry(c, ne_path, entry, util.path(ne_path, "{}.ags".format(strings["dirs"]["unique_nonenglish"])))
 
         # add demos, disk mags
         def add_demo(entry, sort_group, sort_country):
@@ -524,31 +507,31 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
             if group_letter.isnumeric():
                 group_letter = "#"
             if entry.get("subcategory", "").lower().startswith("disk mag"):
-                make_entry(c, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags"])))
-                mag_path = make_entry(c, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags_date"])))
+                make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags"])))
+                mag_path = make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags_date"])))
                 if mag_path:
                     rank = util.parse_date_int(entry["release_date"], sortable=True)
                     c.path_sort_rank["{}.run".format(mag_path)] = rank if rank else 0
             elif entry.get("subcategory", "").lower().startswith("music disk"):
-                make_entry(c, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".ags"))
+                make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".ags"))
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".iff"), {"op":"tx", "txt": letter})
-                make_entry(c, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".ags"))
+                make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".ags"))
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
             else:
                 if entry.get("subcategory", "").lower().startswith("crack"):
-                    make_entry(c, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_cracktro"])), prefix=sort_group)
+                    make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_cracktro"])), prefix=sort_group)
                 if entry.get("subcategory", "").lower().startswith("intro"):
-                    make_entry(c, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_intro"])))
+                    make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_intro"])))
                 group_entry = dict(entry)
                 group_entry["title_short"] = group_entry.get("title")
-                make_entry(c, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".ags"))
+                make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".ags"))
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".iff"), {"op":"tx", "txt": letter})
-                make_entry(c, path, None, group_entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".ags"), prefix=sort_group)
+                make_entry(c, path, group_entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".ags"), prefix=sort_group)
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".iff"), {"op":"tx", "txt": group_letter})
-                make_entry(c, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".ags"))
+                make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".ags"))
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
                 if sort_country:
-                    make_entry(c, path, None, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".ags"))
+                    make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".ags"))
 
         if all_demos and entry.get("category", "").lower() == "demo":
             groups = query.get_publishers(entry)
