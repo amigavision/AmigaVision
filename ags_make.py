@@ -523,7 +523,7 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
                 if entry.get("subcategory", "").lower().startswith("intro"):
                     make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_intro"])))
                 group_entry = dict(entry)
-                group_entry["title_short"] = group_entry.get("title")
+                group_entry["disp_name"] = group_entry.get("title")
                 make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".ags"))
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".iff"), {"op":"tx", "txt": letter})
                 make_entry(c, path, group_entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".ags"), prefix=sort_group)
