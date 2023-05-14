@@ -498,7 +498,7 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
             if not "english" in entry.get("language", "").lower() and not entry.get("preferred_version", None):
                 make_entry(c, ne_path, entry, util.path(ne_path, "{}.ags".format(strings["dirs"]["unique_nonenglish"])))
 
-        # add demos, disk mags
+        # add demos, disk mags, etc
         def add_demo(entry, sort_group, sort_country):
             if sort_group.startswith("The "):
                 sort_group = sort_group[4:]
@@ -517,6 +517,8 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".iff"), {"op":"tx", "txt": letter})
                 make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".ags"))
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
+            elif entry.get("subcategory", "").lower().startswith("slide"):
+                make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["slideshows"])))
             else:
                 if entry.get("subcategory", "").lower().startswith("crack"):
                     make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_cracktro"])), prefix=sort_group)
@@ -553,7 +555,10 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
             if util.is_file("{}{}".format(imgen.IMG_SRC_BASE, img_src)):
                 make_image(util.path(path, "{}.iff".format(strings["dirs"][dir])), {"ops":{"op":"pi", "path":img_src}, "size":[320,128], "scale":[1,1]})
 
-    for dir in ["demos", "demos_country", "demos_group", "demos_year", "demos_cracktro", "demos_intro", "diskmags", "diskmags_date", "musicdisks", "musicdisks_year"]:
+    for dir in [
+        "demos", "demos_country", "demos_group", "demos_year", "demos_cracktro", "demos_intro",
+        "diskmags", "diskmags_date", "musicdisks", "musicdisks_year", "slideshows"
+    ]:
         if util.is_dir(util.path(d_path, "{}.ags".format(strings["dirs"][dir]))):
             open(util.path(d_path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(wrap_note(strings["desc"][dir]))
 

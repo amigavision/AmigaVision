@@ -23,7 +23,7 @@ strings = {
         "allgames": "[ All Games - By Title ]",
         "allgames_year": "[ All Games - By Year ]",
         "allgames_nonenglish": "[ All Games - Non-English ]",
-        "unique_nonenglish": "[ No English Version ]", # TODO: Better title?
+        "unique_nonenglish": "[ No English Version ]",
         "scene": "[ Demo Scene ]",
         "issues": "[ Issues ]",
         "demos": "[ Demos - By Title ]",
@@ -35,7 +35,8 @@ strings = {
         "diskmags": "[ Disk Mags - By Title ]",
         "diskmags_date": "[ Disk Mags - By Date ]",
         "musicdisks": "[ Music Disks - By Title ]",
-        "musicdisks_year": "[ Music Disks - By Year ]"
+        "musicdisks_year": "[ Music Disks - By Year ]",
+        "slideshows": "[ Slide Shows ]",
     },
     "desc": {
         "allgames": "Browse all games alphabetically.",
@@ -53,7 +54,8 @@ strings = {
         "diskmags": "A selection of scene disk magazines.",
         "diskmags_date": "Disk magazines in chronological order.",
         "musicdisks": "Browse music disks by title.",
-        "musicdisks_year": "Browse music disks by year."
+        "musicdisks_year": "Browse music disks by year.",
+        "slideshows": "Slide shows and animations from scene groups.\n\n(Viewer discretion is advised!)",
     },
     "images": {
         "allgames": "allgames_alpha.png",

@@ -117,6 +117,8 @@ def get_runscript_paths(entry) -> Tuple[str | None, str | None]:
             return (util.path("Run", "MusicDisk"), None)
         elif sub.startswith("disk mag"):
             return (util.path("Run", "DiskMag"), None)
+        elif sub.startswith("slide"):
+            return (util.path("Run", "SlideShow"), None)
         elif sub.startswith("demo") or sub.startswith("intro") or sub.startswith("crack"):
             return (util.path("Run", "Demo"), util.path("RunQuiet", "Demo"))
         else:
