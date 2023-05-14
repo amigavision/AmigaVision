@@ -710,7 +710,7 @@ demo--c64demos--c64demos;C64 Demo;C64 Demo;;;OCS;;0;;;;;;;;;1989;Germany;English
 demo--cebit90--cebit90;CeBIT Demo 90: Revenge of Babbnaasen;CeBIT Demo 90;;;OCS;;0;;;;;;;;;1990;Germany;English;;Red Sector Inc.;1;;v1.0;Cebit90/Cebit90.Slave;demo/C/Cebit90_v1.0_RedSectorInc.lha;Demo;Demo;;
 demo--controlaga--controlaga;Control;Control;;;AGA;1;0;;;;;;;;;1995;France;English;;Oxygene;1;;v1.4;ControlAGA/ControlAGA.slave;demo/C/Control_v1.4_Oxygene_AGA.lha;Demo;Demo;;
 demo--capricornone--capricornone;Capricorn One;Capricorn One;;;OCS;;0;;;;;;;;;1995;Australia;English;;Cydonia;1;;v1.0;CapricornOne/CapricornOne.Slave;demo/C/CapricornOne_v1.0_Cydonia.lha;Demo;Demo;;
-demo--copperslave--copperslave;Copper Slave;Copper Slave;;;OCS;;0;;;;;;;;;1992;Italy;English;;Ram Jam;1;;v1.0;CopperSlave/CopperSlave.Slave;demo/C/CopperSlave_v1.0_RamJam.lha;Demo;Demo;;
+demo--copperslave--copperslave;Copper Slave;Copper Slave;;;OCS;;0;;;;;;;"Exception ""Line 111 Emulator"" ($2C) error";;1992;Italy;English;;Ram Jam;1;;v1.0;CopperSlave/CopperSlave.Slave;demo/C/CopperSlave_v1.0_RamJam.lha;Demo;Demo;;
 demo--cybersounds--cybersounds;Cyber Sounds;Cyber Sounds;;;OCS;;0;;;;;;;;;1991;Denmark;English;;Bastards;1;;v1.0;CyberSounds/CyberSounds.Slave;demo/C/CyberSounds_v1.0_Bastards.lha;Demo;Music Disk;;
 demo--captureddreamsaga--captureddreamsaga;Captured Dreams;Captured Dreams;1;;AGA;1;0;;;;;;;;;1997;Sweden, Netherlands;English;;The Black Lotus;1;;v1.0;CapturedDreamsAGA/CapturedDreamsAGA.Slave;demo/C/CapturedDreams_v1.0_BlackLotus_AGA.lha;Demo;Demo;;
 demo--crazysexycoolaga--crazysexycoolaga;Crazy Sexy Cool;Crazy Sexy Cool;;;AGA;1;0;;;;;;;;;1995;Germany;English;;Essence;1;;v1.0;CrazySexyCoolAGA/CrazySexyCoolAGA.Slave;demo/C/CrazySexyCool_v1.0_Essence_AGA.lha;Demo;Demo;;
