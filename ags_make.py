@@ -19,27 +19,31 @@ from make_vadjust import VADJUST_MAX, VADJUST_MIN
 
 AGS_INFO_WIDTH = 53
 AGS_LIST_WIDTH = 26
+MAX_FILENAME_LENGTH = 96
 
 # -----------------------------------------------------------------------------
 
 def make_canonical_name(entry) -> str | None:
+    max_len = MAX_FILENAME_LENGTH - 5
     if not (isinstance(entry, dict)):
         return None
     name = sanitize_name(entry["title_short"])
     meta = ""
     # add group name for demos
     if entry.get("category", "").lower() == "demo":
-        meta += "(" + entry.get("publisher") + ")"
+        groups = query.get_publishers(entry)
+        if len(groups):
+            meta += "(" + groups[0] + ")"
     # add hardware info
     meta += "(" + query.get_hardware_short(entry) + ")"
     # add language
     if entry.get("category", "").lower() == "game":
         languages = list(map(lambda s: util.language_code(s), query.get_languages(entry)))
-        meta += "[" + ",".join(languages) + "]"
-    return "{} {}".format(name, meta).replace(" ", "_")
+        meta += "[" + "-".join(languages) + "]"
+    return "{} {}".format(name, meta).replace("#", "")[:max_len].strip()
 
 def sanitize_name(name: str) -> str:
-    name = name.replace("/", "-").replace("\\", "-").replace(": ", " ").replace(":", " ")
+    name = name.replace("/", "-").replace("\\", "-").replace(": ", " ").replace(":", " ").replace("\"", "")
     name = name.replace(" [AGA]", "")
     if name[0] == '(':
         name = name.replace('(', '[', 1).replace(')', ']', 1)

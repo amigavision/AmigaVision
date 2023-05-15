@@ -17,6 +17,7 @@
   - image: [{ op: "tx", txt: "ASS" }, { op: "tx", txt: "P*SS", size: 100, color: "#f0f" }]
   - EMotion: { disp_name: "[2P] E-Motion" }
   - Hexuma
+  - WorldOfNoise1
 
 - Ordering Tests:
   - Ranked (2):
