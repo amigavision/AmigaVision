@@ -73,7 +73,7 @@ Simply locate the `games/Amiga/MegaAGS.hdf` file, and load that in your disk ima
 
 ### A note about save files & upgrading on Amiga hardware
 
-Note that save files in games will only be written to disk when you quit the game as descripted in the [Save Files](#save-files) section.
+Note that save files in games will only be written to disk when you quit the game as described in the [Save Files](#save-files) section.
 
 When installed on a single partition like this, you obviously will overwrite any save files if you upgrade MegaAGS to its newest release. The easiest way is to mount an ADF (or a real floppy!) and copy out the save files before upgrading, and put them back after the new image has been written to your SD/CF card.
 
