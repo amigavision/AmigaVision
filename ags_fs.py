@@ -38,7 +38,7 @@ def build_pfs(hdf_path, clone_path, verbose):
         print(" > calculating partition sizes...")
 
     num_buffers = 128
-    heads = 4
+    heads = 16
     sectors = 63
     cylinder_size = SECTOR_SIZE * heads * sectors
     num_cyls_rdb = 1
@@ -70,7 +70,7 @@ def build_pfs(hdf_path, clone_path, verbose):
     r = subprocess.run([
         "rdbtool", hdf_path,
         "fsadd", pfs3_bin,
-        "fs=PFS3"
+        "fs=PDS3"
     ], stdout=subprocess.PIPE)
 
     if verbose:
@@ -84,7 +84,7 @@ def build_pfs(hdf_path, clone_path, verbose):
         "add", "name={}".format(part[0]),
         "start={}".format(num_cyls_rdb),
         "size={}".format(part[1]),
-        "fs=PFS3",
+        "fs=PDS3",
         "bs={}".format(BLOCK_SIZE),
         "max_transfer=0x0001FE00",
         "mask=0x7FFFFFFE",
@@ -109,7 +109,7 @@ def build_pfs(hdf_path, clone_path, verbose):
             "add", "name={}".format(part[0]),
             "start={}".format(part_start),
             "end={}".format(part_end),
-            "fs=PFS3",
+            "fs=PDS3",
             "bs={}".format(BLOCK_SIZE),
             "max_transfer=0x0001FE00",
             "mask=0x7FFFFFFE",
