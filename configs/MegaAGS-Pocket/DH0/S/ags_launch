@@ -1,17 +1,17 @@
 .K TITLE
 
-if <TITLE$_NONE_> EQ "_NONE_"
+if "<TITLE$_NONE_>" EQ "_NONE_"
   skip DONE
 endif
-if <TITLE> EQ "any"
+if "<TITLE>" EQ "any"
   pickfile d AGS:RunQuiet/Meta q c execute ags_launch []
   skip DONE
 endif
-if <TITLE> EQ "any_game"
+if "<TITLE>" EQ "any_game"
   pickfile d AGS:RunQuiet/Game q c execute ""AGS:RunQuiet/Game/[]"
   skip DONE
 endif
-if <TITLE> EQ "any_demo"
+if "<TITLE>" EQ "any_demo"
   pickfile d AGS:RunQuiet/Demo q c execute ""AGS:RunQuiet/Demo/[]"
   skip DONE
 endif
