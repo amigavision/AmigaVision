@@ -4,23 +4,23 @@ if <TITLE$_NONE_> EQ "_NONE_"
   skip DONE
 endif
 if <TITLE> EQ "any"
-  pickfile >NIL: d AGS:RunQuiet/Meta q c execute ags_launch []
+  pickfile d AGS:RunQuiet/Meta q c execute ags_launch []
   skip DONE
 endif
 if <TITLE> EQ "any_game"
-  pickfile >NIL: d AGS:RunQuiet/Game q c execute AGS:RunQuiet/Game/[]
+  pickfile d AGS:RunQuiet/Game q c execute ""AGS:RunQuiet/Game/[]"
   skip DONE
 endif
 if <TITLE> EQ "any_demo"
-  pickfile >NIL: d AGS:RunQuiet/Demo q c execute AGS:RunQuiet/Demo/[]
+  pickfile d AGS:RunQuiet/Demo q c execute ""AGS:RunQuiet/Demo/[]"
   skip DONE
 endif
-if exists AGS:RunQuiet/Game/<TITLE>
-  execute AGS:RunQuiet/Game/<TITLE>
+if exists "AGS:RunQuiet/Game/<TITLE>"
+  execute "AGS:RunQuiet/Game/<TITLE>"
   skip DONE
 endif
-if exists AGS:RunQuiet/Demo/<TITLE>
-  execute AGS:RunQuiet/Demo/<TITLE>
+if exists "AGS:RunQuiet/Demo/<TITLE>"
+  execute "AGS:RunQuiet/Demo/<TITLE>"
   skip DONE
 endif
 
