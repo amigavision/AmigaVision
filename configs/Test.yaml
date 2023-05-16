@@ -19,6 +19,17 @@
   - Hexuma
   - WorldOfNoise1
 
+- Simple:
+  - Agony
+  - ShadowOfTheBeast
+
+- SimpleTree:
+  - Agony
+  - ShadowOfTheBeast
+  - Nested:
+    - IK+
+    - BatmanTheMovie
+
 - Ordering Tests:
   - Ranked (2):
     - rank: 2
@@ -58,6 +69,9 @@
     - HumanTarget
     - Interference
 
+- !include Lists/TestInclude/Test.yaml
+
 - "[ Demo Scene ]":
   - note: A sample of demo scene releases.
-  - !include configs/Lists/DemosWidescreen.yaml
+  - !include Lists/TestInclude/Demos.yaml
+  - Widescreen: !include Lists/TestInclude/DemosWidescreen.yaml

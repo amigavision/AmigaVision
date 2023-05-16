@@ -222,10 +222,17 @@ def lha_extract(arcpath, outpath):
 # -----------------------------------------------------------------------------
 # yaml serialization
 
+yaml_path_stack = []
+
 def constr_include(loader, node):
-    value = loader.construct_scalar(node)
-    with open(value, 'r') as f:
+    global yaml_path_stack
+    p = path(yaml_path_stack[-1], loader.construct_scalar(node))
+    if not is_file(p):
+        raise IOError("file not found")
+    yaml_path_stack.append(os.path.dirname(os.path.abspath(p)))
+    with open(p, 'r') as f:
         d = yaml.safe_load(f)
+    yaml_path_stack.pop()
     return d
 
 yaml.SafeConstructor.add_constructor(u'!include', constr_include)
@@ -234,8 +241,13 @@ def yaml_write(data, path: str):
     with open(path, 'w') as f:
         yaml.round_trip_dump(data, f, explicit_start=True, version=(1, 2))
 
-def yaml_load(path: str):
-    with open(path, 'r') as f:
+def yaml_load(yaml_path: str):
+    global yaml_path_stack
+    p = path(os.getcwd(), yaml_path)
+    if not is_file(p):
+        raise IOError("file not found")
+    yaml_path_stack.append(os.path.dirname(os.path.abspath(p)))
+    with open(p, 'r') as f:
         return yaml.safe_load(f)
 
 # -----------------------------------------------------------------------------

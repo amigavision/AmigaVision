@@ -7,6 +7,9 @@
     - note: Intentionally left blank.
   - AmigaDealerDemo
 
-- !include configs/Lists/Games.yaml
-- !include configs/Lists/Demos.yaml
-- !include configs/Lists/DemosWidescreen.yaml
+- !include Lists/Games.yaml
+
+- "[ Demo Scene ]":
+  - note: A sample of demo scene releases.
+  - !include Lists/Demos.yaml
+  - Widescreen: !include Lists/DemosWidescreen.yaml

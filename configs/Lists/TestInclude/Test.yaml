@@ -1,0 +1,7 @@
+- Test Includes:
+  - Turrican3
+  - More: !include More.yaml
+  - Subtree: !include MoreTree.yaml
+
+- Test Also Includes:
+  - Lemmings

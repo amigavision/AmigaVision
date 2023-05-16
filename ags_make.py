@@ -82,12 +82,16 @@ def make_tree(
         rank = None
 
         for item in node:
-            # plain titles
+            # plain title
             if isinstance(item, str):
                 entries += [item]
+            # list
             if isinstance(item, list):
-                if len(item) == 2:
-                    entries += [(item[0], item[1])]
+                for e in item:
+                    if isinstance(e, dict):
+                        make_tree(db, collection, ags_path, [e], path, template=template)
+                    else:
+                        raise ValueError("make_tree(): list error ({})".format(e))
             # parse metadata or subtree
             if isinstance(item, dict):
                 if "image" in item:

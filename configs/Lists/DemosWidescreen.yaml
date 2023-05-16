@@ -1,55 +1,53 @@
-"[ Demo Scene ]":
-- Widescreen:
-    - note: Demos configured to be displayed in\nfull screen 16:9 aspect ratio.\n\nOSD > Audio & Video > Aspect Ratio > Full Screen\n\nSome pixel cropping may occur. If you want the\n4:3 versions, use the other listings.
-    - 3LE-Drama: { scale: 6, v_offset: 44 }
-    - Andromeda-Rule30: { scale: 6, v_offset: 62 }
-    - Artwork-Dawn: { scale: 6, v_offset: 44 }
-    - AtomeAGA: { scale: 6, v_offset: 46 }
-    - Axis-Headcase: { scale: 6, v_offset: 42 }
-    - ControlAGA: { scale: 6, v_offset: 48 }
-    - Coda: { scale: 6, v_offset: 73 }
-    - Deadliners-Five: { scale: 6, v_offset: 40 }
-    - DHS-CopperKaahBaahYaah: { scale: 6, v_offset: 44 }
-    - Drugstore: { scale: 6, v_offset: 18 }
-    - Extension: { scale: 6, v_offset: 40 }
-    - FaktoryAGA: { scale: 6, v_offset: 40 }
-    - FullmoonAGA: { scale: 6, v_offset: 22 }
-    - Ghostown-SushiBoyz: { scale: 6, v_offset: 62 }
-    - Hardwired: { scale: 6, v_offset: 28 }
-    - Hologon: { scale: 6, v_offset: 45 }
-    - ISOAGA: { scale: 6, v_offset: 42 }
-    - Jormas-KanaalinArvoitus: { scale: 6, v_offset: 42 }
-    - Lemon-Lemonade: { scale: 6, v_offset: 45 }
-    - Lemon+TDL-BlastFromThePast: { scale: 6, v_offset: 52 }
-    - Lemon+TDL-TheFall: { scale: 6, v_offset: 44 }
-    - LGC&LNS-WayTooRude: { scale: 6, v_offset: 45 }
-    - Loonies-MyLuckyNumber: { scale: 6, v_offset: 48 }
-    - Loonies-Octorubber: { scale: 6, v_offset: 48 }
-    - Melon-Cortez: { scale: 6, v_offset: 45 }
-    - Melon-FisherhawkDr: { scale: 6, v_offset: 45 }
-    - Melon-WelcomeIntro: { scale: 6, v_offset: 45 }
-    - ProjectXSE--Ministry: { scale: 6, v_offset: 17 }
-    - MoodsPlateau-SolveEtCoagula: { scale: 6, v_offset: 34 }
-    - MrsBeanbag-BeSheep: { scale: 6, v_offset: 22 }
-    - Pacific-2ndWave: { scale: 6, v_offset: 8 }
-    - Pacific-Monomateria: { scale: 6, v_offset: 50 }
-    - Pacific-OhFive: { scale: 6, v_offset: 50 }
-    - Retream-TheCure: { scale: 6, v_offset: 48 }
-    - RNO-FourSkin: { scale: 6, v_offset: 44 }
-    - RNO-Fruitcake: { scale: 6, v_offset: 35 }
-    - Shaft7AGA: { scale: 6, v_offset: 44 }
-    - Spaceballs-Dubzilla: { scale: 6, v_offset: 42 }
-    - Spaceballs-Emperor: { scale: 6, v_offset: 46 }
-    - Spaceballs-Makt: { scale: 6, v_offset: 42 }
-    - Spaceballs-Noisejesus: { scale: 6, v_offset: 38 }
-    - Spaceballs-Peek: { scale: 6, v_offset: 42 }
-    - Spaceballs-Straff: { scale: 6, v_offset: 44 }
-    - SumeaAGA: { scale: 6, v_offset: 44 }
-    - TEK-NewWorldOrder: { scale: 6, v_offset: 46 }
-    - TowardsDarkerTimes: { scale: 6, v_offset: 45 }
-    - UpRough-15YearsOfFame: { scale: 6, v_offset: 36 }
-    - UpRough-AprilInParis: { scale: 6, v_offset: 44 }
-    - Vectors-Mindsurfin: { scale: 6, v_offset: 45 }
-    - YCrew-BolkerWay: { scale: 6, v_offset: 42 }
-    - YCrew-RoyalPalms: { scale: 6, v_offset: 44 }
-    - YCrew-Vertigo: { scale: 6, v_offset: 44 }
+- note: Demos configured to be displayed in\nfull screen 16:9 aspect ratio.\n\nOSD > Audio & Video > Aspect Ratio > Full Screen\n\nSome pixel cropping may occur. If you want the\n4:3 versions, use the other listings.
+- 3LE-Drama: { scale: 6, v_offset: 44 }
+- Andromeda-Rule30: { scale: 6, v_offset: 62 }
+- Artwork-Dawn: { scale: 6, v_offset: 44 }
+- AtomeAGA: { scale: 6, v_offset: 46 }
+- Axis-Headcase: { scale: 6, v_offset: 42 }
+- ControlAGA: { scale: 6, v_offset: 48 }
+- Coda: { scale: 6, v_offset: 73 }
+- Deadliners-Five: { scale: 6, v_offset: 40 }
+- DHS-CopperKaahBaahYaah: { scale: 6, v_offset: 44 }
+- Drugstore: { scale: 6, v_offset: 18 }
+- Extension: { scale: 6, v_offset: 40 }
+- FaktoryAGA: { scale: 6, v_offset: 40 }
+- FullmoonAGA: { scale: 6, v_offset: 22 }
+- Ghostown-SushiBoyz: { scale: 6, v_offset: 62 }
+- Hardwired: { scale: 6, v_offset: 28 }
+- Hologon: { scale: 6, v_offset: 45 }
+- ISOAGA: { scale: 6, v_offset: 42 }
+- Jormas-KanaalinArvoitus: { scale: 6, v_offset: 42 }
+- Lemon-Lemonade: { scale: 6, v_offset: 45 }
+- Lemon+TDL-BlastFromThePast: { scale: 6, v_offset: 52 }
+- Lemon+TDL-TheFall: { scale: 6, v_offset: 44 }
+- LGC&LNS-WayTooRude: { scale: 6, v_offset: 45 }
+- Loonies-MyLuckyNumber: { scale: 6, v_offset: 48 }
+- Loonies-Octorubber: { scale: 6, v_offset: 48 }
+- Melon-Cortez: { scale: 6, v_offset: 45 }
+- Melon-FisherhawkDr: { scale: 6, v_offset: 45 }
+- Melon-WelcomeIntro: { scale: 6, v_offset: 45 }
+- ProjectXSE--Ministry: { scale: 6, v_offset: 17 }
+- MoodsPlateau-SolveEtCoagula: { scale: 6, v_offset: 34 }
+- MrsBeanbag-BeSheep: { scale: 6, v_offset: 22 }
+- Pacific-2ndWave: { scale: 6, v_offset: 8 }
+- Pacific-Monomateria: { scale: 6, v_offset: 50 }
+- Pacific-OhFive: { scale: 6, v_offset: 50 }
+- Retream-TheCure: { scale: 6, v_offset: 48 }
+- RNO-FourSkin: { scale: 6, v_offset: 44 }
+- RNO-Fruitcake: { scale: 6, v_offset: 35 }
+- Shaft7AGA: { scale: 6, v_offset: 44 }
+- Spaceballs-Dubzilla: { scale: 6, v_offset: 42 }
+- Spaceballs-Emperor: { scale: 6, v_offset: 46 }
+- Spaceballs-Makt: { scale: 6, v_offset: 42 }
+- Spaceballs-Noisejesus: { scale: 6, v_offset: 38 }
+- Spaceballs-Peek: { scale: 6, v_offset: 42 }
+- Spaceballs-Straff: { scale: 6, v_offset: 44 }
+- SumeaAGA: { scale: 6, v_offset: 44 }
+- TEK-NewWorldOrder: { scale: 6, v_offset: 46 }
+- TowardsDarkerTimes: { scale: 6, v_offset: 45 }
+- UpRough-15YearsOfFame: { scale: 6, v_offset: 36 }
+- UpRough-AprilInParis: { scale: 6, v_offset: 44 }
+- Vectors-Mindsurfin: { scale: 6, v_offset: 45 }
+- YCrew-BolkerWay: { scale: 6, v_offset: 42 }
+- YCrew-RoyalPalms: { scale: 6, v_offset: 44 }
+- YCrew-Vertigo: { scale: 6, v_offset: 44 }
