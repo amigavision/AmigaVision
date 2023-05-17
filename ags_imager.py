@@ -135,22 +135,22 @@ def main():
         util.rm_path(clone_path)
         util.make_dir(util.path(clone_path, "DH0"))
 
-        config_base_name = os.path.splitext(os.path.basename(args.config_file))[0]
-
         data_dir = "data"
         if not util.is_dir(data_dir):
             raise IOError("data dir doesn't exist: " + data_dir)
 
         # parse configuration
-        menu = None
+        config_dir = os.path.dirname(args.config_file)
+        config_base_name = os.path.splitext(os.path.basename(args.config_file))[0]
+
+        runscript_template_path = util.path(config_dir, config_base_name) + ".runscript"
+        if not util.is_file(runscript_template_path):
+            raise IOError("AGS2 run script template doesn't exist: " + runscript_template_path)
+
         if args.verbose: print("parsing menu...")
         menu = util.yaml_load(args.config_file)
         if not isinstance(menu, list):
             raise ValueError("config file not a list: " + args.config_file)
-
-        runscript_template_path = util.path(os.path.dirname(args.config_file), config_base_name) + ".runscript"
-        if not util.is_file(runscript_template_path):
-            raise IOError("AGS2 run script template doesn't exist: " + runscript_template_path)
         with open(runscript_template_path, 'r') as f:
             runscript_template = f.read()
 
@@ -195,11 +195,24 @@ def main():
 
         make_vadjust_dats(util.path(amiga_boot_path, "S", "vadjust_dat"))
 
-        # copy extra files
-        config_extra_dir = util.path(os.path.dirname(args.config_file), config_base_name)
-        if util.is_dir(config_extra_dir):
-            if args.verbose: print("copying configuration extras...")
-            util.copytree(config_extra_dir, clone_path)
+        # copy layers
+        if args.verbose: print("adding layers...")
+        layers_path = util.path(config_dir, config_base_name) + ".layers.yaml"
+        if util.is_file(layers_path):
+            layers = util.yaml_load(layers_path)
+            if not isinstance(layers, list):
+                raise ValueError("layers definition not a list: " + layers_path)
+            for layer in layers:
+                if not (isinstance(layer, dict) and len(layer.keys()) == 1):
+                    raise ValueError("layer definition malformed: " + layer)
+                for src, dst in layer.items():
+                    src_dir = util.path(config_dir, src)
+                    if not util.is_dir(src_dir):
+                        raise ValueError("layer source not a directory: " + src_dir)
+                    if not (isinstance(dst, str) and dst[0] == "/"):
+                        raise ValueError("layer destination malformed: " + dst)
+                    if args.verbose: print(" > " + src)
+                    util.copytree(src_dir, util.path(clone_path, dst[1:]))
 
         # copy additional directories
         if not args.only_ags_tree and args.add_dirs:

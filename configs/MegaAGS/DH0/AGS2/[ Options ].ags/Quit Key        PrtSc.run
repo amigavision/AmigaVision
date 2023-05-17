@@ -1,2 +1,0 @@
-echo "QuitKey=93" >ENV:whdlqtkey
-echo "QuitKey=93" >ENVARC:whdlqtkey

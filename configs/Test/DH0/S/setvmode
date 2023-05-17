@@ -1,7 +1,0 @@
-.K MODE
-
-if <MODE> EQ "pal"
-  setpal
-else
-  setntsc
-endif
