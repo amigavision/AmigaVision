@@ -149,7 +149,7 @@ def apply_template(template: str, dictionary: dict) -> str:
 # -----------------------------------------------------------------------------
 # misc
 
-def language_code(lang: str):
+def language_code(lang: str) -> str:
     codes = {
         "croatian": "hr",
         "czech": "cs",
@@ -173,6 +173,31 @@ def language_code(lang: str):
         return codes[lang.lower()]
     else:
         raise ValueError("no language code for: " + lang)
+
+def country(lang: str) -> str:
+    codes = {
+        "croatian": "Croatia",
+        "czech": "Czech Republic",
+        "danish": "Denmark",
+        "dutch": "Netherlands",
+        "english": "UK",
+        "finnish": "Finland",
+        "fremen": "Fremen",
+        "french": "France",
+        "german": "Germany",
+        "greek": "Greece",
+        "hungarian": "Hungary",
+        "italian": "Italy",
+        "japanese": "Japan",
+        "norwegian": "Norway",
+        "polish": "Poland",
+        "spanish": "Spain",
+        "swedish": "Sweden",
+    }
+    if lang.lower() in codes:
+        return codes[lang.lower()]
+    else:
+        raise ValueError("no country name for: " + lang)
 
 def sorted_natural(lst):
     rom_nums = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10, "XI": 11, "XII": 12, "XIII": 13, "XIV": 14, "XV": 15}

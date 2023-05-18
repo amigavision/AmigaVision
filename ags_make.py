@@ -502,9 +502,13 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
             for language in query.get_languages(entry):
                 if language.lower() != "english":
                     make_entry(c, path, entry, util.path(ne_path, language + ".ags"))
-                    # TODO: Add country image
+                    flag_path = "flags/{}.png".format(util.country(language).lower())
+                    img_ops =  { "ops": { "op": "pi", "path": flag_path }, "size": [320, 128 ], "scale": [1, 1] }
+                    make_image(util.path(ne_path, language + ".iff"), img_ops)
             if not "english" in entry.get("language", "").lower() and not entry.get("preferred_version", None):
                 make_entry(c, ne_path, entry, util.path(ne_path, "{}.ags".format(strings["dirs"]["unique_nonenglish"])))
+                img_ops =  { "ops": { "op": "pi", "path": "flags/eu barcode.png" }, "size": [320, 128 ], "scale": [1, 1] }
+                make_image(util.path(ne_path, strings["dirs"]["unique_nonenglish"] + ".iff"), img_ops)
 
         # add demos, disk mags, etc
         def add_demo(entry, sort_group, sort_country):
