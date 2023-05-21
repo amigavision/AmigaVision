@@ -546,6 +546,9 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
                 make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
                 if sort_country:
                     make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".ags"))
+                    flag_path = "flags/{}.png".format(sort_country.lower())
+                    img_ops =  { "ops": { "op": "pi", "path": flag_path }, "size": [320, 128 ], "scale": [1, 1] }
+                    make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".iff"), img_ops)
 
         if all_demos and entry.get("category", "").lower() == "demo":
             groups = query.get_publishers(entry)
