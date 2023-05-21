@@ -109,7 +109,7 @@ def main():
     parser.add_argument("-o", "--out-dir", dest="out_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="output directory")
     parser.add_argument("-b", "--base-hdf", dest="base_hdf", metavar="FILE", help="base HDF image")
     parser.add_argument("-a", "--ags-dir", dest="ags_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="AGS2 configuration directory")
-    parser.add_argument("-d", "--add-dir", dest="add_dirs", action="append", help="add dir to amiga filesystem (example 'DH1:Music::~/Amiga/Music')")
+    parser.add_argument("-d", "--add-dir", dest="add_dirs", action="append", help="add dir to amiga filesystem (example '~/Amiga/Music::DH1:Music')")
 
     parser.add_argument("--all-games", dest="all_games", action="store_true", default=False, help="include all games in database")
     parser.add_argument("--all-demos", dest="all_demos", action="store_true", default=False, help="include all demos in database")
@@ -211,7 +211,7 @@ def main():
                         raise ValueError("layer source not a directory: " + src_dir)
                     if not (isinstance(dst, str) and dst[0] == "/"):
                         raise ValueError("layer destination malformed: " + dst)
-                    if args.verbose: print(" > " + src)
+                    if args.verbose: print(" > '" + src + "' -> '" + dst + "'")
                     util.copytree(src_dir, util.path(clone_path, dst[1:]))
 
         # copy additional directories
@@ -219,12 +219,14 @@ def main():
             if args.verbose: print("copying additional directories...")
             for s in args.add_dirs:
                 d = s.split("::")
-                if util.is_dir(d[1]):
-                    dest = util.path(clone_path, d[0].replace(":", "/"))
-                    print(" > copying '" + d[1] + "' to '"  + d[0] + "'")
-                    util.copytree(d[1], dest)
+                if len(d) != 2:
+                    raise ValueError("--add-dir parameter malformed")
+                elif util.is_dir(d[0]):
+                    dest = util.path(clone_path, d[1].replace(":", "/"))
+                    print(" > '" + d[0] + "' -> '"  + d[1] + "'")
+                    util.copytree(d[0], dest)
                 else:
-                    print(" > WARNING: '" + d[1] + "' doesn't exist")
+                    raise IOError("--add-dir source doesn't exist: " + d[0])
 
         # create directory caches
         for path, dirs, files in os.walk(amiga_ags_path):
