@@ -82,7 +82,7 @@ def main():
 
         titles_dir = paths.titles()
         if not util.is_dir(titles_dir):
-            raise IOError("titles dir missing:", titles_dir)
+            raise IOError("titles dir not found ({})".format(titles_dir))
 
         # remove missing archive_paths from db
         for r in db.cursor().execute("SELECT * FROM titles"):

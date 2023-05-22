@@ -91,7 +91,7 @@ def make_tree(
                     if isinstance(e, dict):
                         make_tree(db, collection, ags_path, [e], path, template=template)
                     else:
-                        raise ValueError("make_tree(): list error ({})".format(e))
+                        raise ValueError("make_tree: list error ({})".format(e))
             # parse metadata or subtree
             if isinstance(item, dict):
                 if "image" in item:
@@ -175,7 +175,7 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
     note = None
 
     if not isinstance(entry, dict):
-        raise ValueError("make_entry(): no entry dict")
+        raise ValueError("make_entry: no entry dict")
 
     entry = entry.copy()
 
@@ -186,7 +186,7 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
     has_overrides = False
     if isinstance(options, dict):
         if "id" in options or "title_short" in options:
-            raise ValueError("make_entry(): illegal key(s) in override options ({})".format(str(options)))
+            raise ValueError("make_entry: illegal key(s) in override options ({})".format(str(options)))
         if "scale" in options or "v_offset" in options or "slave_args" in options:
             has_overrides = True
         entry.update(options)
@@ -242,7 +242,7 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
     # create runfile
     if has_overrides:
         if not template:
-            raise IOError("run script template not passed")
+            raise IOError("make_entry: no run script template")
         runfile = make_runscript(entry, template, False)
     else:
         runfile = "execute \"AGS:{}/{}\"".format(query.get_runscript_paths(entry)[0], make_canonical_name(entry))

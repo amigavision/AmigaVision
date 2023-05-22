@@ -43,7 +43,7 @@ def tx(txt, size=240, halign="center", valign="center", kerning=-1.0, font="disp
     font_path = util.path(paths.content(), "fonts", font)
     try:
         if not util.is_file(font_path):
-            raise IOError("font file doesn't exist: " + font_path)
+            raise IOError("font file not found ({})".format(font_path))
         with Drawing() as drawing:
             img = bg if isinstance(bg, Image) else bg(color=bg)
             drawing.font = font_path

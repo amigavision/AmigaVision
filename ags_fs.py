@@ -32,7 +32,7 @@ def build_pfs(hdf_path, clone_path, verbose):
 
     pfs3_bin = util.path("data", "pfs3", "pfs3.bin")
     if not util.is_file(pfs3_bin):
-        raise IOError("PFS3 filesystem doesn't exist: " + pfs3_bin)
+        raise IOError("PFS3 filesystem binary not found ({})".format(pfs3_bin))
 
     if verbose:
         print(" > calculating partition sizes...")

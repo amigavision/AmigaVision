@@ -137,7 +137,7 @@ def main():
 
         data_dir = "data"
         if not util.is_dir(data_dir):
-            raise IOError("data dir doesn't exist: " + data_dir)
+            raise IOError("data dir not found ({})".format(data_dir))
 
         # parse configuration
         config_dir = os.path.dirname(args.config_file)
@@ -145,12 +145,12 @@ def main():
 
         runscript_template_path = util.path(config_dir, config_base_name) + ".runscript"
         if not util.is_file(runscript_template_path):
-            raise IOError("AGS2 run script template doesn't exist: " + runscript_template_path)
+            raise IOError("run script template not found ({})".format(runscript_template_path))
 
         if args.verbose: print("parsing menu...")
         menu = util.yaml_load(args.config_file)
         if not isinstance(menu, list):
-            raise ValueError("config file not a list: " + args.config_file)
+            raise ValueError("config file not a list ({})".format(args.config_file))
         with open(runscript_template_path, 'r') as f:
             runscript_template = f.read()
 
@@ -159,9 +159,9 @@ def main():
         if not base_hdf:
             base_hdf = util.path(paths.content(), "base", "base.hdf")
         if not util.is_file(base_hdf):
-            raise IOError("base HDF doesn't exist: " + base_hdf)
+            raise IOError("base HDF not found ({})".format(base_hdf))
         if not args.only_ags_tree:
-            if args.verbose: print("extracting base HDF image... ({})".format(base_hdf))
+            if args.verbose: print("extracting base HDF image: {}".format(base_hdf))
             extract_base_image(base_hdf, amiga_boot_path)
 
         # copy base AGS2 config
@@ -170,9 +170,9 @@ def main():
         if not base_ags2:
             base_ags2 = util.path("data", "ags2")
         if not util.is_dir(base_ags2):
-            raise IOError("AGS2 configuration directory doesn't exist: " + base_ags2)
+            raise IOError("configuration directory not found ({})".format(base_ags2))
         if args.verbose:
-            print(" > using configuration: " + base_ags2)
+            print(" > using configuration: {}".format(base_ags2))
         util.copytree(base_ags2, amiga_ags_path)
 
         # collect entries
@@ -201,17 +201,17 @@ def main():
         if util.is_file(layers_path):
             layers = util.yaml_load(layers_path)
             if not isinstance(layers, list):
-                raise ValueError("layers definition not a list: " + layers_path)
+                raise ValueError("layers definition not a list ({})".format(layers_path))
             for layer in layers:
                 if not (isinstance(layer, dict) and len(layer.keys()) == 1):
-                    raise ValueError("layer definition malformed: " + layer)
+                    raise ValueError("layer definition malformed: {}".format(layer))
                 for src, dst in layer.items():
                     src_dir = util.path(config_dir, src)
                     if not util.is_dir(src_dir):
-                        raise ValueError("layer source not a directory: " + src_dir)
+                        raise IOError("layer source not a directory ({})".format(src_dir))
                     if not (isinstance(dst, str) and dst[0] == "/"):
-                        raise ValueError("layer destination malformed: " + dst)
-                    if args.verbose: print(" > '" + src + "' -> '" + dst + "'")
+                        raise ValueError("layer destination malformed: ({})".format(dst))
+                    if args.verbose: print(" > '{}' -> '{}'".format(src, dst))
                     util.copytree(src_dir, util.path(clone_path, dst[1:]))
 
         # copy additional directories
@@ -220,13 +220,13 @@ def main():
             for s in args.add_dirs:
                 d = s.split("::")
                 if len(d) != 2:
-                    raise ValueError("--add-dir parameter malformed")
+                    raise ValueError("--add-dir parameter malformed ({})".format(s))
                 elif util.is_dir(d[0]):
                     dest = util.path(clone_path, d[1].replace(":", "/"))
-                    print(" > '" + d[0] + "' -> '"  + d[1] + "'")
+                    if args.verbose: print(" > '{}' -> '{}'".format(d[0], d[1]))
                     util.copytree(d[0], dest)
                 else:
-                    raise IOError("--add-dir source doesn't exist: " + d[0])
+                    raise IOError("--add-dir source not found ({})".format(d[0]))
 
         # create directory caches
         for path, dirs, files in os.walk(amiga_ags_path):
@@ -281,7 +281,7 @@ def main():
                 shutil.copyfile(clone_script, util.path(clone_path, "clone"))
                 open(util.path(clone_path, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.00")
             else:
-                print("WARNING: cloner config files not found")
+                raise IOError("cloner config files not found ({}, {}, {})".format(cloner_adf, cloner_cfg, clone_script))
 
         # clean output directory
         for r, _, f in os.walk(clone_path):

@@ -172,7 +172,7 @@ def language_code(lang: str) -> str:
     if lang.lower() in codes:
         return codes[lang.lower()]
     else:
-        raise ValueError("no language code for: " + lang)
+        raise ValueError("no language code for '{}'".format(lang))
 
 def country(lang: str) -> str:
     codes = {
@@ -197,7 +197,7 @@ def country(lang: str) -> str:
     if lang.lower() in codes:
         return codes[lang.lower()]
     else:
-        raise ValueError("no country name for: " + lang)
+        raise ValueError("no country name for '{}'".format(lang))
 
 def sorted_natural(lst):
     rom_nums = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10, "XI": 11, "XII": 12, "XIII": 13, "XIV": 14, "XV": 15}
@@ -253,7 +253,7 @@ def constr_include(loader, node):
     global yaml_path_stack
     p = path(yaml_path_stack[-1], loader.construct_scalar(node))
     if not is_file(p):
-        raise IOError("file not found")
+        raise IOError("yaml include file not found ({})".format(p))
     yaml_path_stack.append(os.path.dirname(os.path.abspath(p)))
     with open(p, 'r') as f:
         d = yaml.safe_load(f)
@@ -270,7 +270,7 @@ def yaml_load(yaml_path: str):
     global yaml_path_stack
     p = path(os.getcwd(), yaml_path)
     if not is_file(p):
-        raise IOError("file not found")
+        raise IOError("yaml file not found ({})".format(p))
     yaml_path_stack.append(os.path.dirname(os.path.abspath(p)))
     with open(p, 'r') as f:
         return yaml.safe_load(f)
@@ -303,7 +303,7 @@ def write_csv():
     csv_path = "data/db/titles.csv"
 
     if not is_file(sqlite3_path):
-        raise IOError("SQLite database doesn't exist: " + sqlite3_path)
+        raise IOError("SQLite database not found ({})".format(sqlite3_path))
 
     csv.register_dialect("megaags",
         delimiter=';',
