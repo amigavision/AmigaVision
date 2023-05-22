@@ -12,10 +12,10 @@
 # hardware: Hardware the title was originally targeting (OCS, OCS/CD, OCS/CDTV, AGA, AGA/CD, AGA/CD32, etc)
 # aga: Title is AGA only
 # ntsc: Video mode and pixel aspect ratio
-#   0 = PAL title that will be run at 50Hz (PAL, 16:15 PAR @ 4X or 5X, 1:1 PAR @ 6X)
-#   1 = PAL title that will be run at 60Hz (PAL60, 16:15 PAR @ 5X, 1:1 PAR @ 6X)
-#   2 = "World" title that will be run at 60Hz (NTSC, 16:15 PAR @ 5X, 1:1 PAR @ 6X)
-#   3 = NTSC title that will be run at 60Hz (NTSC, 16:15 PAR @ 5X, 1:1 PAR @ 6X)
+#   0 = PAL title that will be run at 50Hz (PAL, 16:15 PAR @ 4X, 1:1 PAR @ 5X)
+#   1 = PAL title that will be run at 60Hz (PAL60, 16:15 PAR @ 4X, 1:1 PAR @ 5X)
+#   2 = "World" title that will be run at 60Hz (NTSC, 16:15 PAR @ 4X, 1:1 PAR @ 5X)
+#   3 = NTSC title that will be run at 60Hz (NTSC, 16:15 PAR @ 4X, 1:1 PAR @ 5X)
 #   4 = NTSC title that will be run at 60Hz and was likely designed for narrow PAR ("Sachs NTSC", 5:6 PAR @ 5X)
 # scale: Viewport integer scale factor at 1080p (PAL: 4-6, NTSC: 5-6)
 # v_offset: Viewport vertical offset (lower value -> screen is shifted downwards)
