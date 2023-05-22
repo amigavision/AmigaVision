@@ -1,2 +1,2 @@
 # Post build script
-cp $AGSCONTENT/distro/* $AGSDEST/
+cp -R $AGSCONTENT/distro_pocket/* $AGSDEST/
