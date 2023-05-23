@@ -55,7 +55,7 @@ def build_pfs(hdf_path, clone_path, verbose):
     if util.is_file(hdf_path):
         os.remove(hdf_path)
 
-    if verbose: print(" > creating pfs container ({}MB)...".format((total_cyls * cylinder_size) // (1024 * 1024)))
+    if verbose: print(" > creating pfs container ({}MB)".format((total_cyls * cylinder_size) // (1024 * 1024)))
     if verbose: print(" > drive geometry: {} cylinders, {} heads, {} sectors".format(total_cyls + 1, heads, sectors))
     r = subprocess.run([
         "rdbtool", hdf_path,
@@ -78,7 +78,7 @@ def build_pfs(hdf_path, clone_path, verbose):
 
     # add boot partition
     part = partitions.pop(0)
-    if verbose: print("    > " + part[0])
+    if verbose: print("    > {} ({}MB)".format(part[0], (part[1] * cylinder_size) // (1024 * 1024)))
     r = subprocess.run([
         "rdbtool", hdf_path,
         "add", "name={}".format(part[0]),
@@ -95,7 +95,7 @@ def build_pfs(hdf_path, clone_path, verbose):
 
     # add subsequent partitions
     for part in partitions:
-        if verbose: print("    > " + part[0])
+        if verbose: print("    > {} ({}MB)".format(part[0], (part[1] * cylinder_size) // (1024 * 1024)))
         r = subprocess.run(["rdbtool", hdf_path, "free"], stdout=subprocess.PIPE, universal_newlines=True)
         free = make_tuple(r.stdout.splitlines()[0])
         free_start = int(free[0])
