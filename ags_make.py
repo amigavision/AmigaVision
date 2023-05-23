@@ -315,6 +315,11 @@ def make_note(entry, add_note):
     system = entry["hardware"].replace("/", "·")
     aspect_ratio = None
 
+    def trunc(s: str) -> str:
+        if len(s) > max_w:
+            s = s[:max_w - 2].strip() + ".."
+        return s
+
     if entry.get("ntsc", 0) == 4:
         if entry.get("scale", 0) == 6:
             system += "·6×NTSC"
@@ -356,19 +361,19 @@ def make_note(entry, add_note):
         system += " ({})".format(aspect_ratio)
 
     if "category" in entry and entry["category"].lower() == "game":
-        note += ("{}{}".format(strings["note"]["title"], entry["title"]))[:max_w] + "\n"
-        note += ("{}{}".format(strings["note"]["developer"], entry["developer"]))[:max_w] + "\n"
-        note += ("{}{}".format(strings["note"]["publisher"], entry["publisher"]))[:max_w] + "\n"
+        note += trunc("{}{}".format(strings["note"]["title"], entry["title"])) + "\n"
+        note += trunc("{}{}".format(strings["note"]["developer"], entry["developer"])) + "\n"
+        note += trunc("{}{}".format(strings["note"]["publisher"], entry["publisher"])) + "\n"
         note += ("{}{}".format(strings["note"]["release_date"], entry["release_date"]))[:max_w] + "\n"
         note += ("{}{}".format(strings["note"]["players"], entry["players"]))[:max_w] + "\n"
         if entry.get("language"):
             language = util.prettify_names(entry["language"])
-            note += ("{}{}".format(strings["note"]["language"], language))[:max_w] + "\n"
+            note += trunc("{}{}".format(strings["note"]["language"], language)) + "\n"
         note += ("{}{}".format(strings["note"]["system"], system))[:max_w] + "\n"
         if entry.get("issues"):
-            note += ("{}{}".format(strings["note"]["issues"], entry["issues"]))[:max_w] + "\n"
+            note += trunc("{}{}".format(strings["note"]["issues"], entry["issues"])) + "\n"
         elif entry.get("hack"):
-            note += ("{}{}".format(strings["note"]["hack"], entry["hack"]))[:max_w] + "\n"
+            note += trunc("{}{}".format(strings["note"]["hack"], entry["hack"])) + "\n"
 
     elif "category" in entry and entry["category"].lower() == "demo":
         group = util.prettify_names(entry["publisher"])
@@ -376,7 +381,7 @@ def make_note(entry, add_note):
         note += ("{}{}".format(strings["note"]["group"], group))[:max_w] + "\n"
         if entry.get("country"):
             country = util.prettify_names(entry["country"])
-            note += ("{}{}".format(strings["note"]["country"], country))[:max_w] + "\n"
+            note += trunc("{}{}".format(strings["note"]["country"], country)) + "\n"
         note += ("{}{}".format(strings["note"]["release_date"], entry["release_date"]))[:max_w] + "\n"
         if entry.get("subcategory", "").lower() != "demo":
             note += ("{}{}".format(strings["note"]["category"], entry["subcategory"]))[:max_w] + "\n"
@@ -384,12 +389,12 @@ def make_note(entry, add_note):
             note += "{}Demo\n".format(strings["note"]["category"])
         note += ("{}{}".format(strings["note"]["system"], system))[:max_w] + "\n"
         if entry.get("issues"):
-            note += ("{}{}".format(strings["note"]["issues"], entry["issues"]))[:max_w] + "\n"
+            note += trunc("{}{}".format(strings["note"]["issues"], entry["issues"])) + "\n"
 
     if add_note and isinstance(add_note, str):
-            note += ("{}{}".format(strings["note"]["note"], add_note))[:max_w] + "\n"
+            note += trunc("{}{}".format(strings["note"]["note"], add_note)) + "\n"
     elif entry.get("note"):
-            note += ("{}{}".format(strings["note"]["note"], entry["note"]))[:max_w] + "\n"
+            note += trunc("{}{}".format(strings["note"]["note"], entry["note"])) + "\n"
     return note
 
 # -----------------------------------------------------------------------------
