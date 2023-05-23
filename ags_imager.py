@@ -6,11 +6,11 @@
 #
 # id: Unique title identifier
 # title: Full title (displayed in info box)
-# title_short: Short title (displayed in list)
+# title_short: Short title (displayed in list), *used as identifier for favorites feature and SAM integration*
 # redundant: Exclude in add_all operations
 # preferred_version: Use this version instead if title is fuzzy matched (i.e. not using precise name in yaml config)
 # hardware: Hardware the title was originally targeting (OCS, OCS/CD, OCS/CDTV, AGA, AGA/CD, AGA/CD32, etc)
-# aga: Title is AGA only
+# aga: Title is AGA only (1=true)
 # ntsc: Video mode and pixel aspect ratio
 #   0 = PAL title that will be run at 50Hz (PAL, 16:15 PAR @ 4X, 1:1 PAR @ 5X)
 #   1 = PAL title that will be run at 60Hz (PAL60, 16:15 PAR @ 4X, 1:1 PAR @ 5X)
@@ -25,9 +25,9 @@
 #   PAL-4X:  -11 ... 5
 #   PAL-5X:  -11 ... 59
 #   PAL-6X:  -11 ... 95
-# killaga: Use killaga hack when invoking whdload
-# gamepad: Title supports more than one button
-# lightgun: Title supports light gun
+# killaga: Use killaga hack when invoking whdload (1=true)
+# gamepad: Title supports more than one button (1=true)
+# lightgun: Title supports light gun (1=true)
 # note: Extra text displayed in info box as "Note:"
 # issues: Extra text displayed in info box as "Issues:"
 # hack: Extra text displayed in info box as "Hack info:"
