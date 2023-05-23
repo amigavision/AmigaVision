@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# AGSImager: Hardcoded banner image generator
+# AGSImager: Image compositor
 
 import io
 import sys
@@ -55,7 +55,7 @@ def tx(txt, size=240, halign="center", valign="center", kerning=-1.0, font="disp
             drawing(img)
             return img
     except:
-        print(" > WARNING: ags_imgen text rendering failed for '{}'".format(txt))
+        print(" > WARNING: ags_compositor text rendering failed for '{}'".format(txt))
         return bg if isinstance(bg, Image) else bg(color=bg)
 
 # "pi" operation: paste image from file

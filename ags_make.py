@@ -10,7 +10,7 @@ import textwrap
 from pathlib import Path
 from sqlite3 import Connection
 
-import ags_imgen as imgen
+import ags_compositor as compositor
 import ags_query as query
 import ags_util as util
 from ags_strings import strings
@@ -65,7 +65,7 @@ def make_image(path, options):
         operations = options["ops"]
     else:
         operations = options
-    imgen.out_iff(path, imgen.compose(operations, size=size), scale=scale)
+    compositor.out_iff(path, compositor.compose(operations, size=size), scale=scale)
 
 # -----------------------------------------------------------------------------
 # create entries from dictionary/tree
@@ -572,7 +572,7 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
         if util.is_dir(util.path(path, "{}.ags".format(strings["dirs"][dir]))):
             open(util.path(path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(wrap_note(strings["desc"][dir]))
             img_src = util.path("top", strings["images"][dir])
-            if util.is_file("{}{}".format(imgen.IMG_SRC_BASE, img_src)):
+            if util.is_file("{}{}".format(compositor.IMG_SRC_BASE, img_src)):
                 make_image(util.path(path, "{}.iff".format(strings["dirs"][dir])), {"ops":{"op":"pi", "path":img_src}, "size":[320,128], "scale":[1,1]})
 
     for dir in [
