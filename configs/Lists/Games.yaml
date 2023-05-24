@@ -610,7 +610,7 @@
     - SpaceCrusade
     - Switchblade2
     - GTSoccerChallenge
-  - EAB Top 10 Exclusive:
+  - EAB Top 20 Exclusives:
     - ordering: "ranked"
     - note: The best Amiga-exclusive games according to users of the English Amiga Board.
     - image: { op: "pi", path: "list/eab.png" }
