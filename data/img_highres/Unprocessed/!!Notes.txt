@@ -1,1 +1,3 @@
 This directory contains hi-res screenshots (mostly of the demo scene productions) that haven't been resized/cropped/converted to IFF yet.
+
+Glitches are documented in the respective text files for each letter, and should be investigated and added to the CSV/DB as `issues` if we can't resolve it with e.g. `killaga`. Ideally also report upstream bugs.
