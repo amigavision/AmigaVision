@@ -1,0 +1,28 @@
+demo--dane--dane
+Stops loading at tunnel part, although tunnel continues to spin, or stops loading at the next image
+can't get enough screenshots
+
+demo--danishknowhow--danishknowhow
+Crashes during first screen
+
+demo--megademodarkness--megademodarkness
+Stops loading after starfield
+
+demo--megademo2darkness--megademo2darkness
+Hungry Dwarf section corrupt (rest of demo okay)
+
+demo--megademodeathstar--megademodeathstar
+A few demo sections in, yellow sun portion bad glitches, looks like interlace issue
+
+demo--deepcore--deepcore
+All colours are red and green after the raytraced scene
+
+demo--digitalinnovation--digitalinnovation
+freezes after first picture - can't get screens
+
+demo--megademodragons--megademodragons
+too cropped
+
+demo-notwhdl--spaceballs-dubzilla
+badly cropped
+

@@ -1,0 +1,19 @@
+demo--banditsradio--banditsradio
+Corrupt image shows and a fully corrupt effect shortly afterwards
+
+demo--bigtimesensualityaga--bigtimesensualityaga
+very glitchy throughout - too gitchy to get screenshots
+
+demo--borisvallejoslide--borisvallejoslide
+blank after intro
+screenblank not working between images, images all get overlayed
+
+demo--boundlessvoid--boundlessvoid
+blank section after intro
+
+demo--megademobrainstorm--megademobrainstorm
+after initial "loading" logo, blank screen
+
+demo-notwhdl--fairlight-burgerman
+Corrupt gfx in sroller, can't get screenshots
+

@@ -1,0 +1,1 @@
+This directory contains hi-res screenshots (mostly of the demo scene productions) that haven't been resized/cropped/converted to IFF yet.

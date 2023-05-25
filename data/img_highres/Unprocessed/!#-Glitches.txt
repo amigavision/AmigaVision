@@ -1,0 +1,6 @@
+demo--1001stolenideas--1001stolenideas
+4th part with credits is screenwrapped incorrectly if holding a key to speed up - may be bug in demo
+
+demo-notwhdl--bs1-4thinches
+Crashes at end, music glitches first, goes slow, until crash. If you press a key to skip the text it ends gracefully, but if left on the text (theres 3 screens of text), it will eventually crash. Seems like a musicplayer issue in demo.
+

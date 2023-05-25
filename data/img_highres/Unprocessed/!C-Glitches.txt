@@ -1,0 +1,21 @@
+demo--c64demos--c64demos
+Masking issue as per other demos - disappearing scroller text mid screen
+
+demo--codertrash--codertrash
+Glitchy glenz vector routine
+
+demo--contravention--contravention
+Some glitchy vectors - lines coming off them to the left
+
+demo--copperslave--copperslave
+A glitchy effect then a crash
+
+demo--crayonshinchan--crayonshinchan
+Fails after intro screen, stuck on blank screen
+
+demo--worldofwonders crazycars2--worldofwonders
+Bottom scroller glitched out
+
+demo--cuzcoaga--cuzcoaga
+Glitchy effects
+

@@ -1,0 +1,22 @@
+demo--absoluteinebriation--absoluteinebriation
+White screen - fails to load
+
+demo--alchemy--alchemy
+Many wrong colours showing, doesn't look right in all the terrain sections (looks like an AGA demo trying to run on a 1.3rom)
+
+demo-notwhdl--paranoimia-anotherfirst
+Part of screen masked - old screenshot shows the demo working correctly (nb// i have notcied this issue in other demos where part of screen is masked)
+
+demo--anotherworldintro--anotherworld
+Lines across screen
+
+demo--aquarium--aquarium
+Extreme slowness of many effects, then gets stuck on flower for ages (but does continue eventually)
+Desperately needs looking at, good demo otherwise.
+
+demo--astrogate--astrogate
+Another demo with the masking issue (like Paranoimia demo above)
+
+demo--atmosphere--atmosphere
+Crashes if pressing Win key or Shift key (getting screenshots was tough)
+
