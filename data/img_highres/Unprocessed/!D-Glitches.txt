@@ -1,9 +1,11 @@
 demo--dane--dane
 Stops loading at tunnel part, although tunnel continues to spin, or stops loading at the next image
 can't get enough screenshots
+- Noted and excluded
 
 demo--danishknowhow--danishknowhow
 Crashes during first screen
+- Noted and excluded
 
 demo--megademodarkness--megademodarkness
 Stops loading after starfield
@@ -21,8 +23,7 @@ demo--digitalinnovation--digitalinnovation
 freezes after first picture - can't get screens
 
 demo--megademodragons--megademodragons
-too cropped
+FIXED (too cropped)
 
 demo-notwhdl--spaceballs-dubzilla
-badly cropped
-
+FIXED (much more overscan visible with new dynamic PAR) (badly cropped)

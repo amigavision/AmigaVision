@@ -3,6 +3,7 @@ Corrupt image shows and a fully corrupt effect shortly afterwards
 
 demo--bigtimesensualityaga--bigtimesensualityaga
 very glitchy throughout - too gitchy to get screenshots
+- It's just the "sofware interlace" parts that are glitchy. Noted.
 
 demo--borisvallejoslide--borisvallejoslide
 blank after intro
@@ -13,7 +14,8 @@ blank section after intro
 
 demo--megademobrainstorm--megademobrainstorm
 after initial "loading" logo, blank screen
+- Noted and excluded
 
 demo-notwhdl--fairlight-burgerman
 Corrupt gfx in sroller, can't get screenshots
-
+- Already noted

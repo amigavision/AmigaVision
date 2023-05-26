@@ -12,6 +12,7 @@ A glitchy effect then a crash
 
 demo--crayonshinchan--crayonshinchan
 Fails after intro screen, stuck on blank screen
+- Noted and excluded
 
 demo--worldofwonders crazycars2--worldofwonders
 Bottom scroller glitched out
