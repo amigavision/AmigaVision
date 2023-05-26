@@ -9,7 +9,7 @@ autopep8 = "*"
 
 [packages]
 #amitools = {editable = true,path = "../amitools"}
-amitools = {ref = "fix-dosenv", git = "https://github.com/Optiroc/amitools.git"}
+amitools = {ref = "rdbflags", git = "https://github.com/Optiroc/amitools.git"}
 lhafile = "~=0.3.0"
 pillow = "~=9.5.0"
 ruamel-yaml = "~=0.17.21"
