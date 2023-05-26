@@ -15,9 +15,7 @@
 
 - Current:
   - image: [{ op: "tx", txt: "ASS" }, { op: "tx", txt: "P*SS", size: 100, color: "#f0f" }]
-  - EMotion: { disp_name: "[2P] E-Motion" }
-  - Hexuma
-  - WorldOfNoise1
+  - game--croisierepouruncadavrefr--croisierepouruncadavrefr
 
 - Simple:
   - Agony
@@ -58,6 +56,7 @@
 
 - Test:
   - note: Test for builder options
+  - EMotion: { disp_name: "[2P] E-Motion" }
   - Andromeda-Rule30: { scale: 6, v_offset: 48 }
   - Bacteria
   - BaygonAGA: Melon!
