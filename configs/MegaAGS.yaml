@@ -7,9 +7,15 @@
     - note: Intentionally left blank.
   - AmigaDealerDemo
 
-- !include Lists/Games.yaml
+- !include Lists/Games-HallOfFame.yaml
+- !include Lists/Games-Charts.yaml
+- !include Lists/Games-Decennial.yaml
+- !include Lists/Games-Focus.yaml
+- !include Lists/Games-Gameographies.yaml
+- !include Lists/Games-Multiplayer.yaml
+- !include Lists/Games-SpecialHardware.yaml
 
 - "[ Demo Scene ]":
   - note: A sample of demo scene releases.
   - !include Lists/Demos.yaml
-  - Widescreen: !include Lists/DemosWidescreen.yaml
+  - Widescreen: !include Lists/Demos-Widescreen.yaml

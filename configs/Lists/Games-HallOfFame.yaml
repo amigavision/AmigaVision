@@ -1,0 +1,192 @@
+- Hall of Fame:
+  - rank: 2
+  - note: Games inducted into the Megaboys Hall of Fame.\nSorted by genre.
+  - image: { ops: { op: "pi", path: "top/hall_of_fame.png" }, size: [320, 128], scale: [1, 1] }
+  - Action:
+    - image: { op: "pi", path: "hof/action.png" }
+    - CannonFodder
+    - DogsOfWar
+    - DynaBlaster
+    - IK+
+    - Leander
+    - MarbleMadness
+    - Pang
+    - Paradroid90
+    - ParasolStars
+    - Psyborg
+    - RuffNTumble
+    - Switchblade2
+    - Turrican2
+    - Ugh
+    - Walker
+    - WizNLiz
+    - YoJoe
+  - Adventure:
+    - image: { op: "pi", path: "hof/adventure.png" }
+    - AnotherWorld
+    - BladeWarrior
+    - Cadaver
+    - Darkmere
+    - DefenderOfTheCrown
+    - DGeneration
+    - Flashback
+    - HiredGuns
+    - Hostages
+    - ItCameFromTheDesert
+    - KingOfChicago
+    - Moonstone
+    - NorthAndSouth
+    - Pirates
+    - PrinceOfPersia
+    - RocketRanger
+    - Wings
+  - Pinball:
+    - image: { op: "pi", path: "hof/pinball.png" }
+    - Obsession
+    - PinballDreams
+    - PinballFntsies
+    - PinballIllusions
+    - SlamTilt
+  - Platform:
+    - image: { op: "pi", path: "hof/platform.png" }
+    - AddamsFamily
+    - ArabianNights
+    - BCKid
+    - Flood
+    - JamesPond2
+    - KidChaos
+    - NaughtyOnes
+    - RickDangerous
+    - RodLand
+    - SnowBros
+    - SoccerKid
+    - TrapsNTreasures
+  - Platform Puzzle:
+    - image: { op: "pi", path: "hof/platformpuzzle.png" }
+    - Benefactor
+    - BubbaNStix
+    - Builderland
+    - Flipit&Magnose
+    - FuryOfTheFurries
+    - Globdule
+    - LostVikings
+    - ShadowOfTheBeast3
+    - SillyPutty
+  - Point & Click:
+    - image: { op: "pi", path: "hof/pointandclick.png" }
+    - AlteredDestiny
+    - BeneathAStlSky
+    - DarkSeed
+    - DejaVu
+    - DejaVu2LostInLasVegas
+    - Elvira
+    - Elvira2
+    - FlightOfTheAmazonQueen
+    - FutureWars
+    - IndianaJonesAtlantisAdv
+    - IndyJonesLastCrusAdv
+    - InnocentUntilCaught
+    - Loom
+    - ManiacMansion
+    - MonkeyIsland2
+    - Murder
+    - OperationStealth
+    - RiseOfTheDragon
+    - SecretOfMonkeyIsland
+    - Universe
+  - Puzzle:
+    - image: { op: "pi", path: "hof/puzzle.png" }
+    - ClikClak
+    - Deflektor
+    - DeviousDesigns
+    - EMotion
+    - Lemmings
+    - Logical
+    - OneStepBeyond
+    - PipeDream
+    - PushOver
+    - Sentinel
+    - SpringTime
+    - Statix
+    - SuperSkweek
+    - SuperTwintris
+    - TetrisPro
+    - Twintris
+  - Racing:
+    - image: { op: "pi", path: "hof/racing.png" }
+    - AllTerrainRacing
+    - BadLands
+    - BuggyBoy
+    - Carnage
+    - IndyHeat
+    - JaguarXJ220
+    - LamborghiniAmericanChllng
+    - Lotus
+    - Lotus2
+    - Nitro
+    - Skidmarks
+    - StuntCarRacer
+    - SuperCars2
+    - SuperSkidmarks+CD
+    - TestDrive2
+    - Vroom
+  - Role Playing:
+    - image: { op: "pi", path: "hof/roleplaying.png" }
+    - Ambermoon
+    - BlackCrypt
+    - Captive
+    - DungeonMaster
+    - EyeOfTheBeholderAGA
+    - EyeOfTheBeholder2AGA
+    - FourCrystalsOfTrazere
+    - HeroQuest
+    - Rogue
+    - Shadowlands
+  - Shoot'em Up:
+    - image: { op: "pi", path: "hof/shootemup.png" }
+    - Apidya
+    - BattleSquadron
+    - DisposableHero
+    - GalacticTheXmasEdition
+    - Hybris
+    - MegaTyphoon
+    - Pod
+    - Silkworm
+    - Uridium2
+    - ZOut
+  - Simulation:
+    - image: { op: "pi", path: "hof/simulation.png" }
+    - Floor13
+    - OilImperium
+    - PortsOfCall
+    - RailroadTycoon
+    - SimCity
+  - Sports:
+    - image: { op: "pi", path: "hof/sports.png" }
+    - AquaticGames
+    - ArcadePool
+    - ArcadeSnooker
+    - Botics
+    - CaliforniaGames
+    - GrandMonsterSlam
+    - Projectyle
+    - ProTennisTour
+    - RBI2Baseball
+    - SensibleGolf
+    - ShufflepuckCafe
+    - Speedball2
+    - SWOS9697
+  - Strategy:
+    - image: { op: "pi", path: "hof/strategy.png" }
+    - BattleIsle
+    - CelticLegends
+    - Centurion
+    - Dune2
+    - HistoryLine
+    - LaserSquad
+    - LostPatrol
+    - MegaLoMania
+    - NuclearWar
+    - Populous
+    - Rampart
+    - Settlers

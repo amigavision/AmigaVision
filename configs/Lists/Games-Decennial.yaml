@@ -1,0 +1,123 @@
+- Decennial Spotlight:
+  - note: 10 games for every year between 1986 and 1995. Cutting across genres to select the great and/or representative titles available at the time.\n\n(While the Amiga computer premiered mid-1985, hardware and software availability was very limited for the first months.)
+  - image: { ops: { op: "pi", path: "top/spotlight.png" }, size: [320, 128], scale: [1, 1] }
+  - "1986":
+    - image: { op: "tx", txt: "’86", size: 190 }
+    - BardsTale
+    - Brataccas
+    - DefenderOfTheCrown
+    - DejaVu
+    - FaeryTaleAdventure
+    - MindWalker
+    - Pawn
+    - Rogue
+    - Shanghai
+    - Skyfox
+  - "1987":
+    - image: { op: "tx", txt: "’87", size: 190 }
+    - Amegas
+    - KingOfChicago
+    - LittleComputerPeople
+    - NinjaMission
+    - Plutos
+    - PortsOfCall
+    - Shadowgate
+    - Starglider
+    - TerrorPods
+    - TestDrive
+  - "1988":
+    - image: { op: "tx", txt: "’88", size: 190 }
+    - BattleChess
+    - BubbleBobble
+    - DungeonMaster
+    - FA18Interceptor
+    - Hostages
+    - Hybris
+    - IK+
+    - Katakis
+    - Sentinel
+    - Virus
+  - "1989":
+    - image: { op: "tx", txt: "’89", size: 190 }
+    - BattleSquadron
+    - BloodMoney
+    - FutureWars
+    - ItCameFromTheDesert
+    - NorthAndSouth
+    - OilImperium
+    - Populous
+    - ShadowOfTheBeast
+    - Silkworm
+    - SimCity
+  - "1990":
+    - image: { op: "tx", txt: "’90", size: 190 }
+    - Cadaver
+    - Elvira
+    - LostPatrol
+    - OperationStealth
+    - Pang
+    - RainbowIslands
+    - Speedball2
+    - Turrican
+    - Twintris
+    - Wings
+  - "1991":
+    - image: { op: "tx", txt: "’91", size: 190 }
+    - AnotherWorld
+    - BattleIsle
+    - Lotus2
+    - Moonstone
+    - EyeOfTheBeholder
+    - Hunter
+    - MegaLoMania
+    - SecretOfMonkeyIsland
+    - Lemmings
+    - Turrican2
+  - "1992":
+    - image: { op: "tx", txt: "’92", size: 190 }
+    - Apidya
+    - BCKid
+    - CrazyCars3
+    - DGeneration
+    - MonkeyIsland2
+    - ParasolStars
+    - PinballDreams
+    - PushOver
+    - SensibleSoccer
+    - Troddlers
+  - "1993":
+    - image: { op: "tx", txt: "’93", size: 190 }
+    - Ambermoon
+    - CannonFodder
+    - ChaosEngine
+    - HiredGuns
+    - HistoryLine
+    - IndianaJonesAtlantisAdv
+    - Lionheart
+    - Settlers
+    - Syndicate
+    - WizNLiz
+  - "1994":
+    - image: { op: "tx", txt: "’94", size: 190 }
+    - Banshee
+    - BeneathAStlSky
+    - BubbaNStix
+    - DarkMere
+    - DisposableHero
+    - DreamWeb
+    - Elfmania
+    - KidChaos
+    - NaughtyOnes
+    - RuffNTumble
+  - "1995":
+    - image: { op: "tx", txt: "’95", size: 190 }
+    - BloodNet
+    - Lollypop
+    - Odyssey
+    - PinballIllusions
+    - SensibleGolf
+    - SWOS9596
+    - SuperSkidmarks
+    - UltimateSoccerManager
+    - Virocop
+    - Worms

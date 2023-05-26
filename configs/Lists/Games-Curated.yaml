@@ -1,0 +1,601 @@
+- Curated Content:
+  - note: Curated collections from around the net.
+  - image: { ops: { op: "pi", path: "top/curated_content.png" }, size: [320, 128], scale: [1, 1] }
+  - Alex Limi's Collection:
+    - note: Amiga games worth your time, according to Alex Limi.
+    - Multiplayer:
+      - ordering: "ordered"
+      - note: Show only the multiplayer games.
+      - AlienBreed2: { disp_name: "[2P] Alien Breed 2" }
+      - AlienBreedSpecialEdition: { disp_name: "[2P] Alien Breed Special Edition" }
+      - AlienBreedTA: { disp_name: "[2P] Alien Breed Tower Assault" }
+      - ApidyaSpecialEdition: { disp_name: "[2P] Apidya SE" }
+      - BadLands: { disp_name: "[2P] BadLands" }
+      - Banshee: { disp_name: "[2P] Banshee" }
+      - BattleSquadron: { disp_name: "[2P] Battle Squadron" }
+      - BeachVolley: { disp_name: "[2P] Beach Volley" }
+      - BloodMoney: { disp_name: "[2P] Blood Money" }
+      - BrutalHomicide: { disp_name: "[2P] Brutal Homicide" }
+      - BrutalHomicide2: { disp_name: "[2P] Brutal Homicide 2" }
+      - BubbleBobble: { disp_name: "[2P] Bubble Bobble" }
+      - ChambersOfShaolin: { disp_name: "[2P] Chambers of Shaolin" }
+      - ChaosEngine: { disp_name: "[2P] Chaos Engine" }
+      - ChaosEngine2: { disp_name: "[2P] Chaos Engine 2" }
+      - DogsOfWar: { disp_name: "[2P] Dogs of War" }
+      - EmeraldMine: { disp_name: "[2P] Emerald Mine" }
+      - EmeraldMine2: { disp_name: "[2P] Emerald Mine 2" }
+      - EmeraldMine3: { disp_name: "[2P] Emerald Mine 3" }
+      - EMotion: { disp_name: "[2P] E-Motion" }
+      - Firepower: { disp_name: "[2P] Fire Power" }
+      - Gauntlet3: { disp_name: "[2P] Gauntlet III" }
+      - IK+: { disp_name: "[2P] IK+" }
+      - IkariWarriors: { disp_name: "[2P] Ikari Warriors" }
+      - KickOff: { disp_name: "[2P] Kick Off" }
+      - LaserSquad: { disp_name: "[2P] Laser Squad" }
+      - Lemmings: { disp_name: "[2P] Lemmings" }
+      - LethalXcess: { disp_name: "[2P] Lethal Xcess" }
+      - Lotus: { disp_name: "[2P] Lotus Esprit Turbo Challenge" }
+      - Lotus2: { disp_name: "[2P] Lotus 2" }
+      - Lotus3: { disp_name: "[2P] Lotus 3" }
+      - MarbleMadness: { disp_name: "[2P] Marble Madness" }
+      - NaughtyOnes: { disp_name: "[2P] Naughty Ones" }
+      - NorthAndSouth: { disp_name: "[2P] North & South" }
+      - OhNoMoreLemmings: { disp_name: "[2P] Oh No! More Lemmings" }
+      - OperationThunderbolt: { disp_name: "[2P] Operation Thunderbolt" }
+      - Pang: { disp_name: "[2P] Pang" }
+      - ParasolStars: { disp_name: "[2P] Parasol Stars" }
+      - PuffysSaga: { disp_name: "[2P] Puffy's Saga" }
+      - Qwak: { disp_name: "[2P] Qwak" }
+      - Rampart: { disp_name: "[2P] Rampart" }
+      - Renegades: { disp_name: "[2P] Renegades" }
+      - RodLand: { disp_name: "[2P] Rod-Land" }
+      - SecondSamurai: { disp_name: "[2P] Second Samurai" }
+      - SensibleSoccer: { disp_name: "[2P] Sensible Soccer" }
+      - Settlers: { disp_name: "[2P] Settlers" }
+      - Silkworm: { disp_name: "[2P] Silkworm" }
+      - Speedball: { disp_name: "[2P] Speedball" }
+      - Speedball2: { disp_name: "[2P] Speedball 2" }
+      - SpittingImage: { disp_name: "[2P] Spitting Image" }
+      - SpyVsSpy: { disp_name: "[2P] Spy vs. Spy" }
+      - SpyVsSpy2TheIslandCaper: { disp_name: "[2P] Spy vs. Spy II" }
+      - SpyVsSpy3ArcticAntics: { disp_name: "[2P] Spy vs. Spy III" }
+      - SuperCars2AGA: { disp_name: "[2P] Super Cars II" }
+      - SuperMethaneBros: { disp_name: "[2P] Super Methane Bros" }
+      - SuperTwintris: { disp_name: "[2P] Super Twintris" }
+      - SWIV: { disp_name: "[2P] SWIV" }
+      - SWOS9596: { disp_name: "[2P] Sensible World of Soccer 95/96" }
+      - TinyBobble: { disp_name: "[2P] Tiny Bobble" }
+      - TopGear2: { disp_name: "[2P] Top Gear 2" }
+      - TurboRaketti2Fi: { disp_name: "[2P] TurboRaketti II" }
+      - Twintris: { disp_name: "[2P] Twintris" }
+      - Ugh: { disp_name: "[2P] Ugh!" }
+      - Virocop: { disp_name: "[2P] Virocop" }
+      - WizNLiz: { disp_name: "[2P] Wiz 'n' Liz" }
+      - YoJoe: { disp_name: "[2P] Yo! Joe" }
+      - ZOut: { disp_name: "[2P] Z-Out" }
+      - IndyHeat: { disp_name: "[3P] Indy Heat" }
+      - Nitro: { disp_name: "[3P] Nitro" }
+      - SpaceCrusade&VoyageBeyond: { disp_name: "[3P] Space Crusade" }
+      - SuperOffRoad: { disp_name: "[3P] Super Off Road" }
+      - BaseJumpers: { disp_name: "[4P] Base Jumpers" }
+      - Gauntlet2: { disp_name: "[4P] Gauntlet II" }
+      - GreatCourts: { disp_name: "[4P] Great Courts" }
+      - GreatCourts2: { disp_name: "[4P] Great Courts 2" }
+      - KickOff2FinalWhistle: { disp_name: "[4P] Kick Off 2: Final Whistle" }
+      - Leatherneck: { disp_name: "[4P] Leatherneck" }
+      - OilImperium: { disp_name: "[4P] Oil Imperium" }
+      - PortsOfCall: { disp_name: "[4P] Ports of Call" }
+      - RallyCrossChallenge: { disp_name: "[4P] Rally Cross Challenge" }
+      - Skidmarks: { disp_name: "[4P] Skidmarks" }
+      - SuperSkidmarks: { disp_name: "[4P] Super Skidmarks" }
+      - TVSportsBasketball: { disp_name: "[4P] TV Sports Basketball" }
+      - Worms: { disp_name: "[4P] Worms" }
+      - ZanyGolf: { disp_name: "[4P] Zany Golf" }
+      - DynaBlaster: { disp_name: "[5P] Dyna Blaster" }
+      - AllTerrainRacing: { disp_name: "[6P] All Terrain Racing" }
+      - WormsDC: { disp_name: "[8P] Worms Director's Cut" }
+      - SensibleGolf: { disp_name: "[72P] Sensible Golf" }
+    - AdventuresOfRobinHood
+    - Agony
+    - AirborneRanger
+    - AlienBreed2
+    - AlienBreedSpecialEdition
+    - AlienBreedTA
+    - AllTerrainRacing
+    - Amegas
+    - AnotherWorld
+    - AnotherWorldLostLevel
+    - APB
+    - ApidyaSpecialEdition
+    - ArabianNights
+    - Arkanoid
+    - ArkanoidRevengeOfDoh
+    - Astaroth
+    - Atomino
+    - Atomix
+    - BadLands
+    - Banshee
+    - Barbarian2Palace
+    - BaseJumpers
+    - BattleChess
+    - BattleChess2
+    - BattleIsle
+    - BattleSquadron
+    - BCKid
+    - BeachVolley
+    - Benefactor
+    - BeyondTheIcePalace
+    - BiplaneDuel
+    - BillsTomatoGame
+    - Blasteroids
+    - BloodNet
+    - BoneCruncherEnhanced
+    - BrutalHomicide
+    - BrutalHomicide2
+    - BubbleAndSqueak
+    - BubbleBobble
+    - Budokan
+    - BuggyBoy
+    - Cadaver
+    - CaliforniaGames
+    - CannonFodder: { scale: 5, v_offset: 11 }
+    - CannonFodder2: { scale: 5, v_offset: 11 }
+    - CannonSoccer: { scale: 5, v_offset: 11 }
+    - CastleMaster
+    - CastleMaster2
+    - Centurion
+    - ChambersOfShaolin
+    - ChaosEngine
+    - ChaosEngine2
+    - ChuckRock
+    - ChuckRock2
+    - Civilization
+    - ClownOMania
+    - Colonization
+    - CruiseForACorpse
+    - CrystalHammerV2
+    - CrystalKingdomDizzy
+    - Cubulus
+    - DeathSword
+    - Defender2
+    - DefenderOfTheCrown
+    - DesertStrike
+    - Deuteros
+    - DGeneration
+    - DizzyCollection--Disk1
+    - DizzyCollection--Disk2
+    - DizzysExcellentAdventures--Disk1
+    - DizzysExcellentAdventures--Disk2
+    - DogsOfWar
+    - DragonBreed
+    - DreamWeb
+    - DuckTales
+    - Dune
+    - Dune2
+    - DynaBlaster
+    - Eco
+    - Elite
+    - EmeraldMine
+    - EmeraldMine2
+    - EmeraldMine3
+    - EMotion
+    - FaeryTaleAdventure
+    - FantasticDizzy
+    - FantasyWorldDizzy
+    - Fascination
+    - FinalAssault
+    - FireAndIce
+    - FireForce
+    - Firepower
+    - FirstContact
+    - FirstSamurai
+    - Flashback
+    - Flink
+    - Flood
+    - FlyHarder
+    - FlyingSharkSE
+    - Frontier
+    - FuryOfTheFurries
+    - Gauntlet2
+    - Gauntlet3
+    - Giana2
+    - Giganoid
+    - GlobduleNTSC
+    - Goal
+    - Gobliiins
+    - Gobliins2
+    - Goblins3
+    - Gods
+    - Gravity
+    - GreatCourts
+    - GreatCourts2
+    - GreatGianaSisters
+    - Hammerfist
+    - Heimdall
+    - Heimdall2
+    - Hostages
+    - Hybris
+    - Hyperion
+    - IK+
+    - IndianaJonesAtlantisAdv
+    - IndianaJonesTempleOfDoom
+    - IndyJonesLastCrusAdv
+    - IndyHeat
+    - ItCameFromTheDesert
+    - ItCameFromTheDesert2
+    - JamesPond
+    - JamesPond2
+    - JamesPond3
+    - JumpingJackSon
+    - JungleStrike
+    - Katakis
+    - KickOff&ExtraTime
+    - KickOff2FinalWhistle
+    - KillingGameShow
+    - LaserSquad
+    - LEDStorm
+    - LegendOfFaerghail
+    - Lemmings
+    - Lemmings2
+    - LemmingsHoliday1994
+    - LemmingsNewYear9192
+    - LemmingsXmasDemo1991
+    - LemmingsXmasDemo1992
+    - LethalXcess
+    - Lionheart
+    - Logical
+    - Loom
+    - LostPatrol
+    - LostVikings
+    - Lotus
+    - Lotus2
+    - Lotus3
+    - MagiclandDizzy
+    - MagicPockets
+    - MarbleMadness
+    - MegaLoMania
+    - Menace
+    - Midwinter
+    - Midwinter2
+    - Millennium22
+    - MonkeyIsland2
+    - Moonstone
+    - NaughtyOnes
+    - Nebulus
+    - Nebulus2
+    - Neuromancer
+    - NewZealandStory
+    - NinjaRemix
+    - Nitro
+    - NorthAndSouth
+    - NoSecondPrize
+    - NuclearWar
+    - Obliterator
+    - OhNoMoreLemmings
+    - OilImperium
+    - OneStepBeyond
+    - OperationThunderbolt
+    - OperationWolf
+    - PacLand
+    - Pandora
+    - Pang
+    - Paradroid90
+    - ParasolStars
+    - Perihelion
+    - PinballDreams
+    - PinballFntsies
+    - PinballIllusions
+    - PipeDream
+    - Pirates
+    - PlayerManager
+    - Poing
+    - Poing2
+    - Poing3
+    - Poing4
+    - Poing5
+    - Poing6
+    - Poing7
+    - Populous&DataDisks
+    - Populous2&ChallengeGames
+    - PortsOfCall
+    - PostmanPat
+    - Powermonger
+    - PowermongerWW1Edition
+    - ProjectXSE2017
+    - PuffysSaga
+    - Puggsy
+    - PushOver
+    - Putty
+    - PuttySquad
+    - Qwak
+    - RailroadTycoon
+    - RainbowIslands
+    - RallyCrossChallenge
+    - Rampart
+    - Renegades
+    - RickDangerous
+    - RickDangerous2
+    - RickDangerous25
+    - RingsOfMedusa
+    - Roadkill
+    - RocketRanger
+    - RockNRoll
+    - RockStarAteMyHamster
+    - RodLand
+    - Rogue
+    - Rotox
+    - RType
+    - RType2
+    - RuffNTumble
+    - Rygar
+    - SaintDragon
+    - SecondSamurai
+    - SecretOfMonkeyIsland
+    - SensibleGolf
+    - SensibleSoccer
+    - SWOS9697
+    - Sentinel
+    - Settlers
+    - SevenGatesOfJambala
+    - ShufflepuckCafe
+    - Silkworm
+    - SillyPutty
+    - SimAntHiRes
+    - SimCity
+    - SimonTheSorcerer
+    - Simulcra
+    - Skidmarks
+    - SlamTilt
+    - Sleepwalker
+    - SpaceCrusade&VoyageBeyond
+    - Speedball
+    - Speedball2
+    - SperisLegacy
+    - SpindizzyWorlds
+    - SpittingImage
+    - SpyVsSpy
+    - SpyVsSpy2TheIslandCaper
+    - SpyVsSpy3ArcticAntics
+    - SpyWhoLovedMe
+    - StreetRod
+    - StreetRod2
+    - StuntCarRacer
+    - StuntCarRacerTNT
+    - SuperCars
+    - SuperCars2AGA
+    - Superfrog
+    - SuperMethaneBros
+    - SuperOffRoad
+    - SuperSkidmarks
+    - SuperStardust
+    - SuperTwintris
+    - Switchblade
+    - Switchblade2
+    - SWIV
+    - Syndicate
+    - SyndicateAmericanRevolt
+    - Terramex
+    - ThreeStooges
+    - Thunderbirds
+    - TinyBobble
+    - Toki
+    - TrapsNTreasures
+    - TreasureIslandDizzy
+    - TurboRaketti2Fi
+    - Turrican
+    - Turrican2AGA
+    - Turrican3
+    - Tusker
+    - TVSportsBasketball
+    - Twintris
+    - UFOEnemyUnknown
+    - Ugh
+    - Universe
+    - Unreal
+    - Vaxine
+    - Virocop
+    - Virus
+    - Vyrus
+    - Walker
+    - WarInMiddleEarth
+    - Wings
+    - WingsOfDeath
+    - WingsOfFury
+    - WizNLiz
+    - Worms
+    - WormsDC
+    - Worthy
+    - Xenon
+    - Xenon2
+    - Xit
+    - XOut2
+    - YoJoe
+    - YolandaImage
+    - ZakMcKracken
+    - ZanyGolf
+    - Zeewolf
+    - Zeewolf2
+    - ZOut
+  - DenOfGeek-Underappreciated:
+    - ordering: "ranked"
+    - note: The Top 50 underappreciated Amiga games according to Den of Geek.
+    - image: { op: "pi", path: "list/denofgeek.jpg" }
+    - Stardust
+    - NoSecondPrize
+    - DynaBlaster
+    - Qwak
+    - Roadkill
+    - SuprTennisChmps
+    - Odyssey
+    - Banshee
+    - KingsBounty
+    - Paradroid90
+    - YoJoe
+    - RuffNTumble
+    - Supremacy
+    - SpaceCrusade
+    - Nitro
+    - Jetstrike
+    - FourCrystalsOfTrazere
+    - Virocop
+    - Damocles
+    - Flood
+    - FlyHarder
+    - GemX
+    - Deuteros
+    - Bloodwych
+    - LostTreasuresOfInfocom
+    - LamborghiniAmericanChllng
+    - SabreTeam
+    - Corporation
+    - EscapeFromColditz
+    - Thunderhawk
+    - HistoryLine
+    - Cybercon3
+    - Deliverance
+    - FireForce
+    - PacificIslands
+    - RoboCop3
+    - Apocalypse
+    - Statix
+    - StormMaster
+    - Shadowlands
+    - Blob
+    - Midwinter2
+    - Cavitas
+    - Infestation
+    - Citadel
+    - BirdsOfPrey
+    - GoldOfTheAztecs
+    - Conqueror
+    - Alcatraz
+    - Resolution101
+  - Kim Justice Platformers:
+    - note: Nine obscure euro platformers that DON'T suck, according to Kim Justice.
+    - image: { op: "pi", path: "list/kimjustice_platformers.jpg" }
+    - Lionheart
+    - Odyssey
+    - Ugh
+    - NaughtyOnes
+    - KidChaos
+    - Globdule
+    - ArabianNights
+    - Lollypop
+    - TrapsNTreasures
+  - Kim Justice Top Psygnosis:
+    - ordering: "ordered"
+    - note: Kim Justice's top 10 favourite Psygnosis games (excluding a few non-Amiga games, including honorable mentions).
+    - image: { op: "pi", path: "list/kimjustice_psygnosis.jpg" }
+    - Lemmings
+    - BillsTomatoGame
+    - KillingGameShow
+    - Lemmings2
+    - ShadowOfTheBeast3
+    - WizNLiz
+    - Leander
+    - Benefactor
+    - Walker
+    - BloodMoney
+    - HiredGuns
+    - SecondSamurai
+  - PIXEL thing - 45 Games:
+    - ordering: "ordered"
+    - note: 45 Games That Defined the AMIGA 500, according to It's a P/XEL thing.\n\n(Chronologically ordered.)
+    - image: { op: "pi", path: "list/pixelthing_45games.jpg" }
+    - IK+
+    - CarrierCommand
+    - ShadowOfTheBeast
+    - BatmanTheMovie
+    - StuntCarRacer
+    - ItCameFromTheDesert
+    - BloodMoney
+    - Populous
+    - Lotus
+    - Speedball2
+    - SecretOfMonkeyIsland
+    - Supremacy
+    - Midwinter
+    - Pang
+    - F19StealthFighter
+    - RainbowIslands
+    - Captive
+    - Wings
+    - SuperCars2
+    - JimmyWhitesSnooker
+    - AnotherWorld
+    - FormulaOneGrandPrix
+    - Moonstone
+    - Lemmings
+    - Turrican2
+    - EyeOfTheBeholder2
+    - Wizkid
+    - Civilization
+    - PinballFntsies
+    - Flashback
+    - Dune2
+    - Syndicate
+    - CannonFodder
+    - Settlers
+    - Frontier
+    - ChaosEngine
+    - RuffNTumble
+    - KingsQuest6
+    - Benefactor
+    - BeneathAStlSky
+    - ThemePark
+    - MrNutz
+    - Worms
+    - UFOEnemyUnknown
+    - SWOS9596ECE
+  - Racketboy Shmup Essentials:
+    - note: The Commodore Amiga Shmup Library Essentials, according to The Knives and Herr Schatten of Racketboy.com.
+    - image: { op: "pi", path: "list/racketboy_shmups.jpg" }
+    - Apidya
+    - BattleSquadron
+    - Uridium2
+    - ZOut
+    - DeluxeGalaga
+  - v's Recommended Games:
+    - note: From /v/'s Recommended Games Wiki
+    - image: { op: "pi", path: "list/vgames.png" }
+    - Agony
+    - AnotherWorld
+    - Apidya
+    - ArabianNights
+    - BCKid
+    - BlackCrypt
+    - CannonFodder
+    - ChaosEngine
+    - FateGatesOfDawn
+    - FuryOfTheFurries
+    - GreatGianaSisters
+    - Hunter
+    - JimPower
+    - Lemmings
+    - Lionheart
+    - LostPatrol
+    - Onslaught
+    - PinballDreams
+    - Perihelion
+    - ProjectXSE
+    - RuffNTumble
+    - SWOS9697
+    - ShadowFighter
+    - ShadowOfTheBeast2
+    - SlamTilt
+    - Superfrog
+    - Turrican
+    - Turrican2
+  - Wired - Most Influential:
+    - note: Top 10 most influential Amiga games according to Wired.
+    - image: { op: "pi", path: "list/wired.png" }
+    - DefenderOfTheCrown
+    - SensibleSoccer
+    - Speedball2
+    - Syndicate
+    - Lemmings
+    - PinballDreams
+    - CannonFodder
+    - ShadowOfTheBeast
+    - AnotherWorld
+    - Worms

@@ -1,0 +1,443 @@
+- Gameographies:
+  - note: Notable developer and artist gameographies.\n\n(All lists in chronological order.)
+  - image: { ops: { op: "pi", path: "top/gameographies.png" }, size: [320, 128], scale: [1, 1] }
+  - "[ By Composer ]":
+    - rank: 1
+    - note: Games with music by notable composers.\n\n(Not necessarily complete lists.)
+    - Chris Hülsbeck:
+      - ordering: "release"
+      - note: Arguably the most loved Amiga composer of all time, and also creator of the quite unique TFMX music software.
+      - image: { op: "pi", path: "chris_hülsbeck.jpg" }
+      - AdventuresOfQuik&Silva
+      - Apidya
+      - Apprentice
+      - BadCat
+      - BattleIsle
+      - BCKid
+      - BundesligaMngrHatt
+      - CaribbeanDisasterDe
+      - CarlLewisChallenge
+      - CircusAttractions
+      - DangerFreak
+      - GemX
+      - GrandMonsterSlam
+      - HardNHeavy
+      - HexumaDe
+      - HollywoodPokerPro
+      - JimPower
+      - Logistic
+      - Masterblazer
+      - MetalLaw
+      - MUDS
+      - Oxxonian
+      - RockNRoll
+      - RType
+      - SecretOfMonkeyIsland
+      - Spaceball
+      - Turrican
+      - Turrican2
+      - Turrican3
+      - XOut
+      - ZOut
+    - Jochen Hippel:
+      - ordering: "release"
+      - note: Hippel's music was for the most part primarily composed for Atari ST, but despite that (or even because of it!), his oevre is among the best to ever grace the Amiga.
+      - image: { op: "pi", path: "jochen_hippel.png" }
+      - 5thGear
+      - Amberstar
+      - Astaroth
+      - Atomix
+      - BCKid
+      - BattleValley
+      - ChambersOfShaolin
+      - Dragonflight
+      - EnchantedLand
+      - GhostBattle
+      - LeavinTeramis
+      - LethalXcess
+      - MonsterBusiness
+      - NinjaRemix
+      - PrehistoricTale
+      - RingsOfMedusa
+      - SevenGatesOfJambala
+      - Tangram
+      - Warp
+      - WingsOfDeath
+    - Karsten Obarski:
+      - ordering: "release"
+      - note: Maker of the original Sound Tracker software, and virtuoso composer in the very early days of Amiga.
+      - image: { op: "pi", path: "karsten_obarski.png" }
+      - Amegas
+      - BrandsHatch
+      - CrystalHammerV2
+      - Dyter07
+      - FateGatesOfDawn
+      - FutureTank
+      - Larrie
+      - OilImperium
+      - Project1
+      - Sarcophaser
+      - WindowWizard
+    - Tim Follin:
+      - ordering: "release"
+      - note: The Amiga was Tim Follin's least favorite platform, and you can sort of tell... Still, Ghouls 'n Ghosts is a masterpiece.
+      - image: { op: "pi", path: "tim_follin_bw.png" }
+      - BionicCommando
+      - Gauntlet3
+      - GhoulsNGhosts
+      - LEDStorm
+      - Qix
+      - Renegade
+      - SlySpySecretAgent
+  - Assembly Line, The:
+    - ordering: "release"
+    - note: While most known for helping out the Bitmap Bros on Xenon 2, the awesome and quirky puzzle games represent their finest work.
+    - image: { op: "pi", path: "logo/assembly_line.png" }
+    - Cybercon3
+    - EMotion
+    - Exterminator
+    - Interphase
+    - PipeDream
+    - Vaxine
+    - Xenon2
+  - Bill Williams:
+    - ordering: "release"
+    - note: The Amiga's original auteur.
+    - image: { op: "pi", path: "bill_williams_bw.png" }
+    - KnightsOfTheCrystallion
+    - MindWalker
+    - PioneerPlague
+    - Sinbad
+  - Bitmap Brothers:
+    - ordering: "release"
+    - note: The original "style over substance" game studio. Their catalogue is worth checking out for Dan Malone and Mark Coleman's exquisite pixeling style alone.
+    - image: { op: "pi", path: "logo/bitmap_brothers.png" }
+    - Cadaver&ThePayoff
+    - Cadaver&ThePayoff--TPO
+    - ChaosEngine
+    - ChaosEngine2
+    - Gods
+    - MagicPockets
+    - Speedball
+    - Speedball2
+    - Xenon
+    - Xenon2
+  - Blue Byte:
+    - ordering: "release"
+    - note: Purveyors of fine strategy games (and tennis!).
+    - image: { op: "pi", path: "logo/blue_byte.png" }
+    - Atomino
+    - BattleIsle&DataDisks
+    - BattleIsle&DataDisks--Intro
+    - BattleIsle&DataDisks--ALSS
+    - BattleIsle&DataDisks--Moon
+    - ProTennisTour
+    - ProTennisTour2
+    - Historyline
+    - Historyline--Intro
+    - Historyline--Outro
+    - Settlers
+    - TomAndTheGhost
+    - TwinWorld
+  - Brøderbund:
+    - ordering: "release"
+    - note: Don't get fooled by the name - Brøderbund is about as American as it gets in the Amiga library.
+    - image: { op: "pi", path: "logo/broderbund.png" }
+    - DownhillChallenge
+    - PrinceOfPersia
+    - ShufflepuckCafe
+    - TyphoonThompson
+    - WIEuropeIsCarmenSandiego
+    - WITUSAIsCarmenSandiego
+    - WITWIsCarmenSandiego
+    - WingsOfFury
+  - Cinemaware:
+    - ordering: "release"
+    - note: Pioneers of cinematic videogame storytelling.
+    - image: { op: "pi", path: "logo/cinemaware.png" }
+    - DefenderOfTheCrown
+    - ItCameFromTheDesert
+    - ItCameFromTheDesert2
+    - KingOfChicago
+    - LordsOfTheRisingSun
+    - RocketRanger
+    - SDICinemaware
+    - Sinbad
+    - ThreeStooges
+    - TVSportsBaseball
+    - TVSportsBasketball
+    - TVSportsBoxing
+    - TVSportsFootball
+    - Wings
+  - Delphine Software:
+    - ordering: "release"
+    - note: The quintessential French Touch publisher.
+    - image: { op: "pi", path: "logo/delphine_software.png" }
+    - AnotherWorld
+    - AnotherWorldLostLevel
+    - BioChallenge
+    - CastleWarrior
+    - CruiseForACorpse
+    - Flashback
+    - FutureWars
+    - OperationStealth
+    - ShaqFu
+  - Digital Illusions:
+    - ordering: "release"
+    - note: The Swedish faction of famed demo group The Silents that started the Amiga pinball craze and went on to become DICE.
+    - image: { op: "pi", path: "logo/digital_illusions.png" }
+    - Amiganoid
+    - Benefactor
+    - PinballDreams
+    - PinballFntsies
+    - PinballIllusions
+  - DMA Design:
+    - ordering: "release"
+    - note: From humble beginnings to Lemmings, to Grand Theft Auto.
+    - image: { op: "pi", path: "logo/dma_design.png" }
+    - AllNewWorldOfLemmings
+    - BloodMoney
+    - HiredGuns
+    - Lemmings
+    - Lemmings2
+    - Menace
+    - OhNoMoreLemmings
+    - Walker
+  - Factor 5:
+    - ordering: "release"
+    - note: Creators of the iconic Amiga ports of the Turrican series.
+    - image: { op: "pi", path: "logo/factor_5.png" }
+    - BCKid
+    - Denaris
+    - Katakis
+    - RType
+    - Tony&Friends
+    - Turrican
+    - Turrican2
+    - Turrican3
+  - Graftgold:
+    - ordering: "release"
+    - note: The studio founded by ZX Spectrum legends Steve Turner and Andrew Braybrook that delivered both original games and arcade conversions of excellent quality.
+    - image: { op: "pi", path: "logo/graftgold.png" }
+    - EmpireSoccer94
+    - FireAndIce
+    - Paradroid90
+    - RainbowIslands
+    - Realms
+    - Simulcra
+    - SuperOffRoad
+    - Uridium2
+    - Virocop
+  - Horror Soft:
+    - ordering: "release"
+    - note: The original and best developer specializing in pulp horror.
+    - image: { op: "pi", path: "logo/horror_soft.png" }
+    - Elvira
+    - Elvira2
+    - PersonalNightmare
+    - Waxworks
+  - Llamasoft:
+    - note: Jeff Minter is the Yak.
+    - image: { op: "pi", path: "logo/llamasoft.png" }
+    - Defender2
+    - Llamatron
+    - RevengeOfMutantCamels
+    - RevengeOfMutantCamels2
+    - SuperGridRunner
+  - Lucasfilm:
+    - ordering: "release"
+    - note: The studio that defined the silver age of point and click adventure games.
+    - image: { op: "pi", path: "logo/lucasfilm_games.png" }
+    - Battlehawks1942
+    - IndianaJonesAtlantisAct
+    - IndianaJonesAtlantisAdv
+    - IndyJonesLastCrusAdv
+    - Loom
+    - ManiacMansion
+    - MonkeyIsland2
+    - SecretOfMonkeyIsland
+    - TheirFinestHour
+    - ZakMcKracken
+  - Magnetic Fields:
+    - ordering: "release"
+    - note: Good games, great opening ident.
+    - image: { op: "pi", path: "logo/magnetic_fields.png" }
+    - CrystalDragon
+    - KidChaos
+    - Kikstart2
+    - Lotus
+    - Lotus2
+    - Lotus3
+    - MFTanks
+    - Pod
+    - SuperCars
+    - SuperCars2
+    - SuperScrambleSimulator
+  - Ocean France:
+    - ordering: "release"
+    - note: Noteworthy for managing to put an unmistakably french touch into arcade conversions.
+    - image: { op: "pi", path: "logo/ocean.png" }
+    - BadDudesVsDragonNinja
+    - BeachVolley
+    - Cabal
+    - Ivanhoe
+    - LiquidKids
+    - OperationWolf
+    - Pang
+    - Plotting
+    - SnowBros
+    - Toki
+  - Random Access, Storm:
+    - ordering: "release"
+    - note: Purveyors of fine arcade conversions.
+    - image: { op: "pi", path: "logo/sales_curve.png" }
+    - BigRun
+    - FinalBlow
+    - IndyHeat
+    - JudgeDredd
+    - Narc
+    - NinjaWarriors
+    - RodLand
+    - SaintDragon
+    - Silkworm
+    - SWIV
+  - Reflections:
+    - ordering: "release"
+    - note: One of the best teams under Psygnosis' wings.
+    - image: { op: "pi", path: "logo/reflections.png" }
+    - Awesome
+    - Ballistix
+    - BrianTheLion
+    - ShadowOfTheBeast
+    - ShadowOfTheBeast2
+    - ShadowOfTheBeast3
+  - reLINE:
+    - ordering: "release"
+    - note: The premier West German Amiga publisher.
+    - image: { op: "pi", path: "logo/reline.png" }
+    - Amegas
+    - BiingAGA
+    - CrystalHammerV2
+    - Dyter07
+    - FateGatesOfDawn
+    - GraffitiMan
+    - HardNHeavy
+    - HollywoodPoker
+    - HollywoodPokerPro
+    - OilImperium
+    - PenthouseHotNumbers
+    - PinkPanther
+    - Spaceport
+    - WesternGames
+    - WindowWizard
+  - Sensible Software:
+    - ordering: "release"
+    - note: Probably the Amiga developer with the most idiosyncratic style of game design.
+    - image: { op: "pi", path: "logo/sensible_software.png" }
+    - CannonFodder
+    - CannonFodder2
+    - CannonFodder2AlienLevels
+    - CannonFodderNewCampaign
+    - CannonFodderPlus
+    - InsectsInSpace
+    - International3DTennis
+    - MegaLoMania
+    - SensibleGolf
+    - SensibleSoccer
+    - SensibleSoccerBulldogBlty
+    - SensibleWorldMoonSoccer
+    - SWOS
+    - SWOS9697
+    - SensibleTrainSpotting
+    - Wizball
+    - Wizkid
+  - Sierra On-Line:
+    - ordering: "release"
+    - note: The publisher that defined the golden age of adventure games.
+    - image: { op: "pi", path: "logo/sierra.png" }
+    - BlackCauldron
+    - CastleOfDrBrain
+    - CodeNameIceman
+    - ColonelsBequest
+    - ConquestsOfCamelot
+    - ConquestsOfTheLongbow
+    - DonaldDucksPlayground
+    - GoldRush
+    - KingsQuest
+    - KingsQuestEnhanced
+    - KingsQuest2
+    - KingsQuest3
+    - KingsQuest4
+    - KingsQuest5
+    - LeisureSuitLarry
+    - LeisureSuitLarryEnhanced
+    - LeisureSuitLarry2
+    - LeisureSuitLarry3
+    - LeisureSuitLarry5
+    - Manhunter
+    - Manhunter2
+    - PoliceQuest2
+    - PoliceQuest3
+    - PoliceQuest
+    - QuestForGlory
+    - QuestForGlory2
+    - SpaceQuest
+    - SpaceQuestEnhanced
+    - SpaceQuest2
+    - SpaceQuest3
+    - SpaceQuest4
+  - Thalion:
+    - ordering: "release"
+    - note: The premier Atari ST developer.
+    - image: { op: "pi", path: "logo/thalion.png" }
+    - Ambermoon
+    - Amberstar
+    - ChambersOfShaolin
+    - Dragonflight
+    - EnchantedLand
+    - GhostBattle
+    - LeavinTeramis
+    - Lionheart
+    - Neuronics
+    - NoSecondPrize
+    - Tangram
+    - SevenGatesOfJambala
+    - TrexWarrior
+    - Warp
+    - WingsOfDeath
+  - Travellers Tales:
+    - ordering: "release"
+    - note: A short but sweet gameography from the developers who would go on to consistently push the limits of any platform they work on.
+    - image: { op: "pi", path: "logo/travellers_tales.png" }
+    - Leander
+    - Puggsy
+  - Vectordean:
+    - ordering: "release"
+    - note: An incredibly solid list of works by a developer that gained relatively little recognition.
+    - image: { op: "pi", path: "logo/vectordean.png" }
+    - AquaticGames
+    - BadCompany
+    - DogsOfWar
+    - FireAndBrimstone
+    - JamesPond
+    - JamesPond2
+    - JamesPond3
+    - Yolanda
+  - Westwood:
+    - ordering: "release"
+    - note: An American PC powerhouse that poured commendable effort into the Amiga.
+    - image: { op: "pi", path: "logo/westwood.png" }
+    - Battletech
+    - CaliforniaGames
+    - DragonStrike
+    - Dune2
+    - EyeOfTheBeholder
+    - EyeOfTheBeholder2
+    - GoofysRailwayExpress
+    - Hillsfar
+    - LegendOfKyrandia
+    - Phantasie3
+    - Questron2
+    - RoadwarEuropa
+    - TempleOfApshaiTrilogy
+    - WorldGames
