@@ -48,7 +48,7 @@ strings = {
         "demos": "Browse demos by title.",
         "demos_country": "Browse demos by country of origin.",
         "demos_group": "Browse demos by release group.",
-        "demos_year": "Browse demos by release year.",
+        "demos_year": "Browse demos by release year.\n\nYou might wonder why the selection is so thin between 1996 and 2012? Those were the dark years when the Amiga scene mostly were trying hard to make PC style demos targeting high end Amigas. These run poorly on any machine, and extremely poorly or not at all on MiSTer/Pocket.",
         "demos_cracktro": "A glimpse into the origins of the demo scene.",
         "demos_intro": "Browse demos in the 1/4/40/64KB categories.",
         "diskmags": "A selection of scene disk magazines.",
