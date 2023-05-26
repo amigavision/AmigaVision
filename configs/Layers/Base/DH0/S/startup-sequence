@@ -7,6 +7,7 @@ if not warn
 endif
 
 failat 21
+
 makedir RAM:T RAM:Clipboards RAM:ENV RAM:ENV/Sys
 copy >NIL: ENVARC: RAM:ENV ALL NOREQ
 
@@ -94,8 +95,7 @@ mount CON: from DEVS:KingCON-mountlist
 mount RAW: from DEVS:KingCON-mountlist
 
 ;RTG support
-is_mister
-if warn
+if `ags_uname` EQ "mister"
   assign Picasso96: SYS:Tools/Picasso96
   DEVS:Monitors/MiSTer
 endif
