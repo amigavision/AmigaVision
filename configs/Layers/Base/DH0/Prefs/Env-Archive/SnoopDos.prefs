@@ -1,0 +1,69 @@
+<SnoopDos Settings>
+;
+;    $VER: SnoopDos 3.8 (8.5.2003)
+;
+;    Settings file
+;
+NoFindPort
+NoFindResident
+NoFindSemaphore
+NoFindTask
+LockScreen
+NoOpenDevice
+NoOpenFont
+NoOpenLibrary
+NoOpenResource
+ReadToolTypes
+NoSendRexx
+ChangeDir
+Delete
+Execute
+NoGetVar
+LoadSeg
+NoLock
+MakeDir
+MakeLink
+Open
+Rename
+NoRunCommand
+NoSetVar
+NoSystem
+NoOnlyShowFails
+ShowCLI
+NoShowFullPath
+NoUseDeviceNames
+NoMonitorPackets
+NoPacketDebugger
+NoMonitorROMCalls
+IgnoreShell
+;
+MatchName=""
+HideMethod=ToolsMenu
+ScreenType=Default
+LogMode=Prompt
+FileIOType=Automatic
+BufferSize=32
+HotKey="ctrl alt d"
+ScreenName="Workbench"
+LogName="ram:SnoopDos.log"
+WindowFont="Small 7"
+BufferFont="Small 7"
+Format="%u %p %a %n %o %r"
+LogFormat=""
+TextSpacing=0
+SmartRefresh
+LeftAligned
+RowQualifier=Ignore
+ShowStatus
+ShowGadgets
+NoAutoOpen
+NoDisableWhenHidden
+NoCreateIcons
+MainWindowPos=0,0
+MainWindowSize=640,256
+FormatWindowPos=-1,-1
+FunctionWindowPos=48,30
+SetupWindowPos=35,52
+IconPos=-1,-1
+StackLimit=1000
+TaskPri=0

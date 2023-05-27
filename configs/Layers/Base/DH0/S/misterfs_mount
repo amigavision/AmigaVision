@@ -5,7 +5,7 @@ if WARN
   if $uname EQ "mister"
     mount MR0:
   else
-    makedir RAM:MiSTer FORCE >NIL:
+    makedir RAM:MiSTer >NIL:
     assign MiSTer: RAM:MiSTer
     skip DONE
   endif
