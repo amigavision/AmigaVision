@@ -1,0 +1,9 @@
+demo--gigademo3--gigademo3
+Crashes after first scene
+
+demo--megademogoldfire--megademogoldfire
+doesn't get past first picture - white screen stuck
+
+demo--greatbytesinfire--greatbytesinfire
+Crashes at end of sinusscroller part
+
