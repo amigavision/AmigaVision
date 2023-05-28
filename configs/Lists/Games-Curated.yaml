@@ -6,6 +6,7 @@
     - Multiplayer:
       - ordering: "ordered"
       - note: Show only the multiplayer games.
+      - image: { ops: { op: "pi", path: "top/multiplayer.png" }, size: [320, 128], scale: [1, 1] }
       - AlienBreed2: { disp_name: "[2P] Alien Breed 2" }
       - AlienBreedSpecialEdition: { disp_name: "[2P] Alien Breed Special Edition" }
       - AlienBreedTA: { disp_name: "[2P] Alien Breed Tower Assault" }
