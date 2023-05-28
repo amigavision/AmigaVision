@@ -9,6 +9,7 @@
 
 - !include Lists/Games-HallOfFame.yaml
 - !include Lists/Games-Charts.yaml
+- !include Lists/Games-Curated.yaml
 - !include Lists/Games-Decennial.yaml
 - !include Lists/Games-Focus.yaml
 - !include Lists/Games-Gameographies.yaml
