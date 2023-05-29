@@ -18,13 +18,14 @@
 #   3 = NTSC title that will be run at 60Hz (NTSC, 16:15 PAR @ 4X, 1:1 PAR @ 5X)
 #   4 = NTSC title that will be run at 60Hz and was likely designed for narrow PAR ("Sachs NTSC", 5:6 PAR @ 5X)
 # scale: Viewport integer scale factor at 1080p (PAL: 4-6, NTSC: 5-6)
-# v_offset: Viewport vertical offset (lower value -> screen is shifted downwards)
+# vshift: Viewport vertical shift (lower value -> screen is shifted downwards)
 #   Expressible range (higher values allowed but have no effect):
 #   NTSC-5X: -16 ... 9
 #   NTSC-6X: -16 ... 45
 #   PAL-4X:  -11 ... 5
 #   PAL-5X:  -11 ... 59
 #   PAL-6X:  -11 ... 95
+# hshift: Viewport horizontal shift (lower value -> screen is shifted right)
 # killaga: Use killaga hack when invoking whdload (1=true)
 # gamepad: Title supports more than one button (1=true)
 # lightgun: Title supports light gun (1=true)
@@ -59,7 +60,6 @@ from ags_fs import build_pfs, extract_base_image, convert_filename_uae2a
 from ags_make import make_autoentries, make_runscripts, make_tree
 from ags_query import entry_is_notwhdl, get_archive_path, get_entry, get_whd_dir
 from ags_types import EntryCollection
-from make_vadjust import VADJUST_MAX, VADJUST_MIN, make_vadjust
 
 # -----------------------------------------------------------------------------
 
@@ -91,14 +91,6 @@ def extract_entry(clone_path, entry):
             info_path = util.path(dest, entry["slave_dir"] + ".info")
             if util.is_file(info_path):
                 os.remove(info_path)
-
-def make_vadjust_dats(path):
-    util.make_dir(path)
-    for i in range(VADJUST_MIN, VADJUST_MAX+1):
-        open(util.path(path, "xd_{}".format(i)), mode="wb").write(make_vadjust(v_shift=i))
-        open(util.path(path, "x5_{}".format(i)), mode="wb").write(make_vadjust(scale=5, v_shift=i))
-        open(util.path(path, "x6_{}".format(i)), mode="wb").write(make_vadjust(scale=6, v_shift=i))
-        open(util.path(path, "xS_{}".format(i)), mode="wb").write(make_vadjust(scale=5, v_shift=i, sachs=True))
 
 # -----------------------------------------------------------------------------
 # command line interface
@@ -192,8 +184,6 @@ def main():
         if not args.only_ags_tree:
             if args.verbose: print("extracting {} content archives...".format(len(collection.by_id.items())))
             extract_entries(clone_path, collection.ids())
-
-        make_vadjust_dats(util.path(amiga_boot_path, "S", "vadjust_dat"))
 
         # copy layers
         if args.verbose: print("adding layers...")

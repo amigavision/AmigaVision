@@ -1,3 +1,3 @@
 - note: Demos configured to be displayed in\nfull screen 16:9 aspect ratio.\n\nOSD > Audio & Video > Aspect Ratio > Full Screen\n\nSome pixel cropping may occur. If you want the\n4:3 versions, use the other listings.
-- Melon-FisherhawkDr: { scale: 6, v_offset: 45 }
-- Spaceballs-Makt: { scale: 6, v_offset: 42 }
+- Melon-FisherhawkDr: { scale: 6, vshift: 45 }
+- Spaceballs-Makt: { scale: 6, vshift: 42 }

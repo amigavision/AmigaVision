@@ -76,7 +76,7 @@ if not warn
         wait 4
         assign WHDSaves: SYS:WHDSaves
       endif
-      setvadjust
+      ags-vadjust
       if exists MiSTer:ags_boot
         cpr MiSTer:ags_boot T:ags_boot MOVE CLONE SILENT
         pickfile f T:ags_boot q c ags-launch ""[]"

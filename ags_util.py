@@ -343,7 +343,8 @@ def read_csv(csv_path, new_db_path):
                "aga" INTEGER,
                "ntsc" INTEGER,
                "scale" INTEGER,
-               "v_offset" INTEGER,
+               "vshift" INTEGER,
+               "hshift" INTEGER,
                "killaga" INTEGER,
                "gamepad" INTEGER,
                "lightgun" INTEGER,
@@ -367,16 +368,16 @@ def read_csv(csv_path, new_db_path):
                PRIMARY KEY("id"));''')
     with open(csv_path, "r") as f:
         dr = csv.DictReader(f, delimiter=";")
-        r = [(l["id"], l["title"], l["title_short"], l["redundant"], l["preferred_version"], l["hardware"], l["aga"], l["ntsc"],
-              l["scale"], l["v_offset"], l["killaga"], l["gamepad"], l["lightgun"], l["note"], l["issues"], l["hack"], l["release_date"],
+        r = [(l["id"], l["title"], l["title_short"], l["redundant"], l["preferred_version"], l["hardware"], l["aga"], l["ntsc"], l["scale"],
+              l["vshift"], l["hshift"], l["killaga"], l["gamepad"], l["lightgun"], l["note"], l["issues"], l["hack"], l["release_date"],
               l["country"], l["language"], l["developer"], l["publisher"], l["players"], l["slave_args"], l["slave_version"],
               l["slave_path"], l["archive_path"], l["category"], l["subcategory"], l["hol_id"], l["lemon_id"]) for l in dr]
         c.executemany('''INSERT INTO titles (
                            id, title, title_short, redundant, preferred_version, hardware, aga, ntsc,
-                           scale, v_offset, killaga, gamepad, lightgun, note, issues, hack, release_date, country, language,
-                           developer, publisher, players, slave_args, slave_version, slave_path, archive_path,
+                           scale, vshift, hshift, killaga, gamepad, lightgun, note, issues, hack, release_date,
+                           country, language, developer, publisher, players, slave_args, slave_version, slave_path, archive_path,
                            category, subcategory, hol_id, lemon_id)
-                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);''', r)
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);''', r)
     conn.commit()
     conn.close()
 

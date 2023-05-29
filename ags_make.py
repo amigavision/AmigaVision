@@ -15,7 +15,7 @@ import ags_query as query
 import ags_util as util
 from ags_strings import strings
 from ags_types import EntryCollection
-from make_vadjust import VADJUST_MAX, VADJUST_MIN
+from make_vadjust import VSHIFT_MAX, VSHIFT_MIN
 
 AGS_INFO_WIDTH = 53
 AGS_LIST_WIDTH = 26
@@ -187,7 +187,7 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
     if isinstance(options, dict):
         if "id" in options or "title_short" in options:
             raise ValueError("make_entry: illegal key(s) in override options ({})".format(str(options)))
-        if "scale" in options or "v_offset" in options or "slave_args" in options:
+        if "scale" in options or "vshift" in options or "hshift" in options or "slave_args" in options:
             has_overrides = True
         entry.update(options)
 
@@ -426,24 +426,26 @@ def make_runscript(entry, template, quiet: bool) -> str:
     if query.get_amiga_whd_dir(entry) is not None or query.entry_is_notwhdl(entry):
         # videomode
         whd_vmode = "NTSC" if util.parse_int(entry.get("ntsc", 0)) > 0 else "PAL"
-        # vadjust scale
+        # scale
         vadjust_scale = util.parse_int(entry.get("scale", 0))
-        vadjust_scale = "S" if util.parse_int(entry.get("ntsc", 0)) == 4 else vadjust_scale
+        # vertical shift
+        vadjust_vshift = util.parse_int(entry.get("vshift", 0))
+        vadjust_vshift = min(max(vadjust_vshift, VSHIFT_MIN), VSHIFT_MAX)
+        # horizontal shift
+        vadjust_hshift = util.parse_int(entry.get("hshift", 0))
+        # jim sachs mode
+        vadjust_sachs = "JS" if util.parse_int(entry.get("ntsc", 0)) == 4 else ""
         if not vadjust_scale: vadjust_scale = 0
-        # vadjust vertical shift
-        vadjust_vofs = util.parse_int(entry.get("v_offset", 0))
-        if not vadjust_vofs: vadjust_vofs = 0
-        vadjust_vofs = min(max(vadjust_vofs, VADJUST_MIN), VADJUST_MAX)
 
         if query.entry_is_notwhdl(entry):
             runfile_source_path = query.get_archive_path(entry).replace(".lha", ".run")
             if util.is_file(runfile_source_path):
                 script = "ags-notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
                 script += "set{}\n".format(whd_vmode.lower())
-                script += "setvadjust {} {}\n".format(vadjust_vofs, vadjust_scale)
+                script += "ags-vadjust s={} v={} h={} {}\n".format(vadjust_scale, vadjust_vshift, vadjust_hshift, vadjust_sachs)
                 with open(runfile_source_path, 'r') as f: script += f.read()
                 script += "setvmode $AGSVMode\n"
-                script += "setvadjust\n"
+                script += "ags-vadjust\n"
                 script += "ags-notify\n"
         else:
             whd_entrypath = query.get_amiga_whd_dir(entry)
@@ -462,8 +464,10 @@ def make_runscript(entry, template, quiet: bool) -> str:
                     "QUIT_KEY": whd_qtkey,
                     "SPLASH_DELAY": whd_spdly,
                     "VIDEO_MODE": whd_vmode,
-                    "VADJUST_VOFS": vadjust_vofs,
-                    "VADJUST_SCALE": vadjust_scale
+                    "VADJUST_SCALE": vadjust_scale,
+                    "VADJUST_VSHIFT": vadjust_vshift,
+                    "VADJUST_HSHIFT": vadjust_hshift,
+                    "VADJUST_SACHS": vadjust_sachs
                 })
     else:
         script = "echo \"Title not available.\"" + "\n" + "wait 2"

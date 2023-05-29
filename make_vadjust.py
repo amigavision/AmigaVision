@@ -53,8 +53,8 @@ import struct
 import sys
 
 # -----------------------------------------------------------------------------
-VADJUST_MIN = -16
-VADJUST_MAX = 96
+VSHIFT_MIN = -16
+VSHIFT_MAX = 96
 
 VADJUST_LEN = 1024
 

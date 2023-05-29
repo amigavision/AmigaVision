@@ -139,9 +139,9 @@
     - BuggyBoy
     - Cadaver
     - CaliforniaGames
-    - CannonFodder: { scale: 5, v_offset: 11 }
-    - CannonFodder2: { scale: 5, v_offset: 11 }
-    - CannonSoccer: { scale: 5, v_offset: 11 }
+    - CannonFodder: { scale: 5, vshift: 11 }
+    - CannonFodder2: { scale: 5, vshift: 11 }
+    - CannonSoccer: { scale: 5, vshift: 11 }
     - CastleMaster
     - CastleMaster2
     - Centurion

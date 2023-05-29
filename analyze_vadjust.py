@@ -46,19 +46,19 @@ def analyze(path):
     height = bottom - top
     pal5_margin = (PAL5_VIEWPORT_HEIGHT - height) >> 1
     pal4_margin = (PAL4_VIEWPORT_HEIGHT - height) >> 1
-    pal5_vofs = top - PAL5_FUDGE
-    pal4_vofs = top - PAL4_FUDGE
+    pal5_vshift = top - PAL5_FUDGE
+    pal4_vshift = top - PAL4_FUDGE
 
     stats = {
         "top": top, "bottom": bottom, "height": height,
-        "pal5_margin": pal5_margin, "pal5_vofs": pal5_vofs,
-        "pal4_margin": pal4_margin, "pal4_vofs": pal4_vofs
+        "pal5_margin": pal5_margin, "pal5_vshift": pal5_vshift,
+        "pal4_margin": pal4_margin, "pal4_vshift": pal4_vshift
     }
 
     if pal5_margin < 0:
-        r = "mode: pal4, v_offset: {}".format(pal4_vofs)
+        r = "mode: pal4, vshift: {}".format(pal4_vshift)
     else:
-        r = "mode: pal5, v_offset: {}".format(pal5_vofs)
+        r = "mode: pal5, vshift: {}".format(pal5_vshift)
 
     return (stats,r)
 

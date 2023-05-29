@@ -57,10 +57,10 @@
 - Test:
   - note: Test for builder options
   - EMotion: { disp_name: "[2P] E-Motion" }
-  - Andromeda-Rule30: { scale: 6, v_offset: 48 }
+  - Andromeda-Rule30: { scale: 6, vshift: 48 }
   - Bacteria
   - BaygonAGA: Melon!
-  - BrunosMusicBox3: { v_offset: 4, image: { op: "tx", txt: "BRUNO", size: 90 } }
+  - BrunosMusicBox3: { vshift: 4, image: { op: "tx", txt: "BRUNO", size: 90 } }
   - Coma: { note: COMA! }
   - Nested:
     - How2SkinACat
