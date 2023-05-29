@@ -1,4 +1,4 @@
-ags_cd N/RAW02
+ags-cd N/RAW02
 assign >NIL: R.A.W: ""
 killaga >NIL: rawintro
 raw >NIL:

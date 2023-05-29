@@ -1,4 +1,4 @@
-ags_cd N/Poing5
+ags-cd N/Poing5
 IF NOT EXISTS WHDSaves:Poing5
   makedir WHDSaves:Poing5
   copy poing5.levels WHDSaves:Poing5 QUIET

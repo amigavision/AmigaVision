@@ -1,7 +1,7 @@
-ags_cd N/Rotator
+ags-cd N/Rotator
 IF EXISTS WHDSaves:Rotator
   copy WHDSaves:Rotator/#?OPTIONS#? "" ALL CLONE QUIET
 ENDIF
 ROTATOR3 >NIL:
-ags_cd N/Rotator
+ags-cd N/Rotator
 copy #?OPTIONS#? WHDSaves:Rotator ALL CLONE QUIET

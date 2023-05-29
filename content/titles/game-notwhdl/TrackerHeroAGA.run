@@ -1,11 +1,11 @@
-ags_cd N/TrackerHeroAGA
+ags-cd N/TrackerHeroAGA
 IF EXISTS WHDSaves:TrackerHero
   cd datas
   copy WHDSaves:TrackerHero/#? "" ALL CLONE QUIET
   cd /
 ENDIF
 TrackerHeroAGA >NIL:
-ags_cd N/TrackerHeroAGA
+ags-cd N/TrackerHeroAGA
 IF EXISTS datas
   copy datas/#? WHDSaves:TrackerHero ALL CLONE QUIET
 ENDIF

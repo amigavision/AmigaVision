@@ -1,2 +1,2 @@
-ags_cd N/ROM08
+ags-cd N/ROM08
 wbrun >NIL: rOM_8 SYNC

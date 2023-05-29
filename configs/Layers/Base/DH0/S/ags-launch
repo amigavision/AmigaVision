@@ -4,7 +4,7 @@ if "<TITLE$_NONE_>" EQ "_NONE_"
   skip DONE
 endif
 if "<TITLE>" EQ "any"
-  pickfile d AGS:RunQuiet/Meta q c execute ags_launch []
+  pickfile d AGS:RunQuiet/Meta q c execute ags-launch []
   skip DONE
 endif
 if "<TITLE>" EQ "any_game"

@@ -1,10 +1,10 @@
-ags_cd N/ChampMan93
+ags-cd N/ChampMan93
 IF EXISTS WHDSaves:ChampMan93
   copy WHDSaves:ChampMan93/#? "" ALL QUIET
   delete >NIL: WHDSaves:ChampMan93 ALL FORCE
 ENDIF
 ChampMan93 >NIL:
-ags_cd N/ChampMan93
+ags-cd N/ChampMan93
 wait 4
 echo ""
 ask "Thank you for playing! Press enter to save data and return..."

@@ -1,9 +1,9 @@
-ags_cd N/Poing2
+ags-cd N/Poing2
 IF EXISTS WHDSaves:Poing2
   copy WHDSaves:Poing2/poing2.scores S: QUIET
 ENDIF
 Poing22 >NIL:
-ags_cd N/Poing2
+ags-cd N/Poing2
 IF EXISTS S:poing2.scores
   copy S:poing2.scores#? WHDSaves:Poing2 ALL QUIET
   delete S:poing2.scores QUIET

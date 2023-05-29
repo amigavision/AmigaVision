@@ -1,7 +1,7 @@
-ags_cd N/KiwiTale
+ags-cd N/KiwiTale
 IF EXISTS WHDSaves:KiwiTale
   copy WHDSaves:KiwiTale/options.#? "" ALL QUIET
 ENDIF
 kiwi >NIL:
-ags_cd N/KiwiTale
+ags-cd N/KiwiTale
 copy options.#? WHDSaves:KiwiTale ALL QUIET

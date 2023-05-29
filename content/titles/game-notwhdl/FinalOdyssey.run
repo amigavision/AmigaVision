@@ -1,4 +1,4 @@
-ags_cd N/FinalOdyssey
+ags-cd N/FinalOdyssey
 IF EXISTS WHDSaves:FinalOdyssey
   copy WHDSaves:FinalOdyssey/V-FO#? S: ALL CLONE QUIET
 ENDIF

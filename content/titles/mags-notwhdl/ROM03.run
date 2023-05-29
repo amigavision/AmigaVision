@@ -1,4 +1,4 @@
-ags_cd N/ROM03
+ags-cd N/ROM03
 assign >NIL: ROM3a: ""
 ROM3_Intro >NIL:
 wbrun >NIL: ROM_3 SYNC

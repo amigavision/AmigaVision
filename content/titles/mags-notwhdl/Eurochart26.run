@@ -1,4 +1,4 @@
-ags_cd N/Eurochart26
+ags-cd N/Eurochart26
 assign >NIL: EC26a: ""
 assign >NIL: EC26b: ""
 EC26Intro >NIL:

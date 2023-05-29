@@ -1,5 +1,5 @@
-ags_notify TITLE="{{TITLE}}"
-ags_cd "{{PATH}}"
+ags-notify TITLE="{{TITLE}}"
+ags-cd "{{PATH}}"
 IF NOT EXISTS ENV:whdlspdly
   echo 200 >ENV:whdlspdly
 ENDIF
@@ -13,4 +13,4 @@ ELSE
   whdload >NIL: "{{SLAVE}}" {{VIDEO_MODE}} {{CUST_ARGS}} SplashDelay={{SPLASH_DELAY}} {{QUIT_KEY}}
   setvadjust
 ENDIF
-ags_notify
+ags-notify

@@ -1,8 +1,6 @@
-SET uname `ags_uname`
-
 assign >NIL: EXISTS MiSTer:
 if WARN
-  if $uname EQ "mister"
+  if `ags-uname` EQ "mister"
     mount MR0:
   else
     makedir RAM:MiSTer >NIL:

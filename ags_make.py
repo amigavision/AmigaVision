@@ -438,13 +438,13 @@ def make_runscript(entry, template, quiet: bool) -> str:
         if query.entry_is_notwhdl(entry):
             runfile_source_path = query.get_archive_path(entry).replace(".lha", ".run")
             if util.is_file(runfile_source_path):
-                script = "ags_notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
+                script = "ags-notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
                 script += "set{}\n".format(whd_vmode.lower())
                 script += "setvadjust {} {}\n".format(vadjust_vofs, vadjust_scale)
                 with open(runfile_source_path, 'r') as f: script += f.read()
                 script += "setvmode $AGSVMode\n"
                 script += "setvadjust\n"
-                script += "ags_notify\n"
+                script += "ags-notify\n"
         else:
             whd_entrypath = query.get_amiga_whd_dir(entry)
             if whd_entrypath:

@@ -1,4 +1,4 @@
-ags_cd N/Poing6
+ags-cd N/Poing6
 IF NOT EXISTS WHDSaves:Poing6
   makedir WHDSaves:Poing6
   copy default.levels WHDSaves:Poing6 QUIET

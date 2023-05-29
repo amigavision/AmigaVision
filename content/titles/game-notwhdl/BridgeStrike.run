@@ -1,7 +1,7 @@
-ags_cd N/BridgeStrike
+ags-cd N/BridgeStrike
 IF EXISTS WHDSaves:BridgeStrike
   copy WHDSaves:BridgeStrike/#?.dat "" ALL QUIET
 ENDIF
 bs >NIL:
-ags_cd N/BridgeStrike
+ags-cd N/BridgeStrike
 copy #?.dat WHDSaves:BridgeStrike ALL QUIET

@@ -1,0 +1,13 @@
+.K EC
+
+if <EC> EQ "evo"
+  path Dev:E/Bin REMOVE
+  path Dev:E-VO/Bin
+  assign EMODULES: REMOVE
+  assign EMODULES: Dev:E-VO/Modules
+else
+  path Dev:E-VO/Bin REMOVE
+  path Dev:E/Bin
+  assign EMODULES: REMOVE
+  assign EMODULES: Dev:E/Modules
+endif

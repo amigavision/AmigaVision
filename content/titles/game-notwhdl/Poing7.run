@@ -1,4 +1,4 @@
-ags_cd N/Poing7
+ags-cd N/Poing7
 IF EXISTS WHDSaves:Poing714
   copy WHDSaves:Poing714/#?.levels "" ALL QUIET
   copy WHDSaves:Poing714/#?.scores "" ALL QUIET
@@ -6,6 +6,6 @@ ENDIF
 assign >NIL: POING: ""
 poing >NIL:
 assign >NIL: POING: REMOVE
-ags_cd N/Poing7
+ags-cd N/Poing7
 copy #?.levels WHDSaves:Poing714 ALL QUIET
 copy #?.scores WHDSaves:Poing714 ALL QUIET
