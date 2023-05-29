@@ -1,0 +1,15 @@
+demo--hardwired--hardwired
+image corruption at jellycube
+
+demo--hittheroad--hittheroad
+doesn't get past title
+
+demo--proximahopscotch--proximahopscotch
+no music and lots of gfx corruption
+
+demo--megademohumanoids--megademohumanoids
+no control, can't start demo parts
+
+demo-notwhdl--jormas-hapycarva72
+appears at bottom of list, happycarva74 near top
+
