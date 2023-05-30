@@ -1,0 +1,8 @@
+ags-cd N/SkillGrid
+IF EXISTS WHDSaves:SkillGrid/h
+  copy WHDSaves:SkillGrid/h data QUIET
+ENDIF
+SkillGrid >NIL:
+IF EXISTS data/h
+  copy data/h#? WHDSaves:SkillGrid ALL CLONE QUIET
+ENDIF
