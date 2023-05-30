@@ -5,10 +5,13 @@ default:
 	@echo No default action
 
 env:
+	-@pipenv --rm
+	-@pipenv --clear
 	@pipenv install
 
 env-rm:
-	@pipenv --rm
+	-@pipenv -v --rm
+	-@pipenv -v --clear
 
 index:
 	@pipenv run ./ags_index.py -v
