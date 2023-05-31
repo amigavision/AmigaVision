@@ -1,0 +1,15 @@
+assign >NIL: EXISTS MiSTer:
+if WARN
+  makedir RAM:MiSTer >NIL:
+  assign MiSTer: RAM:MiSTer
+  skip DONE
+ ndif
+
+assign >NIL: EXISTS MiSTer:
+if NOT WARN
+  if NOT EXISTS MiSTer:Disk.info
+    copy >NIL: SYS:Prefs/Icons/MiSTer/Disk.info MiSTer:
+  endif
+endif
+
+LAB DONE
