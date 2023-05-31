@@ -1,5 +1,6 @@
 - Spotlight:
   - note: More great or interesting demos, sorted by year.
+  - image: { ops: { op: "pi", path: "top/spotlight.png" }, size: [320, 128], scale: [1, 1] }
   - "1993":
     - image: { op: "tx", txt: "’93", size: 190 }
     - Arte
