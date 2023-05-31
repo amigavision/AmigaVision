@@ -1,0 +1,160 @@
+- Spotlight:
+  - note: A selection of great or interesting demos sorted by year.
+  - "1993":
+    - image: { op: "tx", txt: "’93", size: 190 }
+    - Arte
+    - Balance-CuttingEdge
+    - Demo--A.S.S
+    - Demo--Aquarium
+    - Demo--Groovy
+    - Demo--RinkADink--RinkADink
+    - DemonDownload
+    - DesertDream
+    - EmptyheadAGA
+    - Extension
+    - FullmoonAGA
+    - How2SkinACat
+    - Interference
+    - LEGO-TheReal40K
+    - Melon-GuruMeditation
+    - MinaOmistanAGA
+    - NotAGAin
+    - NumbAGA
+    - ProSIAK
+    - Rednex-Revival
+    - SozzledSomersault
+    - Stellar-Bananamen
+    - TechnologicalDeath
+    - TerminalFuckup
+    - VirtualDreams-ChaosLand
+
+  - "1994":
+    - image: { op: "tx", txt: "’94", size: 190 }
+    - Cryptoburners-BrainState
+    - Darkroom
+    - Demo--Rampage
+    - Demo--RealAGA
+    - Demo--SAGA
+    - FridayAtEightAGA
+    - Gevalia
+    - JulietCase-CCCP
+    - Melon-AcidTrip
+    - Melon-Booo2
+    - Movement-RastaBars
+    - Nexus7AGA
+    - Roots2AGA
+    - Sequential
+
+  - "1995":
+    - image: { op: "tx", txt: "’95", size: 190 }
+    - Artwork-Dawn
+    - Axis-Headcase
+    - Axis-Siesta
+    - BatmanVuelve
+    - BaygonAGA
+    - Drugstore
+    - LoveAGA
+    - PlanetMAGA
+
+  - "1996":
+    - image: { op: "tx", txt: "’96", size: 190 }
+    - Rednex-DMA
+    - Movement-Bubblegum
+    - Sonik-Pure
+
+  - "1997":
+    - image: { op: "tx", txt: "’97", size: 190 }
+    - Jormas-MonoMeno66
+
+  - "1998":
+    - image: { op: "tx", txt: "’98", size: 190 }
+    - ElectronsAtWork
+
+  - "2004":
+    - image: { op: "tx", txt: "’04", size: 190 }
+    - Jormas-MajorRelease
+
+  - "2006":
+    - image: { op: "tx", txt: "’06", size: 190 }
+    - RNO-Fruitcake
+    - UpRough-ShadowFighter
+
+  - "2009":
+    - image: { op: "tx", txt: "’09", size: 190 }
+    - Jormas-MeganeRellu
+
+  - "2012":
+    - image: { op: "tx", txt: "’12", size: 190 }
+    - RNO&Ghostown-BoogieTown
+    - ScoopexUTSonix
+
+  - "2013":
+    - image: { op: "tx", txt: "’13", size: 190 }
+    - RinkADinkRedux
+    - Spaceballs-Straff
+    - UpRough-15YearsOfFame
+
+  - "2014":
+    - image: { op: "tx", txt: "’14", size: 190 }
+    - MoodsPlateau-SolveEtCoagula
+    - Spaceballs-Emperor
+
+  - "2015":
+    - image: { op: "tx", txt: "’15", size: 190 }
+    - Dekadence-Eighteen
+    - Ghostown-SushiBoyz
+    - Interparallactic
+    - Jormas-HapyCarva72
+    - Jormas-KayraSoiro
+
+  - "2016":
+    - image: { op: "tx", txt: "’16", size: 190 }
+    - BombDreamdealersSanity-E255
+    - Pacific-Koobz
+
+  - "2017":
+    - image: { op: "tx", txt: "’17", size: 190 }
+    - Jormas-KanaalinArvoitus
+    - Lemon+TDL-BlastFromThePast
+    - Pacific-Monomateria
+    - Spaceballs-Makt
+
+  - "2018":
+    - image: { op: "tx", txt: "’18", size: 190 }
+    - Lemon+TDL-TheFall
+    - Lemon-Lemonade
+    - Spaceballs-Peek
+
+  - "2019":
+    - image: { op: "tx", txt: "’19", size: 190 }
+    - Abyss-Coda
+    - Deadliners-Five
+    - DHS-CopperKaahBaahYaah
+    - Offence-AHymnToHipparchus
+    - TEK-FutureOfLimits
+
+  - "2020":
+    - image: { op: "tx", txt: "’20", size: 190 }
+    - Hologon
+    - Lemon-Colombia
+    - Offence-TowardsDarkerTimes
+    - Retream-TheCure
+
+  - "2021":
+    - image: { op: "tx", txt: "’21", size: 190 }
+    - Andromeda-Rule30
+    - Melon-Cortez
+    - Melon-FisherhawkDr
+
+  - "2022":
+    - image: { op: "tx", txt: "’22", size: 190 }
+    - AbyssBitmapRasters
+    - AbyssDone
+    - BatmanGroup-Posadas2022
+    - FFPUnicodeAttac
+    - Fnuque-HexJunkie
+    - Koney-Ketamuskolar
+
+  - "2023":
+    - image: { op: "tx", txt: "’23", size: 190 }
+    - Ghostown-Electric
