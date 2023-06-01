@@ -5002,3 +5002,7 @@ game--xeviousaga--xeviousaga;Xevious;Xevious;;;AGA;1;0;;;;;;;;;Arcade to Amiga p
 game--lcddreams--lcddreams;LCD Dreams;LCD Dreams;;;OCS;;0;4;;;;;;;;;1992;;English;Solstice;Solstice;1;;v1.0;LCDDreams/LCDDreams.slave;game/L/LCDDreams_v1.0.lha;Game;;5557;4783
 demo-notwhdl--ghostown-electric;Electric Lifeforms;Electric Lifeforms;;;OCS;;0;;;;;;;;;;2023;Poland;English;;Ghostown;1;;;;demo-notwhdl/Ghostown-Electric.lha;Demo;Intro 64K;;
 game-notwhdl--skillgrid;SkillGrid;SkillGrid;;;AGA;1;;;;;;;;;;;2019;;English;Retream;RGCD;1;;;;game-notwhdl/SkillGrid.lha;Game;;6525;4382
+game--rickdangerousaga--scorpion_loader;Rick Dangerous (Enhanced);Rick Dangerous (AGA);;;AGA;1;0;;;;;;;;;;2023;;English;Z-team;Z-team;1;;v1.0;RickDangerousAGA/scorpion_loader.slave;game/_hacks/RickDangerousAGA.lha;Game;;6516;4875
+game-notwhdl--lumberjackrevision;Lumberjack Revision;Lumberjack Revision;;;OCS;;0;;;;;;;;;;2020;;English;Cobe;CDLabel;1;;;;game-notwhdl/LumberjackRevision.lha;Game;;-1;4113
+game-notwhdl--pong4b;PoNG4b;PoNG4b;;;OCS;;0;;;;;;;;;;2020;;English;Cobe;CDLabel;4;;;;game-notwhdl/PoNG4b.lha;Game;;-1;-1
+game--tapper--tapper;Tapper;Tapper;;;OCS;;0;;;;;;;;;Arcade to Amiga port by Old Bob;2023;;English;Old Bob;Old Bob;1;;v0.1;Tapper/Tapper.slave;game/_hacks/Tapper_v0.1.lha;Game;;-2;-2
