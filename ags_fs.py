@@ -38,7 +38,7 @@ def build_pfs(hdf_path, clone_path, verbose):
         print(" > calculating partition sizes...")
 
     num_buffers = 128
-    heads = 16
+    heads = 4
     sectors = 63
     cylinder_size = SECTOR_SIZE * heads * sectors
     num_cyls_rdb = 1
