@@ -1,6 +1,7 @@
-- All Time Favorites:
+- Hall of Fame:
+  - rank: 1
   - note: Seminal, or otherwise significant, releases according to 1.000.000 BOYS aka Megaboys.
-  - image: { ops: { op: "pi", path: "top/favorites.png" }, size: [320, 128], scale: [1, 1] }
+  - image: { ops: { op: "pi", path: "top/hall_of_fame.png" }, size: [320, 128], scale: [1, 1] }
   - 3DDemo2
   - Abyss-Coda
   - AbyssDone

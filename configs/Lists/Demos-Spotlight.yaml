@@ -1,19 +1,69 @@
 - Spotlight:
+  - rank: 2
   - note: More great or interesting demos, sorted by year.
   - image: { ops: { op: "pi", path: "top/spotlight.png" }, size: [320, 128], scale: [1, 1] }
+  - "1990":
+    - image: { op: "tx", txt: "’90", size: 190 }
+    - Animotion
+    - CeBIT90
+    - Coma
+    - CopperMaster
+    - FollowMe
+    - Highway1930
+    - MegademoBudbrain
+    - Megademo2Budbrain
+    - ObviousDisaster
+
+  - "1991":
+    - image: { op: "tx", txt: "’91", size: 190 }
+    - Analogia
+    - DecayingParadise
+    - Elysium
+    - Enigma
+    - GlobalTrash
+    - GuardianDragon
+    - Hardwired
+    - Joyride
+    - OurDefOfBoombastic
+    - Overdose
+    - PlasticPassion
+    - SeeingIsBelieving
+    - VectorDemoTristanLorach
+    - VoyageRazor1911
+
+  - "1992":
+    - image: { op: "tx", txt: "’92", size: 190 }
+    - 3DDemo2
+    - DayOfReckoning
+    - DOS
+    - GuardianDragon2
+    - Hallucinations&Dreams
+    - HumanTarget
+    - InTheKitchen
+    - JesusOnEs
+    - KrestMassLeftovers
+    - MaximumVelocity
+    - PointBlank
+    - Punisher
+    - SOS
+    - SoundVision
+    - Stateline
+    - StateOfTheArt
+    - WickedSensation
+    - WorldOfCommodore
+
   - "1993":
     - image: { op: "tx", txt: "’93", size: 190 }
+    - A.S.S
+    - Aquarium
     - Arte
     - Balance-CuttingEdge
-    - Demo--A.S.S
-    - Demo--Aquarium
-    - Demo--Groovy
-    - Demo--RinkADink--RinkADink
     - DemonDownload
     - DesertDream
     - EmptyheadAGA
     - Extension
     - FullmoonAGA
+    - Groovy
     - How2SkinACat
     - Interference
     - LEGO-TheReal40K
@@ -23,6 +73,7 @@
     - NumbAGA
     - ProSIAK
     - Rednex-Revival
+    - RinkADink
     - SozzledSomersault
     - Stellar-Bananamen
     - TechnologicalDeath
@@ -34,8 +85,6 @@
     - Cryptoburners-BrainState
     - Darkroom
     - Demo--Rampage
-    - Demo--RealAGA
-    - Demo--SAGA
     - FridayAtEightAGA
     - Gevalia
     - JulietCase-CCCP
@@ -43,7 +92,9 @@
     - Melon-Booo2
     - Movement-RastaBars
     - Nexus7AGA
+    - RealAGA
     - Roots2AGA
+    - SAGA
     - Sequential
 
   - "1995":
