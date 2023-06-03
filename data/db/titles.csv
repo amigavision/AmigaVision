@@ -803,7 +803,7 @@ demo--worldofnoise1--worldofnoise1;World of Noise #1;World of Noise 1;;;OCS;;0;;
 demo--waterprooffixed--waterprooffixed;Water Proof;Water Proof;;;OCS;;0;;;;;;;;;;1990;Denmark, Sweden;English;;Rebels;1;;v1.02;WaterproofFixed/WaterproofFixed.slave;demo/W/Waterproof_v1.02_Fixed_Rebels.lha;Demo;Demo;;
 demo--worldswave--worldswave;World's Wave;World's Wave;;;OCS;;0;;;;;;;;;;1988;Austria;English;;Subway;1;;v1.0;WorldsWave/WorldsWave.Slave;demo/W/WorldsWave_v1.0_Subway.lha;Demo;Music Disk;;
 demo--wavesound--wavesound;Wave Sound;Wave Sound;;;OCS;;0;;;;;;;;;;1993;Poland;English;;Appendix;1;;v1.0;WaveSound/WaveSound.Slave;demo/W/WaveSound_v1.0_Appendix.lha;Demo;Music Disk;;
-demo--waterproof--waterproof;Water Proof;Water Proof;1;;OCS;;0;;;;;;;;;;1990;Denmark, Sweden;English;;Rebels;1;;v1.02;Waterproof/Waterproof.slave;demo/W/Waterproof_v1.02_Rebels.lha;Demo;Demo;;
+demo--waterproof--waterproof;Water Proof;Water Proof;1;demo--waterprooffixed--waterprooffixed;OCS;;0;;;;;;;;;;1990;Denmark, Sweden;English;;Rebels;1;;v1.02;Waterproof/Waterproof.slave;demo/W/Waterproof_v1.02_Rebels.lha;Demo;Demo;;
 demo--wickedsensation--wickedsensation;Wicked Sensation;Wicked Sensation;;;OCS;;0;;;;;;;;;;1992;Germany;English;;Masque, TRSI;1;;v1.0;WickedSensation/WickedSensation.Slave;demo/W/WickedSensation_v1.0_Tristar&RedSectorInc.lha;Demo;Demo;;
 demo--worldswave4--worldswave4;World's Wave IV;World's Wave IV;;;OCS;;0;;;;;;;;;;1989;Austria;English;;Subway;1;;v1.0;WorldsWave4/WorldsWave4.Slave;demo/W/WorldsWave4_v1.0_Subway.lha;Demo;Music Disk;;
 demo--wewillsmashyou--wewillsmashyou;We Will Smash You;We Will Smash You;;;OCS;;0;;;;;;;;;;1994;Poland;English;;TRSI;1;;v1.0;WeWillSmashYou/WeWillSmashYou.Slave;demo/W/WeWillSmashYou_v1.0_Tristar&RedSectorInc.lha;Demo;Demo;;

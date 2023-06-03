@@ -2,6 +2,20 @@
   - rank: 2
   - note: More great or interesting demos, sorted by year.
   - image: { ops: { op: "pi", path: "top/spotlight.png" }, size: [320, 128], scale: [1, 1] }
+  - "1988":
+    - image: { op: "tx", txt: "’88", size: 190 }
+    - Megademo2Northstar
+    - MegademoNorthstar
+    - MegaloDemos
+
+  - "1989":
+    - image: { op: "tx", txt: "’89", size: 190 }
+    - MegademoRedSectorInc
+    - Megademo7Kefrens
+    - MegademoJoy&MGf&TJC
+    - Megademo3NSFLT
+    - MegademoPhenomena
+
   - "1990":
     - image: { op: "tx", txt: "’90", size: 190 }
     - Animotion
@@ -10,9 +24,16 @@
     - CopperMaster
     - FollowMe
     - Highway1930
-    - MegademoBudbrain
     - Megademo2Budbrain
+    - Megademo2Rebels
+    - Megademo8Kefrens
+    - MegademoBudbrain
+    - MegademoHumanoids
+    - MegademoIntuition
+    - MentalHangover
     - ObviousDisaster
+    - TropicalSunset
+    - WaterProof
 
   - "1991":
     - image: { op: "tx", txt: "’91", size: 190 }
@@ -43,6 +64,7 @@
     - JesusOnEs
     - KrestMassLeftovers
     - MaximumVelocity
+    - Melon-Tetris
     - PointBlank
     - Punisher
     - SOS
