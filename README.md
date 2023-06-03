@@ -3,7 +3,7 @@
 Amiga HDF image builder using WHDL or custom installs, using the [Arcade Game Selector] launcher as a front-end.
 
 ## Dependencies
-- python@3.9
+- python@3.11
 - [pipenv](https://pipenv.readthedocs.io)
 - imagemagick
 - make
