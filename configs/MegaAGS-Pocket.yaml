@@ -20,3 +20,7 @@
   - note: A sample of demo scene releases.
   - !include Lists/Demos.yaml
   - !include Lists/Demos-Spotlight.yaml
+
+- PocketAdditions:
+  - hidden: true
+  - AdventuresOfWillyBeamish
