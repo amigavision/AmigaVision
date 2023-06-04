@@ -72,7 +72,7 @@ def make_image(path, options):
 
 def make_tree(
         db: Connection, collection: EntryCollection, ags_path, node,
-        path=[], template=None
+        path=[], template=None, hidden=False
     ):
     if isinstance(node, list):
         entries = []
@@ -89,7 +89,7 @@ def make_tree(
             if isinstance(item, list):
                 for e in item:
                     if isinstance(e, dict):
-                        make_tree(db, collection, ags_path, [e], path, template=template)
+                        make_tree(db, collection, ags_path, [e], path, template=template, hidden=hidden)
                     else:
                         raise ValueError("make_tree: list error ({})".format(e))
             # parse metadata or subtree
@@ -108,30 +108,35 @@ def make_tree(
                         entries += [(key, value)]
                     else:
                         # item is a subtree
-                        make_tree(db, collection, ags_path, value, path + [key], template=template)
-        make_entries(db, collection, ags_path, entries, path, note=note, image=image, ordering=ordering, rank=rank, template=template)
+                        hidden = hidden or item.get("hidden", False)
+                        make_tree(db, collection, ags_path, value, path + [key], template=template, hidden=hidden)
+        make_entries(db, collection, ags_path, entries, path, note=note, image=image, ordering=ordering, rank=rank, template=template, hidden=hidden)
 
 # -----------------------------------------------------------------------------
 # create entries from list
 
-def make_entries(db: Connection, collection: EntryCollection, ags_path, entries, path, note=None, image=None, ordering=None, rank=None, template=None):
+def make_entries(
+        db: Connection, collection: EntryCollection, ags_path, entries, path,
+        note=None, image=None, ordering=None, rank=None, template=None, hidden=False
+    ):
     # make dir
     base_path = ags_path
     if path:
         for d in path:
             base_path = util.path(base_path, d[:26].strip() + ".ags")
-    util.make_dir(base_path)
+    if not hidden: util.make_dir(base_path)
 
     # set dir sort rank
     if rank is not None:
         collection.path_sort_rank[base_path] = rank
 
     # make note, image
-    if note:
-        note = wrap_note(note)
-        open(base_path[:-4] + ".txt", mode="w", encoding="latin-1").write(note)
-    if isinstance(image, (dict, list)):
-        make_image(base_path[:-4] + ".iff", image)
+    if not hidden:
+        if note:
+            note = wrap_note(note)
+            open(base_path[:-4] + ".txt", mode="w", encoding="latin-1").write(note)
+        if isinstance(image, (dict, list)):
+            make_image(base_path[:-4] + ".iff", image)
 
     # collect titles
     pos = 0
@@ -162,6 +167,8 @@ def make_entries(db: Connection, collection: EntryCollection, ags_path, entries,
             sort_rank = pos
         elif ordering == "release" and entry and "release_date" in entry:
             sort_rank = util.parse_date_int(entry["release_date"], sortable=True)
+
+        if hidden: return
 
         make_entry(collection, ags_path, entry, base_path, rank=rank, sort_rank=sort_rank, options=options, template=template)
     return

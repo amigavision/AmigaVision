@@ -16,6 +16,11 @@
 - Current:
   - image: [{ op: "tx", txt: "ASS" }, { op: "tx", txt: "P*SS", size: 100, color: "#f0f" }]
   - game--croisierepouruncadavrefr--croisierepouruncadavrefr
+  - More:
+    - hidden: true
+    - Mercenary3
+    - Most:
+      - Mercenary
 
 - Simple:
   - Agony
