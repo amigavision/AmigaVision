@@ -1,0 +1,9 @@
+demo--ice--ice
+Crashes at 2nd demo part (box)
+
+demo--inspirationisgone--inspirationisgone
+Some corrupt text in intro
+
+demo--megademointuition--megademointuition
+crashes after bobs
+
