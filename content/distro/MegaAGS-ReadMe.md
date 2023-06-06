@@ -12,18 +12,19 @@ Its aim is to balance preservation of the historical and current output of the [
 2. [Save Files](#save-files)
 3. [Setup for Amiga hardware](#setup-for-amiga-hardware)
 4. [Setup for emulators](#setup-for-emulators)
-5. [Setup for MiSTer](#setup-for-mister)
-6. [Optional Setups](#optional-setups)
-7. [MiSTer: Gamepad & Joystick Mapping](#mister-gamepad--joystick-mapping)
-8. [MiSTer: Video Modes](#mister-video-modes)
-9. [MiSTer: CPU Performance Notes](#mister-cpu-performance-notes)
-10. [Workbench](#workbench)
-11. [Non-working Games](#non-working-games)
-12. [Custom Scripts](#custom-scripts)
-13. [Bug Reports & Feature Requests](#bug-reports--feature-requests)
-14. [Credits](#credits)
-15. [Troubleshooting](#troubleshooting)
-16. [Frequently Asked Questions](#frequently-asked-questions)
+5. [Setup for Pocket](#setup-for-pocket)
+6. [Setup for MiSTer](#setup-for-mister)
+7. [Optional Setups](#optional-setups)
+8. [MiSTer: Gamepad & Joystick Mapping](#mister-gamepad--joystick-mapping)
+9. [MiSTer: Video Modes](#mister-video-modes)
+10. [MiSTer: CPU Performance Notes](#mister-cpu-performance-notes)
+11. [Workbench](#workbench)
+12. [Non-working Games](#non-working-games)
+13. [Custom Scripts](#custom-scripts)
+14. [Bug Reports & Feature Requests](#bug-reports--feature-requests)
+15. [Credits](#credits)
+16. [Troubleshooting](#troubleshooting)
+17. [Frequently Asked Questions](#frequently-asked-questions)
 
 ## Features
 
@@ -94,6 +95,24 @@ We recommend — and include a setup for — the [FS-UAE] Amiga emulator, which 
 3. Double-click the `MegaAGS.fs-uae` file to run the setup with the preferred settings. You can of course also add a shortcut to this file to your Windows start menu, or as an alias in the Mac's Applications folder.
 
 For any additional configuration or customizations, consult the FS-UAE documentation.
+
+## Setup for Pocket
+
+AmigaVision also has a version for the handheld [Analogue Pocket] FPGA device.
+
+Make sure you use the "Pocket" edition of AmigaVision, since we have had to make some Pocket-specific changes.
+
+* Download the latest version of the [Amiga Pocket Core] and put it on your device.
+* Copy the included files in the AmigaVision Pocket setup to the `/Assets/amiga/common` directory on your Pocket SD card.
+* Start the Amiga core.
+
+Controls:
+
+* Left/Right triggers are Left/Right mouse buttons
+* `Select` button brings up the on-screen keyboard, hit DEL to quit a game
+* `Start` button toggles mouse emulation mode
+* `A` button selects an entry in the launcher
+* `B` button goes back to the parent category in the launcher
 
 ## Setup for MiSTer
 
@@ -409,6 +428,8 @@ Audio & Video:
 [Balena Etcher]:https://www.balena.io/etcher
 [Win32 Disk Imager]:https://win32diskimager.org
 [FS-UAE]:https://fs-uae.net
+[Analogue Pocket]:https://analogue.co/pocket
+[Amiga Pocket Core]:https://github.com/Mazamars312/Analogue-Amiga/releases
 
 [David Lindecrantz]:https://github.com/Optiroc
 [Alex Limi]:https://limi.dev
