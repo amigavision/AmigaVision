@@ -1,3 +1,0 @@
-delete ENV:dsblvadj >NIL:
-delete ENVARC:dsblvadj >NIL:
-setvadjust 0

@@ -1,1 +1,2 @@
 echo "PAL" >ENV:whdlvmode
+ags-vadjust
