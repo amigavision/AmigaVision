@@ -48,7 +48,7 @@ We recommend using the separate, dedicated Amiga 500 setup for ADF format game d
 
 * Copy MGL file to `/_Computer`
 * Copy config files to `/config`
-* Copy the A500HD directory and its contents to `/games`
+* Copy the Amiga500HD directory and its contents to `/games`
 * Cold reboot the MiSTer
 * You now have a dedicated entry for `Amiga 500HD` in the MiSTer menu
 
@@ -76,7 +76,7 @@ We recommend using the separate, dedicated Amiga 500 setup for ADF format game d
 
 * Copy MGL file to `/_Computer`
 * Copy config files to `/config`
-* Copy the A600HD directory and its contents to `/games`
+* Copy the Amiga600HD directory and its contents to `/games`
 * Cold reboot the MiSTer
 * You now have a dedicated entry for `Amiga 600HD` in the MiSTer menu
 
