@@ -21,6 +21,4 @@
   - !include Lists/Demos.yaml
   - !include Lists/Demos-Spotlight.yaml
 
-- PocketAdditions:
-  - hidden: true
-  - AdventuresOfWillyBeamish
+- !include Lists/Pocket-Additions.yaml
