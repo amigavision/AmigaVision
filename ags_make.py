@@ -168,7 +168,7 @@ def make_entries(
         elif ordering == "release" and entry and "release_date" in entry:
             sort_rank = util.parse_date_int(entry["release_date"], sortable=True)
 
-        if hidden: return
+        if hidden: continue
 
         make_entry(collection, ags_path, entry, base_path, rank=rank, sort_rank=sort_rank, options=options, template=template)
     return
