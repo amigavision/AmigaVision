@@ -1,5 +1,5 @@
 include .env
-.PHONY: default env env-rm index image pocket-image test-image test-dry screenshots sqlite clean
+.PHONY: default env env-rm index manifests sqlite csv screenshots image pocket-image test-image test-dry clean
 
 default:
 	@echo No default action
@@ -16,6 +16,18 @@ env-rm:
 index:
 	@pipenv run ./ags_index.py -v
 
+manifests:
+	@pipenv run ./ags_index.py -v -m
+
+sqlite:
+	@pipenv run ./ags_index.py -v --make-sqlite
+
+csv:
+	@pipenv run ./ags_index.py -v --make-csv
+
+screenshots:
+	@pipenv run ./make_screenshots.sh screenshots
+
 image:
 	@pipenv run ./ags_imager.py -v -c configs/MegaAGS.yaml --all-games --all-demos -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
@@ -30,12 +42,3 @@ test-image:
 
 test-dry:
 	@pipenv run ./ags_imager.py -v -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
-
-screenshots:
-	@pipenv run ./make_screenshots.sh screenshots
-
-sqlite:
-	@pipenv run ./ags_index.py -v --make-sqlite
-
-csv:
-	@pipenv run ./ags_index.py -v --make-csv

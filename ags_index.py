@@ -3,10 +3,12 @@
 # AGSImager: Indexer
 
 import argparse
+import hashlib
 import os
 import sys
 
 from lhafile import LhaFile, is_lhafile
+from ruamel import yaml
 
 import ags_paths as paths
 import ags_util as util
@@ -59,11 +61,37 @@ def index_whdload_archives(basedir):
     return d
 
 # -----------------------------------------------------------------------------
+# Make manifests for lha files in content directory
+
+def make_manifests(basedir):
+    basedir += os.sep
+    print("making manifests..", end="", flush=True)
+    count = 0
+    for r, _, f in os.walk(basedir):
+        for file in f:
+            contents = dict()
+            path = util.path(r, file)
+            if file.endswith(".lha") and is_lhafile(path):
+                count += 1
+                if count % 100 == 0:
+                    print(".", end="", flush=True)
+                arc = LhaFile(path)
+                for n in arc.namelist():
+                    hasher = hashlib.sha256()
+                    hasher.update(arc.read(n))
+                    contents[n] = "{}".format(hasher.hexdigest())
+                with open(path + ".yaml", 'w') as f:
+                    yaml.round_trip_dump(contents, f, explicit_start=True, version=(1, 2))
+    print("\n", flush=True)
+    return
+
+# -----------------------------------------------------------------------------
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--make-sqlite", dest="make_sqlite", action="store_true", default=False, help="make sqlite db from cvs (if none exists or if cvs is newer than existing)")
     parser.add_argument("--make-csv", dest="make_csv", action="store_true", default=False, help="make csv from sqlite db")
+    parser.add_argument("-m", "--make-manifests", dest="make_manifests", action="store_true", default=False, help="make manifest files")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
@@ -83,6 +111,10 @@ def main():
         titles_dir = paths.titles()
         if not util.is_dir(titles_dir):
             raise IOError("titles dir not found ({})".format(titles_dir))
+
+        if args.make_manifests:
+            make_manifests(titles_dir)
+            return 0
 
         # remove missing archive_paths from db
         for r in db.cursor().execute("SELECT * FROM titles"):
