@@ -1,5 +1,5 @@
 include .env
-.PHONY: default env env-rm index manifests sqlite csv screenshots image pocket-image test-image test-dry clean
+.PHONY: default env env-rm index manifests manifests-check sqlite csv screenshots image pocket-image test-image test-dry clean
 
 default:
 	@echo No default action
@@ -17,7 +17,10 @@ index:
 	@pipenv run ./ags_index.py -v
 
 manifests:
-	@pipenv run ./ags_index.py -v -m
+	@pipenv run ./ags_index.py --make-manifests
+
+manifests-check:
+	@pipenv run ./ags_index.py --check-manifests
 
 sqlite:
 	@pipenv run ./ags_index.py -v --make-sqlite
