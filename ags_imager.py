@@ -18,14 +18,14 @@
 #   3 = NTSC title that will be run at 60Hz (NTSC, 16:15 PAR @ 4X, 1:1 PAR @ 5X)
 #   4 = NTSC title that will be run at 60Hz and was likely designed for narrow PAR ("Sachs NTSC", 5:6 PAR @ 5X)
 # scale: Viewport integer scale factor at 1080p (PAL: 4-6, NTSC: 5-6)
-# vshift: Viewport vertical shift (lower value -> screen is shifted downwards)
+# vshift: Viewport vertical shift (higher value -> screen is shifted up)
 #   Expressible range (higher values allowed but have no effect):
 #   NTSC-5X: -16 ... 9
 #   NTSC-6X: -16 ... 45
 #   PAL-4X:  -11 ... 5
 #   PAL-5X:  -11 ... 59
 #   PAL-6X:  -11 ... 95
-# hshift: Viewport horizontal shift (lower value -> screen is shifted right)
+# hshift: Viewport horizontal shift (super hires pixels, higher value -> screen is shifted left)
 # killaga: Use killaga hack when invoking whdload (1=true)
 # gamepad: Title supports more than one button (1=true)
 # lightgun: Title supports light gun (1=true)
