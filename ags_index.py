@@ -61,65 +61,81 @@ def index_whdload_archives(basedir):
     return d
 
 # -----------------------------------------------------------------------------
-# Make manifests for lha files in content directory
+# Make and verify manifests for lha files in content directory
 
-def make_manifests(basedir):
+def make_manifests(basedir, only_missing=False):
     basedir += os.sep
     print("making manifests..", end="", flush=True)
     count = 0
     for r, _, f in os.walk(basedir):
         for file in f:
-            contents = dict()
-            path = util.path(r, file)
-            if file.endswith(".lha") and is_lhafile(path):
+            if make_manifest(util.path(r, file), only_missing):
                 count += 1
-                if count % 100 == 0:
-                    print(".", end="", flush=True)
-                arc = LhaFile(path)
-                for n in arc.namelist():
-                    hasher = hashlib.sha256()
-                    hasher.update(arc.read(n))
-                    contents[n] = "{}".format(hasher.hexdigest())
-                with open(path + ".yaml", 'w') as f:
-                    yaml.round_trip_dump(contents, f, explicit_start=True, version=(1, 2))
+                if count % 100 == 0: print(".", end="", flush=True)
     print("\n", flush=True)
     return
 
-def check_manifests(basedir):
+def make_manifest(path, only_missing=False):
+    yaml_path = path + ".yaml"
+    contents = None
+    if only_missing and util.is_file(yaml_path):
+        return None
+    if path.endswith(".lha") and is_lhafile(path):
+        contents = make_lha_manifest(path)
+    if contents:
+        with open(yaml_path, 'w') as f:
+            yaml.round_trip_dump(contents, f, explicit_start=True, version=(1, 2))
+    return contents
+
+def make_lha_manifest(path):
+    contents = dict()
+    arc = LhaFile(path)
+    for n in arc.namelist():
+        hasher = hashlib.sha256()
+        hasher.update(arc.read(n))
+        contents[n] = "{}".format(hasher.hexdigest())
+    return contents
+
+def verify_manifests(basedir):
     basedir += os.sep
-    print("checking manifests...")
+    print("verifying manifests...")
     errors = 0
     for r, _, f in os.walk(basedir):
         for file in f:
+            error = None
             path = util.path(r, file)
             if file.endswith(".lha.yaml"):
-                lha_path = path[:-5]
-                if not is_lhafile(lha_path):
-                    print("lha file missing or corrupt: {}".format(lha_path))
-                    errors += 1
-                else:
-                    manifest = load_manifest(path)
-                    if not isinstance(manifest, dict):
-                        print("manifest corrupt: {}".format(path))
-                        errors += 1
-                    else:
-                        arc = LhaFile(lha_path)
-                        arc_names = arc.namelist()
-                        for mf, mh in manifest.items():
-                            if not mf in arc_names:
-                                print("file '{}' missing in archive '{}'".format(mf, lha_path))
-                                errors += 1
-                            else:
-                                hasher = hashlib.sha256()
-                                hasher.update(arc.read(mf))
-                                if hasher.hexdigest() != mh:
-                                    print("incorrect checksum for file '{}' in '{}'".format(mf, lha_path))
-                                    errors += 1
+                error = verify_lha_manifest(path, path[:-5])
+            if error:
+                print(error)
+                errors += 1
     if errors > 0:
-        print("manifest check completed with {} inconsistencies".format(errors))
+        print("manifest verification completed with {} error(s)".format(errors))
     else:
-        print("manifest check completed: all good")
+        print("manifest verification completed: all good")
     return
+
+def verify_lha_manifest(manifest_path, lha_path):
+    if not util.is_file(lha_path):
+        return "lha file missing: {}".format(lha_path)
+    elif not is_lhafile(lha_path):
+         return "lha file unreadable: {}".format(lha_path)
+    else:
+        manifest = load_manifest(manifest_path)
+        if not isinstance(manifest, dict):
+            return "manifest corrupt: {}".format(manifest_path)
+        else:
+            arc = LhaFile(lha_path)
+            arc_names = arc.namelist()
+            for mf, md in manifest.items():
+                if not mf in arc_names:
+                    return "file '{}' missing in archive '{}'".format(mf, lha_path)
+                else:
+                    hasher = hashlib.sha256()
+                    hasher.update(arc.read(mf))
+                    if hasher.hexdigest() != md:
+                        return "incorrect checksum for file '{}' in '{}'".format(mf, lha_path)
+    return None
 
 def load_manifest(p):
     try:
@@ -135,7 +151,8 @@ def main():
     parser.add_argument("--make-sqlite", dest="make_sqlite", action="store_true", default=False, help="make sqlite db from cvs (if none exists or if cvs is newer than existing)")
     parser.add_argument("--make-csv", dest="make_csv", action="store_true", default=False, help="make csv from sqlite db")
     parser.add_argument("--make-manifests", dest="make_manifests", action="store_true", default=False, help="make manifest files")
-    parser.add_argument("--check-manifests", dest="check_manifests", action="store_true", default=False, help="check manifest files")
+    parser.add_argument("--only-missing", dest="only_missing", action="store_true", default=False, help="create only missing manifests")
+    parser.add_argument("--verify-manifests", dest="verify_manifests", action="store_true", default=False, help="verify that contents match manifests")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
@@ -157,11 +174,11 @@ def main():
             raise IOError("titles dir not found ({})".format(titles_dir))
 
         if args.make_manifests:
-            make_manifests(titles_dir)
+            make_manifests(titles_dir, only_missing=args.only_missing)
             return 0
 
-        if args.check_manifests:
-            check_manifests(titles_dir)
+        if args.verify_manifests:
+            verify_manifests(titles_dir)
             return 0
 
         # remove missing archive_paths from db
@@ -191,9 +208,12 @@ def main():
         if args.verbose:
             missing_archives = []
             missing_images = []
+            missing_manifests = []
             for r in db.cursor().execute("SELECT * FROM titles"):
                 if not r["archive_path"]:
                     missing_archives.append(r["id"])
+                elif not util.is_file(util.path(titles_dir, r["archive_path"]) + ".yaml"):
+                    missing_manifests.append(util.path(titles_dir, r["archive_path"]) + ".yaml")
                 if not util.is_file("data/img/" + r["id"] + ".iff"):
                     missing_images.append(r["id"])
             if missing_archives:
@@ -204,6 +224,11 @@ def main():
             if missing_images:
                 print("titles missing images:")
                 for id in missing_images:
+                    print("  >> {}".format(id))
+                print()
+            if missing_manifests:
+                print("missing manifests (generate with 'make missing-manifests'):")
+                for id in missing_manifests:
                     print("  >> {}".format(id))
                 print()
 

@@ -19,8 +19,11 @@ index:
 manifests:
 	@pipenv run ./ags_index.py --make-manifests
 
-manifests-check:
-	@pipenv run ./ags_index.py --check-manifests
+missing-manifests:
+	@pipenv run ./ags_index.py --make-manifests --only-missing
+
+verify-manifests:
+	@pipenv run ./ags_index.py --verify-manifests
 
 sqlite:
 	@pipenv run ./ags_index.py -v --make-sqlite
