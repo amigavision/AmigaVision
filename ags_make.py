@@ -293,16 +293,20 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
     if query.entry_is_valid(entry):
         metadata = dict()
         meta_title = sanitize_name(entry["title_short"])
+        unshortened_title = meta_title
         if len(meta_title) > max_w:
             meta_title = meta_title.replace(", The", "")
-        if len(title) > max_w:
+        if len(meta_title) > max_w:
             meta_title = meta_title[:max_w - 2].strip() + ".."
-        if meta_title != title: metadata["title"] = meta_title
+        if meta_title != unshortened_title:
+            metadata["title"] = meta_title
         if entry["category"] and entry["category"] != "Game":
             if entry.get("subcategory", "").lower().startswith("music disk"):
                 metadata["category"] = "Music Disk"
             elif entry.get("subcategory", "").lower().startswith("disk mag"):
                 metadata["category"] = "Disk Magazine"
+            elif entry.get("subcategory", "").lower().startswith("slide show"):
+                metadata["category"] = "Slide Show"
             else:
                 metadata["category"] = entry["category"]
         if "title" in metadata or "category" in metadata:
