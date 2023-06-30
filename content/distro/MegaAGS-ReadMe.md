@@ -283,39 +283,17 @@ The easiest — but a little bit time-consuming — is to compare SHA-1 checksum
 
 Depending on what operating system you are on, you will do one of the following:
 
-* **If you are on macOS:** Open the Terminal, and run the command: `shasum /path/to/MegaAGS.hdf`. Compare this to the checksum you got on the MiSTer.
+* **If you are on macOS:** Open the Terminal, and run the command: `shasum /path/to/MegaAGS.hdf` Compare this to the checksum you got on the MiSTer.
 
-* **If you are on Windows:** Open PowerShell, and run the command: `Get-FileHash C:\path\to\MegaAGS.hdf -Algorithm SHA1`. Compare this to the checksum you got on the MiSTer.
+* **If you are on Windows:** Open PowerShell, and run the command: `Get-FileHash C:\path\to\MegaAGS.hdf -Algorithm SHA1` Compare this to the checksum you got on the MiSTer.
 
-* **If you are on Linux:** Open a terminal, and run the command: `shasum /path/to/MegaAGS.hdf`. Compare this to the checksum you got on the MiSTer.
+* **If you are on Linux:** Open a terminal, and run the command: `shasum /path/to/MegaAGS.hdf` Compare this to the checksum you got on the MiSTer.
 
 If these checksums do not match, something is wrong with either the way you transfer your file, or your SD card. 
 
 If they do match, launching should work without issues, assuming you don't have a bad `HDF` file on your computer.
 
 ## Frequently Asked Questions
-
-### What does the `Minimig` entry do now that I have an `Amiga` setup on MiSTer?
-
-We use the `Amiga` and `Amiga 500` MGL files to launch the Minimig core with  dedicated configurations. The Minimig entry isn't used directly anymore. Just ignore the Minimig entry or rename it using your own [names.txt] if you want. You can also use this core for Amiga setups unrelated to MegaAGS.
-
-This also lets us have the `Amiga 500HD` and `Amiga 600HD` setups with separate hard disk images, shared files directory, etc.
-
-We find this to be a more usable and cleaner setup, instead of using the core configuration selectors that cannot be named, and lets you have e.g. the Amiga 500 setup easily available on the top level for use with demos and games that do not work on a "modern" Amiga HD-based setup.
-
-### Why are there two `Amiga` entries in my menu on MiSTer?
-
-The entry without a date listed on the right side in the OSD is the AmigaVision setup.
-
-If you are using the `update_all` script, it may download a file called `names.txt` that renames the "Minimig" core to "Amiga". You have a few options to fix this, pick one of these:
-
-* **Easiest:** Switch the `update_all` script to use the `CHAR28` variant instead of the `CHAR18` variant in its settings for `names.txt`. This will use core names with manufacturers, so the Minimig core will end up being called "Commodore Amiga". This is the easiest, but you may not want this format — but you can easily go back to `CHAR18` if you test it and don't like it.
-
-* **More involved:** Edit the `names.txt` in the root of your MiSTer filesystem to map "Minimig" to "Commodore Amiga", or just remove that line altogether if you are fine with it being called "Minimig". You may need to disable updating of `names.txt` to ensure that it doesn't get overwritten the next time you run `update_all`.
-
-* **Complex:** If you absolutely want to avoid having a separate "Minimig" entry altogether, some people rename the config files from the Amiga 500 setup to be Minimig instead, and move the HDF into the Amiga folder, and then name the Minimig core "Amiga 500" in `names.txt`.
-
-See also the previous question for why we chose an MGL-based setup.
 
 ### Why do you have Scanline and Shadow Mask presets by default?
 
