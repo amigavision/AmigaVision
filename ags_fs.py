@@ -26,6 +26,7 @@ def build_pfs(hdf_path, clone_path, verbose):
     FS_OVERHEAD = 1.06 # filesystem size fudge factor
     SECTOR_SIZE = 512 # fixed
     BLOCK_SIZE = 512 # amiga only support RDBs with a 512 byte block size
+    DIRECT_SCSI = True
 
     if verbose:
         print("building PFS container...")
@@ -84,6 +85,7 @@ def build_pfs(hdf_path, clone_path, verbose):
         "add", "name={}".format(part[0]),
         "start={}".format(num_cyls_rdb),
         "size={}".format(part[1]),
+        "interleave={}".format(65536 if DIRECT_SCSI else 0),
         "fs=PDS3",
         "bs={}".format(BLOCK_SIZE),
         "max_transfer=0x0001FE00",
@@ -109,6 +111,7 @@ def build_pfs(hdf_path, clone_path, verbose):
             "add", "name={}".format(part[0]),
             "start={}".format(part_start),
             "end={}".format(part_end),
+            "interleave={}".format(65536 if DIRECT_SCSI else 0),
             "fs=PDS3",
             "bs={}".format(BLOCK_SIZE),
             "max_transfer=0x0001FE00",
