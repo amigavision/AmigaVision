@@ -3,7 +3,7 @@ if WARN
   makedir RAM:MiSTer >NIL:
   assign MiSTer: RAM:MiSTer
   skip DONE
- ndif
+endif
 
 assign >NIL: EXISTS MiSTer:
 if NOT WARN
