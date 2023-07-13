@@ -1,0 +1,10 @@
+#!/bin/bash
+
+date_str=$1
+
+if [ -z "$date_str" ]; then
+  echo "No archive suffix";
+else
+  arc_name="MegaAGS-Pocket-$date_str.7z"
+  7zz a -xr'!.*' -mx=7 -myx=5 $arc_name MegaAGS-Pocket-ReadMe.txt MegaAGS-Kickstart.rom MegaAGS-Saves.hdf MegaAGS-Pocket.hdf;
+fi

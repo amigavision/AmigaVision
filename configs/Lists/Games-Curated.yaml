@@ -501,7 +501,7 @@
     - SecondSamurai
   - PIXEL thing - 45 Games:
     - ordering: "ordered"
-    - note: 45 Games That Defined the AMIGA 500, according to It's a P/XEL thing.\n\n(Chronologically ordered.)
+    - note: 45 Games That Defined the AMIGA 500,\naccording to It's a P/XEL thing.\n\n(Chronologically ordered.)
     - image: { op: "pi", path: "list/pixelthing_45games.jpg" }
     - IK+
     - CarrierCommand
@@ -548,6 +548,33 @@
     - Worms
     - UFOEnemyUnknown
     - SWOS9596ECE
+  - PIXEL thing - Exclusives:
+    - ordering: "ordered"
+    - note: 23 unforgettable Amiga exclusives,\naccording to It's a P/XEL thing.
+    - image: { op: "pi", path: "list/pixelthing_23exclusive.jpg" }
+    - NaughtyOnes
+    - WormsDC
+    - Breathless
+    - KidChaos
+    - AllTerrainRacing
+    - ArabianNights
+    - FlyHarder
+    - Virocop
+    - Roadkill
+    - SuperMethaneBros
+    - Darkmere
+    - Globdule
+    - Odyssey
+    - Assassin
+    - Agony
+    - Banshee
+    - Hybris
+    - RuffNTumble
+    - Uridium2
+    - ShadowOfTheBeast3
+    - Lionheart
+    - Fuzzball
+    - Apidya
   - Racketboy Shmup Essentials:
     - note: The Commodore Amiga Shmup Library Essentials, according to The Knives and Herr Schatten of Racketboy.com.
     - image: { op: "pi", path: "list/racketboy_shmups.jpg" }
