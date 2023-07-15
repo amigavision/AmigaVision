@@ -228,11 +228,12 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
             title += " (" + entry.get("publisher") + ")"
         else:
             # add language prefix and/or hardware info
-            languages = query.get_languages(entry)
-            if len(languages) == 1:
-                title = title.rstrip() + " [" + util.language_code(languages[0]).upper() + "]"
+            title = title.rstrip() + " (" + query.get_hardware_short(entry) + ")"
             if util.is_file(util.path(path, title) + runfile_ext):
-                title = title.rstrip() + " (" + query.get_hardware_short(entry) + ")"
+                languages = query.get_languages(entry)
+                if len(languages) == 1:
+                    title = title.rstrip() + " [" + util.language_code(languages[0]).upper() + "]"
+
     if len(title) > max_w:
         title = title[:max_w - 2].strip() + ".."
         if util.is_file(util.path(path, title) + runfile_ext):
@@ -280,9 +281,6 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
     elif entry and "id" in entry:
         img_list = [Path(util.path("data", "img", entry["id"] + ".iff"))]
         img_list += list(Path(util.path("data", "img")).rglob(entry["id"] + "-[0-9].iff"))
-        # Switch with these to get high-res thumbnails, ignores #1 (box art) and only includes first 4 screenshots:
-        # img_list = [Path(util.path("data", "img_highres", entry["id"] + ".iff"))]
-        # img_list += list(Path(util.path("data", "img_highres")).rglob(entry["id"] + "-[2-5].iff"))
         for img_path in img_list:
             src_path = str(img_path.resolve())
             if util.is_file(src_path):
@@ -500,7 +498,7 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
     d_path = util.path(path, "{}.ags".format(strings["dirs"]["scene"]))
     ne_path = util.path(path, "{}.ags".format(strings["dirs"]["allgames_nonenglish"]))
 
-    for entry in sorted(c.ids(), key=operator.itemgetter("title")):
+    for entry in sorted(c.ids(), key=operator.itemgetter("title_short")):
         if entry.get("unavailable", False):
             continue
         letter = entry.get("title_short", "z")[0].upper()
