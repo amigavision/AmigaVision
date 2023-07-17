@@ -68,7 +68,7 @@ We default this setup to NTSC for compatibility reasons, but you can easily chan
 
 Common applications like Directory Opus, ProTracker, music players and graphics/audio applications are already included in the Apps menu in Workbench, giving you a great starting point for your own custom setup.
 
-This setup enables the faster CPU by default since this setup isn't really meant to be used for games that require cycle accurate CPU compatibility. You can switch the CPU to 68000 in the MiSTer core menu for the Amiga core if you want the orignal A500+/A600 speed instead of something that resembles an Amiga 3000.
+This setup enables the faster CPU by default since this setup isn't really meant to be used for games that require cycle accurate CPU compatibility. You can switch the CPU to 68000 in the MiSTer core menu for the Amiga core if you want the original A500+/A600 speed instead of something that resembles an Amiga 3000.
 
 We recommend using the separate, dedicated Amiga 500 setup for ADF format game disks and demo disks, this setup is for people interested in running a Workbench setup.
 
