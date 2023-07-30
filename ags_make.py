@@ -494,7 +494,7 @@ def make_runscript(entry, template, quiet: bool) -> str:
 # -----------------------------------------------------------------------------
 # collect entries for special folders ("All Games", "Demo Scene")
 
-def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=False):
+def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
     d_path = util.path(path, "{}.ags".format(strings["dirs"]["scene"]))
     ne_path = util.path(path, "{}.ags".format(strings["dirs"]["allgames_nonenglish"]))
 
@@ -511,7 +511,7 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
             year_img = "19XX"
 
         # add games
-        if all_games and entry.get("category", "").lower() == "game":
+        if games and entry.get("category", "").lower() == "game":
             if query.has_english_language(entry):
                 make_entry(c, path, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"))
                 make_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".iff"), {"op":"tx", "txt": letter})
@@ -568,7 +568,7 @@ def make_autoentries(c: EntryCollection, path: str, all_games=False, all_demos=F
                     img_ops =  { "ops": { "op": "pi", "path": flag_path }, "size": [320, 128 ], "scale": [1, 1] }
                     make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".iff"), img_ops)
 
-        if all_demos and entry.get("category", "").lower() == "demo":
+        if demos and entry.get("category", "").lower() == "demo":
             groups = query.get_publishers(entry)
             if not groups:
                 continue

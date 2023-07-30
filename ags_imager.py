@@ -63,13 +63,27 @@ from ags_types import EntryCollection
 
 # -----------------------------------------------------------------------------
 
-def add_all(db: Connection, c: EntryCollection, category: str) -> None:
+def add_all(db: Connection, c: EntryCollection, category: str, exclude_subcategories=None) -> None:
     for r in db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
         entry, preferred_entry = get_entry(db, r["id"])
         if entry:
-            c.by_id[entry["id"]] = entry
+            if exclude_subcategories:
+                exclude_entry = False
+                for subcategory in exclude_subcategories:
+                    if entry.get("subcategory", "").lower().startswith(subcategory.lower()): exclude_entry = True
+                if not exclude_entry:
+                    c.by_id[entry["id"]] = entry
+            else:
+                c.by_id[entry["id"]] = entry
         if preferred_entry:
-            c.by_id[preferred_entry["id"]] = preferred_entry
+            if exclude_subcategories:
+                exclude_entry = False
+                for subcategory in exclude_subcategories:
+                    if preferred_entry.get("subcategory", "").lower().startswith(subcategory.lower()): exclude_entry = True
+                if not exclude_entry:
+                    c.by_id[preferred_entry["id"]] = preferred_entry
+            else:
+                c.by_id[preferred_entry["id"]] = preferred_entry
 
 def extract_entries(clone_path, entries):
     unarchived = set()
@@ -103,8 +117,9 @@ def main():
     parser.add_argument("-a", "--ags-dir", dest="ags_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="AGS2 configuration directory")
     parser.add_argument("-d", "--add-dir", dest="add_dirs", action="append", help="add dir to amiga filesystem (example '~/Amiga/Music::DH1:Music')")
 
-    parser.add_argument("--all-games", dest="all_games", action="store_true", default=False, help="include all games in database")
-    parser.add_argument("--all-demos", dest="all_demos", action="store_true", default=False, help="include all demos in database")
+    parser.add_argument("--all-games", dest="all_games", action="store_true", default=False, help="include all games")
+    parser.add_argument("--all-demos", dest="all_demos", action="store_true", default=False, help="include all demos")
+    parser.add_argument("--all-demoscene", dest="all_demoscene", action="store_true", default=False, help="include all demo scene content")
     parser.add_argument("--auto-lists", dest="auto_lists", action="store_true", default=False, help="create automatic lists")
     parser.add_argument("--only-ags-tree", dest="only_ags_tree", action="store_true", default=False, help="only generate AGS tree")
 
@@ -173,9 +188,11 @@ def main():
         if args.all_games:
             add_all(db, collection, "Game")
         if args.all_demos:
+            add_all(db, collection, "Demo", exclude_subcategories=["Disk Magazine", "Slide Show"])
+        if args.all_demoscene:
             add_all(db, collection, "Demo")
-        if args.all_games or args.all_demos or args.auto_lists:
-            make_autoentries(collection, amiga_ags_path, args.all_games | args.auto_lists, args.all_demos | args.auto_lists)
+        if args.all_games or args.all_demos or args.all_demoscene or args.auto_lists:
+            make_autoentries(collection, amiga_ags_path, games=args.all_games|args.auto_lists, demos=args.all_demos|args.all_demoscene|args.auto_lists)
 
         # generate run scripts
         make_runscripts(collection, amiga_ags_path, template=runscript_template)

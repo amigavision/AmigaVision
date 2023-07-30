@@ -48,7 +48,7 @@ def build_pfs(hdf_path, clone_path, verbose):
     partitions = [] # (partition name, cylinders)
     for f in sorted(os.listdir(clone_path)):
         if util.is_dir(util.path(clone_path, f)) and is_amiga_devicename(f):
-            mb_free = 120 if f == "DH0" else 80
+            mb_free = 80 if f == "DH0" else 40
             cyls = int(FS_OVERHEAD * (util.get_dir_size(util.path(clone_path, f), BLOCK_SIZE) + (mb_free * 1024 * 1024))) // cylinder_size
             partitions.append(("DH" + str(len(partitions)), cyls))
             total_cyls += cyls

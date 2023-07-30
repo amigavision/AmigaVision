@@ -35,12 +35,12 @@ screenshots:
 	@pipenv run ./make_screenshots.sh screenshots
 
 image:
-	@pipenv run ./ags_imager.py -v -c configs/MegaAGS.yaml --all-games --all-demos -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
+	@pipenv run ./ags_imager.py -v -c configs/MegaAGS.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 	@mv ${AGSDEST}/MegaAGS.hdf ${AGSDEST}/games/Amiga/MegaAGS.hdf
 
 pocket-image:
-	@pipenv run ./ags_imager.py -v -c configs/MegaAGS-Pocket.yaml --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
+	@pipenv run ./ags_imager.py -v -c configs/MegaAGS-Pocket.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 
 test-image:
