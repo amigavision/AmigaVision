@@ -8,17 +8,6 @@ This is a slimmed down version of the [AmigaVision] setup made specifically for 
 * Copy the included files in this setup to the `/Assets/amiga/common` directory on your Pocket SD card.
 * Start the Amiga core.
 
-## If upgrading:
-
-Ensure that the core settings (when you press the Analogue button) are set to:
-
-* Screen X Position: 154
-* Screen Y Position: 40
-
-These values will be correct if this is your first installation of the core, but 
-as these aren't overridden when you upgrade, you need to manually ensure you have 
-the correct offset for this version of the core.
-
 ## Controls:
 * Select button brings up the virtual keyboard (and defaults to DEL as the selected key, press this
   to exit the current game and select a new one).
