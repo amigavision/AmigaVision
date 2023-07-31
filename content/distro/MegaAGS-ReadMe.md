@@ -185,31 +185,48 @@ If you are using a gamepad, you might want to use MiSTer's controller mapping to
 
 While a keyboard and mouse isn't strictly necessary to play most action games, it is definitely recommended for the full Amiga experience, and many games have controls that make use of them.
 
-## MiSTer: Video Modes
+We care deeply about preserving the correct aspect ratio for all games. That means going beyond just NTSC and PAL, and ensuring that the Pixel Aspect Ratio (PAR) is also correct. Pixels on the Amiga were close to square (16:15) in PAL resolutions on a CRT, but quite tall on NTSC displays (5:6). Additionally, when we apply a 5×PAL or 6×PAL [Dynamic Crop](https://amiga.vision/5x), 1:1 gives us great results that are near indistinguishable from the original PAR at those sizes, while modernizing the output to fit 16:9 displays.
+
+This release completely reworks how this is handled, so you no longer have to interact with the MiSTer OSD menu to switch in certain cases like what we informally refer to as "Jim Sachs mode" — NTSC, tall pixels at 5:6 PAR, seen in e.g. Defender of the Crown. Most emulators and captures get this wrong and use 1:1 pixels instead, so we built an implementation that handles all the variants correctly on MiSTer:
+
+* **PAL title, 50Hz:** PAL, 16:15 PAR at 4×, 1:1 PAR at 5× and 6×
+* **PAL title, 60Hz:** PAL60, 1:1 PAR at 5×
+* **NTSC title, 60Hz:**  NTSC, 1:1 PAR at 5×
+* **"World" title, 60Hz:** NTSC, 1:1 PAR at 5×
+* **"Sachs NTSC" title, 60Hz:**  NTSC, 5:6 PAR at 5×
+
+All these align to the 1080p/4K 16:9 pixel grid while having the correct Pixel Aspect Ratio, so you will not get any shimmering or non-integer pixels.
+
+On the MiSTer side of things, always, *always* run the AmigaVision setup in the `40:27` aspect ratio that we supply to ensure that this is handled correctly. This is what AmigaVision sets as the default as long as you copy over the supplied config file and have the correct `MiSTer.ini` definition for the core. 
+
+The `Original` aspect ratio supplied by the core should not be used. The `Full Screen` aspect ratio is *only* used for 6×PAL on 16:9 widescreen displays.
+
+Make absolutely sure that you update your `MiSTer.ini` settings for the core according to the documentation! It should look like this:
+
+```
+[Amiga
++Amiga500
++Amiga500HD
++Amiga600HD]
+video_mode_ntsc=8 
+video_mode_pal=9
+vscale_mode=0
+vsync_adjust=1 
+custom_aspect_ratio_1=40:27
+bootscreen=0
+```
+
+### vsync_adjust setting
 
 The optimal `vsync_adjust` setting in `MiSTer.ini` will depend on your HDMI display. A setting of `2` ensures the lowest possible latency, but it may come at the cost of a short period of no video or audio on video mode changes -- something Amiga games and demos do quite often. Setting `vsync_adjust` to `1` introduces a buffer that will smooth over most of these changes, although it will add a frame of latency.
 
-A unique feature of the Amiga (Minimig) core on MiSTer is the ability to do viewport cropping. By default the full overscan area will be fed to the HDMI scaler, resulting in huge borders for most content. But fear not! MegaAGS leverages the custom `vadjust` feature of the core to dynamically apply viewport settings on a per-game basis. This depends on MiSTer's "shared folder" functionality, which is enabled in MegaAGS if the "games/Amiga/shared" directory exists. So, make sure you copied all the archive contents as described in the Setup section.
+### Dynamic cropping *&* 5× scaling on 1080p/4K displays
 
-Also note that the dynamic cropping *only* applies if you are using 1080p output. Most Amiga games fit on the screen using 5× zoom in this resolution. Any other resolution or analog output is *not* affected by dynamic viewport cropping, as it only makes sense for 1080p/4K 16:9 displays.
+A unique feature of the Amiga (Minimig) core on MiSTer is the ability to do viewport cropping. By default the full overscan area will be fed to the HDMI scaler, resulting in huge borders for most content. But fear not! AmigaVision leverages the custom `vadjust` feature of the core to dynamically apply viewport settings on a per-game basis. This depends on MiSTer's "shared folder" functionality, which is enabled in AmigaVision if the "games/Amiga/shared" directory exists. So, make sure you copied all the archive contents as described in the Setup section.
+
+Also note that dynamic cropping *only* applies if you are using 1080p output. Most Amiga games fit on the screen using 5× zoom in this resolution. Any other resolution or analog output is *not* affected by dynamic viewport cropping, as it only makes sense for 1080p/4K 16:9 displays.
 
 With dynamic vadjust enabled, most titles will enjoy a nicely centered viewport at a perfect 5× scale using 1080p output resolution, by cropping the viewport to 216 lines. Games using more than 216 active video lines will instead get a perfect 4× scale by applying a 270 line crop.
-
-Next, let's talk about Pixel Aspect Ratio (PAR). Most Amiga graphics were drawn targeting a roughly square pixel display, if considering standard low resolution mode in PAL. However, some American games were drawn using the 320x200px NTSC mode stretched to cover a 4:3 display, yielding distinctly narrower pixels. Using MiSTer's capability for setting up custom aspect ratios, it is possible to quickly toggle between these PARs via OSD -> Audio & Video -> Aspect ratio. When you add the `custom_aspect_ratio` override to `MiSTer.ini` as specified in the setup section, you will be able to toggle between `Original` and `40:27` settings (as well as the fully useless `Full screen` setting, please don't use this).
-
-`Original` will yield square pixels for full-height PAL titles, and the sometimes correct narrow pixels for NTSC games. `40:27` will result in square pixels for PAL (5×) titles and NTSC/PAL60 titles. As guidance, use these settings depending on what video mode the launcher UI denotes in the info section for the game for best results:
-
-```
-4×PAL      Original
-5×PAL      40:27
-5×PAL60    40:27
-5×NTSC     Original (or occasionally 40:27, depending on title)
-
-```
-
-Generally, if you leave it on the default setting (`40:27`), most popular Amiga games will appear in the correct aspect ratio. Exceptions are US-produced games like e.g. Defender of the Crown, which were made using the narrower NTSC resolutions.
-
-Again, make sure to add the Minimig core overrides in MiSTer.ini as specified in the setup section to enjoy the best HDMI output possible, and make sure you have set MiSTer to output in 1080p resolution.
 
 ## MiSTer: CPU Performance Notes
 
