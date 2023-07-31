@@ -1,0 +1,282 @@
+config_description=Redquark Six state resume config
+config_hardware=true
+config_host=true
+config_version=4.4.0
+config_hardware_path=
+config_host_path=
+config_all_path=
+amiberry.hide_idle_led=0
+amiberry.rom_path=/usr/share/amiberry/kickstarts/
+amiberry.floppy_path=./
+amiberry.hardfile_path=./
+amiberry.cd_path=./
+; 
+; *** Controller/Input Configuration
+; 
+joyport0_mode=mousenowheel
+joyport0_name=MOUSE0
+joyport0_amiberry_custom_none_dpad_up=
+joyport0_amiberry_custom_none_dpad_down=
+joyport0_amiberry_custom_none_dpad_left=
+joyport0_amiberry_custom_none_dpad_right=
+joyport0_amiberry_custom_none_north=
+joyport0_amiberry_custom_none_west=
+joyport0_amiberry_custom_none_south=
+joyport0_amiberry_custom_none_east=
+joyport0_amiberry_custom_none_left_shoulder=
+joyport0_amiberry_custom_none_right_shoulder=
+joyport0_amiberry_custom_none_start=
+joyport0_amiberry_custom_hotkey_dpad_up=
+joyport0_amiberry_custom_hotkey_dpad_down=
+joyport0_amiberry_custom_hotkey_dpad_left=
+joyport0_amiberry_custom_hotkey_dpad_right=
+joyport0_amiberry_custom_hotkey_north=
+joyport0_amiberry_custom_hotkey_west=
+joyport0_amiberry_custom_hotkey_south=
+joyport0_amiberry_custom_hotkey_east=
+joyport0_amiberry_custom_hotkey_left_shoulder=
+joyport0_amiberry_custom_hotkey_right_shoulder=
+joyport0_amiberry_custom_hotkey_start=
+joyport0_hotbutton=
+joyport1_mode=cd32joy
+joyport1_name=JOY1
+joyport1_amiberry_custom_none_dpad_up=Joy2 Up
+joyport1_amiberry_custom_none_dpad_down=Joy2 Down
+joyport1_amiberry_custom_none_dpad_left=Joy2 Left
+joyport1_amiberry_custom_none_dpad_right=Joy2 Right
+joyport1_amiberry_custom_none_north=Joy2 CD32 Yellow
+joyport1_amiberry_custom_none_west=Joy2 CD32 Green
+joyport1_amiberry_custom_none_south=Joy2 CD32 Red
+joyport1_amiberry_custom_none_east=Joy2 CD32 Blue
+joyport1_amiberry_custom_none_left_shoulder=Joy2 CD32 RWD
+joyport1_amiberry_custom_none_right_shoulder=Joy2 CD32 FFW
+joyport1_amiberry_custom_none_start=Toggle Virtual Keyboard
+joyport1_amiberry_custom_hotkey_dpad_up=
+joyport1_amiberry_custom_hotkey_dpad_down=
+joyport1_amiberry_custom_hotkey_dpad_left=
+joyport1_amiberry_custom_hotkey_dpad_right=
+joyport1_amiberry_custom_hotkey_north=
+joyport1_amiberry_custom_hotkey_west=
+joyport1_amiberry_custom_hotkey_south=
+joyport1_amiberry_custom_hotkey_east=
+joyport1_amiberry_custom_hotkey_left_shoulder=
+joyport1_amiberry_custom_hotkey_right_shoulder=
+joyport1_amiberry_custom_hotkey_start=
+joyport1_hotbutton=
+; 
+; 
+; 
+input.joymouse_speed_analog=2
+input.joymouse_speed_digital=2
+input.joymouse_deadzone=33
+input.joystick_deadzone=33
+input.analog_joystick_multiplier=15
+input.analog_joystick_offset=-1
+input.mouse_speed=100
+input.mouse_sensitivity=0
+input.autofire_speed=0
+input.autoswitch=1
+kbd_lang=us
+; 
+; *** Host-Specific
+; 
+amiberry.gfx_auto_height=false
+amiberry.gfx_correct_aspect=1
+amiberry.kbd_led_num=-1
+amiberry.kbd_led_scr=-1
+amiberry.scaling_method=1 ; 0 pixeleted 1 Smooth
+amiberry.open_gui=F12
+amiberry.allow_host_run=false
+amiberry.use_analogue_remap=false
+amiberry.use_retroarch_quit=false
+amiberry.use_retroarch_menu=false
+amiberry.use_retroarch_reset=false
+amiberry.active_priority=1
+amiberry.inactive_priority=0
+amiberry.minimized_priority=0
+amiberry.minimized_input=0
+amiberry.disk_led_gpio=/sys/class/gpio_sw/PL7/data
+amiberry.power_led_gpio=
+amiberry.save_state_on_exit=true
+amiberry.ignore_gui=false
+amiberry.force_jit=false
+amiberry.gfx_scale=scanlines2
+amiberry.gfx_dynamic_top=0
+amiberry.gfx_dynamic_height=256
+amiberry.gfx_dynamic_safe_zone=0
+; 
+; *** Common / Paths
+; 
+use_gui=no
+kickstart_rom_file=kick40068.A1200
+kickstart_rom_file_id=1483A091,KS ROM v3.1 (A1200)
+kickstart_ext_rom_file=
+pcmcia_mb_rom_file=:ENABLED
+ide_mb_rom_file=:ENABLED
+flash_file=
+cart_file=
+rtc_file=/usr/share/amiberry/kickstarts/
+kickshifter=false
+; 
+; *** Floppy Drives
+
+floppy_volume=33
+floppy_speed=800
+; 
+; *** Hard Drives
+;
+hardfile2=rw,DH0:/mnt/AmigaVision/HDFs/MegaAGS-Pocket.hdf,0,0,0,512,10,,uae0,0
+uaehf0=hdf,rw,DH0:/mnt/AmigaVision/HDFs/MegaAGS-Pocket.hdf,0,0,0,512,10,,uae0,0
+hardfile2=rw,DH1:/mnt/AmigaVision/HDFs/MegaAGS-Saves.hdf,0,0,0,512,10,,uae0,-128
+uaehf0=hdf,rw,DH1:/mnt/AmigaVision/HDFs/MegaAGS-Saves.hdf,0,0,0,512,10,,uae0,128
+filesystem2=rw,DH3:USB:/mnt/AmigaVision/Shared,0
+uaehf2=dir,rw,DH3:USB:/mnt/AmigaVision/Shared,0
+
+scsi=false 
+; 
+; *** CD / CD32
+; 
+cd_speed=100
+; 
+; *** Display / Screen Setup
+; 
+gfx_framerate=1
+gfx_width=704
+gfx_height=568
+gfx_top_windowed=0
+gfx_left_windowed=0
+gfx_width_windowed=704
+gfx_height_windowed=568
+gfx_width_fullscreen=800
+gfx_height_fullscreen=600
+gfx_refreshrate=50
+gfx_refreshrate_rtg=50
+gfx_backbuffers=2
+gfx_backbuffers_rtg=1
+gfx_vsync=false
+gfx_vsyncmode=normal
+gfx_vsync_picasso=false
+gfx_vsyncmode_picasso=normal
+gfx_lores=false
+gfx_resolution=hires
+gfx_lores_mode=normal
+gfx_flickerfixer=false
+gfx_linemode=double2
+gfx_fullscreen_amiga=false
+gfx_fullscreen_picasso=false
+gfx_center_horizontal=
+gfx_center_vertical=smart
+ntsc=false
+gfx_colour_mode=32bit
+gfx_blacker_than_black=false
+gfx_api=directdraw
+gfx_api_options=hardware
+; 
+; *** CPU options
+; 
+cpu_speed=max
+cpu_throttle=0.0
+cpu_type=68040
+cpu_model=68040
+fpu_model=68040
+cpu_compatible=true
+cpu_24bit_addressing=true
+cpu_data_cache=false
+cpu_cycle_exact=false
+cpu_memory_cycle_exact=false
+blitter_cycle_exact=false
+cycle_exact=false
+
+fpu_strict=false
+comp_trustbyte=direct
+comp_trustword=direct
+comp_trustlong=direct
+comp_trustnaddr=direct
+comp_nf=true
+comp_constjump=true
+comp_flushmode=soft
+comp_fpu=true
+comp_catchfault=true
+cachesize=16384
+; 
+; *** Memory
+; 
+z3mapping=real
+fastmem_size=0
+a3000mem_size=0
+mbresmem_size=128
+z3mem_size=16
+z3mem_start=0x40000000
+bogomem_size=0
+gfxcard_hardware_vblank=false
+gfxcard_hardware_sprite=false
+gfxcard_multithread=false
+chipmem_size=16
+rtg_modes=0x502
+gfxcard_size=128
+gfxcard_type=ZorroIII
+; 
+; *** Chipset
+; 
+immediate_blits=false
+fast_copper=false
+ntsc=false
+chipset=aga
+chipset_refreshrate=49.920410
+collision_level=playfields
+chipset_compatible=A1200
+rtc=MSM6242B
+ksmirror_a8=true
+pcmcia=true
+ide=a600/a1200
+; 
+; *** Sound Options
+; 
+sound_output=exact
+sound_channels=stereo
+sound_stereo_separation=7
+sound_stereo_mixing_delay=0
+sound_max_buff=2048
+sound_frequency=44100
+sound_interpol=none
+sound_filter=off
+sound_filter_type=enhanced
+sound_volume=0
+sound_volume_paula=0
+sound_volume_cd=0
+sound_volume_ahi=0
+sound_volume_midi=0
+sound_volume_genlock=0
+sound_auto=true
+sound_cdaudio=false
+sound_stereo_swap_paula=false
+sound_stereo_swap_ahi=false
+; 
+; *** Misc. Options
+; 
+parallel_on_demand=false
+serial_on_demand=false
+serial_hardware_ctsrts=true
+serial_direct=false
+uaeserial=false
+sana2=false
+bsdsocket_emu=false
+synchronize_clock=false
+maprom=0x0
+parallel_postscript_emulation=false
+parallel_postscript_detection=false
+ghostscript_parameters=
+parallel_autoflush=5
+; 
+; *** WHDLoad Booter. Options
+; 
+whdload_slave=
+whdload_showsplash=false
+whdload_buttonwait=false
+whdload_custom1=0
+whdload_custom2=0
+whdload_custom3=0
+whdload_custom4=0
+whdload_custom5=0
+whdload_custom=
+whdload_writecache=false
