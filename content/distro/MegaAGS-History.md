@@ -2,6 +2,29 @@
 
 (This is a partial version history reconstructed from earlier releases, some features may be missing)
 
+## 2023.07.17
+
+* More reliable loading of thumbnail previews in the launcher when returning from a previously loaded game or demo. This was especially noticable in the Pocket variant, since that device has slower disk access.
+* Zine 11 disk magazine now works.
+* Disambiguation between multiple versions of the same game (e.g. ECS vs AGA) in titles ended up accidentally listing them with a language code instead. This has been fixed.
+
+## 2023.07.07
+
+* Direct SCSI is now enabled by default --- this improves compatibility with certain original Amiga hardware setups.
+* Additional requested game configurations for the Analogue Pocket have been included.
+* WHDLoad configurations are up to date with WHDLoad 2023-07-06.
+* Some games have updated and improved PAL & NTSC configurations.
+* Adding games with titles >30 letters as a Favorite now works.
+
+## 2023.06.06
+
+* Improved aspect ratio and Pixel Aspect Ratio handling to ensure 16:15 PAL and 5:6 NTSC pixels.
+* Support for the Analogue Pocket FPGA
+* Favorites support in the launcher
+* Non-English Games Included & Categorized
+* Support for Amiga 1200/4000 and CD32
+* Support for emulators
+
 ## 2023.04.05
 
 * This new version makes use of MiSTer's recently introduced `MGL` support to supply convenient, dedicated `Amiga` and `Amiga 500` setups for ease of switching on MiSTer. This lets you have the best of both worlds: An everyday, easy HD-based games/demo setup, as well as a cycle-accurate floppy-based Amiga 500 for running ADF games and demos when necessary.
