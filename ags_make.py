@@ -17,8 +17,8 @@ from ags_strings import strings
 from ags_types import EntryCollection
 from make_vadjust import VSHIFT_MAX, VSHIFT_MIN
 
-AGS_INFO_WIDTH = 53
-AGS_LIST_WIDTH = 26
+AGS_INFO_WIDTH = 54
+AGS_LIST_WIDTH = 30
 MAX_FILENAME_LENGTH = 96
 
 # -----------------------------------------------------------------------------
