@@ -1,0 +1,24 @@
+--- # AGSImager menu
+- About:
+  - rank: 1
+  - note: "MEGA AGS MINI 2023.07.17"
+  - Nothing to see here:
+    - rank: 1
+    - note: Intentionally left blank.
+  - AmigaDealerDemo
+
+- !include Lists/Games-HallOfFame.yaml
+- !include Lists/Games-Charts.yaml
+- !include Lists/Games-Curated.yaml
+- !include Lists/Games-Decennial.yaml
+- !include Lists/Games-Focus.yaml
+- !include Lists/Games-Gameographies.yaml
+- !include Lists/Games-Multiplayer.yaml
+- !include Lists/Games-SpecialHardware.yaml
+
+- "[ Demo Scene ]":
+  - note: A sample of demo scene releases.
+  - !include Lists/Demos.yaml
+  - !include Lists/Demos-Spotlight.yaml
+
+- !include Lists/Pocket-Additions.yaml
