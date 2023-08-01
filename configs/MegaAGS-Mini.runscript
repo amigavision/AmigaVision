@@ -9,13 +9,19 @@ uae-configuration cpu_speed max
 uae-configuration cachesize 0 cpu_speed real cpu_multiplier 4
 uae-configuration finegrain_cpu_speed 1024
 
-IF "{{VIDEO_MODE}}" EQ "NTSC"
-  ; Explicitly ask for NTSC
-  uae-configuration ntsc true
-  ; Set NTSC height
-  uae-configuration amiberry.gfx_dynamic_height 216
-  ; Sets offset to 0 if NTSC:
-  ;uae-configuration gfx_center_vertical false amiberry.gfx_dynamic_top 0
+; Optionally set NTSC parameters
+IF EXISTS ENV:whdlvmode
+  IF $whdlvmode EQ "NTSC"
+    uae-configuration ntsc true
+    uae-configuration amiberry.gfx_dynamic_height 216
+    ;uae-configuration gfx_center_vertical false amiberry.gfx_dynamic_top 0
+  ENDIF
+ELSE
+  IF "{{VIDEO_MODE}}" EQ "NTSC"
+    uae-configuration ntsc true
+    uae-configuration amiberry.gfx_dynamic_height 216
+    ;uae-configuration gfx_center_vertical false amiberry.gfx_dynamic_top 0
+  ENDIF
 ENDIF
 ;END A500 Mini Init
 
