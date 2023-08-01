@@ -64,7 +64,6 @@ if not warn
     if exists Data:WHD
       assign AGS: Amiga:AGS2
       assign WHD0: Data:WHD
-      ags-vadjust
       AGS:AGS2
     endif
   endif

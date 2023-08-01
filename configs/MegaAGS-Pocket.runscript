@@ -1,4 +1,3 @@
-ags-notify TITLE="{{TITLE}}"
 ags-cd "{{PATH}}"
 IF NOT EXISTS ENV:whdlspdly
   echo 200 >ENV:whdlspdly
@@ -9,8 +8,5 @@ ENDIF
 IF EXISTS ENV:whdlvmode
   whdload >NIL: "{{SLAVE}}" $whdlvmode {{CUST_ARGS}} SplashDelay={{SPLASH_DELAY}} {{QUIT_KEY}}
 ELSE
-  ags-vadjust s={{VADJUST_SCALE}} v={{VADJUST_VSHIFT}} h={{VADJUST_HSHIFT}} {{VADJUST_SACHS}}
   whdload >NIL: "{{SLAVE}}" {{VIDEO_MODE}} {{CUST_ARGS}} SplashDelay={{SPLASH_DELAY}} {{QUIT_KEY}}
-  ags-vadjust
 ENDIF
-ags-notify
