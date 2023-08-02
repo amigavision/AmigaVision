@@ -1,3 +1,5 @@
 # Post build script
-cp -R $AGSCONTENT/distro_mini/* $AGSDEST/
-mv $AGSDEST/MegaAGS-Mini-ReadMe.md $AGSDEST/MegaAGS-Mini-ReadMe.txt
+rm -rf $AGSDEST/MegaAGS-Mini
+mkdir $AGSDEST/MegaAGS-Mini
+cp -R $AGSCONTENT/distro_mini/* $AGSDEST/MegaAGS-Mini
+mv $AGSDEST/MegaAGS-Mini/MegaAGS-Mini-ReadMe.md $AGSDEST/MegaAGS-Mini/MegaAGS-Mini-ReadMe.txt

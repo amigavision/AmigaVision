@@ -37,15 +37,17 @@ screenshots:
 image:
 	@pipenv run ./ags_imager.py -v -c configs/MegaAGS.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
-	@mv ${AGSDEST}/MegaAGS.hdf ${AGSDEST}/games/Amiga/MegaAGS.hdf
+	@mv ${AGSDEST}/MegaAGS.hdf ${AGSDEST}/games/Amiga
 
 pocket-image:
 	@pipenv run ./ags_imager.py -v -c configs/MegaAGS-Pocket.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
+	@mv ${AGSDEST}/MegaAGS-Pocket.hdf ${AGSDEST}/MegaAGS-Pocket
 
 mini-image:
 	@pipenv run ./ags_imager.py -v -c configs/MegaAGS-Mini.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
+	@mv ${AGSDEST}/MegaAGS-Mini.hdf ${AGSDEST}/MegaAGS-Mini
 
 test-image:
 	@pipenv run ./ags_imager.py -v -c configs/Test.yaml --auto-lists -o ${AGSDEST}
