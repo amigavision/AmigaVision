@@ -5,5 +5,3 @@ uae-configuration gfx_center_vertical smart amiberry.gfx_dynamic_top 0 chipset_r
 
 ; We always run with JIT and as an A1200
 uae-configuration cpu_speed max
-uae-configuration cachesize 0 cpu_speed real cpu_multiplier 4
-uae-configuration finegrain_cpu_speed 1024
