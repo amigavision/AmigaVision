@@ -25,9 +25,9 @@ Plenty of those setups exist out there, but this is not that. :)
 * Copy the included files in this setup to the root of the drive, the structure should look like this:
 
 ```
+Shared/
 THEA500/
   whdboot/
-  Shared/
 MegaAGS-Mini.hdf
 MegaAGS-Saves.hdf
 Start MegaAGS_ol.uae
