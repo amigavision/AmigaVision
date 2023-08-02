@@ -53,13 +53,12 @@ For full documentation on the rest of the AmigaVision setup, go to the [AmigaVis
 
 * The A500 Mini is not the most powerful of devices, and does have issues with perfect emulation. This will be the same for any setup made for the A500 Mini, and if you are looking for accurate Amiga performance, there are versions of the AmigaVision setup for real hardware, MiSTer and Analogue Pocket FPGAs, as well as PC & Mac emulators.
 * Because of the FAT32 restriction of 4GB, the game selection is a bit more limited than on the real AmigaVision setup. If you have specific games that are missing and you would like to include, file an issue on the [AmigaVision] web site, and we will consider adding it.
-* NTSC Settings are still not scaling the way we'd like, but should work as well as they can (running 60hz games under 50hz displays will have some trade-offs).
 * Tested on the original Mini firmware (1.0.x), and also the latest available firmware at this time (v1.1.1). We recommend the latest firmware.
 
 ## Still in Beta:
 
 * There is currently no support for [Dynamic Crop] or [Dynamic Pixel Aspect] Ratio on emulators, nor on the A500 Mini.
-* Scaling and offsets are still not optimized.
+* NTSC games are still not scaling the way we'd like, but we are working on improving the situation -- running 60hz games under 50hz displays will have some trade-offs.
 
 
 [AmigaVision]:https://amiga.vision
