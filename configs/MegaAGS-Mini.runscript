@@ -1,0 +1,26 @@
+mini-init
+
+IF EXISTS ENV:whdlvmode
+  IF $whdlvmode EQ "NTSC"
+    mini-ntsc
+  ENDIF
+ELSE
+  IF "{{VIDEO_MODE}}" EQ "NTSC"
+    mini-ntsc
+  ENDIF
+ENDIF
+
+ags-cd "{{PATH}}"
+IF NOT EXISTS ENV:whdlspdly
+  echo 200 >ENV:whdlspdly
+ENDIF
+IF NOT EXISTS ENV:whdlqtkey
+  echo "" >ENV:whdlqtkey
+ENDIF
+IF EXISTS ENV:whdlvmode
+  whdload >NIL: "{{SLAVE}}" $whdlvmode {{CUST_ARGS}} SplashDelay={{SPLASH_DELAY}} {{QUIT_KEY}}
+ELSE
+  whdload >NIL: "{{SLAVE}}" {{VIDEO_MODE}} {{CUST_ARGS}} SplashDelay={{SPLASH_DELAY}} {{QUIT_KEY}}
+ENDIF
+
+mini-reset

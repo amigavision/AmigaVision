@@ -1,0 +1,9 @@
+; Reset a bunch of states before we start (necessary because we can't trust that these are correct)
+uae-configuration fast_copper false immediate_blits false
+uae-configuration ntsc false amiberry.gfx_dynamic_height 256
+uae-configuration gfx_center_vertical smart amiberry.gfx_dynamic_top 0 chipset_refreshrate 50
+
+; We always run with JIT and as an A1200
+uae-configuration cpu_speed max
+uae-configuration cachesize 0 cpu_speed real cpu_multiplier 4
+uae-configuration finegrain_cpu_speed 1024

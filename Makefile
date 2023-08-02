@@ -43,6 +43,10 @@ pocket-image:
 	@pipenv run ./ags_imager.py -v -c configs/MegaAGS-Pocket.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 
+mini-image:
+	@pipenv run ./ags_imager.py -v -c configs/MegaAGS-Mini.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
+	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
+
 test-image:
 	@pipenv run ./ags_imager.py -v -c configs/Test.yaml --auto-lists -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
