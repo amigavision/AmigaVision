@@ -3,7 +3,7 @@
   - image: { ops: { op: "pi", path: "top/curated_content.png" }, size: [320, 128], scale: [1, 1] }
   - Alex Limi's Collection:
     - note: Amiga games worth your time, according to Alex Limi.
-    - Multiplayer:
+    - "[ Multiplayer ]":
       - ordering: "ordered"
       - note: Show only the multiplayer games.
       - image: { ops: { op: "pi", path: "top/multiplayer.png" }, size: [320, 128], scale: [1, 1] }
@@ -417,7 +417,7 @@
     - Zeewolf
     - Zeewolf2
     - ZOut
-  - DenOfGeek-Underappreciated:
+  - Den of Geek's Underappreciated:
     - ordering: "ranked"
     - note: The Top 50 underappreciated Amiga games according to Den of Geek.
     - image: { op: "pi", path: "list/denofgeek.jpg" }
@@ -471,7 +471,7 @@
     - Conqueror
     - Alcatraz
     - Resolution101
-  - Kim Justice Platformers:
+  - Kim Justice's Euro Platformers:
     - note: Nine obscure euro platformers that DON'T suck, according to Kim Justice.
     - image: { op: "pi", path: "list/kimjustice_platformers.jpg" }
     - Lionheart
@@ -483,7 +483,7 @@
     - ArabianNights
     - Lollypop
     - TrapsNTreasures
-  - Kim Justice Top Psygnosis:
+  - Kim Justice's Top 10 Psygnosis:
     - ordering: "ordered"
     - note: Kim Justice's top 10 favourite Psygnosis games (excluding a few non-Amiga games, including honorable mentions).
     - image: { op: "pi", path: "list/kimjustice_psygnosis.jpg" }
@@ -499,7 +499,7 @@
     - BloodMoney
     - HiredGuns
     - SecondSamurai
-  - PIXEL thing - 45 Games:
+  - PIXEL thing's 45 Games:
     - ordering: "ordered"
     - note: 45 Games That Defined the AMIGA 500,\naccording to It's a P/XEL thing.\n\n(Chronologically ordered.)
     - image: { op: "pi", path: "list/pixelthing_45games.jpg" }
@@ -548,7 +548,7 @@
     - Worms
     - UFOEnemyUnknown
     - SWOS9596ECE
-  - PIXEL thing - Exclusives:
+  - PIXEL thing's 23 Exclusives:
     - ordering: "ordered"
     - note: 23 unforgettable Amiga exclusives,\naccording to It's a P/XEL thing.
     - image: { op: "pi", path: "list/pixelthing_23exclusive.jpg" }
@@ -575,7 +575,7 @@
     - Lionheart
     - Fuzzball
     - Apidya
-  - Racketboy Shmup Essentials:
+  - Racketboy's Shmup Essentials:
     - note: The Commodore Amiga Shmup Library Essentials, according to The Knives and Herr Schatten of Racketboy.com.
     - image: { op: "pi", path: "list/racketboy_shmups.jpg" }
     - Apidya
@@ -614,7 +614,7 @@
     - Superfrog
     - Turrican
     - Turrican2
-  - Wired - Most Influential:
+  - Wired's Most Influential:
     - note: Top 10 most influential Amiga games according to Wired.
     - image: { op: "pi", path: "list/wired.png" }
     - DefenderOfTheCrown

@@ -44,7 +44,6 @@ def make_canonical_name(entry) -> str | None:
 
 def sanitize_name(name: str) -> str:
     name = name.replace("/", "-").replace("\\", "-").replace(": ", " ").replace(":", " ").replace("\"", "")
-    name = name.replace(" [AGA]", "")
     if name[0] == '(':
         name = name.replace('(', '[', 1).replace(')', ']', 1)
     return name.strip()
@@ -123,7 +122,7 @@ def make_entries(
     base_path = ags_path
     if path:
         for d in path:
-            base_path = util.path(base_path, d[:26].strip() + ".ags")
+            base_path = util.path(base_path, d[:AGS_LIST_WIDTH].strip() + ".ags")
     if not hidden: util.make_dir(base_path)
 
     # set dir sort rank
@@ -223,6 +222,7 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
     # shorten name and prevent name clashes
     title = title.strip()
     if len(title) > max_w: title = title.replace(", The", "")
+
     if util.is_file(util.path(path, title) + runfile_ext):
         if entry.get("category", "").lower() == "demo":
             title += " (" + entry.get("publisher") + ")"
@@ -233,6 +233,8 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
                 languages = query.get_languages(entry)
                 if len(languages) == 1:
                     title = title.rstrip() + " [" + util.language_code(languages[0]).upper() + "]"
+
+    if len(title) > max_w: title = title.replace("(", "").replace(")", "")
 
     if len(title) > max_w:
         title = title[:max_w - 2].strip() + ".."

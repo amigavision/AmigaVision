@@ -545,9 +545,9 @@
     - NavySEALs
     - Uridium2
     - YoJoe
-  - Lemon Top 30 (Sep 2022):
+  - Lemon Amiga Top 30:
     - ordering: "ranked"
-    - note: As voted by lemonamiga.com users
+    - note: The best Amiga games, as voted by Lemon Amiga users.
     - image: { op: "pi", path: "list/lemon.png" }
     - SecretOfMonkeyIsland
     - MonkeyIsland2
@@ -592,7 +592,7 @@
     - SensibleSoccer
     - Syndicate
     - JimmyWhitesSnooker
-  - retroGAMER A500 Top 10 :
+  - retroGAMER Amiga 500 Top 10:
     - note: Top 10 from retroGAMER magazine.
     - image: { op: "pi", path: "list/retrogamer.jpg" }
     - Worms
