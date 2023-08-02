@@ -27,9 +27,9 @@ Plenty of those setups exist out there, but this is not that. :)
 ```
 THEA500/
   whdboot/
-MegaAGS/
-  HDFs/
   Shared/
+MegaAGS-Mini.hdf
+MegaAGS-Saves-hdf
 Start MegaAGS_ol.uae
 Start MegaAGS.lha
 ```
