@@ -1,29 +1,14 @@
-; BEGIN A500 Mini Init
-; Reset a bunch of states before we start (necessary because we can't trust that these are correct)
-uae-configuration fast_copper false immediate_blits false
-uae-configuration ntsc false amiberry.gfx_dynamic_height 256
-uae-configuration gfx_center_vertical smart amiberry.gfx_dynamic_top 0 chipset_refreshrate 50
+mini-init
 
-; We always run with JIT and as an A1200
-uae-configuration cpu_speed max
-uae-configuration cachesize 0 cpu_speed real cpu_multiplier 4
-uae-configuration finegrain_cpu_speed 1024
-
-; Optionally set NTSC parameters
 IF EXISTS ENV:whdlvmode
   IF $whdlvmode EQ "NTSC"
-    uae-configuration ntsc true
-    uae-configuration amiberry.gfx_dynamic_height 216
-    ;uae-configuration gfx_center_vertical false amiberry.gfx_dynamic_top 0
+    mini-ntsc
   ENDIF
 ELSE
   IF "{{VIDEO_MODE}}" EQ "NTSC"
-    uae-configuration ntsc true
-    uae-configuration amiberry.gfx_dynamic_height 216
-    ;uae-configuration gfx_center_vertical false amiberry.gfx_dynamic_top 0
+    mini-ntsc
   ENDIF
 ENDIF
-;END A500 Mini Init
 
 ags-cd "{{PATH}}"
 IF NOT EXISTS ENV:whdlspdly
@@ -38,10 +23,4 @@ ELSE
   whdload >NIL: "{{SLAVE}}" {{VIDEO_MODE}} {{CUST_ARGS}} SplashDelay={{SPLASH_DELAY}} {{QUIT_KEY}}
 ENDIF
 
-; BEGIN A500 Mini Cleanup
-; Reset a bunch of states before going back to the launcher (again, this is always a good idea to do)
-uae-configuration ntsc false
-uae-configuration fast_copper false immediate_blits false
-uae-configuration ntsc false amiberry.gfx_dynamic_height 256
-uae-configuration gfx_center_vertical smart amiberry.gfx_dynamic_top 0 chipset_refreshrate 50
-; END A500 Mini Cleanup
+mini-reset
