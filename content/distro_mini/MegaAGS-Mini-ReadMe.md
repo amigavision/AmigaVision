@@ -29,7 +29,7 @@ THEA500/
   whdboot/
   Shared/
 MegaAGS-Mini.hdf
-MegaAGS-Saves-hdf
+MegaAGS-Saves.hdf
 Start MegaAGS_ol.uae
 Start MegaAGS.lha
 ```
