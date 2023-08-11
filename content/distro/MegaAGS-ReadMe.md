@@ -70,7 +70,9 @@ MegaAGS supports any AGA-capable Amiga: Amiga 1200, Amiga 4000, and Amiga CD32 â
 
 To set up MegaAGS, choose your favorite disk imaging tool â€” e.g. [Balena Etcher] for Mac, Linux and Windows, [Win32 Disk Imager] for Windows, or whatever tool you prefer for writing to SD/CF cards.
 
-Simply locate the `games/Amiga/MegaAGS.hdf` file, and load that in your disk imaging tool of choice, and write it to the SD/CF card. 
+Simply locate the `games/Amiga/MegaAGS.hdf` file, and load that in your disk imaging tool of choice, and write it to the SD/CF card. If the file requester in the disk imaging tool does not allow you to select `.hdf` files, you may need to rename it to have a different extension, e.g. `.img`, `.bin` or similar.
+
+If your HDF image contains every game in the database, you will need a 16GB CF/SD card. If you have a smaller card, you can make use of the configuration for the Analogue Pocket device, which will keep the selection under 4GB.
 
 ### A note about save files & upgrading on Amiga hardware
 
