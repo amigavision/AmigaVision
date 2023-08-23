@@ -1,0 +1,15 @@
+ags-cd N/StarTrekTR
+IF EXISTS WHDSaves:StarTrekTR
+  copy WHDSaves:StarTrekTR/STGAME1 "" QUIET
+ELSE
+  makedir WHDSaves:StarTrekTR
+ENDIF
+assign >NIL: STGAME: ""
+assign >NIL: STDATA: STDATA
+ShowAnim >NIL: TrekGame.PreAnim +4
+failat 2147483647
+StarTrek
+failat 21
+copy STGAME:STGAME1 WHDSaves:StarTrekTR/ QUIET
+assign >NIL: STDATA: REMOVE
+assign >NIL: STGAME: REMOVE

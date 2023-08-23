@@ -1,0 +1,6 @@
+%YAML 1.2
+---
+AmoebaInvaders/Amoeba.info: eefb5777e975281dd5617540a31d1c873d93a8ddf2fa09ae7ea2b30ce74a75e5
+AmoebaInvaders/Amoeba.slave: 020e5c25402de9d6b01c6c94077b680411e145a31c610389ee62f09f6e519b0e
+AmoebaInvaders/data/Amoeba: e9f2100f3fd4f953a5b8b550a5ed5e95aff219873ea0e4dfaeb94d4e5ab64089
+AmoebaInvaders/data/amoebasounds: 4a997a1bcbccf1c21d30e59823b725e9b86455cf5528457e1822a3a5e751d760

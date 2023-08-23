@@ -1,0 +1,9 @@
+IF NOT EXISTS WHDSaves:CurseOfRabenstein
+  makedir WHDSaves:CurseOfRabenstein
+ENDIF
+assign DF0: DISMOUNT
+assign DF0: WHDSaves:CurseOfRabenstein
+ags-cd N/CurseOfRabenstein
+INTERP >NIL:
+assign DF0: REMOVE
+mount DF0:

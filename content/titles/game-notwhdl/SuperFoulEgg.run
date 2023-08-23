@@ -1,0 +1,8 @@
+ags-cd N/SuperFoulEgg
+IF EXISTS WHDSaves:SuperFoulEgg
+  copy WHDSaves:SuperFoulEgg/#?.dat "" ALL QUIET
+ENDIF
+assign >NIL: sfe: ""
+SuperFoulEgg >NIL:
+assign >NIL: sfe: REMOVE
+copy #?.dat WHDSaves:SuperFoulEgg ALL QUIET

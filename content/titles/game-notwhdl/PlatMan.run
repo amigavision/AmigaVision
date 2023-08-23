@@ -1,0 +1,6 @@
+ags-cd N/PlatMan
+assign DF0: DISMOUNT
+assign DF0: ""
+Platman/Plat_Man >NIL:
+assign DF0: REMOVE
+mount DF0:
