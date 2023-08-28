@@ -231,4 +231,5 @@
 
   - "2023":
     - image: { op: "tx", txt: "’23", size: 190 }
+    - DaltonMarkFerrari
     - Ghostown-Electric
