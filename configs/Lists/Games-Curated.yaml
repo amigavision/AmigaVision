@@ -67,6 +67,7 @@
       - SWOS9596: { disp_name: "[2P] Sensible World of Soccer" }
       - TinyBobble: { disp_name: "[2P] Tiny Bobble" }
       - TopGear2: { disp_name: "[2P] Top Gear 2" }
+      - Troddlers: { disp_name: "[2P] Troddlers" }
       - TurboRaketti2Fi: { disp_name: "[2P] TurboRaketti II" }
       - Twintris: { disp_name: "[2P] Twintris" }
       - Ugh: { disp_name: "[2P] Ugh!" }
@@ -382,6 +383,7 @@
     - Toki
     - TrapsNTreasures
     - TreasureIslandDizzy
+    - Troddlers
     - TurboRaketti2Fi
     - Turrican
     - Turrican2AGA
