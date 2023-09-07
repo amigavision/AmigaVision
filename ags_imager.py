@@ -95,7 +95,7 @@ def extract_entries(clone_path, entries):
 def extract_entry(clone_path, entry):
     arc_path = get_archive_path(entry)
     if not arc_path:
-        print(" > WARNING: content archive not found:", entry["id"])
+        print(" > WARNING: archive not found for", entry["id"])
     else:
         dest = get_whd_dir(clone_path, entry)
         if entry_is_notwhdl(entry):

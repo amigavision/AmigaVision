@@ -449,37 +449,44 @@ def make_runscript(entry, template, quiet: bool) -> str:
         if not vadjust_scale: vadjust_scale = 0
 
         if query.entry_is_notwhdl(entry):
-            runfile_source_path = query.get_archive_path(entry).replace(".lha", ".run")
-            if util.is_file(runfile_source_path):
-                script = "ags-notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
-                script += "set{}\n".format(whd_vmode.lower())
-                script += "ags-vadjust s={} v={} h={} {}\n".format(vadjust_scale, vadjust_vshift, vadjust_hshift, vadjust_sachs)
-                with open(runfile_source_path, 'r') as f: script += f.read()
-                script += "setvmode $AGSVMode\n"
-                script += "ags-vadjust\n"
-                script += "ags-notify\n"
+            archive_path = query.get_archive_path(entry)
+            if archive_path:
+                runfile_source_path = archive_path.replace(".lha", ".run")
+                if util.is_file(runfile_source_path):
+                    script = "ags-notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
+                    script += "set{}\n".format(whd_vmode.lower())
+                    script += "ags-vadjust s={} v={} h={} {}\n".format(vadjust_scale, vadjust_vshift, vadjust_hshift, vadjust_sachs)
+                    with open(runfile_source_path, 'r') as f: script += f.read()
+                    script += "setvmode $AGSVMode\n"
+                    script += "ags-vadjust\n"
+                    script += "ags-notify\n"
+            else:
+                script = "echo \"Title not available.\"" + "\n" + "wait 2"
         else:
-            whd_entrypath = query.get_amiga_whd_dir(entry)
-            if whd_entrypath:
-                whd_cargs = "BUTTONWAIT"
-                if entry.get("slave_args"):
-                    whd_cargs += " " + entry["slave_args"]
-                whd_qtkey = "" if "QuitKey=" in whd_cargs else "$whdlqtkey"
-                whd_spdly = "0" if quiet else "$whdlspdly"
-
-                script = util.apply_template(template, {
-                    "TITLE": entry.get("title", "Unknown"),
-                    "PATH": whd_entrypath,
-                    "SLAVE": query.get_whd_slavename(entry),
-                    "CUST_ARGS": whd_cargs,
-                    "QUIT_KEY": whd_qtkey,
-                    "SPLASH_DELAY": whd_spdly,
-                    "VIDEO_MODE": whd_vmode,
-                    "VADJUST_SCALE": vadjust_scale,
-                    "VADJUST_VSHIFT": vadjust_vshift,
-                    "VADJUST_HSHIFT": vadjust_hshift,
-                    "VADJUST_SACHS": vadjust_sachs
-                })
+            archive_path = query.get_archive_path(entry)
+            if archive_path:
+                whd_entrypath = query.get_amiga_whd_dir(entry)
+                if whd_entrypath:
+                    whd_cargs = "BUTTONWAIT"
+                    if entry.get("slave_args"):
+                        whd_cargs += " " + entry["slave_args"]
+                    whd_qtkey = "" if "QuitKey=" in whd_cargs else "$whdlqtkey"
+                    whd_spdly = "0" if quiet else "$whdlspdly"
+                    script = util.apply_template(template, {
+                        "TITLE": entry.get("title", "Unknown"),
+                        "PATH": whd_entrypath,
+                        "SLAVE": query.get_whd_slavename(entry),
+                        "CUST_ARGS": whd_cargs,
+                        "QUIT_KEY": whd_qtkey,
+                        "SPLASH_DELAY": whd_spdly,
+                        "VIDEO_MODE": whd_vmode,
+                        "VADJUST_SCALE": vadjust_scale,
+                        "VADJUST_VSHIFT": vadjust_vshift,
+                        "VADJUST_HSHIFT": vadjust_hshift,
+                        "VADJUST_SACHS": vadjust_sachs
+                    })
+            else:
+                script = "echo \"Title not available.\"" + "\n" + "wait 2"
     else:
         script = "echo \"Title not available.\"" + "\n" + "wait 2"
 
