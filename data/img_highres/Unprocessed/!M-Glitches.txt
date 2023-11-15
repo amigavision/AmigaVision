@@ -1,0 +1,33 @@
+demo--magneticdreams--magneticdreams
+some parts overcropped
+
+demo--megademomanowar--megademomanowar
+crashes after first part
+
+demo--maximumvelocity--maximumvelocity
+locks up fading out the mushroom cloud
+
+demo-notwhdl--fairlight-megalomania
+useless intro - 1 logo + text - i would remove this
+
+demo--megademomegaforce--megademomegaforce
+can't exit game?
+
+demo--metalmelissathepisser--metalmelissathepisser
+crashes at first image
+
+demo--megademojoy&mgf&tjc--megademojoy&mgf&tjc
+crashes at second part
+
+demo--prime90--prime90
+left shit or fn key crashes demo (hard to get pics)
+
+demo--morbidvisions2--morbidvisions2
+overcropped vertically
+
+demo--motionaga--motionaga
+crashes at first image
+
+demo--mrmonkeyaga--mrmonkeyaga
+fails to load, crashes
+
