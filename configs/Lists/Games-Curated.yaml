@@ -21,7 +21,6 @@
       - BubbleBobble: { disp_name: "[2P] Bubble Bobble" }
       - ChambersOfShaolin: { disp_name: "[2P] Chambers of Shaolin" }
       - ChaosEngine: { disp_name: "[2P] Chaos Engine" }
-      - ChaosEngine2: { disp_name: "[2P] Chaos Engine 2" }
       - DogsOfWar: { disp_name: "[2P] Dogs of War" }
       - EmeraldMine: { disp_name: "[2P] Emerald Mine" }
       - EmeraldMine2: { disp_name: "[2P] Emerald Mine 2" }
@@ -148,7 +147,6 @@
     - Centurion
     - ChambersOfShaolin
     - ChaosEngine
-    - ChaosEngine2
     - ChuckRock
     - ChuckRock2
     - Civilization
