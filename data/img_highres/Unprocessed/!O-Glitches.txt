@@ -1,0 +1,9 @@
+demo--oasisaga--oasisaga
+black screen - doesn't load
+
+demo--onestone--onestone
+overcropped hor+ver
+
+demo--originaga--originaga
+locks up at first picture
+
