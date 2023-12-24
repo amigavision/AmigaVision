@@ -12,3 +12,4 @@ echo "Cloning DH1:..."
 copy tmp:DH1/#? DH1: all clone quiet
 echo ""
 echo "Done!"
+UAEquit
