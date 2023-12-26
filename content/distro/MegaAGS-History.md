@@ -11,7 +11,7 @@
 * "Lost" Codemasters game added: Stuntman Seymour.
 * Aspect ratio fixes for several games LucasArts and Cinemaware games: Maniac Mansion, Zak McKracken, Loom, Pipe Dream, Battlehawks 1942, Who Framed Roger Rabbit, Lords of the Rising Sun, King of Chicago, It Came From the Desert, Antheads, Sinbad, SDI, Rocket Ranger, Three Stooges, TV Sports Baseball, TV Sports Football, TV Sports Boxing, TV Sports Basketball, Wings.
 * New "Focus" categories: “PD Golden Age”, “PD Silver Age” — the best of Public Domain games on the Amiga.
-* Requests for specific games and demos for the Analogue Pocket setup added.
+* Requests for specific game and demo configurations for the Analogue Pocket setup added.
 * Longer game names allowed in the launcher, which avoids 99% of truncated names.
 * Topaz Double added to the setup for those of you wanting to run Workbench in a 1:1 pixel aspect ratio setup.
 * Build script is now capable of running without any human interaction.
