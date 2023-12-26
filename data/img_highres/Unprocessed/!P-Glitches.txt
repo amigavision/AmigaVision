@@ -1,0 +1,38 @@
+demo--megademophenomena--megademophenomena
+poor vertical crop
+
+demo--pixelnation--pixelnation
+corruption in zoom scroller part
+
+demo--planetgrooveaga--planetgrooveaga
+Overcropped verically
+
+demo--plasticpassion--plasticpassion
+Crashes as 6259 SinePlots part
+
+demo-notwhdl--batmangroup-posadas2022
+overcropped horizontally
+
+demo--megademopossessed--megademopossessed
+Overcropped
+
+demo--powerandagony--powerandagony
+Line down screen in some parts and overcropped horizontally
+
+demo--megademoprecise--megademoprecise
+overcropped horizontally
+
+demo--prism--prism
+Goes nuts at first part
+
+demo--prosiak--prosiak
+overcropped
+
+demo--psychedelicaga--psychedelicaga
+some gfx corruption then a crash after music speeds up
+
+demo--puggsinspace--puggsinspace
+glitches then crashes
+
+demo--punisher--punisher
+Fails to start after "Digital" screen
