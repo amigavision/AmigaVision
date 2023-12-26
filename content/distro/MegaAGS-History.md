@@ -6,6 +6,7 @@
 * Wings of Death crash on exit fixed.
 * Some 5×PAL offsets/defaults improved: Turrican, Switchblade, Agony.
 * Notable demo added: The Black Lotus — Eon.
+* Disk Magazines added: Stolen Data 9 & 10
 * Christmas version of Mega-lo-Mania added.
 * "Lost" Codemasters game added: Stuntman Seymour.
 * Aspect ratio fixes for several games LucasArts and Cinemaware games: Maniac Mansion, Zak McKracken, Loom, Pipe Dream, Battlehawks 1942, Who Framed Roger Rabbit, Lords of the Rising Sun, King of Chicago, It Came From the Desert, Antheads, Sinbad, SDI, Rocket Ranger, Three Stooges, TV Sports Baseball, TV Sports Football, TV Sports Boxing, TV Sports Basketball, Wings.

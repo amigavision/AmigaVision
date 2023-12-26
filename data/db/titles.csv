@@ -5055,7 +5055,7 @@ demo-notwhdl--daltonmarkferrari;Mark Ferrari Slideshow;Mark Ferrari Slideshow;;;
 game--karatechamp--karatechamp;Karate Champ;Karate Champ;;;OCS;0;0;;;;;1;;;;Arcade to Amiga port by JOTD;2023;;English;JOTD;JOTD;2;CUSTOM4=1 CUSTOM5=2;v1.0;KarateChamp/KarateChamp.slave;game/_generic/KarateChamp_v1.0.lha;Game;;-2;-2
 game--kingdomsofengland--kingdomsofengland;Kingdoms of England;Kingdoms of England;;;OCS;;0;;;;;;;;;;1989;;English;Realism Entertainment;Incognito Software;4 (taking turns);;v1.01;KingdomsOfEngland/KingdomsOfEngland.slave;game/K/KingdomsOfEngland_v1.01.lha;Game;;-2;641
 demo--musicdisk3vega--musicdisk3vega;Music Disk #3;Vega Music Disk 3;;;OCS;;0;;;;;;;;;;1991;Italy;English;;Vega;1;;v1.0;MusicDisk3Vega/MusicDisk3Vega.slave;demo/M/MusicDisk3_v1.0_Vega.lha;Demo;Music Disk;;
-demo--eon--eon;Eon;Eon;;;OCS;;0;;;;;;;;;;2019-04-21;Sweden, UK;English;;The Black Lotus;1;;v1.0;Eon/Eon.slave;demo/E/Eon_v1.0_BlackLotus.lha;Demo;;;
+demo--eon--eon;Eon;Eon;;;OCS;;0;5;26;;;;;;;;2019-04-21;Sweden, UK;English;;The Black Lotus;1;;v1.0;Eon/Eon.slave;demo/E/Eon_v1.0_BlackLotus.lha;Demo;Demo;;
 demo--lasttraintodanzigaga--lasttraintodanzigaga;Last Train to Danzig;Last Train to Danzig;;;AGA;;0;;;;;;;;Black screen on startup;;2015-10-17;Poland, Germany;English;;Ghostown, Haujobb;1;;v1.0;LastTrainToDanzigAGA/LastTrainToDanzigAGA.slave;demo/L/LastTrainToDanzig_v1.0_Ghostown&Haujobb_AGA.lha;Demo;;;
 demo--zenerdrive--zenerdrive;Zener Drive;Zener Drive;;;OCS;;0;;;;;;;;;;2017-10-21;Poland;English;;Altair;1;;v1.0;ZenerDrive/ZenerDrive.slave;demo/Z/ZenerDrive_v1.0_Altair.lha;Demo;;;
 game--bagman--bagman;Bagman;Bagman;;;OCS;;0;;;;;;;;;Arcade to Amiga port by JOTD;2023;;English;JOTD;JOTD;1;;v1.0;Bagman/Bagman.slave;game/B/Bagman_v1.0.lha;Game;;;4921
