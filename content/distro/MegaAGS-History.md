@@ -1,6 +1,19 @@
 # MegaAGS Version History
 
-(This is a partial version history reconstructed from earlier releases, some features may be missing)
+## 2023.12.25
+
+* WHDLoad configurations are up to date with WHDLoad 2023-12-23.
+* Wings of Death crash on exit fixed.
+* Some 5×PAL offsets/defaults improved: Turrican, Switchblade, Agony.
+* Notable demo added: The Black Lotus — Eon.
+* Christmas version of Mega-lo-Mania added.
+* "Lost" Codemasters game added: Stuntman Seymour.
+* Aspect ratio fixes for several games LucasArts and Cinemaware games: Maniac Mansion, Zak McKracken, Loom, Pipe Dream, Battlehawks 1942, Who Framed Roger Rabbit, Lords of the Rising Sun, King of Chicago, It Came From the Desert, Antheads, Sinbad, SDI, Rocket Ranger, Three Stooges, TV Sports Baseball, TV Sports Football, TV Sports Boxing, TV Sports Basketball, Wings.
+* New "Focus" categories: “PD Golden Age”, “PD Silver Age” — the best of Public Domain games on the Amiga.
+* Requests for specific games and demos for the Analogue Pocket setup added.
+* Longer game names allowed in the launcher, which avoids 99% of truncated names.
+* Topaz Double added to the setup for those of you wanting to run Workbench in a 1:1 pixel aspect ratio setup.
+* Build script is now capable of running without any human interaction.
 
 ## 2023.07.17
 
