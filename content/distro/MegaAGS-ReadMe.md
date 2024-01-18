@@ -100,7 +100,7 @@ For any additional configuration or customizations, consult the FS-UAE documenta
 
 ## Setup for Pocket
 
-AmigaVision also has a version for the handheld [Analogue Pocket] FPGA device.
+AmigaVision also works great with the handheld [Analogue Pocket] FPGA device.
 
 * Download the latest version of the [Amiga Pocket Core] and put it on your device.
 * Copy the included files in the AmigaVision Pocket setup to the `/Assets/amiga/common` directory on your Pocket SD card.
