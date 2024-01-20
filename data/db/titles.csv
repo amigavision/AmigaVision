@@ -5065,8 +5065,8 @@ game--crimboaga--crimboaga;Crimbo;Crimbo;;;AGA;;0;;;;;;;;;;2022;;English;Andrew 
 game--defenderacid--defenderacid;Defender (Acid);Defender (Acid);;;OCS;;0;;;;;;;;;;1993;;English;Acid Software;Amiga Power;1;;v1.0;DefenderAcid/DefenderAcid.slave;game/D/Defender_v1.0_Acid.lha;Game;;;4777
 game--frogger--frogger;Frogger;Frogger;;;OCS;;0;;;;;;;;;Arcade to Amiga port by JoeJoe;2023;;English;JoeJoe;;1;;v1.23;Frogger/Frogger.slave;game/F/Frogger_v1.23.lha;Game;;;4936
 game--galaxian--galaxian;Galaxian;Galaxian;;;OCS;;0;;;;;;;;;Arcade to Amiga port by JOTD;2023;;English;JOTD;JOTD;1;;v1.0;Galaxian/Galaxian.slave;game/G/Galaxian_v1.0.lha;Game;;;4904
-game--manager--manager;Manager;The Manager;;;OCS;;0;;;;;;;;;;1992;;English;Software 2000;US Gold;4 (taking turns);;v1.02;Manager/Manager.slave;game/M/Manager_v1.02_1310.lha;Game;;;1627
-game--managerit--managerit;Manager;The Manager;;game--manager--manager;OCS;;0;;;;;;;;;;1992;;Italian;Software 2000;US Gold;4 (taking turns);;v1.02;ManagerIt/ManagerIt.slave;game/M/Manager_v1.02_It.lha;Game;;;1627
+game--manager--manager;The Manager;Manager;;;OCS;;0;;;;;;;;;;1992;;English;Software 2000;US Gold;4 (taking turns);;v1.02;Manager/Manager.slave;game/M/Manager_v1.02_1310.lha;Game;;;1627
+game--managerit--managerit;The Manager;Manager;;game--manager--manager;OCS;;0;;;;;;;;;;1992;;Italian;Software 2000;US Gold;4 (taking turns);;v1.02;ManagerIt/ManagerIt.slave;game/M/Manager_v1.02_It.lha;Game;;;1627
 game--superbagman--superbagman;Super Bagman;Super Bagman;;;OCS;;0;;;;;;;;;Arcade to Amiga port by JOTD;2023;;English;JOTD;JOTD;1;;v1.0;SuperBagman/SuperBagman.slave;game/S/SuperBagman_v1.0.lha;Game;;;
 game--tolteka--tolteka;Tolteka;Tolteka;;;OCS;;0;;;;;;;;;;1987;Germany;English;New Software Style;Ariolasoft;1;;v1.1;Tolteka/Tolteka.slave;game/T/Tolteka_v1.1.lha;Game;;;4320
 game--winterlandmegalomania--winterlandmegalomania;Mega Lo Mania Winterland;Mega lo Mania Winterland;;;OCS;;0;;;;;;;Holiday variant of the original game;;;1991;;English;Sensible Software;Image Works;1;;v1.7;WinterlandMegaLoMania/WinterlandMegaLoMania.slave;game/W/WinterlandMegaLoMania_v1.7.lha;Game;;;
