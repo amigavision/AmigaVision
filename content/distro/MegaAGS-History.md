@@ -1,5 +1,9 @@
 # MegaAGS Version History
 
+## 2024.04.04
+
+* 528 games changed from PAL60 to PAL with 5× scaling offsets: https://github.com/amigavision/AmigaVision/commit/062da0505ed7f5cd95a0883c504e8ae6e12a99ac
+
 ## 2023.12.25
 
 * WHDLoad configurations are up to date with WHDLoad 2023-12-23.
