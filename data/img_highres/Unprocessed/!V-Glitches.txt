@@ -1,0 +1,10 @@
+demo--vectordance--vectordance - overcropped at top
+
+demo--vectordance2--vectordance2 - After checker board goes past the screen goes black, music continues
+
+demo--megademovision--megademovision - crashes in first loading part - goes nuts
+demo--megademo2vision--megademo2vision - crashes in first loading part - goes nuts
+demo--megademo4vision--megademo4vision - crashes in first loading part - goes nuts
+
+demo--megademovortex42--megademovortex42 - cropped on left
+
