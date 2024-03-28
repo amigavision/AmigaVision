@@ -1,0 +1,26 @@
+demo--saga--saga - Saga? - overcropped at top
+
+demo--screwballs--screwballs - corrupt rotating sine scroller text
+
+demo--sensenmann--sensenmann - crashes 2 seconds in
+
+demo--sevensins--sevensins - 2 corrupt parts before crash
+
+demo--shakkalakkaaga--shakkalakkaaga - locks up immediately
+
+demo--silicongraphics2aga--silicongraphics2aga - overcropped top and bottom - looks like it needs 50hz
+
+demo--sozzledsomersault--sozzledsomersault - some glitchy cube effects
+
+demo--spaceship--spaceship - overcropped all sides
+
+demo--cyrus--cyrus - Horiz overcrop
+
+demo--stateoftheart--stateoftheart - overcropped
+
+demo--statusquo--statusquo - Screenshots given this title but could belong to "demo--statusquofast--statusquofast" instead
+
+demo--swelteringforest--swelteringforest - blank screen after intro title
+
+demo--switchbackaga--switchbackaga - instant crash
+
