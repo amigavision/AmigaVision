@@ -6,5 +6,5 @@ if [ -z "$date_str" ]; then
   echo "No archive suffix";
 else
   arc_name="MegaAGS-Mini-$date_str.7z"
-  7zz a -xr'!.*' -mx=7 -myx=5 $arc_name MegaAGS-Mini-ReadMe.txt "Start MegaAGS_ol.uae" "Start MegaAGS.LHA" THEA500/ MegaAGS-Saves.hdf MegaAGS-Mini.hdf;
+  7z a -xr'!.*' -mx=7 -myx=5 $arc_name MegaAGS-Mini-ReadMe.txt "Start MegaAGS_ol.uae" "Start MegaAGS.LHA" THEA500/ MegaAGS-Saves.hdf MegaAGS-Mini.hdf;
 fi
