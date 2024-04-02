@@ -6,6 +6,7 @@
 - Axis-Headcase: { scale: 6, vshift: 42 }
 - ControlAGA: { scale: 6, vshift: 48 }
 - Coda: { scale: 6, vshift: 73 }
+- Darkage-DeepMeet: { scale: 6, vshift: 45 }
 - Deadliners-Five: { scale: 6, vshift: 40 }
 - DHS-CopperKaahBaahYaah: { scale: 6, vshift: 44 }
 - Drugstore: { scale: 6, vshift: 18 }
@@ -26,6 +27,7 @@
 - Loonies-Octorubber: { scale: 6, vshift: 48 }
 - Melon-Cortez: { scale: 6, vshift: 45 }
 - Melon-FisherhawkDr: { scale: 6, vshift: 45 }
+- Melon-Paint: { scale: 6, vshift: 45 }
 - Melon-WelcomeIntro: { scale: 6, vshift: 45 }
 - ProjectXSE--Ministry: { scale: 6, vshift: 17 }
 - MoodsPlateau-SolveEtCoagula: { scale: 6, vshift: 34 }
