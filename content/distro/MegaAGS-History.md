@@ -2,7 +2,10 @@
 
 ## 2024.04.04
 
-* 528 games changed from PAL60 to PAL with 5× scaling offsets: https://github.com/amigavision/AmigaVision/commit/062da0505ed7f5cd95a0883c504e8ae6e12a99ac
+* 528 games [changed from PAL60 to PAL with 5× scaling offsets](https://github.com/amigavision/AmigaVision/commit/062da0505ed7f5cd95a0883c504e8ae6e12a99ac).
+* 28MHz is the new default pixel clock, make sure you update the `Amiga.cfg` file.
+* Revision 2024 demo party entries added.
+* WHDLoad configurations are up to date with WHDLoad 2024-04-03.
 
 ## 2023.12.25
 
