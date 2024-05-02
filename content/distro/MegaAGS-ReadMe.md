@@ -145,6 +145,15 @@ custom_aspect_ratio_1=40:27
 bootscreen=0
 ```
 
+These default settings assume that you are using it with a 16:9 format 1080p or 4K TV. If you are using a 16:10 format 1440p monitor, use these settings for the video modes instead:
+
+```
+video_mode_ntsc=1920,1440,60
+video_mode_pal=1920,1440,50
+```
+
+Note that even if your 16:9 4K TV can handle and scale 1440p, we still recommend using 1080p output, since that will do proper integer scaling to 4K and make use of the per-game 5× Zoom and Dynamic Crop modes.
+
 * Reboot your MiSTer, you should now have two entries in the `Computer` section: 
   * `Amiga` for the main MegaAGS setup -- you'll be using this one 99% of the time.
   * `Amiga 500` for a stock Amiga 500 hardware setup with no hard drive to use with ADF floppy disk images for any troublesome demos or games that don't work with the main setup. Some demo ADFs are included and can be mounted as floppy disks in MiSTer's OSD menu, invoked with the `F12` key.
