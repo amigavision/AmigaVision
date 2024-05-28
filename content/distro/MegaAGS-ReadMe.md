@@ -1,6 +1,6 @@
-# MegaAGS Amiga Setup
+AmigaVision Setup
 
-MegaAGS creates a carefully curated collection of Amiga games and demos, as well as a minimal Workbench setup with useful utilities and apps, and wraps it all in a user-friendly launcher.
+AmigaVision is a carefully curated collection of Amiga games and demos, as well as a minimal Workbench setup with useful utilities and apps, and wraps it all in a user-friendly launcher.
 
 It has many features specifically for use with [MiSTer] FPGA devices, but also aims to work with emulators like UAE and on original AGA-compatible hardware like an Amiga 1200/4000 or CD32, usually with SD/CF card adapters.
 
@@ -66,9 +66,9 @@ In the `[Options]` menu of the launcher you can choose between a few alternative
 
 ## Setup for Amiga hardware
 
-MegaAGS supports any AGA-capable Amiga: Amiga 1200, Amiga 4000, and Amiga CD32 — as long as it has a mass storage device like an SD card or CF card connected via an adapter to the IDE bus.
+AmigaVision supports any AGA-capable Amiga: Amiga 1200, Amiga 4000, and Amiga CD32 — as long as it has a mass storage device like an SD card or CF card connected via an adapter to the IDE bus.
 
-To set up MegaAGS, choose your favorite disk imaging tool — e.g. [Balena Etcher] for Mac, Linux and Windows, [Win32 Disk Imager] for Windows, or whatever tool you prefer for writing to SD/CF cards.
+To set up AmigaVision, choose your favorite disk imaging tool — e.g. [Balena Etcher] for Mac, Linux and Windows, [Win32 Disk Imager] for Windows, or whatever tool you prefer for writing to SD/CF cards.
 
 Simply locate the `games/Amiga/MegaAGS.hdf` file, and load that in your disk imaging tool of choice, and write it to the SD/CF card. If the file requester in the disk imaging tool does not allow you to select `.hdf` files, you may need to rename it to have a different extension, e.g. `.img`, `.bin` or similar.
 
@@ -78,9 +78,9 @@ If your HDF image contains every game in the database, you will need a 16GB CF/S
 
 Note that save files in games will only be written to disk when you quit the game as described in the [Save Files](#save-files) section.
 
-When installed on a single partition like this, you obviously will overwrite any save files if you upgrade MegaAGS to its newest release. The easiest way is to mount an ADF (or a real floppy!) and copy out the save files before upgrading, and put them back after the new image has been written to your SD/CF card.
+When installed on a single partition like this, you obviously will overwrite any save files if you upgrade AmigaVision to its newest release. The easiest way is to mount an ADF (or a real floppy!) and copy out the save files before upgrading, and put them back after the new image has been written to your SD/CF card.
 
-Save files are located in `DH0:WHDSaves` — and are usually small enough that all of them fit comfortably on an ADF or a real floppy. So don't let that stop you from upgrading to new and improved versions of MegaAGS, it's really quite easy!
+Save files are located in `DH0:WHDSaves` — and are usually small enough that all of them fit comfortably on an ADF or a real floppy. So don't let that stop you from upgrading to new and improved versions of AmigaVision, it's really quite easy!
 
 ### Joystick and Gamepad support on Amiga hardware
 
@@ -155,7 +155,7 @@ video_mode_pal=1920,1440,50
 Note that even if your 16:9 4K TV can handle and scale 1440p, we still recommend using 1080p output, since that will do proper integer scaling to 4K and make use of the per-game 5× Zoom and Dynamic Crop modes.
 
 * Reboot your MiSTer, you should now have two entries in the `Computer` section: 
-  * `Amiga` for the main MegaAGS setup -- you'll be using this one 99% of the time.
+  * `Amiga` for the main AmigaVision setup -- you'll be using this one 99% of the time.
   * `Amiga 500` for a stock Amiga 500 hardware setup with no hard drive to use with ADF floppy disk images for any troublesome demos or games that don't work with the main setup. Some demo ADFs are included and can be mounted as floppy disks in MiSTer's OSD menu, invoked with the `F12` key.
 
 * Launch the `Amiga` entry and enjoy! Don't forget to check out the sections below -- especially on save files, controller mappings and video modes once the basic setup is up and running.
@@ -175,7 +175,7 @@ If you used the Amiga back in the day, you may have memories of using an Amiga 5
 
 There are `ReadMe` files that go into more detail about these setups.
 
-These are *not* meant to be used for games or demos, but instead for giving you a basic setup that lets you run productivity apps like you did back in the day. For games and demos, we recommend the `Amiga` (main MegaAGS setup) and `Amiga 500` (for use with ADF files) instead.
+These are *not* meant to be used for games or demos, but instead for giving you a basic setup that lets you run productivity apps like you did back in the day. For games and demos, we recommend the `Amiga` (main AmigaVision setup) and `Amiga 500` (for use with ADF files) instead.
 
 ## MiSTer: Gamepad & Joystick Mapping
 
@@ -193,6 +193,8 @@ If you are using a gamepad, you might want to use MiSTer's controller mapping to
 * Skip all choices except "up", which we recommend mapping to `X`.
 
 While a keyboard and mouse isn't strictly necessary to play most action games, it is definitely recommended for the full Amiga experience, and many games have controls that make use of them.
+
+## MiSTer: Video Modes
 
 We care deeply about preserving the correct aspect ratio for all games. That means going beyond just NTSC and PAL, and ensuring that the Pixel Aspect Ratio (PAR) is also correct. Pixels on the Amiga were close to square (16:15) in PAL resolutions on a CRT, but quite tall on NTSC displays (5:6). Additionally, when we apply a 5×PAL or 6×PAL [Dynamic Crop](https://amiga.vision/5x), 1:1 gives us great results that are near indistinguishable from the original PAR at those sizes, while modernizing the output to fit 16:9 displays.
 
@@ -264,29 +266,29 @@ About 10 games are currently not working due to CPU or graphics chipset features
 
 ## Custom Scripts
 
-If you want to run additional scripts on startup, MegaAGS looks for a file named `Saves:custom-startup` on boot and runs it, so if you need to run scripts that will survive upgrades of the main image, this is where to put them.
+If you want to run additional scripts on startup, AmigaVision looks for a file named `Saves:custom-startup` on boot and runs it, so if you need to run scripts that will survive upgrades of the main image, this is where to put them.
 
 As an example, here's what you would add to `Saves:custom-startup` if you wanted to make changes to screen resolution, colors, pointers or any other Workbench setting copied from `ENV:Sys/` (which is where Workbench settings are stored temporarily) to `Saves:Custom/Prefs-Env/` before rebooting:
 
 ```
 copy >NIL: Saves:Custom/Prefs-Env ENV:Sys/
-
 ```
 
 This will take the setting you copied to `Saves:Custom/Prefs-Env` and put them in RAM: when booting the image, so you can keep your own settings even when replacing the `MegaAGS.hdf` file with a future version. You can also install new apps/games to Saves: and add `Assign` statements etc to the `Saves:` drive, or do anything else you want to keep permanent after upgrading.
 
 ## Bug Reports & Feature Requests
 
-While MegaAGS has been tested for many years, the sheer volume of games and demos makes it all but certain that something has been overlooked somewhere. If you find something that doesn't work or seems like it's running with the wrong settings, or something is missing -- tell us about it in the issue tracker found under the Development section at [amiga.vision].
+While AmigaVision has been tested for many years, the sheer volume of games and demos makes it all but certain that something has been overlooked somewhere. If you find something that doesn't work or seems like it's running with the wrong settings, or something is missing -- tell us about it in the issue tracker found under the Development section at [amiga.vision].
 
 ## Credits
 
-* [David Lindecrantz] -- Creator, main developer
-* [Alex Limi] -- Contributor, developer
+* [David Lindecrantz] -- Creator, original developer
+* [Alex Limi] -- Developer, current maintainer
 * [Per Olofsson] -- Creator of [AGS], the launcher software
 * [Ben Squibb] -- Improvements to AGS to enable hi-res launcher with thumbnail cycling + IFF conversion of hi-res thumbnails
-* LamerDeluxe — MT-32 support
-* [Frode Solheim] -- Creator of [OpenRetro.org], thumbnails used with kind permission
+* [hitm4n] -- Hi-resolution screenshots for demos
+* LamerDeluxe -- MT-32 support
+* [Frode Solheim] -- Creator of [OpenRetro.org], screenshots used with kind permission
 
 ## Troubleshooting
 
@@ -339,7 +341,7 @@ In short: No.
 
 Viruses on the Amiga were quite common, and some retail games even shipped with infected disks in the box. 
 
-Even though we don't control what's being used as inputs to the script that creates the MegaAGS image, pretty much all games and demos run inside WHDL containers, you can think of them as "virtualization for the Amiga". Their job is to insulate the game from the rest of the system, reset CPU vectors, and other system state preservation. So even if a game or demo contains a virus, it cannot stay resident in memory, and will not spread to the rest of the system outside of the sandbox it has been given.
+Even though we don't control what's being used as inputs to the script that creates the AmigaVision image, pretty much all games and demos run inside WHDL containers, you can think of them as "virtualization for the Amiga". Their job is to insulate the game from the rest of the system, reset CPU vectors, and other system state preservation. So even if a game or demo contains a virus, it cannot stay resident in memory, and will not spread to the rest of the system outside of the sandbox it has been given.
 
 If you want to check the state of a given setup, or whether you have viruses in memory, just run the included VirusZ scanner in the System folder. Again, if you see virus warnings inside of WHDLoad containers, it's nothing to worry about.
 
@@ -355,7 +357,7 @@ The MiSTer core will handle these mappings for you, and joystick port configurat
 
 While the standard AmigaVision setup expects Kickstart 3.1 — which was the last release from Commodore — we have had reports of the setup working if you replace `icon.library` and `workbench.library` with their respective Workbench 3.2 versions. The recommended and tested setup is still Kickstart 3.1.
 
-### Are there any plans to support Amiga 500, Amiga 600, or Amiga 1000 hardware?
+### Are there any plans to support original Amiga 500, Amiga 600, or Amiga 1000 hardware?
 
 Not at the moment, AmigaVision is currently AGA-only and requires at least a 68020 processor. Unless you have added a fair bit of upgrades to these systems, using the AmigaVision setup would be an exercise in frustration, and we also don't have the real hardware to test with when we do a release. 
 
@@ -363,7 +365,7 @@ We welcome contributions, though — so if you're interested in maintaining this
 
 ### What's "Arcadia Systems"?
 
-Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500 based multi-game arcade system. Most titles released for the system have been dumped and are available on the MegaAGS image. The games are not great (to put it kindly), but are an interesting curiosity.
+Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500 based multi-game arcade system. Most titles released for the system have been dumped and are available on the AmigaVision image. The games are not great (to put it kindly), but are an interesting curiosity.
 
 Button mapping:
 
@@ -389,10 +391,12 @@ Joystick Swap: OFF
 Drives:
   A600/A1200 IDE: On
   Fast-IDE (68020): On
-  Primary Master: Fixed/HDD
-                  games/Amiga/MegaAGS.hdf
-  Primary Slave: Fixed/HDD
-                  games/Amiga/MegaAGS-Saves.hdf
+  Primary Master:
+    Fixed/HDD
+    games/Amiga/MegaAGS.hdf
+  Primary Slave:
+    Fixed/HDD
+    games/Amiga/MegaAGS-Saves.hdf
   Secondary Master: Disabled
   Secondary Slave: Disabled
   Floppy Disk Turbo: Off
@@ -404,14 +408,15 @@ System:
   FastRAM: 384M
   SlowRAM: none
   Joystick: CD32
-  ROM: games/Amiga/MegaAGS-Kickstart.rom (or whatever your 3.1 ROM is called)
+  ROM:
+    games/Amiga/MegaAGS-Kickstart.rom
   HRTmon: disabled
 Audio & Video:
   TV Standard: PAL
   Scandoubler FX: Off
   Video area by: Blank
   Aspect ratio: 40:27
-  Pixel Clock: Adaptive
+  Pixel Clock: 28MHz
   Scaling: Normal
   RTG Upscaling: Normal
   Stereo mix: 50%
@@ -439,5 +444,7 @@ Audio & Video:
 [Alex Limi]:https://limi.dev
 [Per Olofsson]:https://github.com/MagerValp
 [Ben Squibb]:https://github.com/stat-mat
+[hitm4n]:https://github.com/hittm4n
 [Frode Solheim]:https://github.com/FrodeSolheim
 [OpenRetro.org]:https://openretro.org
+
