@@ -1,4 +1,4 @@
-# AGSImager
+# AmigaVision
 
 Amiga HDF image builder using WHDL or custom installs, using the [Arcade Game Selector] launcher as a front-end.
 
