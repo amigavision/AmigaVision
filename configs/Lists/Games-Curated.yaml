@@ -388,7 +388,7 @@
     - TurboRaketti2Fi
     - Turrican
     - Turrican2AGA
-    - Turrican3
+    - Turrican3: { scale: 5, vshift: 10 }
     - Tusker
     - TVSportsBasketball
     - Twintris

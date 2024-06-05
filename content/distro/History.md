@@ -1,8 +1,17 @@
-# MegaAGS Version History
+# AmigaVision Version History
+
+## 2024.06.06
+
+* Added optional `MiSTer.ini` settings for 1440p displays. Note that these will not use the 5×PAL Dynamic Crop, those are only active for 1080p and 4K displays.
+* Sensible World of Soccer had several problems with loading tactics and English club teams in the past few releases. This was fixed upstream.
+* New June update of Castlevania AGA, includes a music test menu and a new character sprite, as well as other fixes.
+* Turrican 3 now supports the full set of CD32 buttons, making it much better to play with a gamepad.
+* 8 games identified as running with the wrong settings, fixed.
+* Game configurations are current with WHDLoad as of 2024-06-05.
 
 ## 2024.04.04
 
-* 528 games [changed from PAL60 to PAL with 5× scaling offsets](https://github.com/amigavision/AmigaVision/commit/062da0505ed7f5cd95a0883c504e8ae6e12a99ac).
+* 528 games .changed from PAL60 to PAL with 5× scaling offsets.
 * 28MHz is the new default pixel clock, make sure you update the `Amiga.cfg` file.
 * Revision 2024 demo party entries added.
 * WHDLoad configurations are up to date with WHDLoad 2024-04-03.
