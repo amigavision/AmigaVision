@@ -4300,7 +4300,6 @@ demo-notwhdl--jormas-meganerellu;Megane Rellu;Megane Rellu;;;OCS;;0;;;;;;;;;;200
 demo-notwhdl--jormas-hapycarva72;HäpyCarva #72;HäpyCarva 72;;;OCS;;0;;;;;;;;;;2015;Finland;English;;Da Jormas;1;;;;demo-notwhdl/Jormas-HapyCarva72.lha;Demo;Demo;;
 demo-notwhdl--jormas-monomeno66;MonoMeno 66;MonoMeno 66;;;OCS;;0;;;;;;;;;;1997;Finland;English;;Da Jormas;1;;;;demo-notwhdl/Jormas-MonoMeno66.lha;Demo;Demo;;
 game--hostagentsc--hostagentsc;Hostages;Hostages;1;game--hostages--hostages;OCS;;3;;;;;;;;;;1989;;English;Infogrames;Infogrames;1;;v1.2;HostageNTSC/HostageNTSC.Slave;game/H/Hostage_v1.2_NTSC_1173.lha;Game;Action - Multi-Type;738;504
-demo-notwhdl--altair-zenerdrive;Zener Drive;Zener Drive;1;;OCS;;0;;;;;;;;Only runs on 68000 with 1MB chip?;;2017;Poland;English;;Altair;1;;;;demo-notwhdl/Altair-ZenerDrive.lha;Demo;Intro 40K;;
 demo-notwhdl--loonies-dontbesquare;Don't Be Square;Don't Be Square;1;;OCS;;0;;;;;;;;Only runs on A500;;2019;Denmark;English;;Loonies;1;;;;demo-notwhdl/Loonies-DontBeSquare.lha;Demo;Intro 4K;;
 demo-notwhdl--unique-interparallactic;Interparallactic;Interparallactic;;;OCS;;0;5;24;;;;;;;;2015;Finland;English;;Unique;1;;;;demo-notwhdl/Unique-Interparallactic.lha;Demo;Demo;;
 demo-notwhdl--moodsplateau-solveetcoagula;Solve et Coagula;Solve et Coagula;;;AGA;1;0;5;16;;;;;;;;2014;Germany;English;;Moods Plateau;1;;;;demo-notwhdl/MoodsPlateau-SolveEtCoagula.lha;Demo;Intro 64K;;
@@ -5049,7 +5048,7 @@ game--kingdomsofengland--kingdomsofengland;Kingdoms of England;Kingdoms of Engla
 demo--musicdisk3vega--musicdisk3vega;Music Disk #3;Vega Music Disk 3;;;OCS;;0;;;;;;;;;;1991;Italy;English;;Vega;1;;v1.0;MusicDisk3Vega/MusicDisk3Vega.slave;demo/M/MusicDisk3_v1.0_Vega.lha;Demo;Music Disk;;
 demo--eon--eon;Eon;Eon;;;OCS;;0;5;26;;;;;;;;2019-04-21;Sweden, UK;English;;The Black Lotus;1;;v1.0;Eon/Eon.slave;demo/E/Eon_v1.0_BlackLotus.lha;Demo;Demo;;
 demo--lasttraintodanzigaga--lasttraintodanzigaga;Last Train to Danzig;Last Train to Danzig;;;AGA;;0;;;;;;;;Black screen on startup;;2015-10-17;Poland, Germany;English;;Ghostown, Haujobb;1;;v1.0;LastTrainToDanzigAGA/LastTrainToDanzigAGA.slave;demo/L/LastTrainToDanzig_v1.0_Ghostown&Haujobb_AGA.lha;Demo;;;
-demo--zenerdrive--zenerdrive;Zener Drive;Zener Drive;;;OCS;;0;;;;;;;;;;2017-10-21;Poland;English;;Altair;1;;v1.1;ZenerDrive/ZenerDrive.slave;demo/Z/ZenerDrive_v1.1_Altair.lha;Demo;;;
+demo--zenerdrive--zenerdrive;Zener Drive;Zener Drive;;;OCS;;0;5;0;;;;;;;;2017-10-21;Poland;English;;Altair;1;;v1.1;ZenerDrive/ZenerDrive.slave;demo/Z/ZenerDrive_v1.1_Altair.lha;Demo;;;
 game--bagman--bagman;Bagman;Bagman;;;OCS;;0;;;;;;;;;Arcade to Amiga port by JOTD;2023;;English;JOTD;JOTD;1;;v1.0;Bagman/Bagman.slave;game/B/Bagman_v1.0.lha;Game;;;4921
 game--blueboy--blueboy;Blue Boy;Blue Boy;;;OCS;;0;;;;;;;;;;1992;Italy;English;Micromania;Micromania;1;;v1.0;BlueBoy/BlueBoy.slave;game/B/BlueBoy_v1.0.lha;Game;;;1691
 game--castlevaniaaga--castlevaniaaga;Castlevania AGA;Castlevania AGA;;;AGA;;0;;;;;;;;;Modern Amiga version by Dante;2023;;English;Dante Retro Dev;Dante Retro Dev;1;;v1.2;CastlevaniaAGA/CastlevaniaAGA.slave;game/C/Castlevania_v1.2_AGA_June2024.lha;Game;;;
