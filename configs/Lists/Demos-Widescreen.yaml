@@ -1,5 +1,6 @@
 - note: Demos configured to be displayed in\nfull screen integer scaled 16:9 aspect ratio.\n\nOSD > Audio & Video > Aspect Ratio > Full Screen\n\nSome pixel cropping may occur. If you want the\n4:3 versions, use the other listings.
 - 3LE-Drama: { scale: 6, vshift: 44 }
+- Altair-Zenerdrive: { scale: 6, vshift: 23 }
 - Andromeda-Rule30: { scale: 6, vshift: 62 }
 - Artwork-Dawn: { scale: 6, vshift: 44 }
 - AtomeAGA: { scale: 6, vshift: 46 }
@@ -54,4 +55,3 @@
 - YCrew-BolkerWay: { scale: 6, vshift: 42 }
 - YCrew-RoyalPalms: { scale: 6, vshift: 44 }
 - YCrew-Vertigo: { scale: 6, vshift: 44 }
-- Zenerdrive-Altair: { scale: 6, vshift: 23 }
