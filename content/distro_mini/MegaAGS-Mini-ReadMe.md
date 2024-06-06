@@ -1,4 +1,4 @@
-# AmigaVision/MegaAGS Setup for A500 Mini (Beta)
+# AmigaVision Setup for A500 Mini (Beta)
 
 This is a slimmed down version of the [AmigaVision] setup made specifically for the [A500 Mini] device.
 

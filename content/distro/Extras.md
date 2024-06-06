@@ -1,4 +1,4 @@
-# MegaAGS Extras 
+# AmigaVision Extras 
 
 In addition to the main setup, we include some additional images and convenience functions that may be of interest to the Amiga connoisseur.
 
@@ -82,8 +82,8 @@ We recommend using the separate, dedicated Amiga 500 setup for ADF format game d
 
 # Empty PFS Save Images
 
-We have included several larger sizes of pre-formatted PFS `MegaAGS-Saves.hdf` files, should you want to create your own custom setup based on MegaAGS without having to re-do your customizations every time. The reason it's important to use PFS instead of creating your own FFS-based Amiga HD images is that PFS protects against accidental corruption of the HD if you reset the computer during a write operation. It's also faster than an FFS image, and the rest of the MegaAGS setup uses PFS everywhere for that same reason.
+We have included several larger sizes of pre-formatted PFS `MegaAGS-Saves.hdf` files, should you want to create your own custom setup based on MegaAGS without having to re-do your customizations every time. The reason it's important to use PFS instead of creating your own FFS-based Amiga HD images is that PFS protects against accidental corruption of the HD if you reset the computer during a write operation. It's also faster than an FFS image, and the rest of the AmigaVision setup uses PFS everywhere for that same reason.
 
-The main MegaAGS image will check for `Saves:custom-startup` and execute that when found. This lets you e.g. copy any custom settings to `ENV:` as part of the startup, so you can have your own Workbench, Directory Opus and custom application installs on a separate hard drive that survives upgrades to the main MegaAGS image.
+The main AmigaVision image will check for `Saves:custom-startup` and execute that when found. This lets you e.g. copy any custom settings to `ENV:` as part of the startup, so you can have your own Workbench, Directory Opus and custom application installs on a separate hard drive that survives upgrades to the main AmigaVision image.
 
 Note that these are contained in a 7zip archive file to make sure they don't take any additional space in the main archive. Only unpack these if you intend to use them, as they will take up quite a bit of storage if you do.

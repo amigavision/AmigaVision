@@ -1,4 +1,4 @@
-# AmigaVision/MegaAGS Setup for Analogue Pocket
+# AmigaVision Setup for Analogue Pocket
 
 This is a slimmed down version of the [AmigaVision] setup made specifically for the [Analogue Pocket] FPGA handheld.
 
