@@ -335,6 +335,14 @@ If you are using resolutions lower than 1080p, 1440p or 1536p, we recommend turn
 
 If you are using analog output to CRTs, these will of course not be used.
 
+### Can I add my own games?
+
+It’s pretty straightforward to add your own games as long as you are a little bit familiar with AmigaOS. Just install the game on the Saves HDF drive, and you can add your own launcher entries and thumbnails in the Favorites folder, also located on the Saves drive. If you need a template, favorite a random game and open it in a text editor.
+
+### Can I make a setup with only a few games?
+
+The simplest way to do this is to make your own personal collection using the Favorites feature in the launcher. They will be stored on the `Saves` drive, and will survive upgrades.
+
 ### Should I worry about Amiga viruses?
 
 In short: No. 
