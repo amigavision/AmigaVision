@@ -286,7 +286,7 @@ While AmigaVision has been tested for many years, the sheer volume of games and 
 * [Alex Limi] -- Developer, current maintainer
 * [Per Olofsson] -- Creator of [AGS], the launcher software
 * [Ben Squibb] -- Improvements to AGS to enable hi-res launcher with thumbnail cycling + IFF conversion of hi-res thumbnails
-* [hitm4n] -- Hi-resolution screenshots for demos
+* Simon "[hitm4n]" Quincey -- Hi-resolution screenshots for demos
 * LamerDeluxe -- MT-32 support
 * [Frode Solheim] -- Creator of [OpenRetro.org], screenshots used with kind permission
 
