@@ -1,0 +1,4 @@
+; IDEfix >NIL:
+WBRun SYS:Storage/Devs/DOSDrivers/CD0
+SetAkiko >NIL:
+CD32

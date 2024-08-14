@@ -1,0 +1,1 @@
+Save data from CD32 is stored in this directory

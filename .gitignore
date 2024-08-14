@@ -4,3 +4,4 @@
 *.so
 vadjust
 .DS_Store
+configs/Layers/Base/DH0/Libs/idefix.library

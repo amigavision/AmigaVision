@@ -1,0 +1,6 @@
+Run CD32 Games from CHD or BIN/CUE disc images.
+Mount the game CD in MiSTer's "Drives" menu section
+as a Secondary Master drive. Then select "Boot".
+
+Compatibility is not 100% perfect, so not all games
+will work or necessarily have their CD soundtracks.

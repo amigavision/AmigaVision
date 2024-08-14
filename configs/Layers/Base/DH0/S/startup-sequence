@@ -8,6 +8,8 @@ endif
 
 failat 21
 
+IDEFix >NIL:
+
 makedir RAM:T RAM:Clipboards RAM:ENV RAM:ENV/Sys
 copy >NIL: ENVARC: RAM:ENV ALL NOREQ
 

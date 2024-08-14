@@ -1,0 +1,37 @@
+/***************************************************************/
+/*  CacheCDFS mountlist entry © 1993 Elaborate Bytes, O. Kastl */
+/***************************************************************/
+	FileSystem     = L:CacheCDFS /* The name of the game */
+	Device         = "scsi.device" /* Name of exec device driver */
+	Unit           = 2 /* exec device unit */
+	Flags          = 0 /* OpenDevice flags */
+	BlocksPerTrack = 351000 /* Unused */
+	BlockSize      = 2048 /* True, but unused */
+	Mask           = 0x7ffffffe /* Memory mask for direct read */
+	MaxTransfer    = 0x1000000 /* Maximum amount of bytes for direct read */
+	Reserved       = 0 /* Unused */
+	Interleave     = 0 /* Unused */
+	LowCyl         = 0 /* Unused */
+	HighCyl        = 0 /* Unused */
+	Surfaces       = 1 /* Unused */
+	Buffers        = 50 /* Number of cache lines */
+	BufMemType     = 513 /* MEMF_PUBLIC|MEMF_24BITDMA */
+	BootPri        = 2 /* Boot priority for MountCD */
+	GlobVec        = -1 /* Do not change! */
+	Mount          = 1 /* Mount it immediately */
+	Priority       = 10 /* Priority of FileSystem task */
+	DosType        = 0x43443031 /* Currently unused */
+	StackSize      = 3000 /* Minimum stack required is 3000! */
+	Control        = "MD=0 LC=1 DC=8 S L LV AL LFC=1 HR=.rsrc"
+   /* The Control field is for special adjustments */
+   /* L/S convert all file/volume names to lowercase */
+   /* LV/S convert volume names to lowercase */
+   /* AL/S Auto-Lower converts only non-Amiga CDs */
+   /* LFC/N start converting at this character */
+   /* LC/N/A number of blocks per cache line */
+   /* DC/N/A number of cache lines for the data cache */
+   /* MD/N/A number of blocks, when starting direct read, not using */
+   /* the cache. 0 will be a reasonable default (LC*DC+1) */
+   /* S/S Do SCSI direct commands, no Trackdisk like commands! */
+   /* NC/S Do NOT use TD_ADDCHANGEINT, poll for DiskChange! */
+   /* M/S Issue a TD_MOTOR (OFF) command after read */
