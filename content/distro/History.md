@@ -1,5 +1,32 @@
 # AmigaVision Version History
 
+## 2024.08.18
+
+* Added support for booting CD32 disc images (CHD or bin/cue) on MiSTer from the launcher.
+* Dynablaster's battle mode timed out after 3 seconds instead of 3 minutes, fixed.
+* Non-AGA version of Robocod added, since it is a different set of levels
+* Alien Breed non-SE added, has better gamepad controls
+* Various offsets/scaling imrpoved (Turrican 2, Switchblade II, )
+* Updated configurations to be current with WHDLoad as of 2024.08.14, games added/updated:
+	* A320 Airbus 
+	* A320 Airbus: Edition Europa
+	* Aladdin's Magic Lamp
+	* Centerbase
+	* Evil's Doom
+	* Evolution Cryser
+	* Fortress Underground
+	* Galaga
+	* Glubble
+	* Grand National
+	* Indian Mission (German only)
+	* Magic Serpent
+	* Pop-Up
+	* Shadow Fighter (No-jump version)
+	* The Final Trip
+	* Tubular Worlds
+	* Wrath of the Demon (Scoopex fixed version)
+
+
 ## 2024.06.06
 
 * Added optional `MiSTer.ini` settings for 1440p displays. Note that these will not use the 5×PAL Dynamic Crop, those are only active for 1080p and 4K displays.
