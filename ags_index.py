@@ -18,7 +18,7 @@ import ags_util as util
 
 def index_whdload_archives(basedir):
     basedir += os.sep
-    print("enumerating archives..", end="", flush=True)
+    print("Enumerating archives...", end="", flush=True)
     count = 0
     d = {}
     for r, _, f in os.walk(basedir):
@@ -65,7 +65,7 @@ def index_whdload_archives(basedir):
 
 def make_manifests(basedir, only_missing=False):
     basedir += os.sep
-    print("making manifests..", end="", flush=True)
+    print("Making manifests...", end="", flush=True)
     count = 0
     for r, _, f in os.walk(basedir):
         for file in f:
@@ -98,7 +98,7 @@ def make_lha_manifest(path):
 
 def verify_manifests(basedir):
     basedir += os.sep
-    print("verifying manifests...")
+    print("Verifying manifests...")
     errors = 0
     for r, _, f in os.walk(basedir):
         for file in f:
@@ -110,9 +110,9 @@ def verify_manifests(basedir):
                 print(error)
                 errors += 1
     if errors > 0:
-        print("manifest verification completed with {} error(s)".format(errors))
+        print("Manifest verification completed with {} error(s)".format(errors))
     else:
-        print("manifest verification completed: all good")
+        print("Manifest verification completed: all good")
     return
 
 def verify_lha_manifest(manifest_path, lha_path):
@@ -129,12 +129,12 @@ def verify_lha_manifest(manifest_path, lha_path):
             arc_names = arc.namelist()
             for mf, md in manifest.items():
                 if not mf in arc_names:
-                    return "file '{}' missing in archive '{}'".format(mf, lha_path)
+                    return "• File '{}' missing in archive '{}'".format(mf, lha_path)
                 else:
                     hasher = hashlib.sha256()
                     hasher.update(arc.read(mf))
                     if hasher.hexdigest() != md:
-                        return "incorrect checksum for file '{}' in '{}'".format(mf, lha_path)
+                        return "• Incorrect checksum for file '{}' in '{}'".format(mf, lha_path)
     return None
 
 def load_manifest(p):
@@ -171,7 +171,7 @@ def main():
 
         titles_dir = paths.titles()
         if not util.is_dir(titles_dir):
-            raise IOError("titles dir not found ({})".format(titles_dir))
+            raise IOError("Titles dir not found ({})".format(titles_dir))
 
         if args.make_manifests:
             make_manifests(titles_dir, only_missing=args.only_missing)
@@ -184,8 +184,8 @@ def main():
         # remove missing archive_paths from db
         for r in db.cursor().execute("SELECT * FROM titles"):
             if r["archive_path"] and not util.is_file(util.path(titles_dir, r["archive_path"])):
-                print("archive removed:", r["id"])
-                print("  >>", r["archive_path"])
+                print("• Archive removed:", r["id"])
+                print(r["archive_path"])
                 db.cursor().execute("UPDATE titles SET archive_path=NULL,slave_path=NULL,slave_version=NULL WHERE id=?;", (r["id"],))
                 print()
 
@@ -193,8 +193,8 @@ def main():
         for _, arc in index_whdload_archives(titles_dir).items():
             rows = db.cursor().execute("SELECT * FROM titles WHERE (id = ?) OR (id LIKE ?);", (arc["id"], arc["id"] + '--%',)).fetchall()
             if not rows:
-                print("no db entry:", arc["archive_path"])
-                print("  >>", arc["id"])
+                print("• No DB entry:", arc["archive_path"])
+                print(arc["id"])
                 print()
                 continue
             for row in rows:
@@ -217,19 +217,19 @@ def main():
                 if not util.is_file("data/img/" + r["id"] + ".iff"):
                     missing_images.append(r["id"])
             if missing_archives:
-                print("titles missing archives:")
+                print("• Titles missing archives:")
                 for id in missing_archives:
-                    print("  >> {}".format(id))
+                    print("{}".format(id))
                 print()
             if missing_images:
-                print("titles missing images:")
+                print("• Titles missing images:")
                 for id in missing_images:
-                    print("  >> {}".format(id))
+                    print("{}".format(id))
                 print()
             if missing_manifests:
-                print("missing manifests (generate with 'make missing-manifests'):")
+                print("• Missing manifests (generate with 'make missing-manifests'):")
                 for id in missing_manifests:
-                    print("  >> {}".format(id))
+                    print("{}".format(id))
                 print()
 
         db.commit()
