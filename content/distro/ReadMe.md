@@ -10,21 +10,22 @@ Its aim is to balance preservation of the historical and current output of the [
 
 1. [Features](#features)
 2. [Save Files](#save-files)
-3. [Setup for Amiga hardware](#setup-for-amiga-hardware)
-4. [Setup for emulators](#setup-for-emulators)
-5. [Setup for Pocket](#setup-for-pocket)
-6. [Setup for MiSTer](#setup-for-mister)
-7. [Optional Setups](#optional-setups)
-8. [MiSTer: Gamepad & Joystick Mapping](#mister-gamepad--joystick-mapping)
-9. [MiSTer: Video Modes](#mister-video-modes)
-10. [MiSTer: CPU Performance Notes](#mister-cpu-performance-notes)
-11. [Workbench](#workbench)
-12. [Non-working Games](#non-working-games)
-13. [Custom Scripts](#custom-scripts)
-14. [Bug Reports & Feature Requests](#bug-reports--feature-requests)
-15. [Credits](#credits)
-16. [Troubleshooting](#troubleshooting)
-17. [Frequently Asked Questions](#frequently-asked-questions)
+3. [Upgrading](#upgrading)
+4. [Setup for Amiga hardware](#setup-for-amiga-hardware)
+5. [Setup for emulators](#setup-for-emulators)
+6. [Setup for Pocket](#setup-for-pocket)
+7. [Setup for MiSTer](#setup-for-mister)
+8. [Optional Setups](#optional-setups)
+9. [MiSTer: Gamepad & Joystick Mapping](#mister-gamepad--joystick-mapping)
+10. [MiSTer: Video Modes](#mister-video-modes)
+11. [MiSTer: CPU Performance Notes](#mister-cpu-performance-notes)
+12. [Workbench](#workbench)
+13. [Non-working Games](#non-working-games)
+14. [Custom Scripts](#custom-scripts)
+15. [Bug Reports & Feature Requests](#bug-reports--feature-requests)
+16. [Credits](#credits)
+17. [Troubleshooting](#troubleshooting)
+18. [Frequently Asked Questions](#frequently-asked-questions)
 
 ## Features
 
@@ -63,6 +64,14 @@ Before we start, a quick note on save files:
 **IMPORTANT:** For games with save functionality you **MUST** quit the game using the `DEL` key to ensure the save data will be written to "disk", and thus the SD card. You *will* lose your save games if you don't exit the game *after* also saving in-game! 
 
 In the `[Options]` menu of the launcher you can choose between a few alternative quit key options if the `DEL` key doesn't work for you. If set, it will override the preconfigured default Quit key. The active Quit key is displayed on the splash screen shown when a game is loading.
+
+## Upgrading
+
+When upgrading AmigaVision from a previous release (on any platform), we always recommend following the instructions for doing a clean install and **only** keep your `Saves.hdf` hard drive image, which is where your game saves are stored.
+
+We often make important changes to the configuration files, `MiSTer.ini`and other included files, so the only way to ensure that you can use the new version properly and get the new capabilities (examples from previous releases: 5×PAL Dynamic Scaling, CD32 support on MiSTer, etc.) is to do a clean install of everything, every time. 
+
+Follow the instructions for your platform below.
 
 ## Setup for Amiga hardware
 
