@@ -6,7 +6,7 @@
 * Dynablaster's battle mode timed out after 3 seconds instead of 3 minutes, fixed.
 * Non-AGA version of Robocod added, since it is a different set of levels
 * Alien Breed non-SE added, has better gamepad controls
-* Various offsets/scaling imrpoved (Turrican 2, Switchblade II, )
+* Various offsets/scaling imrpoved (Turrican 2, Switchblade II)
 * Updated configurations to be current with WHDLoad as of 2024.08.14, games added/updated:
 	* A320 Airbus 
 	* A320 Airbus: Edition Europa
@@ -25,7 +25,6 @@
 	* The Final Trip
 	* Tubular Worlds
 	* Wrath of the Demon (Scoopex fixed version)
-
 
 ## 2024.06.06
 
