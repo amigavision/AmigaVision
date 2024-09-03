@@ -352,6 +352,10 @@ It’s pretty straightforward to add your own games as long as you are a little 
 
 The simplest way to do this is to make your own personal collection using the Favorites feature in the launcher. They will be stored on the `Saves` drive, and will survive upgrades.
 
+### Why doesn't AmigaVision doesn't work on my network drive or external drive?
+
+The config files of MiSTer for the Amiga core contain absolute path references instead of relative ones. That means that the location of the Kickstart file (think: the firmware of the Amiga) in the AmigaVision setup will point to your SD card path instead of the network drive or external drive path. You can fix this by navigating to the Kickstart file section in the MiSTer menu and selecting the correct file in the new location.
+
 ### Should I worry about Amiga viruses?
 
 In short: No. 
