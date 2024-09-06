@@ -13,14 +13,14 @@ To complete the Amiga look using the menu background above, you probably want th
 We have included a custom font that looks like Topaz from both AmigaOS 1.3 and 2.0 for use in the MiSTer menu. To use these, copy the files to MiSTer's `fonts/` directory, and edit `MiSTer.ini` to have *one* of the following values for the `font` property, depending on which one you prefer:
 
 ```
-font=fonts/Topaz13.pf
-font=fonts/Topaz20.pf
+font=font/Topaz13.pf
+font=font/Topaz20.pf
 ```
 
 There's also a custom font from Optiroc that mimics the classic Sega AM2 look with special treatments for loading progress bars, and is also a great option you should check out:
 
 ```
-font=fonts/OptirocAM2.pf
+font=font/OptirocAM2.pf
 ```
 
 ## Amiga 500HD Setup
