@@ -89,6 +89,7 @@
       - PortsOfCall: { disp_name: "[4P] Ports of Call" }
       - RallyCrossChallenge: { disp_name: "[4P] Rally Cross Challenge" }
       - Skidmarks: { disp_name: "[4P] Skidmarks" }
+      - SpaceTaxi3: { disp_name: "[4P] Space Taxi 3" }
       - SuperSkidmarks: { disp_name: "[4P] Super Skidmarks" }
       - TVSportsBasketball: { disp_name: "[4P] TV Sports Basketball" }
       - Worms: { disp_name: "[4P] Worms" }
