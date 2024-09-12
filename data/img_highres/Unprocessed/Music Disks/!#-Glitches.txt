@@ -1,0 +1,5 @@
+demo--100mostrememberedc64tunes--100mostrememberedc64tunes
+hold left mouse to skip intro screen or it gets stuck, music plays slow
+
+demo--8bitjungle--8bitjungle
+DOS-Error #205 (object not found) on reading "DSK1mainpart.bin".
