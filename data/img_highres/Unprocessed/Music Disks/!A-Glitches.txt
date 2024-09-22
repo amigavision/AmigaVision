@@ -1,0 +1,15 @@
+demo--afewtunes--afewtunes
+just glitches up audio and locks up
+
+demo--absenceoflight--absenceoflight
+absence of a picture! Messing with left and right mouse buttons does change song but nothing on screen
+
+demo--absoluteswedish--absoluteswedish
+overcropped at top
+
+demo--audiox--audiox
+music silent and playing fast, can't change tune, scrolly broken
+
+demo--audiodreams--audiodreams
+overcropped at top
+
