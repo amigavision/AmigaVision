@@ -4,18 +4,17 @@ This is a convenience package that will allow you to load CD32 games using the M
 
 == Adding games ==
 
-Put your CD32 disc images in the games/AmigaCD32 directory. CHD and BIN/CUE as well as ISO images are supported.
+Put your CD32 disc images in the games/AmigaCD32 directory. CHD, BIN/CUE as well as ISO images are supported.
 
 == Usage ==
 
-* Navigate to Consoles -> Amiga CD32 and start it.
-* You will be presented with a UI, but don't click anything yet.
+* Navigate to Console → Amiga CD32, and select it.
+* You will be presented with an Amiga UI, but don’t click anything yet.
 * Open the MiSTer menu (F12), and navigate to the Drives section.
-* Navigate to the drive marked as "Removable/CD", and select the CD32 disc image you want to play on the line below.
+* Navigate to the drive marked as “Removable/CD”, and select the CD32 disc image you want to play on the line below.
 * Dismiss the MiSTer menu (F12).
-* Select "Boot".
+* Select “Boot” in the Amiga UI.
 * Enjoy your game!
-
 
 == A note on compatibility ==
 
@@ -25,4 +24,5 @@ Compatibility is not perfect, and not all games will work or necessarily have th
 
 https://amiga.vision/cd32
 
-Happy gaming!
+—AmigaVision Team
+
