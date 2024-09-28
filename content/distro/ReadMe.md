@@ -57,6 +57,8 @@ Its aim is to balance preservation of the historical and current output of the [
 
 * Includes an optional, dedicated Amiga 600HD setup that gives you a representative feel for how it was to use Workbench 2.x with an Amiga 600 or 3000 and productivity apps around 1991-1992.
 
+* Includes a dedicated Amiga CD32 setup for MiSTer that is compatible with the majority of the released games for it.
+
 ## Save Files
 
 Before we start, a quick note on save files:
@@ -227,7 +229,8 @@ Make absolutely sure that you update your `MiSTer.ini` settings for the core acc
 [Amiga
 +Amiga500
 +Amiga500HD
-+Amiga600HD]
++Amiga600HD
++AmigaCD32]
 video_mode_ntsc=8 
 video_mode_pal=9
 vscale_mode=0
