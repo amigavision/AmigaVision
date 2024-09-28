@@ -1,0 +1,15 @@
+demo--bacteria--bacteria
+crashes on intro screen
+
+demo--bassomatic--bassomatic
+some graphic glitches but works
+
+demo--beastsonix--beastsonix
+requires joystick
+
+demo--blueshouse--blueshouse
+better with joystick
+
+demo--bluessymphoniesaga--bluessymphoniesaga
+crashes on load
+
