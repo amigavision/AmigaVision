@@ -147,7 +147,8 @@ Shadow_Masks
 [Amiga
 +Amiga500
 +Amiga500HD
-+Amiga600HD]
++Amiga600HD
++AmigaCD32]
 video_mode_ntsc=8 ; These two use the recommended setting of 1080p60 and
 video_mode_pal=9  ; 1080p50, adjust if you want a different resolution
 vscale_mode=0
