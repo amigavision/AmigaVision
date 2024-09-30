@@ -2,7 +2,7 @@
 
 AmigaVision is a carefully curated collection of Amiga games and demos, as well as a minimal Workbench setup with useful utilities and apps, wrapped in a user-friendly launcher.
 
-It has many features specifically for use with [MiSTer] FPGA devices, but also aims to work with emulators like UAE and on original AGA-compatible hardware like an Amiga 1200/4000 or CD32, usually with SD/CF card adapters.
+It has many features specifically for use with [MiSTer] and [Analogue Pocket] FPGA devices, but also aims to work with emulators like UAE, handheld emulation devices, and original AGA-compatible hardware like an Amiga 1200/4000 or CD32.
 
 Its aim is to balance preservation of the historical and current output of the [Amiga games] and [demo scene] as accurately as possible, while still being easy to use for people new to the Amiga computer.
 
@@ -456,6 +456,7 @@ Audio & Video:
 [AmigaVision]:https://amiga.vision
 [amiga.vision]:https://amiga.vision
 [MiSTer]:https://misterfpga.org
+[Analogue Pocket]:https://www.analogue.co/pocket
 [UNESCO-nominated]:http://demoscene-the-art-of-coding.net
 [names.txt]:https://github.com/MiSTer-devel/Main_MiSTer/blob/master/names.txt
 [Amiga games]:https://lemonamiga.com
