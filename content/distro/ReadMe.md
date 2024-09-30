@@ -305,6 +305,12 @@ While AmigaVision has been tested for many years, the sheer volume of games and 
 
 ## Troubleshooting
 
+### Why doesn't AmigaVision work on my network drive or external drive?
+
+The configuration is likely still looking for your Kickstart file on the path to the SD card. There is currently no way to make this configuration relative in a way that works both on the standard SD card location as well as an SSD or network drive. 
+
+Go to the MiSTer menu → System → ROM, and point it to the location of the file on your SSD or network drive instead. Save this new configuration.
+
 ### I get a bunch of errors when starting up!
 
 Unfortunately, there's a lot of variables in what could go wrong, but one useful thing to verify is to make sure the `HDF` file didn't get corrupted on its way to the MiSTer, your Amiga or emulation setup. It's a large file, and there's a lot that can go wrong along the way. The reasons for this happening are legion, but among them:
@@ -355,10 +361,6 @@ It’s pretty straightforward to add your own games as long as you are a little 
 ### Can I make a setup with only a few games?
 
 The simplest way to do this is to make your own personal collection using the Favorites feature in the launcher. They will be stored on the `Saves` drive, and will survive upgrades.
-
-### Why doesn't AmigaVision work on my network drive or external drive?
-
-The config files of MiSTer for the Amiga core contain absolute path references instead of relative ones. That means that the location of the Kickstart file (think: the firmware of the Amiga) in the AmigaVision setup will point to your SD card path instead of the network drive or external drive path. You can fix this by navigating to the Kickstart file section in the MiSTer menu and selecting the correct file in the new location.
 
 ### Should I worry about Amiga viruses?
 
