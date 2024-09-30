@@ -1,6 +1,6 @@
 # AmigaVision Setup
 
-AmigaVision is a carefully curated collection of Amiga games and demos, as well as a minimal Workbench setup with useful utilities and apps, and wraps it all in a user-friendly launcher.
+AmigaVision is a carefully curated collection of Amiga games and demos, as well as a minimal Workbench setup with useful utilities and apps, wrapped in a user-friendly launcher.
 
 It has many features specifically for use with [MiSTer] FPGA devices, but also aims to work with emulators like UAE and on original AGA-compatible hardware like an Amiga 1200/4000 or CD32, usually with SD/CF card adapters.
 
