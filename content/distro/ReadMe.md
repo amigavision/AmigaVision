@@ -140,7 +140,6 @@ Filters
 games
 Presets
 Shadow_Masks
-
 ```
 
 Paste the following recommended core settings to the bottom of your `MiSTer.ini` file in the root of your MiSTer file system -- these settings are further explained in the [Video Modes](#mister-video-modes) section. It's especially important to explicity define resolutions for both PAL and NTSC, and *not* rely on the automatic fallback that MiSTer has available:
