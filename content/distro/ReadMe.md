@@ -303,7 +303,7 @@ We maintain a compatibility list, including any special settings needed at [amig
 
 ## Non-working Games
 
-About 10 games are currently not working due to CPU or graphics chipset features not yet implemented in MiSTer's Minimig core. Over the past years compatibility has improved a lot, and that trend is likely to continue. A few titles do not work, or are very glitchy, due to other inaccuracies. This will also likely improve over time. The launcher will specify when a game is known not to work in the `Notes` section of a given game.
+About 10 games are currently not working due to CPU or graphics chipset features not yet implemented in MiSTer's Minimig core. Over the past years compatibility has improved a lot, and that trend is likely to continue. A few titles do not work, or are very glitchy, due to other inaccuracies. This will also likely improve over time. The launcher will specify when a game is known not to work in the `Issues` section of a given game.
 
 ## Custom Scripts
 
