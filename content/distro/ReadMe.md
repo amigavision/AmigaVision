@@ -293,7 +293,7 @@ We include a setup in AmigaVision that puts an entry in your `Console` section o
 * You will be presented with a UI, but don't click anything yet.
 * Open the MiSTer menu (`F12`), and navigate to the Drives section.
 * Navigate to the `Removable/CD` section, and select the CD³² disc image you want to play.
-* Dismiss the menu with `F12`
+* Dismiss the menu with `ESC`
 * Select "Boot"
 * Enjoy your game!
 
