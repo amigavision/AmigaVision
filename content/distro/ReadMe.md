@@ -102,7 +102,7 @@ We support single-button Amiga/C64 joysticks, as well as four-button CD32 gamepa
 
 Many WHDLoad games have been patched to support multiple buttons, so check for those options when starting a game.
 
-## Setup for emulators
+## Setup for Emulators
 
 We recommend — and include a setup for — the [FS-UAE] Amiga emulator, which supports Mac, Windows and Linux.
 
@@ -114,19 +114,20 @@ For any additional configuration or customizations, consult the FS-UAE documenta
 
 ## Setup for Pocket
 
-AmigaVision also works great with the handheld [Analogue Pocket] FPGA device.
+AmigaVision also works great with the handheld [Analogue Pocket] FPGA device. Do note that the Amiga core on Analogue Pocket does not support mounting/loading disc images for CD³² yet, but the 3000+ games in the library work great.
 
-* Download the latest version of the [Amiga Pocket Core] and put it on your device.
-* Copy the included files in the AmigaVision Pocket setup to the `/Assets/amiga/common` directory on your Pocket SD card.
-* Start the Amiga core.
+* Use any of the Pocket updaters to get the OpenFPGA cores, or manually download the latest version of the [Amiga Pocket Core] and put it on your device.
+* Copy the files in the AmigaVision directory `games/Amiga` (HDF and ROM files) to the `/Assets/amiga/common` directory on your Pocket SD card.
+* Start the Amiga core, enjoy!
 
-Controls:
+### Pocket Controls
 
-* Left/Right triggers are Left/Right mouse buttons
-* `Select` button brings up the on-screen keyboard, hit DEL to quit a game
-* `Start` button toggles mouse emulation mode
-* `A` button selects an entry in the launcher
-* `B` button goes back to the parent category in the launcher
+* `Select` button brings up the on-screen keyboard, hit `DEL` to quit a game.
+* `Start` button toggles mouse emulation mode, left/right triggers are the left/right mouse buttons.
+* `A` button selects an entry in the launcher.
+* `B` button goes back to the parent category in the launcher.
+
+Many games are updated to support two-button controls, but some require remapping if you prefer button-to-jump instead of up-to-jump (which makes sense on a joystick, but is pretty terrible on a gamepad). Button remapping is done just like in any other Pocket core.
 
 ## Setup for MiSTer
 
