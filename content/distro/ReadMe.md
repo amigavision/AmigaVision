@@ -163,14 +163,14 @@ Note that *even if* your 16:9 4K TV *can* handle and scale 1440p, we *still reco
 
 ### Other monitor sizes
 
-The above default settings assume that you are using it with a 16:9 format 1080p or 4K TV or computer monitor. If you are using a 16:10 format 1440p computer monitor, use these settings for the video modes instead:
+The above default settings assume that you are using it with a 16:9 format 1080p or 4K TV or computer monitor. If you are using a 1440p computer monitor (no matter how many pixels wide it is), use these settings for the video modes instead:
 
 ```
 video_mode_ntsc=1920,1440,60
 video_mode_pal=1920,1440,50
 ```
 
-Finally, 1920×1200 (8:5) computer monitors are also especially good for scaling 240p retro gaming output with minimal black borders (since 240×5 = 1200), so some people choose these for their setup. In that case, use these settings for the video modes:
+Finally, 1920×1200 (16:10) computer monitors are also especially good for scaling 240p retro gaming output with minimal black borders (since 240×5 = 1200), so some people choose these for their setup. In that case, use these settings for the video modes:
 
 ```
 video_mode_ntsc=1920,1200,60
