@@ -20,7 +20,7 @@ Its aim is to balance preservation of the historical and current output of the [
 10. [MiSTer: Video Modes](#mister-video-modes)
 11. [MiSTer: CPU Performance Notes](#mister-cpu-performance-notes)
 12. [Workbench](#workbench)
-13. [CD³² Game Support](#cd-game-support)
+13. [CD³² Games Support](#cd-games-support)
 14. [Non-working Games](#non-working-games)
 15. [Custom Scripts](#custom-scripts)
 16. [Bug Reports & Feature Requests](#bug-reports--feature-requests)
