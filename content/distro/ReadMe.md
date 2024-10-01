@@ -284,7 +284,7 @@ If you are unfamiliar with the Amiga CD³², it was essentially an Amiga 1200 wi
 
 While the CD³² never really got its time to shine because of Commodore’s bankruptcy soon after launch, there are some fun expansions of existing Amiga games with great CD audio and Full Motion Video intros, so some of its ~150 games are worth checking out.
 
-We include a setup in AmigaVision that puts an entry in your `Console` section of MiSTer's core selector. This boots directly into an Amiga setup preconfigured to let you load CD³² games. You will need a mouse or an analog stick set up to act as a mouse to operate this UI.
+We include a setup in AmigaVision that puts an entry in your `Console` section of MiSTer's core selector. This boots directly into an Amiga setup preconfigured to let you load CD³² games. You will need a mouse, a keyboard or an analog stick set up to act as a mouse to operate this UI.
 
 ### Starting a CD³² Game
 
