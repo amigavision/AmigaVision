@@ -392,7 +392,7 @@ Not at the moment, AmigaVision is currently AGA-only and requires at least a 680
 
 We welcome contributions, though — so if you're interested in maintaining this part of the AmigaVision setup scripts, let us know!
 
-### What's "Arcadia Systems"?
+### What is "Arcadia Systems"?
 
 Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500 based multi-game arcade system. Most titles released for the system have been dumped and are available on the AmigaVision image. The games are not great (to put it kindly), but are an interesting curiosity.
 
