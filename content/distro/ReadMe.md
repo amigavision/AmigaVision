@@ -394,7 +394,7 @@ We welcome contributions, though — so if you're interested in maintaining this
 
 ### What is "Arcadia Systems"?
 
-Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500 based multi-game arcade system. Most titles released for the system have been dumped and are available on the AmigaVision image. The games are not great (to put it kindly), but are an interesting curiosity.
+Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500-based multi-game arcade system. Most titles released for the system have been dumped and are available via AmigaVision. The games are not great (to put it kindly), but are an interesting curiosity.
 
 Button mapping:
 
