@@ -144,7 +144,7 @@ Shadow_Masks
 
 ```
 
-* Paste the following recommended core settings to the bottom of your `MiSTer.ini` file in the root of your MiSTer file system -- these settings are further explained in the Video Modes section. It's especially important to explicity define resolutions for both PAL and NTSC, and not rely on the automatic fallback that MiSTer has available:
+* Paste the following recommended core settings to the bottom of your `MiSTer.ini` file in the root of your MiSTer file system -- these settings are further explained in the [Video Modes](#mister-video-modes) section. It's especially important to explicity define resolutions for both PAL and NTSC, and not rely on the automatic fallback that MiSTer has available:
 
 ```
 [Amiga
@@ -229,21 +229,7 @@ On the MiSTer side of things, always, *always* run the AmigaVision setup in the 
 
 The `Original` aspect ratio supplied by the core should not be used. The `Full Screen` aspect ratio is *only* used for 6×PAL on 16:9 widescreen displays.
 
-Make absolutely sure that you update your `MiSTer.ini` settings for the core according to the documentation! It should look like this:
-
-```
-[Amiga
-+Amiga500
-+Amiga500HD
-+Amiga600HD
-+AmigaCD32]
-video_mode_ntsc=8 
-video_mode_pal=9
-vscale_mode=0
-vsync_adjust=1 
-custom_aspect_ratio_1=40:27
-bootscreen=0
-```
+Make absolutely sure that you update your `MiSTer.ini` settings for the core [according to the documentation](#setup-for-mister)!
 
 ### vsync_adjust setting
 
