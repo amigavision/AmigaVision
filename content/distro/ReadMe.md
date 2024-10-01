@@ -495,10 +495,10 @@ Audio & Video:
 [FS-UAE]:https://fs-uae.net
 [Analogue Pocket]:https://analogue.co/pocket
 [Amiga Pocket Core]:https://github.com/Mazamars312/Analogue-Amiga/releases
-[https://amiga.vision/cd32]:(https://amiga.vision/cd32)
+[https://amiga.vision/cd32]:https://amiga.vision/cd32
 
 [David Lindecrantz]:https://github.com/Optiroc
-[Alex Limi]:https://limi.dev
+[Alex Limi]:https://limi.net
 [Per Olofsson]:https://github.com/MagerValp
 [Ben Squibb]:https://github.com/stat-mat
 [hitm4n]:https://github.com/hittm4n
