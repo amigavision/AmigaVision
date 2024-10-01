@@ -130,12 +130,11 @@ Controls:
 
 ## Setup for MiSTer
 
-**Note:** If you are updating from an earlier version -- especially before 2023 -- we *highly* recommend setting aside your `games/Amiga/MegaAGS-Saves.hdf` file and doing this installation from scratch and then adding that file back in, as many things have changed. This is generally always the best approach when upgrading.
-
-* Copy the contents of the following directories to the corresponding directories in the top level on MiSTer's file system:
+Copy the contents of the following directories to the corresponding directories in the top level on MiSTer's file system:
 
 ```  
 _Computer
+_Console
 config
 Filters
 games
@@ -144,7 +143,7 @@ Shadow_Masks
 
 ```
 
-* Paste the following recommended core settings to the bottom of your `MiSTer.ini` file in the root of your MiSTer file system -- these settings are further explained in the [Video Modes](#mister-video-modes) section. It's especially important to explicity define resolutions for both PAL and NTSC, and not rely on the automatic fallback that MiSTer has available:
+Paste the following recommended core settings to the bottom of your `MiSTer.ini` file in the root of your MiSTer file system -- these settings are further explained in the [Video Modes](#mister-video-modes) section. It's especially important to explicity define resolutions for both PAL and NTSC, and *not* rely on the automatic fallback that MiSTer has available:
 
 ```
 [Amiga
@@ -160,20 +159,30 @@ custom_aspect_ratio_1=40:27
 bootscreen=0
 ```
 
-These default settings assume that you are using it with a 16:9 format 1080p or 4K TV. If you are using a 16:10 format 1440p monitor, use these settings for the video modes instead:
+Note that *even if* your 16:9 4K TV *can* handle and scale 1440p, we *still recommend* using 1080p output, since that will do proper integer scaling to 4K and make use of the per-game 5× Zoom and Dynamic Crop modes, to reduce the amount of pixels wasted on black bars along the edges.
+
+### Other monitor sizes
+
+The above default settings assume that you are using it with a 16:9 format 1080p or 4K TV or computer monitor. If you are using a 16:10 format 1440p computer monitor, use these settings for the video modes instead:
 
 ```
 video_mode_ntsc=1920,1440,60
 video_mode_pal=1920,1440,50
 ```
 
-Note that even if your 16:9 4K TV can handle and scale 1440p, we still recommend using 1080p output, since that will do proper integer scaling to 4K and make use of the per-game 5× Zoom and Dynamic Crop modes.
+Finally, 1920×1200 (8:5) computer monitors are also especially good for scaling 240p retro gaming output with minimal black borders (since 240×5 = 1200), so some people choose these for their setup. In that case, use these settings for the video modes:
 
-* Reboot your MiSTer, you should now have two entries in the `Computer` section: 
+```
+video_mode_ntsc=1920,1200,60
+video_mode_pal=1920,1200,50
+```
+
+Reboot your MiSTer, you should now have two entries in the `Computer` section: 
+
   * `Amiga` for the main AmigaVision setup -- you'll be using this one 99% of the time.
   * `Amiga 500` for a stock Amiga 500 hardware setup with no hard drive to use with ADF floppy disk images for any troublesome demos or games that don't work with the main setup. Some demo ADFs are included and can be mounted as floppy disks in MiSTer's OSD menu, invoked with the `F12` key.
 
-* Launch the `Amiga` entry and enjoy! Don't forget to check out the sections below -- especially on save files, controller mappings and video modes once the basic setup is up and running.
+Launch the `Amiga` entry — and enjoy! Don't forget to check out the other sections of the documentation — especially on save files, controller mappings and video modes — once the basic setup is up and running.
 
 ### Potential issues
 
