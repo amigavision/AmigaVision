@@ -289,10 +289,10 @@ We include a setup in AmigaVision that puts an entry in your `Console` section o
 ### Starting a CD³² Game
 
 * Put your CD³² disc images in `games/AmigaCD32` — CHD format is recommended, but BIN/CUE and ISO are also supported.
-* Navigate to Consoles → Amiga CD32 and start it.
+* Navigate to `Consoles → `Amiga CD32` and start it.
 * You will be presented with a UI, but don't click anything yet.
 * Open the MiSTer menu (`F12`), and navigate to the Drives section.
-* Navigate to the `CD/Removable` section, and select the CD³² disc image you want to play.
+* Navigate to the `Removable/CD` section, and select the CD³² disc image you want to play.
 * Dismiss the menu with `F12`
 * Select "Boot"
 * Enjoy your game!
