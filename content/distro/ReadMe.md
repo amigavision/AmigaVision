@@ -299,7 +299,7 @@ We include a setup in AmigaVision that puts an entry in your `Console` section o
 
 Do note that while the majority of CD³² games work (and, even a few CDTV games), this is using a shim combined with MiSTer's CD Audio support in the Amiga core, so not every game will work perfectly — but a good number of them do.
 
-We maintain a compatibility list, including any special settings needed at [https://amiga.vision/cd32] — make sure to consult the listing for the game you are trying to play if it does not work.
+We maintain a compatibility list, including any special settings needed at [amiga.vision/cd32] — make sure to consult the listing for the game you are trying to play if it does not work.
 
 ## Non-working Games
 
@@ -495,7 +495,7 @@ Audio & Video:
 [FS-UAE]:https://fs-uae.net
 [Analogue Pocket]:https://analogue.co/pocket
 [Amiga Pocket Core]:https://github.com/Mazamars312/Analogue-Amiga/releases
-[https://amiga.vision/cd32]:https://amiga.vision/cd32
+[amiga.vision/cd32]:https://amiga.vision/cd32
 
 [David Lindecrantz]:https://github.com/Optiroc
 [Alex Limi]:https://limi.net
