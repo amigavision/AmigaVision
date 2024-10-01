@@ -276,7 +276,7 @@ You can explore the world's first multitasking 16-bit computer from 1985 with th
 
 To change from the default 640×200 resolution to something like 1280×720 or 1920×1080 for use with a 16:9 HD display, hold down the right mouse button and select your preferred resolution from the ScreenMode menu. 540p is a nice compromise, a very usable screen resolution that doubles every pixel on a modern 1080p/4K 16:9 display.
 
-##CD³² Games Support
+## CD³² Games Support
 
 *This section is for MiSTer only. Most emulators have a way to run CD³² games, so consult the documentation there for instructions on how to play CD³² games. The Amiga core on Analogue Pocket does not support mounting/loading disc images yet.*
 
