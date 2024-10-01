@@ -179,10 +179,13 @@ video_mode_ntsc=1920,1200,60
 video_mode_pal=1920,1200,50
 ```
 
-Reboot your MiSTer, you should now have two entries in the `Computer` section: 
+### Using the Amiga Cores
 
-  * `Amiga` for the main AmigaVision setup -- you'll be using this one 99% of the time.
+Reboot your MiSTer, you should now have two entries in the `Computer` section, and one in `Console`: 
+
+  * `Amiga` for the main AmigaVision setup — you'll be using this one 99% of the time.
   * `Amiga 500` for a stock Amiga 500 hardware setup with no hard drive to use with ADF floppy disk images for any troublesome demos or games that don't work with the main setup. Some demo ADFs are included and can be mounted as floppy disks in MiSTer's OSD menu, invoked with the `F12` key.
+  * `Amiga CD32` for the Amiga CD³² games console — see the instructions for how to load disc images in the dedicated [CD³² section](#cd-games-support)
 
 Launch the `Amiga` entry — and enjoy! Don't forget to check out the other sections of the documentation — especially on save files, controller mappings and video modes — once the basic setup is up and running.
 
