@@ -10,6 +10,7 @@ kickstart_file = ./kickstart.rom
 cdrom_drive_count = 0
 floppy_drive_count = 2
 hard_drive_0 = ./base.hdf
+hard_drive_1 = ~
 ntsc_mode = 1
 scanlines = 1
 viewport = * * * * => 74 36 678 538
