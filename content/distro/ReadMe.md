@@ -20,12 +20,13 @@ Its aim is to balance preservation of the historical and current output of the [
 10. [MiSTer: Video Modes](#mister-video-modes)
 11. [MiSTer: CPU Performance Notes](#mister-cpu-performance-notes)
 12. [Workbench](#workbench)
-13. [Non-working Games](#non-working-games)
-14. [Custom Scripts](#custom-scripts)
-15. [Bug Reports & Feature Requests](#bug-reports--feature-requests)
-16. [Credits](#credits)
-17. [Troubleshooting](#troubleshooting)
-18. [Frequently Asked Questions](#frequently-asked-questions)
+13. [CD³² Game Support](#CD³²-game-support)
+14. [Non-working Games](#non-working-games)
+15. [Custom Scripts](#custom-scripts)
+16. [Bug Reports & Feature Requests](#bug-reports--feature-requests)
+17. [Credits](#credits)
+18. [Troubleshooting](#troubleshooting)
+19. [Frequently Asked Questions](#frequently-asked-questions)
 
 ## Features
 
@@ -67,11 +68,13 @@ Before we start, a quick note on save files:
 
 In the `[Options]` menu of the launcher you can choose between a few alternative quit key options if the `DEL` key doesn't work for you. If set, it will override the preconfigured default Quit key. The active Quit key is displayed on the splash screen shown when a game is loading.
 
+The reason for this is that most games run in a WHDLoad container (think "virtualization"), and cannot write the save data to disk outside the container until you explicitly exit the game.
+
 ## Upgrading
 
 When upgrading AmigaVision from a previous release (on any platform), we always recommend following the instructions for doing a clean install and **only** keep your `Saves.hdf` hard drive image, which is where your game saves are stored.
 
-We often make important changes to the configuration files, `MiSTer.ini`and other included files, so the only way to ensure that you can use the new version properly and get the new capabilities (examples from previous releases: 5×PAL Dynamic Scaling, CD32 support on MiSTer, etc.) is to do a clean install of everything, every time. 
+We often make important changes to the configuration files, `MiSTer.ini` and other included files, so the only way to ensure that you can use the new version properly and get the new capabilities (examples from previous releases: 5×PAL Dynamic Scaling, CD32 support on MiSTer, etc.) is to do a clean install of everything, every time. 
 
 Follow the instructions for your platform below.
 
@@ -273,11 +276,34 @@ You can explore the world's first multitasking 16-bit computer from 1985 with th
 
 To change from the default 640×200 resolution to something like 1280×720 or 1920×1080 for use with a 16:9 HD display, hold down the right mouse button and select your preferred resolution from the ScreenMode menu. 540p is a nice compromise, a very usable screen resolution that doubles every pixel on a modern 1080p/4K 16:9 display.
 
+##CD³² Games Support
+
+*This section is for MiSTer only. Most emulators have a way to run CD³² games, so consult the documentation there for instructions on how to play CD³² games. The Amiga core on Analogue Pocket does not support mounting/loading disc images yet.*
+
+If you are unfamiliar with the Amiga CD³², it was essentially an Amiga 1200 with a 2× speed CD drive, packaged with gamepads and in a console form factor. It was released in September 1993.
+
+While the CD³² never really got its time to shine because of Commodore’s bankruptcy soon after launch, there are some fun expansions of existing Amiga games with great CD audio and Full Motion Video intros, so some of its ~150 games are worth checking out.
+
+We include a setup in AmigaVision that puts an entry in your `Console` section of MiSTer's core selector. This boots directly into an Amiga setup preconfigured to let you load CD³² games. You will need a mouse or an analog stick set up to act as a mouse to operate this UI.
+
+### Starting a CD³² Game
+
+* Put your CD³² disc images in `games/AmigaCD32` — CHD format is recommended, but BIN/CUE and ISO are also supported.
+* Navigate to Consoles → Amiga CD32 and start it.
+* You will be presented with a UI, but don't click anything yet.
+* Open the MiSTer menu (`F12`), and navigate to the Drives section.
+* Navigate to the `CD/Removable` section, and select the CD³² disc image you want to play.
+* Dismiss the menu with `F12`
+* Select "Boot"
+* Enjoy your game!
+
+Do note that while the majority of CD³² games work (and, even a few CDTV games), this is using a shim combined with MiSTer's CD Audio support in the Amiga core, so not every game will work perfectly — but a good number of them do.
+
+We maintain a compatibility list, including any special settings needed at [amiga.vision/cd32] — make sure to consult the listing for the game you are trying to play if it does not work.
 
 ## Non-working Games
 
 About 10 games are currently not working due to CPU or graphics chipset features not yet implemented in MiSTer's Minimig core. Over the past years compatibility has improved a lot, and that trend is likely to continue. A few titles do not work, or are very glitchy, due to other inaccuracies. This will also likely improve over time. The launcher will specify when a game is known not to work in the `Notes` section of a given game.
-
 
 ## Custom Scripts
 
@@ -469,6 +495,7 @@ Audio & Video:
 [FS-UAE]:https://fs-uae.net
 [Analogue Pocket]:https://analogue.co/pocket
 [Amiga Pocket Core]:https://github.com/Mazamars312/Analogue-Amiga/releases
+[amiga.vision/cd32]:(https://amiga.vision/cd32)
 
 [David Lindecrantz]:https://github.com/Optiroc
 [Alex Limi]:https://limi.dev
