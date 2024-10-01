@@ -1,6 +1,6 @@
 # AmigaVision Setup
 
-AmigaVision is a carefully curated collection of Amiga games and demos, as well as a minimal Workbench setup with useful utilities and apps, wrapped in a user-friendly launcher.
+AmigaVision is a carefully curated collection of Amiga game and demo configurations, as well as a minimal Workbench setup with useful utilities and apps, wrapped in a user-friendly launcher.
 
 Its aim is to balance preservation of the historical and current output of the [Amiga games] and [demo scene] as accurately as possible, while still being easy to use for people new to the Amiga computer — making it as easy to use as any games console.
 
