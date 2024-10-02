@@ -126,6 +126,9 @@ assign Mline: APPS:Audio/Mline
 assign "MT-32 Editor:" APPS:Audio/MT32Editor
 assign XORFiles: APPS:Audio/X-oR
 
+assign Miami: APPS:Network/Miami
+path Miami:
+
 assign ST-00: APPS:Audio/ProTracker2
 assign >NIL: exists Data:
 if not warn
