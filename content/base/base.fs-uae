@@ -1,9 +1,8 @@
 # Name: MegaAGS FS-UAE configuration
 
 [fs-uae]
-accuracy = -1
 amiga_model = A1200
-cpu = 68040-NOMMU
+cpu = 68020
 uae_cpu_speed = max
 chip_memory = 2048
 zorro_iii_memory = 262144
