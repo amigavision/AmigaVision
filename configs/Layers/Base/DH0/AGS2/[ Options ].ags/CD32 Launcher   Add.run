@@ -1,3 +1,4 @@
-copy "SYS:Storage/[ Run CD32 Game Disc ].run" TO "AGS:[ Options ].ags/" QUIET
-copy "SYS:Storage/[ Run CD32 Game Disc ].txt" TO "AGS:[ Options ].ags/" QUIET
-copy "SYS:Storage/[ Run CD32 Game Disc ].iff" TO "AGS:[ Options ].ags/" QUIET
+copy >NIL: "SYS:Storage/[ Run CD32 Game Disc ].run" TO AGS:
+copy >NIL: "SYS:Storage/[ Run CD32 Game Disc ].txt" TO AGS:
+copy >NIL: "SYS:Storage/[ Run CD32 Game Disc ].iff" TO AGS:
+delete >NIL AGS:.dir
