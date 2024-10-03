@@ -1,1 +1,2 @@
-Add CD32 launcher to the main menu. (Only works on MiSTer)
+Add CD32 launcher to the main menu. 
+(Only works on MiSTer)
