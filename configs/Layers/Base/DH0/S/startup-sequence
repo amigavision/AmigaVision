@@ -10,6 +10,8 @@ failat 21
 
 IDEFix >NIL:
 
+LED ; Turn off the audio filter
+
 makedir RAM:T RAM:Clipboards RAM:ENV RAM:ENV/Sys
 copy >NIL: ENVARC: RAM:ENV ALL NOREQ
 
