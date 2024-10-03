@@ -1,0 +1,3 @@
+copy "SYS:Storage/[ Run CD32 Game Disc ].run" TO "AGS:[ Options ].ags/" QUIET
+copy "SYS:Storage/[ Run CD32 Game Disc ].txt" TO "AGS:[ Options ].ags/" QUIET
+copy "SYS:Storage/[ Run CD32 Game Disc ].iff" TO "AGS:[ Options ].ags/" QUIET
