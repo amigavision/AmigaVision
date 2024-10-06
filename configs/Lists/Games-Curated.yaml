@@ -57,9 +57,6 @@
       - Speedball: { disp_name: "[2P] Speedball" }
       - Speedball2: { disp_name: "[2P] Speedball 2" }
       - SpittingImage: { disp_name: "[2P] Spitting Image" }
-      - SpyVsSpy: { disp_name: "[2P] Spy vs. Spy" }
-      - SpyVsSpy2TheIslandCaper: { disp_name: "[2P] Spy vs. Spy II" }
-      - SpyVsSpy3ArcticAntics: { disp_name: "[2P] Spy vs. Spy III" }
       - SuperCars2AGA: { disp_name: "[2P] Super Cars II" }
       - SuperMethaneBros: { disp_name: "[2P] Super Methane Bros" }
       - SuperTwintris: { disp_name: "[2P] Super Twintris" }
@@ -349,9 +346,6 @@
     - SperisLegacy
     - SpindizzyWorlds
     - SpittingImage
-    - SpyVsSpy
-    - SpyVsSpy2TheIslandCaper
-    - SpyVsSpy3ArcticAntics
     - SpyWhoLovedMe
     - StreetRod
     - StreetRod2
