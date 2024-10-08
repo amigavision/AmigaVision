@@ -314,7 +314,7 @@ copy >NIL: Saves:Custom/Prefs-Env ENV:Sys/
 
 This will take the setting you copied to `Saves:Custom/Prefs-Env` and put them in RAM: when booting the image, so you can keep your own settings even when replacing the `MegaAGS.hdf` file with a future version. You can also install new apps/games to Saves: and add `Assign` statements etc to the `Saves:` drive, or do anything else you want to keep permanent after upgrading.
 
-## Bug Reports & Feature Requests
+## Bug Reports *&* Feature Requests
 
 While AmigaVision has been tested for many years, the sheer volume of games and demos makes it all but certain that something has been overlooked somewhere. If you find something that doesn't work or seems like it's running with the wrong settings, or something is missing -- tell us about it in the issue tracker found under the Development section at [amiga.vision].
 
