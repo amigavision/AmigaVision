@@ -263,10 +263,7 @@ The D-Cache option in MiSTer's Amiga core is essentially a turbo switch for the 
 
 The CPU D-Cache option is available in the `OSD` under the `System` menu.
 
-On the other hand, some titles -- mostly 3D polygon games and demos -- will benefit greatly from the CPU boost D-Cache offers. So it's an option worth experimenting with on a case by case basis.
-
-Note that the glitches introduced with D-Cache on can sometimes clear up by turning it off while the Amiga core is running. Other times they seem to stick until reboot. The latter behavior is the case with, for example, Turrican II and Grand Monster Slam (and many less significant titles). Whenever making changes to the System settings in the OSD, we recommend re-loading the core.
-
+On the other hand, some titles -- mostly 3D polygon games and demos -- will benefit greatly from the CPU boost D-Cache offers. So it's an option worth experimenting with on a case by case basis. Whenever switching this on or off, we recommend reloading the core to avoid any issues.
 
 ## Workbench
 
