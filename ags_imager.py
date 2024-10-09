@@ -60,6 +60,7 @@ from ags_fs import build_pfs, extract_base_image, convert_filename_uae2a
 from ags_make import make_autoentries, make_runscripts, make_tree
 from ags_query import entry_is_notwhdl, get_archive_path, get_entry, get_whd_dir
 from ags_types import EntryCollection
+from datetime import datetime
 
 # -----------------------------------------------------------------------------
 
@@ -124,6 +125,10 @@ def main():
     parser.add_argument("--only-ags-tree", dest="only_ags_tree", action="store_true", default=False, help="only generate AGS tree")
 
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
+
+    
+    print("Build started: ")
+    print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
     try:
         paths.verify()
