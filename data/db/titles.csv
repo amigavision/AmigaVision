@@ -3425,7 +3425,7 @@ game--turricancdtv--turricancdtv;Turrican;Turrican;1;game--turrican--turrican;OC
 game--timerace--timerace;Time Race;Time Race;;;OCS;;0;5;;;;;;;;;1990;;English;Cistar;Loriciel;1;;v1.0;TimeRace/TimeRace.Slave;game/TimeRace_v1.0_2420.lha;Game;;3628;2673
 game--timefr--timefr;Time;Time;;game--time--time;OCS;;2;;;;;;;;;;1989;;French;Oxford Digital Enterprises (ODE);Empire;1;;v1.2;TimeFr/TimeFr.Slave;game/Time_v1.2_Fr_2644.lha;Game;Adventure;1401;2470
 game--turbotraxarcane1mb--turbotraxarcane1mb;Turbo Trax;Turbo Trax;;;OCS;;0;;;;;;;;;;1995;;English;Arcane;Arcane;1 (2 with serial link);;v1.1;TurboTraxArcane1MB/TurboTraxArcane1MB.Slave;game/TurboTrax_v1.1_Arcane_1MB_0156.lha;Game;Racing - Top-Down;1529;1597
-game--trollsaga--trollsaga;Trolls;Trolls;;;AGA;1;0;;;;;;;;;;1993;;English;Flair;Flair;1;;v1.2;TrollsAGA/TrollsAGA.Slave;game/Trolls_v1.2_AGA_0996.lha;Game;;1519;2251
+game--trollsaga--trollsaga;Trolls;Trolls;;;AGA;1;0;5;18;;;;;;;;1993;;English;Flair;Flair;1;;v1.2;TrollsAGA/TrollsAGA.Slave;game/Trolls_v1.2_AGA_0996.lha;Game;;1519;2251
 game--turrican2--turrican2;Turrican II: The Final Fight;Turrican II;;;OCS;;0;5;6;;;1;;;;;1991;;English;Factor 5;Rainbow Arts;1;CUSTOM2=3;v2.2;Turrican2/Turrican2.Slave;game/Turrican2_v2.2_0029.lha;Game;Platform - Shooting;1535;1081
 game--timerunnersseries--timerunners24;Time Runners 24: Beyond All Dimensions;Time Runners 24: Beyond All Dimensions;1;;OCS;;0;;;;;;;;;;1994;;English;Simulmondo;Simulmondo;1;;v1.0;TimeRunnersSeries/TimeRunners24.Slave;game/TimeRunnersSeries_v1.0.lha;Game;;1429;3569
 game--titan--titan;Titan;Titan;;;OCS;;0;;;;;;;;;;1989;;English;Titus;Titus;1;;v2.0;Titan/Titan.Slave;game/Titan_v2.0_1913.lha;Game;;1447;2466
