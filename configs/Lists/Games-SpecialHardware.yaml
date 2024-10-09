@@ -1,5 +1,5 @@
 - Special Hardware:
-  - note: Games with support for special controllers & peripherals.
+  - note: Games with support for special controllers & peripherals, and arcade hardware.
   - image: { ops: { op: "pi", path: "top/peripheral.png" }, size: [320, 128], scale: [1, 1] }
   - Modem or Serial Link:
     - note: Games with local and/or remote multiplayer support.
@@ -78,3 +78,22 @@
     - QuestForGlory2MT32
     - SpaceQuest4NTSCMT32
     - SpaceQuestEnhanced--MT32
+  - Arcadia Systems:
+    - note: Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500-based multi-game arcade system.
+    - MagicJohnsonFstbrkArcadia
+    - NinjaMissionArcadia
+    - XenonArcadia
+    - TableHockeyArcadia
+    - SpaceRangerArcadia
+    - SideWinderArcadia
+    - SpotArcadia
+    - TenPinBowlingArcadia
+    - DeltaCommandArcadia
+    - RoadwarsArcadia
+    - PharaohsMatchArcadia
+    - BlastaballArcadia
+    - UpScopeArcadia
+    - Aaargh!Arcadia
+    - WorldDartsArcadia
+    - WorldTrophySoccerArcadia
+    - LeaderBoardArcadia
