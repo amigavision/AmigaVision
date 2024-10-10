@@ -11,10 +11,10 @@
 # A CLI interface is also available. Example usage:
 #
 # Convert to 640x200 with center-crop
-# ./ags_screenshot.py --crop 640x400 --scale 640x200 --center_crop -i test.png -o test.iff
+# ./build/ags_screenshot.py --crop 640x400 --scale 640x200 --center_crop -i test.png -o test.iff
 #
 # Convert to 320x128 (squished height) with smart-crop, max 128 colors
-# ./ags_screenshot.py --crop 640x512 --scale 320x256 --resample 320x128 --colors 128 -i test.png -o test.iff
+# ./build/ags_screenshot.py --crop 640x512 --scale 320x256 --resample 320x128 --colors 128 -i test.png -o test.iff
 
 import argparse
 import sys

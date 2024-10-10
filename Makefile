@@ -14,44 +14,44 @@ env-rm:
 	-@pipenv -v --clear
 
 index:
-	@pipenv run ./ags_index.py -v
+	@pipenv run ./build/ags_index.py -v
 
 manifests:
-	@pipenv run ./ags_index.py --make-manifests
+	@pipenv run ./build/ags_index.py --make-manifests
 
 missing-manifests:
-	@pipenv run ./ags_index.py --make-manifests --only-missing
+	@pipenv run ./build/ags_index.py --make-manifests --only-missing
 
 verify-manifests:
-	@pipenv run ./ags_index.py --verify-manifests
+	@pipenv run ./build/ags_index.py --verify-manifests
 
 sqlite:
-	@pipenv run ./ags_index.py -v --make-sqlite
+	@pipenv run ./build/ags_index.py -v --make-sqlite
 
 csv:
-	@pipenv run ./ags_index.py -v --make-csv
+	@pipenv run ./build/ags_index.py -v --make-csv
 
 screenshots:
-	@pipenv run ./make_screenshots.sh screenshots
+	@pipenv run ./build/make_screenshots.sh screenshots
 
 image:
-	@pipenv run ./ags_imager.py -v -c configs/MegaAGS.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
+	@pipenv run ./build/ags_imager.py -v -c configs/MegaAGS.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 	@mv ${AGSDEST}/MegaAGS.hdf ${AGSDEST}/games/Amiga
 
 pocket-image:
-	@pipenv run ./ags_imager.py -v -c configs/MegaAGS-Pocket.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
+	@pipenv run ./build/ags_imager.py -v -c configs/MegaAGS-Pocket.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 	@mv ${AGSDEST}/MegaAGS-Pocket.hdf ${AGSDEST}/MegaAGS-Pocket
 
 mini-image:
-	@pipenv run ./ags_imager.py -v -c configs/MegaAGS-Mini.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
+	@pipenv run ./build/ags_imager.py -v -c configs/MegaAGS-Mini.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 	@mv ${AGSDEST}/MegaAGS-Mini.hdf ${AGSDEST}/MegaAGS-Mini
 
 test-image:
-	@pipenv run ./ags_imager.py -v -c configs/Test.yaml --auto-lists -o ${AGSDEST}
+	@pipenv run ./build/ags_imager.py -v -c configs/Test.yaml --auto-lists -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 
 test-dry:
-	@pipenv run ./ags_imager.py -v -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
+	@pipenv run ./build/ags_imager.py -v -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
