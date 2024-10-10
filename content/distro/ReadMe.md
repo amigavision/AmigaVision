@@ -46,6 +46,8 @@ It has many features specifically for use with [MiSTer] and [Analogue Pocket] FP
 
 * Shared file system support for the `MiSTer:` volume, making it trivial to transfer files to and from the Amiga over WiFi or wired networks, or directly using the SD card.
 
+* Internet support is included, you can go online with your Amiga and download apps, games and graphics/music files directly to your setup.
+
 * Minimalist Workbench setup with support for including your own custom set of configurations, games, applications and files using the `Saves:` HD image that will survive upgrades of the main HD image.
 
 * RTG resolution support for running Workbench in modern resolutions like 1920×1080 and in 16:9 aspect ratios on MiSTer.
