@@ -1,6 +1,6 @@
 # AmigaVision
 
-(The latest version of this documentation with a clean, readable layout can also always be found on the AmigaVision web site at [https://amiga.vision/docs])
+(The latest version of this documentation can also always be found on our web site at [https://amiga.vision/docs])
 
 AmigaVision is a carefully curated collection of Amiga game and demo configurations, as well as a minimal Workbench setup with useful utilities and apps, wrapped in a user-friendly launcher.
 
