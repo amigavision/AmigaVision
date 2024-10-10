@@ -1,4 +1,4 @@
-# AmigaVision Setup
+# AmigaVision
 
 (The latest version of this documentation with a clean, readable layout can always be found on the AmigaVision web site at [https://amiga.vision/docs])
 
