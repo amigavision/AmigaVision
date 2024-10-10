@@ -1,8 +1,19 @@
 # AmigaVision Version History
 
+## 2024.10.10
+
+* Internet support was added.
+* Separate CD32 launcher was added to MiSTer's main core selection menu, put CD32 games in `games/AmigaCD32`.
+* There is now a dedicated [section on setting up and launching CD32 games] in the documentation.
+* AmigaVision launcher entry is now optional, you can add it back into the menu in "Options" if you have a MiSTer.
+* Default setup is now NTSC instead of the resulting PAL → NTSC → PAL switching that was the case in the past, to cut down on any delays when booting the setup. All games will of course run in their correct PAL or NTSC resolutions (depending on origin of the game developer) as before, this is just to avoid the 1-2 second wait every time a new resolution is applied on boot. We default the launcher to NTSC for maximum compatibility with e.g. US consumer CRT TVs, since these often can't handle PAL.
+* Added 1280×1024 (5:4) resolution option for Workbench
+* Updated 100 NTSC games to use 5:6 PAR
+* Configurations for 49 games added/updated, current with WHDLoad as of 2024.10.01:
+
 ## 2024.08.18
 
-* Added support for booting CD32 disc images (CHD or bin/cue) on MiSTer from the launcher.
+* Added support for booting CD32 disc images (CHD or bin/cue) on MiSTer from the launcher. 
 * Dynablaster's battle mode timed out after 3 seconds instead of 3 minutes, fixed.
 * Non-AGA version of Robocod added, since it is a different set of levels
 * Alien Breed non-SE added, has better gamepad controls
