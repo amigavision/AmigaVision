@@ -2,7 +2,7 @@
 
 (The latest version of this documentation can also always be found on our web site at [https://amiga.vision/docs])
 
-AmigaVision is a carefully curated collection of Amiga game and demo configurations, as well as a minimal Workbench setup with useful utilities and apps, wrapped in a user-friendly launcher.
+AmigaVision is a carefully curated collection of game and demo configurations for the [Amiga computer] platform, as well as a minimal Workbench setup with useful utilities and apps, wrapped in a user-friendly launcher.
 
 Its aim is to balance preservation of the historical and current output of the [Amiga games] and [demo scene] as accurately as possible, while still being easy to use for people new to the Amiga computer — making it as easy to use as any game console.
 
@@ -484,6 +484,7 @@ Audio & Video:
 
 [AmigaVision]:https://amiga.vision
 [amiga.vision]:https://amiga.vision
+[Amiga computer]:https://en.wikipedia.org/wiki/Amiga
 [https://amiga.vision/docs]:https://amiga.vision/docs
 [MiSTer]:https://misterfpga.org
 [Analogue Pocket]:https://www.analogue.co/pocket
