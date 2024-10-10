@@ -137,7 +137,7 @@ Many games are updated to support two-button controls, but some require remappin
 
 Copy the contents of the following directories to the corresponding directories in the top level on MiSTer's file system:
 
-```  
+```
 _Computer
 _Console
 config
