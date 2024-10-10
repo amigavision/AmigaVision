@@ -30,7 +30,7 @@ It has many features specifically for use with [MiSTer] and [Analogue Pocket] FP
 
 ## Features
 
-* Supports original Amiga hardware, MiSTer, MiST and Analogue Pocket FPGA hardware recreations, as well as Amiga emulators.
+* Supports original Amiga 1200, 4000 *&* CD32 hardware, MiSTer, MiST and Analogue Pocket FPGA hardware recreations, as well as Amiga emulators.
 
 * Sophisticated and performant Amiga games and demo launcher with screenshots included, can be entirely controlled using gamepads, joysticks or via keyboard. This lets you quickly and easily experience the best of what the system has to offer.
 
