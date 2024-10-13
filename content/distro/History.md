@@ -1,5 +1,9 @@
 # AmigaVision Version History
 
+##Upcoming Release
+
+* Workbench now uses 216px (NTSC) & 270px (PAL) vertical resolution to use the full height on 1080p/4K screens.
+
 ## 2024.10.10
 
 * Internet support was added.
