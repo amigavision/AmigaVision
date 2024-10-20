@@ -10,9 +10,13 @@ kickstart_file = ./MegaAGS-Kickstart.rom
 cdrom_drive_count = 0
 floppy_drive_count = 2
 hard_drive_0 = ./MegaAGS.hdf
+hard_drive_0_read_only = 0
 hard_drive_1 = ./MegaAGS-Saves.hdf
-hard_drive_3 = ./shared
-hard_drive_3_label = MiSTer
+hard_drive_1_read_only = 0
+hard_drive_2 = ./shared
+hard_drive_2_read_only = 0
+hard_drive_2_label = MiSTer
+
 ntsc_mode = 1
 scanlines = 1
 viewport = * * * * => 74 36 678 538
