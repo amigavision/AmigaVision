@@ -1,4 +1,4 @@
-# Name: MegaAGS FS-UAE configuration
+# Name: AmigaVision FS-UAE configuration
 
 [fs-uae]
 amiga_model = A1200/020
@@ -16,7 +16,6 @@ hard_drive_3_label = MiSTer
 ntsc_mode = 1
 scanlines = 1
 viewport = * * * * => 74 36 678 538
-fullscreen = 0
 window_width = 678
 window_height = 538
 window_border = 0

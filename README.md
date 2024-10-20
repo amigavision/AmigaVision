@@ -112,7 +112,7 @@ We recommend — and include a setup for — the [FS-UAE] Amiga emulator, which 
 
 1. Download and install [FS-UAE].
 2. Copy the `games/Amiga` directory to your preferred location.
-3. Double-click the `MegaAGS.fs-uae` file to run the setup with the preferred settings. You can of course also add a shortcut to this file to your Windows start menu, or as an alias in the Mac's Applications folder.
+3. Double-click the `AmigaVision.fs-uae` file to run the setup with the preferred settings. You can of course also add a shortcut to this file to your Windows start menu, or as an alias in the Mac's Applications folder.
 
 For any additional configuration or customizations, consult the FS-UAE documentation.
 
