@@ -468,7 +468,7 @@ System:
     games/Amiga/MegaAGS-Kickstart.rom
   HRTmon: disabled
 Audio & Video:
-  TV Standard: PAL
+  TV Standard: NTSC
   Scandoubler FX: Off
   Video area by: Blank
   Aspect ratio: 40:27
