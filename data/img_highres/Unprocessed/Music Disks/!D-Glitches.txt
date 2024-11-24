@@ -1,0 +1,18 @@
+demo--deliriumkronical--deliriumkronical
+overcropped at top
+
+demo--difficulttocureaga--difficulttocureaga
+incorrectly stretched to double height
+
+demo--digitalnoises--digitalnoises
+crashes after intro, works if intro is skipped
+
+demo--divineinspiration--divineinspiration
+locks up at title screen
+
+demo--dizzytunes--dizzytunes
+overcropped at top
+
+demo--dizzytunes2--dizzytunes2
+leftmouse on songinfo screen crashes
+
