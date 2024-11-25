@@ -4290,7 +4290,7 @@ demo-notwhdl--balance-cuttingedge;Cutting Edge;Cutting Edge;;;AGA;1;0;;;;;;;;;;1
 demo-notwhdl--sonik-pure;Pure;Pure;;;AGA;1;0;;;;;;;;;;1996;Finland;English;;Sonik Clique;1;;;;demo-notwhdl/Sonik-Pure.lha;Demo;Intro 64K;;
 demo-notwhdl--jormas-kayrasoiro;Käyrä Soiro;Käyrä Soiro;;;OCS;;0;;;;;;;;;;2015;Finland;English;;Da Jormas;1;;;;demo-notwhdl/Jormas-KayraSoiro.lha;Demo;Demo;;
 demo-notwhdl--jormas-meganerellu;Megane Rellu;Megane Rellu;;;OCS;;0;;;;;;;;;;2009;Finland;English;;Da Jormas;1;;;;demo-notwhdl/Jormas-MeganeRellu.lha;Demo;Intro 40K;;
-demo-notwhdl--jormas-hapycarva72;HäpyCarva #72;HäpyCarva 72;;;OCS;;0;;;;;;;;;;2015;Finland;English;;Da Jormas;1;;;;demo-notwhdl/Jormas-HapyCarva72.lha;Demo;Demo;;
+demo-notwhdl--jormas-hapycarva72;Happy Carva #72;Happy Carva #72;;;OCS;;0;;;;;;;;;;2015;Finland;English;;Da Jormas;1;;;;demo-notwhdl/Jormas-HapyCarva72.lha;Demo;Demo;;
 demo-notwhdl--jormas-monomeno66;MonoMeno 66;MonoMeno 66;;;OCS;;0;;;;;;;;;;1997;Finland;English;;Da Jormas;1;;;;demo-notwhdl/Jormas-MonoMeno66.lha;Demo;Demo;;
 game--hostagentsc--hostagentsc;Hostages;Hostages;1;game--hostages--hostages;OCS;;3;;;;;;;;;;1989;;English;Infogrames;Infogrames;1;;v1.2;HostageNTSC/HostageNTSC.Slave;game/Hostage_v1.2_NTSC_1173.lha;Game;Action - Multi-Type;738;504
 demo-notwhdl--loonies-dontbesquare;Don't Be Square;Don't Be Square;1;;OCS;;0;;;;;;;;Only runs on A500;;2019;Denmark;English;;Loonies;1;;;;demo-notwhdl/Loonies-DontBeSquare.lha;Demo;Intro 4K;;
@@ -5129,5 +5129,5 @@ game--diosadecozumeles--diosadecozumeles;Diosa De Cozumeles;Diosa De Cozumeles;;
 game--rectangle--rectangle;Rectangle;Rectangle;;;OCS;;0;;;;;;;;;;1991;;English;;Turtle Byte Software;1;;v1.0;Rectangle/Rectangle.slave;game/Rectangle_v1.0.lha;Game;;;
 game--airsupply--airsupply;Air Supply;Air Supply;;;OCS;;0;;;;;;;;;;1990;;English;;Magic Bytes;2;;v1.0;AirSupply/AirSupply.slave;game/AirSupply_v1.0.lha;Game;;;
 game--littleprincess2--littleprincess2;Little Princess 2;Little Princess 2;;;OCS;;0;;;;;;;;;;2015;;English;;Night Owl Design;1;;v1.1;LittlePrincess2/LittlePrincess2.slave;game/LittlePrincess2_v1.1.lha;Game;;;
-demo--digitalnoize2--digitalnoize2;Digital Noize 2;Digital Noize 2;;;OCS;;0;;;;;;;;;;1990;;English;;The Evil Forces;;;v1.0;DigitalNoize2/DigitalNoize2.Slave;demo/DigitalNoize2_v1.0_TheEvilForces.lha;Demo;;;
-demo--momentsaga--momentsaga;Moments;Moments;;;AGA;;0;;;;;;;;;;1995;;English;;Old Bulls;;;v1.0;MomentsAGA/MomentsAGA.slave;demo/Moments_v1.0_AGA_OldBulls.lha;Demo;;;
+demo--digitalnoize2--digitalnoize2;Digital Noize 2;Digital Noize 2;;;OCS;;0;;;;;;;;;;1990;;English;;The Evil Forces;;;v1.0;DigitalNoize2/DigitalNoize2.Slave;demo/DigitalNoize2_v1.0_TheEvilForces.lha;Demo;Demo;;
+demo--momentsaga--momentsaga;Moments;Moments;;;AGA;;0;;;;;;;;;;1995;;English;;Old Bulls;;;v1.0;MomentsAGA/MomentsAGA.slave;demo/Moments_v1.0_AGA_OldBulls.lha;Demo;Demo;;
