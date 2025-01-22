@@ -411,7 +411,7 @@ The MiSTer core will handle these mappings for you, and joystick port configurat
 
 ### Does AmigaVision work with Kickstart 3.2?
 
-While the standard AmigaVision setup expects Kickstart 3.1.3 — which was the last release from Commodore — we have had reports of the setup working if you replace `icon.library` and `workbench.library` with their respective Workbench 3.2 versions. The recommended and tested setup is still Kickstart 3.1.3.
+While the standard AmigaVision setup expects Kickstart 3.1 (not 3.1.4 or 3.2) — which was the last release from Commodore — we have had reports of the setup working if you replace `icon.library` and `workbench.library` with their respective Workbench 3.2 versions. The recommended and tested setup is still Kickstart 3.1.
 
 ### Are there any plans to support original Amiga 500, Amiga 600, or Amiga 1000 hardware?
 
