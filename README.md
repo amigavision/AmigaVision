@@ -413,7 +413,7 @@ The MiSTer core will handle these mappings for you, and joystick port configurat
 
 While the standard AmigaVision setup expects Kickstart 3.1 (not 3.1.4 or 3.2) — which was the last release from Commodore in 1993 — we have had reports of the setup working if you replace `icon.library` and `workbench.library` with their respective Workbench 3.2 (or 3.1.4) versions. The recommended and tested setup is still Kickstart 3.1.
 
-The files needed can be found on the Workbench Install disk, in the Libs drawer.
+The files needed can be found on the Workbench Install disk, in the `Libs` drawer.
 
 If you get an error on startup saying "Please insert a volume containing LIBS/workbench.library in any drive", this is likely the reason.
 
