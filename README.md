@@ -415,7 +415,7 @@ While the standard AmigaVision setup expects Kickstart 3.1 (not 3.1.4 or 3.2) â€
 
 The files needed can be found on the Workbench Install disk, in the Libs drawer.
 
-If you get an error on startup saying "Please insert a volume containing LIBS/workbench.library in any drive.", this is likely the reason.
+If you get an error on startup saying "Please insert a volume containing LIBS/workbench.library in any drive", this is likely the reason.
 
 ### Are there any plans to support original Amiga 500, Amiga 600, or Amiga 1000 hardware?
 
