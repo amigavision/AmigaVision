@@ -409,9 +409,13 @@ Unless you are using the "Arcadia Systems" games (see below), no. On the Commodo
 
 The MiSTer core will handle these mappings for you, and joystick port configuration is pretty much never the reason you can't start or control a given game. It's way more likely that you have to hit the space bar, F1, or click a mouse button to get the game started. If you're stuck, look up the controls for a given game in an online manual — which is always a good idea anyway, as there are often additional keyboard or mouse controls needed for a given game for full enjoyment.
 
-### Does AmigaVision work with Kickstart 3.2?
+### Does AmigaVision work with Kickstart 3.2 / 3.1.4?
 
-While the standard AmigaVision setup expects Kickstart 3.1 (not 3.1.4 or 3.2) — which was the last release from Commodore in 1993 — we have had reports of the setup working if you replace `icon.library` and `workbench.library` with their respective Workbench 3.2 versions. The recommended and tested setup is still Kickstart 3.1.
+While the standard AmigaVision setup expects Kickstart 3.1 (not 3.1.4 or 3.2) — which was the last release from Commodore in 1993 — we have had reports of the setup working if you replace `icon.library` and `workbench.library` with their respective Workbench 3.2 (or 3.1.4) versions. The recommended and tested setup is still Kickstart 3.1.
+
+The files needed can be found on the Workbench Install disk, in the Libs drawer.
+
+If you get an error on startup saying "Please insert a volume containing LIBS/workbench.library in any drive.", this is likely the reason.
 
 ### Are there any plans to support original Amiga 500, Amiga 600, or Amiga 1000 hardware?
 
