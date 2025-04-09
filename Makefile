@@ -38,20 +38,25 @@ image:
 	@pipenv run ./build/ags_imager.py -v -c configs/MegaAGS.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 	@mv ${AGSDEST}/MegaAGS.hdf ${AGSDEST}/games/Amiga
+	@echo -e "\a"
 
 pocket-image:
 	@pipenv run ./build/ags_imager.py -v -c configs/MegaAGS-Pocket.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 	@mv ${AGSDEST}/MegaAGS-Pocket.hdf ${AGSDEST}/MegaAGS-Pocket
+	@echo -e "\a"
 
 mini-image:
 	@pipenv run ./build/ags_imager.py -v -c configs/MegaAGS-Mini.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
 	@mv ${AGSDEST}/MegaAGS-Mini.hdf ${AGSDEST}/MegaAGS-Mini
+	@echo -e "\a"
 
 test-image:
 	@pipenv run ./build/ags_imager.py -v -c configs/Test.yaml --auto-lists -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
+	@echo -e "\a"
 
 test-dry:
 	@pipenv run ./build/ags_imager.py -v -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
+	@echo -e "\a"
