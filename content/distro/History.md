@@ -4,6 +4,7 @@
 
 * Workbench now uses 216px (NTSC) & 270px (PAL) vertical resolution to use the full height on 1080p/4K screens.
 * WHDLoad upgraded to version 19.1.
+* Back navigation in the launcher re-enabled
 
 ## 2024.10.10
 
