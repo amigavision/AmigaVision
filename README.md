@@ -88,7 +88,7 @@ AmigaVision supports any AGA-capable Amiga: Amiga 1200, Amiga 4000, and Amiga CD
 
 To set up AmigaVision, choose your favorite disk imaging tool — e.g. [Balena Etcher] for Mac, Linux and Windows, [Win32 Disk Imager] for Windows, or whatever tool you prefer for writing to SD/CF cards.
 
-Simply locate the `games/Amiga/MegaAGS.hdf` file, and load that in your disk imaging tool of choice, and write it to the SD/CF card. If the file requester in the disk imaging tool does not allow you to select `.hdf` files, you may need to rename it to have a different extension, e.g. `.img`, `.bin` or similar.
+Simply locate the `games/Amiga/AmigaVision.hdf` file, and load that in your disk imaging tool of choice, and write it to the SD/CF card. If the file requester in the disk imaging tool does not allow you to select `.hdf` files, you may need to rename it to have a different extension, e.g. `.img`, `.bin` or similar.
 
 If your HDF image contains every game in the database, you will need a 16GB CF/SD card.
 
@@ -316,7 +316,7 @@ As an example, here's what you would add to `Saves:custom-startup` if you wanted
 copy >NIL: Saves:Custom/Prefs-Env ENV:Sys/
 ```
 
-This will take the setting you copied to `Saves:Custom/Prefs-Env` and put them in RAM: when booting the image, so you can keep your own settings even when replacing the `MegaAGS.hdf` file with a future version. You can also install new apps/games to Saves: and add `Assign` statements etc to the `Saves:` drive, or do anything else you want to keep permanent after upgrading.
+This will take the setting you copied to `Saves:Custom/Prefs-Env` and put them in RAM: when booting the image, so you can keep your own settings even when replacing the `AmigaVision.hdf` file with a future version. You can also install new apps/games to Saves: and add `Assign` statements etc to the `Saves:` drive, or do anything else you want to keep permanent after upgrading.
 
 ## Bug Reports *&* Feature Requests
 
@@ -354,16 +354,16 @@ The easiest — but a little bit time-consuming — is to compare SHA-1 checksum
 
 1. Do a new, clean transfer of the `HDF` file to MiSTer — ideally not over the network, but if that's your only option, go for it. The reason why you need to do this again is that if the Amiga does any writes to the `HDF` during earlier attempts to launch it, the checksum will be different, and useless for this purpose.
 2. Do a clean boot of your MiSTer, and press the `F9` key on a keyboard connected to it. This will let you log in to the terminal. Username is `root`, and password is `1` unless you have changed it in the past.
-3. Run the following command, which will take 5-10 minutes to complete: `shasum /media/fat/games/Amiga/MegaAGS.hdf`
+3. Run the following command, which will take 5-10 minutes to complete: `shasum /media/fat/games/Amiga/AmigaVision.hdf`
 4. It will report back a checksum, you will compare this to the checksum on your computer.
 
 Depending on what operating system you are on, you will do one of the following:
 
-* **If you are on macOS:** Open the Terminal, and run the command: `shasum /path/to/MegaAGS.hdf` Compare this to the checksum you got on the MiSTer.
+* **If you are on macOS:** Open the Terminal, and run the command: `shasum /path/to/AmigaVision.hdf` Compare this to the checksum you got on the MiSTer.
 
-* **If you are on Windows:** Open PowerShell, and run the command: `Get-FileHash C:\path\to\MegaAGS.hdf -Algorithm SHA1` Compare this to the checksum you got on the MiSTer.
+* **If you are on Windows:** Open PowerShell, and run the command: `Get-FileHash C:\path\to\AmigaVision.hdf -Algorithm SHA1` Compare this to the checksum you got on the MiSTer.
 
-* **If you are on Linux:** Open a terminal, and run the command: `shasum /path/to/MegaAGS.hdf` Compare this to the checksum you got on the MiSTer.
+* **If you are on Linux:** Open a terminal, and run the command: `shasum /path/to/AmigaVision.hdf` Compare this to the checksum you got on the MiSTer.
 
 If these checksums do not match, something is wrong with either the way you transfer your file, or your SD card. 
 
@@ -453,10 +453,10 @@ Drives:
   Fast-IDE (68020): On
   Primary Master:
     Fixed/HDD
-    games/Amiga/MegaAGS.hdf
+    games/Amiga/AmigaVision.hdf
   Primary Slave:
     Fixed/HDD
-    games/Amiga/MegaAGS-Saves.hdf
+    games/Amiga/AmigaVision-Saves.hdf
   Secondary Master: Disabled
   Secondary Slave: Disabled
   Floppy Disk Turbo: Off
@@ -469,7 +469,7 @@ System:
   SlowRAM: none
   Joystick: CD32
   ROM:
-    games/Amiga/MegaAGS-Kickstart.rom
+    games/Amiga/AmigaVision.rom
   HRTmon: disabled
 Audio & Video:
   TV Standard: NTSC

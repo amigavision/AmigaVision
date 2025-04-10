@@ -305,7 +305,7 @@ def write_csv():
     if not is_file(sqlite3_path):
         raise IOError("SQLite database not found ({})".format(sqlite3_path))
 
-    csv.register_dialect("megaags",
+    csv.register_dialect("amigavision",
         delimiter=';',
         doublequote=True,
         escapechar=None,
@@ -320,12 +320,12 @@ def write_csv():
     c = conn.cursor()
     c.execute("SELECT * FROM titles ORDER BY 'id' ASC")
     with open(csv_path, "w") as f:
-        csv_out = csv.writer(f, dialect="megaags")
+        csv_out = csv.writer(f, dialect="amigavision")
         csv_out.writerow([d[0] for d in c.description])
         for result in c:
             csv_out.writerow(result)
     conn.close()
-    csv.unregister_dialect("megaags")
+    csv.unregister_dialect("amigavision")
 
 
 def read_csv(csv_path, new_db_path):

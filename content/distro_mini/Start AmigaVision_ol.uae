@@ -125,10 +125,10 @@ floppy_speed=800
 ; 
 ; *** Hard Drives
 ;
-hardfile2=rw,DH0:/mnt/MegaAGS-Mini.hdf,0,0,0,512,10,,uae0,0
-uaehf0=hdf,rw,DH0:/mnt/MegaAGS-Mini.hdf,0,0,0,512,10,,uae0,0
-hardfile2=rw,DH1:/mnt/MegaAGS-Saves.hdf,0,0,0,512,10,,uae0,-128
-uaehf0=hdf,rw,DH1:/mnt/MegaAGS-Saves.hdf,0,0,0,512,10,,uae0,128
+hardfile2=rw,DH0:/mnt/AmigaVision-Mini.hdf,0,0,0,512,10,,uae0,0
+uaehf0=hdf,rw,DH0:/mnt/AmigaVision-Mini.hdf,0,0,0,512,10,,uae0,0
+hardfile2=rw,DH1:/mnt/AmigaVision-Saves.hdf,0,0,0,512,10,,uae0,-128
+uaehf0=hdf,rw,DH1:/mnt/AmigaVision-Saves.hdf,0,0,0,512,10,,uae0,128
 filesystem2=rw,DH3:USB:/mnt/Shared,0
 uaehf2=dir,rw,DH3:USB:/mnt/Shared,0
 

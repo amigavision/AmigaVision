@@ -27,7 +27,7 @@ font=font/OptirocAM2.pf
 
 This hard disk setup aims to recreate an Amiga 500 with Kickstart/Workbench 1.3, the setup of an Amiga 500/1000/2000 power user from around 1989. Think Amiga 500 with a GVP HD8+ or A590 attached, supplying a hard disk and memory expansion.
 
-This is implemented as a separate MGL file and directory setup for MiSTer, letting you have a separate setup that doesn't affect the main MegaAGS game/demo image.
+This is implemented as a separate MGL file and directory setup for MiSTer, letting you have a separate setup that doesn't affect the main AmigaVision game/demo image.
 
 It aims to recreate the setups that were common before the Amiga 600/1200 were released with hard disk support and a more modern OS.
 
@@ -56,7 +56,7 @@ We recommend using the separate, dedicated Amiga 500 setup for ADF format game d
 
 This hard disk setup aims to recreate an Amiga 600HD (or an Amiga 500 Plus or Amiga 3000) with Kickstart 2.0 and Workbench 2.1. This would be the setup of an Amiga 500+/600/3000 user with a hard drive, memory expansion (and possibly an accelerator card) from around 1991-1992, common before the Amiga 1200/4000 computers that included the newer AGA graphics chipset and AmigaOS 3.0/3.1.
 
-This is implemented as a separate MGL file and directory setup for MiSTer, letting you have a separate setup that doesn't affect the main MegaAGS game/demo image.
+This is implemented as a separate MGL file and directory setup for MiSTer, letting you have a separate setup that doesn't affect the main AmigaVision game/demo image.
 
 In addition, the image includes:
 
@@ -82,7 +82,7 @@ We recommend using the separate, dedicated Amiga 500 setup for ADF format game d
 
 # Empty PFS Save Images
 
-We have included several larger sizes of pre-formatted PFS `MegaAGS-Saves.hdf` files, should you want to create your own custom setup based on MegaAGS without having to re-do your customizations every time. The reason it's important to use PFS instead of creating your own FFS-based Amiga HD images is that PFS protects against accidental corruption of the HD if you reset the computer during a write operation. It's also faster than an FFS image, and the rest of the AmigaVision setup uses PFS everywhere for that same reason.
+We have included several larger sizes of pre-formatted PFS `AmigaVision-Saves.hdf` files, should you want to create your own custom setup based on AmigaVision without having to re-do your customizations every time. The reason it's important to use PFS instead of creating your own FFS-based Amiga HD images is that PFS protects against accidental corruption of the HD if you reset the computer during a write operation. It's also faster than an FFS image, and the rest of the AmigaVision setup uses PFS everywhere for that same reason.
 
 The main AmigaVision image will check for `Saves:custom-startup` and execute that when found. This lets you e.g. copy any custom settings to `ENV:` as part of the startup, so you can have your own Workbench, Directory Opus and custom application installs on a separate hard drive that survives upgrades to the main AmigaVision image.
 

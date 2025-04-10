@@ -1,10 +1,12 @@
 # AmigaVision Version History
 
-##Upcoming Release
+## Upcoming Release
 
-* Workbench now uses 216px (NTSC) & 270px (PAL) vertical resolution to use the full height on 1080p/4K screens.
+* Ensure you do a clean reinstall and rename your `MegaAGS-Saves.hdf` to `AmigaVision-Saves.hdf`! A lot of config settings have changed, AmigaVision will not work unless you install everything fresh — like you should always do! This also applies to the CD32 and Amiga 500 setups.
+* Workbench now uses 216px (NTSC) & 270px (PAL) vertical resolution to use the full height on 1080p/4K screens. This includes the Amiga 600HD setup, so do a clean install of that one if you want the new settings!
+* Amiga 600HD setup now has access to `AmigaVision-Saves.hdf`` in addition to the shared MiSTer drive.
 * WHDLoad upgraded to version 19.1.
-* Back navigation in the launcher re-enabled
+* Back navigation in the launcher re-enabled.
 
 ## 2024.10.10
 
@@ -15,7 +17,7 @@
 * Default setup is now NTSC instead of the resulting PAL → NTSC → PAL switching that was the case in the past, to cut down on any delays when booting the setup. All games will of course run in their correct PAL or NTSC resolutions (depending on origin of the game developer) as before, this is just to avoid the 1-2 second wait every time a new resolution is applied on boot. We default the launcher to NTSC for maximum compatibility with e.g. US consumer CRT TVs, since these often can't handle PAL.
 * Added 1280×1024 (5:4) resolution option for Workbench
 * Updated 100 NTSC games to use 5:6 PAR
-* Configurations for 49 games added/updated, current with WHDLoad as of 2024.10.01:
+* Configurations for 49 games added/updated, current with WHDLoad as of 2024.10.01.
 
 ## 2024.08.18
 
@@ -111,7 +113,7 @@
 * Natural sorting: the launcher will now sort e.g. Turrican, Turrican II, Turrican 3 in that order instead of a straight ASCII sort.
 * New "look and feel" for the launcher.
 * MiSTer Super Attract Mode integration added.
-* `MegaAGS-Extras` section added, with alternative MGL based configs and convenient PFS-formatted `Saves` HDF images in various sizes. See the dedicated documentation included for more detail.
+* `AmigaVision-Extras` section added, with alternative MGL based configs and convenient PFS-formatted `Saves` HDF images in various sizes. See the dedicated documentation included for more detail.
 
 ## 2022.06.06
 
@@ -156,4 +158,4 @@
 
 ## 2019.10.09
 
-* Initial release of MegaAGS
+* Initial release of AmigaVision

@@ -28,15 +28,15 @@ Plenty of those setups exist out there, but this is not that. :)
 Shared/
 THEA500/
   whdboot/
-MegaAGS-Mini.hdf
-MegaAGS-Saves.hdf
-Start MegaAGS_ol.uae
-Start MegaAGS.lha
+AmigaVision-Mini.hdf
+AmigaVision-Saves.hdf
+Start AmigaVision_ol.uae
+Start AmigaVision.lha
 ```
 
 * Plug the USB drive into your A500 Mini, and turn it on.
 * Navigate to the "USB Drive" section.
-* Select "Start MegaAGS.lha", press the `A` button to select it, then press the Menu button to run it.
+* Select "Start AmigaVision.lha", press the `A` button to select it, then press the Menu button to run it.
 * Enjoy the best of what the Amiga has to offer!
 
 

@@ -35,21 +35,21 @@ screenshots:
 	@pipenv run ./build/make_screenshots.sh screenshots
 
 image:
-	@pipenv run ./build/ags_imager.py -v -c configs/MegaAGS.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
+	@pipenv run ./build/ags_imager.py -v -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
-	@mv ${AGSDEST}/MegaAGS.hdf ${AGSDEST}/games/Amiga
+	@mv ${AGSDEST}/AmigaVision.hdf ${AGSDEST}/games/Amiga
 	@echo -e "\a"
 
 pocket-image:
-	@pipenv run ./build/ags_imager.py -v -c configs/MegaAGS-Pocket.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
+	@pipenv run ./build/ags_imager.py -v -c configs/AmigaVision-Pocket.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
-	@mv ${AGSDEST}/MegaAGS-Pocket.hdf ${AGSDEST}/MegaAGS-Pocket
+	@mv ${AGSDEST}/AmigaVision-Pocket.hdf ${AGSDEST}/AmigaVision-Pocket
 	@echo -e "\a"
 
 mini-image:
-	@pipenv run ./build/ags_imager.py -v -c configs/MegaAGS-Mini.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
+	@pipenv run ./build/ags_imager.py -v -c configs/AmigaVision-Mini.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 	@${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae
-	@mv ${AGSDEST}/MegaAGS-Mini.hdf ${AGSDEST}/MegaAGS-Mini
+	@mv ${AGSDEST}/AmigaVision-Mini.hdf ${AGSDEST}/AmigaVision-Mini
 	@echo -e "\a"
 
 test-image:

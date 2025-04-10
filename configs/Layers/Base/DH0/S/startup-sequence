@@ -72,11 +72,11 @@ if not warn
       assign >NIL: exists WHDSaves:
       if warn
         echo ""
-        echo ">>> Using MegaAGS.hdf for save data <<<"
+        echo ">>> Using AmigaVision.hdf for save data <<<"
         echo ""
-        echo "Mount MegaAGS-Saves.hdf as secondary drive to enable a"
+        echo "Mount AmigaVision-Saves.hdf as secondary drive to enable a"
         echo "save disk that can easily be carried over when upgrading"
-        echo "to new releases of MegaAGS."
+        echo "to new releases of AmigaVision."
         wait 4
         assign WHDSaves: SYS:WHDSaves
       endif

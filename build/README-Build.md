@@ -25,7 +25,7 @@ First have a look at the path variables in `.env` and edit as needed.
 Common usage is covered by makefile "shortcuts":
 
 - `make index` — Index WHDLoad archives in the `$AGSCONTENT` path
-- `make image` — Create the Amiga HDF image and filesystem specified in `configs/MegaAGS.yaml`
+- `make image` — Create the Amiga HDF image and filesystem specified in `configs/AmigaVision.yaml`
 - `make screenshots` — Create scaled IFF images from arbitrary PNG files placed in `screenshots` 
 - `make sqlite` — Create SQLite database from `data/db/titles.csv` (for easier viewing and editing)
 - `make csv` — Output the contents of SQLite database to `data/db/titles.csv` (for committing to version control)
