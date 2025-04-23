@@ -1,6 +1,6 @@
-# RetroTink 4K profiles for MiSTer using DV1
+# RetroTink 4K profiles for HDMI Computers/Consoles and with MiSTer DV1 support
 
-If you are using the RetroTink 4K scaler, here are some pre-configured profiles to get you started. These are optimized for use with MiSTer, but can also be used with emulation software and real hardware, although they won't auto-switch to the correct profile like they do with MiSTer's DV1 signalling — you will have to manually load them in the RT4K Profile menu.
+If you are using the RetroTink 4K scaler, here are some pre-configured profiles to get you started. These are optimized for use with MiSTer, but can also be used with emulation software and real hardware via HDMI, although they won't auto-switch to the correct profile like they do with MiSTer's DV1 signalling — you will have to manually load them in the RT4K Profile menu.
 
 ## Installation
 
@@ -27,3 +27,7 @@ If you are using a MiSTer, the correct profile will automatically be selected fo
 If the image from a given game does not go all the way to the edges, hit the `AUX1` button on the controller. Especially on computer cores like the Amiga, the offsets vary wildly, so one default setting can't serve every game. 
 
 We are also looking into whether we can signal this directly from the Amiga core on a per-game basis, like we currently do with the 5×PAL scaling we do on MiSTer, but this is not implemented yet — so, use that AUX1 button once you are inside the game to make use of all your lovely 4K pixels!
+
+# Credits
+
+This uses the shadow mask/scanline profiles by Kuro Houou, just adapted for HDMI usage.
