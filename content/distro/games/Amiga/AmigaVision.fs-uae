@@ -18,6 +18,7 @@ hard_drive_2_read_only = 0
 hard_drive_2_label = MiSTer
 
 ntsc_mode = 1
+fullscreen = 1
 scanlines = 1
 viewport = * * * * => 74 36 678 538
 window_width = 678
