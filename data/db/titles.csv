@@ -5150,15 +5150,15 @@ demo--digitalnoize2--digitalnoize2;Digital Noize 2;Digital Noize 2;;;OCS;;0;;;;;
 demo--momentsaga--momentsaga;Moments;Moments;;;AGA;;0;;;;;;;;;;1995;;English;;Old Bulls;;;v1.0;MomentsAGA/MomentsAGA.slave;demo/Moments_v1.0_AGA_OldBulls.lha;Demo;Demo;;
 demo--insidethemachine--insidethemachine;Inside the Machine;Inside the Machine;;;OCS;;0;;;;;;;;;;2024;Italy, Sweden, Belgium, UK, Norway;English;;Desire;;;v1.0;InsideTheMachine/InsideTheMachine.slave;demo/InsideTheMachine_v1.0_Desire.lha;Demo;Demo;;
 demo--transhuman--transhuman;Transhuman/Pachinkoland;Transhuman/Pachinkoland;;;OCS;;0;;;;;;;;;;2022;Germany, France;English;;The Electronic Knights;;;v1.0;Transhuman/Transhuman.slave;demo/Transhuman_v1.0_TheElectronicKnights.lha;Demo;Demo;;
-game--pooyan--pooyan;Pooyan;Pooyan;;;OCS;;0;;;;;;;Transcode of Pooyan arcade version;;;2025;;English;JOTD;Konami;1;;v1.0;Pooyan/Pooyan.slave;game/Pooyan_v1.0.lha;Game;;;
-game--grimblood--grimblood;Grimblood;Grimblood;;;OCS;;0;;;;;;;;;;1990;UK;English;Maelstrom Games;Virgin Games;1;;v1.0;Grimblood/Grimblood.slave;game/Grimblood_v1.0_2088.lha;Game;;2801;1623
+game--pooyan--pooyan;Pooyan;Pooyan;;;OCS;;0;4;-10;;;;;Transcode of Pooyan arcade version;;;2025;;English;JOTD;Konami;1;;v1.0;Pooyan/Pooyan.slave;game/Pooyan_v1.0.lha;Game;;;
+game--grimblood--grimblood;Grimblood;Grimblood;;;OCS;;0;5;-2;;;;;;;;1990;UK;English;Maelstrom Games;Virgin Games;1;;v1.0;Grimblood/Grimblood.slave;game/Grimblood_v1.0_2088.lha;Game;;2801;1623
 game--burgertime68020--burgertime68020;Burger Time;Burger Time;;;OCS;;0;;;;;;;Transcode of Burger Time arcade version;;;2025;;English;JOTD;Data East;1;;v1.0;BurgerTime68020/BurgerTime68020.slave;game/BurgerTime_v1.0_68020.lha;Game;;;
-game--dungeonettedemoaga--dungeonettedemoaga;Dungeonette (Demo);Dungeonette;;;AGA;;0;;;;;;;;;;2024;UK;English;Mutation Software;Mutation Software;1;;v1.1;DungeonetteDemoAGA/DungeonetteDemoAGA.slave;game/DungeonetteDemo_v1.1_AGA.lha;Game;;7410;5069
+game--dungeonettedemoaga--dungeonettedemoaga;Dungeonette (Demo);Dungeonette;;;AGA;;0;5;16;;;;;;;;2024;UK;English;Mutation Software;Mutation Software;1;;v1.1;DungeonetteDemoAGA/DungeonetteDemoAGA.slave;game/DungeonetteDemo_v1.1_AGA.lha;Game;;7410;5069
 game--charly--charly;Charly;Charly;;;OCS;;0;;;;;;;;;;1989;Germany;English;Interactive Design;Dragonware;1;;v1.0;Charly/Charly.slave;game/Charly_v1.0.lha;Game;;4943;1854
-game--transputor--transputor;Transputor;Transputor;;;OCS;;0;;;;;;;;;;1989;UK;English;;Actual Screenshots;1;;v1.0;Transputor/Transputor.slave;game/Transputor_v1.0_0395.lha;Game;;1497;4739
+game--transputor--transputor;Transputor;Transputor;;;OCS;;0;5;6;;;;;;;;1989;UK;English;;Actual Screenshots;1;;v1.0;Transputor/Transputor.slave;game/Transputor_v1.0_0395.lha;Game;;1497;4739
 game--wizmo--wizmo;Wizmo;Wizmo;;;OCS;;0;;;;;;;;;;1988;Sweden;English;CrossTechnics;Kingsoft;1;;v1.0;Wizmo/Wizmo.slave;game/Wizmo_v1.0.lha;Game;;3421;1639
 game--thinktwice--thinktwice;Think Twice;Think Twice;;;OCS;;0;;;;;;;;;;1991;Germany;English;;Magic Soft;1;;v1.0;ThinkTwice/ThinkTwice.slave;game/ThinkTwice_v1.0_1695.lha;Game;;1378;3295
-game--quicksilva--quicksilva;Quicksilva;Quicksilva;;;OCS;;0;;;;;;;;;;1996;UK;;;Entactogenic Design;1;;v1.0;Quicksilva/Quicksilva.slave;game/Quicksilva_v1.0.lha;Game;;;
-game--futuresport--futuresport;Future Sport;Future Sport;;;OCS;;0;;;;;;;;;;1989;UK;;;Exocet Software;1;;v1.0;FutureSport/FutureSport.slave;game/FutureSport_v1.0.lha;Game;;4576;2409
-game--elysiumde--elysiumde;Elysium;Elysium;;;OCS;;0;;;;;;;;;;1993;Germany;;Deep Thought;Magic Bytes;1;;v1.0;ElysiumDe/ElysiumDe.slave;game/Elysium_v1.0_De.lha;Game;;2839;4394
-game--cybersphere--cybersphere;Cybersphere;Cybersphere;;;OCS;;0;;;;;;;;;;1994;UK;;;Psycon;2;;v1.0;Cybersphere/Cybersphere.slave;game/Cybersphere_v1.0.lha;Game;;5306;6706
+game--quicksilva--quicksilva;Quicksilva;Quicksilva;;;OCS;;0;5;16;;;;;;;;1996;UK;English;;Entactogenic Design;1;;v1.0;Quicksilva/Quicksilva.slave;game/Quicksilva_v1.0.lha;Game;;;
+game--futuresport--futuresport;Future Sport;Future Sport;;;OCS;;0;5;2;;;;;;;;1989;UK;English;;Exocet Software;1;;v1.0;FutureSport/FutureSport.slave;game/FutureSport_v1.0.lha;Game;;4576;2409
+game--elysiumde--elysiumde;Elysium;Elysium;;;OCS;;0;;;;;;;;;;1993;Germany;German;Deep Thought;Magic Bytes;1;;v1.0;ElysiumDe/ElysiumDe.slave;game/Elysium_v1.0_De.lha;Game;;2839;4394
+game--cybersphere--cybersphere;Cybersphere;Cybersphere;;;OCS;;0;5;0;;;;;;;;1994;UK;English;;Psycon;2;;v1.0;Cybersphere/Cybersphere.slave;game/Cybersphere_v1.0.lha;Game;;5306;6706
