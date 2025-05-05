@@ -126,6 +126,7 @@
     - ordering: "release"
     - note: Purveyors of fine strategy games (and tennis!).
     - image: { op: "pi", path: "logo/blue_byte.png" }
+    - Apidya
     - Atomino
     - BattleIsle&DataDisks
     - BattleIsle&DataDisks--Intro
@@ -139,6 +140,8 @@
     - Settlers
     - TomAndTheGhost
     - TwinWorld
+    - YoJoe
+    - Ugh
   - Brøderbund:
     - ordering: "release"
     - note: Don't get fooled by the name - Brøderbund is about as American as it gets in the Amiga library.
