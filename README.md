@@ -78,6 +78,8 @@ The reason for this is that most games run in a WHDLoad container (think "virtua
 
 When upgrading AmigaVision from a previous release (on any platform), we always recommend following the instructions for doing a clean install and **only** keep your `Saves.hdf` hard drive image, which is where your game saves are stored.
 
+In 2025, we changed the naming scheme on the file system, so if you have a file called `MegaAGS-Saves.hdf` that you want to keep, rename it to `AmigaVision-Saves.hdf`.
+
 We often make important changes to the configuration files, `MiSTer.ini` and other included files, so the only way to ensure that you can use the new version properly and get the new capabilities (examples from previous releases: 5×PAL Dynamic Scaling, CD32 support on MiSTer, etc.) is to do a clean install of everything, every time. 
 
 Follow the instructions for your platform below.
