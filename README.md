@@ -114,7 +114,7 @@ We recommend — and include a setup for — the [FS-UAE] Amiga emulator, which 
 
 1. Download and install [FS-UAE]. Note that you do not need the "FS-UAE Launcher", just the main package.
 2. Copy the `games/Amiga` directory to your preferred location.
-3. Double-click the `AmigaVision.fs-uae` file to run the setup with the preferred settings. Some platforms, like Windows, do not auto-associate this file type with the FS-UAE application, so you might have to right-click and open it with that app. Do not open it with "FS-UAE Launcher", you want the main FS-UAE application. (You can of course also add a shortcut to this file to your Windows start menu, or as an alias in the Mac's Applications folder).
+3. Double-click the `AmigaVision.fs-uae` file to run the setup with the preferred settings. Some platforms, like Windows, do not auto-associate this file type with the FS-UAE application, so you might have to right-click and open it with that app. Do not open it with "FS-UAE Launcher", you want the main FS-UAE application. (You can of course also add a shortcut to `AmigaVision.fs-uae` to your Windows start menu, or as an alias in the Mac's Applications folder)
 
 For any additional configuration or customizations, consult the FS-UAE documentation.
 
