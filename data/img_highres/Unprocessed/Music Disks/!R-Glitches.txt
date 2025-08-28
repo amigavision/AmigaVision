@@ -1,0 +1,11 @@
+demo--megamix1--megamix1
+music glitches out a couple of minutes in and crashes eventually after some stuttering
+
+demo--megamix2--megamix2
+have to turn off buttonwait to get past first title, then no audio and superfast scrolly
+
+demo--rockbox1--rockbox1
+Overcropped at top
+
+demo--royalmusic2--royalmusic2
+Crashes after 1 second
