@@ -92,7 +92,7 @@ To set up AmigaVision, choose your favorite disk imaging tool — e.g. [Balena E
 
 Simply locate the `games/Amiga/AmigaVision.hdf` file, and load that in your disk imaging tool of choice, and write it to the SD/CF card. If the file requester in the disk imaging tool does not allow you to select `.hdf` files, you may need to rename it to have a different extension, e.g. `.img`, `.bin` or similar.
 
-If your HDF image contains every game in the database, you will need a 16GB CF/SD card.
+If your HDF image contains every game in the database, you will need at least a 16GB CF/SD card.
 
 ### A note about save files & upgrading on Amiga hardware
 
