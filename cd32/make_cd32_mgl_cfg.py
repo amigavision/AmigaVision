@@ -153,6 +153,8 @@ def main() -> int:
     cd32_dir = root / "AmigaCD32"
     mgl_dir = root / "games/_Console/Amiga CD32 Games"
     cfg_dir = root / "config"
+
+    # Ensure all directories exist (create parents as needed)
     mgl_dir.mkdir(parents=True, exist_ok=True)
     cfg_dir.mkdir(parents=True, exist_ok=True)
 
@@ -164,6 +166,15 @@ def main() -> int:
         print(f"No CHD files found under {cd32_dir}")
         return 1
 
+    # Location of the extra per-game config templates (relative to the script)
+    extras_src = (root / "../content/distro/config").resolve()
+    extras_templates = [
+        ("Amiga_gamma.cfg",  "{setname}_gamma.cfg"),     # -> {setname}_gamma.cfg
+        ("Amiga_scaler.cfg", "{setname}_scaler.cfg"),    # -> {setname}.scaler.cfg
+        ("Amiga_shmask.cfg", "{setname}_shmask.cfg"),    # -> {setname}_shmask.cfg
+        ("Amiga_vadjust.dat",    "{setname}_vadjust.dat"),       # -> {setname}.vadjust
+    ]
+
     for chd in chd_files:
         chd_name = chd.name                         # with extension
         chd_stem = chd.stem                         # no extension
@@ -171,33 +182,38 @@ def main() -> int:
 
         # --- Make MGL ---
         mgl_text = build_mgl_text(setname)
-
-        # MGL filename = exact CHD filename stem
-        mgl_filename = f"{chd_stem}.mgl"
+        mgl_filename = f"{chd_stem}.mgl"            # MGL file uses raw CHD stem
         mgl_path = mgl_dir / mgl_filename
-
         write_text_unix(mgl_path, mgl_text)
 
-        # --- Make CFG ---
+        # --- Make CFG (per-game) ---
         buf = bytearray(DEFAULT_CFG)  # clone pristine default
         rom_path   = jpath(assets_base, "CD32.rom")
         hdf_path   = jpath(assets_base, "CD32.hdf")
         saves_path = jpath(assets_base, "CD32-Saves.hdf")
-        chd_path   = jpath(chd_base, chd_name)  # include filename + extension
+        chd_path   = jpath(chd_base, chd_name)
 
         write_exact_at(buf, OFF_AMIGAVISION_ROM, rom_path)
         write_exact_at(buf, OFF_CD32_HDF,        hdf_path)
         write_exact_at(buf, OFF_SAVES_HDF,       saves_path)
-        write_exact_at(buf, OFF_CHD_PATH,        chd_path)  # written ONCE
+        write_exact_at(buf, OFF_CHD_PATH,        chd_path)
 
         cfg_out = cfg_dir / f"{setname}.cfg"
         cfg_out.write_bytes(buf)
+
+        # --- Per-game extras: gamma/scaler/shmask/vadjust ---
+        for template_name, suffix in extras_templates:
+            src = extras_src / template_name
+            dst = cfg_dir / f"{setname}{suffix}"
+            try:
+                dst.write_bytes(src.read_bytes())  # overwrite if exists
+            except FileNotFoundError:
+                print(f"Warning: template not found: {src}")
 
         print(f"Created:\n  {mgl_path}\n  {cfg_out}\n")
 
     print("All done.")
     return 0
-
 
 if __name__ == "__main__":
     sys.exit(main())
