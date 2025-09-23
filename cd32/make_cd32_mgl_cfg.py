@@ -120,12 +120,14 @@ def pick_assets_base() -> str:
     """
     choice = ask_choice(
         "Where are the CD32.rom, CD32.hdf and CD32-Saves.hdf files located?",
-        ["SD  -> fat/games/AmigaCD32", "USB -> usb0/games/AmigaCD32", "Custom path"],
+        ["SD card-> fat/games/AmigaCD32", "USB drive → usb0/games/AmigaCD32", "Network drive (Samba/CIFS) → fat/cifs/AmigaCD32", "Custom path"],
     )
     if choice == 1:
         return "fat/games/AmigaCD32"
     if choice == 2:
         return "usb0/games/AmigaCD32"
+    if choice == 3:
+        return "fat/cifs/AmigaCD32"
     # custom
     custom = input("Enter custom base path (e.g. /fat/games/AmigaCD32): ").strip()
     return norm_base(custom)
@@ -137,12 +139,14 @@ def pick_chd_base() -> str:
     """
     choice = ask_choice(
         "Where are your CD32 CHD files stored?",
-        ["SD  -> fat/games/AmigaCD32", "USB -> usb0/games/AmigaCD32", "Custom path"],
+        ["SD card-> fat/games/AmigaCD32", "USB drive → usb0/games/AmigaCD32", "Network drive (Samba/CIFS) → fat/cifs/AmigaCD32", "Custom path"],
     )
     if choice == 1:
         return "fat/games/AmigaCD32"
     if choice == 2:
         return "usb0/games/AmigaCD32"
+    if choice == 3:
+        return "fat/cifs/AmigaCD32"
     # custom
     custom = input("Enter custom CHD base path (e.g. fat/games/AmigaCD32): ").strip()
     return norm_base(custom)
