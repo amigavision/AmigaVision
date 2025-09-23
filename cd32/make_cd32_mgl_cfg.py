@@ -210,7 +210,7 @@ def main() -> int:
             except FileNotFoundError:
                 print(f"Warning: template not found: {src}")
 
-        print(f"Created:\n  {mgl_path}\n  {cfg_out}\n")
+        print(f"{mgl_filename}")
 
     print("All done.")
     return 0
