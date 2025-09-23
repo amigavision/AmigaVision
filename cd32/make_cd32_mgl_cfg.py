@@ -40,7 +40,7 @@ PREFIX = "CD32-"
 MAX_TOTAL = 30
 
 # Field offsets
-OFF_AMIGAVISION_ROM = 0x000F
+OFF_CD32_ROM = 0x000F
 OFF_CD32_HDF        = 0x041B
 OFF_SAVES_HDF       = 0x081D
 OFF_CHD_PATH        = 0x0C1F
@@ -197,7 +197,7 @@ def main() -> int:
         saves_path = jpath(assets_base, "CD32-Saves.hdf")
         chd_path   = jpath(chd_base, chd_name)
 
-        write_exact_at(buf, OFF_AMIGAVISION_ROM, rom_path)
+        write_exact_at(buf, OFF_CD32_ROM, rom_path)
         write_exact_at(buf, OFF_CD32_HDF,        hdf_path)
         write_exact_at(buf, OFF_SAVES_HDF,       saves_path)
         write_exact_at(buf, OFF_CHD_PATH,        chd_path)
