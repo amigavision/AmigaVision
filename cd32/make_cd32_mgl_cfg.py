@@ -151,7 +151,7 @@ def pick_chd_base() -> str:
 def main() -> int:
     root = Path(__file__).resolve().parent
     cd32_dir = root / "AmigaCD32"
-    mgl_dir = root / "games/_Console/Amiga CD32 Games"
+    mgl_dir = root / "_Console/Amiga CD32 Games"
     cfg_dir = root / "config"
 
     # Ensure all directories exist (create parents as needed)
