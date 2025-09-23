@@ -7,7 +7,7 @@ Generate MiSTer CD32 MGL + CFG files from CHDs in ./AmigaCD32
 - MGL files written with UNIX LF line endings to ./MGL
 - CFG files are cloned from a hard-coded Default.cfg binary blob (exact bytes) and
   patched at fixed offsets with paths (no leading slash) to ROM/HDF/SAV files and the CHD.
-- CFGs are written to ./CFGs
+- CFG files are written to ./config
 - Prompts:
     1) One consolidated base path for CD32.rom, CD32.hdf, CD32-Saves.hdf
        (SD, USB, or Custom)
@@ -151,8 +151,8 @@ def pick_chd_base() -> str:
 def main() -> int:
     root = Path(__file__).resolve().parent
     cd32_dir = root / "AmigaCD32"
-    mgl_dir = root / "MGL"
-    cfg_dir = root / "CFGs"
+    mgl_dir = root / "games/_Console/Amiga CD32 Games"
+    cfg_dir = root / "config"
     mgl_dir.mkdir(exist_ok=True)
     cfg_dir.mkdir(exist_ok=True)
 
