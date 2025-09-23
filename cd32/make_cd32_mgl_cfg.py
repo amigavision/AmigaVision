@@ -198,9 +198,9 @@ def main() -> int:
         chd_path   = jpath(chd_base, chd_name)
 
         write_exact_at(buf, OFF_CD32_ROM, rom_path)
-        write_exact_at(buf, OFF_CD32_HDF,        hdf_path)
-        write_exact_at(buf, OFF_SAVES_HDF,       saves_path)
-        write_exact_at(buf, OFF_CHD_PATH,        chd_path)
+        write_exact_at(buf, OFF_CD32_HDF, hdf_path)
+        write_exact_at(buf, OFF_SAVES_HDF, saves_path)
+        write_exact_at(buf, OFF_CHD_PATH, chd_path)
 
         cfg_out = cfg_dir / f"{setname}.cfg"
         cfg_out.write_bytes(buf)
