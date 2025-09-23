@@ -153,8 +153,8 @@ def main() -> int:
     cd32_dir = root / "AmigaCD32"
     mgl_dir = root / "games/_Console/Amiga CD32 Games"
     cfg_dir = root / "config"
-    mgl_dir.mkdir(exist_ok=True)
-    cfg_dir.mkdir(exist_ok=True)
+    mgl_dir.mkdir(parents=True, exist_ok=True)
+    cfg_dir.mkdir(parents=True, exist_ok=True)
 
     assets_base = pick_assets_base()        # e.g., "fat/games/AmigaCD32"
     chd_base    = pick_chd_base()           # e.g., "fat/games/AmigaCD32"
