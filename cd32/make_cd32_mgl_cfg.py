@@ -158,8 +158,8 @@ def main() -> int:
     mgl_dir.mkdir(parents=True, exist_ok=True)
     cfg_dir.mkdir(parents=True, exist_ok=True)
 
-    assets_base = pick_assets_base()        # e.g., "fat/games/AmigaCD32"
-    chd_base    = pick_chd_base()           # e.g., "fat/games/AmigaCD32"
+    assets_base = pick_assets_base() # e.g., "fat/games/AmigaCD32"
+    chd_base    = pick_chd_base()    # e.g., "fat/games/AmigaCD32"
 
     chd_files = sorted(cd32_dir.rglob("*.chd"))
     if not chd_files:
@@ -169,20 +169,20 @@ def main() -> int:
     # Location of the extra per-game config templates (relative to the script)
     extras_src = (root / "../content/distro/config").resolve()
     extras_templates = [
-        ("Amiga_gamma.cfg",  "{setname}_gamma.cfg"),     # -> {setname}_gamma.cfg
-        ("Amiga_scaler.cfg", "{setname}_scaler.cfg"),    # -> {setname}.scaler.cfg
-        ("Amiga_shmask.cfg", "{setname}_shmask.cfg"),    # -> {setname}_shmask.cfg
-        ("Amiga_vadjust.dat",    "{setname}_vadjust.dat"),       # -> {setname}.vadjust
+        ("Amiga_gamma.cfg", "_gamma.cfg"),      # -> {setname}_gamma.cfg
+        ("Amiga_scaler.cfg", "_scaler.cfg"),    # -> {setname}.scaler.cfg
+        ("Amiga_shmask.cfg", "_shmask.cfg"),    # -> {setname}_shmask.cfg
+        ("Amiga_vadjust.dat", "_vadjust.dat"),  # -> {setname}.vadjust
     ]
 
     for chd in chd_files:
-        chd_name = chd.name                         # with extension
-        chd_stem = chd.stem                         # no extension
-        setname  = make_setname(chd_stem)           # display name inside MGL
+        chd_name = chd.name               # with extension
+        chd_stem = chd.stem               # no extension
+        setname  = make_setname(chd_stem) # display name inside MGL
 
         # --- Make MGL ---
         mgl_text = build_mgl_text(setname)
-        mgl_filename = f"{chd_stem}.mgl"            # MGL file uses raw CHD stem
+        mgl_filename = f"{chd_stem}.mgl" # MGL file uses raw CHD stem
         mgl_path = mgl_dir / mgl_filename
         write_text_unix(mgl_path, mgl_text)
 
@@ -206,7 +206,7 @@ def main() -> int:
             src = extras_src / template_name
             dst = cfg_dir / f"{setname}{suffix}"
             try:
-                dst.write_bytes(src.read_bytes())  # overwrite if exists
+                dst.write_bytes(src.read_bytes()) # overwrite if exists
             except FileNotFoundError:
                 print(f"Warning: template not found: {src}")
 
