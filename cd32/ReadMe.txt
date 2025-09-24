@@ -16,7 +16,11 @@ First, you need to pick the correct set of config files. Because of the way MiST
 
 * Open the SD, USB or NAS folder, depending on your setup.
 * Copy everything inside that folder to the root of your MiSTer filesystem.
+
+### Previous CD32 setup
+
 * If you already have AmigaVision installed, some files like the `Presets`, `Filters` and `Shadow_Masks` will already exist — you can skip these or overwrite them, it doesn't matter, they are identical.
+* If you had the previous CD32 setup, absolutely overwrite the old `CD32.hdf` for this new setup to work.
 
 ## Adding games 
 
@@ -30,9 +34,9 @@ Put your CD32 disc images in the `games/AmigaCD32` directory. You have to use th
 
 ## Optional
 
-If you already had the previous AmigaVision CD32 support, you can remove the `_Consoles/Amiga CD32.mgl` file — it is no longer needed unless you want to keep it as a setup that boots into a CD32 setup that doesn't have a particular game selected. Also note that the previous setup used 
+If you already had the previous AmigaVision CD32 support, you can remove the `_Consoles/Amiga CD32.mgl` file — it is no longer needed, and in fact will not do anything useful if you start it.
 
-## A note on compatibility
+## Compatibility
 
 This is not a *real* CD32 core for the MiSTer. It uses the CD Audio support that was recently added to the Amiga (Minimig) core, and uses a program called CD32-Emulator to run CD32 games. 
 
