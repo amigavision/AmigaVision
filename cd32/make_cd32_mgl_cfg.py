@@ -50,6 +50,45 @@ OFF_CHD_PATH        = 0x0C1F
 PARENS_RE = re.compile(r"\s*\([^)]*\)")
 TRAIL_TRIM_RE = re.compile(r"[ .-_]+$")
 
+# --- Special per-game HDF variants -----------------------------------------
+# Games that require different core settings, mapped to which CD32*.hdf to use.
+# Matching is done on a normalized game name (lowercase, no parentheses, only
+# alphanumerics and spaces).
+SPECIAL_VARIANTS = {
+    "CD32NoFastMem.hdf": {
+        "chaos engine",
+        "dangerous streets",
+        "fears",
+        "humans",
+        "lotus trilogy",
+        "pinball fantasies",
+        "quik the thunder rabbit",
+        "soccer kid",
+        "surf ninjas",
+    },
+    "CD32NoFastMemNoICache.hdf": {
+        "dizzy collection",
+    },
+    "CD32NoICache.hdf": {
+        "ultimate body blows",
+    },
+    "CD32NoVolumeControl.hdf": {
+        "guardian",
+    },
+}
+
+def normalize_game_name(name: str) -> str:
+    cleaned = PARENS_RE.sub("", name)
+    cleaned = re.sub(r"[^A-Za-z0-9]+", " ", cleaned)
+    return " ".join(cleaned.lower().split())
+
+def pick_hdf_for_game(game_stem: str) -> str:
+    norm = normalize_game_name(game_stem)
+    for hdf_name, names in SPECIAL_VARIANTS.items():
+        if norm in names:
+            return hdf_name
+    return "CD32.hdf"
+
 
 def build_mgl_text(setname: str) -> str:
     """Create MGL content using UNIX LF only."""
@@ -205,14 +244,14 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
         setname  = make_setname(chd_stem) # display name inside MGL
 
         # --- Write MGL -------------------------------------------------------
-        mgl_filename = mgl_dir / f"{setname}.mgl"
+        mgl_filename = mgl_dir / f"{chd_stem}.mgl"
         write_text_unix(mgl_filename, build_mgl_text(setname))
 
         # --- Prepare CFG (clone the embedded Default.cfg and patch paths) ----
         buf = bytearray(DEFAULT_CFG)
 
         rom_path   = jpath(assets_base, "CD32.rom")
-        hdf_path   = jpath(assets_base, "CD32.hdf")
+        hdf_path   = jpath(assets_base, pick_hdf_for_game(chd_stem))
         saves_path = jpath(assets_base, "CD32-Saves.hdf")
         chd_path   = jpath(chd_base, chd_name)
 

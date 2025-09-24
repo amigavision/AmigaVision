@@ -6,9 +6,10 @@ This is a convenience package that will allow you to load Amiga CD32 games using
 
 * Stand-alone setup that doesn't have any dependencies on AmigaVision itself. If you want to just have CD32 games, and not the rest of the Amiga library, you can. (…and you'd be missing out on all of the good games!) 😄
 * Allows you to start CD32 games directly from MiSTer's menu without requiring a mouse or keyboard, gamepad/joystick is all you need.
+* No need to keep track of which games need FastMem or Instruction Cache disabled — or even that one game that requires volume control to be disabled! — we handle it for you.
 * Uses AmigaVision's scanline and shadow masks presets.
 * Uses AmigaVision's scaling presets, which are considered the best in the business. 😅
-* Uses AmigaVision's 5×PAL overscale presets on a per-game basis when a game can handle it. More info on this: [https://amiga.vision/5x]
+* Games that can make use of AmigaVision's 5×PAL overscale presets — like Chaos Engine CD32 — now use that on a per-game basis when a game can handle it. More info on this: [https://amiga.vision/5x]
 
 ## Installation
 
