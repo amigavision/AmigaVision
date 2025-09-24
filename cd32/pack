@@ -6,5 +6,5 @@ if [ -z "$date_str" ]; then
   echo "No archive suffix";
 else
   arc_name="!AmigaVision-CD32-Setup-for-MiSTer-$date_str.7z"
-  7z a -xr'!.*' -mx=7 -myx=5 $arc_name SD/ USB/ NAS/ games/ ../content/distro/Presets/ ../content/distro/Shadow_Masks/ ../content/distro/Filters/ ReadMe.txt;
+  7z a -xr'!.*' -mx=7 -myx=5 $arc_name SD/ USB/ NAS/ ReadMe.txt;
 fi

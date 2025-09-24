@@ -25,6 +25,7 @@ Requires: Python 3.8+
 from pathlib import Path
 import sys
 import re
+import shutil
 
 # --------------------------------------------------------------------------------------
 # Hard-coded Default.cfg (exact bytes)
@@ -164,6 +165,25 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
 
     mgl_dir.mkdir(parents=True, exist_ok=True)
     cfg_dir.mkdir(parents=True, exist_ok=True)
+
+    # --- Copy distro folders into each preset (SD/USB/NAS) ------------------
+    # Required copies: ../content/distro/Presets/, ../content/distro/Shadow_Masks/,
+    # ../content/distro/Filters/, and ./games/
+    try:
+        extras_to_copy = [
+            (root / "../content/distro/Presets").resolve(),
+            (root / "../content/distro/Shadow_Masks").resolve(),
+            (root / "../content/distro/Filters").resolve(),
+            (root / "./games").resolve(),
+        ]
+        for src in extras_to_copy:
+            dst = (root / variant_name / src.name).resolve()
+            if src.exists():
+                shutil.copytree(src, dst, dirs_exist_ok=True)
+            else:
+                print(f"[{variant_name}] Warning: missing source to copy: {src}")
+    except Exception as e:
+        print(f"[{variant_name}] Warning: failed to copy extras: {e}")
 
     chd_files = sorted(cd32_dir.rglob("*.chd"))
     if not chd_files:
