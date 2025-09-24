@@ -4,10 +4,10 @@ This is a convenience package that will allow you to load Amiga CD32 games using
 
 ## Features
 
-* Stand-alone setup that doesn't have any dependencies on AmigaVision itself. If you want to just have CD32 games, and not the rest of the Amiga library, you can. (…and you'd be missing out on all of the good games 😄
+* Stand-alone setup that doesn't have any dependencies on AmigaVision itself. If you want to just have CD32 games, and not the rest of the Amiga library, you can. (…and you'd be missing out on all of the good games!) 😄
 * Allows you to start CD32 games without requiring a mouse or keyboard, gamepad/joystick is all you need.
 * Uses AmigaVision's scanline and shadow masks presets
-* Uses AmigaVision's scaling presets, which are considered the best in the business 😅
+* Uses AmigaVision's scaling presets, which are considered the best in the business) 😅
 * Uses AmigaVision's 5×PAL overscale presets on a per-game basis when a game can handle it. More info on this: [https://amiga.vision/5x]
 
 ## Installation
