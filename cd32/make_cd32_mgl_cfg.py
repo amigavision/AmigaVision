@@ -152,31 +152,31 @@ def pick_chd_base() -> str:
     return norm_base(custom)
 
 
-def main() -> int:
+def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
+    """
+    Non-interactive generator for one target variant (SD/USB/NAS).
+    Writes outputs to ./<VARIANT>/_Console/_Amiga CD32 Games (MGL) and ./<VARIANT>/config (CFG).
+    """
     root = Path(__file__).resolve().parent
     cd32_dir = root / "AmigaCD32"
-    mgl_dir = root / "_Console/_Amiga CD32 Games"
-    cfg_dir = root / "config"
+    mgl_dir = root / variant_name / "_Console" / "_Amiga CD32 Games"
+    cfg_dir = root / variant_name / "config"
 
-    # Ensure all directories exist (create parents as needed)
     mgl_dir.mkdir(parents=True, exist_ok=True)
     cfg_dir.mkdir(parents=True, exist_ok=True)
 
-    assets_base = pick_assets_base() # e.g., "fat/games/AmigaCD32"
-    chd_base    = pick_chd_base()    # e.g., "fat/games/AmigaCD32"
-
     chd_files = sorted(cd32_dir.rglob("*.chd"))
     if not chd_files:
-        print(f"No CHD files found under {cd32_dir}")
+        print(f"[{variant_name}] No CHD files found under {cd32_dir}")
         return 1
 
     # Location of the extra per-game config templates (relative to the script)
     extras_src = (root / "../content/distro/config").resolve()
     extras_templates = [
-        ("Amiga_gamma.cfg", "_gamma.cfg"),      # -> {setname}_gamma.cfg
-        ("Amiga_scaler.cfg", "_scaler.cfg"),    # -> {setname}.scaler.cfg
-        ("Amiga_shmask.cfg", "_shmask.cfg"),    # -> {setname}_shmask.cfg
-        ("Amiga_vadjust.dat", "_vadjust.dat"),  # -> {setname}.vadjust
+        ("Amiga_gamma.cfg", "_gamma.cfg"),
+        ("Amiga_scaler.cfg", "_scaler.cfg"),
+        ("Amiga_shmask.cfg", "_shmask.cfg"),
+        ("Amiga_vadjust.dat", "_vadjust.dat"),
     ]
 
     for chd in chd_files:
@@ -184,14 +184,13 @@ def main() -> int:
         chd_stem = chd.stem               # no extension
         setname  = make_setname(chd_stem) # display name inside MGL
 
-        # --- Make MGL ---
-        mgl_text = build_mgl_text(setname)
-        mgl_filename = f"{chd_stem}.mgl" # MGL file uses raw CHD stem
-        mgl_path = mgl_dir / mgl_filename
-        write_text_unix(mgl_path, mgl_text)
+        # --- Write MGL -------------------------------------------------------
+        mgl_filename = mgl_dir / f"{setname}.mgl"
+        write_text_unix(mgl_filename, build_mgl_text(setname))
 
-        # --- Make CFG (per-game) ---
-        buf = bytearray(DEFAULT_CFG)  # clone pristine default
+        # --- Prepare CFG (clone the embedded Default.cfg and patch paths) ----
+        buf = bytearray(DEFAULT_CFG)
+
         rom_path   = jpath(assets_base, "CD32.rom")
         hdf_path   = jpath(assets_base, "CD32.hdf")
         saves_path = jpath(assets_base, "CD32-Saves.hdf")
@@ -205,19 +204,39 @@ def main() -> int:
         cfg_out = cfg_dir / f"{setname}.cfg"
         cfg_out.write_bytes(buf)
 
-        # --- Per-game extras: gamma/scaler/shmask/vadjust ---
+        # --- Per-game extras: gamma/scaler/shmask/vadjust --------------------
         for template_name, suffix in extras_templates:
             src = extras_src / template_name
             dst = cfg_dir / f"{setname}{suffix}"
             try:
-                dst.write_bytes(src.read_bytes()) # overwrite if exists
+                dst.write_bytes(src.read_bytes())  # overwrite if exists
             except FileNotFoundError:
-                print(f"Warning: template not found: {src}")
+                # Soft warning only; continue without aborting
+                print(f"[{variant_name}] Warning: template not found: {src}")
 
-        print(f"{mgl_filename}")
+        print(f"[{variant_name}] {mgl_filename.relative_to(root)}")
 
-    print("All done.")
+    print(f"[{variant_name}] Done.")
     return 0
 
+
+def main() -> int:
+    # Produce three presets automatically:
+    # 1+1  -> SD  -> assets: SD,  CHDs: SD
+    # 2+2  -> USB -> assets: USB, CHDs: USB
+    # 3+3  -> NAS -> assets: NAS, CHDs: NAS
+    presets = [
+        ("SD",  "fat/games/AmigaCD32",   "fat/games/AmigaCD32"),
+        ("USB", "usb0/games/AmigaCD32",  "usb0/games/AmigaCD32"),
+        ("NAS", "fat/cifs/AmigaCD32",    "fat/cifs/AmigaCD32"),
+    ]
+
+    codes = []
+    for name, assets_base, chd_base in presets:
+        codes.append(generate_for(name, assets_base, chd_base))
+
+    # Return non-zero if any preset failed
+    return 0 if all(c == 0 for c in codes) else 1
+
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(main())
