@@ -22,6 +22,10 @@ First, you need to pick the correct set of config files. Because of the way MiST
 * If you already have AmigaVision installed, some files like the `Presets`, `Filters` and `Shadow_Masks` will already exist — you can skip these or overwrite them, it doesn't matter, they are identical.
 * If you had the previous CD32 setup, absolutely overwrite the old `CD32.hdf` for this new setup to work.
 
+## Upgrading
+
+As always with AmigaVision, the same goes for this CD32 setup — always do a clean install and replace all the files with the exception of your `CD32-Saves.hdf`. We will update config files when needed, so you want the latest version of all the files, even though it might not be obvious what has changed from the directory listing alone.
+
 ## Adding games 
 
 Put your CD32 disc images in the `games/AmigaCD32` directory. You have to use the MiSTer CD32 CHD pack, or rename your own CHD images according to the naming scheme for the MGLs to work. The expected names are listed at the bottom of this file. We do not support `bin/cue` or `ISO` files.
