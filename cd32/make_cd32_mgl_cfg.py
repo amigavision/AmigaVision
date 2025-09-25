@@ -101,16 +101,41 @@ def build_mgl_text(setname: str) -> str:
 
 
 def make_setname(chd_basename_no_ext: str) -> str:
-    """Make display setname 'CD32-...' removing '(...)' and enforcing 30-char limit total."""
-    base = PARENS_RE.sub("", chd_basename_no_ext).strip()
+    """
+    Make display setname 'CD32-...' enforcing 30-char total limit,
+    while preserving a trailing year ' (YYYY)' if present.
+    """
+    # Detect trailing year e.g., "Name (1994)"
+    m = re.search(r"\s*\((\d{4})\)\s*$", chd_basename_no_ext)
+    year_suffix = ""
+    if m:
+        year_suffix = f" ({m.group(1)})"
+        base_no_year = chd_basename_no_ext[:m.start()]
+    else:
+        base_no_year = chd_basename_no_ext
+
+    # Remove other parenthetical content from the base (but NOT the year suffix)
+    base = re.sub(r"\s*\([^)]*\)", "", base_no_year).strip()
+
+    # Compute room for base + optional year within MAX_TOTAL
     room = MAX_TOTAL - len(PREFIX)
     if room < 0:
         room = 0
-    trimmed = base[:room]
-    trimmed = TRAIL_TRIM_RE.sub("", trimmed)
-    return PREFIX + trimmed
 
+    # If we have a year suffix, reserve space for it
+    if year_suffix:
+        room_for_base = max(0, room - len(year_suffix))
+    else:
+        room_for_base = room
 
+    trimmed_base = base[:room_for_base]
+    trimmed_base = TRAIL_TRIM_RE.sub("", trimmed_base)
+
+    if not trimmed_base and room > 0:
+        trimmed_base = (base[:room]).rstrip()
+
+    final = PREFIX + trimmed_base + (year_suffix if trimmed_base else "")
+    return final[:MAX_TOTAL]
 def write_text_unix(path: Path, text: str) -> None:
     """Write text using LF line endings explicitly."""
     with open(path, "w", encoding="utf-8", newline="\n") as f:
