@@ -31,11 +31,17 @@ As is the case with the main AmigaVision setup, the same goes for this CD32 setu
 
 Put your CD32 disc images in the `games/AmigaCD32` directory. You have to use the MiSTer CD32 CHD pack, or rename your own CHD images according to the naming scheme for the MGLs to work. The expected names are listed at the bottom of this file. We do not support `bin/cue` or `ISO` files.
 
+## Mapping Controller Inputs
+
 ## Playing a Game
 
 * Navigate to `Console` → `Amiga CD32 Games`
 * Select the game you want to play.
 * Enjoy your game!
+
+## Game Recommendations
+
+
 
 ## Optional
 
