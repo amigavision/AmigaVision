@@ -59,6 +59,7 @@ SPECIAL_VARIANTS = {
         "chaos engine",
         "dangerous streets",
         "fears",
+        "fire force",
         "humans",
         "lotus trilogy",
         "pinball fantasies",
