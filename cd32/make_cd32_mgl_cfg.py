@@ -55,11 +55,28 @@ TRAIL_TRIM_RE = re.compile(r"[ .-_]+$")
 # Matching is done on a normalized game name (lowercase, no parentheses, only
 # alphanumerics and spaces).
 SPECIAL_VARIANTS = {
+    # These titles need to use the CD32Emu image that presents a UI, since they don't work with the autobooting images below
+    "CD32Emu.hdf": {
+        "arabian nights",
+        "arcade pool",
+        "beneath a steel sky",
+        "deep core",
+        "fields of glory",
+        "fire force",
+        "jungle strike",
+        "kid chaos",
+        "nigel mansell",
+        "rise of the robots",
+        "road avenger",
+        "time gal",
+        "wing commander",
+        "zool",
+        "zool 2",
+    },
     "CD32NoFastMem.hdf": {
         "chaos engine",
         "dangerous streets",
         "fears",
-        "fire force",
         "humans",
         "lotus trilogy",
         "pinball fantasies",
@@ -313,7 +330,7 @@ def main() -> int:
     presets = [
         ("SD",  "fat/games/AmigaCD32",   "fat/games/AmigaCD32"),
         ("USB", "usb0/games/AmigaCD32",  "usb0/games/AmigaCD32"),
-        ("NAS", "fat/cifs/AmigaCD32",    "fat/cifs/AmigaCD32"),
+#        ("NAS", "fat/cifs/AmigaCD32",    "fat/cifs/AmigaCD32"), # Looks like NAS actually uses the SD paths
     ]
 
     codes = []
