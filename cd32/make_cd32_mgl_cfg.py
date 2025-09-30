@@ -55,34 +55,43 @@ TRAIL_TRIM_RE = re.compile(r"[ .-_]+$")
 # Matching is done on a normalized game name (lowercase, no parentheses, only
 # alphanumerics and spaces).
 SPECIAL_VARIANTS = {
-    # These titles need to use the CD32Emu image that presents a UI, since they don't work with the autobooting images below
-    "CD32Emu.hdf": {
+    "CD32EmuMouse.hdf": {
         "arabian nights",
         "arcade pool",
-        "beneath a steel sky",
-        "deep core",
         "fields of glory",
-        "fire force",
-        "jungle strike",
         "kid chaos",
+        "marvin s marvellous adventure",
         "nigel mansell",
         "rise of the robots",
+        "trivial pursuit",
+        "ufo",
+        "vital light",
+    },
+    "CD32EmuNoFastMem.hdf": {
+        "fire force",
+    },
+    "CD32Emu.hdf": {
+        "beneath a steel sky",
+        "deep core",
+        "magic island",
         "road avenger",
+        "seek destroy",
+        "syndicate",
         "time gal",
-        "wing commander",
-        "zool",
-        "zool 2",
     },
     "CD32NoFastMem.hdf": {
         "chaos engine",
         "dangerous streets",
         "fears",
         "humans",
+        "jungle strike",
         "lotus trilogy",
         "pinball fantasies",
         "quik the thunder rabbit",
         "soccer kid",
         "surf ninjas",
+        "zool",
+        "zool 2",
     },
     "CD32NoFastMemNoICache.hdf": {
         "dizzy collection",
