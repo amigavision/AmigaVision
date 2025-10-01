@@ -59,15 +59,15 @@ Some Amiga CD32 games are up-to-jump or up-to-accelerate, which is OK if you hav
 * Disposable Hero
 * Chaos Engine
 * Beneath a Steel Sky — great point & click adventure in the Lucasfilm style with voice acting — does need a mouse, though
-* Super Stardust (We recommend entering password `BZZZZZZZZZB` to go straight to the game's showpiece — the tunnel sequence)
+* Super Stardust — We recommend entering password `BZZZZZZZZZB` to go straight to the game's showpiece — the tunnel sequence
 * Worms — Director's Cut (Amiga Exclusive)
-* Fury of the Furries (it is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad)
+* Fury of the Furries — it is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad
 * Banshee
 * Flink
 * Naughty Ones
 * Pinball Fantasies
-* Project X (Warning: Challenging shoot'em-up, not for everyone!)
-* Speedball 2 (Unfortunately doesn't have the iconic music of the Amiga version)
+* Project X — Warning: Challenging shoot'em-up, not for everyone!
+* Speedball 2 — Unfortunately doesn't have the iconic music of the Amiga version, but new voice-over and ambient soundscapes
 * Super Methane Bros.
 * Super Skidmarks
 * Superfrog
