@@ -31,7 +31,9 @@ As is the case with the main AmigaVision setup, the same goes for this CD32 setu
 
 ## Adding Games 
 
-Put your CD32 disc images in the `games/AmigaCD32` directory. You have to use the MiSTer CD32 CHD pack, or rename your own CHD images according to the naming scheme for the MGLs to work. The expected names are listed at the bottom of this file. We do not support `bin/cue` or `ISO` files.
+Put your CD32 disc images in the `games/AmigaCD32` directory. You have to use the MiSTer CD32 CHD pack, or rename your own CHD images according to the naming scheme for the MGLs to work. 
+
+The expected names are listed at the bottom of this file. We do not support `bin/cue` or `ISO` files.
 
 ## Mapping Controller Inputs
 
@@ -45,7 +47,15 @@ Some Amiga CD32 games are up-to-jump or up-to-accelerate, which feels OK if you 
 
 ## Game Recommendations
 
-* Fightin' Spirit (link to WalrusFPGA's video)
+<iframe style="aspect-ratio: 16/9; width: 100%;"
+        src="https://www.youtube.com/watch?v=T8iMcCmK6MI"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+        gyroscope; picture-in-picture; web-share" allowfullscreen>
+</iframe>
+
+* Fightin' Spirit
 * Disposable Hero
 * Chaos Engine
 * Beneath a Steel Sky — great point & click adventure in the Lucasfilm style with voice acting — does need a mouse, though
