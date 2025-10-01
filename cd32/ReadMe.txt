@@ -52,6 +52,128 @@ If you already had the previous AmigaVision CD32 support, you can delete the `_C
 * We generate 1280 config files to ensure these CD32 games work on MiSTer.
 * We generate 7 different hard disk images to power these.
 
+== Games where you need to select "Boot" to start
+
+There are some games that won't work unless we show the Amiga UI first, but we supply mouse emulation for gamepads — just navigate to the "Boot" button to start these:
+
+* Arabian Nights 
+* Arcade Pool 
+* Fields of Glory 
+* Fire Force
+* Kid Chaos 
+* Marvin's Marvellous Adventure (could there be a tooltip or argument to avoid requester?)
+* Nigel Mansell's European Championship
+* Rise of the Robots
+* Trivial Pursuit
+* Vital Light
+
+== Games that still require a mouse
+
+There are a few games that still require mouse because the game demands it. These are:
+
+* Beneath a Steel Sky 
+* Gulp
+* Magic Island
+* Seek & Destroy
+* Syndicate
+* Theme Park
+
+
+(If you can't start a game with the gamepad by navigating to the "Boot" button, it's a definitely a game that requires a mouse to play.)
+
+
+Recommended games:
+
+* Fightin' Spirit (link to WalrusFPGA's video)
+* Disposable Hero
+* Chaos Engine
+* Beneath a Steel Sky — great point & click adventure in the Lucasfilm style with voice acting — does need a mouse, though
+* Super Stardust (We recommend entering password `BZZZZZZZZZB` to go straight to the game's showpiece — the tunnel sequence)
+* Worms — Director's Cut (Amiga Exclusive)
+* Fury of the Furries (it is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad)
+* Banshee
+* Flink
+* Naughty Ones
+* Pinball Fantasies
+* Project X (Warning: Challenging shoot'em-up, not for everyone!)
+* Speedball 2 (Unfortunately doesn't have the iconic music of the Amiga version)
+* Super Methane Bros.
+* Super Skidmarks
+* Superfrog
+
+
+
+## Games that use 5xPAL overscale
+
+As you may know, AmigaVision has per-game [5×PAL Overscale presets] for games that support it. With this CD32 setup, we are bringing that same support to CD32!
+
+* Arabian Nights
+* Beavers
+* Beneath a Steel Sky
+* Black Viper
+* Brian the Lion
+* Brutal Paws of Fury
+* Brutal Football
+* Bubba N Stix
+* Castles II - Siege & Conquest
+* Chambers of Shaolin
+* Chaos Engine
+* D/Generation
+* Darkseed
+* Death Mask
+* Dennis
+* Diggers
+* Disposable Hero
+* Emerald Mines
+* Exile
+* Fields of Glory
+* Fire Force
+* Flink
+* Fly Harder
+* Frontier - Elite II
+* Fury of the Furries
+* Global Effect
+* Guardian
+* Gulp
+* Gunship 2000
+* Heimdall 2
+* Humans
+* Impossible Mission 2025
+* International Karate
+* James Pond 2 - Robocod
+* John Barnes European Football
+* Jungle Strike
+* Kid Chaos
+* Labyrinth of Time
+* Lamborghini American Challenge
+* Legends
+* Lotus Trilogy
+* Marvin's Marvellous Adventure
+* Nigel Mansell's World Championship
+* PGA European Tour
+* Pirates Gold
+* Projekt Lila
+* Roadkill
+* Ryder Cup by Johnnie Walker
+* Seven Gates of Jambala
+* Soccer Kid
+* Speedball 2
+* Strip Pot
+* Subwar 2050
+* Summer Olympix
+* Super Street Fighter II Turbo
+* Surf Ninjas
+* Syndicate
+* Theme Park
+* Top Gear 2
+* Total Carnage
+* Trolls
+* UFO - Enemy Unknown
+* Vital Light
+* Whale's Voyage
+* Wild Cup Soccer
+* Wing Commander
+
 ## Compatibility
 
 This is not a *real* CD32 core for the MiSTer. It uses the CD Audio support that was recently added to the Amiga (Minimig) core, and uses a program called CD32-Emulator to run CD32 games. 
@@ -201,3 +323,4 @@ Zool 2 (1994).chd
 
 [https://amiga.vision/5x]:https://amiga.vision/5x
 [https://amiga.vision/cd32]:https://amiga.vision/cd32
+[5×PAL Overscale presets]:https://amiga.vision/5x
