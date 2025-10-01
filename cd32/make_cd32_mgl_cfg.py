@@ -50,7 +50,7 @@ OFF_CHD_PATH        = 0x0C1F
 PARENS_RE = re.compile(r"\s*\([^)]*\)")
 TRAIL_TRIM_RE = re.compile(r"[ .-_]+$")
 
-# --- Special per-game HDF variants -----------------------------------------
+# Special per-game HDF variants
 # Games that require different core settings, mapped to which CD32*.hdf to use.
 # Matching is done on a normalized game name (lowercase, no parentheses, only
 # alphanumerics and spaces).
@@ -104,6 +104,117 @@ SPECIAL_VARIANTS = {
     },
 }
 
+# Per-game 5xPAL Overscale VSHIFT mapping
+VSHIFT_MAP_RAW = {
+    "Arabian Nights": -4,
+    "Beavers": 6,
+    "Beneath a Steel Sky": 26,
+    "Black Viper": 0,
+    "Brian the Lion": 1,
+    "Brutal Paws of Fury": 14,
+    "Brutal Football": 12,
+    "Bubba N Stix": 5,
+    "Castles II - Siege & Conquest": 0,
+    "Chambers of Shaolin": 7,
+    "Chaos Engine": 10,
+    "D/Generation": 26,
+    "Darkseed": 26,
+    "Death Mask": 0,
+    "Dennis": 6,
+    "Diggers": 26,
+    "Disposable Hero": 6,
+    "Emerald Mines": 1,
+    "Exile": 12,
+    "Fields of Glory": 26,
+    "Fire Force": 0,
+    "Flink": 24,
+    "Fly Harder": 12,
+    "Frontier - Elite II": 0,
+    "Fury of the Furries": 4,
+    "Global Effect": 26,
+    "Guardian": 12,
+    "Gulp": 12,
+    "Gunship 2000": 20,
+    "Heimdall 2": 6,
+    "Humans": 26,
+    "Impossible Mission 2025": 0,
+    "International Karate": 8,
+    "James Pond 2 - Robocod": 2,
+    "John Barnes European Football": 4,
+    "Jungle Strike": 0,
+    "Kid Chaos": 26,
+    "Labyrinth of Time": 0,
+    "Lamborghini American Challenge": 0,
+    "Legends": 0,
+    "Lotus Trilogy": 2,
+    "Marvin's Marvellous Adventure": 0,
+    "Nigel Mansell's World Championship": 0,
+    "PGA European Tour": 0,
+    "Pirates Gold": 20,
+    "Projekt Lila": 0,
+    "Roadkill": 24,
+    "Ryder Cup by Johnnie Walker": 8,
+    "Seven Gates of Jambala": 2,
+    "Soccer Kid": 15,
+    "Speedball 2": 0,
+    "Strip Pot": 0,
+    "Subwar 2050": 0,
+    "Summer Olympix": 0,
+    "Super Street Fighter II Turbo": 0,
+    "Surf Ninjas": 0,
+    "Syndicate": 8,
+    "Theme Park": 12,
+    "Top Gear 2": -6,
+    "Total Carnage": 9,
+    "Trolls": 18,
+    "UFO - Enemy Unknown": 30,
+    "Vital Light": 18,
+    "Whale's Voyage": 0,
+    "Wild Cup Soccer": 12,
+    "Wing Commander": 26
+}
+
+def _norm_title(s: str) -> str:
+    """Local normalizer just for 5xPAL logic (no global dependency)."""
+    s = re.sub(r"\s*\([^)]*\)", "", s)
+    s = re.sub(r"[^A-Za-z0-9]+", " ", s)
+    return " ".join(s.lower().split())
+
+def _build_vshift_map() -> dict:
+    mapping = {}
+    for k, v in VSHIFT_MAP_RAW.items():
+        mapping[_norm_title(k)] = v
+    return mapping
+
+VSHIFT_MAP = _build_vshift_map()
+
+def pick_vadjust_from_offsets_strict(offsets_dir: Path, game_stem: str):
+    """
+    Strict lookup: if game is in VSHIFT_MAP, require an exact file
+    './Offsets/5xPAL{value}.dat' (e.g., 5xPAL-4.dat, 5xPAL26.dat).
+    Returns Path if found; raises FileNotFoundError when missing.
+    For games not in VSHIFT_MAP, returns None.
+    """
+    norm = _norm_title(game_stem)
+    if norm not in VSHIFT_MAP:
+        return None
+    val = VSHIFT_MAP[norm]
+    path = offsets_dir / f"5xPAL{val}.dat"
+    if not path.exists():
+        raise FileNotFoundError(f"Required offsets file not found: {path}")
+    return path
+
+def pick_vadjust_path(extras_src: Path, offsets_dir: Path, game_stem: str) -> Path:
+    """
+    Choose vadjust source path.
+    - If game has a VSHIFT entry, return the exact ./Offsets/5xPAL{value}.dat
+      (error if missing).
+    - Otherwise, fall back to the standard Amiga_vadjust.dat in extras_src.
+    """
+    special = pick_vadjust_from_offsets_strict(offsets_dir, game_stem)
+    if special is not None:
+        return special
+    return extras_src / "Amiga_vadjust.dat"
 def normalize_game_name(name: str) -> str:
     cleaned = PARENS_RE.sub("", name)
     cleaned = re.sub(r"[^A-Za-z0-9]+", " ", cleaned)
@@ -257,7 +368,7 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
     mgl_dir.mkdir(parents=True, exist_ok=True)
     cfg_dir.mkdir(parents=True, exist_ok=True)
 
-    # --- Copy distro folders into each preset (SD/USB/NAS) ------------------
+    # Copy distro folders into each preset (SD/USB)
     # Required copies: ../content/distro/Presets/, ../content/distro/Shadow_Masks/,
     # ../content/distro/Filters/, and ./games/
     try:
@@ -283,6 +394,7 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
 
     # Location of the extra per-game config templates (relative to the script)
     extras_src = (root / "../content/distro/config").resolve()
+    offsets_dir = (root / "Offsets").resolve()
     extras_templates = [
         ("Amiga_gamma.cfg", "_gamma.cfg"),
         ("Amiga_scaler.cfg", "_scaler.cfg"),
@@ -317,14 +429,16 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
 
         # --- Per-game extras: gamma/scaler/shmask/vadjust --------------------
         for template_name, suffix in extras_templates:
-            src = extras_src / template_name
+            if suffix == "_vadjust.dat":
+                src = pick_vadjust_path(extras_src, offsets_dir, chd_stem)
+            else:
+                src = extras_src / template_name
             dst = cfg_dir / f"{setname}{suffix}"
             try:
                 dst.write_bytes(src.read_bytes())  # overwrite if exists
             except FileNotFoundError:
                 # Soft warning only; continue without aborting
                 print(f"[{variant_name}] Warning: template not found: {src}")
-
         print(f"[{variant_name}] {mgl_filename.relative_to(root)}")
 
     print(f"[{variant_name}] Done.")
@@ -332,10 +446,9 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
 
 
 def main() -> int:
-    # Produce three presets automatically:
-    # 1+1  -> SD  -> assets: SD,  CHDs: SD
-    # 2+2  -> USB -> assets: USB, CHDs: USB
-    # 3+3  -> NAS -> assets: NAS, CHDs: NAS
+    # Produce two presets automatically:
+    # SD  -> assets: SD,  CHDs: SD
+    # USB -> assets: USB, CHDs: USB
     presets = [
         ("SD",  "fat/games/AmigaCD32",   "fat/games/AmigaCD32"),
         ("USB", "usb0/games/AmigaCD32",  "usb0/games/AmigaCD32"),
