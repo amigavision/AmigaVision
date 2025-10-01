@@ -1,19 +1,19 @@
 # AmigaVision CD32 Setup for MiSTer 
 
-This is a convenience package that will allow you to load Amiga CD32 games using the MiSTer Amiga core. It uses MiSTer’s MGL support allowing you to start games directly from the MiSTer menu.
+A ready-to-go package for playing Amiga CD32 games on the MiSTer’s Amiga core.
 
 ## Features
 
-* Stand-alone setup that doesn't have any dependencies on AmigaVision itself. If you want to just have CD32 games, and not the rest of the Amiga library, you can. (…and you'd be missing out on all of the good games!) 😄
-* Allows you to start CD32 games directly from MiSTer's menu without requiring a mouse or keyboard, gamepad/joystick is all you need.
-* No need to keep track of which games need FastMem or Instruction Cache disabled — or even that one game that requires volume control to be disabled! — we handle it for you.
+* Fully stand-alone — no AmigaVision install required. If you only want CD32 games (though you’d be missing out on the rest of the Amiga classics! 😄), this works by itself.
+* Launch CD32 games straight from the MiSTer menu — no keyboard or mouse required, just your controller.
+* Forget juggling obscure settings like FastMem, Instruction Cache, or that one game needing volume control off — we handle all that automatically.
 * Uses AmigaVision's scanline and shadow masks presets.
 * Uses AmigaVision's scaling presets, which are considered the best in the business. 😅
 * Games that can make use of AmigaVision's 5×PAL Overscale presets — like Chaos Engine CD32 — now use that on a per-game basis when a game can handle it. More info on this: [https://amiga.vision/5x]
 
 ## Installation
 
-First, you need to pick the correct set of config files. Because of the way MiSTer implements paths differently between using SD cards and external USB drives, you need to pick the one that matches your setup.
+First, you need to pick the correct set of config files. MiSTer handles file paths differently for SD cards vs. USB drives, so be sure to pick the correct configuration set for your setup.
 
 * Open the SD or USB folder, depending on your setup.
 * Copy everything inside that folder to the root of your MiSTer filesystem.
@@ -21,13 +21,13 @@ First, you need to pick the correct set of config files. Because of the way MiST
 ### Previous CD32 Setup
 
 * If you already had AmigaVision installed, some files like the `Presets`, `Filters` and `Shadow_Masks` will already exist — you can skip these or overwrite them, it doesn't matter, they are identical.
-* If you had the previous CD32 setup, absolutely overwrite the old `CD32.hdf` for this new setup to work.
+* If you had the previous CD32 setup, be sure to overwrite the old `CD32.hdf` for this new setup to work.
 
-As usual, if in doubt, overwrite. Except for your Saves.
+As usual, when in doubt, overwrite. **Except for your save files.**
 
 ## Upgrading
 
-As is the case with the main AmigaVision setup, the same goes for this CD32 setup — always do a clean install and replace all the files with the exception of your `CD32-Saves.hdf`. We will update config files when needed, so you want the latest version of all the files, even though it might not be obvious what has changed from the directory listing alone.
+As is the case with the main AmigaVision setup, the same goes for this CD32 setup — always do a clean install and replace all the files with the exception of your `CD32-Saves.hdf`. Configuration files may change over time, even if it’s not obvious from the folder listing — always replace them to stay up to date.
 
 ## Adding Games 
 
@@ -58,10 +58,10 @@ Some Amiga CD32 games are up-to-jump or up-to-accelerate, which is OK if you hav
 * Fightin' Spirit
 * Disposable Hero
 * Chaos Engine
-* Beneath a Steel Sky — great point & click adventure in the Lucasfilm style with voice acting — does need a mouse, though
-* Super Stardust — We recommend entering password `BZZZZZZZZZB` to go straight to the game's showpiece — the tunnel sequence
+* Beneath a Steel Sky — Great point & click adventure in the Lucasfilm style with voice acting — does need a mouse, though
+* Super Stardust — Enter `BZZZZZZZZZB` to jump straight to its iconic tunnel sequence.
 * Worms — Director's Cut (Amiga Exclusive)
-* Fury of the Furries — it is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad
+* Fury of the Furries — It is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad
 * Banshee
 * Flink
 * Naughty Ones
@@ -186,7 +186,7 @@ As you may know, AmigaVision has per-game [5×PAL Overscale presets] for games t
 
 This is not a *real* CD32 core for the MiSTer. It uses the CD Audio support that was recently added to the Amiga (Minimig) core, and uses a program called CD32-Emulator to run CD32 games. 
 
-Compatibility is not perfect, and not all games will work or necessarily have their CD soundtracks. An updated compatibility list with any special settings required can be found at:
+Compatibility isn’t perfect — some games may not work or may lack their CD audio tracks. An updated compatibility list with any special settings required can be found at:
 
 [https://amiga.vision/cd32]
 
