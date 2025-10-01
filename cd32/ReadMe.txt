@@ -47,6 +47,11 @@ Put your CD32 disc images in the `games/AmigaCD32` directory. You have to use th
 
 If you already had the previous AmigaVision CD32 support, you can delete the `_Consoles/Amiga CD32.mgl` file — it is no longer needed, and in fact will not do anything useful if you start it.
 
+## Fun Facts
+
+* We generate 1280 config files to ensure these CD32 games work on MiSTer.
+* We generate 7 different hard disk images to power these.
+
 ## Compatibility
 
 This is not a *real* CD32 core for the MiSTer. It uses the CD Audio support that was recently added to the Amiga (Minimig) core, and uses a program called CD32-Emulator to run CD32 games. 
