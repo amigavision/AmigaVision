@@ -161,7 +161,7 @@ def main():
     parser.add_argument("-o", "--out", dest="out_vadjust", metavar="FILE", help="output file")
     parser.add_argument("--scale", dest="scale", type=int, default=0, help="create viewport crops with forced scale factor (5 or 6)")
     parser.add_argument("--vshift", dest="v_shift", type=int, default=0, help="set vertical shift (positive values move visible image up)")
-    parser.add_argument("--sachs", dest="sachs", action="store_true", default=False, help="jim sachs mode (5:4 PAR for 5X scale)")
+    parser.add_argument("--sachs", dest="sachs", action="store_true", default=False, help="jim sachs mode (5:6 PAR for 5X scale)")
 
     try:
         args = parser.parse_args()
