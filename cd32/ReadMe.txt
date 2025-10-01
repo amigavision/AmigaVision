@@ -37,7 +37,7 @@ The expected names are listed at the bottom of this file. We do not support `bin
 
 ## Mapping Controller Inputs
 
-Some Amiga CD32 games are up-to-jump or up-to-accelerate, which feels OK if you have a joystick, but might be awkward if you use a gamepad. Consult MiSTer's documentation to remap the buttons for these games.
+Some Amiga CD32 games are up-to-jump or up-to-accelerate, which is OK if you have a joystick, but might be awkward if you use a gamepad. Consult MiSTer's documentation to remap up to buttons for these games.
 
 ## Playing a Game
 
