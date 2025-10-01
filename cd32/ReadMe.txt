@@ -9,19 +9,21 @@ This is a convenience package that will allow you to load Amiga CD32 games using
 * No need to keep track of which games need FastMem or Instruction Cache disabled — or even that one game that requires volume control to be disabled! — we handle it for you.
 * Uses AmigaVision's scanline and shadow masks presets.
 * Uses AmigaVision's scaling presets, which are considered the best in the business. 😅
-* Games that can make use of AmigaVision's 5×PAL overscale presets — like Chaos Engine CD32 — now use that on a per-game basis when a game can handle it. More info on this: [https://amiga.vision/5x]
+* Games that can make use of AmigaVision's 5×PAL Overscale presets — like Chaos Engine CD32 — now use that on a per-game basis when a game can handle it. More info on this: [https://amiga.vision/5x]
 
 ## Installation
 
-First, you need to pick the correct set of config files. Because of the way MiSTer implements paths differently between using SD cards, external USB drives, and network drives (NAS/CIFS), you need to pick the one that matches your setup.
+First, you need to pick the correct set of config files. Because of the way MiSTer implements paths differently between using SD cards and external USB drives, you need to pick the one that matches your setup.
 
-* Open the SD, USB or NAS folder, depending on your setup.
+* Open the SD or USB folder, depending on your setup.
 * Copy everything inside that folder to the root of your MiSTer filesystem.
 
 ### Previous CD32 Setup
 
-* If you already have AmigaVision installed, some files like the `Presets`, `Filters` and `Shadow_Masks` will already exist — you can skip these or overwrite them, it doesn't matter, they are identical.
+* If you already had AmigaVision installed, some files like the `Presets`, `Filters` and `Shadow_Masks` will already exist — you can skip these or overwrite them, it doesn't matter, they are identical.
 * If you had the previous CD32 setup, absolutely overwrite the old `CD32.hdf` for this new setup to work.
+
+As usual, if in doubt, overwrite. Except for your Saves.
 
 ## Upgrading
 
@@ -33,6 +35,8 @@ Put your CD32 disc images in the `games/AmigaCD32` directory. You have to use th
 
 ## Mapping Controller Inputs
 
+Some Amiga CD32 games are up-to-jump or up-to-accelerate, which feels OK if you have a joystick, but might be awkward if you use a gamepad. Consult MiSTer's documentation to remap the buttons for these games.
+
 ## Playing a Game
 
 * Navigate to `Console` → `Amiga CD32 Games`
@@ -40,49 +44,6 @@ Put your CD32 disc images in the `games/AmigaCD32` directory. You have to use th
 * Enjoy your game!
 
 ## Game Recommendations
-
-
-
-## Optional
-
-If you already had the previous AmigaVision CD32 support, you can delete the `_Consoles/Amiga CD32.mgl` file — it is no longer needed, and in fact will not do anything useful if you start it.
-
-## Fun Facts
-
-* We generate 1280 config files to ensure these CD32 games work on MiSTer.
-* We generate 7 different hard disk images to power these.
-
-== Games where you need to select "Boot" to start
-
-There are some games that won't work unless we show the Amiga UI first, but we supply mouse emulation for gamepads — just navigate to the "Boot" button to start these:
-
-* Arabian Nights 
-* Arcade Pool 
-* Fields of Glory 
-* Fire Force
-* Kid Chaos 
-* Marvin's Marvellous Adventure (could there be a tooltip or argument to avoid requester?)
-* Nigel Mansell's European Championship
-* Rise of the Robots
-* Trivial Pursuit
-* Vital Light
-
-== Games that still require a mouse
-
-There are a few games that still require mouse because the game demands it. These are:
-
-* Beneath a Steel Sky 
-* Gulp
-* Magic Island
-* Seek & Destroy
-* Syndicate
-* Theme Park
-
-
-(If you can't start a game with the gamepad by navigating to the "Boot" button, it's a definitely a game that requires a mouse to play.)
-
-
-Recommended games:
 
 * Fightin' Spirit (link to WalrusFPGA's video)
 * Disposable Hero
@@ -102,6 +63,43 @@ Recommended games:
 * Superfrog
 
 
+## Optional
+
+If you already had the previous AmigaVision CD32 support, you can delete the `_Consoles/Amiga CD32.mgl` file — it is no longer needed, and in fact will not do anything useful if you start it.
+
+## Fun Facts
+
+* We generate 1280 config files to ensure these CD32 games work on MiSTer.
+* We generate 7 different hard disk images to power these.
+
+## Games where you need to select "Boot" to start
+
+There are some games that won't work unless we show the Amiga UI first, but we supply mouse emulation for gamepads — just navigate to the "Boot" button to start these:
+
+* Arabian Nights 
+* Arcade Pool 
+* Fields of Glory 
+* Fire Force
+* Kid Chaos 
+* Marvin's Marvellous Adventure (could there be a tooltip or argument to avoid requester?)
+* Nigel Mansell's European Championship
+* Rise of the Robots
+* Trivial Pursuit
+* Vital Light
+
+## Games that still require a mouse
+
+There are a few games that still require mouse because the game demands it. These are:
+
+* Beneath a Steel Sky 
+* Gulp
+* Magic Island
+* Seek & Destroy
+* Syndicate
+* Theme Park
+
+
+(If you can't start a game with the gamepad by navigating to the "Boot" button, it's a definitely a game that requires a mouse to play.)
 
 ## Games that use 5xPAL overscale
 
@@ -182,7 +180,7 @@ Compatibility is not perfect, and not all games will work or necessarily have th
 
 [https://amiga.vision/cd32]
 
-—AmigaVision Team
+*—AmigaVision Team*
 
 ## File Naming Convention
 
