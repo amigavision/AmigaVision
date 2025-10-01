@@ -29,3 +29,5 @@ cd32/games/AmigaCD32/CD32Emu.hdf
 cd32/NAS/games/AmigaCD32/CD32Emu.hdf
 cd32/SD/games/AmigaCD32/CD32Emu.hdf
 cd32/USB/games/AmigaCD32/CD32Emu.hdf
+cd32/games/AmigaCD32/CD32EmuNoFastMem.hdf
+cd32/USB/games/AmigaCD32/CD32EmuNoFastMem.hdf
