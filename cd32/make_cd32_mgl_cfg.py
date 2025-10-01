@@ -61,14 +61,14 @@ SPECIAL_VARIANTS = {
         "fields of glory",
         "kid chaos",
         "marvin s marvellous adventure",
-        "nigel mansell",
         "rise of the robots",
         "trivial pursuit",
         "ufo",
         "vital light",
     },
-    "CD32EmuNoFastMem.hdf": {
+    "CD32EmuMouseNoFastMem.hdf": {
         "fire force",
+        "nigel mansell s world championship",
     },
     "CD32Emu.hdf": {
         "beneath a steel sky",
