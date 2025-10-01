@@ -1,6 +1,6 @@
 # AmigaVision CD32 Setup for MiSTer 
 
-A ready-to-go package for playing Amiga CD32 games on the MiSTer’s Amiga core.
+A ready-to-go package for playing Amiga CD32 games on MiSTer’s Amiga core.
 
 ## Features
 
@@ -115,6 +115,8 @@ There are a few games that still require mouse because the game demands it. Thes
 
 As you may know, AmigaVision has per-game [5×PAL Overscale presets] for games that support it, which optimizes scaling for 1080p/4K. With this setup, we are bringing that same support to CD32!
 
+The following games will use 5×PAL Overscale:
+
 * Arabian Nights
 * Beavers
 * Beneath a Steel Sky
@@ -184,7 +186,7 @@ As you may know, AmigaVision has per-game [5×PAL Overscale presets] for games t
 
 ## Compatibility
 
-This is not a *real* CD32 core for the MiSTer. It uses the CD Audio support that was recently added to the Amiga (Minimig) core, and uses a program called CD32-Emulator to run CD32 games. 
+This is not a *real* CD32 core for the MiSTer. It uses the CD Audio support that was added to the Amiga (Minimig) core, and uses a program called CD32-Emulator to run CD32 games. 
 
 Compatibility isn’t perfect — some games may not work or may lack their CD audio tracks. An updated compatibility list with any special settings required can be found at:
 
@@ -192,7 +194,7 @@ Compatibility isn’t perfect — some games may not work or may lack their CD a
 
 *—AmigaVision Team*
 
-## File Naming Convention
+## Addendum: File Naming Convention
 
 Here are the file names that the setup expects for it to work properly — without these filenames, the game will not launch:
 
