@@ -3214,7 +3214,7 @@ game--bostonbombclubfast--bostonbombclubfast;Boston Bomb Club;Boston Bomb Club;;
 game--bagitman--bagitman;Bagitman;Bagitman;;;OCS;;0;5;;;;;;;;;1992;;English;Bignonia;Bignonia;2;;v2.0;Bagitman/Bagitman.Slave;game/Bagitman_v2.0.lha;Game;;3807;2218
 game--bramstokersdracula--bramstokersdracula;Bram Stoker's Dracula;Bram Stoker's Dracula;;;OCS;;0;;;;;;;;;;1994;;English;Psygnosis;Psygnosis;1;;v1.0;BramStokersDracula/BramStokersDracula.Slave;game/BramStokersDracula_v1.0.lha;Game;;403;1736
 game--bansheeaga--bansheeaga;Banshee;Banshee;;;AGA;1;0;;;;;1;;;Glitches during intro on Minimig-AGA;;1994;;English, German, French, Danish;Core Design;Core Design;2;;v3.3;BansheeAGA/BansheeAGA.slave;game/Banshee_v3.3_AGA_0633.lha;Game;Shoot'em Up - Vertical;31;225
-game--blackviperaga--blackviperaga;Black Viper;Black Viper;;;AGA;1;0;;;;;1;;;;;1996;;English;Light Shock;neo;1;;v1.1;BlackViperAGA/BlackViperAGA.slave;game/BlackViper_v1.1_AGA.lha;Game;Racing - Arcade;135;226
+game--blackviperaga--blackviperaga;Black Viper;Black Viper;;;AGA;1;0;5;0;;;1;;;;;1996;;English;Light Shock;neo;1;;v1.1;BlackViperAGA/BlackViperAGA.slave;game/BlackViper_v1.1_AGA.lha;Game;Racing - Arcade;135;226
 game--borobodur--borobodur;Borobodur: The Planet of Doom;Borobodur;;;OCS;;0;;;;;;;;;;1992;;English;Softeyes;Thalamus;1;;v1.2;Borobodur/Borobodur.Slave;game/Borobodur_v1.2_1014.lha;Game;;186;189
 game--blacksectfr--blacksectfr;Black Sect;Black Sect;;;OCS;;0;5;;;;;;;;;1994;;French;Lankhor;Lankhor;1;;v1.4;BlackSectFr/BlackSectFr.Slave;game/BlackSect_v1.4_Fr_2339.lha;Game;Adventure;131;2168
 game--backlash--backlash;Backlash;Backlash;;;OCS;;2;;;;;;;;;;1987;;English;Novagen;Novagen;1;;v1.0;Backlash/Backlash.Slave;game/Backlash_v1.0_1118.lha;Game;;12;109
