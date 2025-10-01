@@ -4589,8 +4589,8 @@ demo-notwhdl--ghostown-sushiboyz;Sushi Boyz;Sushi Boyz;;;OCS;;0;;;;;;;;;;2015;Po
 demo-notwhdl--dekadence-eighteen;Eighteen;Eighteen;;;OCS;;0;;;;;;;;;;2015;Finland;English;;Dekadence;1;;;;demo-notwhdl/Dekadence-Eighteen.lha;Demo;Intro 64K;;
 demo-notwhdl--rno-fruitcake;Fruitcake;Fruitcake;;;OCS;;0;5;26;;;;;;;;2006;Finland;English;;RNO;1;;;;demo-notwhdl/RNO-Fruitcake.lha;Demo;Demo;;
 demo-notwhdl--rno-fourskin;Four Skin;Four Skin;;;OCS;;0;5;27;;;;;;;;2011;Finland;English;;RNO;1;;;;demo-notwhdl/RNO-Fourskin.lha;Demo;Intro 4K;;
-game--gulp--gulp;Gulp!;Gulp;;;OCS;;0;;;;;;;;;;1994;;English, German, French, Italian, Spanish;I.C.E.;I.C.E.;1;;v1.1-C;Gulp/Gulp.slave;game/Gulp_v1.1-C_2632.lha;Game;;2807;1954
-game--gulpcd32--gulpcd32;Gulp!;Gulp;1;game--gulp--gulp;AGA/CD32;1;0;;;;;;;;;;1994;;English, German, French, Italian, Spanish;I.C.E.;I.C.E.;1;;v1.0;GulpCD32/GulpCD32.slave;game/Gulp_v1.0_CD32.lha;Game;;4106;1954
+game--gulp--gulp;Gulp!;Gulp;;;OCS;;0;5;12;;;;;;;;1994;;English, German, French, Italian, Spanish;I.C.E.;I.C.E.;1;;v1.1-C;Gulp/Gulp.slave;game/Gulp_v1.1-C_2632.lha;Game;;2807;1954
+game--gulpcd32--gulpcd32;Gulp!;Gulp;1;game--gulp--gulp;AGA/CD32;1;0;5;12;;;;;;;;1994;;English, German, French, Italian, Spanish;I.C.E.;I.C.E.;1;;v1.0;GulpCD32/GulpCD32.slave;game/Gulp_v1.0_CD32.lha;Game;;4106;1954
 demo-notwhdl--spaceballs-noisejesus;Noisejesus;Noisejesus;;;OCS;;0;5;18;;;;;;;;2000;Norway;English;;Spaceballs;1;;;;demo-notwhdl/Spaceballs-Noisejesus.lha;Demo;Intro 4K;;
 demo-notwhdl--cryptoburners-brainstate;brain-state-in-a-box;Brain State in a Box;;;AGA;1;0;;;;;;;;;;1994;Norway;English;;Cryptoburners;1;;;;demo-notwhdl/Cryptoburners-BrainState.lha;Demo;Demo;;
 demo-notwhdl--abyss-preschoolno1;Preschool #1;Preschool 1;;;OCS;;0;;;;;;;;;;2018;Germany;English;;Abyss;1;;;;demo-notwhdl/Abyss-PreschoolNo1.lha;Demo;Music Disk;;
