@@ -82,7 +82,7 @@ If you already had the previous AmigaVision CD32 support, you can delete the `_C
 * We generate 1280 config files to ensure these CD32 games work on MiSTer.
 * We generate 7 different hard disk images to power these.
 
-## Games where you need to select "Boot" to start
+## Games Where You Need to Select "Boot" to Start
 
 There are some games that won't work unless we show the Amiga UI first, but we supply mouse emulation for gamepads — just navigate to the "Boot" button to start these:
 
@@ -97,7 +97,7 @@ There are some games that won't work unless we show the Amiga UI first, but we s
 * Trivial Pursuit
 * Vital Light
 
-## Games that still require a mouse
+## Games That Still Require a Mouse
 
 There are a few games that still require mouse because the game demands it. These are:
 
@@ -111,9 +111,9 @@ There are a few games that still require mouse because the game demands it. Thes
 
 (If you can't start a game with the gamepad by navigating to the "Boot" button, it's a definitely a game that requires a mouse to play.)
 
-## Games that use 5xPAL overscale
+## Games That Can Use 5xPAL Overscale
 
-As you may know, AmigaVision has per-game [5×PAL Overscale presets] for games that support it. With this CD32 setup, we are bringing that same support to CD32!
+As you may know, AmigaVision has per-game [5×PAL Overscale presets] for games that support it, which optimizes scaling for 1080p/4K. With this setup, we are bringing that same support to CD32!
 
 * Arabian Nights
 * Beavers
