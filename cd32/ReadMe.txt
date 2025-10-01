@@ -18,16 +18,16 @@ First, you need to pick the correct set of config files. MiSTer handles file pat
 * Open the SD or USB folder, depending on your setup.
 * Copy everything inside that folder to the root of your MiSTer filesystem.
 
+## Upgrading
+
+As is the case with the main AmigaVision setup, the same goes for this CD32 setup — always do a clean install and replace all the files with the exception of your `CD32-Saves.hdf`. Configuration files may change over time, even if it’s not obvious from the folder listing — always replace them to stay up to date.
+
 ### Previous CD32 Setup
 
 * If you already had AmigaVision installed, some files like the `Presets`, `Filters` and `Shadow_Masks` will already exist — you can skip these or overwrite them, it doesn't matter, they are identical.
 * If you had the previous CD32 setup, be sure to overwrite the old `CD32.hdf` for this new setup to work.
 
 As usual, when in doubt, overwrite. **Except for your save files.**
-
-## Upgrading
-
-As is the case with the main AmigaVision setup, the same goes for this CD32 setup — always do a clean install and replace all the files with the exception of your `CD32-Saves.hdf`. Configuration files may change over time, even if it’s not obvious from the folder listing — always replace them to stay up to date.
 
 ## Adding Games 
 
