@@ -4,7 +4,7 @@ A ready-to-go package for playing Amiga CD32 games on MiSTer’s Amiga core.
 
 ## Features
 
-* Fully stand-alone — no AmigaVision install required. If you only want CD32 games (although you’d be missing out on the rest of the Amiga classics! 😄), this works by itself.
+* Fully stand-alone — no AmigaVision install required. If you only want CD32 games (although you’d be missing out on most of the Amiga classics! 😄), this works by itself.
 * Launch CD32 games straight from the MiSTer menu — no keyboard or mouse required, just your controller.
 * Forget juggling obscure settings like NoFastMem, Instruction Cache, or that one game needing Volume Control off — we handle all that automatically.
 * Uses AmigaVision's scanline and shadow masks presets.
