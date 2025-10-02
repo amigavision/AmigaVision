@@ -1,4 +1,0 @@
-delete >NIL: "AGS:'[ Run CD32 Game Disc '].run" QUIET
-delete >NIL: "AGS:'[ Run CD32 Game Disc '].txt" QUIET
-delete >NIL: "AGS:'[ Run CD32 Game Disc '].iff" QUIET
-delete >NIL: AGS:.dir
