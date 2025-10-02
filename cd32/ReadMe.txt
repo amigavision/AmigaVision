@@ -26,6 +26,8 @@ As is the case with the main AmigaVision setup, the same goes for this CD32 setu
 
 * If you already had AmigaVision installed, some files like the `Presets`, `Filters` and `Shadow_Masks` will already exist — you can skip these or overwrite them, it doesn't matter, they are identical.
 * If you had the previous CD32 setup, be sure to overwrite the old `CD32.hdf` for this new setup to work.
+* If you already had the previous AmigaVision CD32 support, you can delete the `_Consoles/Amiga CD32.mgl` file — it is no longer needed, and in fact will not do anything useful if you start it.
+
 
 As usual, when in doubt, overwrite. **Except for your save files.**
 
@@ -71,11 +73,6 @@ The CD32 wasn't exactly a paragon of a console with incredible games, and was cu
 * **Speedball 2** — Does not have the iconic music of the original Amiga version, but new voice-over and great ambient soundscapes makes this a great 2-player experience.
 * **Super Skidmarks** — Great overhead racer. If you loved RC Pro-AM on Nintendo, you will love this.
 * **Superfrog** — Every system needs a mascot platformer, right? This game is arguably the one for Amiga.
-
-
-## Optional
-
-If you already had the previous AmigaVision CD32 support, you can delete the `_Consoles/Amiga CD32.mgl` file — it is no longer needed, and in fact will not do anything useful if you start it.
 
 ## Fun Facts
 
