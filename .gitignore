@@ -7,3 +7,4 @@ vadjust
 configs/Layers/Base/DH0/Libs/idefix.library
 *.hdf
 *.rom
+/cd32/CD32-Output
