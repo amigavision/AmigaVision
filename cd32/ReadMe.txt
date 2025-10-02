@@ -102,7 +102,7 @@ There are a few games that still require mouse because the game demands it. Thes
 
 (If you can't start a game with the gamepad by navigating to the "Boot" button, it's a definitely a game that requires a mouse to play.)
 
-## Games That Can Use 5xPAL Overscale
+## Games That Can Use 5×PAL Overscale
 
 As you may know, AmigaVision has per-game [5×PAL Overscale presets] for games that support it, which optimizes scaling for 1080p/4K. With this setup, we are bringing that same support to CD32!
 
