@@ -363,7 +363,7 @@ def pick_chd_base() -> str:
 def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
     """
     Non-interactive generator for one target variant (SD/USB/NAS).
-    Writes outputs to ./<VARIANT>/_Console/_Amiga CD32 Games (MGL) and ./<VARIANT>/config (CFG).
+    Writes outputs to ./<VARIANT>/_Console/_Amiga CD32 Games (MGL) and ./<VARIANT>/config (CFG). For this repo, SD variant uses VARIANT='CD32-Output'.
     """
     root = Path(__file__).resolve().parent
     cd32_dir = root / "AmigaCD32"
@@ -450,19 +450,61 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
     return 0
 
 
+
 def main() -> int:
-    # Produce two presets automatically:
-    # SD  -> assets: SD,  CHDs: SD
-    # USB -> assets: USB, CHDs: USB
-    presets = [
-        ("SD",  "fat/games/AmigaCD32",   "fat/games/AmigaCD32"),
-        ("USB", "usb0/games/AmigaCD32",  "usb0/games/AmigaCD32"),
-#        ("NAS", "fat/cifs/AmigaCD32",    "fat/cifs/AmigaCD32"), # Looks like NAS actually uses the SD paths
-    ]
+    """
+    Build outputs into a single ./CD32-Output directory.
+    - SD preset (assets & CHDs on SD) is written directly under ./CD32-Output
+    - USB preset (assets & CHDs on USB) is generated to ./USB then archived to ./CD32-Output/USB.7z, and the ./USB folder is removed.
+    """
+    root = Path(__file__).resolve().parent
+    output_dir = root / "CD32-Output"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    # Presets: (variant_name, assets_base, chd_base)
+    sd_preset = ("CD32-Output", "fat/games/AmigaCD32", "fat/games/AmigaCD32")
+    usb_preset_tmpdir = ("USB", "usb0/games/AmigaCD32", "usb0/games/AmigaCD32")
 
     codes = []
-    for name, assets_base, chd_base in presets:
-        codes.append(generate_for(name, assets_base, chd_base))
+    # 1) Generate SD directly into CD32-Output
+    codes.append(generate_for(*sd_preset))
+
+    # 2) Generate USB into ./USB, then 7z it into ./CD32-Output/USB.7z and remove the ./USB directory
+    codes.append(generate_for(*usb_preset_tmpdir))
+
+    # Create USB.7z inside CD32-Output
+    usb_dir = root / "USB"
+    usb_archive = output_dir / "USB.7z"
+    if usb_dir.exists():
+        try:
+            # Prefer external 7z if available; fall back to shutil.make_archive (zip) if not
+            import shutil as _shutil, subprocess as _subprocess
+            # Test for 7z
+            try:
+                _subprocess.run(["7z"], stdout=_subprocess.DEVNULL, stderr=_subprocess.DEVNULL)
+                have_7z = True
+            except Exception:
+                have_7z = False
+
+            if have_7z:
+                # Create archive with top-level folder "USB"
+                _subprocess.check_call(["7z", "a", "-mx=7", str(usb_archive), str(usb_dir)])
+            else:
+                # Fallback to .zip if 7z is not available
+                zip_path = output_dir / "USB.zip"
+                _shutil.make_archive(str(zip_path.with_suffix("")), "zip", root_dir=root, base_dir="USB")
+                print("[USB] 7z not found; created USB.zip instead.")
+        except Exception as e:
+            print(f"[USB] Archiving USB folder failed: {e}")
+            # Keep the USB directory in case of failure
+        else:
+            # Remove the expanded USB folder only if archive exists
+            if usb_archive.exists():
+                import shutil as _shutil
+                _shutil.rmtree(usb_dir)
+                print("[USB] Archived to CD32-Output/USB.7z and removed ./USB")
+    else:
+        print("[USB] No USB directory to archive; skipping USB.7z step.")
 
     # Return non-zero if any preset failed
     return 0 if all(c == 0 for c in codes) else 1

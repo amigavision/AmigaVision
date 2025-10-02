@@ -3,8 +3,9 @@
 date_str=$1
 
 if [ -z "$date_str" ]; then
-  echo "No archive suffix";
+  echo "No archive suffix"
 else
   arc_name="!AmigaVision-CD32-Setup-for-MiSTer-$date_str.7z"
-  7z a -xr'!.*' -mx=7 -myx=5 $arc_name SD/ USB/ NAS/ ReadMe.txt;
+  # Package everything under CD32-Output (including USB.7z if present) plus ReadMe.txt
+  7z a -xr'!.*' -mx=7 -myx=5 "$arc_name" CD32-Output/ ReadMe.txt
 fi
