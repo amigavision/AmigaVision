@@ -88,7 +88,7 @@ There are some games that won't work unless we show the Amiga UI first, but we s
 * Fields of Glory 
 * Fire Force
 * Kid Chaos 
-* Marvin's Marvellous Adventure (could there be a tooltip or argument to avoid requester?)
+* Marvin's Marvellous Adventure
 * Nigel Mansell's European Championship
 * Rise of the Robots
 * Trivial Pursuit
