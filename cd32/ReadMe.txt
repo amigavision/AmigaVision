@@ -13,10 +13,11 @@ A ready-to-go package for playing Amiga CD32 games on MiSTer’s Amiga core.
 
 ## Installation
 
-First, you need to pick the correct set of config files. MiSTer handles file paths differently for SD cards vs. USB drives, so be sure to pick the correct configuration set for your setup.
+Simply copy the contents to the root of your MiSTer drive. For platforms that ask, you should of course Merge with the existing files, and overwrite any existing files if asked (e.g. if you already have the main AmigaVision installed, especially the ones that contain a CD32 setup). This will work for SD card and NAS (network drive) setups. 
 
-* Open the SD or USB folder, depending on your setup.
-* Copy everything inside that folder to the root of your MiSTer filesystem.
+If you are not using an external USB drive to store your game setup, you can delete `USB.7z`.
+
+If you are using an external USB drive for storing your game setup, there is an included `USB.7z` file included that you should use instead — this unpacks in the same way as the main archive, and you copy these contents to your MiSTer USB drive instead.
 
 ## Upgrading
 
