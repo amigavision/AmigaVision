@@ -60,24 +60,24 @@ Some Amiga CD32 games are up-to-jump or up-to-accelerate, which is OK if you hav
 The CD32 wasn't exactly a paragon of a console with incredible games, and was cut short by Commodore's unfortunate bankruptcy before it could really prove itself. However, if you are looking for a starting point, here are some games to check out:
 
 * **Fightin' Spirit** — Probably the best Street Fighter 2 clone on the Amiga.
-* **Disposable Hero** — Surprisingly good shoot'em-up.
 * **Chaos Engine** — True Amiga classic, two-player mode is especially fun.
 * **Beneath a Steel Sky** — Great point & click adventure in the Lucasfilm style with voice acting — does require a mouse, though.
 * **Super Stardust** — Enter `BZZZZZZZZZB` to jump straight to its iconic tunnel sequence.
 * **Worms — Director's Cut** — An Amiga exclusive, this legendary game series got its start here.
-* **Fury of the Furries** — Surprisingly deep platform game. This game is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad.
+* **Pinball Fantasies** — Move over, every 16-bit pinball game created! This is the one that set the standard.
+* **Fury of the Furries** — Great platform game. This game is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad.
 * **Banshee** — Great shoot'em-up, and the pixel art is next-level.
 * **Flink** — Did someone say pixel art? Gorgeous platformer.
+* **Disposable Hero** — Surprisingly good shoot'em-up.
 * **Naughty Ones** — Late-stage platformer made by one of the most influential Amiga demo groups.
-* **Pinball Fantasies** — Move over, every 16-bit pinball game created! This is the one that set the standard.
 * **Speedball 2** — Does not have the iconic music of the original Amiga version, but new voice-over and great ambient soundscapes makes this a great 2-player experience.
 * **Super Skidmarks** — Great overhead racer. If you loved RC Pro-AM on Nintendo, you will love this.
-* **Superfrog** — Every system needs a mascot platformer, right? This game is arguably the one for Amiga.
+* **Superfrog** — Every system needs a mascot platformer, right? This game is arguably the one for Amiga. Ignore Zool, play this instead.
 
 ## Fun Facts
 
 * We generate 1280 config files to ensure these CD32 games work on MiSTer.
-* We generate 7 different hard disk images to power these.
+* We generate 10 different hard disk images to power these.
 
 ## Games Where You Need to Select "Boot" to Start
 
@@ -93,6 +93,8 @@ There are some games that won't work unless we show the Amiga UI first, but we s
 * Rise of the Robots
 * Trivial Pursuit
 * Vital Light
+* Zool
+* Zool 2
 
 ## Games That Still Require a Mouse
 
@@ -104,7 +106,6 @@ There are a few games that still require mouse because the game demands it. Thes
 * Seek & Destroy
 * Syndicate
 * Theme Park
-
 
 (If you can't start a game with the gamepad by navigating to the "Boot" button, it's a definitely a game that requires a mouse to play.)
 
@@ -160,6 +161,7 @@ The following games will use 5×PAL Overscale:
 * PGA European Tour
 * Pirates Gold
 * Projekt Lila
+* Road Avenger
 * Roadkill
 * Ryder Cup by Johnnie Walker
 * Seven Gates of Jambala
@@ -172,6 +174,7 @@ The following games will use 5×PAL Overscale:
 * Surf Ninjas
 * Syndicate
 * Theme Park
+* Time Gal
 * Top Gear 2
 * Total Carnage
 * Trolls

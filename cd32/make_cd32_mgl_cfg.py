@@ -70,14 +70,16 @@ SPECIAL_VARIANTS = {
         "fire force",
         "nigel mansell s world championship",
     },
+    "CD32EmuMouseNoFastMemNoICache.hdf": {
+        "zool",
+        "zool 2",
+    },
     "CD32Emu.hdf": {
         "beneath a steel sky",
         "deep core",
         "magic island",
-        "road avenger",
         "seek destroy",
         "syndicate",
-        "time gal",
     },
     "CD32NoFastMem.hdf": {
         "chaos engine",
@@ -90,8 +92,6 @@ SPECIAL_VARIANTS = {
         "quik the thunder rabbit",
         "soccer kid",
         "surf ninjas",
-        "zool",
-        "zool 2",
     },
     "CD32NoFastMemNoICache.hdf": {
         "dizzy collection",
@@ -155,6 +155,7 @@ VSHIFT_MAP_RAW = {
     "PGA European Tour": 0,
     "Pirates Gold": 20,
     "Projekt Lila": 0,
+    "Road Avenger": 8,
     "Roadkill": 24,
     "Ryder Cup by Johnnie Walker": 8,
     "Seven Gates of Jambala": 2,
@@ -167,6 +168,7 @@ VSHIFT_MAP_RAW = {
     "Surf Ninjas": 0,
     "Syndicate": 8,
     "Theme Park": 12,
+    "TimeGal": 24,
     "Top Gear 2": -6,
     "Total Carnage": 9,
     "Trolls": 18,
