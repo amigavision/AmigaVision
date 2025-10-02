@@ -57,22 +57,21 @@ Some Amiga CD32 games are up-to-jump or up-to-accelerate, which is OK if you hav
 
 The CD32 wasn't exactly a paragon of a console with incredible games, it was cut short by Commodore's bankruptcy before it could really prove itself. However, if you are looking for a starting point, here are some games to check out:
 
-* Fightin' Spirit
-* Disposable Hero
-* Chaos Engine
-* Beneath a Steel Sky — Great point & click adventure in the Lucasfilm style with voice acting — does need a mouse, though
-* Super Stardust — Enter `BZZZZZZZZZB` to jump straight to its iconic tunnel sequence.
-* Worms — Director's Cut (Amiga Exclusive)
-* Fury of the Furries — This game is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad
-* Banshee
-* Flink
-* Naughty Ones
-* Pinball Fantasies
-* Project X — Warning: Challenging shoot'em-up, not for everyone!
-* Speedball 2 — Unfortunately doesn't have the iconic music of the Amiga version, but new voice-over and great ambient soundscapes
-* Super Methane Bros.
-* Super Skidmarks
-* Superfrog
+* **Fightin' Spirit** — Probably the best Street Fighter 2 clone on the Amiga.
+* **Disposable Hero** — Surprisingly good shoot'em-up.
+* **Chaos Engine** — True Amiga classic, two-pl.ayer mode is especially fun
+* **Beneath a Steel Sky** — Great point & click adventure in the Lucasfilm style with voice acting — does require a mouse, though.
+* **Super Stardust** — Enter `BZZZZZZZZZB` to jump straight to its iconic tunnel sequence.
+* **Worms — Director's Cut** — An Amiga exclusive, this legendary game series got its start here.
+* **Fury of the Furries** — This game is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad.
+* **Banshee** — Great shoot'em-up, and the pixel art is next-level.
+* **Flink** — Did someone say pixel art? Gorgeous platformer.
+* Naughty Ones — Late-stage platformer made by one of the most influential Amiga demo groups.
+* **Pinball Fantasies** — Move over, every 16-bit pinball game created! This is the one that set the standard.
+* **Project X** — Warning: Challenging shoot'em-up, not for everyone!
+* **Speedball 2** — Does not have the iconic music of the original Amiga version, but new voice-over and great ambient soundscapes makes this a great 2-player experience.
+* **Super Skidmarks** — Great overhead racer. If you loved RC Pro-AM on Nintendo, you will love this.
+* **Superfrog** — Every system needs a mascot platformer, right? This game is arguably the one for Amiga.
 
 
 ## Optional
