@@ -95,6 +95,9 @@ SPECIAL_VARIANTS = {
     },
     "CD32NoFastMemNoICache.hdf": {
         "dizzy collection",
+        "impossible mission",
+        "gunship",
+        "pirates",
     },
     "CD32NoICache.hdf": {
         "ultimate body blows",
