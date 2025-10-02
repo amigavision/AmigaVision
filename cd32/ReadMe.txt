@@ -50,21 +50,13 @@ Some Amiga CD32 games are up-to-jump or up-to-accelerate, which is OK if you hav
 
 ## Game Recommendations
 
-<iframe style="aspect-ratio: 16/9; width: 100%;"
-        src="https://www.youtube.com/watch?v=T8iMcCmK6MI"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media;
-        gyroscope; picture-in-picture; web-share" allowfullscreen>
-</iframe>
-
 The CD32 wasn't exactly a paragon of a console with incredible games, and was cut short by Commodore's unfortunate bankruptcy before it could really prove itself. However, if you are looking for a starting point, here are some games to check out:
 
 * **Fightin' Spirit** — Probably the best Street Fighter 2 clone on the Amiga.
 * **Chaos Engine** — True Amiga classic, two-player mode is especially fun.
 * **Beneath a Steel Sky** — Great point & click adventure in the Lucasfilm style with voice acting — does require a mouse, though.
 * **Super Stardust** — Enter `BZZZZZZZZZB` to jump straight to its iconic tunnel sequence.
-* **Worms — Director's Cut** — An Amiga exclusive, this legendary game series got its start here.
+* **Worms** — This legendary game series got its start on the Amiga.
 * **Pinball Fantasies** — Move over, every 16-bit pinball game created! This is the one that set the standard.
 * **Fury of the Furries** — Great platform game. This game is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad.
 * **Banshee** — Great shoot'em-up, and the pixel art is next-level.
