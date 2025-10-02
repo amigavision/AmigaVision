@@ -17,7 +17,7 @@ Simply copy the contents to the root of your MiSTer drive. For platforms that as
 
 If you are not using an external USB drive to store your game setup, you can delete `USB.7z`.
 
-If you are using an external USB drive for storing your game setup, there is an included `USB.7z` file included that you should use instead — this unpacks in the same way as the main archive, and you copy these contents to your MiSTer USB drive instead.
+If you are using an external USB drive for storing your game setup, there is an included `USB.7z` file included that you should use instead — this unpacks in the same way as the main archive, and you copy these files to your MiSTer USB drive.
 
 ## Upgrading
 
