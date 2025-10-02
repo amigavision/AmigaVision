@@ -61,7 +61,7 @@ The CD32 wasn't exactly a paragon of a console with incredible games, and was cu
 
 * **Fightin' Spirit** — Probably the best Street Fighter 2 clone on the Amiga.
 * **Disposable Hero** — Surprisingly good shoot'em-up.
-* **Chaos Engine** — True Amiga classic, two-pl.ayer mode is especially fun
+* **Chaos Engine** — True Amiga classic, two-player mode is especially fun.
 * **Beneath a Steel Sky** — Great point & click adventure in the Lucasfilm style with voice acting — does require a mouse, though.
 * **Super Stardust** — Enter `BZZZZZZZZZB` to jump straight to its iconic tunnel sequence.
 * **Worms — Director's Cut** — An Amiga exclusive, this legendary game series got its start here.
