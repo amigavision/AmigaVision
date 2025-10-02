@@ -37,15 +37,15 @@ Put your CD32 disc images in the `games/AmigaCD32` directory. You have to use th
 
 The expected names are listed at the bottom of this file. We do not support `bin/cue` or `ISO` files. Because why would you want to waste space like that? 😅
 
-## Mapping Controller Inputs
-
-Some Amiga CD32 games are up-to-jump or up-to-accelerate, which is OK if you have a joystick, but might be awkward if you use a gamepad. Consult MiSTer's documentation to remap buttons for these games.
-
 ## Playing a Game
 
 * Navigate to `Console` → `Amiga CD32 Games`
 * Select the game you want to play.
 * Enjoy your game!
+
+## Mapping Controller Inputs
+
+Some Amiga CD32 games are up-to-jump or up-to-accelerate, which is OK if you have a joystick, but might be awkward if you use a gamepad. Consult MiSTer's documentation to remap buttons for these games.
 
 ## Game Recommendations
 
