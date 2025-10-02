@@ -33,7 +33,7 @@ As usual, when in doubt, overwrite. **Except for your save files.**
 
 Put your CD32 disc images in the `games/AmigaCD32` directory. You have to use the MiSTer CD32 CHD pack, or rename your own CHD images according to the naming scheme for the MGLs to work. 
 
-The expected names are listed at the bottom of this file. We do not support `bin/cue` or `ISO` files.
+The expected names are listed at the bottom of this file. We do not support `bin/cue` or `ISO` files. Because why would you want to waste space like that? 😅
 
 ## Mapping Controller Inputs
 
@@ -55,19 +55,21 @@ Some Amiga CD32 games are up-to-jump or up-to-accelerate, which is OK if you hav
         gyroscope; picture-in-picture; web-share" allowfullscreen>
 </iframe>
 
+The CD32 wasn't exactly a paragon of a console with incredible games, it was cut short by Commodore's bankruptcy before it could really prove itself. However, if you are looking for a starting point, here are some games to check out:
+
 * Fightin' Spirit
 * Disposable Hero
 * Chaos Engine
 * Beneath a Steel Sky — Great point & click adventure in the Lucasfilm style with voice acting — does need a mouse, though
 * Super Stardust — Enter `BZZZZZZZZZB` to jump straight to its iconic tunnel sequence.
 * Worms — Director's Cut (Amiga Exclusive)
-* Fury of the Furries — It is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad
+* Fury of the Furries — This game is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad
 * Banshee
 * Flink
 * Naughty Ones
 * Pinball Fantasies
 * Project X — Warning: Challenging shoot'em-up, not for everyone!
-* Speedball 2 — Unfortunately doesn't have the iconic music of the Amiga version, but new voice-over and ambient soundscapes
+* Speedball 2 — Unfortunately doesn't have the iconic music of the Amiga version, but new voice-over and great ambient soundscapes
 * Super Methane Bros.
 * Super Skidmarks
 * Superfrog
