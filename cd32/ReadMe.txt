@@ -319,7 +319,7 @@ Vital Light (1994).chd
 Whale's Voyage (1994).chd
 Wild Cup Soccer (1994).chd
 Wing Commander (CD32 Enhanced) (1993).chd
-Worms - Director's Cut (1995).chd
+Worms (1995).chd
 Zool (1993).chd
 Zool 2 (1994).chd
 ```
