@@ -61,6 +61,7 @@ The CD32 wasn't exactly a paragon of a console with incredible games, and was cu
 * **Fury of the Furries** — Great platform game. This game is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad.
 * **Banshee** — Fun shoot'em-up, and the pixel art is next-level.
 * **Flink** — Did someone say pixel art? Gorgeous platformer.
+* **Bubba 'N' Stix** — Unique platformer with a cartoon intro and great CD soundtrack.
 * **Disposable Hero** — Surprisingly good shoot'em-up.
 * **Naughty Ones** — Late-stage platformer made by one of the most influential Amiga demo groups.
 * **Speedball 2** — Does not have the iconic music of the original Amiga version, but new voice-over and great ambient soundscapes makes this a great 2-player experience.
