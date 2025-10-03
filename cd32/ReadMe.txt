@@ -65,7 +65,7 @@ The CD32 wasn't exactly a paragon of a console with incredible games, and was cu
 * **Naughty Ones** — Late-stage platformer made by one of the most influential Amiga demo groups.
 * **Speedball 2** — Does not have the iconic music of the original Amiga version, but new voice-over and great ambient soundscapes makes this a great 2-player experience.
 * **Super Skidmarks** — Great overhead racer. If you loved RC Pro-AM on Nintendo, you will love this. Supports 4 players at once, because you can easily get 3 of your closest friends together for a retro game night, right? Right?
-* **Superfrog** — Every system needs a mascot platformer? This game is arguably the one for Amiga. Ignore Zool, play this instead.
+* **Superfrog** — Every system needs a mascot platformer, obviously. This game is arguably the one for Amiga. Ignore Zool, play this instead.
 
 ## Fun Facts
 
