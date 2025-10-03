@@ -59,7 +59,7 @@ The CD32 wasn't exactly a paragon of a console with incredible games, and was cu
 * **Worms** — This legendary game series got its start on the Amiga.
 * **Pinball Fantasies** — Move over, every 16-bit pinball game created! This is the one that set the standard.
 * **Fury of the Furries** — Great platform game. This game is up-to-jump, which works great with joysticks, but remap in MiSTer if you have a gamepad.
-* **Banshee** — Great shoot'em-up, and the pixel art is next-level.
+* **Banshee** — Fun shoot'em-up, and the pixel art is next-level.
 * **Flink** — Did someone say pixel art? Gorgeous platformer.
 * **Disposable Hero** — Surprisingly good shoot'em-up.
 * **Naughty Ones** — Late-stage platformer made by one of the most influential Amiga demo groups.
