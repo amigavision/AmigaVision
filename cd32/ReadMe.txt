@@ -23,6 +23,21 @@ If you are not using an external USB drive to store your game setup, you can del
 
 If you *are* using an external USB drive for storing your game setup, there is an included `USB.7z` file included that you should use instead — this unpacks in the same way as the main archive, and you copy these files to your MiSTer USB drive.
 
+### MiSTer.ini settings
+
+Then, as CD32 is probably the only PAL console you have, add this line to your global `MiSTer.ini``:
+
+```
+video_mode_pal=9
+````
+
+We need this to ensure that the scaling works properly, and it will run all PAL games (probably only the CD32 unless you use computer cores like the C64) at 1080p at 50hz. Both AmigaVision and this CD32 setup is optimized for 1080p/4K TVs and monitors, and if you are running other resolutions, you are probably used to editing your `INI` file anyway.
+
+If you are one of the sickos 😅 that want to run SNES at 50hz PAL in 1200p, there's an easy solution — do a per-system setting for those systems to override the global default. For the CD32 core to work with the MGL approach without adding 100s of configuration settings to `MiSTer.ini`, this is the easiest approach.
+
+In short, add this line to your `INI` file, and if you have other systems that you want to run in 50hz at other solutions, add overrides for those. If none of this makes any sense to you, don't worry — this setting will not mess with the majority of the popular cores on the MiSTer.
+
+
 ## ⬆️ Upgrading
 
 As is the case with the main AmigaVision setup, the same goes for this CD32 setup — always do a clean install and replace all the files with the exception of your `CD32-Saves.hdf`. Configuration files may change over time, even if it’s not obvious from the folder listing — always replace them to stay up to date.
