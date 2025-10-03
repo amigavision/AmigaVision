@@ -77,35 +77,20 @@ The CD32 wasn't exactly a paragon of a console with incredible games, and was cu
 * We generate 1280 config files to ensure these CD32 games work on MiSTer.
 * We generate 10 different hard disk images to power these.
 
-## 🥾 Games Where You Need to Select "Boot" to Start
-
-There are some games that won't work unless we show the Amiga UI first, but we supply mouse emulation for gamepads — just navigate to the "Boot" button to start these:
-
-* Arabian Nights 
-* Arcade Pool 
-* Fields of Glory 
-* Fire Force
-* Kid Chaos 
-* Marvin's Marvellous Adventure
-* Nigel Mansell's European Championship
-* Rise of the Robots
-* Trivial Pursuit
-* Vital Light
-* Zool
-* Zool 2
-
 ## 🐭 Games That Still Require a Mouse
 
 There are a few games that still require mouse because the game demands it. These are:
 
 * Beneath a Steel Sky 
-* Gulp
 * Magic Island
-* Seek & Destroy
-* Syndicate
 * Theme Park
 
-(If you can't start a game with the gamepad by navigating to the "Boot" button, it's a definitely a game that requires a mouse to play.)
+## 🕹️ Games That Require "Joystick Swap"
+
+For some inexplicable reason, there are a few games that needed the CD32 gamepad in the other port. So to play these games, you need to open the MiSTer menu and select `Joystick Swap` after launching them to make them playable:
+
+* Gulp
+* Seek & Destroy
 
 ## ↕️ 68 Games Will Use 5×PAL Overscale
 
