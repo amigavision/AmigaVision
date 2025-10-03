@@ -2,7 +2,11 @@
 
 A ready-to-go package for playing Amiga CD32 games on MiSTer’s Amiga core.
 
-## Features
+If you are unfamiliar with the Amiga CD³², it was essentially an Amiga 1200 with a 2× speed CD drive, packaged with gamepads and in a console form factor. It was released in September 1993. 
+
+While the CD³² never really got its time to shine because of Commodore's bankruptcy soon after launch, there are some fun expansions of existing Amiga games with great CD audio and Full Motion Video intros, so some of its ~150 games are worth checking out.
+
+## ✅ Features
 
 * Fully stand-alone — no AmigaVision install required. If you only want CD32 games (although you’d be missing out on most of the Amiga classics! 😄), this works by itself.
 * Launch CD32 games straight from the MiSTer menu — no keyboard or mouse required, just your controller.
@@ -11,7 +15,7 @@ A ready-to-go package for playing Amiga CD32 games on MiSTer’s Amiga core.
 * Uses AmigaVision's scaling presets, which are considered the best in the business. 😅
 * Games that can make use of AmigaVision's 5×PAL Overscale presets — like Chaos Engine CD32 — now use that on a per-game basis when a game can handle it. More info on this: [https://amiga.vision/5x]
 
-## Installation
+## 📥 Installation
 
 Simply copy the contents to the root of your MiSTer drive. For platforms that ask, you should of course Merge with the existing files, and overwrite any existing files if asked (e.g. if you already have the main AmigaVision installed, especially the ones that contain a CD32 setup). This will work for SD card and NAS (network drive) setups. 
 
@@ -19,7 +23,7 @@ If you are not using an external USB drive to store your game setup, you can del
 
 If you are using an external USB drive for storing your game setup, there is an included `USB.7z` file included that you should use instead — this unpacks in the same way as the main archive, and you copy these files to your MiSTer USB drive.
 
-## Upgrading
+## ⬆️ Upgrading
 
 As is the case with the main AmigaVision setup, the same goes for this CD32 setup — always do a clean install and replace all the files with the exception of your `CD32-Saves.hdf`. Configuration files may change over time, even if it’s not obvious from the folder listing — always replace them to stay up to date.
 
@@ -32,23 +36,23 @@ As is the case with the main AmigaVision setup, the same goes for this CD32 setu
 
 As usual, when in doubt, overwrite. **Except for your save files.**
 
-## Adding Games 
+## 🎮 Adding Games
 
 Put your CD32 disc images in the `games/AmigaCD32` directory. You have to use the MiSTer CD32 CHD pack, or rename your own CHD images according to the naming scheme for the MGLs to work. 
 
 The expected names are listed at the bottom of this file. We do not support `bin/cue` or `ISO` files. Because why would you want to waste space like that? 😅
 
-## Playing a Game
+## 🛝 Playing a Game
 
 * Navigate to `Console` → `Amiga CD32 Games`
 * Select the game you want to play.
 * Enjoy your game!
 
-## Mapping Controller Inputs
+## 🗺️ Mapping Controller Inputs
 
 Some Amiga CD32 games are up-to-jump or up-to-accelerate, which is OK if you have a joystick, but might be awkward if you use a gamepad. Consult MiSTer's documentation to remap buttons for these games.
 
-## Game Recommendations
+## 🕹️ Game Recommendations
 
 The CD32 wasn't exactly a paragon of a console with incredible games, and was cut short by Commodore's unfortunate bankruptcy before it could really prove itself. However, if you are looking for a starting point, here are some games to check out:
 
@@ -68,12 +72,12 @@ The CD32 wasn't exactly a paragon of a console with incredible games, and was cu
 * **Super Skidmarks** — Great overhead racer. If you loved RC Pro-AM on Nintendo, you will love this. Supports 4 players at once, because you can easily get 3 of your closest friends together for a retro game night, right? Right?
 * **Superfrog** — Every system needs a mascot platformer, obviously. This game is arguably the one for Amiga. Ignore Zool, play this instead.
 
-## Fun Facts
+## 🤩 Fun Facts
 
 * We generate 1280 config files to ensure these CD32 games work on MiSTer.
 * We generate 10 different hard disk images to power these.
 
-## Games Where You Need to Select "Boot" to Start
+## 🥾 Games Where You Need to Select "Boot" to Start
 
 There are some games that won't work unless we show the Amiga UI first, but we supply mouse emulation for gamepads — just navigate to the "Boot" button to start these:
 
@@ -90,7 +94,7 @@ There are some games that won't work unless we show the Amiga UI first, but we s
 * Zool
 * Zool 2
 
-## Games That Still Require a Mouse
+## 🐭 Games That Still Require a Mouse
 
 There are a few games that still require mouse because the game demands it. These are:
 
@@ -103,7 +107,7 @@ There are a few games that still require mouse because the game demands it. Thes
 
 (If you can't start a game with the gamepad by navigating to the "Boot" button, it's a definitely a game that requires a mouse to play.)
 
-## 68 Games Will Use 5×PAL Overscale
+## ↕️ 68 Games Will Use 5×PAL Overscale
 
 As you may know, AmigaVision has per-game [5×PAL Overscale presets] for games that support it, which optimizes scaling for 1080p/4K. With this setup, we are bringing that same support to CD32!
 
@@ -178,17 +182,13 @@ The following 68 games will use hand-tuned 5×PAL Overscale presets:
 * Wild Cup Soccer
 * Wing Commander
 
-## Compatibility
+## 🤝 Compatibility
 
 This is not a *real* CD32 core for the MiSTer. It uses the CD Audio support that was added to the Amiga (Minimig) core, and uses a program called CD32-Emulator to run CD32 games. 
 
-Compatibility isn’t perfect — some games may not work or may lack their CD audio tracks. An updated compatibility list with any special settings required can be found at:
+[Check the compatibility spreadsheet to see which games currently run on MiSTer](https://docs.google.com/spreadsheets/d/1iNO0tp8hlV959-MnsI8S7j5xPWghIR0zdI9LwVyBF2w)
 
-[https://amiga.vision/cd32]
-
-*—AmigaVision Team*
-
-## Addendum: File Naming Convention
+## 📝 Addendum: File Naming Convention
 
 Here are the file names that the setup expects for it to work properly — without these filenames, the game will not launch:
 
