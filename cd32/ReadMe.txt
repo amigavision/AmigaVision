@@ -29,7 +29,7 @@ Then, as CD32 is probably the only PAL console you have, add this line to your g
 
 ```
 video_mode_pal=9
-````
+```
 
 We need this to ensure that the scaling works properly, and it will run all PAL games (probably only the CD32 unless you use computer cores like the C64) at 1080p at 50hz. Both AmigaVision and this CD32 setup is optimized for 1080p/4K TVs and monitors, and if you are running other resolutions, you are probably used to editing your `INI` file anyway.
 
