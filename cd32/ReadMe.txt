@@ -25,7 +25,7 @@ If you *are* using an external USB drive for storing your game setup, there is a
 
 ### MiSTer.ini settings
 
-Then, as CD32 is probably the only PAL console you have, add this line to your global `MiSTer.ini``:
+Then, as CD32 is probably the only PAL console you have, add this line to your global `MiSTer.ini`:
 
 ```
 video_mode_pal=9
