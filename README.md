@@ -62,7 +62,7 @@ It has many features specifically for use with [MiSTer] and [Analogue Pocket] FP
 
 * Includes an optional, dedicated Amiga 600HD setup that gives you a representative feel for how it was to use Workbench 2.x with an Amiga 600 or 3000 and productivity apps around 1991-1992.
 
-* Includes a dedicated Amiga CD32 setup for MiSTer that is compatible with the majority of the released games for it.
+* We also have a dedicated Amiga CD32 setup for MiSTer that is compatible with the majority of the released games for it.
 
 ## Save Files
 
@@ -188,11 +188,10 @@ video_mode_pal=1920,1200,50
 
 ### Using the Amiga Cores
 
-Reboot your MiSTer, you should now have two entries in the `Computer` section, and one in `Console`: 
+Reboot your MiSTer, you should now have two entries in the `Computer` section: 
 
   * `Amiga` for the main AmigaVision setup — you'll be using this one 99% of the time.
   * `Amiga 500` for a stock Amiga 500 hardware setup with no hard drive to use with ADF floppy disk images for any troublesome demos or games that don't work with the main setup. Some demo ADFs are included and can be mounted as floppy disks in MiSTer's OSD menu, invoked with the `F12` key.
-  * `Amiga CD32` for the Amiga CD³² games console — see the instructions for how to load disc images in the dedicated [CD³² section](#cd-games-support)
 
 Launch the `Amiga` entry — and enjoy! Don't forget to check out the other sections of the documentation — especially on save files, controller mappings and video modes — once the basic setup is up and running.
 
@@ -288,18 +287,7 @@ If you are unfamiliar with the Amiga CD³², it was essentially an Amiga 1200 wi
 
 While the CD³² never really got its time to shine because of Commodore’s bankruptcy soon after launch, there are some fun expansions of existing Amiga games with great CD audio and Full Motion Video intros, so some of its ~150 games are worth checking out.
 
-We include a setup in AmigaVision that puts an entry in your `Console` section of MiSTer's core selector. This boots directly into an Amiga setup preconfigured to let you load CD³² games. You will need a mouse, a keyboard or an analog stick set up to act as a mouse to operate this UI.
-
-### Starting a CD³² Game
-
-* Put your CD³² disc images in `games/AmigaCD32` — CHD format is recommended, but BIN/CUE and ISO are also supported.
-* Navigate to `Consoles` → `Amiga CD32` and start it.
-* You will be presented with a UI, but don't click anything yet.
-* Open the MiSTer menu (`F12`), and navigate to the Drives section.
-* Navigate to the `Removable/CD` section, and select the CD³² disc image you want to play.
-* Dismiss the menu with `ESC`
-* Select "Boot"
-* Enjoy your game!
+We have made a separate setup available that uses MiSTer's MGL support to let you launch CD32 games directly from the MiSTer menu. Go to the [CD32 section] of the site to learn more.
 
 Do note that while the majority of CD³² games work (and, even a few CDTV games), this is using a shim combined with MiSTer's CD Audio support in the Amiga core, so not every game will work perfectly — but the majority of them do.
 
@@ -507,6 +495,7 @@ Audio & Video:
 [Analogue Pocket]:https://analogue.co/pocket
 [Amiga Pocket Core]:https://github.com/Mazamars312/Analogue-Amiga/releases
 [amiga.vision/cd32]:https://amiga.vision/cd32
+[CD32 section]:https://amiga.vision/cd32
 
 [David Lindecrantz]:https://github.com/Optiroc
 [Alex Limi]:https://limi.net
