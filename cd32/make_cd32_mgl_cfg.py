@@ -59,21 +59,19 @@ TRAIL_TRIM_RE = re.compile(r"[ .-_]+$")
 # Matching is done on a normalized game name (lowercase, no parentheses, only
 # alphanumerics and spaces).
 SPECIAL_VARIANTS = {
-    "CD32Emu.hdf": {
-        "beneath a steel sky",
-        "deep core",
-        "magic island",
-        "syndicate",
-    },
     "CD32EmuMouse.hdf": {
         "arabian nights",
         "arcade pool",
+        "beneath a steel sky",
+        "deep core",
         "fields of glory",
         "gulp",
         "kid chaos",
+        "magic island",
         "marvin s marvellous adventure",
         "rise of the robots",
         "seek destroy",
+        "syndicate",
         "trivial pursuit",
         "ufo",
         "vital light",
@@ -167,6 +165,7 @@ VSHIFT_MAP_RAW = {
     "PGA European Tour": 0,
     "Pirates Gold": 20,
     "Projekt Lila": 0,
+    "Rise of the Robots": 28,
     "Road Avenger": 8,
     "Roadkill": 24,
     "Ryder Cup by Johnnie Walker": 8,
