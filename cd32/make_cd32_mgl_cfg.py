@@ -46,6 +46,10 @@ OFF_CD32_HDF        = 0x041B
 OFF_SAVES_HDF       = 0x081D
 OFF_CHD_PATH        = 0x0C1F
 
+# JoySwap control (deduced from diff: bit 0x08 at 0x141F)
+OFF_INPUT_FLAGS = 0x141F
+JOYSWAP_BIT     = 0x08
+
 # Regex for cleaning display name
 PARENS_RE = re.compile(r"\s*\([^)]*\)")
 TRAIL_TRIM_RE = re.compile(r"[ .-_]+$")
@@ -55,13 +59,21 @@ TRAIL_TRIM_RE = re.compile(r"[ .-_]+$")
 # Matching is done on a normalized game name (lowercase, no parentheses, only
 # alphanumerics and spaces).
 SPECIAL_VARIANTS = {
+    "CD32Emu.hdf": {
+        "beneath a steel sky",
+        "deep core",
+        "magic island",
+        "syndicate",
+    },
     "CD32EmuMouse.hdf": {
         "arabian nights",
         "arcade pool",
         "fields of glory",
+        "gulp",
         "kid chaos",
         "marvin s marvellous adventure",
         "rise of the robots",
+        "seek destroy",
         "trivial pursuit",
         "ufo",
         "vital light",
@@ -73,16 +85,6 @@ SPECIAL_VARIANTS = {
     "CD32EmuMouseNoFastMemNoICache.hdf": {
         "zool",
         "zool 2",
-    },
-    "CD32Emu.hdf": {
-        "beneath a steel sky",
-        "deep core",
-        "magic island",
-        "syndicate",
-    },
-    "CD32EmuJoySwap.hdf": {
-        "seek destroy",
-        "gulp"
     },
     "CD32NoFastMem.hdf": {
         "chaos engine",
@@ -109,6 +111,13 @@ SPECIAL_VARIANTS = {
         "guardian",
     },
 }
+
+# Titles requiring JoySwap ON (normalized names: lowercase, no parentheses, only alphanumerics and spaces)
+JOYSWAP_TITLES = {
+    "gulp",
+    "seek destroy",
+}
+
 
 # Per-game 5xPAL Overscale VSHIFT mapping
 VSHIFT_MAP_RAW = {
@@ -431,6 +440,17 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
         write_exact_at(buf, OFF_CD32_HDF, hdf_path)
         write_exact_at(buf, OFF_SAVES_HDF, saves_path)
         write_exact_at(buf, OFF_CHD_PATH, chd_path)
+
+        
+
+        
+        # --- JoySwap flag ---
+        # Determine normalized title and toggle bit 0x08 at OFF_INPUT_FLAGS
+        norm_title = normalize_game_name(chd_stem)
+        if norm_title in JOYSWAP_TITLES:
+            buf[OFF_INPUT_FLAGS] |= JOYSWAP_BIT
+        else:
+            buf[OFF_INPUT_FLAGS] &= ~JOYSWAP_BIT
 
         cfg_out = cfg_dir / f"{setname}.cfg"
         cfg_out.write_bytes(buf)
