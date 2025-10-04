@@ -78,8 +78,11 @@ SPECIAL_VARIANTS = {
         "beneath a steel sky",
         "deep core",
         "magic island",
-        "seek destroy",
         "syndicate",
+    },
+    "CD32EmuJoySwap.hdf": {
+        "seek destroy",
+        "gulp"
     },
     "CD32NoFastMem.hdf": {
         "chaos engine",
@@ -372,6 +375,18 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
 
     mgl_dir.mkdir(parents=True, exist_ok=True)
     cfg_dir.mkdir(parents=True, exist_ok=True)
+
+# --- Copy any custom cfgs from ./config-joyswap early -------------------
+custom_cfg = root / "config-joyswap"
+if custom_cfg.exists():
+    copied = 0
+    for f in custom_cfg.glob("*.cfg"):
+        shutil.copy(f, cfg_dir / f.name)
+        copied += 1
+    if copied:
+        print(f"[{variant_name}] Pre-copied {copied} custom cfg(s) from ./config-joyswap")
+# ------------------------------------------------------------------------
+
 
     # Copy distro folders into each preset (SD/USB)
     # Required copies: ../content/distro/Presets/, ../content/distro/Shadow_Masks/,
