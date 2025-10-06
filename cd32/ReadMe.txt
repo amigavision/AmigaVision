@@ -100,13 +100,6 @@ There are a few games that still require mouse because the game demands it. Thes
 * Magic Island
 * Theme Park
 
-## 🕹️ Games That Require "Joystick Swap"
-
-For some inexplicable reason, there are a few games that needed the CD32 gamepad in the other port. So to play these games, you need to open the MiSTer menu and select `Joystick Swap` after launching them to make them playable:
-
-* Gulp
-* Seek & Destroy
-
 ## ↕️ 68 Games Will Use 5×PAL Overscale
 
 As you may know, AmigaVision has per-game [5×PAL Overscale presets] for games that support it, which optimizes scaling for 1080p/4K. With this setup, we are bringing that same support to CD32!
