@@ -186,6 +186,17 @@ video_mode_ntsc=1920,1200,60
 video_mode_pal=1920,1200,50
 ```
 
+### What about 4:3 monitors?
+
+In general, the MiSTer video mode setting is pretty easy to get running — here's an example of what to add if you have a 1600x1200 4:3 monitor, replace the values for whatever display you are using:
+
+```
+video_mode_ntsc=1600,1200,60
+video_mode_pal=1600,1200,50
+````
+
+Replace the resolution values with whatever corresponds to your monitor's native resolution.
+
 ### Using the Amiga Cores
 
 Reboot your MiSTer, you should now have two entries in the `Computer` section: 
