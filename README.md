@@ -193,7 +193,7 @@ In general, the MiSTer video mode setting is pretty easy to get running — here
 ```
 video_mode_ntsc=1600,1200,60
 video_mode_pal=1600,1200,50
-````
+```
 
 Replace the resolution values with whatever corresponds to your monitor's native resolution.
 
