@@ -168,7 +168,7 @@ bootscreen=0
 
 Note that *even if* your 16:9 4K TV *can* handle and scale 1440p, we *still recommend* using 1080p output, since that will do proper integer scaling to 4K and make use of the per-game 5× Zoom and Dynamic Crop modes, to reduce the amount of pixels wasted on black bars along the edges.
 
-### Other monitor sizes
+### Other 16:9 or 16:10 monitor sizes
 
 The above default settings assume that you are using it with a 16:9 format 1080p or 4K TV or computer monitor. 
 
@@ -186,7 +186,7 @@ video_mode_ntsc=1920,1200,60
 video_mode_pal=1920,1200,50
 ```
 
-### What about 4:3 monitors?
+### What about 4:3 monitors or 5:4 monitors?
 
 In general, the MiSTer video mode setting is pretty easy to get running — here's an example of what to add if you have a 1600x1200 4:3 monitor, replace the values for whatever display you are using:
 
@@ -195,7 +195,7 @@ video_mode_ntsc=1600,1200,60
 video_mode_pal=1600,1200,50
 ```
 
-Replace the resolution values with whatever corresponds to your monitor's native resolution.
+Replace the resolution values with whatever corresponds to your monitor's native resolution, and the scaler will figure it out.
 
 ### Using the Amiga Cores
 
