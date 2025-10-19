@@ -419,7 +419,7 @@ The files needed can be found on the Workbench Install disk, in the `Libs` drawe
 
 If you get an error on startup saying "Please insert a volume containing LIBS/workbench.library in any drive", this is likely the reason.
 
-### Are there any plans to support original Amiga 500, Amiga 600, or Amiga 1000 hardware?
+### Are there any plans to support original Amiga 500, Amiga 600, Amiga 1000, Amiga 2000 or Amiga 3000 hardware?
 
 Not at the moment, AmigaVision is currently AGA-only and requires at least a 68020 processor. Unless you have added a fair bit of upgrades to these systems, using the AmigaVision setup would be an exercise in frustration, and we also don't have the real hardware to test with when we do a release. 
 
