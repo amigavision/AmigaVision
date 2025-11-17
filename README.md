@@ -229,7 +229,7 @@ These are *not* meant to be used for games or demos, but instead for giving you 
 
 While many games supports two or more buttons, Amiga games were generally designed for one button joysticks. Consequently "up to jump" (or accelerate) control scheme is very common. 
 
-If you are using a gamepad, you might want to use MiSTer's controller mapping to bind the up direction to the D-pad and/or an dedicated jump/accelerate button, typically the `X` button. Here's how:
+If you are using a gamepad, you might want to use MiSTer's controller mapping to bind the up direction to a dedicated jump/accelerate button, typically the `X` button. Here's how:
 
 * First, make sure to have CD32 controller mode enabled (this is the default).
 * Enter "Define joystick buttons" mode
