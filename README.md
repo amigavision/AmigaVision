@@ -123,8 +123,8 @@ For any additional configuration or customizations, consult the FS-UAE documenta
 AmigaVision also works great with the handheld [Analogue Pocket] FPGA device. Do note that the Amiga core on Analogue Pocket does not support mounting/loading disc images for CD³² yet, but the 3000+ games in the library work great.
 
 * Use any of the Pocket updaters to get the OpenFPGA cores, or manually download the latest version of the [Amiga Pocket Core] and put it on your device.
-* Copy the files in the AmigaVision directory `games/Amiga` (HDF and ROM files) to the `/Assets/amiga/common` directory on your Pocket SD card.
-* The core does not yet support the new file naming scheme, so rename `AmigaVision.hdf` to `MegaAGS.hdf` — and, if you don't already have an existing save file, rename `AmigaVision-Saves.hdf` to `MegaAGS.hdf`.
+* Copy the files in the AmigaVision directory `games/Amiga` (HDFs and ROM files) to the `/Assets/amiga/common` directory on your Pocket SD card.
+* If you already have an existing save file, make sure it is named `AmigaVision-Saves.hdf` — *not* `MegaAGS.hdf`, which was the old name.
 * Start the Amiga core, enjoy!
 
 ### Pocket Controls
