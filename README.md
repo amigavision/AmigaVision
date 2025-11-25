@@ -124,7 +124,7 @@ AmigaVision also works great with the handheld [Analogue Pocket] FPGA device. Do
 
 * Use any of the Pocket updaters to get the OpenFPGA cores, or manually download the latest version of the [Amiga Pocket Core] and put it on your device.
 * Copy the files in the AmigaVision directory `games/Amiga` (HDFs and ROM files) to the `/Assets/amiga/common` directory on your Pocket SD card.
-* If you already have an existing save file, make sure it is named `AmigaVision-Saves.hdf` — *not* `MegaAGS.hdf`, which was the old name.
+* If you already have an existing save file, make sure it is named `AmigaVision-Saves.hdf` — *not* `MegaAGS-Saves.hdf`, which was the old name.
 * Start the Amiga core, enjoy!
 
 ### Pocket Controls
