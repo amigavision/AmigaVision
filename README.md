@@ -427,7 +427,7 @@ We welcome contributions, though — so if you're interested in maintaining this
 
 ### What is the difference between AmigaVision, MegaAGS and AGS?
 
-In the beginning, there was an Amiga launcher called [Arcade Game Selector], aka. [AGS]. This is the software you interact with to launch a game or demo from the collection. This software was originally written by [Per Olofson], and is now maintained by the AmigaVision team.
+In the beginning, there was an Amiga launcher called [Arcade Game Selector], aka. [AGS]. This is the software you interact with to launch a game or demo from the collection. This software was originally written by [Per Olofsson], and is now maintained by the AmigaVision team.
 
 Initially, AmigaVision was called MegaAGS, and focused mostly on being the best Amiga setup for MiSTer. It was using the [Arcade Game Selector] (AGS) launcher.
 
