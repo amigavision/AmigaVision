@@ -425,6 +425,20 @@ Not at the moment, AmigaVision is currently AGA-only and requires at least a 680
 
 We welcome contributions, though — so if you're interested in maintaining this part of the AmigaVision setup scripts, let us know!
 
+### What is the difference between AmigaVision, MegaAGS and AGS?
+
+In the beginning, there was an Amiga launcher called [Arcade Game Selector], aka. [AGS]. This is the software you interact with to launch a game or demo from the collection. This software was originally written by [MagerValp], and is now maintained by the AmigaVision team.
+
+Initially, AmigaVision was called MegaAGS, and focused mostly on being the best Amiga setup for MiSTer. It was using the [Arcade Game Selector] (AGS) launcher.
+
+Sometime later, a different project that was a collection of Amiga games came along and named itself Amiga Game Selector, using the initials "AGS", usually with a version number like "AGS 3.0". This collection uses the launcher maintained by the AmigaVision team, but is otherwise unrelated.
+
+Since having AGS (the launcher), MegaAGS, and AGS (the software collection) was very confusing, we decided to rename our MegaAGS project to AmigaVision instead. Of course, we have no control over the naming of the software collection, and we didn't want to rename the launcher (since it came first, and also wasn't initially written by us), so that confusion still remains.
+
+Focus-wise, AGS X.X takes a very different approach from AmigaVision when it comes to curation, running on original hardware and MiSTer etc. For example, there is no support for [5×PAL overscale](https://amiga.vision/overscale) or the shared MiSTer drive in AGS 3.0.
+
+And for the record, there is no animosity or conflicts between the projects, but since the names can get confusing, we thought we'd clear up some of the confusion as best we can!
+
 ### What is "Arcadia Systems"?
 
 Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500-based multi-game arcade system. Most titles released for the system have been dumped and are available via AmigaVision. The games are not great (to put it kindly), but are an interesting curiosity.
