@@ -14,21 +14,22 @@ It has many features specifically for use with [MiSTer] and [Analogue Pocket] FP
 2. [Save Files](#save-files)
 3. [Upgrading](#upgrading)
 4. [Setup for Amiga hardware](#setup-for-amiga-hardware)
-5. [Setup for emulators](#setup-for-emulators)
-6. [Setup for Pocket](#setup-for-pocket)
-7. [Setup for MiSTer](#setup-for-mister)
-8. [Optional Setups](#optional-setups)
-9. [MiSTer: Gamepad & Joystick Mapping](#mister-gamepad--joystick-mapping)
-10. [MiSTer: Video Modes](#mister-video-modes)
-11. [MiSTer: CPU Performance Notes](#mister-cpu-performance-notes)
-12. [Workbench](#workbench)
-13. [CD³² Games Support](#cd-games-support)
-14. [Non-working Games](#non-working-games)
-15. [Custom Scripts](#custom-scripts)
-16. [Bug Reports & Feature Requests](#bug-reports--feature-requests)
-17. [Credits](#credits)
-18. [Troubleshooting](#troubleshooting)
-19. [Frequently Asked Questions](#frequently-asked-questions)
+5. [Setup for Raspberry Pi](#setup-for-raspberry-pi)
+6. [Setup for emulators](#setup-for-emulators)
+7. [Setup for Pocket](#setup-for-pocket)
+8. [Setup for MiSTer](#setup-for-mister)
+9. [Optional Setups](#optional-setups)
+10. [MiSTer: Gamepad & Joystick Mapping](#mister-gamepad--joystick-mapping)
+11. [MiSTer: Video Modes](#mister-video-modes)
+12. [MiSTer: CPU Performance Notes](#mister-cpu-performance-notes)
+13. [Workbench](#workbench)
+14. [CD³² Games Support](#cd-games-support)
+15. [Non-working Games](#non-working-games)
+16. [Custom Scripts](#custom-scripts)
+17. [Bug Reports & Feature Requests](#bug-reports--feature-requests)
+18. [Credits](#credits)
+19. [Troubleshooting](#troubleshooting)
+20. [Frequently Asked Questions](#frequently-asked-questions)
 
 ## Features
 
@@ -107,6 +108,19 @@ Save files are located in `DH0:WHDSaves` — and are usually small enough that a
 We support single-button Amiga/C64 joysticks, as well as four-button CD32 gamepads, and probably Sega Mega Drive (aka. Sega Genesis) gamepads as well — although we haven't personally tested this.
 
 Many WHDLoad games have been patched to support multiple buttons, so check for those options when starting a game.
+
+## Setup for Raspberry Pi
+
+AmigaVision recommends using RePlayOS for Raspberry Pi emulation of Amiga, since it is optimized for low input latency, low audio latency, and low output latency. To install AmigaVision on RePlayOS:
+
+1. Download and install [RePlayOS].
+2. Boot RePlayOS once on the Raspberry Pi, this will make the image create an exFAT partition where you will put the AmigaVision files.
+3. Put the SD card in your computer, all the files will go on the `replay` partition.
+4. Ensure you have all the BIOS files with the [correct names and locations that RePlayOS demands](https://www.replayos.com/addbios/) in the `bios` directory. Note that it will have issues starting Amiga emulation unless all the various Kickstart files are available, even if AmigaVision only needs the 3.1 ROM. Also note that the AmigaVision team cannot supply Kickstart files.
+5. Copy `AmigaVision.hdf` to `roms/commodore_ami` on the RePlayOS SD card.
+6. Put the SD card back in the Raspberry Pi, you should now be able to start AmigaVision under Commodore Amiga in the menu.
+
+Do note that while this setup will start on Raspberry Pi 3, it is too slow to emulate the Amiga properly, so we recommend Raspberry Pi 4 or 5 (that also includes the Raspberry 400, 500 and 500+) for proper performance.
 
 ## Setup for Emulators
 
@@ -521,6 +535,8 @@ Audio & Video:
 [Amiga Pocket Core]:https://github.com/Mazamars312/Analogue-Amiga/releases
 [amiga.vision/cd32]:https://amiga.vision/cd32
 [CD32 section]:https://amiga.vision/cd32
+[RePlayOS]:https://www.replayos.com/download/
+
 
 [David Lindecrantz]:https://github.com/Optiroc
 [Alex Limi]:https://limi.net
