@@ -111,7 +111,9 @@ Many WHDLoad games have been patched to support multiple buttons, so check for t
 
 ## Setup for Raspberry Pi
 
-AmigaVision recommends using RePlayOS for Raspberry Pi emulation of Amiga, since it is optimized for low input latency, low audio latency, and low output latency. To install AmigaVision on RePlayOS:
+AmigaVision recommends using RePlayOS for Raspberry Pi emulation of Amiga, since it is optimized for low input latency, low audio latency, and low output latency. RePlayOS runs well on any Raspberry Pi 5 with 1GB of RAM (or more, but it's not necessary).
+
+To install AmigaVision on RePlayOS:
 
 1. Download and install [RePlayOS].
 2. Boot RePlayOS once on the Raspberry Pi, this will make the image create an exFAT partition where you will put the AmigaVision files.
