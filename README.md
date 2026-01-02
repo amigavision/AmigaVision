@@ -120,7 +120,7 @@ AmigaVision recommends using RePlayOS for Raspberry Pi emulation of Amiga, since
 5. Copy `games/Amiga/AmigaVision.hdf` to `roms/commodore_ami` on the RePlayOS SD card.
 6. Put the SD card back in the Raspberry Pi, you should now be able to start AmigaVision under Commodore Amiga in the menu.
 
-Do note that while this setup will start on Raspberry Pi 3, it is too slow to emulate the Amiga properly, so we recommend Raspberry Pi 4 or 5 (that also includes the Raspberry 400, 500 and 500+) for proper performance.
+Do note that while this setup will start on Raspberry Pi 3 and 4, they are too slow to emulate the Amiga properly, so we recommend Raspberry Pi 5 (which also includes the Raspberry 500 and 500+) for proper performance. You can get it working on Raspberry Pi 4 with a faster but less accurate emulator if you switch it to the `puae2011` emulator, [see this libretro bug report for more info](https://github.com/libretro/libretro-uae/issues/511).
 
 ## Setup for Emulators
 
