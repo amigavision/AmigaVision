@@ -111,7 +111,11 @@ Many WHDLoad games have been patched to support multiple buttons, so check for t
 
 ## Setup for Raspberry Pi
 
-AmigaVision recommends using RePlayOS for Raspberry Pi emulation of Amiga, since it is optimized for low input latency, low audio latency, and low output latency. RePlayOS runs well on any Raspberry Pi 5 with 1GB of RAM (or more, but it's not necessary).
+AmigaVision recommends using [RePlayOS] for Raspberry Pi emulation of Amiga, since it is optimized for low input latency, low audio latency, and low output latency. RePlayOS runs well on any Raspberry Pi 5 with 1GB of RAM — or more, but 1GB is sufficient. Raspberry Pi 3 and 4 are supported, but too slow for the most accurate emulation.
+
+With RePlayOS, AmigaVision on Raspberry Pi comes as close as possible to being as low latency as a MiSTer FPGA — still our benchmark for input/output/audio latency — and also has great options for analog output via the [RGB-Pi 2](https://www.mortaca.com) adapter that converts HDMI to SCART RGB without any added latency, similar to MiSTer's Direct Video mode.
+
+AmigaVision on RePlayOS gives you far lower input/output/audio latency than any other Raspberry Pi Amiga setup available today, which translates into the best Amiga gaming experience available on Raspberry Pi.
 
 To install AmigaVision on RePlayOS:
 
@@ -122,7 +126,7 @@ To install AmigaVision on RePlayOS:
 5. Copy `games/Amiga/AmigaVision.hdf` to `roms/commodore_ami` on the RePlayOS SD card.
 6. Put the SD card back in the Raspberry Pi, you should now be able to start AmigaVision under Commodore Amiga in the menu.
 
-Do note that while this setup will start on Raspberry Pi 3 and 4, they are too slow to emulate the Amiga properly, so we recommend Raspberry Pi 5 (which also includes the Raspberry 500 and 500+) for proper performance. You can get it working on Raspberry Pi 4 with a faster but less accurate emulator if you switch it to the `puae2011` emulator, [see this libretro bug report for more info](https://github.com/libretro/libretro-uae/issues/511).
+While this setup will start on Raspberry Pi 3 and 4, they are too slow to emulate the Amiga properly, so we recommend Raspberry Pi 5 (which also includes the Raspberry 500 and 500+) for proper performance. RePlayOS will automatically switch to the less accurate `puae2021` emulator if it detects a Raspberry Pi 3 or 4.
 
 ## Setup for Emulators
 
