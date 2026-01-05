@@ -343,7 +343,7 @@ While AmigaVision has been tested for many years, the sheer volume of games and 
 ## Credits
 
 * [David Lindecrantz] — Creator, original developer
-* [Alex Limi] — Developer, current maintainer
+* [Alex Limi] — Developer, current project lead
 * [Per Olofsson] — Creator of [AGS], the launcher software
 * [Ben Squibb] — Improvements to AGS to enable hi-res launcher with thumbnail cycling + IFF conversion of hi-res thumbnails
 * Simon "[hitm4n]" Quincey — Hi-resolution screenshots for demos
@@ -352,7 +352,7 @@ While AmigaVision has been tested for many years, the sheer volume of games and 
 
 ## Troubleshooting
 
-### Why doesn't AmigaVision work on my network drive or external drive?
+### Why doesn't AmigaVision work on MiSTer's network drive or external drive?
 
 The configuration is likely still looking for your Kickstart file on the path to the SD card. There is currently no way to make this configuration relative in a way that works both on the standard SD card location as well as an SSD or network drive, so you will have to adjust this manually: 
 
