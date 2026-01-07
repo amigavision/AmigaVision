@@ -103,6 +103,8 @@ When installed on a single partition like this, you obviously will overwrite any
 
 Save files are located in `DH0:WHDSaves` — and are usually small enough that all of them fit comfortably on an ADF or a real floppy. So don't let that stop you from upgrading to new and improved versions of AmigaVision, it's really quite easy!
 
+If you don't have a way to write to a real floppy or an ADF image, the best way would be to boot the image in an emulator and extract the save files that way. Consult the relevant emulator for your system to figure out how to do this.
+
 ### Joystick and Gamepad support on Amiga hardware
 
 We support single-button Amiga/C64 joysticks, as well as four-button CD32 gamepads, and probably Sega Mega Drive (aka. Sega Genesis) gamepads as well — although we haven't personally tested this.
