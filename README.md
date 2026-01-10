@@ -130,6 +130,8 @@ To install AmigaVision on RePlayOS:
 
 While this setup will start on Raspberry Pi 3 and 4, they are too slow to emulate the Amiga properly, so we recommend Raspberry Pi 5 (which also includes the Raspberry 500 and 500+) for proper performance. RePlayOS will automatically switch to the less accurate `puae2021` emulator if it detects a Raspberry Pi 3 or 4.
 
+Do note that if you want to upgrade RePlayOS independently, you will need to re-add the files every time, since it will wipe the drive — RePlayOS does not have in-place upgrades yet. You can avoid this by using a separate external USB or internal NVMe drive and putting the AmigaVision files there instead of on the system boot drive.
+
 ## Setup for Emulators
 
 We recommend — and include a setup for — the [FS-UAE] Amiga emulator, which supports Mac, Windows and Linux.
