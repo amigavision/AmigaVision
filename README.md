@@ -357,7 +357,7 @@ While AmigaVision has been tested for many years, the sheer volume of games and 
 * Simon "[hitm4n]" Quincey — Hi-resolution screenshots for demos
 * LamerDeluxe — MT-32 support
 * [Frode Solheim] — Creator of [OpenRetro.org], screenshots used with kind permission
-* wiisoldier — Initial RePlayOS setup and testing
+* wiisoldier — Initial RePlayOS setup and testing, benchmarking assistance
 * Alessio (PuntoMusica) — Testing AmigaVision on Amiga CD32 hardware
 
 ## Troubleshooting
