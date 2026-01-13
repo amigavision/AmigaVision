@@ -30,6 +30,7 @@ It has many features specifically for use with [MiSTer] and [Analogue Pocket] FP
 18. [Credits](#credits)
 19. [Troubleshooting](#troubleshooting)
 20. [Frequently Asked Questions](#frequently-asked-questions)
+21. [Colophon](#colophon)
 
 ## Features
 
@@ -527,6 +528,18 @@ Audio & Video:
   Paula Output: PWM
 
 ```
+
+## Colophon
+
+AmigaVision was made with the help of these wonderful tools:
+
+* **MacDown 3000** — The best Markdown editor on Mac.
+* **BlueHarvest** — keeps those pesky Mac metadata files away from SD cards and exFAT formatted drives. We wish it wasn’t necessary, but it the best tool to address that issue.
+* **Modern CSV** - A free CSV editor to maintain our games database, and one that doesn’t rearrange the entire file every time you save (looking at you, every other CSV tool).
+* **Python** — Most of the AmigaVision scripts to build the entire system are in Python.
+* **TextMate** — An old text editor that is still embedded in our muscle memory, so it is by definition the best.
+* **Xee** — Useful for showing Amiga IFF graphics files on the Mac.
+* **FS-UAE** — Powers our build script as the emulator we use to generate the HDFs.
 
 [AmigaVision]:https://amiga.vision
 [amiga.vision]:https://amiga.vision
