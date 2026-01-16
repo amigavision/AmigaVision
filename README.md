@@ -38,11 +38,11 @@ It has many features specifically for use with [MiSTer] and [Analogue Pocket] FP
 
 * Sophisticated and performant Amiga games and demo launcher with screenshots included, can be entirely controlled using gamepads, joysticks or via keyboard. This lets you quickly and easily experience the best of what the system has to offer.
 
-* Close to 2000 hand-tuned, per-game 5× integer scaling with Dynamic Crop settings on MiSTer, ensuring that games and demos make the best use of modern 1080p and 4K 16:9 displays without leaving large parts of the screen blank.
+* Close to 2000 hand-tuned, per-game 5×PAL Overscale Integer scaling with settings on MiSTer, ensuring that games and demos make the best use of modern 1080p and 4K 16:9 displays without leaving large parts of the screen blank.
 
 * Carefully curated and well-tested settings for games and demos, no duplication of AGA and ECS versions, with lots of genre and top lists to help you navigate the massive amount of Amiga games available. We take special care to run every game at the correct aspect ratio and CPU speed.
 
-* Games are configured to run in their correct modes, games created in Europe use PAL with 5× Dynamic Crop where appropriate, whereas US-made games run in NTSC for the correct aspect ratio and CPU speed. You can optionally override this in the settings.
+* Games are configured to run in their correct modes, games created in Europe use PAL with 5×PAL Overscale where appropriate, whereas US-made games run in NTSC for the correct aspect ratio and CPU speed. You can optionally override this in the settings.
 
 * Includes key productions from the legendary Amiga demo scene, including disk magazines sorted chronologically, making it a great companion to explore the demo scene's [UNESCO-nominated] cultural heritage artifacts.
 
@@ -191,7 +191,7 @@ custom_aspect_ratio_1=40:27
 bootscreen=0
 ```
 
-Note that *even if* your 16:9 4K TV *can* handle and scale 1440p, we *still recommend* using 1080p output, since that will do proper integer scaling to 4K and make use of the per-game 5× Zoom and Dynamic Crop modes, to reduce the amount of pixels wasted on black bars along the edges.
+Note that *even if* your 16:9 4K TV *can* handle and scale 1440p, we *still recommend* using 1080p output, since that will do proper integer scaling to 4K and make use of the per-game 5×PAL Overscale modes, to reduce the amount of pixels wasted on black bars along the edges.
 
 ### Other 16:9 or 16:10 monitor sizes
 
@@ -269,7 +269,7 @@ While a keyboard and mouse isn't strictly necessary to play most action games, i
 
 ## MiSTer: Video Modes
 
-We care deeply about preserving the correct aspect ratio for all games. That means going beyond just NTSC and PAL, and ensuring that the Pixel Aspect Ratio (PAR) is also correct. Pixels on the Amiga were close to square (16:15) in PAL resolutions on a CRT, but quite tall on NTSC displays (5:6). Additionally, when we apply a 5×PAL or 6×PAL [Dynamic Crop](https://amiga.vision/5x), 1:1 gives us great results that are near indistinguishable from the original PAR at those sizes, while modernizing the output to fit 16:9 displays.
+We care deeply about preserving the correct aspect ratio for all games. That means going beyond just NTSC and PAL, and ensuring that the Pixel Aspect Ratio (PAR) is also correct. Pixels on the Amiga were close to square (16:15) in PAL resolutions on a CRT, but quite tall on NTSC displays (5:6). Additionally, when we apply a 5×PAL or 6×PAL [Overscale](https://amiga.vision/overscale), 1:1 gives us great results that are near indistinguishable from the original PAR at those sizes, while modernizing the output to fit 16:9 displays.
 
 You no longer have to interact with the MiSTer OSD menu to switch aspect ratios in certain cases like what we informally refer to as "Jim Sachs mode" — NTSC, tall pixels at 5:6 PAR, seen in e.g. Defender of the Crown. Most emulators and captures get this wrong and use 1:1 pixels instead, so we built an implementation that handles all the variants correctly on MiSTer:
 
@@ -291,11 +291,11 @@ Make absolutely sure that you update your `MiSTer.ini` settings for the core [ac
 
 The optimal `vsync_adjust` setting in `MiSTer.ini` will depend on your HDMI display. A setting of `2` ensures the lowest possible latency, but it may come at the cost of a short period of no video or audio on video mode changes — something Amiga games and demos do quite often. Setting `vsync_adjust` to `1` introduces a buffer that will smooth over most of these changes, although it will add a frame of latency.
 
-### Dynamic cropping *&* 5× scaling on 1080p/4K displays
+### 5×PAL overscaling on 1080p/4K displays
 
 A unique feature of the Amiga (Minimig) core on MiSTer is the ability to do viewport cropping. By default the full overscan area will be fed to the HDMI scaler, resulting in huge borders for most content. But fear not! AmigaVision leverages the custom `vadjust` feature of the core to dynamically apply viewport settings on a per-game basis. This depends on MiSTer's "shared folder" functionality, which is enabled in AmigaVision if the "games/Amiga/shared" directory exists. So, make sure you copied all the archive contents as described in the Setup section.
 
-Also note that dynamic cropping *only* applies if you are using 1080p output. Most Amiga games fit on the screen using 5× zoom in this resolution. Any other resolution or analog output is *not* affected by dynamic viewport cropping, as it only makes sense for 1080p/4K 16:9 displays.
+Also note that overscale *only* applies if you are using 1080p output. Most Amiga games fit on the screen using 5× zoom in this resolution. Any other resolution or analog output is *not* affected by dynamic viewport cropping, as it only makes sense for 1080p/4K 16:9 displays.
 
 With dynamic vadjust enabled, most titles will enjoy a nicely centered viewport at a perfect 5× scale using 1080p output resolution, by cropping the viewport to 216 lines. Games using more than 216 active video lines will instead get a perfect 4× scale by applying a 270 line crop.
 
