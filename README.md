@@ -533,13 +533,12 @@ Audio & Video:
 
 AmigaVision was made with the help of these wonderful tools:
 
-* **MacDown 3000** — The best Markdown editor on Mac.
-* **BlueHarvest** — keeps those pesky Mac metadata files away from SD cards and exFAT formatted drives. We wish it wasn’t necessary, but it the best tool to address that issue.
-* **Tablecruncher** - A free CSV editor to maintain our games database, and one that doesn’t rearrange the entire file every time you save (looking at you, every other CSV tool).
-* **Python** — Most of the AmigaVision scripts to build the entire system are in Python.
-* **TextMate** — An old text editor that is still embedded in our muscle memory, so it is by definition the best.
-* **Xee** — Useful for showing Amiga IFF graphics files on the Mac.
-* **FS-UAE** — Powers our build script as the emulator we use to generate the HDFs.
+* [MacDown 3000] — The best Markdown editor on Mac.
+* [BlueHarvest] — keeps those pesky Mac metadata files away from SD cards and exFAT formatted drives. We wish it wasn’t necessary, but it the best tool to address that issue.
+* [Tablecruncher] - A free CSV editor to maintain our games database, and one that doesn’t rearrange the entire file every time you save (looking at you, every other CSV tool).
+* [Python] — Most of the AmigaVision scripts to build the entire system are in Python.
+* [Xee] — Useful for showing Amiga IFF graphics files on the Mac.
+* [FS-UAE] — Powers our build script as the emulator we use to generate the HDFs.
 
 [AmigaVision]:https://amiga.vision
 [amiga.vision]:https://amiga.vision
@@ -553,6 +552,7 @@ AmigaVision was made with the help of these wonderful tools:
 [Amiga games]:https://lemonamiga.com
 [Demo scene]:https://en.wikipedia.org/wiki/Demoscene
 [AGS]:https://github.com/MagerValp/ArcadeGameSelector
+[Arcade Game Selector]:https://github.com/MagerValp/ArcadeGameSelector
 [Balena Etcher]:https://www.balena.io/etcher
 [Win32 Disk Imager]:https://win32diskimager.org
 [FS-UAE]:https://fs-uae.net
@@ -562,6 +562,11 @@ AmigaVision was made with the help of these wonderful tools:
 [CD32 section]:https://amiga.vision/cd32
 [RePlayOS]:https://www.replayos.com/download/
 
+[MacDown 3000]:https://macdown.app
+[BlueHarvest]:https://www.zeroonetwenty.com/blueharvest/
+[Tablecruncher]:https://tablecruncher.com
+[Python]:https://www.python.org
+[Xee]:https://theunarchiver.com/xee
 
 [David Lindecrantz]:https://github.com/Optiroc
 [Alex Limi]:https://limi.net
