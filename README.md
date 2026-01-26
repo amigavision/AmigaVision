@@ -122,7 +122,7 @@ AmigaVision on RePlayOS gives you far lower input/output/audio latency than any 
 
 To install AmigaVision on RePlayOS:
 
-1. Download and install [RePlayOS].
+1. Download and install [RePlayOS]. Note that there the current stable release is free, but there is a Patreon if you want to support the author and get the upcoming releases early.
 2. Boot RePlayOS once on the Raspberry Pi, this will make the image create an exFAT partition where you will put the AmigaVision files.
 3. Put the SD card in your computer, all the files will go on the `replay` partition.
 4. Ensure you have all the BIOS files with the [correct names and locations that RePlayOS demands](https://www.replayos.com/addbios/) in the `bios` directory. Note that it will have issues starting Amiga emulation unless all the various Kickstart files are available, even if AmigaVision only needs the 3.1 ROM. Also note that the AmigaVision team cannot supply Kickstart files.
