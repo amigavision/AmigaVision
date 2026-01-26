@@ -129,6 +129,11 @@ To install AmigaVision on RePlayOS:
 5. Copy `games/Amiga/AmigaVision.hdf` to `roms/commodore_ami` on the RePlayOS SD card.
 6. Put the SD card back in the Raspberry Pi, you should now be able to start AmigaVision under Commodore Amiga in the menu.
 
+If you also want the setup to boot straight into AmigaVision:
+
+1. Add `AmigaVision.hdf` to your favorites using the RePlayOS launcher UI.
+2. Copy the resulting `.fav` file on the file system into the `_autostart` folder.
+
 While this setup will start on Raspberry Pi 3 and 4, they are too slow to emulate the Amiga properly, so we recommend Raspberry Pi 5 (which also includes the Raspberry 500 and 500+) for proper performance. RePlayOS will automatically switch to the less accurate `puae2021` emulator if it detects a Raspberry Pi 3 or 4.
 
 Do note that if you want to upgrade RePlayOS independently, you will need to re-add the files every time, since it will wipe the drive — RePlayOS does not have in-place upgrades yet. You can avoid this by using a separate external USB or internal NVMe drive and putting the AmigaVision files there instead of on the system boot drive.
