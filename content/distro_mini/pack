@@ -6,5 +6,5 @@ if [ -z "$date_str" ]; then
   echo "No archive suffix";
 else
   arc_name="AmigaVision-Mini-$date_str.7z"
-  7z a -xr'!.*' -mx=7 -myx=5 $arc_name AmigaVision-Mini-ReadMe.txt "Start AmigaVision_ol.uae" "Start AmigaVision.LHA" THEA500/ AmigaVision-Saves.hdf AmigaVision-Mini.hdf;
+  7zz a -xr'!.*' -mx=7 -myx=5 $arc_name AmigaVision-Mini-ReadMe.txt "Start AmigaVision_ol.uae" "Start AmigaVision.LHA" THEA500/ AmigaVision-Saves.hdf AmigaVision-Mini.hdf;
 fi
