@@ -1,7 +1,7 @@
 include .env
 .PHONY: default env env-rm index manifests manifests-check sqlite csv screenshots image pocket-image mini-image test-image test-dry pi pi-only clean
 
-PYTHON ?= /opt/homebrew/bin/python3.11
+PYTHON ?= python3.11
 
 REPLAYOS_BASE_IMG ?= ${AGSCONTENT}/base/RePlayOS.img
 REPLAYOS_OUTPUT_IMG ?= ${AGSDEST}/AmigaVision-RPi.img
@@ -14,7 +14,7 @@ default:
 env:
 	-@pipenv --rm
 	-@pipenv --clear
-	@pipenv --python $(PYTHON)
+	@pipenv --python "$$(command -v $(PYTHON) || command -v python3 || command -v python)"
 	@pipenv install
 
 env-rm:

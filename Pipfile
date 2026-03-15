@@ -9,7 +9,7 @@ autopep8 = "*"
 
 [packages]
 #amitools = {path = "../amitools", editable = true}
-amitools = {ref = "interleave", git = "https://github.com/Optiroc/amitools.git", editable = true}
+amitools = "~=0.8.1"
 lhafile = "~=0.3.0"
 pillow = "~=10.3.0"
 ruamel-yaml = "~=0.17.32"

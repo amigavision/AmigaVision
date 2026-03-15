@@ -2,14 +2,12 @@
 
 Amiga HDF image builder using WHDL or custom installs, using the [Arcade Game Selector] launcher as a front-end.
 
-## Dependencies 
+## Dependencies
 
-(These are in macOS Homebrew format, but if you have a different package manager for your OS, use that)
-
-- `brew install python@3.11`
-- `brew install pipenv`
-- `brew install imagemagick`
-- `brew install make`
+- Python 3.11
+- `pipenv`
+- ImageMagick
+- `make`
 
 The final step in the build process requires [FS-UAE](https://fs-uae.net) to copy all files to a PFS3-formatted HDF image. This is not an ideal setup, but as far as we know, no library exists that supports manipulation of PFS3 volumes without a bunch of dependencies (like C#). As a consequence the entire file tree to be copied first needs to be created on the host filesystem.
 
@@ -39,7 +37,5 @@ For full usage enter `pipenv shell` and use the following commands directly:
 - `./build/ags_index.py --help` — Content indexing tool
 - `./build/ags_imager.py --help` — Image building tool
 - `./build/ags_screenshot.py --help` — IFF image conversion tool
-
-
 
 [Arcade Game Selector]:https://github.com/MagerValp/ArcadeGameSelector
