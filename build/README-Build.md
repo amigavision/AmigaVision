@@ -2,11 +2,14 @@
 
 Amiga HDF image builder using WHDL or custom installs, using the [Arcade Game Selector] launcher as a front-end.
 
-## Dependencies
-- `python@3.11`
-- `pipenv`
-- `imagemagick`
-- `make`
+## Dependencies 
+
+(These are in macOS Homebrew format, but if you have a different package manager for your OS, use that)
+
+- `brew install python@3.11`
+- `brew install pipenv`
+- `brew install imagemagick`
+- `brew install make`
 
 The final step in the build process requires [FS-UAE](https://fs-uae.net) to copy all files to a PFS3-formatted HDF image. This is not an ideal setup, but as far as we know, no library exists that supports manipulation of PFS3 volumes without a bunch of dependencies (like C#). As a consequence the entire file tree to be copied first needs to be created on the host filesystem.
 
@@ -26,6 +29,7 @@ Common usage is covered by makefile "shortcuts":
 
 - `make index` — Index WHDLoad archives in the `$AGSCONTENT` path
 - `make image` — Create the Amiga HDF image and filesystem specified in `configs/AmigaVision.yaml`
+- `make pi` — Build `AmigaVision.hdf`, inject it and `replay/` payload into a RePlayOS base image, and output a 16GB flashable `.img`
 - `make screenshots` — Create scaled IFF images from arbitrary PNG files placed in `screenshots` 
 - `make sqlite` — Create SQLite database from `data/db/titles.csv` (for easier viewing and editing)
 - `make csv` — Output the contents of SQLite database to `data/db/titles.csv` (for committing to version control)

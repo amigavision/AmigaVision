@@ -1,5 +1,12 @@
 include .env
-.PHONY: default env env-rm index manifests manifests-check sqlite csv screenshots image pocket-image test-image test-dry clean
+.PHONY: default env env-rm index manifests manifests-check sqlite csv screenshots image pocket-image mini-image test-image test-dry pi pi-only clean
+
+PYTHON ?= /opt/homebrew/bin/python3.11
+
+REPLAYOS_BASE_IMG ?= ${AGSCONTENT}/base/RePlayOS.img
+REPLAYOS_OUTPUT_IMG ?= ${AGSDEST}/AmigaVision-RPi.img
+REPLAYOS_IMG_SIZE ?= 16g
+AMIGAVISION_HDF ?= ${AGSDEST}/games/Amiga/AmigaVision.hdf
 
 default:
 	@echo No default action
@@ -7,6 +14,7 @@ default:
 env:
 	-@pipenv --rm
 	-@pipenv --clear
+	@pipenv --python $(PYTHON)
 	@pipenv install
 
 env-rm:
@@ -60,3 +68,19 @@ test-image:
 test-dry:
 	@pipenv run ./build/ags_imager.py -v -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
 	@echo -e "\a"
+
+pi: image
+	@./build/pi_image.sh \
+		--base-img "${REPLAYOS_BASE_IMG}" \
+		--hdf "${AMIGAVISION_HDF}" \
+		--output-img "${REPLAYOS_OUTPUT_IMG}" \
+		--payload-dir "./replay" \
+		--size "${REPLAYOS_IMG_SIZE}"
+
+pi-only:
+	@./build/pi_image.sh \
+		--base-img "${REPLAYOS_BASE_IMG}" \
+		--hdf "${AMIGAVISION_HDF}" \
+		--output-img "${REPLAYOS_OUTPUT_IMG}" \
+		--payload-dir "./replay" \
+		--size "${REPLAYOS_IMG_SIZE}"
