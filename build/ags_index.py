@@ -165,7 +165,7 @@ def humanize_archive_name(archive_path):
     return humanize_name(name)
 
 def infer_title_short(title, max_length=28):
-    return (title or "")[:max_length].strip()
+    return util.infer_title_short_from_title(title, max_length=max_length)
 
 def infer_aga_flag(archive_path):
     return "1" if "_AGA" in Path(archive_path).name.upper() else ""
@@ -792,7 +792,7 @@ def main():
                 if added:
                     print("• Appended {} missing title ID(s) to data/db/titles.csv".format(added))
                 if updated:
-                    print("• Filled inferred title/title_short/category/subcategory/AGA/language/developer/publisher/players/country/HOL/Lemon fields for {} existing row(s)".format(updated))
+                    print("• Filled inferred title/title_short/category/subcategory/AGA/language/developer/publisher/players/HOL/Lemon fields for {} existing row(s)".format(updated))
                 util.write_id_verification_report(report_entries, report_path=str(report_path))
                 print("• Wrote ID verification report to {}".format(report_path))
                 print()

@@ -8,6 +8,7 @@ import functools
 import html
 import math
 import os
+import re
 import shutil
 import sqlite3
 import stat
@@ -328,6 +329,113 @@ def write_csv():
     conn.close()
     csv.unregister_dialect("amigavision")
 
+
+def move_trailing_article(title):
+    title = (title or "").strip()
+    for article in ("The", "A", "An"):
+        suffix = f", {article}"
+        if title.endswith(suffix):
+            return f"{article} {title[:-len(suffix)].strip()}"
+    return title
+
+
+def drop_leading_the(title):
+    return re.sub(r"^The\s+", "", (title or "").strip(), flags=re.IGNORECASE)
+
+
+def cleanup_title_short(value):
+    value = re.sub(r"\s+", " ", (value or "").strip())
+    value = re.sub(r"\s+\)", ")", value)
+    value = re.sub(r"\(\s*$", "", value)
+    value = value.rstrip(" :;,-/(").strip()
+    return value
+
+
+def truncate_on_word_boundary(value, max_length=28):
+    value = cleanup_title_short(value)
+    if len(value) <= max_length:
+        return value
+    clipped = value[:max_length + 1].rstrip()
+    clipped = re.sub(r"\s+\S*$", "", clipped)
+    if not clipped:
+        clipped = value[:max_length]
+    return cleanup_title_short(clipped)
+
+
+def infer_title_short_from_title(title, max_length=28):
+    title = move_trailing_article(title)
+    title = re.sub(r"\s+", " ", (title or "").strip())
+    if not title:
+        return ""
+
+    no_the = cleanup_title_short(drop_leading_the(title))
+    no_article = cleanup_title_short(re.sub(r"^(The|A|An)\s+", "", title, flags=re.IGNORECASE))
+    if len(title) <= max_length:
+        if no_the and no_the != title and len(no_the) <= max_length:
+            return no_the
+        if no_article and no_article != title and len(no_article) <= max_length:
+            return no_article
+        return cleanup_title_short(title)
+
+    candidates = []
+
+    def add_candidate(candidate):
+        candidate = cleanup_title_short(candidate)
+        if candidate and candidate not in candidates:
+            candidates.append(candidate)
+
+    colon_base = cleanup_title_short(title.split(":", 1)[0])
+    if colon_base:
+        add_candidate(colon_base)
+        add_candidate(re.sub(r"^(The|A|An)\s+", "", colon_base, flags=re.IGNORECASE))
+
+    paren_base = cleanup_title_short(re.sub(r"\s*\([^)]*\)", "", title))
+    if paren_base:
+        add_candidate(paren_base)
+
+    if no_the:
+        add_candidate(no_the)
+
+    if no_article:
+        add_candidate(no_article)
+
+    no_disc = cleanup_title_short(re.sub(r"\b(?:Disk|Disc)\b", "", title, flags=re.IGNORECASE))
+    if no_disc:
+        add_candidate(no_disc)
+
+    no_byline = cleanup_title_short(re.sub(r"\s+by\s+.+$", "", title, flags=re.IGNORECASE))
+    if no_byline:
+        add_candidate(no_byline)
+
+    simplified = title
+    simplified = re.sub(r"\bSloppy\b", "", simplified, flags=re.IGNORECASE)
+    simplified = re.sub(r"\b(?:Disk|Disc)\b", "", simplified, flags=re.IGNORECASE)
+    simplified = re.sub(r"\s+", " ", simplified)
+    add_candidate(simplified)
+    for candidate in candidates:
+        if len(candidate) <= max_length:
+            return candidate
+
+    add_candidate(title)
+    for candidate in candidates:
+        shortened = truncate_on_word_boundary(candidate, max_length=max_length)
+        if shortened:
+            return shortened
+
+    return truncate_on_word_boundary(title, max_length=max_length)
+
+
+def normalized_title_fields(title, title_short):
+    title = move_trailing_article((title or "").strip())
+    title_short = (title_short or "").strip()
+    if title_short and (not title or len(title_short) > len(title)):
+        title = move_trailing_article(title_short)
+    if title:
+        title_short = infer_title_short_from_title(title)
+    else:
+        title_short = cleanup_title_short(title_short)
+    return title, title_short
+
 def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
     if not entries:
         return 0, 0
@@ -358,15 +466,6 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
     updated = 0
     report_entries = []
 
-    def normalize_title_fields(title, title_short):
-        title = title or ""
-        title_short = title_short or ""
-        if title_short and (not title or len(title_short) > len(title)):
-            title = title_short
-        if title:
-            title_short = title[:28].strip()
-        return title, title_short
-
     for entry in deduped_entries:
         if entry["id"] not in existing_ids:
             continue
@@ -375,23 +474,19 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
         if len(row) < len(header):
             row.extend([""] * (len(header) - len(row)))
         changed = False
-        if "title" in header and "title_short" in header:
-            title_col = header.index("title")
-            title_short_col = header.index("title_short")
-            normalized_title, normalized_title_short = normalize_title_fields(row[title_col], row[title_short_col])
-            if row[title_col] != normalized_title:
-                row[title_col] = normalized_title
-                changed = True
-            if row[title_short_col] != normalized_title_short:
-                row[title_short_col] = normalized_title_short
-                changed = True
-        for field in ("title", "title_short", "category", "subcategory", "hardware", "aga", "language", "developer", "publisher", "players", "country", "hol_id", "lemon_id"):
+        for field in ("title", "title_short", "category", "subcategory", "hardware", "aga", "language", "developer", "publisher", "players", "hol_id", "lemon_id"):
             try:
                 col = header.index(field)
             except ValueError:
                 continue
             if not row[col] and entry.get(field):
-                row[col] = entry[field]
+                if field == "title":
+                    row[col] = normalized_title_fields(entry[field], "")[0]
+                elif field == "title_short":
+                    source_title = row[header.index("title")] if "title" in header else entry.get("title", "")
+                    row[col] = normalized_title_fields(source_title, entry[field])[1]
+                else:
+                    row[col] = entry[field]
                 changed = True
                 if field in ("hol_id", "lemon_id"):
                     report_entries.append({
@@ -419,7 +514,7 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
         row["id"] = entry["id"]
         row["title"] = entry.get("title", "")
         row["title_short"] = entry.get("title_short", "")
-        row["title"], row["title_short"] = normalize_title_fields(row["title"], row["title_short"])
+        row["title"], row["title_short"] = normalized_title_fields(row["title"], row["title_short"])
         row["category"] = entry.get("category", "")
         row["subcategory"] = entry.get("subcategory", "")
         row["hardware"] = entry.get("hardware", "")
