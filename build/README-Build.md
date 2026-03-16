@@ -26,7 +26,7 @@ First have a look at the path variables in `.env` and edit as needed.
 Common usage is covered by makefile "shortcuts":
 
 - `make index` — Index canonical WHDLoad archives in the `$AGSCONTENT` path, update database references, and write the resulting state back to `data/db/titles.csv`
-- `make index-add-missing` — Run indexing, write the current SQLite state back to `data/db/titles.csv`, and then append any missing fields to the CSV using an online Wikidata lookup
+- `make index-add-missing` — Run indexing, write the current SQLite state back to `data/db/titles.csv`, and then append or backfill missing fields in the CSV using an online Wikidata lookup.
 - `make manifests` — Regenerate all archive manifests under `$AGSCONTENT/manifests`
 - `make missing-manifests` — Generate manifests only for archives that do not already have one
 - `make verify-manifests` — Verify `.lha` archive contents against the manifests in `$AGSCONTENT/manifests`

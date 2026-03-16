@@ -133,7 +133,7 @@ def load_csv_rows_by_id(csv_path="data/db/titles.csv"):
 def needs_remote_game_enrichment(existing_row):
     if existing_row is None:
         return True
-    fields = ("title", "hol_id", "lemon_id", "language", "developer", "publisher", "players")
+    fields = ("title", "subcategory", "hol_id", "lemon_id", "language", "developer", "publisher", "players")
     return any(not existing_row.get(field) for field in fields)
 
 def csv_enrichment_fields(archive_path, existing_row=None):
@@ -154,7 +154,7 @@ def csv_enrichment_fields(archive_path, existing_row=None):
     if entry["category"] == "Demo":
         entry["publisher"] = infer_demo_publisher(archive_path)
     if entry["category"] == "Game" and needs_remote_game_enrichment(existing_row):
-        entry.update(enrich_game_metadata(archive_path))
+        entry.update(enrich_game_metadata(archive_path, existing_row))
         entry["title_short"] = infer_title_short(entry.get("title", title))
     return entry
 
@@ -179,6 +179,17 @@ def wikidata_api(params):
         "Accept": "application/json",
     })
     with urlopen(request, timeout=15) as response:
+        return json.load(response)
+
+def wikidata_sparql(query):
+    request = Request(
+        "https://query.wikidata.org/sparql?" + urlencode({"format": "json", "query": query}),
+        headers={
+            "User-Agent": "AmigaVision/1.0 (local build tooling)",
+            "Accept": "application/sparql-results+json, application/json",
+        },
+    )
+    with urlopen(request, timeout=20) as response:
         return json.load(response)
 
 def wikidata_claim_value(entity, prop):
@@ -229,8 +240,115 @@ def wikidata_labels_for_ids(ids, include_claims=False):
 def entity_label(entity):
     return entity.get("labels", {}).get("en", {}).get("value", "")
 
-def enrich_game_metadata(archive_path):
+def map_wikidata_genres_to_subcategory(genres):
+    normalized = [genre.strip().lower() for genre in genres if genre and genre.strip()]
+    mapping = {
+        "platform game": "Platform",
+        "puzzle video game": "Puzzle",
+        "puzzle game": "Puzzle",
+        "graphic adventure game": "Adventure",
+        "adventure game": "Adventure",
+        "interactive fiction": "Adventure",
+        "point-and-click adventure game": "Adventure",
+        "action-adventure game": "Action Adventure",
+        "action game": "Action",
+        "strategy video game": "Strategy",
+        "real-time strategy": "Strategy",
+        "god game": "Strategy",
+        "turn-based strategy video game": "Strategy",
+        "tactical role-playing game": "Strategy",
+        "role-playing video game": "RPG",
+        "action role-playing game": "Action RPG",
+        "dungeon crawl": "RPG",
+        "racing video game": "Racing",
+        "arcade racing game": "Racing",
+        "simulation video game": "Simulation",
+        "business simulation game": "Simulation",
+        "construction and management simulation": "Simulation",
+        "flight simulator": "Simulation",
+        "space flight simulator game": "Simulation",
+        "sports video game": "Sports",
+        "association football video game": "Sports",
+        "baseball video game": "Sports",
+        "basketball video game": "Sports",
+        "boxing video game": "Sports",
+        "bowling video game": "Sports",
+        "cricket video game": "Sports",
+        "golf video game": "Sports",
+        "ice hockey video game": "Sports",
+        "tennis video game": "Sports",
+        "volleyball video game": "Sports",
+        "wrestling video game": "Sports",
+        "shoot 'em up": "Shoot'em Up",
+        "horizontally scrolling shooter": "Shoot'em Up",
+        "vertically scrolling shooter": "Shoot'em Up",
+        "run and gun": "Action",
+        "beat 'em up": "Action",
+        "fighting game": "Action",
+        "board game": "Board Game",
+        "chess": "Board Game",
+    }
+    for genre in normalized:
+        if genre in mapping:
+            return mapping[genre]
+    return ""
+
+def enrich_game_metadata_by_existing_ids(existing_row):
+    hol_id = (existing_row or {}).get("hol_id", "").strip()
+    lemon_id = (existing_row or {}).get("lemon_id", "").strip()
+    if not hol_id and not lemon_id:
+        return None
+    conditions = []
+    if hol_id:
+        conditions.append(f'?item wdt:P4671 "{hol_id}" .')
+    if lemon_id:
+        conditions.append(f'?item wdt:P4846 "{lemon_id}" .')
+    query = """
+SELECT ?itemLabel ?genreLabel WHERE {{
+  {conditions}
+  OPTIONAL {{ ?item wdt:P136 ?genre . }}
+  SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
+}}
+""".format(conditions="\n  ".join(conditions))
+    try:
+        data = wikidata_sparql(query)
+    except Exception:
+        return None
+    bindings = data.get("results", {}).get("bindings", [])
+    if not bindings:
+        return None
+    title = ""
+    genres = []
+    for binding in bindings:
+        if not title:
+            title = binding.get("itemLabel", {}).get("value", "")
+        genre = binding.get("genreLabel", {}).get("value", "")
+        if genre:
+            genres.append(genre)
+    return {
+        "title": title,
+        "title_short": infer_title_short(title),
+        "subcategory": map_wikidata_genres_to_subcategory(genres),
+        "hol_id": hol_id,
+        "lemon_id": lemon_id,
+    }
+
+def enrich_game_metadata(archive_path, existing_row=None):
     search_title = humanize_archive_name(archive_path)
+    exact_match = enrich_game_metadata_by_existing_ids(existing_row)
+    if exact_match:
+        return {
+            "title": exact_match.get("title") or search_title,
+            "title_short": infer_title_short(exact_match.get("title") or search_title),
+            "subcategory": exact_match.get("subcategory", ""),
+            "language": "",
+            "developer": "",
+            "publisher": "",
+            "players": "",
+            "country": "",
+            "hol_id": exact_match.get("hol_id", ""),
+            "lemon_id": exact_match.get("lemon_id", ""),
+        }
     try:
         search_data = wikidata_api({
             "action": "wbsearchentities",
@@ -285,7 +403,8 @@ def enrich_game_metadata(archive_path):
         developer_ids = wikidata_item_ids(entity, "P178")
         publisher_ids = wikidata_item_ids(entity, "P123")
         country_ids = wikidata_item_ids(entity, "P495")
-        related_entities = wikidata_labels_for_ids(language_ids + developer_ids + publisher_ids + country_ids, include_claims=True)
+        genre_ids = wikidata_item_ids(entity, "P136")
+        related_entities = wikidata_labels_for_ids(language_ids + developer_ids + publisher_ids + country_ids + genre_ids, include_claims=True)
 
         if not country_ids and developer_ids:
             developer_country_ids = []
@@ -301,6 +420,7 @@ def enrich_game_metadata(archive_path):
         developers = [entity_label(related_entities.get(id, {})) for id in developer_ids]
         publishers = [entity_label(related_entities.get(id, {})) for id in publisher_ids]
         countries = [entity_label(related_entities.get(id, {})) for id in country_ids]
+        genres = [entity_label(related_entities.get(id, {})) for id in genre_ids]
 
         min_players = wikidata_quantities(entity, "P1872")
         max_players = wikidata_quantities(entity, "P1873")
@@ -315,6 +435,7 @@ def enrich_game_metadata(archive_path):
         return {
             "title": entity_label(entity) or search_title,
             "title_short": infer_title_short(entity_label(entity) or search_title),
+            "subcategory": map_wikidata_genres_to_subcategory(genres),
             "language": ", ".join([label for label in languages if label]),
             "developer": ", ".join([label for label in developers if label]),
             "publisher": ", ".join([label for label in publishers if label]),
@@ -327,6 +448,7 @@ def enrich_game_metadata(archive_path):
         return {
             "title": entity_label(entity) or search_title,
             "title_short": infer_title_short(entity_label(entity) or search_title),
+            "subcategory": "",
             "language": "",
             "developer": "",
             "publisher": "",

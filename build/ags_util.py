@@ -397,6 +397,8 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
                     report_entries.append({
                         "id": entry["id"],
                         "title": row[header.index("title")] if "title" in header else entry.get("title", ""),
+                        "title_short": row[header.index("title_short")] if "title_short" in header else entry.get("title_short", ""),
+                        "subcategory": row[header.index("subcategory")] if "subcategory" in header else entry.get("subcategory", ""),
                         "hol_id": row[header.index("hol_id")] if "hol_id" in header else entry.get("hol_id", ""),
                         "lemon_id": row[header.index("lemon_id")] if "lemon_id" in header else entry.get("lemon_id", ""),
                     })
@@ -407,6 +409,7 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
                 "id": entry["id"],
                 "title": row[header.index("title")] if "title" in header else entry.get("title", ""),
                 "title_short": row[header.index("title_short")] if "title_short" in header else entry.get("title_short", ""),
+                "subcategory": row[header.index("subcategory")] if "subcategory" in header else entry.get("subcategory", ""),
                 "hol_id": row[header.index("hol_id")] if "hol_id" in header else entry.get("hol_id", ""),
                 "lemon_id": row[header.index("lemon_id")] if "lemon_id" in header else entry.get("lemon_id", ""),
             })
@@ -432,6 +435,7 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
             "id": entry["id"],
             "title": row["title"],
             "title_short": row["title_short"],
+            "subcategory": row["subcategory"],
             "hol_id": row["hol_id"],
             "lemon_id": row["lemon_id"],
         })
@@ -459,7 +463,8 @@ def write_id_verification_report(entries, report_path="data/db/index-add-missing
         lemon_link = f'<a href="https://www.lemonamiga.com/?game_id={entry["lemon_id"]}">{html.escape(entry["lemon_id"])}</a>' if entry.get("lemon_id") else ""
         title = html.escape(entry.get("title", "") or entry["id"])
         title_short = html.escape(entry.get("title_short", "") or "")
-        rows.append(f"<tr><td>{title}</td><td>{title_short}</td><td>{hol_link}</td><td>{lemon_link}</td></tr>")
+        subcategory = html.escape(entry.get("subcategory", "") or "")
+        rows.append(f"<tr><td>{title}</td><td>{title_short}</td><td>{subcategory}</td><td>{hol_link}</td><td>{lemon_link}</td></tr>")
 
     report_html = """<!doctype html>
 <html lang="en">
@@ -480,7 +485,7 @@ def write_id_verification_report(entries, report_path="data/db/index-add-missing
   <p>Rows appended or updated during the latest index-add-missing run.</p>
   <table>
     <thead>
-      <tr><th>Title</th><th>Title Short</th><th>Hall of Light</th><th>Lemon Amiga</th></tr>
+      <tr><th>Title</th><th>Title Short</th><th>Subcategory</th><th>Hall of Light</th><th>Lemon Amiga</th></tr>
     </thead>
     <tbody>
       {rows}
