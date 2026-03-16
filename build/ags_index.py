@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import os
 import sys
+from pathlib import Path
 
 from lhafile import LhaFile, is_lhafile
 from ruamel import yaml
@@ -25,6 +26,21 @@ def archive_path_for_manifest(titles_dir, manifests_dir, manifest_path):
     if not rel_path.endswith(".lha.yaml"):
         return None
     return util.path(titles_dir, rel_path[:-5])
+
+def is_ignored_archive_path(titles_dir, archive_path):
+    rel_parts = Path(os.path.relpath(archive_path, titles_dir)).parts
+    ignored_dirs = {"retired", "manual-downloads", "mega-downloads", "imported"}
+    return any(part in ignored_dirs for part in rel_parts)
+
+def csv_category_fields(archive_path):
+    category_dir = Path(archive_path).parts[0]
+    if category_dir == "game":
+        return {"category": "Game", "subcategory": ""}
+    if category_dir == "demo":
+        return {"category": "Demo", "subcategory": "Demo"}
+    if category_dir == "mags":
+        return {"category": "Demo", "subcategory": "Disk Magazine"}
+    return {"category": "", "subcategory": ""}
 
 def find_stale_manifests(titles_dir, manifests_dir):
     stale_manifests = []
@@ -76,6 +92,8 @@ def index_whdload_archives(basedir):
                 if count % 100 == 0:
                     print(".", end="", flush=True)
                 path = util.path(r, file)
+                if is_ignored_archive_path(basedir, path):
+                    continue
                 if not is_lhafile(path):
                     print("\n{} is not a valid lha file".format(path), flush=True)
                     continue
@@ -117,7 +135,10 @@ def make_manifests(titles_dir, manifests_dir, only_missing=False):
     count = 0
     for r, _, f in os.walk(titles_dir):
         for file in f:
-            if make_manifest(titles_dir, manifests_dir, util.path(r, file), only_missing):
+            path = util.path(r, file)
+            if is_ignored_archive_path(titles_dir, path):
+                continue
+            if make_manifest(titles_dir, manifests_dir, path, only_missing):
                 count += 1
                 if count % 100 == 0: print(".", end="", flush=True)
     print("\n", flush=True)
@@ -206,6 +227,7 @@ def main():
     parser.add_argument("--sync-manifests", dest="sync_manifests", action="store_true", default=False, help="create missing manifests and report/prune stale manifests")
     parser.add_argument("--prune-manifests", dest="prune_manifests", action="store_true", default=False, help="report or prune manifests without a matching archive")
     parser.add_argument("--apply", dest="apply", action="store_true", default=False, help="apply changes for destructive manifest operations")
+    parser.add_argument("--append-missing-csv", dest="append_missing_csv", action="store_true", default=False, help="append missing title IDs to data/db/titles.csv")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
@@ -246,18 +268,23 @@ def main():
         # remove missing archive_paths from db
         for r in db.cursor().execute("SELECT * FROM titles"):
             if r["archive_path"] and not util.is_file(util.path(titles_dir, r["archive_path"])):
-                print("• Archive removed:", r["id"])
+                print("• Archive reference removed from DB:", r["id"])
                 print(r["archive_path"])
                 db.cursor().execute("UPDATE titles SET archive_path=NULL,slave_path=NULL,slave_version=NULL WHERE id=?;", (r["id"],))
                 print()
 
         # enumerate whdl archives, correlate with db
+        missing_db_entries = []
         for _, arc in index_whdload_archives(titles_dir).items():
             rows = db.cursor().execute("SELECT * FROM titles WHERE (id = ?) OR (id LIKE ?);", (arc["id"], arc["id"] + '--%',)).fetchall()
             if not rows:
                 print("• No DB entry:", arc["archive_path"])
                 print(arc["id"])
                 print()
+                missing_db_entries.append({
+                    "id": arc["id"],
+                    **csv_category_fields(arc["archive_path"]),
+                })
                 continue
             for row in rows:
                 if not row["archive_path"]:
@@ -265,6 +292,18 @@ def main():
                                         (arc["archive_path"], arc["slave_path"], arc["slave_version"], row["id"]))
                     print("archive added: " + arc["archive_path"] + " -> " +row["id"])
                     print()
+
+        if args.append_missing_csv:
+            added = util.append_missing_title_rows(missing_db_entries)
+            if added:
+                print("• Appended {} missing title ID(s) to data/db/titles.csv".format(added))
+                print()
+            else:
+                print("No missing title IDs needed to be appended to data/db/titles.csv")
+                print()
+        elif missing_db_entries:
+            print("• Found {} missing title ID(s); run 'make index-add-missing' to append them to data/db/titles.csv".format(len({entry['id'] for entry in missing_db_entries})))
+            print()
 
         # list missing content
         if args.verbose:

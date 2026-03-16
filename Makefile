@@ -1,5 +1,5 @@
 include .env
-.PHONY: default env env-rm index manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives sqlite csv screenshots image pocket-image mini-image test-image test-dry pi pi-only clean
+.PHONY: default env env-rm index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives sqlite csv screenshots image pocket-image mini-image test-image test-dry pi pi-only clean
 
 PYTHON ?= python3.11
 SOURCE ?= ${AGSCONTENT}/titles/manual-downloads
@@ -24,6 +24,9 @@ env-rm:
 
 index:
 	@pipenv run ./build/ags_index.py -v
+
+index-add-missing:
+	@pipenv run ./build/ags_index.py -v --append-missing-csv
 
 manifests:
 	@pipenv run ./build/ags_index.py --make-manifests

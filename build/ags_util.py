@@ -327,6 +327,45 @@ def write_csv():
     conn.close()
     csv.unregister_dialect("amigavision")
 
+def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
+    if not entries:
+        return 0
+
+    deduped_entries = []
+    seen_ids = set()
+    for entry in entries:
+        if entry["id"] in seen_ids:
+            continue
+        seen_ids.add(entry["id"])
+        deduped_entries.append(entry)
+
+    with open(csv_path, "r", newline="") as f:
+        rows = list(csv.reader(f, delimiter=";"))
+
+    if not rows:
+        raise IOError("CSV file is empty ({})".format(csv_path))
+
+    header = rows[0]
+    if not header or header[0] != "id":
+        raise IOError("CSV header is invalid ({})".format(csv_path))
+
+    existing_ids = {row[0] for row in rows[1:] if row}
+    missing_entries = [entry for entry in deduped_entries if entry["id"] not in existing_ids]
+    if not missing_entries:
+        return 0
+
+    blank_columns = max(len(header) - 1, 0)
+    row_template = {column: "" for column in header}
+    with open(csv_path, "a", newline="") as f:
+        writer = csv.writer(f, delimiter=";", lineterminator="\n")
+        for entry in missing_entries:
+            row = dict(row_template)
+            row["id"] = entry["id"]
+            row["category"] = entry.get("category", "")
+            row["subcategory"] = entry.get("subcategory", "")
+            writer.writerow([row[column] for column in header])
+    return len(missing_entries)
+
 
 def read_csv(csv_path, new_db_path):
     if is_file(new_db_path):
