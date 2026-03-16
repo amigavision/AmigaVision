@@ -3,10 +3,16 @@
 # AGSImager: Indexer
 
 import argparse
+import csv
 import hashlib
+import json
 import os
+import re
+import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
 
 from lhafile import LhaFile, is_lhafile
 from ruamel import yaml
@@ -41,6 +47,294 @@ def csv_category_fields(archive_path):
     if category_dir == "mags":
         return {"category": "Demo", "subcategory": "Disk Magazine"}
     return {"category": "", "subcategory": ""}
+
+def humanize_name(value):
+    value = value.replace("_", " ").replace("&", " & ")
+    value = re.sub(r"(?<=[A-Z])(?=[A-Z][a-z])", " ", value)
+    value = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", value)
+    value = re.sub(r"(?<=[A-Za-z])(?=[0-9])", " ", value)
+    value = re.sub(r"\s+", " ", value)
+    return value.strip()
+
+def infer_demo_publisher(archive_path):
+    parts = Path(archive_path).parts
+    if not parts or parts[0] != "demo" or (len(parts) > 1 and parts[1].startswith("_")):
+        return ""
+    stem = Path(archive_path).stem
+    if "_v" not in stem:
+        return ""
+    _, versioned = stem.split("_v", 1)
+    tokens = versioned.split("_")[1:]
+    if not tokens:
+        return ""
+    stop_tokens = {
+        "AGA", "CD32", "CDTV", "FAST", "NTSC", "PAL", "ECS", "OCS",
+        "DECRUNCHED", "CRUNCHED", "FIX", "FILES", "IMAGE", "NOINTRO",
+    }
+    ignore_tokens = {
+        "COMPLETEEDITION", "SPECIALEDITION", "DELUXE", "FINAL", "INTRO",
+        "INVITATION", "REMASTERED", "REMASTER", "RELOADED",
+    }
+    publisher_tokens = []
+    for token in tokens:
+        if token.upper() in ignore_tokens:
+            continue
+        if token.upper() in stop_tokens:
+            break
+        publisher_tokens.append(token)
+    if not publisher_tokens:
+        return ""
+    return humanize_name(" ".join(publisher_tokens))
+
+def infer_language_from_archive(archive_path):
+    parts = Path(archive_path).parts
+    if not parts:
+        return ""
+    if parts[0] == "demo":
+        return "English"
+    stem_tokens = Path(archive_path).stem.split("_")
+    language_map = {
+        "DE": "German",
+        "ES": "Spanish",
+        "FR": "French",
+        "IT": "Italian",
+        "PL": "Polish",
+        "GR": "Greek",
+        "DK": "Danish",
+        "SE": "Swedish",
+        "NL": "Dutch",
+        "PT": "Portuguese",
+        "RU": "Russian",
+        "FI": "Finnish",
+        "NO": "Norwegian",
+        "HU": "Hungarian",
+        "CZ": "Czech",
+        "CS": "Czech",
+        "SK": "Slovak",
+        "HR": "Croatian",
+        "SR": "Serbian",
+        "RO": "Romanian",
+    }
+    for token in reversed(stem_tokens[1:]):
+        if token.isdigit() or token.startswith("v"):
+            continue
+        mapped = language_map.get(token.upper())
+        if mapped:
+            return mapped
+    return ""
+
+def load_csv_rows_by_id(csv_path="data/db/titles.csv"):
+    rows = {}
+    with open(csv_path, "r") as f:
+        for row in csv.DictReader(f, delimiter=";"):
+            rows[row["id"]] = row
+    return rows
+
+def needs_remote_game_enrichment(existing_row):
+    if existing_row is None:
+        return True
+    fields = ("title", "hol_id", "lemon_id", "language", "developer", "publisher", "players")
+    return any(not existing_row.get(field) for field in fields)
+
+def csv_enrichment_fields(archive_path, existing_row=None):
+    title = humanize_archive_name(archive_path)
+    entry = {
+        "title": title,
+        "title_short": infer_title_short(title),
+        **csv_category_fields(archive_path),
+        "aga": infer_aga_flag(archive_path),
+        "language": infer_language_from_archive(archive_path),
+        "developer": "",
+        "publisher": "",
+        "players": "",
+        "country": "",
+        "hol_id": "",
+        "lemon_id": "",
+    }
+    if entry["category"] == "Demo":
+        entry["publisher"] = infer_demo_publisher(archive_path)
+    if entry["category"] == "Game" and needs_remote_game_enrichment(existing_row):
+        entry.update(enrich_game_metadata(archive_path))
+        entry["title_short"] = infer_title_short(entry.get("title", title))
+    return entry
+
+def humanize_archive_name(archive_path):
+    stem = Path(archive_path).name[:-4]
+    name = stem.split("_v", 1)[0]
+    return humanize_name(name)
+
+def infer_title_short(title, max_length=28):
+    return (title or "")[:max_length].strip()
+
+def infer_aga_flag(archive_path):
+    return "1" if "_AGA" in Path(archive_path).name.upper() else ""
+
+def normalized_title(value):
+    return "".join(ch.lower() for ch in value if ch.isalnum())
+
+def wikidata_api(params):
+    url = "https://www.wikidata.org/w/api.php?" + urlencode(params)
+    request = Request(url, headers={
+        "User-Agent": "AmigaVision/1.0 (local build tooling)",
+        "Accept": "application/json",
+    })
+    with urlopen(request, timeout=15) as response:
+        return json.load(response)
+
+def wikidata_claim_value(entity, prop):
+    claims = entity.get("claims", {}).get(prop, [])
+    if not claims:
+        return ""
+    try:
+        return claims[0]["mainsnak"]["datavalue"]["value"]
+    except Exception:
+        return ""
+
+def wikidata_item_ids(entity, prop):
+    ids = []
+    for claim in entity.get("claims", {}).get(prop, []):
+        try:
+            value = claim["mainsnak"]["datavalue"]["value"]
+            if isinstance(value, dict) and value.get("id"):
+                ids.append(value["id"])
+        except Exception:
+            continue
+    return ids
+
+def wikidata_quantities(entity, prop):
+    values = []
+    for claim in entity.get("claims", {}).get(prop, []):
+        try:
+            value = claim["mainsnak"]["datavalue"]["value"]
+            amount = value.get("amount", "")
+            if amount:
+                values.append(int(float(amount)))
+        except Exception:
+            continue
+    return values
+
+def wikidata_labels_for_ids(ids, include_claims=False):
+    ids = [id for id in dict.fromkeys(ids) if id]
+    if not ids:
+        return {}
+    props = "labels|claims" if include_claims else "labels"
+    return wikidata_api({
+        "action": "wbgetentities",
+        "format": "json",
+        "languages": "en",
+        "props": props,
+        "ids": "|".join(ids),
+    }).get("entities", {})
+
+def entity_label(entity):
+    return entity.get("labels", {}).get("en", {}).get("value", "")
+
+def enrich_game_metadata(archive_path):
+    search_title = humanize_archive_name(archive_path)
+    try:
+        search_data = wikidata_api({
+            "action": "wbsearchentities",
+            "format": "json",
+            "language": "en",
+            "type": "item",
+            "limit": 10,
+            "search": search_title,
+        })
+    except Exception:
+        return {"title": search_title, "title_short": infer_title_short(search_title), "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
+    candidate_ids = [item["id"] for item in search_data.get("search", [])]
+    if not candidate_ids:
+        return {"title": search_title, "title_short": infer_title_short(search_title), "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
+
+    try:
+        entities = wikidata_api({
+            "action": "wbgetentities",
+            "format": "json",
+            "languages": "en",
+            "props": "labels|claims",
+            "ids": "|".join(candidate_ids),
+        }).get("entities", {})
+    except Exception:
+        return {"title": search_title, "title_short": infer_title_short(search_title), "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
+
+    best = None
+    target = normalized_title(search_title)
+    for entity_id in candidate_ids:
+        entity = entities.get(entity_id, {})
+        label = entity_label(entity)
+        hol_id = wikidata_claim_value(entity, "P4671")
+        lemon_id = wikidata_claim_value(entity, "P4846")
+        if not hol_id and not lemon_id:
+            continue
+        score = 0
+        normalized_label = normalized_title(label)
+        if normalized_label == target:
+            score += 100
+        elif target and (target in normalized_label or normalized_label in target):
+            score += 50
+        score += int(bool(hol_id)) + int(bool(lemon_id))
+        if best is None or score > best[0]:
+            best = (score, entity)
+
+    if best is None:
+        return {"title": search_title, "title_short": infer_title_short(search_title), "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
+
+    entity = best[1]
+    try:
+        language_ids = wikidata_item_ids(entity, "P407")
+        developer_ids = wikidata_item_ids(entity, "P178")
+        publisher_ids = wikidata_item_ids(entity, "P123")
+        country_ids = wikidata_item_ids(entity, "P495")
+        related_entities = wikidata_labels_for_ids(language_ids + developer_ids + publisher_ids + country_ids, include_claims=True)
+
+        if not country_ids and developer_ids:
+            developer_country_ids = []
+            for developer_id in developer_ids:
+                developer_entity = related_entities.get(developer_id, {})
+                developer_country_ids.extend(wikidata_item_ids(developer_entity, "P495"))
+                developer_country_ids.extend(wikidata_item_ids(developer_entity, "P17"))
+            country_ids = [id for id in dict.fromkeys(developer_country_ids) if id]
+            if country_ids:
+                related_entities.update(wikidata_labels_for_ids(country_ids))
+
+        languages = [entity_label(related_entities.get(id, {})) for id in language_ids]
+        developers = [entity_label(related_entities.get(id, {})) for id in developer_ids]
+        publishers = [entity_label(related_entities.get(id, {})) for id in publisher_ids]
+        countries = [entity_label(related_entities.get(id, {})) for id in country_ids]
+
+        min_players = wikidata_quantities(entity, "P1872")
+        max_players = wikidata_quantities(entity, "P1873")
+        players = ""
+        if min_players and max_players:
+            players = str(min_players[0]) if min_players[0] == max_players[0] else f"{min_players[0]}-{max_players[0]}"
+        elif min_players:
+            players = str(min_players[0])
+        elif max_players:
+            players = str(max_players[0])
+
+        return {
+            "title": entity_label(entity) or search_title,
+            "title_short": infer_title_short(entity_label(entity) or search_title),
+            "language": ", ".join([label for label in languages if label]),
+            "developer": ", ".join([label for label in developers if label]),
+            "publisher": ", ".join([label for label in publishers if label]),
+            "players": players,
+            "country": ", ".join([label for label in countries if label]),
+            "hol_id": str(wikidata_claim_value(entity, "P4671") or ""),
+            "lemon_id": str(wikidata_claim_value(entity, "P4846") or ""),
+        }
+    except Exception:
+        return {
+            "title": entity_label(entity) or search_title,
+            "title_short": infer_title_short(entity_label(entity) or search_title),
+            "language": "",
+            "developer": "",
+            "publisher": "",
+            "players": "",
+            "country": "",
+            "hol_id": str(wikidata_claim_value(entity, "P4671") or ""),
+            "lemon_id": str(wikidata_claim_value(entity, "P4846") or ""),
+        }
 
 def find_stale_manifests(titles_dir, manifests_dir):
     stale_manifests = []
@@ -215,6 +509,12 @@ def load_manifest(p):
     except:
         return None
 
+def finish_progress_line(progress_active):
+    if progress_active:
+        print()
+        print()
+    return False
+
 # -----------------------------------------------------------------------------
 
 def main():
@@ -248,6 +548,7 @@ def main():
         if not util.is_dir(titles_dir):
             raise IOError("Titles dir not found ({})".format(titles_dir))
         manifests_dir = paths.manifests()
+        csv_rows_by_id = load_csv_rows_by_id() if args.append_missing_csv else {}
 
         if args.make_manifests:
             make_manifests(titles_dir, manifests_dir, only_missing=args.only_missing)
@@ -266,44 +567,99 @@ def main():
             return 1 if stale_manifests and not args.apply else 0
 
         # remove missing archive_paths from db
+        removed_db_archive_refs = 0
         for r in db.cursor().execute("SELECT * FROM titles"):
             if r["archive_path"] and not util.is_file(util.path(titles_dir, r["archive_path"])):
                 print("• Archive reference removed from DB:", r["id"])
                 print(r["archive_path"])
                 db.cursor().execute("UPDATE titles SET archive_path=NULL,slave_path=NULL,slave_version=NULL WHERE id=?;", (r["id"],))
+                removed_db_archive_refs += 1
                 print()
 
         # enumerate whdl archives, correlate with db
-        missing_db_entries = []
-        for _, arc in index_whdload_archives(titles_dir).items():
+        archives = list(index_whdload_archives(titles_dir).items())
+        total_game_enrichment = sum(
+            1
+            for _, arc in archives
+            if args.append_missing_csv
+            and Path(arc["archive_path"]).parts[0] == "game"
+            and needs_remote_game_enrichment(csv_rows_by_id.get(arc["id"]))
+        )
+        csv_enrichment_entries = []
+        printed_wikidata_status = False
+        printed_wikidata_progress = False
+        game_enrichment_progress = 0
+        for _, arc in archives:
             rows = db.cursor().execute("SELECT * FROM titles WHERE (id = ?) OR (id LIKE ?);", (arc["id"], arc["id"] + '--%',)).fetchall()
+            existing_csv_row = csv_rows_by_id.get(arc["id"])
+            should_enrich_game = (
+                args.append_missing_csv
+                and Path(arc["archive_path"]).parts[0] == "game"
+                and needs_remote_game_enrichment(existing_csv_row)
+            )
+            if should_enrich_game and not printed_wikidata_status:
+                print("Querying Wikidata for game metadata...")
+                printed_wikidata_status = True
+            enrichment_fields = None
+            if should_enrich_game:
+                game_enrichment_progress += 1
+                if game_enrichment_progress == 1 or game_enrichment_progress % 25 == 0 or game_enrichment_progress == total_game_enrichment:
+                    print("\rWikidata: {}/{}".format(game_enrichment_progress, total_game_enrichment), end="", flush=True)
+                    printed_wikidata_progress = True
+                enrichment_fields = csv_enrichment_fields(arc["archive_path"], existing_csv_row)
+            else:
+                enrichment_fields = csv_enrichment_fields(arc["archive_path"], existing_csv_row)
             if not rows:
+                printed_wikidata_progress = finish_progress_line(printed_wikidata_progress)
                 print("• No DB entry:", arc["archive_path"])
                 print(arc["id"])
                 print()
-                missing_db_entries.append({
+                entry = {
                     "id": arc["id"],
-                    **csv_category_fields(arc["archive_path"]),
-                })
+                    **enrichment_fields,
+                }
+                csv_enrichment_entries.append(entry)
                 continue
             for row in rows:
+                csv_enrichment_entries.append({
+                    "id": row["id"],
+                    **enrichment_fields,
+                })
                 if not row["archive_path"]:
+                    printed_wikidata_progress = finish_progress_line(printed_wikidata_progress)
                     db.cursor().execute("UPDATE titles SET archive_path=?,slave_path=?,slave_version=? WHERE id=?;",
                                         (arc["archive_path"], arc["slave_path"], arc["slave_version"], row["id"]))
                     print("archive added: " + arc["archive_path"] + " -> " +row["id"])
                     print()
 
+        if printed_wikidata_progress:
+            print()
+
         if args.append_missing_csv:
-            added = util.append_missing_title_rows(missing_db_entries)
-            if added:
-                print("• Appended {} missing title ID(s) to data/db/titles.csv".format(added))
+            util.write_csv()
+            report_path = Path("data/db/index-add-missing-report.html").resolve()
+            added, updated, report_entries = util.append_missing_title_rows(csv_enrichment_entries)
+            if added or updated:
+                if added:
+                    print("• Appended {} missing title ID(s) to data/db/titles.csv".format(added))
+                if updated:
+                    print("• Filled inferred title/title_short/category/subcategory/AGA/language/developer/publisher/players/country/HOL/Lemon fields for {} existing row(s)".format(updated))
+                util.write_id_verification_report(report_entries, report_path=str(report_path))
+                print("• Wrote ID verification report to {}".format(report_path))
                 print()
             else:
-                print("No missing title IDs needed to be appended to data/db/titles.csv")
+                print("No missing title IDs or inferred CSV fields needed to be updated in data/db/titles.csv")
                 print()
-        elif missing_db_entries:
-            print("• Found {} missing title ID(s); run 'make index-add-missing' to append them to data/db/titles.csv".format(len({entry['id'] for entry in missing_db_entries})))
-            print()
+            if report_path.is_file():
+                subprocess.run(["open", str(report_path)], check=False)
+        else:
+            missing_ids = [entry["id"] for entry in csv_enrichment_entries if not db.cursor().execute("SELECT 1 FROM titles WHERE id=?;", (entry["id"],)).fetchone()]
+            if missing_ids:
+                print("• Found {} missing title ID(s); run 'make index-add-missing' to append them to data/db/titles.csv".format(len(set(missing_ids))))
+                print()
+            if removed_db_archive_refs:
+                print("• Removed {} stale archive reference(s) from the DB; run 'make csv' to persist those changes to data/db/titles.csv".format(removed_db_archive_refs))
+                print()
 
         # list missing content
         if args.verbose:

@@ -24,6 +24,7 @@ env-rm:
 
 index:
 	@pipenv run ./build/ags_index.py -v
+	@pipenv run ./build/ags_index.py --make-csv
 
 index-add-missing:
 	@pipenv run ./build/ags_index.py -v --append-missing-csv

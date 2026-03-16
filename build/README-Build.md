@@ -25,8 +25,8 @@ First have a look at the path variables in `.env` and edit as needed.
 
 Common usage is covered by makefile "shortcuts":
 
-- `make index` — Index canonical WHDLoad archives in the `$AGSCONTENT` path and update database references
-- `make index-add-missing` — Run indexing and append any missing title IDs to the end of `data/db/titles.csv`. It pre-fills `category` as `Game` for `game/...`, `Demo` for `demo/...` and `mags/...`, and pre-fills `subcategory` as `Demo` for `demo/...` and `Disk Magazine` for `mags/...`. Remaining columns are left blank for manual completion
+- `make index` — Index canonical WHDLoad archives in the `$AGSCONTENT` path, update database references, and write the resulting state back to `data/db/titles.csv`
+- `make index-add-missing` — Run indexing, write the current SQLite state back to `data/db/titles.csv`, and then append any missing fields to the CSV using an online Wikidata lookup
 - `make manifests` — Regenerate all archive manifests under `$AGSCONTENT/manifests`
 - `make missing-manifests` — Generate manifests only for archives that do not already have one
 - `make verify-manifests` — Verify `.lha` archive contents against the manifests in `$AGSCONTENT/manifests`
