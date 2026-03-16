@@ -26,6 +26,41 @@ def archive_path_for_manifest(titles_dir, manifests_dir, manifest_path):
         return None
     return util.path(titles_dir, rel_path[:-5])
 
+def find_stale_manifests(titles_dir, manifests_dir):
+    stale_manifests = []
+    for r, _, f in os.walk(manifests_dir):
+        for file in f:
+            if not file.endswith(".lha.yaml"):
+                continue
+            manifest_path = util.path(r, file)
+            archive_path = archive_path_for_manifest(titles_dir, manifests_dir, manifest_path)
+            if archive_path and not util.is_file(archive_path):
+                stale_manifests.append(manifest_path)
+    return sorted(stale_manifests)
+
+def prune_manifests(titles_dir, manifests_dir, apply=False):
+    stale_manifests = find_stale_manifests(titles_dir, manifests_dir)
+    if stale_manifests:
+        heading = "• Stale manifests pruned:" if apply else "• Stale manifests found (rerun with --apply to prune):"
+        print(heading)
+        for manifest_path in stale_manifests:
+            print(manifest_path)
+            if apply:
+                os.remove(manifest_path)
+        print()
+    else:
+        print("No stale manifests found")
+    return stale_manifests
+
+def sync_manifests(titles_dir, manifests_dir, apply=False):
+    make_manifests(titles_dir, manifests_dir, only_missing=True)
+    stale_manifests = prune_manifests(titles_dir, manifests_dir, apply=apply)
+    if stale_manifests and not apply:
+        print("Manifest sync completed with {} stale manifest(s) pending prune".format(len(stale_manifests)))
+    else:
+        print("Manifest sync completed")
+    return stale_manifests
+
 # -----------------------------------------------------------------------------
 # Make dictionary of whdload archives
 
@@ -168,6 +203,9 @@ def main():
     parser.add_argument("--make-manifests", dest="make_manifests", action="store_true", default=False, help="make manifest files")
     parser.add_argument("--only-missing", dest="only_missing", action="store_true", default=False, help="create only missing manifests")
     parser.add_argument("--verify-manifests", dest="verify_manifests", action="store_true", default=False, help="verify that contents match manifests")
+    parser.add_argument("--sync-manifests", dest="sync_manifests", action="store_true", default=False, help="create missing manifests and report/prune stale manifests")
+    parser.add_argument("--prune-manifests", dest="prune_manifests", action="store_true", default=False, help="report or prune manifests without a matching archive")
+    parser.add_argument("--apply", dest="apply", action="store_true", default=False, help="apply changes for destructive manifest operations")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
@@ -196,6 +234,14 @@ def main():
         if args.verify_manifests:
             verify_manifests(titles_dir, manifests_dir)
             return 0
+
+        if args.sync_manifests:
+            stale_manifests = sync_manifests(titles_dir, manifests_dir, apply=args.apply)
+            return 1 if stale_manifests and not args.apply else 0
+
+        if args.prune_manifests:
+            stale_manifests = prune_manifests(titles_dir, manifests_dir, apply=args.apply)
+            return 1 if stale_manifests and not args.apply else 0
 
         # remove missing archive_paths from db
         for r in db.cursor().execute("SELECT * FROM titles"):

@@ -26,11 +26,20 @@ First have a look at the path variables in `.env` and edit as needed.
 Common usage is covered by makefile "shortcuts":
 
 - `make index` — Index WHDLoad archives in the `$AGSCONTENT` path
+- `make manifests` — Regenerate all archive manifests under `$AGSCONTENT/manifests`
+- `make missing-manifests` — Generate manifests only for archives that do not already have one
+- `make verify-manifests` — Verify `.lha` archive contents against the manifests in `$AGSCONTENT/manifests`
+- `make sync-manifests` — Generate missing manifests and report stale manifests whose archive no longer exists
+- `make sync-manifests-apply` — Generate missing manifests and remove stale manifests
+- `make prune-manifests` — Report stale manifests without deleting them
+- `make prune-manifests-apply` — Remove stale manifests whose archive no longer exists
 - `make image` — Create the Amiga HDF image and filesystem specified in `configs/AmigaVision.yaml`
 - `make pi` — Build `AmigaVision.hdf`, inject it and `replay/` payload into a RePlayOS base image, and output a 16GB flashable `.img`
 - `make screenshots` — Create scaled IFF images from arbitrary PNG files placed in `screenshots` 
 - `make sqlite` — Create SQLite database from `data/db/titles.csv` (for easier viewing and editing)
 - `make csv` — Output the contents of SQLite database to `data/db/titles.csv` (for committing to version control)
+
+Manifests are stored in a mirrored tree under `$AGSCONTENT/manifests`, not next to the `.lha` archives in `$AGSCONTENT/titles`.
 
 For full usage enter `pipenv shell` and use the following commands directly:
 

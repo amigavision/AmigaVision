@@ -1,5 +1,5 @@
 include .env
-.PHONY: default env env-rm index manifests manifests-check sqlite csv screenshots image pocket-image mini-image test-image test-dry pi pi-only clean
+.PHONY: default env env-rm index manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply sqlite csv screenshots image pocket-image mini-image test-image test-dry pi pi-only clean
 
 PYTHON ?= python3.11
 
@@ -32,6 +32,18 @@ missing-manifests:
 
 verify-manifests:
 	@pipenv run ./build/ags_index.py --verify-manifests
+
+prune-manifests:
+	@pipenv run ./build/ags_index.py --prune-manifests
+
+prune-manifests-apply:
+	@pipenv run ./build/ags_index.py --prune-manifests --apply
+
+sync-manifests:
+	@pipenv run ./build/ags_index.py --sync-manifests
+
+sync-manifests-apply:
+	@pipenv run ./build/ags_index.py --sync-manifests --apply
 
 sqlite:
 	@pipenv run ./build/ags_index.py -v --make-sqlite
