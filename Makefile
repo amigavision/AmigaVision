@@ -1,7 +1,8 @@
 include .env
-.PHONY: default env env-rm index manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply sqlite csv screenshots image pocket-image mini-image test-image test-dry pi pi-only clean
+.PHONY: default env env-rm index manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives sqlite csv screenshots image pocket-image mini-image test-image test-dry pi pi-only clean
 
 PYTHON ?= python3.11
+SOURCE ?= ${AGSCONTENT}/titles/manual-downloads
 
 REPLAYOS_BASE_IMG ?= ${AGSCONTENT}/base/RePlayOS.img
 REPLAYOS_OUTPUT_IMG ?= ${AGSDEST}/AmigaVision-RPi.img
@@ -44,6 +45,9 @@ sync-manifests:
 
 sync-manifests-apply:
 	@pipenv run ./build/ags_index.py --sync-manifests --apply
+
+promote-newer-archives:
+	@pipenv run python ./build/promote_newer_archives.py --apply "$(SOURCE)"
 
 sqlite:
 	@pipenv run ./build/ags_index.py -v --make-sqlite

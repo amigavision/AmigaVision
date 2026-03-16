@@ -33,6 +33,7 @@ Common usage is covered by makefile "shortcuts":
 - `make sync-manifests-apply` — Generate missing manifests and remove stale manifests
 - `make prune-manifests` — Report stale manifests without deleting them
 - `make prune-manifests-apply` — Remove stale manifests whose archive no longer exists
+- `make promote-newer-archives [SOURCE=...]` — Promote clear newer versioned `.lha` archives, or same-name replacement archives, from a source directory into the canonical tree. Existing canonical destinations are overwritten from the source set, replaced archives are moved into a sibling `retired/` folder, and consumed source archives are moved into `SOURCE/imported/` so reruns converge cleanly. Archives under `_generic`, `_hacks`, and `_mt32` are ignored. Numeric ID suffixes may be added or removed across versions during matching (for example `Title_v1.1.lha` to `Title_v1.2_2707.lha`). Defaults to `${AGSCONTENT}/titles/manual-downloads`
 - `make image` — Create the Amiga HDF image and filesystem specified in `configs/AmigaVision.yaml`
 - `make pi` — Build `AmigaVision.hdf`, inject it and `replay/` payload into a RePlayOS base image, and output a 16GB flashable `.img`
 - `make screenshots` — Create scaled IFF images from arbitrary PNG files placed in `screenshots` 
