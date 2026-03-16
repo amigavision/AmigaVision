@@ -133,7 +133,7 @@ def load_csv_rows_by_id(csv_path="data/db/titles.csv"):
 def needs_remote_game_enrichment(existing_row):
     if existing_row is None:
         return True
-    fields = ("title", "subcategory", "hol_id", "lemon_id", "language", "developer", "publisher", "players")
+    fields = ("title", "subcategory", "hol_id", "lemon_id", "language", "developer", "publisher", "players", "hardware")
     return any(not existing_row.get(field) for field in fields)
 
 def csv_enrichment_fields(archive_path, existing_row=None):
@@ -142,6 +142,7 @@ def csv_enrichment_fields(archive_path, existing_row=None):
         "title": title,
         "title_short": infer_title_short(title),
         **csv_category_fields(archive_path),
+        "hardware": infer_hardware_from_archive(archive_path),
         "aga": infer_aga_flag(archive_path),
         "language": infer_language_from_archive(archive_path),
         "developer": "",
@@ -168,6 +169,32 @@ def infer_title_short(title, max_length=28):
 
 def infer_aga_flag(archive_path):
     return "1" if "_AGA" in Path(archive_path).name.upper() else ""
+
+def infer_hardware_from_archive(archive_path):
+    path = Path(archive_path)
+    archive_upper = path.name.upper()
+    rel_parts_upper = [part.upper() for part in path.parts]
+    if "ARCADIA" in archive_upper or "ARCADIA" in rel_parts_upper:
+        return "Arcadia"
+    if "_MT32" in archive_upper or "_MT32" in rel_parts_upper:
+        return "OCS/MT-32"
+    if "CD32" in archive_upper:
+        return "CD32"
+    if "CDTV" in archive_upper:
+        return "CDTV"
+    is_aga = "_AGA" in archive_upper
+    is_cd = "_CD" in archive_upper or archive_upper.endswith("CD.LHA")
+    if is_aga and "060" in archive_upper:
+        return "AGA/060"
+    if is_aga and "030" in archive_upper:
+        return "AGA/030"
+    if is_aga and is_cd:
+        return "AGA/CD"
+    if is_aga:
+        return "AGA"
+    if is_cd:
+        return "OCS/CD"
+    return "OCS"
 
 def normalized_title(value):
     return "".join(ch.lower() for ch in value if ch.isalnum())

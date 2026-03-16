@@ -385,7 +385,7 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
             if row[title_short_col] != normalized_title_short:
                 row[title_short_col] = normalized_title_short
                 changed = True
-        for field in ("title", "title_short", "category", "subcategory", "aga", "language", "developer", "publisher", "players", "country", "hol_id", "lemon_id"):
+        for field in ("title", "title_short", "category", "subcategory", "hardware", "aga", "language", "developer", "publisher", "players", "country", "hol_id", "lemon_id"):
             try:
                 col = header.index(field)
             except ValueError:
@@ -422,6 +422,7 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
         row["title"], row["title_short"] = normalize_title_fields(row["title"], row["title_short"])
         row["category"] = entry.get("category", "")
         row["subcategory"] = entry.get("subcategory", "")
+        row["hardware"] = entry.get("hardware", "")
         row["aga"] = entry.get("aga", "")
         row["language"] = entry.get("language", "")
         row["developer"] = entry.get("developer", "")
