@@ -1,0 +1,6 @@
+%YAML 1.2
+---
+AlcatrazSoil/AlcatrazSoil.slave: 981e56ed86108792008e8a70675813fc0ae5d8b91d43b4c2d93db04e707b2eb9
+AlcatrazSoil/data/atz-soil.exe: 9e1b3d6a50e5e792c384509c83c6f43732d0dff7cf19b09816bfd945e9852003
+AlcatrazSoil/data/atz-soil.nfo: 4fb5387f2c69fad42dd5ca5aa37dc4ec7a10cfbd3580630dd5efb78fcb64c3e3
+AlcatrazSoil/data/s/startup-sequence: 9a2f53575630c19bc05e3bfeedc568ed7eb2d8696876f1553bb1bb0d9c5680f8
