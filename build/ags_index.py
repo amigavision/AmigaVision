@@ -133,6 +133,8 @@ def load_csv_rows_by_id(csv_path="data/db/titles.csv"):
 def needs_remote_game_enrichment(existing_row):
     if existing_row is None:
         return True
+    if existing_row.get("hol_id") or existing_row.get("lemon_id"):
+        return False
     fields = ("title", "subcategory", "hol_id", "lemon_id", "language", "developer", "publisher", "players", "hardware")
     return any(not existing_row.get(field) for field in fields)
 
