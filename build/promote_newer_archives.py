@@ -70,7 +70,6 @@ def collect_current_archives(titles_dir):
             continue
         ignored_prefixes = {
             titles_dir / "manual-downloads",
-            titles_dir / "mega-downloads",
         }
         if any(path.is_relative_to(prefix) for prefix in ignored_prefixes if prefix.exists()):
             continue

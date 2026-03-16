@@ -42,7 +42,7 @@ Common usage is covered by makefile "shortcuts":
 - `make csv` — Output the contents of SQLite database to `data/db/titles.csv` (for committing to version control)
 
 Manifests are stored in a mirrored tree under `$AGSCONTENT/manifests`, not next to the `.lha` archives in `$AGSCONTENT/titles`.
-Archive indexing and manifest generation ignore staging or non-canonical content under `retired/`, `manual-downloads/`, `manual-downloads/imported/`, and `mega-downloads/`.
+Archive indexing and manifest generation ignore staging or non-canonical content under `retired/`, `manual-downloads/`, and `manual-downloads/imported/`.
 
 For full usage enter `pipenv shell` and use the following commands directly:
 
