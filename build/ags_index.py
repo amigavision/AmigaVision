@@ -14,6 +14,19 @@ import ags_paths as paths
 import ags_util as util
 
 # -----------------------------------------------------------------------------
+# Manifest paths
+
+def manifest_path_for_archive(titles_dir, manifests_dir, archive_path):
+    rel_path = os.path.relpath(archive_path, titles_dir)
+    return util.path(manifests_dir, rel_path + ".yaml")
+
+def archive_path_for_manifest(titles_dir, manifests_dir, manifest_path):
+    rel_path = os.path.relpath(manifest_path, manifests_dir)
+    if not rel_path.endswith(".lha.yaml"):
+        return None
+    return util.path(titles_dir, rel_path[:-5])
+
+# -----------------------------------------------------------------------------
 # Make dictionary of whdload archives
 
 def index_whdload_archives(basedir):
@@ -63,26 +76,27 @@ def index_whdload_archives(basedir):
 # -----------------------------------------------------------------------------
 # Make and verify manifests for lha files in content directory
 
-def make_manifests(basedir, only_missing=False):
-    basedir += os.sep
+def make_manifests(titles_dir, manifests_dir, only_missing=False):
+    titles_dir += os.sep
     print("Making manifests...", end="", flush=True)
     count = 0
-    for r, _, f in os.walk(basedir):
+    for r, _, f in os.walk(titles_dir):
         for file in f:
-            if make_manifest(util.path(r, file), only_missing):
+            if make_manifest(titles_dir, manifests_dir, util.path(r, file), only_missing):
                 count += 1
                 if count % 100 == 0: print(".", end="", flush=True)
     print("\n", flush=True)
     return
 
-def make_manifest(path, only_missing=False):
-    yaml_path = path + ".yaml"
+def make_manifest(titles_dir, manifests_dir, path, only_missing=False):
+    yaml_path = manifest_path_for_archive(titles_dir, manifests_dir, path)
     contents = None
     if only_missing and util.is_file(yaml_path):
         return None
     if path.endswith(".lha") and is_lhafile(path):
         contents = make_lha_manifest(path)
     if contents:
+        os.makedirs(os.path.dirname(yaml_path), exist_ok=True)
         with open(yaml_path, 'w') as f:
             yaml.round_trip_dump(contents, f, explicit_start=True, version=(1, 2))
     return contents
@@ -96,16 +110,17 @@ def make_lha_manifest(path):
         contents[n] = "{}".format(hasher.hexdigest())
     return contents
 
-def verify_manifests(basedir):
-    basedir += os.sep
+def verify_manifests(titles_dir, manifests_dir):
+    manifests_dir += os.sep
     print("Verifying manifests...")
     errors = 0
-    for r, _, f in os.walk(basedir):
+    for r, _, f in os.walk(manifests_dir):
         for file in f:
             error = None
             path = util.path(r, file)
             if file.endswith(".lha.yaml"):
-                error = verify_lha_manifest(path, path[:-5])
+                lha_path = archive_path_for_manifest(titles_dir, manifests_dir, path)
+                error = verify_lha_manifest(path, lha_path)
             if error:
                 print(error)
                 errors += 1
@@ -172,13 +187,14 @@ def main():
         titles_dir = paths.titles()
         if not util.is_dir(titles_dir):
             raise IOError("Titles dir not found ({})".format(titles_dir))
+        manifests_dir = paths.manifests()
 
         if args.make_manifests:
-            make_manifests(titles_dir, only_missing=args.only_missing)
+            make_manifests(titles_dir, manifests_dir, only_missing=args.only_missing)
             return 0
 
         if args.verify_manifests:
-            verify_manifests(titles_dir)
+            verify_manifests(titles_dir, manifests_dir)
             return 0
 
         # remove missing archive_paths from db
@@ -212,8 +228,10 @@ def main():
             for r in db.cursor().execute("SELECT * FROM titles"):
                 if not r["archive_path"]:
                     missing_archives.append(r["id"])
-                elif not util.is_file(util.path(titles_dir, r["archive_path"]) + ".yaml"):
-                    missing_manifests.append(util.path(titles_dir, r["archive_path"]) + ".yaml")
+                else:
+                    manifest_path = manifest_path_for_archive(titles_dir, manifests_dir, util.path(titles_dir, r["archive_path"]))
+                    if not util.is_file(manifest_path):
+                        missing_manifests.append(manifest_path)
                 if not util.is_file("data/img/" + r["id"] + ".iff"):
                     missing_images.append(r["id"])
             if missing_archives:

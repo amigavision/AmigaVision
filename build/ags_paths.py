@@ -14,6 +14,9 @@ def content():
 def titles():
     return util.path(content(), "titles")
 
+def manifests():
+    return util.path(content(), "manifests")
+
 def tmp():
     return util.path(os.getenv("AGSTEMP"))
 
