@@ -10,6 +10,7 @@ import os
 import re
 import subprocess
 import sys
+from collections import defaultdict
 from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -525,22 +526,23 @@ def sync_manifests(titles_dir, manifests_dir, apply=False):
 # -----------------------------------------------------------------------------
 # Make dictionary of whdload archives
 
-def index_whdload_archives(basedir):
+def index_whdload_archives(basedir, verbose=False):
     basedir += os.sep
-    print("Enumerating archives...", end="", flush=True)
+    print("Enumerating archives...", flush=True)
     count = 0
     d = {}
     for r, _, f in os.walk(basedir):
         for file in f:
             if file.endswith(".lha"):
                 count += 1
-                if count % 100 == 0:
-                    print(".", end="", flush=True)
                 path = util.path(r, file)
+                if verbose and count % 100 == 0:
+                    rel_path = path.split(basedir, 1)[1]
+                    print("Enumerating archives... [{}] {}".format(count, rel_path), flush=True)
                 if is_ignored_archive_path(basedir, path):
                     continue
                 if not is_lhafile(path):
-                    print("\n{} is not a valid lha file".format(path), flush=True)
+                    print("{} is not a valid lha file".format(path), flush=True)
                     continue
                 db_path = path.split(basedir)[1]
                 slave_category = db_path.split(os.sep)[0]
@@ -666,6 +668,16 @@ def finish_progress_line(progress_active):
         print()
     return False
 
+def build_db_row_maps(db):
+    exact_rows_by_id = {}
+    variant_rows_by_base_id = defaultdict(list)
+    for row in db.cursor().execute("SELECT * FROM titles"):
+        exact_rows_by_id[row["id"]] = row
+        parts = row["id"].split("--")
+        if len(parts) > 3:
+            variant_rows_by_base_id["--".join(parts[:-1])].append(row)
+    return exact_rows_by_id, variant_rows_by_base_id
+
 # -----------------------------------------------------------------------------
 
 def main():
@@ -679,6 +691,7 @@ def main():
     parser.add_argument("--prune-manifests", dest="prune_manifests", action="store_true", default=False, help="report or prune manifests without a matching archive")
     parser.add_argument("--apply", dest="apply", action="store_true", default=False, help="apply changes for destructive manifest operations")
     parser.add_argument("--append-missing-csv", dest="append_missing_csv", action="store_true", default=False, help="append missing title IDs to data/db/titles.csv")
+    parser.add_argument("--audit", dest="audit", action="store_true", default=False, help="report missing archives, images, and manifests")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
@@ -686,6 +699,8 @@ def main():
         args = parser.parse_args()
 
         if args.make_csv:
+            if args.verbose:
+                print("Writing data/db/titles.csv from SQLite...")
             util.write_csv()
             return 0
 
@@ -728,7 +743,9 @@ def main():
                 print()
 
         # enumerate whdl archives, correlate with db
-        archives = list(index_whdload_archives(titles_dir).items())
+        archives = list(index_whdload_archives(titles_dir, verbose=args.verbose).items())
+        total_archives = len(archives)
+        exact_rows_by_id, variant_rows_by_base_id = build_db_row_maps(db)
         total_game_enrichment = sum(
             1
             for _, arc in archives
@@ -736,46 +753,55 @@ def main():
             and Path(arc["archive_path"]).parts[0] == "game"
             and needs_remote_game_enrichment(csv_rows_by_id.get(arc["id"]))
         )
-        csv_enrichment_entries = []
+        csv_enrichment_entries = [] if args.append_missing_csv else None
         printed_wikidata_status = False
         printed_wikidata_progress = False
         game_enrichment_progress = 0
-        for _, arc in archives:
-            rows = db.cursor().execute("SELECT * FROM titles WHERE (id = ?) OR (id LIKE ?);", (arc["id"], arc["id"] + '--%',)).fetchall()
+        if args.verbose:
+            print("Correlating archives with title database...")
+        for archive_progress, (_, arc) in enumerate(archives, start=1):
+            rows = []
+            exact_row = exact_rows_by_id.get(arc["id"])
+            if exact_row:
+                rows.append(exact_row)
+            rows.extend(variant_rows_by_base_id.get(arc["id"], []))
+            if args.verbose and (archive_progress == 1 or archive_progress % 250 == 0 or archive_progress == total_archives):
+                print("Correlating archives... {}/{}".format(archive_progress, total_archives), flush=True)
             existing_csv_row = csv_rows_by_id.get(arc["id"])
             should_enrich_game = (
                 args.append_missing_csv
                 and Path(arc["archive_path"]).parts[0] == "game"
                 and needs_remote_game_enrichment(existing_csv_row)
             )
-            if should_enrich_game and not printed_wikidata_status:
-                print("Querying Wikidata for game metadata...")
-                printed_wikidata_status = True
             enrichment_fields = None
-            if should_enrich_game:
-                game_enrichment_progress += 1
-                if game_enrichment_progress == 1 or game_enrichment_progress % 25 == 0 or game_enrichment_progress == total_game_enrichment:
-                    print("\rWikidata: {}/{}".format(game_enrichment_progress, total_game_enrichment), end="", flush=True)
-                    printed_wikidata_progress = True
-                enrichment_fields = csv_enrichment_fields(arc["archive_path"], existing_csv_row)
-            else:
+            if args.append_missing_csv:
+                if should_enrich_game and not printed_wikidata_status:
+                    print("Querying Wikidata for game metadata...")
+                    printed_wikidata_status = True
+                if should_enrich_game:
+                    game_enrichment_progress += 1
+                    if game_enrichment_progress == 1 or game_enrichment_progress % 25 == 0 or game_enrichment_progress == total_game_enrichment:
+                        print("\rWikidata: {}/{}".format(game_enrichment_progress, total_game_enrichment), end="", flush=True)
+                        printed_wikidata_progress = True
                 enrichment_fields = csv_enrichment_fields(arc["archive_path"], existing_csv_row)
             if not rows:
                 printed_wikidata_progress = finish_progress_line(printed_wikidata_progress)
                 print("• No DB entry:", arc["archive_path"])
                 print(arc["id"])
                 print()
-                entry = {
-                    "id": arc["id"],
-                    **enrichment_fields,
-                }
-                csv_enrichment_entries.append(entry)
+                if args.append_missing_csv:
+                    entry = {
+                        "id": arc["id"],
+                        **enrichment_fields,
+                    }
+                    csv_enrichment_entries.append(entry)
                 continue
             for row in rows:
-                csv_enrichment_entries.append({
-                    "id": row["id"],
-                    **enrichment_fields,
-                })
+                if args.append_missing_csv:
+                    csv_enrichment_entries.append({
+                        "id": row["id"],
+                        **enrichment_fields,
+                    })
                 if not row["archive_path"]:
                     printed_wikidata_progress = finish_progress_line(printed_wikidata_progress)
                     db.cursor().execute("UPDATE titles SET archive_path=?,slave_path=?,slave_version=? WHERE id=?;",
@@ -804,20 +830,21 @@ def main():
             if report_path.is_file():
                 subprocess.run(["open", str(report_path)], check=False)
         else:
-            missing_ids = [entry["id"] for entry in csv_enrichment_entries if not db.cursor().execute("SELECT 1 FROM titles WHERE id=?;", (entry["id"],)).fetchone()]
-            if missing_ids:
-                print("• Found {} missing title ID(s); run 'make index-add-missing' to append them to data/db/titles.csv".format(len(set(missing_ids))))
-                print()
             if removed_db_archive_refs:
                 print("• Removed {} stale archive reference(s) from the DB; run 'make csv' to persist those changes to data/db/titles.csv".format(removed_db_archive_refs))
                 print()
 
         # list missing content
-        if args.verbose:
+        if args.audit:
             missing_archives = []
             missing_images = []
             missing_manifests = []
-            for r in db.cursor().execute("SELECT * FROM titles"):
+            title_rows = list(exact_rows_by_id.values())
+            total_title_rows = len(title_rows)
+            print("Checking for missing archives, images, and manifests...")
+            for title_progress, r in enumerate(title_rows, start=1):
+                if args.verbose and (title_progress == 1 or title_progress % 250 == 0 or title_progress == total_title_rows):
+                    print("Checking indexed titles... {}/{}".format(title_progress, total_title_rows), flush=True)
                 if not r["archive_path"]:
                     missing_archives.append(r["id"])
                 else:
