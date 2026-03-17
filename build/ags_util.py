@@ -474,7 +474,7 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
         if len(row) < len(header):
             row.extend([""] * (len(header) - len(row)))
         changed = False
-        for field in ("title", "title_short", "category", "subcategory", "hardware", "aga", "language", "developer", "publisher", "players", "hol_id", "lemon_id", "demozoo_id", "pouet_id"):
+        for field in ("title", "title_short", "category", "subcategory", "hardware", "aga", "language", "developer", "publisher", "players", "archive_path", "slave_path", "slave_version", "hol_id", "lemon_id", "demozoo_id", "pouet_id"):
             try:
                 col = header.index(field)
             except ValueError:
@@ -527,6 +527,9 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
         row["developer"] = entry.get("developer", "")
         row["publisher"] = entry.get("publisher", "")
         row["players"] = entry.get("players", "")
+        row["archive_path"] = entry.get("archive_path", "")
+        row["slave_path"] = entry.get("slave_path", "")
+        row["slave_version"] = entry.get("slave_version", "")
         row["country"] = entry.get("country", "")
         row["hol_id"] = entry.get("hol_id", "")
         row["lemon_id"] = entry.get("lemon_id", "")

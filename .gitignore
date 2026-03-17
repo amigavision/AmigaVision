@@ -4,10 +4,12 @@
 *.so
 vadjust
 .DS_Store
+.env.local
 configs/Layers/Base/DH0/Libs/idefix.library
 *.hdf
 *.rom
 /cd32/CD32-Output
 /content/titles/manual-downloads/
 /content/titles/**/retired/
+/data/cache/
 /data/img_downloads/

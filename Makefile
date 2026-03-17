@@ -1,5 +1,7 @@
 include .env
-.PHONY: default env env-rm index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots image pocket-image mini-image test-image test-dry pi pi-only clean
+-include .env.local
+export
+.PHONY: default env env-rm update pull-archives index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots image pocket-image mini-image test-image test-dry pi pi-only clean
 
 PYTHON ?= python3.11
 SOURCE ?= ${AGSCONTENT}/titles/manual-downloads
@@ -21,6 +23,14 @@ env:
 env-rm:
 	-@pipenv -v --rm
 	-@pipenv -v --clear
+
+update:
+	@pipenv run python ./build/pull_archives.py --dest "$(SOURCE)"
+	@pipenv run python ./build/promote_newer_archives.py --apply "$(SOURCE)"
+	@pipenv run ./build/ags_index.py -v --ingest
+
+pull-archives:
+	@pipenv run python ./build/pull_archives.py --dest "$(SOURCE)"
 
 index:
 	@pipenv run ./build/ags_index.py -v

@@ -668,6 +668,36 @@ def finish_progress_line(progress_active):
         print()
     return False
 
+def report_missing_required_metadata(csv_rows_by_id, ids=None):
+    required_fields = (
+        ("category", "Category"),
+        ("publisher", "Publisher"),
+        ("release_date", "Year"),
+        ("language", "Language"),
+    )
+    missing_by_field = {field: [] for field, _ in required_fields}
+    rows = csv_rows_by_id.values() if ids is None else [csv_rows_by_id[id] for id in ids if id in csv_rows_by_id]
+    for row in rows:
+        if not row.get("archive_path"):
+            continue
+        for field, _ in required_fields:
+            if not row.get(field):
+                missing_by_field[field].append(row["id"])
+
+    printed = False
+    for field, label in required_fields:
+        ids_for_field = missing_by_field[field]
+        if not ids_for_field:
+            continue
+        if not printed:
+            print("Missing required metadata:")
+            printed = True
+        print("• {} ({}):".format(label, len(ids_for_field)))
+        for id in ids_for_field:
+            print(id)
+        print()
+    return printed
+
 def build_db_row_maps(db):
     exact_rows_by_id = {}
     variant_rows_by_base_id = defaultdict(list)
@@ -691,12 +721,14 @@ def main():
     parser.add_argument("--prune-manifests", dest="prune_manifests", action="store_true", default=False, help="report or prune manifests without a matching archive")
     parser.add_argument("--apply", dest="apply", action="store_true", default=False, help="apply changes for destructive manifest operations")
     parser.add_argument("--append-missing-csv", dest="append_missing_csv", action="store_true", default=False, help="append missing title IDs to data/db/titles.csv")
+    parser.add_argument("--ingest", dest="ingest", action="store_true", default=False, help="index archives, append missing CSV rows, and write CSV")
     parser.add_argument("--audit", dest="audit", action="store_true", default=False, help="report missing archives, images, and manifests")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
     try:
         paths.verify()
         args = parser.parse_args()
+        sync_csv = args.append_missing_csv or args.ingest
 
         if args.make_csv:
             if args.verbose:
@@ -714,7 +746,7 @@ def main():
         if not util.is_dir(titles_dir):
             raise IOError("Titles dir not found ({})".format(titles_dir))
         manifests_dir = paths.manifests()
-        csv_rows_by_id = load_csv_rows_by_id() if args.append_missing_csv else {}
+        csv_rows_by_id = load_csv_rows_by_id() if sync_csv else {}
 
         if args.make_manifests:
             make_manifests(titles_dir, manifests_dir, only_missing=args.only_missing)
@@ -749,11 +781,11 @@ def main():
         total_game_enrichment = sum(
             1
             for _, arc in archives
-            if args.append_missing_csv
+            if sync_csv
             and Path(arc["archive_path"]).parts[0] == "game"
             and needs_remote_game_enrichment(csv_rows_by_id.get(arc["id"]))
         )
-        csv_enrichment_entries = [] if args.append_missing_csv else None
+        csv_enrichment_entries = [] if sync_csv else None
         printed_wikidata_status = False
         printed_wikidata_progress = False
         game_enrichment_progress = 0
@@ -769,12 +801,12 @@ def main():
                 print("Correlating archives... {}/{}".format(archive_progress, total_archives), flush=True)
             existing_csv_row = csv_rows_by_id.get(arc["id"])
             should_enrich_game = (
-                args.append_missing_csv
+                sync_csv
                 and Path(arc["archive_path"]).parts[0] == "game"
                 and needs_remote_game_enrichment(existing_csv_row)
             )
             enrichment_fields = None
-            if args.append_missing_csv:
+            if sync_csv:
                 if should_enrich_game and not printed_wikidata_status:
                     print("Querying Wikidata for game metadata...")
                     printed_wikidata_status = True
@@ -789,17 +821,23 @@ def main():
                 print("• No DB entry:", arc["archive_path"])
                 print(arc["id"])
                 print()
-                if args.append_missing_csv:
+                if sync_csv:
                     entry = {
                         "id": arc["id"],
+                        "archive_path": arc["archive_path"],
+                        "slave_path": arc["slave_path"],
+                        "slave_version": arc["slave_version"],
                         **enrichment_fields,
                     }
                     csv_enrichment_entries.append(entry)
                 continue
             for row in rows:
-                if args.append_missing_csv:
+                if sync_csv:
                     csv_enrichment_entries.append({
                         "id": row["id"],
+                        "archive_path": arc["archive_path"],
+                        "slave_path": arc["slave_path"],
+                        "slave_version": arc["slave_version"],
                         **enrichment_fields,
                     })
                 if not row["archive_path"]:
@@ -812,7 +850,8 @@ def main():
         if printed_wikidata_progress:
             print()
 
-        if args.append_missing_csv:
+        if sync_csv:
+            db.commit()
             util.write_csv()
             report_path = Path("data/db/index-add-missing-report.html").resolve()
             added, updated, report_entries = util.append_missing_title_rows(csv_enrichment_entries)
@@ -827,7 +866,13 @@ def main():
             else:
                 print("No missing title IDs or inferred CSV fields needed to be updated in data/db/titles.csv")
                 print()
-            if report_path.is_file():
+            if args.ingest:
+                refreshed_csv_rows = load_csv_rows_by_id()
+                changed_ids = [entry["id"] for entry in report_entries]
+                if not report_missing_required_metadata(refreshed_csv_rows, ids=changed_ids):
+                    print("No missing required metadata in changed archive-backed CSV rows")
+                    print()
+            elif report_path.is_file():
                 subprocess.run(["open", str(report_path)], check=False)
         else:
             if removed_db_archive_refs:
