@@ -11,7 +11,7 @@ autopep8 = "*"
 #amitools = {path = "../amitools", editable = true}
 amitools = "~=0.8.1"
 lhafile = "~=0.3.0"
-pillow = "~=10.3.0"
+pillow = "~=12.1.1"
 ruamel-yaml = "~=0.17.32"
 Wand = "~=0.6.11"
 
