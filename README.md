@@ -362,7 +362,10 @@ While AmigaVision has been tested for many years, the sheer volume of games and 
 * [Ben Squibb] — Improvements to AGS to enable hi-res launcher with thumbnail cycling + IFF conversion of hi-res thumbnails
 * Simon "[hitm4n]" Quincey — Hi-resolution screenshots for demos
 * LamerDeluxe — MT-32 support
-* [Frode Solheim] — Creator of [OpenRetro.org], screenshots used with kind permission
+* [Frode Solheim] — Creator of [OpenRetro.org], historical screenshot source
+* [Hall of Light] — Game metadata and screenshot source
+* [Lemon Amiga] — Game metadata and screenshot source
+* [Exotica] — Demo archive and screenshot source
 * wiisoldier — Initial RePlayOS setup and testing, benchmarking assistance
 * Alessio (PuntoMusica) — Testing AmigaVision on Amiga CD32 hardware
 
@@ -580,4 +583,6 @@ AmigaVision was made with the help of these wonderful tools:
 [hitm4n]:https://github.com/hittm4n
 [Frode Solheim]:https://github.com/FrodeSolheim
 [OpenRetro.org]:https://openretro.org
-
+[Hall of Light]:https://hol.abime.net
+[Lemon Amiga]:https://www.lemonamiga.com
+[Exotica]:https://www.exotica.org.uk

@@ -474,7 +474,7 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
         if len(row) < len(header):
             row.extend([""] * (len(header) - len(row)))
         changed = False
-        for field in ("title", "title_short", "category", "subcategory", "hardware", "aga", "language", "developer", "publisher", "players", "hol_id", "lemon_id"):
+        for field in ("title", "title_short", "category", "subcategory", "hardware", "aga", "language", "developer", "publisher", "players", "hol_id", "lemon_id", "demozoo_id", "pouet_id"):
             try:
                 col = header.index(field)
             except ValueError:
@@ -496,6 +496,8 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
                         "subcategory": row[header.index("subcategory")] if "subcategory" in header else entry.get("subcategory", ""),
                         "hol_id": row[header.index("hol_id")] if "hol_id" in header else entry.get("hol_id", ""),
                         "lemon_id": row[header.index("lemon_id")] if "lemon_id" in header else entry.get("lemon_id", ""),
+                        "demozoo_id": row[header.index("demozoo_id")] if "demozoo_id" in header else entry.get("demozoo_id", ""),
+                        "pouet_id": row[header.index("pouet_id")] if "pouet_id" in header else entry.get("pouet_id", ""),
                     })
         if changed:
             rows[idx] = row
@@ -507,6 +509,8 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
                 "subcategory": row[header.index("subcategory")] if "subcategory" in header else entry.get("subcategory", ""),
                 "hol_id": row[header.index("hol_id")] if "hol_id" in header else entry.get("hol_id", ""),
                 "lemon_id": row[header.index("lemon_id")] if "lemon_id" in header else entry.get("lemon_id", ""),
+                "demozoo_id": row[header.index("demozoo_id")] if "demozoo_id" in header else entry.get("demozoo_id", ""),
+                "pouet_id": row[header.index("pouet_id")] if "pouet_id" in header else entry.get("pouet_id", ""),
             })
 
     for entry in missing_entries:
@@ -526,6 +530,8 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
         row["country"] = entry.get("country", "")
         row["hol_id"] = entry.get("hol_id", "")
         row["lemon_id"] = entry.get("lemon_id", "")
+        row["demozoo_id"] = entry.get("demozoo_id", "")
+        row["pouet_id"] = entry.get("pouet_id", "")
         rows.append([row[column] for column in header])
         report_entries.append({
             "id": entry["id"],
@@ -534,6 +540,8 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
             "subcategory": row["subcategory"],
             "hol_id": row["hol_id"],
             "lemon_id": row["lemon_id"],
+            "demozoo_id": row["demozoo_id"],
+            "pouet_id": row["pouet_id"],
         })
 
     if updated or missing_entries:
@@ -632,19 +640,21 @@ def read_csv(csv_path, new_db_path):
                "subcategory" TEXT,
                "hol_id" INTEGER,
                "lemon_id" INTEGER,
+               "demozoo_id" INTEGER,
+               "pouet_id" INTEGER,
                PRIMARY KEY("id"));''')
     with open(csv_path, "r") as f:
         dr = csv.DictReader(f, delimiter=";")
         r = [(l["id"], l["title"], l["title_short"], l["redundant"], l["preferred_version"], l["hardware"], l["aga"], l["ntsc"], l["scale"],
               l["vshift"], l["hshift"], l["killaga"], l["gamepad"], l["lightgun"], l["note"], l["issues"], l["hack"], l["release_date"],
               l["country"], l["language"], l["developer"], l["publisher"], l["players"], l["slave_args"], l["slave_version"],
-              l["slave_path"], l["archive_path"], l["category"], l["subcategory"], l["hol_id"], l["lemon_id"]) for l in dr]
+              l["slave_path"], l["archive_path"], l["category"], l["subcategory"], l["hol_id"], l["lemon_id"], l.get("demozoo_id", ""), l.get("pouet_id", "")) for l in dr]
         c.executemany('''INSERT INTO titles (
                            id, title, title_short, redundant, preferred_version, hardware, aga, ntsc,
                            scale, vshift, hshift, killaga, gamepad, lightgun, note, issues, hack, release_date,
                            country, language, developer, publisher, players, slave_args, slave_version, slave_path, archive_path,
-                           category, subcategory, hol_id, lemon_id)
-                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);''', r)
+                           category, subcategory, hol_id, lemon_id, demozoo_id, pouet_id)
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);''', r)
     conn.commit()
     conn.close()
 

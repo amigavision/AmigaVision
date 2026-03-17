@@ -1,5 +1,5 @@
 include .env
-.PHONY: default env env-rm index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives sqlite csv screenshots image pocket-image mini-image test-image test-dry pi pi-only clean
+.PHONY: default env env-rm index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots image pocket-image mini-image test-image test-dry pi pi-only clean
 
 PYTHON ?= python3.11
 SOURCE ?= ${AGSCONTENT}/titles/manual-downloads
@@ -52,6 +52,15 @@ sync-manifests-apply:
 
 promote-newer-archives:
 	@pipenv run python ./build/promote_newer_archives.py --apply "$(SOURCE)"
+
+missing-images:
+	@pipenv run python ./build/sync_missing_images.py
+
+sync-images:
+	@pipenv run python ./build/sync_missing_images.py --fetch-lemon-interactive --apply
+
+sync-images-interactive:
+	@pipenv run python ./build/sync_missing_images.py --fetch-lemon-interactive --apply
 
 sqlite:
 	@pipenv run ./build/ags_index.py -v --make-sqlite
