@@ -4,7 +4,7 @@
 *.so
 vadjust
 .DS_Store
-.env.local
+.env
 configs/Layers/Base/DH0/Libs/idefix.library
 *.hdf
 *.rom
