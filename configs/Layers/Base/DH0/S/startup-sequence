@@ -8,9 +8,10 @@ endif
 
 failat 21
 
-IDEFix >NIL:
+; IDEFix >NIL: ; Creates trouble on original hardware without 4 IDE ports
 
 LED ; Turn off the audio filter
+anticlick ; Disable floppy clicks on real hardware
 
 makedir RAM:T RAM:Clipboards RAM:ENV RAM:ENV/Sys
 copy >NIL: ENVARC: RAM:ENV ALL NOREQ
@@ -71,13 +72,6 @@ if not warn
       assign WHD0: Data:WHD
       assign >NIL: exists WHDSaves:
       if warn
-        echo ""
-        echo ">>> Using AmigaVision.hdf for save data <<<"
-        echo ""
-        echo "Mount AmigaVision-Saves.hdf as secondary drive to enable a"
-        echo "save disk that can easily be carried over when upgrading"
-        echo "to new releases of AmigaVision."
-        wait 4
         assign WHDSaves: SYS:WHDSaves
       endif
       ags-vadjust
