@@ -1,0 +1,28 @@
+/* compactflash.device $VER: 1.37 (13.11.2026) */
+/*
+ * Flags options (can be combined):
+ *   0 = default
+ *   1 = "cfd first" hack for PCMCIA conflicts with other drivers
+ *   2 = unused - was "skip invalid PCMCIA signature" (v1.37+)
+ *   4 = use CardResource API instead of direct chipset access
+ *   8 = output init messages to serial port at 9600 baud (v1.35+ full build)
+ *  16 = force 256 sector transfers regardless of card capability (v1.35+)
+ *  32 = skip multi-sector override auto-detection, use firmware value (v1.37+)
+ */
+FileSystem = l:fat95
+Device = compactflash.device
+Unit = 0
+Flags = 0
+LowCyl = 0
+HighCyl = 0
+Surfaces = 1
+BlocksPerTrack = 1
+BlockSize = 512
+Buffers = 20
+BufMemType = 1
+BootPri = 0
+Stacksize = 4096
+Priority = 5
+GlobVec = -1
+DosType = 0x46415401
+/* MaxTransfer = 0x200 */
