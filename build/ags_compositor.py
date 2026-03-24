@@ -40,6 +40,8 @@ def bg(width=320, height=256, color="#000"):
 # halign = "center", "left", "right"
 # valign = "center", "top", "bottom"
 def tx(txt, size=240, halign="center", valign="center", kerning=-1.0, font="display.otf", color="#ffffff", bg="#000000"):
+    if not txt:
+        return bg if isinstance(bg, Image) else bg(color=bg)
     font_path = util.path(paths.content(), "fonts", font)
     try:
         if not util.is_file(font_path):
@@ -101,8 +103,8 @@ def pi(path, scale="fit", halign="center", valign="center", mode="copy", bg="#00
                 drawing.composite(operator=mode, left=left, top=top, width=comp_width, height=comp_height, image=src)
                 drawing(img)
                 return img
-    except ValueError:
-        return 0
+    except Exception:
+        return bg if isinstance(bg, Image) else bg(color=bg)
 
 def alignment_to_gravity(halign="center", valign="center"):
     if isinstance(valign, str) and valign == "top":

@@ -1,0 +1,10 @@
+stack 32768
+stack
+echo "" >RAM:OK
+echo ""
+pfsformat drive DH0: name "Amiga" quick noicons filenamesize=96 <RAM:OK
+echo ""
+pfsformat drive DH1: name "Data" quick noicons filenamesize=96 <RAM:OK
+echo ""
+echo "Formatting done!"
+UAEquit

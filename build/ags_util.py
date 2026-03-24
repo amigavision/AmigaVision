@@ -12,6 +12,7 @@ import re
 import shutil
 import sqlite3
 import stat
+import subprocess
 import sys
 
 from lhafile import LhaFile
@@ -91,7 +92,7 @@ def make_dir(path: str):
         os.makedirs(path)
 
 def rm_path(path: str):
-    if os.path.isfile(path):
+    if os.path.islink(path) or os.path.isfile(path):
         os.remove(path)
     elif os.path.isdir(path):
         shutil.rmtree(path)
@@ -110,6 +111,36 @@ def get_dir_size(start_path=".", block_size=1):
             fp = os.path.join(dirpath, f)
             file_size += math.ceil(os.path.getsize(fp) / block_size) * block_size
     return file_size + path_size
+
+def get_tree_stats(start_path="."):
+    file_count = 0
+    dir_count = 0
+    total_size = 0
+    for dirpath, dirnames, filenames in os.walk(start_path):
+        dir_count += len(dirnames)
+        for filename in filenames:
+            if filename.endswith(".uaem"):
+                continue
+            file_count += 1
+            total_size += os.path.getsize(os.path.join(dirpath, filename))
+    return {
+        "files": file_count,
+        "dirs": dir_count,
+        "bytes": total_size,
+    }
+
+def format_bytes(size: int) -> str:
+    units = ["B", "KiB", "MiB", "GiB", "TiB"]
+    value = float(size)
+    unit = units[0]
+    for candidate in units:
+        unit = candidate
+        if value < 1024.0 or candidate == units[-1]:
+            break
+        value /= 1024.0
+    if unit == "B":
+        return "{} {}".format(int(value), unit)
+    return "{:.1f} {}".format(value, unit)
 
 def copytree(src: str, dst: str, symlinks=False, ignore=None):
     if not os.path.exists(dst):
@@ -136,6 +167,47 @@ def copytree(src: str, dst: str, symlinks=False, ignore=None):
             copytree(s, d, symlinks, ignore)
         else:
             shutil.copy2(s, d)
+
+def linktree(src: str, dst: str):
+    if not os.path.exists(dst):
+        os.makedirs(dst, exist_ok=True)
+        shutil.copystat(src, dst)
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            linktree(s, d)
+        else:
+            if os.path.lexists(d):
+                os.remove(d)
+            try:
+                os.link(s, d)
+            except OSError:
+                shutil.copy2(s, d)
+
+def clonefile_tree(src: str, dst: str) -> bool:
+    if os.name != "posix":
+        return False
+    if not os.path.exists(dst):
+        os.makedirs(dst, exist_ok=True)
+        shutil.copystat(src, dst)
+    # Prefer filesystem-native copy-on-write clones when supported. This is
+    # much faster than walking large cached trees in Python and avoids sharing
+    # mutable hardlinks with the cache.
+    result = subprocess.run(
+        ["cp", "-cR", path(src, "."), dst],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    return result.returncode == 0
+
+def clone_tree(src: str, dst: str):
+    if clonefile_tree(src, dst):
+        return
+    try:
+        linktree(src, dst)
+    except OSError:
+        copytree(src, dst)
 
 def prettify_names(name: str):
     last_delimiter = name.rfind(", ")
@@ -292,7 +364,7 @@ def get_db(verbose: bool):
 
     if update_sqlite3:
         if verbose:
-            print("updating title database cache...")
+            print("Updating title database cache...")
         read_csv(csv_path, sqlite3_path)
 
     db = sqlite3.connect(sqlite3_path)
@@ -436,6 +508,7 @@ def normalized_title_fields(title, title_short):
         title_short = cleanup_title_short(title_short)
     return title, title_short
 
+
 def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
     if not entries:
         return 0, 0
@@ -474,7 +547,7 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
         if len(row) < len(header):
             row.extend([""] * (len(header) - len(row)))
         changed = False
-        for field in ("title", "title_short", "category", "subcategory", "hardware", "aga", "language", "developer", "publisher", "players", "archive_path", "slave_path", "slave_version", "hol_id", "lemon_id", "demozoo_id", "pouet_id"):
+        for field in ("title", "title_short", "category", "subcategory", "hardware", "aga", "release_date", "language", "developer", "publisher", "players", "archive_path", "slave_path", "slave_version", "hol_id", "lemon_id", "demozoo_id", "pouet_id"):
             try:
                 col = header.index(field)
             except ValueError:

@@ -8,6 +8,24 @@ import ags_util as util
 
 # -----------------------------------------------------------------------------
 
+def cache_root():
+    return util.path(os.getenv("HOME"), "Library", "Caches", "AmigaVision")
+
+def cache_generation_file():
+    return util.path(cache_root(), "build-cache-generation.txt")
+
+def cache_generation():
+    generation = os.getenv("AGSCACHEGEN")
+    if generation:
+        return generation.strip()
+    generation_file = cache_generation_file()
+    if util.is_file(generation_file):
+        with open(generation_file, "r", encoding="utf-8") as f:
+            value = f.read().strip()
+            if value:
+                return value
+    return "current"
+
 def content():
     return util.path(os.getenv("AGSCONTENT"))
 
@@ -19,6 +37,9 @@ def manifests():
 
 def tmp():
     return util.path(os.getenv("AGSTEMP"))
+
+def cache():
+    return util.path(cache_root(), "build", cache_generation())
 
 def verify():
     vars = ["AGSCONTENT", "AGSDEST", "AGSTEMP", "FSUAEBIN", "FSUAEROM"]

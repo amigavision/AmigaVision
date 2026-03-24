@@ -10,21 +10,36 @@ import ags_util as util
 
 # -----------------------------------------------------------------------------
 
-def get_entry(db, name):
-    def sanitize(entry):
-        if entry is None:
-            return None
-        entry = dict(entry)
-        if entry_is_notwhdl(entry):
-            return entry
-        if entry_is_valid(entry) and entry["slave_path"].find("/") > 0:
-            entry["slave_dir"] = entry["slave_path"].split("/")[0]
-            entry["slave_name"] = entry["slave_path"].split("/")[1]
-            entry["slave_id"] = entry["slave_name"][:-6]
-            return entry
+def sanitize_entry(entry):
+    if entry is None:
         return None
+    entry = dict(entry)
+    if entry_is_notwhdl(entry):
+        return entry
+    if entry_is_valid(entry) and entry["slave_path"].find("/") > 0:
+        entry["slave_dir"] = entry["slave_path"].split("/")[0]
+        entry["slave_name"] = entry["slave_path"].split("/")[1]
+        entry["slave_id"] = entry["slave_name"][:-6]
+        return entry
+    return None
 
+def get_entry_by_id(db, entry_id):
+    if not entry_id:
+        return None
+    row = db.cursor().execute('SELECT * FROM titles WHERE id = ?', (entry_id.lower(),)).fetchone()
+    return sanitize_entry(row)
+
+def get_preferred_entry(db, entry):
+    if not entry:
+        return None
+    return get_entry_by_id(db, entry.get("preferred_version"))
+
+def get_entry(db, name):
     n = name.lower()
+    exact_entry = get_entry_by_id(db, n)
+    if exact_entry:
+        return exact_entry, get_preferred_entry(db, exact_entry)
+
     patterns = [
         "{}".format(n),
         "game--{}".format(n),
@@ -50,11 +65,11 @@ def get_entry(db, name):
         "%{}%".format(n)
     ]
     for p in patterns:
-        e = db.cursor().execute('SELECT * FROM titles WHERE id LIKE ?', (p.lower(),)).fetchone()
-        entry = sanitize(e)
-        if entry:
-            (preferred_entry, _) = get_entry(db, entry["preferred_version"]) if entry.get("preferred_version", None) else (None, None)
-            return entry, preferred_entry
+        rows = db.cursor().execute('SELECT * FROM titles WHERE id LIKE ?', (p.lower(),)).fetchall()
+        for e in rows:
+            entry = sanitize_entry(e)
+            if entry:
+                return entry, get_preferred_entry(db, entry)
     return None, None
 
 def entry_is_valid(entry):
@@ -108,7 +123,7 @@ def get_runscript_paths(entry) -> Tuple[str | None, str | None]:
     if not (isinstance(entry, dict)):
         return (None, None)
     if entry.get("issues"):
-        return (util.path("Run", "Problematic"), None)
+        return (util.path("Run", "Issues"), None)
     elif entry.get("category", "").lower() == "game":
         return (util.path("Run", "Game"), util.path("RunQuiet", "Game"))
     elif entry.get("category", "").lower() == "demo":
@@ -118,11 +133,11 @@ def get_runscript_paths(entry) -> Tuple[str | None, str | None]:
         elif sub.startswith("disk mag"):
             return (util.path("Run", "DiskMag"), None)
         elif sub.startswith("slide"):
-            return (util.path("Run", "SlideShow"), None)
+            return (util.path("Run", "Demo"), None)
         elif sub.startswith("demo") or sub.startswith("intro") or sub.startswith("crack"):
             return (util.path("Run", "Demo"), util.path("RunQuiet", "Demo"))
         else:
-            return (util.path("Run", "SlideShow"), None)
+            return (util.path("Run", "Demo"), None)
     else:
         return (util.path("Run", "Misc"), None)
 

@@ -8,6 +8,7 @@ import subprocess
 import sys
 from ast import literal_eval as make_tuple
 
+import ags_paths as paths
 import ags_util as util
 
 # -----------------------------------------------------------------------------
@@ -15,28 +16,55 @@ import ags_util as util
 def is_amiga_devicename(name: str):
     return len(name) == 3 and name[0].isalpha() and name[1].isalpha() and name[2].isnumeric()
 
-def extract_base_image(base_hdf: str, dest: str):
-    tmp_dest = dest + "_unpack"
-    _ = subprocess.run(["xdftool", base_hdf, "unpack", tmp_dest, "fsuae"])
-    for f in os.listdir(tmp_dest):
-        shutil.move(os.path.join(tmp_dest, f), dest)
-    util.rm_path(tmp_dest)
+def get_pfs_free_mb(device_name: str) -> int:
+    default = 128 if device_name == "DH0" else 256
+    env_name = "AGS_PFS_FREE_MB_DH0" if device_name == "DH0" else "AGS_PFS_FREE_MB_OTHER"
+    try:
+        return int(os.getenv(env_name, str(default)).strip())
+    except ValueError:
+        return default
 
-def build_pfs(hdf_path, clone_path, verbose):
+def get_base_hdf_cache_dir(base_hdf: str):
+    cache_root = util.path(paths.cache(), "base-hdf")
+    stat = os.stat(base_hdf)
+    cache_key = "{}-{}-{}".format(
+        os.path.basename(base_hdf),
+        stat.st_size,
+        stat.st_mtime_ns,
+    )
+    return util.path(cache_root, cache_key)
+
+def extract_base_image(base_hdf: str, dest: str):
+    cache_dir = get_base_hdf_cache_dir(base_hdf)
+
+    if cache_dir and util.is_dir(cache_dir):
+        util.clone_tree(cache_dir, dest)
+        return True
+
+    unpack_dest = dest + "_unpack"
+    if cache_dir:
+        util.make_dir(os.path.dirname(cache_dir))
+        unpack_dest = cache_dir + ".tmp"
+        util.rm_path(unpack_dest)
+
+    result = subprocess.run(["xdftool", base_hdf, "unpack", unpack_dest, "fsuae"])
+    if result.returncode != 0:
+        raise IOError("failed to unpack base HDF ({})".format(base_hdf))
+
+    if cache_dir:
+        util.rm_path(cache_dir)
+        os.rename(unpack_dest, cache_dir)
+        util.clone_tree(cache_dir, dest)
+    else:
+        for f in os.listdir(unpack_dest):
+            shutil.move(os.path.join(unpack_dest, f), dest)
+        util.rm_path(unpack_dest)
+    return False
+
+def calculate_pfs_partitions(clone_path):
     FS_OVERHEAD = 1.06 # filesystem size fudge factor
     SECTOR_SIZE = 512 # fixed
     BLOCK_SIZE = 512 # amiga only support RDBs with a 512 byte block size
-    DIRECT_SCSI = True
-
-    if verbose:
-        print("building PFS container...")
-
-    pfs3_bin = util.path("data", "pfs3", "pfs3.bin")
-    if not util.is_file(pfs3_bin):
-        raise IOError("PFS3 filesystem binary not found ({})".format(pfs3_bin))
-
-    if verbose:
-        print(" > calculating partition sizes...")
 
     num_buffers = 128
     heads = 16
@@ -48,16 +76,41 @@ def build_pfs(hdf_path, clone_path, verbose):
     partitions = [] # (partition name, cylinders)
     for f in sorted(os.listdir(clone_path)):
         if util.is_dir(util.path(clone_path, f)) and is_amiga_devicename(f):
-            mb_free = 80 if f == "DH0" else 40
+            mb_free = get_pfs_free_mb(f)
             cyls = int(FS_OVERHEAD * (util.get_dir_size(util.path(clone_path, f), BLOCK_SIZE) + (mb_free * 1024 * 1024))) // cylinder_size
             partitions.append(("DH" + str(len(partitions)), cyls))
             total_cyls += cyls
+    return partitions
+
+def build_pfs(hdf_path, clone_path, verbose, partitions=None):
+    SECTOR_SIZE = 512 # fixed
+    BLOCK_SIZE = 512 # amiga only support RDBs with a 512 byte block size
+    DIRECT_SCSI = True
+
+    if verbose:
+        print("Building PFS container...")
+
+    pfs3_bin = util.path("data", "pfs3", "pfs3.bin")
+    if not util.is_file(pfs3_bin):
+        raise IOError("PFS3 filesystem binary not found ({})".format(pfs3_bin))
+
+    if partitions is None:
+        if verbose:
+            print(" > Calculating partition sizes...")
+        partitions = calculate_pfs_partitions(clone_path)
+
+    num_buffers = 128
+    heads = 16
+    sectors = 63
+    cylinder_size = SECTOR_SIZE * heads * sectors
+    num_cyls_rdb = 1
+    total_cyls = num_cyls_rdb + sum(cyls for _, cyls in partitions)
 
     if util.is_file(hdf_path):
         os.remove(hdf_path)
 
-    if verbose: print(" > creating pfs container ({}MB)".format((total_cyls * cylinder_size) // (1024 * 1024)))
-    if verbose: print(" > drive geometry: {} cylinders, {} heads, {} sectors".format(total_cyls + 1, heads, sectors))
+    if verbose: print(" > Creating PFS container ({}MB)".format((total_cyls * cylinder_size) // (1024 * 1024)))
+    if verbose: print(" > Drive geometry: {} cylinders, {} heads, {} sectors".format(total_cyls + 1, heads, sectors))
     r = subprocess.run([
         "rdbtool", hdf_path,
         "create",
@@ -67,7 +120,7 @@ def build_pfs(hdf_path, clone_path, verbose):
         "rdb_flags=0x2"
     ])
 
-    if verbose: print(" > adding filesystem...")
+    if verbose: print(" > Adding filesystem...")
     r = subprocess.run([
         "rdbtool", hdf_path,
         "fsadd", pfs3_bin,
@@ -75,7 +128,7 @@ def build_pfs(hdf_path, clone_path, verbose):
     ], stdout=subprocess.PIPE)
 
     if verbose:
-        print(" > adding partitions...")
+        print(" > Adding partitions...")
 
     # add boot partition
     part = partitions.pop(0)

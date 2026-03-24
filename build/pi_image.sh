@@ -26,6 +26,38 @@ PAYLOAD_DIR="./replay"
 IMAGE_SIZE="16g"
 KEEP_MOUNTED=0
 
+resolve_base_img() {
+  local input_path="$1"
+
+  if [[ -f "$input_path" ]]; then
+    printf '%s\n' "$input_path"
+    return 0
+  fi
+
+  if [[ -d "$input_path" ]]; then
+    local candidate newest="" newest_mtime=0 mtime
+    shopt -s nullglob
+    for candidate in "$input_path"/RePlayOS*.img; do
+      [[ -f "$candidate" ]] || continue
+      mtime="$(stat -f '%m' "$candidate")"
+      if [[ -z "$newest" || "$mtime" -gt "$newest_mtime" ]]; then
+        newest="$candidate"
+        newest_mtime="$mtime"
+      fi
+    done
+    shopt -u nullglob
+    if [[ -n "$newest" ]]; then
+      printf '%s\n' "$newest"
+      return 0
+    fi
+    echo "error: no RePlayOS*.img found in: $input_path" >&2
+    return 1
+  fi
+
+  echo "error: base image not found: $input_path" >&2
+  return 1
+}
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --base-img)
@@ -70,10 +102,8 @@ if [[ -z "$BASE_IMG" || -z "$HDF_PATH" || -z "$OUTPUT_IMG" ]]; then
   exit 1
 fi
 
-if [[ ! -f "$BASE_IMG" ]]; then
-  echo "error: base image not found: $BASE_IMG" >&2
-  exit 1
-fi
+BASE_IMG="$(resolve_base_img "$BASE_IMG")"
+echo "Using RePlayOS base image: $BASE_IMG"
 
 if [[ ! -f "$HDF_PATH" ]]; then
   echo "error: AmigaVision HDF not found: $HDF_PATH" >&2

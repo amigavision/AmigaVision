@@ -2,13 +2,13 @@
 
 # AGSImager: Make AGS entries
 
-import json
 import operator
 import shutil
 import sys
 import textwrap
 from pathlib import Path
 from sqlite3 import Connection
+from time import perf_counter
 
 import ags_compositor as compositor
 import ags_query as query
@@ -23,24 +23,44 @@ MAX_FILENAME_LENGTH = 96
 
 # -----------------------------------------------------------------------------
 
+def count_tree_entries(node):
+    total = 0
+    if isinstance(node, list):
+        for item in node:
+            if isinstance(item, str):
+                total += 1
+            elif isinstance(item, list):
+                total += count_tree_entries(item)
+            elif isinstance(item, dict):
+                for _, value in item.items():
+                    if not isinstance(value, dict):
+                        total += count_tree_entries(value)
+    return total
+
+
+def update_progress(collection: EntryCollection, verbose: bool):
+    if verbose and collection.progress_total > 0:
+        print(
+            "\r > Building AGS2 tree [{}/{}]".format(collection.progress_current, collection.progress_total),
+            end="",
+            flush=True
+        )
+
+def add_timing(collection: EntryCollection, label: str, duration: float):
+    collection.timing[label] = collection.timing.get(label, 0.0) + duration
+
 def make_canonical_name(entry) -> str | None:
     max_len = MAX_FILENAME_LENGTH - 5
     if not (isinstance(entry, dict)):
         return None
-    name = sanitize_name(entry["title_short"])
-    meta = ""
-    # add group name for demos
-    if entry.get("category", "").lower() == "demo":
-        groups = query.get_publishers(entry)
-        if len(groups):
-            meta += "(" + groups[0] + ")"
-    # add hardware info
-    meta += "(" + query.get_hardware_short(entry) + ")"
-    # add language
-    if entry.get("category", "").lower() == "game":
-        languages = list(map(lambda s: util.language_code(s), query.get_languages(entry)))
-        meta += "[" + "-".join(languages) + "]"
-    return "{} {}".format(name, meta).replace("#", "")[:max_len].strip()
+    entry_id = entry.get("id")
+    if entry_id:
+        # These filenames are internal runscript paths, so prefer the stable
+        # unique database id over display-oriented names that can collide.
+        return sanitize_name(entry_id).replace("#", "")[:max_len].strip()
+
+    name = sanitize_name(entry.get("title_short") or entry.get("title") or "")
+    return name.replace("#", "")[:max_len].strip() or None
 
 def sanitize_name(name: str) -> str:
     name = name.replace("/", "-").replace("\\", "-").replace(": ", " ").replace(":", " ").replace("\"", "")
@@ -49,7 +69,16 @@ def sanitize_name(name: str) -> str:
     return name.strip()
 
 def wrap_note(text: str) -> str:
-    return "\n".join([textwrap.fill(p, AGS_INFO_WIDTH) for p in text.replace("\\n", "\n").splitlines()])
+    wrapped = []
+    for line in text.replace("\\n", "\n").splitlines():
+        if not line.strip():
+            wrapped.append("")
+        elif line != line.strip():
+            # Preserve intentionally padded lines exactly as authored.
+            wrapped.append(line)
+        else:
+            wrapped.append(textwrap.fill(line, AGS_INFO_WIDTH))
+    return "\n".join(wrapped)
 
 def make_image(path, options):
     if util.is_file(path):
@@ -71,7 +100,7 @@ def make_image(path, options):
 
 def make_tree(
         db: Connection, collection: EntryCollection, ags_path, node,
-        path=[], template=None, hidden=False
+        path=[], template=None, hidden=False, verbose=False
     ):
     if isinstance(node, list):
         entries = []
@@ -88,7 +117,7 @@ def make_tree(
             if isinstance(item, list):
                 for e in item:
                     if isinstance(e, dict):
-                        make_tree(db, collection, ags_path, [e], path, template=template, hidden=hidden)
+                        make_tree(db, collection, ags_path, [e], path, template=template, hidden=hidden, verbose=verbose)
                     else:
                         raise ValueError("make_tree: list error ({})".format(e))
             # parse metadata or subtree
@@ -108,15 +137,15 @@ def make_tree(
                     else:
                         # item is a subtree
                         hidden = hidden or item.get("hidden", False)
-                        make_tree(db, collection, ags_path, value, path + [key], template=template, hidden=hidden)
-        make_entries(db, collection, ags_path, entries, path, note=note, image=image, ordering=ordering, rank=rank, template=template, hidden=hidden)
+                        make_tree(db, collection, ags_path, value, path + [key], template=template, hidden=hidden, verbose=verbose)
+        make_entries(db, collection, ags_path, entries, path, note=note, image=image, ordering=ordering, rank=rank, template=template, hidden=hidden, verbose=verbose)
 
 # -----------------------------------------------------------------------------
 # create entries from list
 
 def make_entries(
         db: Connection, collection: EntryCollection, ags_path, entries, path,
-        note=None, image=None, ordering=None, rank=None, template=None, hidden=False
+        note=None, image=None, ordering=None, rank=None, template=None, hidden=False, verbose=False
     ):
     # make dir
     base_path = ags_path
@@ -133,7 +162,7 @@ def make_entries(
     if not hidden:
         if note:
             note = wrap_note(note)
-            open(base_path[:-4] + ".txt", mode="w", encoding="latin-1").write(note)
+            open(base_path[:-4] + ".txt", mode="w", encoding="latin-1", errors="replace").write(note)
         if isinstance(image, (dict, list)):
             make_image(base_path[:-4] + ".iff", image)
 
@@ -148,11 +177,14 @@ def make_entries(
             options = name[1]
 
         # use preferred entry if found, except when name was ID-like
+        lookup_start = perf_counter()
         entry, pref_entry = query.get_entry(db, n)
+        add_timing(collection, "menu lookup", perf_counter() - lookup_start)
         if pref_entry and query.name_is_fuzzy(n): entry = pref_entry
         if not entry:
             if options is None or (options and not options.get("unavailable", False)):
                 print(" > WARNING: invalid entry: {}".format(n))
+                continue
             else:
                 disp_name = n.replace("-", " ")
                 entry = { "id": n, "title": disp_name, "title_short": disp_name, "unavailable": True }
@@ -169,7 +201,11 @@ def make_entries(
 
         if hidden: continue
 
+        entry_start = perf_counter()
         make_entry(collection, ags_path, entry, base_path, rank=rank, sort_rank=sort_rank, options=options, template=template)
+        add_timing(collection, "menu make_entry", perf_counter() - entry_start)
+        collection.progress_current += 1
+        update_progress(collection, verbose)
     return
 
 # -----------------------------------------------------------------------------
@@ -198,7 +234,7 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
         entry.update(options)
 
     # skip if entry already added at path
-    path_id = json.dumps({"entry_id": entry["id"], "path": path})
+    path_id = (entry["id"], path)
     if path_id in collection.path_ids:
         return
     else:
@@ -262,7 +298,7 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
         if util.is_file(runfile_dest_path):
             print(" > WARNING: name clash for", entry["id"], "at", runfile_dest_path)
         else:
-            open(runfile_dest_path, mode="w", encoding="latin-1").write(runfile)
+                open(runfile_dest_path, mode="w", encoding="latin-1", errors="replace").write(runfile)
 
     # apply sorting overrides
     if options and "rank" in options:
@@ -273,9 +309,9 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
     # make note
     if options and options.get("unavailable", False):
         note = strings["note"]["title"] + entry["title"] + "\n\n" + strings["note"]["unavailable"]
-        open(base_path + ".txt", mode="w", encoding="latin-1").write(note)
+        open(base_path + ".txt", mode="w", encoding="latin-1", errors="replace").write(note)
     elif entry:
-        open(base_path + ".txt", mode="w", encoding="latin-1").write(make_note(entry, note))
+        open(base_path + ".txt", mode="w", encoding="latin-1", errors="replace").write(make_note(entry, note))
 
     # make image
     if entry and "image" in entry:
@@ -313,7 +349,7 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
             if not "title" in metadata: metadata["title"] = meta_title
             tmd = metadata["title"]
             if "category" in metadata: tmd += "\n{}".format(metadata["category"])
-            open(base_path + ".tmd", mode="w", encoding="latin-1").write(tmd)
+            open(base_path + ".tmd", mode="w", encoding="latin-1", errors="replace").write(tmd)
 
     return base_path
 
@@ -422,7 +458,7 @@ def make_runscripts(collection: EntryCollection, ags_path: str, template=None):
             if util.is_file(dest):
                 print(" > WARNING: duplicate script at", dest, entry["id"])
             else:
-                open(dest, mode="w", encoding="latin-1").write(script)
+                open(dest, mode="w", encoding="latin-1", errors="replace").write(script)
         if dest_paths[1]:
             script = make_runscript(entry, template, True)
             dest = util.path(ags_path, dest_paths[1], name)
@@ -430,7 +466,7 @@ def make_runscripts(collection: EntryCollection, ags_path: str, template=None):
             if util.is_file(dest):
                 print(" > WARNING: duplicate script at", dest, entry["id"])
             else:
-                open(dest, mode="w", encoding="latin-1").write(script)
+                open(dest, mode="w", encoding="latin-1", errors="replace").write(script)
 
 def make_runscript(entry, template, quiet: bool) -> str:
     script = None
@@ -506,9 +542,17 @@ def make_runscript(entry, template, quiet: bool) -> str:
 def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
     d_path = util.path(path, "{}.ags".format(strings["dirs"]["scene"]))
     ne_path = util.path(path, "{}.ags".format(strings["dirs"]["allgames_nonenglish"]))
+    created_images = set()
+
+    def ensure_image(path, options):
+        if path in created_images:
+            return
+        created_images.add(path)
+        make_image(path, options)
 
     for entry in sorted(c.ids(), key=operator.itemgetter("title_short")):
         if entry.get("unavailable", False):
+            c.progress_current += 1
             continue
         letter = entry.get("title_short", "z")[0].upper()
         if letter.isnumeric():
@@ -522,20 +566,29 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
         # add games
         if games and entry.get("category", "").lower() == "game":
             if query.has_english_language(entry):
+                start = perf_counter()
                 make_entry(c, path, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".ags"))
-                make_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".iff"), {"op":"tx", "txt": letter})
+                add_timing(c, "auto make_entry", perf_counter() - start)
+                ensure_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames"]), letter + ".iff"), {"op":"tx", "txt": letter})
+                start = perf_counter()
                 make_entry(c, path, entry, util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".ags"))
-                make_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
-            for language in query.get_languages(entry):
+                add_timing(c, "auto make_entry", perf_counter() - start)
+                ensure_image(util.path(path, "{}.ags".format(strings["dirs"]["allgames_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
+            languages = query.get_languages(entry)
+            for language in languages:
                 if language.lower() != "english":
+                    start = perf_counter()
                     make_entry(c, path, entry, util.path(ne_path, language + ".ags"))
+                    add_timing(c, "auto make_entry", perf_counter() - start)
                     flag_path = "flags/{}.png".format(util.country(language).lower())
                     img_ops =  { "ops": { "op": "pi", "path": flag_path }, "size": [320, 128 ], "scale": [1, 1] }
-                    make_image(util.path(ne_path, language + ".iff"), img_ops)
-            if not "english" in entry.get("language", "").lower() and not entry.get("preferred_version", None):
+                    ensure_image(util.path(ne_path, language + ".iff"), img_ops)
+            if languages and not query.has_english_language(entry) and not entry.get("preferred_version", None):
+                start = perf_counter()
                 make_entry(c, ne_path, entry, util.path(ne_path, "{}.ags".format(strings["dirs"]["unique_nonenglish"])))
+                add_timing(c, "auto make_entry", perf_counter() - start)
                 img_ops =  { "ops": { "op": "pi", "path": "flags/eu barcode.png" }, "size": [320, 128 ], "scale": [1, 1] }
-                make_image(util.path(ne_path, strings["dirs"]["unique_nonenglish"] + ".iff"), img_ops)
+                ensure_image(util.path(ne_path, strings["dirs"]["unique_nonenglish"] + ".iff"), img_ops)
 
         # add demos, disk mags, etc
         def add_demo(entry, sort_group, sort_country):
@@ -546,40 +599,63 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
             if group_letter.isnumeric():
                 group_letter = "#"
             if entry.get("subcategory", "").lower().startswith("disk mag"):
+                start = perf_counter()
                 make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags"])))
+                add_timing(c, "auto make_entry", perf_counter() - start)
+                start = perf_counter()
                 mag_path = make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["diskmags_date"])))
+                add_timing(c, "auto make_entry", perf_counter() - start)
                 if mag_path:
                     rank = util.parse_date_int(entry["release_date"], sortable=True)
                     c.path_sort_rank["{}.run".format(mag_path)] = rank if rank else 0
             elif entry.get("subcategory", "").lower().startswith("music disk"):
+                start = perf_counter()
                 make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".ags"))
-                make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".iff"), {"op":"tx", "txt": letter})
+                add_timing(c, "auto make_entry", perf_counter() - start)
+                ensure_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks"]), letter + ".iff"), {"op":"tx", "txt": letter})
+                start = perf_counter()
                 make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".ags"))
-                make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
+                add_timing(c, "auto make_entry", perf_counter() - start)
+                ensure_image(util.path(d_path, "{}.ags".format(strings["dirs"]["musicdisks_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
             elif entry.get("subcategory", "").lower().startswith("slide"):
+                start = perf_counter()
                 make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["slideshows"])))
+                add_timing(c, "auto make_entry", perf_counter() - start)
             else:
                 if entry.get("subcategory", "").lower().startswith("crack"):
+                    start = perf_counter()
                     make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_cracktro"])), prefix=sort_group)
+                    add_timing(c, "auto make_entry", perf_counter() - start)
                 if entry.get("subcategory", "").lower().startswith("intro"):
+                    start = perf_counter()
                     make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_intro"])))
+                    add_timing(c, "auto make_entry", perf_counter() - start)
                 group_entry = dict(entry)
                 group_entry["disp_name"] = group_entry.get("title")
+                start = perf_counter()
                 make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".ags"))
-                make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".iff"), {"op":"tx", "txt": letter})
+                add_timing(c, "auto make_entry", perf_counter() - start)
+                ensure_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".iff"), {"op":"tx", "txt": letter})
+                start = perf_counter()
                 make_entry(c, path, group_entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".ags"), prefix=sort_group)
-                make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".iff"), {"op":"tx", "txt": group_letter})
+                add_timing(c, "auto make_entry", perf_counter() - start)
+                ensure_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".iff"), {"op":"tx", "txt": group_letter})
+                start = perf_counter()
                 make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".ags"))
-                make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
+                add_timing(c, "auto make_entry", perf_counter() - start)
+                ensure_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
                 if sort_country:
+                    start = perf_counter()
                     make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".ags"))
+                    add_timing(c, "auto make_entry", perf_counter() - start)
                     flag_path = "flags/{}.png".format(sort_country.lower())
                     img_ops =  { "ops": { "op": "pi", "path": flag_path }, "size": [320, 128 ], "scale": [1, 1] }
-                    make_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".iff"), img_ops)
+                    ensure_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_country"]), sort_country + ".iff"), img_ops)
 
         if demos and entry.get("category", "").lower() == "demo":
             groups = query.get_publishers(entry)
             if not groups:
+                c.progress_current += 1
                 continue
             for sort_group in groups:
                 countries = query.get_countries(entry)
@@ -588,11 +664,13 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
                 else:
                     for sort_country in countries:
                         add_demo(entry, sort_group, sort_country)
+        c.progress_current += 1
+        update_progress(c, True)
 
     # notes and images for created directories
     for dir in ["allgames", "allgames_year", "allgames_nonenglish", "scene", "issues"]:
         if util.is_dir(util.path(path, "{}.ags".format(strings["dirs"][dir]))):
-            open(util.path(path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(wrap_note(strings["desc"][dir]))
+            open(util.path(path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1", errors="replace").write(wrap_note(strings["desc"][dir]))
             img_src = util.path("top", strings["images"][dir])
             if util.is_file("{}{}".format(compositor.IMG_SRC_BASE, img_src)):
                 make_image(util.path(path, "{}.iff".format(strings["dirs"][dir])), {"ops":{"op":"pi", "path":img_src}, "size":[320,128], "scale":[1,1]})
@@ -602,11 +680,11 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
         "diskmags", "diskmags_date", "musicdisks", "musicdisks_year", "slideshows"
     ]:
         if util.is_dir(util.path(d_path, "{}.ags".format(strings["dirs"][dir]))):
-            open(util.path(d_path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(wrap_note(strings["desc"][dir]))
+            open(util.path(d_path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1", errors="replace").write(wrap_note(strings["desc"][dir]))
 
     for dir in ["unique_nonenglish"]:
         if util.is_dir(util.path(ne_path, "{}.ags".format(strings["dirs"][dir]))):
-            open(util.path(ne_path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1").write(wrap_note(strings["desc"][dir]))
+            open(util.path(ne_path, "{}.txt".format(strings["dirs"][dir])), mode="w", encoding="latin-1", errors="replace").write(wrap_note(strings["desc"][dir]))
 
 # -----------------------------------------------------------------------------
 

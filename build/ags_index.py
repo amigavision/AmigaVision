@@ -57,6 +57,43 @@ def humanize_name(value):
     value = re.sub(r"\s+", " ", value)
     return value.strip()
 
+
+SIMULMONDO_EPISODE_TITLES = {
+    "Diabolik": {
+        "01": "Diabolik 01: Inafferrabile Criminale",
+        "02": "Diabolik 02: La Gemma Di Salomone",
+        "03": "Diabolik 03: La Fuga",
+        "04": "Diabolik 04: Trappola D'Acciaio",
+        "05": "Diabolik 05: Ore Pericolose",
+        "06": "Diabolik 06: La Notte Della Paura",
+        "07": "Diabolik 07: 4 Diamanti Unici",
+        "08": "Diabolik 08: Un Piano Perfetto",
+        "09": "Diabolik 09: A Caro Prezzo",
+        "10": "Diabolik 10: All'Ultimo Sangue",
+        "11": "Diabolik 11: Inganno Fatale",
+        "12": "Diabolik 12: Terrore A Teatro",
+    },
+    "DylanDog": {
+        "01": "Dylan Dog 01: La Regina Delle Tenebre",
+        "02": "Dylan Dog 02: Ritorno Al Crepuscolo",
+        "03": "Dylan Dog 03: Storia Di Nessuno",
+        "04": "Dylan Dog 04: Ombre",
+        "05": "Dylan Dog 05: La Mummia",
+        "06": "Dylan Dog 06: Maelstrom",
+        "07": "Dylan Dog 07: Gente Che Scompare",
+        "08": "Dylan Dog 08: La Clessidra Di Pietra",
+        "09": "Dylan Dog 09: Il Male",
+        "10": "Dylan Dog 10: I Vampiri",
+        "11": "Dylan Dog 11: Il Marchio Rosso",
+        "12": "Dylan Dog 12: Il Lungo Addio",
+        "13": "Dylan Dog 13: I Killers Venuti Dal Buio",
+        "14": "Dylan Dog 14: Il Bosco Degli Assassini",
+        "15": "Dylan Dog 15: Inferni",
+        "16": "Dylan Dog 16: Fantasmi",
+        "17": "Dylan Dog 17: Il Cimitero Dimenticato",
+    },
+}
+
 def infer_demo_publisher(archive_path):
     parts = Path(archive_path).parts
     if not parts or parts[0] != "demo" or (len(parts) > 1 and parts[1].startswith("_")):
@@ -136,7 +173,18 @@ def needs_remote_game_enrichment(existing_row):
         return True
     if existing_row.get("hol_id") or existing_row.get("lemon_id"):
         return False
-    fields = ("title", "subcategory", "hol_id", "lemon_id", "language", "developer", "publisher", "players", "hardware")
+    fields = (
+        "title",
+        "subcategory",
+        "hol_id",
+        "lemon_id",
+        "language",
+        "developer",
+        "publisher",
+        "players",
+        "hardware",
+        "release_date",
+    )
     return any(not existing_row.get(field) for field in fields)
 
 def csv_enrichment_fields(archive_path, existing_row=None):
@@ -165,6 +213,12 @@ def csv_enrichment_fields(archive_path, existing_row=None):
 def humanize_archive_name(archive_path):
     stem = Path(archive_path).name[:-4]
     name = stem.split("_v", 1)[0]
+    match = re.fullmatch(r"(Diabolik|DylanDog)(\d{2})(?:It)?", name)
+    if match:
+        series, episode = match.groups()
+        canonical_title = SIMULMONDO_EPISODE_TITLES.get(series, {}).get(episode)
+        if canonical_title:
+            return canonical_title
     return humanize_name(name)
 
 def infer_title_short(title, max_length=28):
@@ -201,6 +255,48 @@ def infer_hardware_from_archive(archive_path):
 
 def normalized_title(value):
     return "".join(ch.lower() for ch in value if ch.isalnum())
+
+def compact_labels(labels, max_items=None):
+    compacted = []
+    seen = set()
+    for label in labels:
+        label = (label or "").strip()
+        if not label:
+            continue
+        key = label.lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        compacted.append(label)
+    if max_items is not None and len(compacted) > max_items:
+        return []
+    return compacted
+
+def normalize_wikidata_date(value):
+    if not value:
+        return ""
+
+    precision = None
+    if isinstance(value, dict):
+        precision = value.get("precision")
+        value = value.get("time", "")
+
+    text = str(value).strip()
+    match = re.match(r"^[+-]?(\d{4})-(\d{2})-(\d{2})", text)
+    if not match:
+        return ""
+
+    year, month, day = match.groups()
+    if precision is not None:
+        try:
+            precision = int(precision)
+        except Exception:
+            precision = None
+    if precision is not None and precision <= 9:
+        return year
+    if month == "01" and day == "01":
+        return year
+    return f"{year}-{month}-{day}"
 
 def wikidata_api(params):
     url = "https://www.wikidata.org/w/api.php?" + urlencode(params)
@@ -334,9 +430,10 @@ def enrich_game_metadata_by_existing_ids(existing_row):
     if lemon_id:
         conditions.append(f'?item wdt:P4846 "{lemon_id}" .')
     query = """
-SELECT ?itemLabel ?genreLabel WHERE {{
+SELECT ?itemLabel ?genreLabel ?inception WHERE {{
   {conditions}
   OPTIONAL {{ ?item wdt:P136 ?genre . }}
+  OPTIONAL {{ ?item wdt:P577 ?inception . }}
   SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
 }}
 """.format(conditions="\n  ".join(conditions))
@@ -349,9 +446,14 @@ SELECT ?itemLabel ?genreLabel WHERE {{
         return None
     title = ""
     genres = []
+    release_date = ""
     for binding in bindings:
         if not title:
             title = binding.get("itemLabel", {}).get("value", "")
+        if not release_date:
+            inception = binding.get("inception", {}).get("value", "")
+            if inception:
+                release_date = normalize_wikidata_date(inception)
         genre = binding.get("genreLabel", {}).get("value", "")
         if genre:
             genres.append(genre)
@@ -359,6 +461,7 @@ SELECT ?itemLabel ?genreLabel WHERE {{
         "title": title,
         "title_short": infer_title_short(title),
         "subcategory": map_wikidata_genres_to_subcategory(genres),
+        "release_date": release_date,
         "hol_id": hol_id,
         "lemon_id": lemon_id,
     }
@@ -371,6 +474,7 @@ def enrich_game_metadata(archive_path, existing_row=None):
             "title": exact_match.get("title") or search_title,
             "title_short": infer_title_short(exact_match.get("title") or search_title),
             "subcategory": exact_match.get("subcategory", ""),
+            "release_date": exact_match.get("release_date", ""),
             "language": "",
             "developer": "",
             "publisher": "",
@@ -389,10 +493,10 @@ def enrich_game_metadata(archive_path, existing_row=None):
             "search": search_title,
         })
     except Exception:
-        return {"title": search_title, "title_short": infer_title_short(search_title), "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
+        return {"title": search_title, "title_short": infer_title_short(search_title), "release_date": "", "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
     candidate_ids = [item["id"] for item in search_data.get("search", [])]
     if not candidate_ids:
-        return {"title": search_title, "title_short": infer_title_short(search_title), "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
+        return {"title": search_title, "title_short": infer_title_short(search_title), "release_date": "", "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
 
     try:
         entities = wikidata_api({
@@ -403,7 +507,7 @@ def enrich_game_metadata(archive_path, existing_row=None):
             "ids": "|".join(candidate_ids),
         }).get("entities", {})
     except Exception:
-        return {"title": search_title, "title_short": infer_title_short(search_title), "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
+        return {"title": search_title, "title_short": infer_title_short(search_title), "release_date": "", "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
 
     best = None
     target = normalized_title(search_title)
@@ -425,7 +529,7 @@ def enrich_game_metadata(archive_path, existing_row=None):
             best = (score, entity)
 
     if best is None:
-        return {"title": search_title, "title_short": infer_title_short(search_title), "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
+        return {"title": search_title, "title_short": infer_title_short(search_title), "release_date": "", "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
 
     entity = best[1]
     try:
@@ -446,11 +550,11 @@ def enrich_game_metadata(archive_path, existing_row=None):
             if country_ids:
                 related_entities.update(wikidata_labels_for_ids(country_ids))
 
-        languages = [entity_label(related_entities.get(id, {})) for id in language_ids]
-        developers = [entity_label(related_entities.get(id, {})) for id in developer_ids]
-        publishers = [entity_label(related_entities.get(id, {})) for id in publisher_ids]
-        countries = [entity_label(related_entities.get(id, {})) for id in country_ids]
-        genres = [entity_label(related_entities.get(id, {})) for id in genre_ids]
+        languages = compact_labels([entity_label(related_entities.get(id, {})) for id in language_ids])
+        developers = compact_labels([entity_label(related_entities.get(id, {})) for id in developer_ids], max_items=4)
+        publishers = compact_labels([entity_label(related_entities.get(id, {})) for id in publisher_ids], max_items=4)
+        countries = compact_labels([entity_label(related_entities.get(id, {})) for id in country_ids], max_items=4)
+        genres = compact_labels([entity_label(related_entities.get(id, {})) for id in genre_ids])
 
         min_players = wikidata_quantities(entity, "P1872")
         max_players = wikidata_quantities(entity, "P1873")
@@ -466,6 +570,7 @@ def enrich_game_metadata(archive_path, existing_row=None):
             "title": entity_label(entity) or search_title,
             "title_short": infer_title_short(entity_label(entity) or search_title),
             "subcategory": map_wikidata_genres_to_subcategory(genres),
+            "release_date": normalize_wikidata_date(wikidata_claim_value(entity, "P577")),
             "language": ", ".join([label for label in languages if label]),
             "developer": ", ".join([label for label in developers if label]),
             "publisher": ", ".join([label for label in publishers if label]),
@@ -479,6 +584,7 @@ def enrich_game_metadata(archive_path, existing_row=None):
             "title": entity_label(entity) or search_title,
             "title_short": infer_title_short(entity_label(entity) or search_title),
             "subcategory": "",
+            "release_date": normalize_wikidata_date(wikidata_claim_value(entity, "P577")),
             "language": "",
             "developer": "",
             "publisher": "",
@@ -698,6 +804,29 @@ def report_missing_required_metadata(csv_rows_by_id, ids=None):
         print()
     return printed
 
+def missing_language_ids(csv_rows_by_id, ids=None):
+    rows = csv_rows_by_id.values() if ids is None else [csv_rows_by_id[id] for id in ids if id in csv_rows_by_id]
+    missing = []
+    for row in rows:
+        if not row.get("archive_path"):
+            continue
+        if not row.get("language"):
+            missing.append(row["id"])
+    return sorted(set(missing))
+
+def write_missing_language_report(csv_rows_by_id, report_path):
+    missing_ids = missing_language_ids(csv_rows_by_id)
+    if not missing_ids:
+        if Path(report_path).exists():
+            Path(report_path).unlink()
+        return 0
+
+    report = ["Missing Language metadata", ""]
+    report.extend(missing_ids)
+    Path(report_path).parent.mkdir(parents=True, exist_ok=True)
+    Path(report_path).write_text("\n".join(report) + "\n", encoding="utf-8")
+    return len(missing_ids)
+
 def build_db_row_maps(db):
     exact_rows_by_id = {}
     variant_rows_by_base_id = defaultdict(list)
@@ -871,6 +1000,17 @@ def main():
                 changed_ids = [entry["id"] for entry in report_entries]
                 if not report_missing_required_metadata(refreshed_csv_rows, ids=changed_ids):
                     print("No missing required metadata in changed archive-backed CSV rows")
+                    print()
+                missing_language_report_path = Path("data/db/missing-language.txt").resolve()
+                missing_language_count = write_missing_language_report(refreshed_csv_rows, missing_language_report_path)
+                if missing_language_count:
+                    print("Language cleanup:")
+                    print("• {} archive-backed row(s) are still missing Language metadata".format(missing_language_count))
+                    print("• Report written to {}".format(missing_language_report_path))
+                    print()
+                else:
+                    print("Language cleanup:")
+                    print("• No archive-backed rows are missing Language metadata")
                     print()
             elif report_path.is_file():
                 subprocess.run(["open", str(report_path)], check=False)

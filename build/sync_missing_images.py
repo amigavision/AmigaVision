@@ -945,6 +945,13 @@ def collect_missing(rows, img_dir, img_highres_dir, downloads_dir):
     return entries
 
 
+def missing_entry_label(entry):
+    title = (entry.get("title") or "").strip()
+    if title and title != entry["id"]:
+        return f"{title} ({entry['id']})"
+    return entry["id"]
+
+
 def sync_images(entries, img_dir, img_highres_dir):
     converted = []
     skipped = []
@@ -1115,6 +1122,10 @@ def main():
         missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
 
     print(f"Missing low-res images remaining: {len(missing)}")
+    if missing:
+        print("Remaining entries:")
+        for entry in sorted(missing, key=lambda item: ((item.get("title") or item["id"]).lower(), item["id"])):
+            print(f"- {missing_entry_label(entry)}")
 
     return 0
 
