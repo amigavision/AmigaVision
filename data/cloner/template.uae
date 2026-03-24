@@ -6,13 +6,11 @@ config_version=8.0.0
 use_gui=no
 kickstart_rom_file=$FSUAEROM
 floppy0=$AGSTEMP/boot.adf
-floppy_speed=800
+floppy_speed=0
 floppy_volume=0
 filesys_no_fsdb=false
 
-filesystem2=rw,tmp:tmp:$AGSTEMP,0
 uaehf1=dir,rw,tmp:tmp:$AGSTEMP,0
-hardfile2=rw,UAE0:$AGSTEMP/target.hdf,0,0,0,512,0,,uae0,0
 uaehf0=hdf,rw,UAE0:$AGSTEMP/target.hdf,0,0,0,512,0,,uae0,0
 
 joyport0_mode=mouse
@@ -28,6 +26,7 @@ gfx_resolution=hires
 gfx_vsync=false
 gfx_fullscreen_amiga=false
 gfx_fullscreen_picasso=false
+gfx_framerate=10
 
 cpu_speed=max
 cpu_type=68040
@@ -36,6 +35,7 @@ fpu_model=68040
 cpu_compatible=false
 cpu_24bit_addressing=false
 cpu_data_cache=true
+cpu_reset_pause=false
 cpu_cycle_exact=false
 cpu_memory_cycle_exact=false
 blitter_cycle_exact=false
@@ -51,9 +51,25 @@ comp_fpu=true
 comp_catchfault=true
 cachesize=16384
 native_code=true
+immediate_blits=true
+fast_copper=true
 
 chipmem_size=4
 z3mem_size=32
+fastmem_size=8
+chipset=aga
+chipset_compatible=A4000
+scsi=false
+warpboot=true
+warpboot_delay=0
+
+sound_output=none
+sound_volume=0
+sound_volume_paula=0
+sound_volume_cd=0
+sound_volume_ahi=0
+sound_volume_midi=0
+sound_volume_genlock=0
 
 amiberry.force_jit=true
 amiberry.allow_host_run=true

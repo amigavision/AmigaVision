@@ -1,7 +1,7 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fuse clone-fuse image-hst clone-hst image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean
+.PHONY: default help env env-rm update updates pull-archives index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-hst clone-hst image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp
 
 PYTHON ?= python3.11
 SOURCE ?= ${AGSCONTENT}/titles/manual-downloads
@@ -27,14 +27,14 @@ define print-start-time
 	@printf 'Start time: %s\n' "$$(date '+%Y-%m-%d %H:%M:%S')"
 endef
 
-# Experimental clone backends:
-# - `make image` remains the stable, supported FS-UAE build path.
+# Clone backends:
+# - `make image` uses Amiberry as the default final cloner backend.
+# - `make image-fsuae` keeps the legacy FS-UAE final clone path available as a fallback.
 # - `*-fuse` targets are opt-in experiments using macFUSE + amifuse and may
 #   require reduced macOS startup security settings.
 # - `*-hst` targets use FS-UAE only for `pfsformat`, then copy files directly
 #   with hst-amiga-pfs on the host.
-# - `*-amiberry` targets run the same prepared clone tree through Amiberry as
-#   an alternate final cloner backend.
+# - `*-amiberry` targets are kept as explicit aliases around the Amiberry backend.
 # Keep these paths separate from the default build flow.
 
 default: help
@@ -94,7 +94,10 @@ help:
 		'    Alias for make sync-images.' \
 		'' \
 		'  make image' \
-		'    Create the Amiga HDF image and filesystem specified in configs/AmigaVision.yaml.' \
+		'    Create the Amiga HDF image and filesystem specified in configs/AmigaVision.yaml using Amiberry as the final cloner.' \
+		'' \
+		'  make image-fsuae' \
+		'    Run the legacy FS-UAE final clone path for configs/AmigaVision.yaml.' \
 		'' \
 		'  make pi' \
 		'    Build AmigaVision.hdf, inject it and replay/ payload into a RePlayOS base image, and output a 16GB flashable .img.' \
@@ -211,11 +214,22 @@ prepare-image-temp:
 	$(call print-start-time)
 	@$(IMAGE_PREP_CMD)
 
-image:
+clone-fsuae:
 	$(call print-start-time)
-	@$(IMAGE_PREP_CMD)
 	@echo "Running FS-UAE..."
 	@start=$$(date +%s); \
+	if [ ! -d "$(subst ",,${AGSTEMP})" ]; then \
+		echo "Preparing temp build tree..."; \
+		$(MAKE) prepare-image-temp || exit $$?; \
+	fi; \
+	if [ ! -f "$(subst ",,${AGSTEMP})/cfg.fs-uae" ]; then \
+		echo "error: $(subst ",,${AGSTEMP})/cfg.fs-uae not found after preparing the temp build tree."; \
+		exit 1; \
+	fi; \
+	if [ ! -e "$(subst ",,${AGSTEMP})/target.hdf" ]; then \
+		echo "error: $(subst ",,${AGSTEMP})/target.hdf not found after preparing the temp build tree."; \
+		exit 1; \
+	fi; \
 	log="${AGSTEMP}/fs-uae-image.log"; \
 	if ! ${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae >"$$log" 2>&1; then \
 		cat "$$log"; \
@@ -223,6 +237,18 @@ image:
 	fi; \
 	end=$$(date +%s); \
 	echo "FS-UAE clone time: $$((end - start))s"
+
+image:
+	$(call print-start-time)
+	@$(IMAGE_PREP_CMD)
+	@$(MAKE) clone-amiberry
+	@mv ${AGSDEST}/AmigaVision.hdf ${AGSDEST}/games/Amiga
+	@printf '\a'
+
+image-fsuae:
+	$(call print-start-time)
+	@$(IMAGE_PREP_CMD)
+	@$(MAKE) clone-fsuae
 	@mv ${AGSDEST}/AmigaVision.hdf ${AGSDEST}/games/Amiga
 	@printf '\a'
 
@@ -304,26 +330,22 @@ clone-amiberry:
 		echo "Preparing temp build tree..."; \
 		$(MAKE) prepare-image-temp || exit $$?; \
 	fi; \
-	hdf="$(subst ",,${AGSDEST})/AmigaVision.hdf"; \
-	if [ ! -f "$$hdf" ]; then \
-		hdf="$(subst ",,${AMIGAVISION_HDF})"; \
-	fi; \
-	if [ ! -f "$$hdf" ]; then \
-		echo "error: AmigaVision HDF not found. Run 'make prepare-image-temp', 'make image', or 'make image-amiberry' first."; \
-		exit 1; \
-	fi; \
 	if [ ! -f "$(subst ",,${AGSTEMP})/cfg.uae" ]; then \
 		echo "error: $(subst ",,${AGSTEMP})/cfg.uae not found after preparing the temp build tree."; \
 		exit 1; \
 	fi; \
-	ln -sfn "$$hdf" "$(subst ",,${AGSTEMP})/target.hdf"; \
+	if [ ! -f "$(subst ",,${AGSTEMP})/clone" ]; then \
+		echo "error: $(subst ",,${AGSTEMP})/clone not found after preparing the temp build tree."; \
+		exit 1; \
+	fi; \
+	if [ ! -e "$(subst ",,${AGSTEMP})/target.hdf" ]; then \
+		echo "error: $(subst ",,${AGSTEMP})/target.hdf not found after preparing the temp build tree."; \
+		exit 1; \
+	fi; \
 	log="${AGSTEMP}/amiberry-image.log"; \
 	if ! "${AMIBERRYBIN}" -f "${AGSTEMP}/cfg.uae" --log >"$$log" 2>&1; then \
 		cat "$$log"; \
 		exit 1; \
-	fi; \
-	if [ -f "$(subst ",,${AGSDEST})/AmigaVision.hdf" ]; then \
-		mv "$(subst ",,${AGSDEST})/AmigaVision.hdf" "$(subst ",,${AGSDEST})/games/Amiga"; \
 	fi; \
 	end=$$(date +%s); \
 	echo "Amiberry clone time: $$((end - start))s"
@@ -333,49 +355,27 @@ image-amiberry:
 	$(call print-start-time)
 	@$(IMAGE_PREP_CMD)
 	@$(MAKE) clone-amiberry
+	@mv ${AGSDEST}/AmigaVision.hdf ${AGSDEST}/games/Amiga
+	@printf '\a'
 
 pocket-image:
 	$(call print-start-time)
 	@pipenv run ./build/ags_imager.py -v -c configs/AmigaVision-Pocket.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
-	@echo "Running FS-UAE..."
-	@start=$$(date +%s); \
-	log="${AGSTEMP}/fs-uae-pocket.log"; \
-	if ! ${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae >"$$log" 2>&1; then \
-		cat "$$log"; \
-		exit 1; \
-	fi; \
-	end=$$(date +%s); \
-	echo "FS-UAE clone time: $$((end - start))s"
+	@$(MAKE) clone-amiberry
 	@mv ${AGSDEST}/AmigaVision-Pocket.hdf ${AGSDEST}/AmigaVision-Pocket
 	@printf '\a'
 
 mini-image:
 	$(call print-start-time)
 	@pipenv run ./build/ags_imager.py -v -c configs/AmigaVision-Mini.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
-	@echo "Running FS-UAE..."
-	@start=$$(date +%s); \
-	log="${AGSTEMP}/fs-uae-mini.log"; \
-	if ! ${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae >"$$log" 2>&1; then \
-		cat "$$log"; \
-		exit 1; \
-	fi; \
-	end=$$(date +%s); \
-	echo "FS-UAE clone time: $$((end - start))s"
+	@$(MAKE) clone-amiberry
 	@mv ${AGSDEST}/AmigaVision-Mini.hdf ${AGSDEST}/AmigaVision-Mini
 	@printf '\a'
 
 test-image:
 	$(call print-start-time)
 	@pipenv run ./build/ags_imager.py -v -c configs/Test.yaml --auto-lists -o ${AGSDEST}
-	@echo "Running FS-UAE..."
-	@start=$$(date +%s); \
-	log="${AGSTEMP}/fs-uae-test.log"; \
-	if ! ${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae >"$$log" 2>&1; then \
-		cat "$$log"; \
-		exit 1; \
-	fi; \
-	end=$$(date +%s); \
-	echo "FS-UAE clone time: $$((end - start))s"
+	@$(MAKE) clone-amiberry
 	@printf '\a'
 
 test-dry:
@@ -426,3 +426,8 @@ distro-pi:
 distro-amiga:
 	$(call print-start-time)
 	@$(DISTRO_PACKAGE_PROMPT) amiga
+
+clean-temp:
+	$(call print-start-time)
+	@echo "Removing temp workspace..."
+	@rm -rf "$(subst ",,${AGSTEMP})"
