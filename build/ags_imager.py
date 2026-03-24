@@ -564,6 +564,52 @@ def get_add_dirs_destinations(add_dirs: list[str] | None) -> list[str]:
         destinations.append(dst)
     return destinations
 
+def count_files_in_tree(path: str) -> int:
+    total = 0
+    for _, _, files in os.walk(path):
+        total += sum(1 for name in files if name != ".DS_Store")
+    return total
+
+def print_add_dir_progress(src_dir: str, verbose: bool, prefix: str = "    > ") -> None:
+    entries = sorted(os.listdir(src_dir), key=str.casefold)
+    top_dirs = [name for name in entries if util.is_dir(util.path(src_dir, name))]
+    top_files = [name for name in entries if util.is_file(util.path(src_dir, name)) and name != ".DS_Store"]
+
+    for index, name in enumerate(top_dirs, start=1):
+        src_path = util.path(src_dir, name)
+        if verbose:
+            print("{}{}. {} ({} files)".format(prefix, index, name, count_files_in_tree(src_path)))
+
+    file_offset = len(top_dirs)
+    for index, name in enumerate(top_files, start=1):
+        if verbose:
+            print("{}{}. {} (file)".format(prefix, file_offset + index, name))
+
+def copy_add_dir_with_progress(src_dir: str, dest: str, verbose: bool) -> None:
+    entries = sorted(os.listdir(src_dir), key=str.casefold)
+    top_dirs = [name for name in entries if util.is_dir(util.path(src_dir, name))]
+    top_files = [name for name in entries if util.is_file(util.path(src_dir, name)) and name != ".DS_Store"]
+
+    util.make_dir(dest)
+
+    print_add_dir_progress(src_dir, verbose)
+
+    for name in top_dirs:
+        src_path = util.path(src_dir, name)
+        dest_path = util.path(dest, name)
+        util.clone_tree(src_path, dest_path)
+
+    for name in top_files:
+        src_path = util.path(src_dir, name)
+        dest_path = util.path(dest, name)
+        shutil.copy2(src_path, dest_path)
+
+def remove_ignored_host_files(path: str) -> None:
+    for root, _, files in os.walk(path):
+        for name in files:
+            if name == ".DS_Store":
+                os.remove(util.path(root, name))
+
 def get_pfs_partition_cache_path(cache_key: str) -> str:
     return util.path(paths.cache(), "pfs-partitions", cache_key + ".json")
 
@@ -1142,6 +1188,11 @@ def main():
                 ):
                     if args.verbose:
                         print(" > Reusing staged extra directories")
+                        for s in args.add_dirs:
+                            src_dir, dst = s.split("::", 1)
+                            remove_ignored_host_files(util.path(clone_path, dst.replace(":", "/")))
+                            print(" > '{}' -> '{}'".format(src_dir, dst))
+                            print_add_dir_progress(src_dir, True)
                 else:
                     for dst in workspace_state.get("add_dirs_destinations", []):
                         util.rm_path(util.path(clone_path, dst.replace(":", "/")))
@@ -1152,8 +1203,10 @@ def main():
                         elif util.is_dir(d[0]):
                             dest = util.path(clone_path, d[1].replace(":", "/"))
                             util.rm_path(dest)
-                            if args.verbose: print(" > '{}' -> '{}'".format(d[0], d[1]))
-                            util.clone_tree(d[0], dest)
+                            if args.verbose:
+                                print(" > '{}' -> '{}'".format(d[0], d[1]))
+                            copy_add_dir_with_progress(d[0], dest, args.verbose)
+                            remove_ignored_host_files(dest)
                         else:
                             raise IOError("--add-dir source not found ({})".format(d[0]))
                     workspace_state["add_dirs_cache_state"] = add_dirs_cache_state
