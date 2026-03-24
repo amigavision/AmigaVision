@@ -457,11 +457,12 @@
   - GouldFish - AGA Games to Play:
     - note: Check out the games that you must play on AGA
     - SlamTilt
-    - Bograts
-    - Skeleton Krew
+    - Bograts: { unavailable: true }
+    - SkeletonKrew
     - Guardian
-    - PierreLeChefIsOutToLunch
-    - XTreme Racing
+    - PierreIsOutToLunch
+    - SixthSenseInvestigations: { unavailable: true }
+    - XTremeRacing
     - SperisLegacy
   - Kim Justice's Euro Platformers:
     - note: Nine obscure euro platformers that DON'T suck, according to Kim Justice.
