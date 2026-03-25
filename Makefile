@@ -1,7 +1,7 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-hst clone-hst image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp
+.PHONY: default help env env-rm update updates pull-archives index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-hst clone-hst image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp clean-build
 
 PYTHON ?= python3.11
 SOURCE ?= ${AGSCONTENT}/titles/manual-downloads
@@ -431,3 +431,21 @@ clean-temp:
 	$(call print-start-time)
 	@echo "Removing temp workspace..."
 	@rm -rf "$(subst ",,${AGSTEMP})"
+
+clean-build:
+	$(call print-start-time)
+	@echo "Removing temp workspace, rotating current build cache, and clearing generated HDF outputs..."
+	@rm -rf "$(subst ",,${AGSTEMP})"
+	@cache_gen="$$(cat "${HOME}/Library/Caches/AmigaVision/build-cache-generation.txt" 2>/dev/null || echo current)"; \
+	cache_dir="${HOME}/Library/Caches/AmigaVision/build/$$cache_gen"; \
+	if [ -d "$$cache_dir" ]; then \
+		trash_dir="$$cache_dir.trash.$$(date +%Y%m%d%H%M%S)"; \
+		mv "$$cache_dir" "$$trash_dir"; \
+		mkdir -p "$$cache_dir"; \
+		nohup rm -rf "$$trash_dir" >/dev/null 2>&1 & \
+		echo "Rotated build cache to $$trash_dir for background deletion."; \
+	fi
+	@rm -f "$(subst ",,${AGSDEST})/AmigaVision.hdf" \
+		"$(subst ",,${AGSDEST})/games/Amiga/AmigaVision.hdf" \
+		"$(subst ",,${AGSDEST})/AmigaVision-Pocket.hdf" \
+		"$(subst ",,${AGSDEST})/AmigaVision-Mini.hdf"
