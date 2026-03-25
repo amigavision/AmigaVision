@@ -159,7 +159,7 @@ def infer_language_from_archive(archive_path):
         mapped = language_map.get(token.upper())
         if mapped:
             return mapped
-    return ""
+    return "English"
 
 def load_csv_rows_by_id(csv_path="data/db/titles.csv"):
     rows = {}
@@ -225,7 +225,8 @@ def infer_title_short(title, max_length=28):
     return util.infer_title_short_from_title(title, max_length=max_length)
 
 def infer_aga_flag(archive_path):
-    return "1" if "_AGA" in Path(archive_path).name.upper() else ""
+    archive_upper = Path(archive_path).name.upper()
+    return "1" if ("_AGA" in archive_upper or "CD32" in archive_upper) else ""
 
 def infer_hardware_from_archive(archive_path):
     path = Path(archive_path)
@@ -366,6 +367,163 @@ def wikidata_labels_for_ids(ids, include_claims=False):
 def entity_label(entity):
     return entity.get("labels", {}).get("en", {}).get("value", "")
 
+def wikidata_entity_id_from_uri(uri):
+    if not uri:
+        return ""
+    value = str(uri).rstrip("/")
+    return value.rsplit("/", 1)[-1]
+
+
+def fetch_wikidata_entities(candidate_ids):
+    candidate_ids = [candidate_id for candidate_id in dict.fromkeys(candidate_ids) if candidate_id]
+    if not candidate_ids:
+        return {}
+    try:
+        return wikidata_api({
+            "action": "wbgetentities",
+            "format": "json",
+            "languages": "en",
+            "props": "labels|claims",
+            "ids": "|".join(candidate_ids),
+        }).get("entities", {})
+    except Exception:
+        return {}
+
+
+def score_wikidata_entity(entity, search_title):
+    label = entity_label(entity)
+    hol_id = wikidata_claim_value(entity, "P4671")
+    lemon_id = wikidata_claim_value(entity, "P4846")
+    if not hol_id and not lemon_id:
+        return None
+    score = 0
+    normalized_label = normalized_title(label)
+    target = normalized_title(search_title)
+    if normalized_label == target:
+        score += 100
+    elif target and (target in normalized_label or normalized_label in target):
+        score += 50
+    score += int(bool(hol_id)) + int(bool(lemon_id))
+    return score
+
+
+def build_game_metadata_from_entity(entity, search_title):
+    try:
+        language_ids = wikidata_item_ids(entity, "P407")
+        developer_ids = wikidata_item_ids(entity, "P178")
+        publisher_ids = wikidata_item_ids(entity, "P123")
+        country_ids = wikidata_item_ids(entity, "P495")
+        genre_ids = wikidata_item_ids(entity, "P136")
+        related_entities = wikidata_labels_for_ids(language_ids + developer_ids + publisher_ids + country_ids + genre_ids, include_claims=True)
+
+        if not country_ids and developer_ids:
+            developer_country_ids = []
+            for developer_id in developer_ids:
+                developer_entity = related_entities.get(developer_id, {})
+                developer_country_ids.extend(wikidata_item_ids(developer_entity, "P495"))
+                developer_country_ids.extend(wikidata_item_ids(developer_entity, "P17"))
+            country_ids = [id for id in dict.fromkeys(developer_country_ids) if id]
+            if country_ids:
+                related_entities.update(wikidata_labels_for_ids(country_ids))
+
+        languages = compact_labels([entity_label(related_entities.get(id, {})) for id in language_ids])
+        developers = compact_labels([entity_label(related_entities.get(id, {})) for id in developer_ids], max_items=4)
+        publishers = compact_labels([entity_label(related_entities.get(id, {})) for id in publisher_ids], max_items=4)
+        countries = compact_labels([entity_label(related_entities.get(id, {})) for id in country_ids], max_items=4)
+        genres = compact_labels([entity_label(related_entities.get(id, {})) for id in genre_ids])
+
+        min_players = wikidata_quantities(entity, "P1872")
+        max_players = wikidata_quantities(entity, "P1873")
+        players = ""
+        if min_players and max_players:
+            players = str(min_players[0]) if min_players[0] == max_players[0] else f"{min_players[0]}-{max_players[0]}"
+        elif min_players:
+            players = str(min_players[0])
+        elif max_players:
+            players = str(max_players[0])
+
+        return {
+            "title": entity_label(entity) or search_title,
+            "title_short": infer_title_short(entity_label(entity) or search_title),
+            "subcategory": map_wikidata_genres_to_subcategory(genres),
+            "release_date": normalize_wikidata_date(wikidata_claim_value(entity, "P577")),
+            "language": ", ".join([label for label in languages if label]),
+            "developer": ", ".join([label for label in developers if label]),
+            "publisher": ", ".join([label for label in publishers if label]),
+            "players": players,
+            "country": ", ".join([label for label in countries if label]),
+            "hol_id": str(wikidata_claim_value(entity, "P4671") or ""),
+            "lemon_id": str(wikidata_claim_value(entity, "P4846") or ""),
+        }
+    except Exception:
+        return {
+            "title": entity_label(entity) or search_title,
+            "title_short": infer_title_short(entity_label(entity) or search_title),
+            "subcategory": "",
+            "release_date": normalize_wikidata_date(wikidata_claim_value(entity, "P577")),
+            "language": "",
+            "developer": "",
+            "publisher": "",
+            "players": "",
+            "country": "",
+            "hol_id": str(wikidata_claim_value(entity, "P4671") or ""),
+            "lemon_id": str(wikidata_claim_value(entity, "P4846") or ""),
+        }
+
+
+def relaxed_search_titles(title):
+    variants = []
+    seen = set()
+
+    def add(candidate):
+        candidate = re.sub(r"\s+", " ", (candidate or "").strip())
+        if not candidate or candidate in seen:
+            return
+        seen.add(candidate)
+        variants.append(candidate)
+
+    add(title)
+    words = re.findall(r"[A-Za-z0-9']+", title or "")
+    stopwords = {"the", "and", "of", "a", "an", "demo", "edition", "version", "remastered", "shareware", "aga", "cd32", "cdtv", "amiga"}
+    significant = [word for word in words if len(word) >= 4 and word.lower() not in stopwords]
+    if significant:
+        add(" ".join(significant))
+        longest = sorted(significant, key=lambda word: (-len(word), words.index(word)))[:3]
+        ordered = [word for word in words if word in longest]
+        add(" ".join(ordered))
+        if len(ordered) >= 2:
+            add(" ".join(ordered[:2]))
+    return variants
+
+
+def enrich_game_metadata_with_queries(search_titles, existing_row=None):
+    for search_title in search_titles:
+        try:
+            search_data = wikidata_api({
+                "action": "wbsearchentities",
+                "format": "json",
+                "language": "en",
+                "type": "item",
+                "limit": 10,
+                "search": search_title,
+            })
+        except Exception:
+            continue
+        candidate_ids = [item["id"] for item in search_data.get("search", [])]
+        entities = fetch_wikidata_entities(candidate_ids)
+        best = None
+        for entity_id in candidate_ids:
+            entity = entities.get(entity_id, {})
+            score = score_wikidata_entity(entity, search_title)
+            if score is None:
+                continue
+            if best is None or score > best[0]:
+                best = (score, entity)
+        if best is not None:
+            return build_game_metadata_from_entity(best[1], search_title)
+    fallback_title = search_titles[0] if search_titles else ""
+    return {"title": fallback_title, "title_short": infer_title_short(fallback_title), "release_date": "", "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
+
 def map_wikidata_genres_to_subcategory(genres):
     normalized = [genre.strip().lower() for genre in genres if genre and genre.strip()]
     mapping = {
@@ -430,169 +588,39 @@ def enrich_game_metadata_by_existing_ids(existing_row):
     if lemon_id:
         conditions.append(f'?item wdt:P4846 "{lemon_id}" .')
     query = """
-SELECT ?itemLabel ?genreLabel ?inception WHERE {{
+SELECT ?item WHERE {{
   {conditions}
-  OPTIONAL {{ ?item wdt:P136 ?genre . }}
-  OPTIONAL {{ ?item wdt:P577 ?inception . }}
-  SERVICE wikibase:label {{ bd:serviceParam wikibase:language "en". }}
 }}
+LIMIT 5
 """.format(conditions="\n  ".join(conditions))
     try:
         data = wikidata_sparql(query)
     except Exception:
         return None
     bindings = data.get("results", {}).get("bindings", [])
-    if not bindings:
-        return None
-    title = ""
-    genres = []
-    release_date = ""
-    for binding in bindings:
-        if not title:
-            title = binding.get("itemLabel", {}).get("value", "")
-        if not release_date:
-            inception = binding.get("inception", {}).get("value", "")
-            if inception:
-                release_date = normalize_wikidata_date(inception)
-        genre = binding.get("genreLabel", {}).get("value", "")
-        if genre:
-            genres.append(genre)
-    return {
-        "title": title,
-        "title_short": infer_title_short(title),
-        "subcategory": map_wikidata_genres_to_subcategory(genres),
-        "release_date": release_date,
-        "hol_id": hol_id,
-        "lemon_id": lemon_id,
-    }
+    candidate_ids = [wikidata_entity_id_from_uri(binding.get("item", {}).get("value", "")) for binding in bindings]
+    entities = fetch_wikidata_entities(candidate_ids)
+    for candidate_id in candidate_ids:
+        entity = entities.get(candidate_id, {})
+        if not entity:
+            continue
+        metadata = build_game_metadata_from_entity(entity, (existing_row or {}).get("title", "") or "")
+        metadata["hol_id"] = metadata.get("hol_id") or hol_id
+        metadata["lemon_id"] = metadata.get("lemon_id") or lemon_id
+        return metadata
+    return None
 
-def enrich_game_metadata(archive_path, existing_row=None):
+
+def enrich_game_metadata(archive_path, existing_row=None, relaxed=False):
     search_title = humanize_archive_name(archive_path)
     exact_match = enrich_game_metadata_by_existing_ids(existing_row)
     if exact_match:
-        return {
-            "title": exact_match.get("title") or search_title,
-            "title_short": infer_title_short(exact_match.get("title") or search_title),
-            "subcategory": exact_match.get("subcategory", ""),
-            "release_date": exact_match.get("release_date", ""),
-            "language": "",
-            "developer": "",
-            "publisher": "",
-            "players": "",
-            "country": "",
-            "hol_id": exact_match.get("hol_id", ""),
-            "lemon_id": exact_match.get("lemon_id", ""),
-        }
-    try:
-        search_data = wikidata_api({
-            "action": "wbsearchentities",
-            "format": "json",
-            "language": "en",
-            "type": "item",
-            "limit": 10,
-            "search": search_title,
-        })
-    except Exception:
-        return {"title": search_title, "title_short": infer_title_short(search_title), "release_date": "", "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
-    candidate_ids = [item["id"] for item in search_data.get("search", [])]
-    if not candidate_ids:
-        return {"title": search_title, "title_short": infer_title_short(search_title), "release_date": "", "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
+        return exact_match
+    search_titles = [search_title]
+    if relaxed:
+        search_titles = relaxed_search_titles(search_title)
+    return enrich_game_metadata_with_queries(search_titles, existing_row=existing_row)
 
-    try:
-        entities = wikidata_api({
-            "action": "wbgetentities",
-            "format": "json",
-            "languages": "en",
-            "props": "labels|claims",
-            "ids": "|".join(candidate_ids),
-        }).get("entities", {})
-    except Exception:
-        return {"title": search_title, "title_short": infer_title_short(search_title), "release_date": "", "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
-
-    best = None
-    target = normalized_title(search_title)
-    for entity_id in candidate_ids:
-        entity = entities.get(entity_id, {})
-        label = entity_label(entity)
-        hol_id = wikidata_claim_value(entity, "P4671")
-        lemon_id = wikidata_claim_value(entity, "P4846")
-        if not hol_id and not lemon_id:
-            continue
-        score = 0
-        normalized_label = normalized_title(label)
-        if normalized_label == target:
-            score += 100
-        elif target and (target in normalized_label or normalized_label in target):
-            score += 50
-        score += int(bool(hol_id)) + int(bool(lemon_id))
-        if best is None or score > best[0]:
-            best = (score, entity)
-
-    if best is None:
-        return {"title": search_title, "title_short": infer_title_short(search_title), "release_date": "", "language": "", "developer": "", "publisher": "", "players": "", "country": "", "hol_id": "", "lemon_id": ""}
-
-    entity = best[1]
-    try:
-        language_ids = wikidata_item_ids(entity, "P407")
-        developer_ids = wikidata_item_ids(entity, "P178")
-        publisher_ids = wikidata_item_ids(entity, "P123")
-        country_ids = wikidata_item_ids(entity, "P495")
-        genre_ids = wikidata_item_ids(entity, "P136")
-        related_entities = wikidata_labels_for_ids(language_ids + developer_ids + publisher_ids + country_ids + genre_ids, include_claims=True)
-
-        if not country_ids and developer_ids:
-            developer_country_ids = []
-            for developer_id in developer_ids:
-                developer_entity = related_entities.get(developer_id, {})
-                developer_country_ids.extend(wikidata_item_ids(developer_entity, "P495"))
-                developer_country_ids.extend(wikidata_item_ids(developer_entity, "P17"))
-            country_ids = [id for id in dict.fromkeys(developer_country_ids) if id]
-            if country_ids:
-                related_entities.update(wikidata_labels_for_ids(country_ids))
-
-        languages = compact_labels([entity_label(related_entities.get(id, {})) for id in language_ids])
-        developers = compact_labels([entity_label(related_entities.get(id, {})) for id in developer_ids], max_items=4)
-        publishers = compact_labels([entity_label(related_entities.get(id, {})) for id in publisher_ids], max_items=4)
-        countries = compact_labels([entity_label(related_entities.get(id, {})) for id in country_ids], max_items=4)
-        genres = compact_labels([entity_label(related_entities.get(id, {})) for id in genre_ids])
-
-        min_players = wikidata_quantities(entity, "P1872")
-        max_players = wikidata_quantities(entity, "P1873")
-        players = ""
-        if min_players and max_players:
-            players = str(min_players[0]) if min_players[0] == max_players[0] else f"{min_players[0]}-{max_players[0]}"
-        elif min_players:
-            players = str(min_players[0])
-        elif max_players:
-            players = str(max_players[0])
-
-        return {
-            "title": entity_label(entity) or search_title,
-            "title_short": infer_title_short(entity_label(entity) or search_title),
-            "subcategory": map_wikidata_genres_to_subcategory(genres),
-            "release_date": normalize_wikidata_date(wikidata_claim_value(entity, "P577")),
-            "language": ", ".join([label for label in languages if label]),
-            "developer": ", ".join([label for label in developers if label]),
-            "publisher": ", ".join([label for label in publishers if label]),
-            "players": players,
-            "country": ", ".join([label for label in countries if label]),
-            "hol_id": str(wikidata_claim_value(entity, "P4671") or ""),
-            "lemon_id": str(wikidata_claim_value(entity, "P4846") or ""),
-        }
-    except Exception:
-        return {
-            "title": entity_label(entity) or search_title,
-            "title_short": infer_title_short(entity_label(entity) or search_title),
-            "subcategory": "",
-            "release_date": normalize_wikidata_date(wikidata_claim_value(entity, "P577")),
-            "language": "",
-            "developer": "",
-            "publisher": "",
-            "players": "",
-            "country": "",
-            "hol_id": str(wikidata_claim_value(entity, "P4671") or ""),
-            "lemon_id": str(wikidata_claim_value(entity, "P4846") or ""),
-        }
 
 def find_stale_manifests(titles_dir, manifests_dir):
     stale_manifests = []
@@ -814,17 +842,17 @@ def missing_language_ids(csv_rows_by_id, ids=None):
             missing.append(row["id"])
     return sorted(set(missing))
 
-def write_missing_language_report(csv_rows_by_id, report_path):
+def print_missing_language_report(csv_rows_by_id):
     missing_ids = missing_language_ids(csv_rows_by_id)
     if not missing_ids:
-        if Path(report_path).exists():
-            Path(report_path).unlink()
         return 0
 
-    report = ["Missing Language metadata", ""]
-    report.extend(missing_ids)
-    Path(report_path).parent.mkdir(parents=True, exist_ok=True)
-    Path(report_path).write_text("\n".join(report) + "\n", encoding="utf-8")
+    print("Language cleanup:")
+    print("• Archive-backed titles default to English unless the archive name contains an explicit language suffix such as DE, FR, or IT.")
+    print("• Rows still needing manual review:")
+    for row_id in missing_ids:
+        print(row_id)
+    print()
     return len(missing_ids)
 
 def build_db_row_maps(db):
@@ -1001,14 +1029,8 @@ def main():
                 if not report_missing_required_metadata(refreshed_csv_rows, ids=changed_ids):
                     print("No missing required metadata in changed archive-backed CSV rows")
                     print()
-                missing_language_report_path = Path("data/db/missing-language.txt").resolve()
-                missing_language_count = write_missing_language_report(refreshed_csv_rows, missing_language_report_path)
-                if missing_language_count:
-                    print("Language cleanup:")
-                    print("• {} archive-backed row(s) are still missing Language metadata".format(missing_language_count))
-                    print("• Report written to {}".format(missing_language_report_path))
-                    print()
-                else:
+                missing_language_count = print_missing_language_report(refreshed_csv_rows)
+                if not missing_language_count:
                     print("Language cleanup:")
                     print("• No archive-backed rows are missing Language metadata")
                     print()

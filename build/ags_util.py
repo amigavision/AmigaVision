@@ -521,6 +521,103 @@ def normalized_title_fields(title, title_short):
     return title, title_short
 
 
+VARIANT_ARCHIVE_RE = re.compile(r"^(?P<name>.+)_v(?P<version>[^_]+)(?P<suffix>(?:_.*)?)\.lha$")
+
+
+def parse_archive_variant(archive_path):
+    basename = os.path.basename(archive_path or "")
+    match = VARIANT_ARCHIVE_RE.match(basename)
+    if not match:
+        return None
+    suffix = match.group("suffix") or ""
+    tokens = [token.upper() for token in suffix.strip("_").split("_") if token]
+    return {
+        "name": match.group("name"),
+        "suffix": suffix,
+        "tokens": tokens,
+    }
+
+
+def variant_preference_rank(archive_path):
+    parsed = parse_archive_variant(archive_path)
+    if parsed is None:
+        return None
+    tokens = parsed["tokens"]
+    if "CD32" in tokens:
+        return 0
+    if "AGA" in tokens:
+        return 1
+    if not tokens:
+        return 2
+    return None
+
+
+def reconcile_preferred_variants(rows, header, changed_ids):
+    if not changed_ids:
+        return 0
+
+    col_index = {column: idx for idx, column in enumerate(header)}
+    required = ["id", "title", "category", "subcategory", "archive_path", "redundant", "preferred_version"]
+    if any(column not in col_index for column in required):
+        return 0
+
+    grouped_rows = {}
+    for idx, row in enumerate(rows[1:], start=1):
+        if not row:
+            continue
+        row_id = row[col_index["id"]]
+        if row_id not in changed_ids:
+            continue
+        key = (row[col_index["title"]], row[col_index["category"]], row[col_index["subcategory"]])
+        grouped_rows[key] = True
+
+    updated = 0
+    for key in grouped_rows:
+        candidate_rows = []
+        for idx, row in enumerate(rows[1:], start=1):
+            if not row:
+                continue
+            row_key = (row[col_index["title"]], row[col_index["category"]], row[col_index["subcategory"]])
+            if row_key != key:
+                continue
+            archive_path = row[col_index["archive_path"]]
+            parsed = parse_archive_variant(archive_path)
+            rank = variant_preference_rank(archive_path)
+            if parsed is None or rank is None:
+                continue
+            candidate_rows.append((idx, row, parsed, rank))
+
+        if len(candidate_rows) < 2:
+            continue
+
+        names = {parsed["name"] for _, _, parsed, _ in candidate_rows}
+        if len(names) != 1:
+            continue
+
+        best_idx, best_row, _, best_rank = min(candidate_rows, key=lambda item: item[3])
+        if best_rank not in (0, 1):
+            continue
+
+        preferred_id = best_row[col_index["id"]]
+        for idx, row, parsed, rank in candidate_rows:
+            if idx == best_idx:
+                continue
+            if rank is None or rank <= best_rank:
+                continue
+            changed = False
+            if row[col_index["redundant"]] != "1":
+                row[col_index["redundant"]] = "1"
+                changed = True
+            if row[col_index["preferred_version"]] != preferred_id:
+                row[col_index["preferred_version"]] = preferred_id
+                changed = True
+            if changed:
+                rows[idx] = row
+                updated += 1
+
+    return updated
+
+
 def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
     if not entries:
         return 0, 0
@@ -631,6 +728,9 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
             "demozoo_id": row["demozoo_id"],
             "pouet_id": row["pouet_id"],
         })
+
+    changed_ids = {entry["id"] for entry in deduped_entries}
+    updated += reconcile_preferred_variants(rows, header, changed_ids)
 
     if updated or missing_entries:
         with open(csv_path, "w", newline="") as f:

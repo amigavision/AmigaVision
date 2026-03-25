@@ -96,6 +96,18 @@ def parse_remote_lha_entries_long(stdout):
     return entries
 
 
+def resolve_remote_download_path(remote_path, known_remote_paths):
+    if remote_path in known_remote_paths:
+        return remote_path
+
+    basename = Path(remote_path).name
+    matches = [candidate for candidate in known_remote_paths if Path(candidate).name == basename]
+    if len(matches) == 1:
+        return matches[0]
+
+    return remote_path
+
+
 def normalize_remote_path_for_get(remote_path):
     parts = Path(remote_path).parts
     if len(parts) >= 3 and parts[0] == "/":
@@ -133,8 +145,8 @@ def required_env(name):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--titles-dir", default="content/titles", help="Canonical titles directory")
-    parser.add_argument("--dest", default="content/titles/manual-downloads", help="Download staging directory")
+    parser.add_argument("--titles-dir", default=str(Path(os.getenv("AGSCONTENT", "content")) / "titles"), help="Canonical titles directory")
+    parser.add_argument("--dest", default=str(Path(os.getenv("AGSCONTENT", "content")) / "titles" / "manual-downloads"), help="Download staging directory")
     parser.add_argument("--state-path", default="data/cache/archive-fetch-state.json", help="Local state file used to track seen remote archive paths")
     args = parser.parse_args()
 
@@ -204,7 +216,11 @@ def main():
             long_result = run(render_command(list_long_cmd_template, remote=remote_ref, path="/", dest=str(dest_dir)), capture_output=True)
             cutoff = datetime.now(timezone.utc) - timedelta(days=cutoff_days)
             long_entries = parse_remote_lha_entries_long(long_result.stdout)
-            candidate_paths = [entry["path"] for entry in long_entries if entry["mtime"] >= cutoff]
+            candidate_paths = [
+                resolve_remote_download_path(entry["path"], remote_paths)
+                for entry in long_entries
+                if entry["mtime"] >= cutoff
+            ]
             print("Found {} remote archive(s) newer than {}".format(len(candidate_paths), cutoff.date().isoformat()))
         else:
             raise SystemExit(
