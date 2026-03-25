@@ -1,6 +1,112 @@
 - Charts:
   - note: Top games lists compiled or voted by magazines back in the day as well as contemporary outlets.
   - image: { ops: { op: "pi", path: "top/charts.png" }, size: [320, 128], scale: [1, 1] }
+
+  - Amiga Addict Top 100:
+    - ordering: "ranked"
+    - note: Amiga Addict's Top 100 Games from Issue 11, 2002
+    - image: { op: "pi", path: "list/amigaaddict100.png" }
+    - MonkeyIsland2
+    - Moonstone
+    - Syndicate
+    - Lemmings
+    - Worms
+    - StuntCarRacer
+    - IK+
+    - LureOfTheTemptress
+    - Settlers
+    - AnotherWorld
+    - AlienBreedSpecialEdition
+    - Speedball2
+    - SlamTilt
+    - IndianaJonesAtlantisAdv
+    - SimonTheSorcerer
+    - BeneathAStlSky
+    - CannonFodder
+    - Turrican2
+    - ChaosEngine
+    - SimCity
+    - SecretOfMonkeyIsland
+    - Dreamweb
+    - PinballFntsies
+    - NorthAndSouth
+    - WingCommander
+    - FormulaOneGrandPrix
+    - SWOS9697
+    - Lionheart
+    - Midwinter2
+    - ArabianNights
+    - Dynablaster
+    - DeluxeGalaga
+    - FireAndIce
+    - Superfrog
+    - BubbleBobble
+    - ParasolStars
+    - KnightsOfTheSky
+    - ChuckRock2
+    - SoccerKid
+    - Dune2
+    - LaserSquad
+    - Civilization
+    - ThemePark
+    - DungeonMaster
+    - Loom
+    - Harlequin
+    - ShadowOfTheBeast2
+    - SuperSkidmarks
+    - UFOEnemyUnknown
+    - SWIV
+    - Colonization
+    - MagicPockets
+    - RainbowIslands
+    - NickFaldosChampGolf
+    - DGeneration
+    - Lotus2
+    - CrazyCars3
+    - BubbaNStix
+    - BillsTomatoGame
+    - JimmyWhitesSnooker
+    - SuperStardust
+    - Flashback
+    - SuperCars2
+    - CarrierCommand
+    - Banshee
+    - Benefactor
+    - FuryOfTheFurries
+    - Apidya
+    - AddamsFamily
+    - DesertStrike
+    - ShadowFighter
+    - Inviyya: { unavailable: true }
+    - MicroMachines
+    - Seek
+    - SpaceCrusade
+    - SuprStrtFtr2Trbo
+    - AlienBreed3D
+    - HeartOfChina
+    - Archipelagos
+    - IndyHeat
+    - OperationStealth
+    - RuffNTumble
+    - AnotherWorld
+    - LegendOfKyrandia
+    - HitchhikersGuideTTG
+    - Pirates
+    - Rodland
+    - Shadowlands
+    - Vroom
+    - Pushover
+    - Sleepwalker
+    - JimPower
+    - KidChaos
+    - ParasolStars
+    - Liberation
+    - Exile
+    - Hunter
+    - ItCameFromTheDesert
+    - RickDangerous2
+    - RoboCop3
+
   - Amiga Lore Top 100:
     - ordering: "ranked"
     - note: Amiga Lore's aggregate review score ranking, taking into account the largest publications of the era from across the continent. A Metacritic equivalent for the platform, if you will.\n\n(Some duplicate entries exist, since rereleases and CD32 versions are considered separately.)
@@ -105,6 +211,7 @@
     - Turrican
     - Xenon2
     - LostTreasuresOfInfocom
+
   - Amiga Power Top 100 (1991):
     - ordering: "ranked"
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1991.
@@ -209,6 +316,7 @@
     - RedStormRising
     - Xybots
     - GrandMonsterSlam
+
   - Amiga Power Top 100 (1992):
     - ordering: "ranked"
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1992.
@@ -313,6 +421,7 @@
     - MonsterBusiness
     - CovertAction
     - GoldenAxe
+
   - Amiga Power Top 100 (1993):
     - ordering: "ranked"
     - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1993.
@@ -417,6 +526,7 @@
     - SpaceCrusade
     - Switchblade2
     - GTSoccerChallenge
+
   - EAB Top 20 Exclusives:
     - ordering: "ranked"
     - note: The best Amiga-exclusive games according to users of the English Amiga Board.
@@ -441,6 +551,7 @@
     - Hybris
     - ShadowOfTheBeast3
     - Roadkill
+
   - Kim Justice Top 100:
     - ordering: "ranked"
     - note: Kim Justice's top 100 Amiga games of all time.
@@ -545,6 +656,7 @@
     - NavySEALs
     - Uridium2
     - YoJoe
+
   - Lemon Amiga Top 30:
     - ordering: "ranked"
     - note: The best Amiga games, as voted by Lemon Amiga users.
@@ -579,6 +691,7 @@
     - Lotus2
     - EyeOfTheBeholder2
     - WormsDC
+
   - Mr Biffo Top 10:
     - note: The 10 best Amiga games according to Mr Biffo of Digitiser 2000.
     - image: { op: "pi", path: "list/digitiser.jpg" }
@@ -592,6 +705,7 @@
     - SensibleSoccer
     - Syndicate
     - JimmyWhitesSnooker
+
   - retroGAMER Amiga 500 Top 10:
     - note: Top 10 from retroGAMER magazine.
     - image: { op: "pi", path: "list/retrogamer.jpg" }
