@@ -4,11 +4,9 @@ export
 .PHONY: default help env env-rm update updates pull-archives index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-hst clone-hst image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp clean-build
 
 PYTHON ?= python3.11
-SOURCE ?= ${AGSCONTENT}/titles/manual-downloads
-AMIFUSEBIN ?= ${HOME}/Library/Caches/AmigaVision/amifuse-venv/bin/amifuse
-HSTAMIGABIN ?= ${HOME}/Developer/hst-amiga/src/Hst.Amiga.Pfs.ConsoleApp/bin/Release/net8.0/osx-arm64/publish/hst-amiga-pfs
-AMIBERRYBIN ?= /Applications/Amiberry.app/Contents/MacOS/Amiberry
+SOURCE ?= $(subst ",,${AGSCONTENT})/titles/manual-downloads
 
+AMIBERRYBIN ?= /Applications/Amiberry.app/Contents/MacOS/Amiberry
 REPLAYOS_BASE_IMG ?= ${AGSCONTENT}/base
 REPLAYOS_OUTPUT_IMG ?= ${AGSDEST}/AmigaVision-RPi.img
 REPLAYOS_IMG_SIZE ?= 16g
