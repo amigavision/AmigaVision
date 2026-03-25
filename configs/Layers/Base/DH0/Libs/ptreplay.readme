@@ -1,0 +1,153 @@
+This file documents ptreplay, a librarybased systemfriendly PT/NT/ST-replayer.
+
+            Copyright (c) 1994-1996 Mattias Karlsson (BetaSoft)
+         Copyright (c) 1996 Andreas Pålsson (Pucko/Digital Dreams)
+    Copyright (c) 2019 StingRay/[S]carab^Scoopex (stingray_dsd@gmx.de)
+
+                           PTREPLAY.LIBRARY 7.0
+
+
+ptreplay.library v7.0 is released under the concept of freeware. This
+means that it is freely distributable as long as following conditions
+are fulfilled:
+
+·The archive may not be sold, but inclusion in a PD-library is permitted
+ as long as only a SMALL fee is charged to cover the costs of copying and
+ distribution. The Fred Fish Library is the perfect example.
+·Programs and documentations must be distributed together in their
+ unmodified form.
+
+·Concerning the library itself, programs using ptreplay.library may
+ include it in their distribution packages as long as this file follows
+ as 'ptreplay.readme'. Of course the program using it must be freeware to.
+
+       For inclusion in a shareware or commercial software package,
+                        please contact the author.
+
+                                   - - -
+
+ptreplay.library (from now on ptreplay) is a standard Amiga shared library,
+capable of playing music files with the well known 'M.K.' sign inside.
+
+Some of PtReplay features:
+· System friendly, uses CIA-timing for smooth playing
+· Except for the ordinary Play, Pause, Resume and Stop there are fading
+  volumechanging, ability to specify position, turn on/off channels.
+· Load modules via PTReplay. No need to open Dos.
+
+Use this library as you would use any normal Amiga library. Included in
+this package is include files for Assembler and C.
+
+                                   - - -
+
+Notes about V7 (StingRay): Back in December 2018 I was contacted
+by Slummy, he was working on a music disk and the requirements were that
+the code just uses system-friendly routines. Hence he tried ptreplay.library
+and encountered that it didn't work on Kickstart 1.3. I had a look and quickly
+found the reason for that, there were quite a few OS2.0+ only routines used
+which I had to completely recode so they now work on 1.3. Basically, the
+memory allocation and device handling routines had to be recoded. Once done
+the library now worked on 1.3 machines but while testing the music disk a
+new problem was encountered, the volume slide command didn't work correctly.
+After checking the code once more I also had to recode all volume slide
+routines as they were completely broken!
+
+To summarise:
+- library now works on 1.3 machines
+- volume slide is now properly supported
+- code has been optimised a bit
+
+I will, most probably, release the full sources of the library in a later
+update, for this I need to clean up the source a bit and add proper
+documention, this hasn't been done yet. For now you only get the 1.3
+compatible library and a new asm source in the "Examples" directory showing
+how to use the library. I have also fixed a few mistakes in the documentation,
+in one of the next updates I'll most probably either rewrite the docs or
+at least improve them as they aren't very good in my opinion.
+
+If you encounter any problems just drop me a message. My mail address
+is stingray_dsd@gmx.de
+
+End of V7 notes by StingRay
+
+
+
+A few weeks ago Mattias Karlsson (Betasoft) decided to pass the development
+on because of lack of time. I volunteered to continue the development
+since I've been using it myself alot and my interest in music and
+programming.
+
+
+Some word from Mattias Karlsson concerning the birth of ptreplay.
+
+I wrote this library because I was unable to find a _good_ and system-
+friendly replay routine for ProTracker. I based this loosely on the 
+example sources that accompany ProTracker, but these were pretty badly
+written, and sparsly commented, and the CIA routines did never work on
+my machine. A job worth doing well is worth doing yourself, I though
+and went to work. This is what emerged, a small library. Notice that it
+is just about 8k, and still contains all needed to play good music (and it
+has a lot of features too)
+
+                                   - - -
+
+Changes from 6.6 to 7.0 by StingRay
+------------------------------------------
+*   FIXED: volume slide was completely broken
+* CHANGED: the library now works on Kick 1.x machines
+
+
+Changes from 6.5 to 6.6 by Andreas Pålsson
+------------------------------------------
+* FIXED: Closelibrary()() wouldn't return. Reported by Michael Stoehr.
+
+* CHANGE: Betasoft turns over the development to Andreas Pålsson.
+
+Changes from 5.14 to 6.5 by Mattias Karlsson
+--------------------------------------------
+* Horror, the clean up routines clears some signals on the task that closes
+  the library (maybe this is what caused the spurius GURUs?). (6.5)
+
+* If you are to quick to start playing after the library has been opened
+  it produced 4 hits and no sound since it checked the IORequesters before
+  PTReplay_ctrltask has time to allocate them. (6.4)
+
+* Now it only trigger ModuleRestart when you do a positionjump in the last
+  position instead of everytime. (6.3)
+
+* Now frees all channel on LibClose instead of libExpunge. (6.2)
+
+* Sometimes ptreplay_ctrltask (See FAQ) "hangs" and starts busylooping
+  when you did a DisplayBeep() with a sample. (6.1)
+
+* New functions for reading the owned channels and sampledata. (6.0)
+
+* A channel that is turned of was not left alone. (5.16)
+
+* All channels were turned on at playtime, instead of only those that
+  ptreplay owns. (5.15)
+
+                                   - - -
+
+My addresses:
+
+
+     URL: http://www.algonet.se/~did/
+  E-Mail: did@algonet.se
+ Fidonet: Andreas Palsson 2:200/628.0        <- recommended
+    Mail: Andreas Pålsson
+          Trolle Ljungby
+          S-290 34 Fjälkinge
+          SWEDEN
+
+or call my bbs at +46-(0)44-55031
+
+The former author can be reached at:
+
+     URL: http://www.algonet.se/~betasoft/
+  E-Mail: betasoft@algonet.se
+    FIDO: Mattias Karlsson@2:200/502.3
+
+
+
+<EOD>
