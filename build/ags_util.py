@@ -14,6 +14,7 @@ import sqlite3
 import stat
 import subprocess
 import sys
+import time
 
 from lhafile import LhaFile
 from ruamel import yaml
@@ -95,7 +96,18 @@ def rm_path(path: str):
     if os.path.islink(path) or os.path.isfile(path):
         os.remove(path)
     elif os.path.isdir(path):
-        shutil.rmtree(path)
+        last_error = None
+        for _ in range(5):
+            try:
+                shutil.rmtree(path)
+                return
+            except OSError as err:
+                last_error = err
+                if err.errno != 66:  # Directory not empty
+                    raise
+                time.sleep(0.1)
+        if last_error is not None:
+            raise last_error
 
 def get_dir_size(start_path=".", block_size=1):
     file_size = 0

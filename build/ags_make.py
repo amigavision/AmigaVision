@@ -95,6 +95,23 @@ def make_image(path, options):
         operations = options
     compositor.out_iff(path, compositor.compose(operations, size=size), scale=scale)
 
+def get_extra_image_paths(entry_id: str) -> list[tuple[Path, str]]:
+    extra = []
+
+    base_image = Path(util.path("data", "img", entry_id + ".iff"))
+    if base_image.is_file():
+        extra.append((base_image, ".iff"))
+
+    for img_path in Path(util.path("data", "img")).rglob(entry_id + "-[0-9].iff"):
+        suffix = img_path.stem.rsplit(entry_id, 1)[-1] + ".iff"
+        extra.append((img_path, suffix))
+
+    qr_image = Path(util.path("data", "img", "qr", entry_id + "-qr.iff"))
+    if qr_image.is_file():
+        extra.append((qr_image, "-QR.iff"))
+
+    return extra
+
 # -----------------------------------------------------------------------------
 # create entries from dictionary/tree
 
@@ -317,12 +334,10 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
     if entry and "image" in entry:
         make_image(base_path + ".iff", entry["image"])
     elif entry and "id" in entry:
-        img_list = [Path(util.path("data", "img", entry["id"] + ".iff"))]
-        img_list += list(Path(util.path("data", "img")).rglob(entry["id"] + "-[0-9].iff"))
-        for img_path in img_list:
+        for img_path, suffix in get_extra_image_paths(entry["id"]):
             src_path = str(img_path.resolve())
             if util.is_file(src_path):
-                dst_path = base_path + img_path.stem.rsplit(entry["id"], 1)[-1] + ".iff"
+                dst_path = base_path + suffix
                 shutil.copyfile(src_path, dst_path)
 
     # make title metadata
