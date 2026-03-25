@@ -1,4 +1,4 @@
-setpatch QUIET
+setpatch QUIET ; We use Mu680x0Libs that detect 68040 or 68060 automatically
 version >NIL:
 
 assign >NIL: exists DF0:
@@ -97,6 +97,11 @@ if `ags-uname` EQ "mister"
   assign Picasso96: SYS:Tools/Picasso96
   DEVS:Monitors/MiSTer
 endif
+if `ags-uname` EQ "uae"
+  assign Picasso96: SYS:Tools/Picasso96
+  
+endif
+
 
 assign INCLUDE: LIBS:include
 assign APPS: SYS:Apps
