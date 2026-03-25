@@ -363,11 +363,11 @@ While AmigaVision has been tested for many years, the sheer volume of games and 
 * Simon "[hitm4n]" Quincey — Hi-resolution screenshots for demos
 * LamerDeluxe — MT-32 support
 * [Frode Solheim] — Creator of [OpenRetro.org], historical screenshot source
-* [Hall of Light] — Game metadata and screenshot source
-* [Lemon Amiga] — Game metadata and screenshot source
-* [Exotica] — Demo archive and screenshot source
 * wiisoldier — Initial RePlayOS setup and testing, benchmarking assistance
 * Alessio (PuntoMusica) — Testing AmigaVision on Amiga CD32 hardware
+* [Hall of Light] — Game metadata and screenshot source, game manuals
+* [Lemon Amiga] — Game metadata and screenshot source
+* [Exotica] — Demo archive and screenshot source
 
 ## Troubleshooting
 
