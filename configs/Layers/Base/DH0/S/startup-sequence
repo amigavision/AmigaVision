@@ -26,6 +26,13 @@ assign >NIL: REXX: S:
 assign >NIL: PRINTERS: DEVS:Printers
 assign >NIL: KEYMAPS: DEVS:Keymaps
 assign >NIL: LOCALE: SYS:Locale
+; Check for newer OS
+version exec.library 46 >NIL:
+if not warn
+  assign >NIL: LIBS: SYS:Libs/alternates SYS:Libs
+else
+  assign >NIL: LIBS: SYS:Libs
+endif
 assign >NIL: LIBS: SYS:Classes ADD
 assign >NIL: HELP: LOCALE:Help DEFER
 
@@ -113,6 +120,8 @@ assign home: S:
 path vim:
 
 ec-select
+
+path Dev:A68k
 
 assign asmpro: Dev:AsmPro
 assign Blitz2: Dev:Blitz
