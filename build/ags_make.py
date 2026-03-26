@@ -80,6 +80,15 @@ def wrap_note(text: str) -> str:
             wrapped.append(textwrap.fill(line, AGS_INFO_WIDTH))
     return "\n".join(wrapped)
 
+def normalize_release_year(release_date: str) -> tuple[str, str]:
+    year, _, _ = util.parse_date(release_date or "")
+    year = (year or "").strip()
+    if not year:
+        return "Unknown", "Unknown"
+    if "x" in year.lower():
+        return "Unknown", "19XX"
+    return year, year
+
 def make_image(path, options):
     if util.is_file(path):
         return
@@ -572,11 +581,7 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
         letter = entry.get("title_short", "z")[0].upper()
         if letter.isnumeric():
             letter = "#"
-        year, _, _ = util.parse_date(entry["release_date"])
-        year_img = year
-        if "x" in year.lower():
-            year = "Unknown"
-            year_img = "19XX"
+        year, year_img = normalize_release_year(entry.get("release_date", ""))
 
         # add games
         if games and entry.get("category", "").lower() == "game":
