@@ -86,7 +86,7 @@ help:
 		'    Print how many titles still lack low-res screenshots.' \
 		'' \
 		'  make sync-images' \
-		'    Preferred image pipeline. Import matching PNGs from data/img_highres/Unprocessed/, fetch missing demo screenshots from Demozoo, Pouet, and Exotica, fetch missing game screenshots from Lemon Amiga in Chrome and then itch.io, convert staged images into canonical low-res and high-res IFF screenshots, and print the remaining missing count.' \
+		'    Preferred image pipeline. Import matching PNGs from data/img_highres/Unprocessed/, fetch missing demo screenshots from Demozoo, Pouet, and Exotica, fetch missing game screenshots from Lemon Amiga in Chrome, then try HoL in Chrome for remaining HoL-linked games, then itch.io, convert staged images into canonical low-res and high-res IFF screenshots, and print the remaining missing count.' \
 		'' \
 		'  make sync-images-interactive' \
 		'    Alias for make sync-images.' \

@@ -227,6 +227,11 @@ def chrome_source():
     return run_osascript([script])
 
 
+def chrome_location():
+    script = 'tell application "Google Chrome" to tell active tab of front window to execute javascript "document.location.href"'
+    return run_osascript([script]).strip()
+
+
 def chrome_execute_javascript(js):
     escaped = js.replace("\\", "\\\\").replace('"', '\\"')
     script = f'tell application "Google Chrome" to tell active tab of front window to execute javascript "{escaped}"'
@@ -682,6 +687,24 @@ def extract_lemon_images(page_html):
     return images
 
 
+def lemon_slug_from_url(url):
+    path = urllib.parse.urlparse(url).path.strip("/")
+    parts = path.split("/")
+    if len(parts) >= 2 and parts[0] == "game" and parts[1]:
+        return parts[1]
+    return None
+
+
+def predictable_lemon_images(page_url):
+    slug = lemon_slug_from_url(page_url)
+    if not slug:
+        return []
+    return [
+        (offset, f"https://www.lemonamiga.com/uploads/amiga/images/games/screens/{slug}/{slug}_{source_index:02d}.png")
+        for offset, source_index in enumerate(range(1, 7), start=2)
+    ]
+
+
 def extract_abime_images(page_html):
     screenshots = []
     for match in ABIME_SCREENSHOT_RE.finditer(page_html):
@@ -712,6 +735,7 @@ def fetch_lemon_interactive_images(entries, chrome_downloads_dir):
         lambda entry: MANUAL_LEMON_URLS.get(entry["id"]) or f"https://www.lemonamiga.com/?game_id={entry['lemon_id'].strip()}",
         lemon_page_ready,
         extract_lemon_images,
+        lambda entry: predictable_lemon_images(MANUAL_LEMON_URLS.get(entry["id"]) or chrome_location()),
     )
 
 
@@ -732,7 +756,24 @@ def fetch_abime_interactive_images(entries, chrome_downloads_dir):
     )
 
 
-def fetch_browser_interactive_images(entries, chrome_downloads_dir, source_name, page_url_for_entry, page_ready_fn, extract_images_fn):
+def fetch_hol_interactive_images(entries, chrome_downloads_dir):
+    fetchable_entries = [
+        entry for entry in entries
+        if entry["category"] == "Game"
+        and not entry["staged"]
+        and (entry.get("hol_id") or "").strip()
+    ]
+    return fetch_browser_interactive_images(
+        fetchable_entries,
+        chrome_downloads_dir,
+        "HoL",
+        lambda entry: f"https://hol.abime.net/{entry['hol_id'].strip()}/screenshot",
+        abime_page_ready,
+        extract_abime_images,
+    )
+
+
+def fetch_browser_interactive_images(entries, chrome_downloads_dir, source_name, page_url_for_entry, page_ready_fn, extract_images_fn, predictable_images_fn=None):
     fetched = []
     skipped = []
     total = len(entries)
@@ -783,6 +824,8 @@ def fetch_browser_interactive_images(entries, chrome_downloads_dir, source_name,
                     skipped.append((entry["id"], "protection still active"))
                     continue
             image_urls = extract_images_fn(page_html)
+            if not image_urls and predictable_images_fn:
+                image_urls = predictable_images_fn(entry)
             if not image_urls:
                 print(f"  skipped: no {source_name} screenshots found")
                 skipped.append((entry["id"], f"no {source_name} screenshots found"))
@@ -899,10 +942,10 @@ def write_iff(src_path, out_path, colors, crop, scale, resample):
 
 
 def lowres_source_index(indices):
-    if 2 in indices:
-        return 2
     if 3 in indices:
         return 3
+    if 2 in indices:
+        return 2
     return min(indices) if indices else None
 
 
@@ -1086,6 +1129,21 @@ def main():
             print()
         if skipped:
             print(f"Skipped {len(skipped)} abime fetches")
+            for id_, reason in skipped:
+                print(f"{id_}: {reason}")
+            print()
+        rows = load_rows(csv_path)
+        missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
+        skipped = []
+
+        fetched, skipped = fetch_hol_interactive_images(missing, args.chrome_downloads_dir)
+        if fetched:
+            print(f"Fetched HoL images for {len(fetched)} title(s)")
+            for id_, page_url, written in fetched:
+                print(f"{id_}: {page_url} -> {', '.join(written)}")
+            print()
+        if skipped:
+            print(f"Skipped {len(skipped)} HoL fetches")
             for id_, reason in skipped:
                 print(f"{id_}: {reason}")
             print()
