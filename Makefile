@@ -1,7 +1,7 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives initial-downloads index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-hst clone-hst image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp clean-build
+.PHONY: default help env env-rm update updates pull-archives initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-hst clone-hst image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp clean-build
 
 PYTHON ?= python3.11
 SOURCE ?= $(subst ",,${AGSCONTENT})/titles/manual-downloads
@@ -61,6 +61,9 @@ help:
 		'' \
 		'  make index-add-missing' \
 		'    Run indexing, write the current SQLite state back to data/db/titles.csv, and then append or backfill missing fields in the CSV using an online Wikidata lookup.' \
+		'' \
+		'  make prune-missing-archives' \
+		'    Clear archive/slave references in the database for rows whose archive_path no longer exists in the titles tree, then write the result back to data/db/titles.csv.' \
 		'' \
 		'  make manifests' \
 		'    Regenerate all archive manifests under $$AGSCONTENT/manifests.' \
@@ -153,6 +156,10 @@ index:
 index-add-missing:
 	$(call print-start-time)
 	@pipenv run ./build/ags_index.py -v --append-missing-csv
+
+prune-missing-archives:
+	$(call print-start-time)
+	@pipenv run ./build/ags_index.py -v --append-missing-csv --apply
 
 manifests:
 	$(call print-start-time)

@@ -922,13 +922,18 @@ def main():
             return 1 if stale_manifests and not args.apply else 0
 
         # remove missing archive_paths from db
+        missing_db_archive_refs = 0
         removed_db_archive_refs = 0
+        prune_missing_archive_refs = args.apply and sync_csv and not args.ingest
         for r in db.cursor().execute("SELECT * FROM titles"):
             if r["archive_path"] and not util.is_file(util.path(titles_dir, r["archive_path"])):
-                print("• Archive reference removed from DB:", r["id"])
+                missing_db_archive_refs += 1
+                label = "• Archive reference removed from DB:" if prune_missing_archive_refs else "• Archive reference missing from titles tree:"
+                print(label, r["id"])
                 print(r["archive_path"])
-                db.cursor().execute("UPDATE titles SET archive_path=NULL,slave_path=NULL,slave_version=NULL WHERE id=?;", (r["id"],))
-                removed_db_archive_refs += 1
+                if prune_missing_archive_refs:
+                    db.cursor().execute("UPDATE titles SET archive_path=NULL,slave_path=NULL,slave_version=NULL WHERE id=?;", (r["id"],))
+                    removed_db_archive_refs += 1
                 print()
 
         # enumerate whdl archives, correlate with db
@@ -1039,6 +1044,10 @@ def main():
         else:
             if removed_db_archive_refs:
                 print("• Removed {} stale archive reference(s) from the DB; run 'make csv' to persist those changes to data/db/titles.csv".format(removed_db_archive_refs))
+                print()
+            elif missing_db_archive_refs:
+                print("• Found {} missing archive reference(s); DB rows were left unchanged".format(missing_db_archive_refs))
+                print("• Run 'make prune-missing-archives' to clear archive/slave references for those rows")
                 print()
 
         # list missing content
