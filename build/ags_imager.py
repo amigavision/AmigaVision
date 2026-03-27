@@ -249,6 +249,69 @@ def save_ags2_tree_state(cache_state: dict) -> None:
     with open(state_path, "w", encoding="utf-8") as f:
         json.dump(cache_state, f, sort_keys=True, separators=(",", ":"))
 
+def prune_cache_root(cache_root: str, keep_dirs=None, keep_files=None) -> None:
+    if not util.is_dir(cache_root):
+        return
+    keep_dir_names = set(keep_dirs or [])
+    keep_file_names = set(keep_files or [])
+    for name in os.listdir(cache_root):
+        path = util.path(cache_root, name)
+        if name.endswith(".tmp"):
+            util.rm_path(path)
+            continue
+        if util.is_dir(path):
+            if name not in keep_dir_names:
+                util.rm_path(path)
+            continue
+        if keep_files is not None and util.is_file(path) and name not in keep_file_names:
+            util.rm_path(path)
+
+def prune_interrupted_cache_artifacts() -> None:
+    cache_root = paths.cache()
+    for relpath in [
+        "ags2-tree",
+        "ags2-subtree",
+        "ags2-auto",
+        "archive-tree",
+        "archive-extract",
+        "base-hdf",
+        "pfs-partitions",
+    ]:
+        prune_cache_root(util.path(cache_root, relpath))
+
+def prune_build_caches(
+    base_hdf_cache_dir: str | None,
+    ags2_cache_key: str,
+    menu_subtree_cache_keys: list[str],
+    autoentries_cache_key: str | None,
+    archive_tree_cache_key: str | None,
+    archive_extract_cache_keys: set[str],
+    pfs_partition_cache_key: str | None,
+) -> None:
+    cache_root = paths.cache()
+
+    base_hdf_keep = []
+    if base_hdf_cache_dir:
+        base_hdf_keep.append(os.path.basename(base_hdf_cache_dir))
+    prune_cache_root(util.path(cache_root, "base-hdf"), keep_dirs=base_hdf_keep)
+
+    ags2_tree_keep = [ags2_cache_key]
+    ags2_tree_state = os.path.basename(get_ags2_tree_state_path())
+    prune_cache_root(util.path(cache_root, "ags2-tree"), keep_dirs=ags2_tree_keep, keep_files=[ags2_tree_state])
+
+    prune_cache_root(util.path(cache_root, "ags2-subtree"), keep_dirs=menu_subtree_cache_keys)
+
+    auto_keep = [autoentries_cache_key] if autoentries_cache_key else []
+    prune_cache_root(util.path(cache_root, "ags2-auto"), keep_dirs=auto_keep)
+
+    archive_tree_keep = [archive_tree_cache_key] if archive_tree_cache_key else []
+    prune_cache_root(util.path(cache_root, "archive-tree"), keep_dirs=archive_tree_keep)
+
+    prune_cache_root(util.path(cache_root, "archive-extract"), keep_dirs=sorted(archive_extract_cache_keys))
+
+    pfs_keep = [pfs_partition_cache_key + ".json"] if pfs_partition_cache_key else []
+    prune_cache_root(util.path(cache_root, "pfs-partitions"), keep_files=pfs_keep)
+
 def get_ags2_tree_cache_paths(cache_key: str) -> tuple[str, str]:
     cache_root = util.path(paths.cache(), "ags2-tree", cache_key)
     return (
@@ -870,6 +933,17 @@ def get_unique_archive_entries(entries):
         unique.append(entry)
     return unique
 
+def get_archive_extract_cache_keys(entries) -> set[str]:
+    keys = set()
+    for entry in get_unique_archive_entries(entries):
+        arc_path = get_archive_path(entry)
+        if not arc_path:
+            continue
+        cache_dir = get_archive_extract_cache_dir(arc_path, entry)
+        if cache_dir:
+            keys.add(os.path.basename(cache_dir))
+    return keys
+
 def extract_entries(clone_path, entries, verbose=False):
     pending = get_unique_archive_entries(entries)
     total = len(pending)
@@ -962,6 +1036,7 @@ def main():
         amiga_ags_path = util.path(amiga_boot_path, "AGS2")
         util.make_dir(clone_path)
         workspace_state = load_workspace_state(clone_path)
+        prune_interrupted_cache_artifacts()
 
         data_dir = "data"
         if not util.is_dir(data_dir):
@@ -1038,6 +1113,9 @@ def main():
                 args,
             )
         autoentries_cache_key = None
+        archive_tree_cache_key = None
+        archive_extract_cache_keys = set()
+        pfs_partition_cache_key = None
 
         with timed_step(timings, "copy ags2 base"):
             if workspace_state.get("ags2_cache_key") == ags2_cache_key and util.is_dir(amiga_ags_path) and (
@@ -1154,6 +1232,7 @@ def main():
                         with timed_step(timings, "archive tree save"):
                             save_archive_tree_cache(archive_tree_cache_key, clone_path)
                 workspace_state["archive_tree_cache_key"] = archive_tree_cache_key
+                archive_extract_cache_keys = get_archive_extract_cache_keys(collection.ids())
 
         layers = []
 
@@ -1267,6 +1346,17 @@ def main():
                 elif args.verbose:
                     print(" > Using cached partition sizes")
                 build_pfs(util.path(out_dir, config_base_name + ".hdf"), clone_path, args.verbose, partitions=pfs_partitions)
+
+        with timed_step(timings, "prune caches"):
+            prune_build_caches(
+                base_hdf_state["base_hdf_cache_dir"],
+                ags2_cache_key,
+                menu_subtree_cache_keys,
+                autoentries_cache_key,
+                archive_tree_cache_key,
+                archive_extract_cache_keys,
+                pfs_partition_cache_key,
+            )
 
         # set up cloner environment
         if not args.only_ags_tree:

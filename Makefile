@@ -1,10 +1,11 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-hst clone-hst image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp clean-build
+.PHONY: default help env env-rm update updates pull-archives initial-downloads index index-add-missing manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-hst clone-hst image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp clean-build
 
 PYTHON ?= python3.11
 SOURCE ?= $(subst ",,${AGSCONTENT})/titles/manual-downloads
+ARCHIVE_FETCH_DEST ?= ${HOME}/Developer/AmigaVision-Content
 
 AMIBERRYBIN ?= /Applications/Amiberry.app/Contents/MacOS/Amiberry
 REPLAYOS_BASE_IMG ?= ${AGSCONTENT}/base
@@ -51,6 +52,9 @@ help:
 		'' \
 		'  make update' \
 		'    Pull archives from the configured source, promote newer manual-downloads archives into the canonical tree, re-index the content database, and run the preferred image sync pipeline.' \
+		'' \
+		'  make initial-downloads [ARCHIVE_FETCH_DEST=...]' \
+		'    Download the demo/game/mags archive paths currently listed in data/db/titles.csv into a local content tree, skipping files already present. Useful for initial contributor setup.' \
 		'' \
 		'  make index' \
 		'    Index canonical WHDLoad archives in the $$AGSCONTENT path, update database references, and write the resulting state back to data/db/titles.csv.' \
@@ -136,6 +140,10 @@ updates: update
 pull-archives:
 	$(call print-start-time)
 	@pipenv run python ./build/pull_archives.py --dest "$(SOURCE)"
+
+initial-downloads:
+	$(call print-start-time)
+	@pipenv run python ./build/fetch_archives_from_csv.py --dest "$(subst ",,${ARCHIVE_FETCH_DEST})"
 
 index:
 	$(call print-start-time)
