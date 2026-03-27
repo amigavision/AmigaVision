@@ -1,0 +1,66 @@
+name: Verify README sync
+
+on:
+  pull_request:
+    paths:
+      - README.md
+      - .github/workflows/verify-readme-sync.yml
+  push:
+    branches:
+      - main
+    paths:
+      - README.md
+      - .github/workflows/verify-readme-sync.yml
+  workflow_dispatch:
+
+jobs:
+  verify-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out AmigaVision repo
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            README.md
+          sparse-checkout-cone-mode: false
+
+      - name: Check out Pages repo
+        uses: actions/checkout@v4
+        with:
+          repository: amigavision/amigavision.github.io
+          path: pages
+          sparse-checkout: |
+            docs.md
+          sparse-checkout-cone-mode: false
+
+      - name: Regenerate expected README
+        run: |
+          awk '
+            BEGIN {
+              in_frontmatter = 0
+              in_script = 0
+              skipping_blank = 0
+              print "# AmigaVision"
+              print ""
+              print "(The latest version of this documentation can also always be found on our web site at [https://amiga.vision/docs])"
+              print ""
+            }
+            NR == 1 && $0 == "---" { in_frontmatter = 1; next }
+            in_frontmatter && $0 == "---" { in_frontmatter = 0; skipping_blank = 1; next }
+            in_frontmatter { next }
+            $0 ~ /<script>/ { in_script = 1; next }
+            in_script && $0 ~ /<\/script>/ { in_script = 0; next }
+            in_script { next }
+            skipping_blank && $0 == "" { next }
+            { skipping_blank = 0 }
+            { print }
+          ' pages/docs.md > /tmp/expected-readme.md
+
+      - name: Fail if README was edited manually
+        run: |
+          if ! diff -u /tmp/expected-readme.md README.md; then
+            echo "README.md does not match amigavision.github.io/docs.md"
+            echo "Update docs.md in the Pages repo instead of editing README.md directly."
+            exit 1
+          fi
