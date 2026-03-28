@@ -11,6 +11,7 @@ from sqlite3 import Connection
 from time import perf_counter
 
 import ags_compositor as compositor
+import ags_paths as paths
 import ags_query as query
 import ags_util as util
 from ags_strings import strings
@@ -84,7 +85,7 @@ def normalize_release_year(release_date: str) -> tuple[str, str]:
     year, _, _ = util.parse_date(release_date or "")
     year = (year or "").strip()
     if not year:
-        return "Unknown", "Unknown"
+        return "Unknown", "19XX"
     if "x" in year.lower():
         return "Unknown", "19XX"
     return year, year
@@ -511,7 +512,7 @@ def make_runscript(entry, template, quiet: bool) -> str:
         if query.entry_is_notwhdl(entry):
             archive_path = query.get_archive_path(entry)
             if archive_path:
-                runfile_source_path = archive_path.replace(".lha", ".run")
+                runfile_source_path = util.path(paths.tracked_titles(), entry["archive_path"]).replace(".lha", ".run")
                 if util.is_file(runfile_source_path):
                     script = "ags-notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
                     script += "set{}\n".format(whd_vmode.lower())
@@ -520,6 +521,8 @@ def make_runscript(entry, template, quiet: bool) -> str:
                     script += "setvmode $AGSVMode\n"
                     script += "ags-vadjust\n"
                     script += "ags-notify\n"
+                else:
+                    script = "echo \"Title not available.\"" + "\n" + "wait 2"
             else:
                 script = "echo \"Title not available.\"" + "\n" + "wait 2"
         else:
