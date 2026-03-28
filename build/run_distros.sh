@@ -34,4 +34,4 @@ if [[ -t 0 ]]; then
   printf '\n'
 fi
 
-DISTRO_DATE="$date_stamp" python3 ./build/package_distros.py --date-stamp "$date_stamp" "$@"
+DISTRO_DATE="$date_stamp" python3 build/package_distros.py --date-stamp "$date_stamp" "$@"
