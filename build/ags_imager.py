@@ -64,7 +64,7 @@ from sqlite3 import Connection
 import ags_paths as paths
 import ags_util as util
 from ags_fs import build_pfs, calculate_pfs_partitions, extract_base_image, convert_filename_uae2a, get_base_hdf_cache_dir
-from ags_make import count_tree_entries, make_autoentries, make_runscripts, make_tree, update_progress
+from ags_make import count_tree_entries, make_autoentries, make_runscripts, make_tree, reset_warning_state, update_progress, warn_missing_archive
 from ags_query import entry_is_notwhdl, get_amiga_whd_dir, get_archive_path, get_entry, get_preferred_entry, get_whd_dir, sanitize_entry
 from ags_strings import strings
 from ags_types import EntryCollection
@@ -159,7 +159,7 @@ def fingerprint_python_defs(path: str, names: list[str]) -> str:
 
 AGS2_TREE_BEHAVIOR_FINGERPRINT = hash_payload([
     fingerprint_python_defs("build/ags_make.py", ["make_tree", "make_entries", "make_entry", "make_runscripts", "make_runscript"]),
-    fingerprint_python_defs("build/ags_query.py", ["get_entry", "get_preferred_entry", "name_is_fuzzy", "get_runscript_paths", "get_amiga_whd_dir", "get_whd_slavename", "entry_is_notwhdl"]),
+    fingerprint_python_defs("build/ags_query.py", ["get_entry", "get_missing_archive_entry", "get_missing_archive_entry_by_id", "get_preferred_entry", "name_is_fuzzy", "get_runscript_paths", "get_amiga_whd_dir", "get_whd_slavename", "entry_is_notwhdl"]),
     fingerprint_python_defs("build/ags_compositor.py", ["compose", "out_iff"]),
 ])
 
@@ -505,7 +505,7 @@ def build_top_level_menu_with_cache(
             continue
         with tempfile.TemporaryDirectory(prefix="ags2-subtree-", dir=paths.tmp()) as subtree_root:
             subtree_collection = EntryCollection()
-            make_tree(db, subtree_collection, subtree_root, [item], template=runscript_template, verbose=False)
+            make_tree(db, subtree_collection, subtree_root, [item], template=runscript_template, verbose=verbose)
             util.clone_tree(subtree_root, amiga_ags_path)
             merge_collection_snapshot(relativize_collection_snapshot({
                 "entries": list(subtree_collection.by_id.values()),
@@ -894,6 +894,11 @@ def inject_clone_progress(clone_script_path: str, clone_path: str) -> None:
 def add_all(db: Connection, c: EntryCollection, category: str, exclude_subcategories=None) -> None:
     for r in db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
         entry = sanitize_entry(r)
+        if not entry and r["archive_path"]:
+            archive_path = r["archive_path"]
+            archive_full_path = util.path(paths.titles(), archive_path)
+            if not util.is_file(archive_full_path):
+                warn_missing_archive(r["title_short"] or r["id"], archive_path)
         preferred_entry = get_preferred_entry(db, entry)
         if entry:
             if exclude_subcategories:
@@ -1018,8 +1023,6 @@ def main():
     parser.add_argument("--auto-lists", dest="auto_lists", action="store_true", default=False, help="create automatic lists")
     parser.add_argument("--only-ags-tree", dest="only_ags_tree", action="store_true", default=False, help="only generate AGS tree")
 
-    parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
-
     
     print("Build started: ")
     print(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
@@ -1030,7 +1033,7 @@ def main():
         timings = []
 
         with timed_step(timings, "db setup"):
-            db = util.get_db(args.verbose)
+            db = util.get_db(True)
             collection = EntryCollection()
 
         if args.out_dir:
@@ -1056,7 +1059,7 @@ def main():
             raise IOError("run script template not found ({})".format(runscript_template_path))
 
         with timed_step(timings, "parse config"):
-            if args.verbose: print("Parsing menu...")
+            print("Parsing menu...")
             menu = util.yaml_load(args.config_file)
             if not isinstance(menu, list):
                 raise ValueError("config file not a list ({})".format(args.config_file))
@@ -1087,23 +1090,22 @@ def main():
 
         if not args.only_ags_tree:
             with timed_step(timings, "extract base hdf"):
-                if args.verbose: print("Extracting base HDF image: {}".format(base_hdf))
+                print("Extracting base HDF image: {}".format(base_hdf))
                 util.rm_path(amiga_boot_path)
                 used_cache = extract_base_image(base_hdf, amiga_boot_path)
-                if args.verbose and used_cache:
+                if used_cache:
                     print(" > Using cached base HDF unpack")
                 workspace_state["base_hdf"] = base_hdf_state["base_hdf"]
                 workspace_state["base_hdf_cache_dir"] = base_hdf_state["base_hdf_cache_dir"]
 
         # copy base AGS2 config
-        if args.verbose: print("Building AGS2 tree...")
+        print("Building AGS2 tree...")
         base_ags2 = args.ags_dir
         if not base_ags2:
             base_ags2 = util.path("data", "ags2")
         if not util.is_dir(base_ags2):
             raise IOError("configuration directory not found ({})".format(base_ags2))
-        if args.verbose:
-            print(" > Using configuration: {}".format(base_ags2))
+        print(" > Using configuration: {}".format(base_ags2))
 
         ags2_cache_state = get_ags2_tree_cache_state(menu, db_path, base_ags2, runscript_template_path, args.config_file, args)
         ags2_cache_key = get_ags2_tree_cache_key(ags2_cache_state)
@@ -1128,23 +1130,21 @@ def main():
                 or restore_ags2_collection_snapshot(ags2_cache_key, collection)
             ):
                 used_ags2_cache = True
-                if args.verbose:
-                    print(" > Reusing cached AGS2 workspace")
+                print(" > Reusing cached AGS2 workspace")
             elif not restore_ags2_tree_cache(ags2_cache_key, amiga_ags_path, collection):
-                if args.verbose:
-                    report_ags2_tree_cache_miss(ags2_cache_state)
+                report_ags2_tree_cache_miss(ags2_cache_state)
                 util.rm_path(amiga_ags_path)
                 util.copytree(base_ags2, amiga_ags_path)
             else:
                 used_ags2_cache = True
-                if args.verbose:
-                    print(" > Using cached AGS2 tree")
+                print(" > Using cached AGS2 tree")
 
         if util.is_dir(amiga_ags_path) and collection.by_id:
             save_workspace_ags2_collection_snapshot(clone_path, collection)
 
         # collect entries
         if not used_ags2_cache:
+            reset_warning_state()
             with timed_step(timings, "collect menu entries"):
                 collection.progress_current = 0
                 collection.progress_total = count_tree_entries(menu) + len(collection.by_id)
@@ -1160,10 +1160,10 @@ def main():
                             runscript_template_path,
                             args,
                             runscript_template,
-                            args.verbose,
+                            True,
                         )
                     else:
-                        make_tree(db, collection, amiga_ags_path, menu, template=runscript_template, verbose=args.verbose)
+                        make_tree(db, collection, amiga_ags_path, menu, template=runscript_template, verbose=True)
             with timed_step(timings, "collect all entries"):
                 if args.all_games:
                     add_all(db, collection, "Game")
@@ -1176,8 +1176,7 @@ def main():
                 if args.all_games or args.all_demos or args.all_demoscene or args.auto_lists:
                     autoentries_cache_key = get_autoentries_cache_key(get_autoentries_cache_state(collection, args))
                     if restore_autoentries_cache(autoentries_cache_key, amiga_ags_path, collection):
-                        if args.verbose:
-                            print(" > Using cached auto entries")
+                        print(" > Using cached auto entries")
                     else:
                         before_path_ids = set(collection.path_ids)
                         before_sort_rank = dict(collection.path_sort_rank)
@@ -1187,7 +1186,7 @@ def main():
                             amiga_ags_path,
                             extract_autoentries_collection_delta(amiga_ags_path, before_path_ids, before_sort_rank, collection),
                         )
-                if args.verbose and collection.progress_total > 0:
+                if collection.progress_total > 0:
                     print("")
 
             # generate run scripts
@@ -1213,27 +1212,23 @@ def main():
         # extract whdloaders
         if not args.only_ags_tree:
             with timed_step(timings, "extract archives"):
-                if args.verbose: print("Extracting {} content archives...".format(len(collection.by_id.items())))
+                print("Extracting {} content archives...".format(len(collection.by_id.items())))
                 archive_tree_cache_key = get_archive_tree_cache_key(get_archive_tree_cache_state(collection.ids()))
                 archive_tree_restored = False
                 workspace_archive_path = util.path(clone_path, "DH1", "WHD")
                 if workspace_state.get("archive_tree_cache_key") == archive_tree_cache_key and util.is_dir(workspace_archive_path):
                     archive_tree_restored = True
-                    if args.verbose:
-                        print(" > Reusing cached archive workspace")
+                    print(" > Reusing cached archive workspace")
                 else:
                     util.rm_path(workspace_archive_path)
-                    if args.verbose:
-                        print(" > Restoring cached archive tree...")
+                    print(" > Restoring cached archive tree...")
                     with timed_step(timings, "archive tree restore"):
                         archive_tree_restored = restore_archive_tree_cache(archive_tree_cache_key, clone_path)
                     if archive_tree_restored:
-                        if args.verbose:
-                            print(" > Using cached archive tree")
+                        print(" > Using cached archive tree")
                     else:
-                        extract_entries(clone_path, collection.ids(), verbose=args.verbose)
-                        if args.verbose:
-                            print(" > Saving cached archive tree...")
+                        extract_entries(clone_path, collection.ids(), verbose=True)
+                        print(" > Saving cached archive tree...")
                         with timed_step(timings, "archive tree save"):
                             save_archive_tree_cache(archive_tree_cache_key, clone_path)
                 workspace_state["archive_tree_cache_key"] = archive_tree_cache_key
@@ -1243,7 +1238,7 @@ def main():
 
         # copy layers
         with timed_step(timings, "copy layers"):
-            if args.verbose: print("Adding layers...")
+            print("Adding layers...")
             layers_path = util.path(config_dir, config_base_name) + ".layers.yaml"
             if util.is_file(layers_path):
                 layers = util.yaml_load(layers_path)
@@ -1258,25 +1253,24 @@ def main():
                             raise IOError("layer source not a directory ({})".format(src_dir))
                         if not (isinstance(dst, str) and dst[0] == "/"):
                             raise ValueError("layer destination malformed: ({})".format(dst))
-                        if args.verbose: print(" > '{}' -> '{}'".format(src, dst))
+                        print(" > '{}' -> '{}'".format(src, dst))
                         util.clone_tree(src_dir, util.path(clone_path, dst[1:]))
 
         # copy additional directories
         if not args.only_ags_tree and args.add_dirs:
             with timed_step(timings, "copy extra dirs"):
-                if args.verbose: print("Copying additional directories...")
+                print("Copying additional directories...")
                 add_dirs_cache_state = get_add_dirs_cache_state(args.add_dirs)
                 add_dirs_destinations = get_add_dirs_destinations(args.add_dirs)
                 if workspace_state.get("add_dirs_cache_state") == add_dirs_cache_state and all(
                     util.is_dir(util.path(clone_path, dst.replace(":", "/"))) for dst in add_dirs_destinations
                 ):
-                    if args.verbose:
-                        print(" > Reusing staged extra directories")
-                        for s in args.add_dirs:
-                            src_dir, dst = s.split("::", 1)
-                            remove_ignored_host_files(util.path(clone_path, dst.replace(":", "/")))
-                            print(" > '{}' -> '{}'".format(src_dir, dst))
-                            print_add_dir_progress(src_dir, True)
+                    print(" > Reusing staged extra directories")
+                    for s in args.add_dirs:
+                        src_dir, dst = s.split("::", 1)
+                        remove_ignored_host_files(util.path(clone_path, dst.replace(":", "/")))
+                        print(" > '{}' -> '{}'".format(src_dir, dst))
+                        print_add_dir_progress(src_dir, True)
                 else:
                     for dst in workspace_state.get("add_dirs_destinations", []):
                         util.rm_path(util.path(clone_path, dst.replace(":", "/")))
@@ -1287,9 +1281,8 @@ def main():
                         elif util.is_dir(d[0]):
                             dest = util.path(clone_path, d[1].replace(":", "/"))
                             util.rm_path(dest)
-                            if args.verbose:
-                                print(" > '{}' -> '{}'".format(d[0], d[1]))
-                            copy_add_dir_with_progress(d[0], dest, args.verbose)
+                            print(" > '{}' -> '{}'".format(d[0], d[1]))
+                            copy_add_dir_with_progress(d[0], dest, True)
                             remove_ignored_host_files(dest)
                         else:
                             raise IOError("--add-dir source not found ({})".format(d[0]))
@@ -1348,9 +1341,9 @@ def main():
                     with timed_step(timings, "calculate pfs sizes"):
                         pfs_partitions = calculate_pfs_partitions(clone_path)
                     save_pfs_partition_cache(pfs_partition_cache_key, pfs_partitions, workspace_state)
-                elif args.verbose:
+                else:
                     print(" > Using cached partition sizes")
-                build_pfs(util.path(out_dir, config_base_name + ".hdf"), clone_path, args.verbose, partitions=pfs_partitions)
+                build_pfs(util.path(out_dir, config_base_name + ".hdf"), clone_path, True, partitions=pfs_partitions)
 
         with timed_step(timings, "prune caches"):
             prune_build_caches(
@@ -1371,7 +1364,7 @@ def main():
                 cloner_cfg_amiberry = util.path("data", "cloner", "template.uae")
                 clone_script = util.path(os.path.dirname(args.config_file), config_base_name) + ".clonescript"
                 if util.is_file(cloner_adf) and util.is_file(cloner_cfg) and util.is_file(cloner_cfg_amiberry) and util.is_file(clone_script):
-                    if args.verbose: print("Copying cloner config...")
+                    print("Copying cloner config...")
                     output_hdf_path = util.path(out_dir, config_base_name + ".hdf")
                     target_hdf_link_path = util.path(clone_path, "target.hdf")
                     shutil.copyfile(cloner_adf, util.path(clone_path, "boot.adf"))
