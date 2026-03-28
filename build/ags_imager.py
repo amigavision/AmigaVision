@@ -277,7 +277,12 @@ def prune_interrupted_cache_artifacts() -> None:
         "base-hdf",
         "pfs-partitions",
     ]:
-        prune_cache_root(util.path(cache_root, relpath))
+        root = util.path(cache_root, relpath)
+        if not util.is_dir(root):
+            continue
+        for name in os.listdir(root):
+            if name.endswith(".tmp"):
+                util.rm_path(util.path(root, name))
 
 def prune_build_caches(
     base_hdf_cache_dir: str | None,
