@@ -39,7 +39,7 @@ def bg(width=320, height=256, color="#000"):
 # "tx" operation: single line text
 # halign = "center", "left", "right"
 # valign = "center", "top", "bottom"
-def tx(txt, size=240, halign="center", valign="center", kerning=-1.0, font="display.otf", color="#ffffff", bg="#000000"):
+def tx(txt, size=240, halign="center", valign="center", kerning=-1.0, font="display.ttf", color="#ffffff", bg="#000000"):
     if not txt:
         return bg if isinstance(bg, Image) else bg(color=bg)
     font_path = util.path(paths.content(), "fonts", font)
