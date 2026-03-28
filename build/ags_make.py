@@ -21,8 +21,22 @@ from make_vadjust import VSHIFT_MAX, VSHIFT_MIN
 AGS_INFO_WIDTH = 54
 AGS_LIST_WIDTH = 30
 MAX_FILENAME_LENGTH = 96
+WARNED_MISSING_ARCHIVES = set()
 
 # -----------------------------------------------------------------------------
+
+def print_warning(message: str):
+    print("")
+    print(" > WARNING: {}".format(message))
+
+def reset_warning_state():
+    WARNED_MISSING_ARCHIVES.clear()
+
+def warn_missing_archive(name: str, archive_path: str):
+    if archive_path in WARNED_MISSING_ARCHIVES:
+        return
+    print_warning("missing archive for {} ({})".format(name, archive_path))
+    WARNED_MISSING_ARCHIVES.add(archive_path)
 
 def count_tree_entries(node):
     total = 0
@@ -209,8 +223,13 @@ def make_entries(
         add_timing(collection, "menu lookup", perf_counter() - lookup_start)
         if pref_entry and query.name_is_fuzzy(n): entry = pref_entry
         if not entry:
+            missing_entry = query.get_missing_archive_entry(db, n)
+            if missing_entry:
+                archive_path = missing_entry["archive_path"]
+                warn_missing_archive(n, archive_path)
+                continue
             if options is None or (options and not options.get("unavailable", False)):
-                print(" > WARNING: invalid entry: {}".format(n))
+                print_warning("invalid entry: {}".format(n))
                 continue
             else:
                 disp_name = n.replace("-", " ")

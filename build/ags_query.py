@@ -10,6 +10,57 @@ import ags_util as util
 
 # -----------------------------------------------------------------------------
 
+def get_entry_lookup_patterns(name: str) -> list[str]:
+    return [
+        "game--{}".format(name),
+        "game--{}--{}".format(name, name),
+        "game--{}files--{}files".format(name, name),
+        "game--{}ntsc--{}ntsc".format(name, name),
+        "game--{}2mb--{}2mb".format(name, name),
+        "game--{}1mb--{}1mb".format(name, name),
+        "game--{}512kb--{}512kb".format(name, name),
+        "game--{}aga--{}aga".format(name, name),
+        "game--{}image--{}image".format(name, name),
+        "game--{}4disk--{}4disk".format(name, name),
+        "game--{}3disk--{}3disk".format(name, name),
+        "game--{}2disk--{}2disk".format(name, name),
+        "demo--{}".format(name),
+        "demo--{}--{}".format(name, name),
+        "game-notwhdl--{}%".format(name),
+        "demo-notwhdl--{}%".format(name),
+        "mags-notwhdl--{}%".format(name),
+        "game--{}%".format(name),
+        "demo--{}%".format(name),
+        "%--{}%".format(name),
+        "%{}%".format(name),
+    ]
+
+def iter_matching_rows(db, name):
+    if not name:
+        return
+
+    lowered = name.lower()
+    row = db.cursor().execute('SELECT * FROM titles WHERE id = ?', (lowered,)).fetchone()
+    seen_ids = set()
+    if row:
+        seen_ids.add(row["id"].lower())
+        yield row
+
+    for pattern in get_entry_lookup_patterns(lowered):
+        rows = db.cursor().execute('SELECT * FROM titles WHERE id LIKE ?', (pattern,)).fetchall()
+        for row in rows:
+            row_id = row["id"].lower()
+            if row_id in seen_ids:
+                continue
+            seen_ids.add(row_id)
+            yield row
+
+def row_has_missing_archive(row) -> bool:
+    if not row:
+        return False
+    archive_path = row["archive_path"]
+    return bool(archive_path and not util.is_file(util.path(paths.titles(), archive_path)))
+
 def sanitize_entry(entry):
     if entry is None:
         return None
@@ -34,48 +85,31 @@ def get_entry_by_id(db, entry_id):
     row = db.cursor().execute('SELECT * FROM titles WHERE id = ?', (entry_id.lower(),)).fetchone()
     return sanitize_entry(row)
 
+def get_missing_archive_entry_by_id(db, entry_id):
+    if not entry_id:
+        return None
+    row = db.cursor().execute('SELECT * FROM titles WHERE id = ?', (entry_id.lower(),)).fetchone()
+    if row_has_missing_archive(row):
+        return dict(row)
+    return None
+
 def get_preferred_entry(db, entry):
     if not entry:
         return None
     return get_entry_by_id(db, entry.get("preferred_version"))
 
 def get_entry(db, name):
-    n = name.lower()
-    exact_entry = get_entry_by_id(db, n)
-    if exact_entry:
-        return exact_entry, get_preferred_entry(db, exact_entry)
-
-    patterns = [
-        "{}".format(n),
-        "game--{}".format(n),
-        "game--{}--{}".format(n, n),
-        "game--{}files--{}files".format(n, n),
-        "game--{}ntsc--{}ntsc".format(n, n),
-        "game--{}2mb--{}2mb".format(n, n),
-        "game--{}1mb--{}1mb".format(n, n),
-        "game--{}512kb--{}512kb".format(n, n),
-        "game--{}aga--{}aga".format(n, n),
-        "game--{}image--{}image".format(n, n),
-        "game--{}4disk--{}4disk".format(n, n),
-        "game--{}3disk--{}3disk".format(n, n),
-        "game--{}2disk--{}2disk".format(n, n),
-        "demo--{}".format(n),
-        "demo--{}--{}".format(n, n),
-        "game-notwhdl--{}%".format(n),
-        "demo-notwhdl--{}%".format(n),
-        "mags-notwhdl--{}%".format(n),
-        "game--{}%".format(n),
-        "demo--{}%".format(n),
-        "%--{}%".format(n),
-        "%{}%".format(n)
-    ]
-    for p in patterns:
-        rows = db.cursor().execute('SELECT * FROM titles WHERE id LIKE ?', (p.lower(),)).fetchall()
-        for e in rows:
-            entry = sanitize_entry(e)
-            if entry:
-                return entry, get_preferred_entry(db, entry)
+    for row in iter_matching_rows(db, name):
+        entry = sanitize_entry(row)
+        if entry:
+            return entry, get_preferred_entry(db, entry)
     return None, None
+
+def get_missing_archive_entry(db, name):
+    for row in iter_matching_rows(db, name):
+        if row_has_missing_archive(row):
+            return dict(row)
+    return None
 
 def entry_is_valid(entry):
     if not (isinstance(entry, dict)): return False

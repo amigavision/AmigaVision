@@ -12,6 +12,7 @@ REPLAYOS_BASE_IMG ?= ${AGSCONTENT}/base
 REPLAYOS_OUTPUT_IMG ?= ${AGSDEST}/AmigaVision-RPi.img
 REPLAYOS_IMG_SIZE ?= 16g
 AMIGAVISION_HDF ?= ${AGSDEST}/games/Amiga/AmigaVision.hdf
+AMIGAVISION_FS_UAE ?= content/distro/games/Amiga/AmigaVision.fs-uae
 DISTRO_DATE ?= $(shell date +%Y.%m.%d)
 DISTRO_OUT ?= ${AGSDEST}/distros
 DISTRO_SAVES_HDF ?= ${AGSCONTENT}/distro/games/Amiga/AmigaVision-Saves.hdf
@@ -19,8 +20,8 @@ DISTRO_SHARED_DIR ?= ${AGSCONTENT}/distro/games/Amiga/shared
 DISTRO_LISTINGS_DIR ?= ${AGSDEST}/games/Amiga/listings
 MISTER_DISTRO_DIR ?= ${AGSCONTENT}/distro
 CD32_DISTRO_DIR ?= ./cd32
-DISTRO_PACKAGE = $(PYTHON) ./build/package_distros.py --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --pi-script "./build/pi_image.sh" --replay-base-img "$(subst ",,${REPLAYOS_BASE_IMG})" --replay-payload-dir "./replay" --replay-size "$(REPLAYOS_IMG_SIZE)"
-DISTRO_PACKAGE_PROMPT = bash ./build/run_distros.sh --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --pi-script "./build/pi_image.sh" --replay-base-img "$(subst ",,${REPLAYOS_BASE_IMG})" --replay-payload-dir "./replay" --replay-size "$(REPLAYOS_IMG_SIZE)"
+DISTRO_PACKAGE = $(PYTHON) build/package_distros.py --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --pi-script "build/pi_image.sh" --replay-base-img "$(subst ",,${REPLAYOS_BASE_IMG})" --replay-payload-dir "replay" --replay-size "$(REPLAYOS_IMG_SIZE)"
+DISTRO_PACKAGE_PROMPT = bash build/run_distros.sh --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --pi-script "build/pi_image.sh" --replay-base-img "$(subst ",,${REPLAYOS_BASE_IMG})" --replay-payload-dir "replay" --replay-size "$(REPLAYOS_IMG_SIZE)"
 
 define print-start-time
 	@printf 'Start time: %s\n' "$$(date '+%Y-%m-%d %H:%M:%S')"
@@ -38,7 +39,12 @@ endef
 
 default: help
 
-IMAGE_PREP_CMD = pipenv run ./build/ags_imager.py -v -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
+IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
+POCKET_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-Pocket.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
+MINI_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-Mini.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
+TEST_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --auto-lists -o ${AGSDEST}
+TEST_DRY_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
+FINALIZE_MAIN_IMAGE = mkdir -p "$(subst ",,${AGSDEST})/games/Amiga" && mv "$(subst ",,${AGSDEST})/AmigaVision.hdf" "$(subst ",,${AGSDEST})/games/Amiga" && cp "$(subst ",,${AMIGAVISION_FS_UAE})" "$(subst ",,${AGSDEST})/games/Amiga/"
 
 help:
 	@printf '%s\n' \
@@ -133,89 +139,89 @@ env-rm:
 
 update:
 	$(call print-start-time)
-	@pipenv run python ./build/pull_archives.py --dest "$(SOURCE)"
-	@pipenv run python ./build/promote_newer_archives.py --apply "$(SOURCE)"
-	@pipenv run ./build/ags_index.py -v --ingest
-	@pipenv run python ./build/sync_missing_images.py --fetch-lemon-interactive --apply
+	@pipenv run python build/pull_archives.py --dest "$(SOURCE)"
+	@pipenv run python build/promote_newer_archives.py --apply "$(SOURCE)"
+	@pipenv run build/ags_index.py -v --ingest
+	@pipenv run python build/sync_missing_images.py --fetch-lemon-interactive --apply
 
 updates: update
 
 pull-archives:
 	$(call print-start-time)
-	@pipenv run python ./build/pull_archives.py --dest "$(SOURCE)"
+	@pipenv run python build/pull_archives.py --dest "$(SOURCE)"
 
 initial-downloads:
 	$(call print-start-time)
-	@pipenv run python ./build/fetch_archives_from_csv.py --dest "$(subst ",,${ARCHIVE_FETCH_DEST})"
+	@pipenv run python build/fetch_archives_from_csv.py --dest "$(subst ",,${ARCHIVE_FETCH_DEST})"
 
 index:
 	$(call print-start-time)
-	@pipenv run ./build/ags_index.py -v
-	@pipenv run ./build/ags_index.py --make-csv
+	@pipenv run build/ags_index.py -v
+	@pipenv run build/ags_index.py --make-csv
 
 index-add-missing:
 	$(call print-start-time)
-	@pipenv run ./build/ags_index.py -v --append-missing-csv
+	@pipenv run build/ags_index.py -v --append-missing-csv
 
 prune-missing-archives:
 	$(call print-start-time)
-	@pipenv run ./build/ags_index.py -v --append-missing-csv --apply
+	@pipenv run build/ags_index.py -v --append-missing-csv --apply
 
 manifests:
 	$(call print-start-time)
-	@pipenv run ./build/ags_index.py --make-manifests
+	@pipenv run build/ags_index.py --make-manifests
 
 missing-manifests:
 	$(call print-start-time)
-	@pipenv run ./build/ags_index.py --make-manifests --only-missing
+	@pipenv run build/ags_index.py --make-manifests --only-missing
 
 verify-manifests:
 	$(call print-start-time)
-	@pipenv run ./build/ags_index.py --verify-manifests
+	@pipenv run build/ags_index.py --verify-manifests
 
 prune-manifests:
 	$(call print-start-time)
-	@pipenv run ./build/ags_index.py --prune-manifests
+	@pipenv run build/ags_index.py --prune-manifests
 
 prune-manifests-apply:
 	$(call print-start-time)
-	@pipenv run ./build/ags_index.py --prune-manifests --apply
+	@pipenv run build/ags_index.py --prune-manifests --apply
 
 sync-manifests:
 	$(call print-start-time)
-	@pipenv run ./build/ags_index.py --sync-manifests
+	@pipenv run build/ags_index.py --sync-manifests
 
 sync-manifests-apply:
 	$(call print-start-time)
-	@pipenv run ./build/ags_index.py --sync-manifests --apply
+	@pipenv run build/ags_index.py --sync-manifests --apply
 
 promote-newer-archives:
 	$(call print-start-time)
-	@pipenv run python ./build/promote_newer_archives.py --apply "$(SOURCE)"
+	@pipenv run python build/promote_newer_archives.py --apply "$(SOURCE)"
 
 missing-images:
 	$(call print-start-time)
-	@pipenv run python ./build/sync_missing_images.py
+	@pipenv run python build/sync_missing_images.py
 
 sync-images:
 	$(call print-start-time)
-	@pipenv run python ./build/sync_missing_images.py --fetch-lemon-interactive --apply
+	@pipenv run python build/sync_missing_images.py --fetch-lemon-interactive --apply
 
 sync-images-interactive:
 	$(call print-start-time)
-	@pipenv run python ./build/sync_missing_images.py --fetch-lemon-interactive --apply
+	@pipenv run python build/sync_missing_images.py --fetch-lemon-interactive --apply
 
 sqlite:
 	$(call print-start-time)
-	@pipenv run ./build/ags_index.py -v --make-sqlite
+	@pipenv run build/ags_index.py -v --make-sqlite
 
 csv:
 	$(call print-start-time)
-	@pipenv run ./build/ags_index.py -v --make-csv
+	@pipenv run build/ags_index.py -v --make-csv
 
 screenshots:
 	$(call print-start-time)
-	@pipenv run ./build/make_screenshots.sh screenshots
+	@pipenv run build/make_screenshots.sh screenshots
 
 invalidate-build-cache:
 	$(call print-start-time)
@@ -255,14 +261,14 @@ image:
 	$(call print-start-time)
 	@$(IMAGE_PREP_CMD)
 	@$(MAKE) clone-amiberry
-	@mv ${AGSDEST}/AmigaVision.hdf ${AGSDEST}/games/Amiga
+	@$(FINALIZE_MAIN_IMAGE)
 	@printf '\a'
 
 image-fsuae:
 	$(call print-start-time)
 	@$(IMAGE_PREP_CMD)
 	@$(MAKE) clone-fsuae
-	@mv ${AGSDEST}/AmigaVision.hdf ${AGSDEST}/games/Amiga
+	@$(FINALIZE_MAIN_IMAGE)
 	@printf '\a'
 
 clone-fuse:
@@ -277,7 +283,7 @@ clone-fuse:
 	if [ ! -f "$$hdf" ]; then \
 		hdf="$(subst ",,${AMIGAVISION_HDF})"; \
 	fi; \
-	./build/hdf_fuse_clone.sh \
+	build/hdf_fuse_clone.sh \
 		--hdf "$$hdf" \
 		--src-root "$(subst ",,${AGSTEMP})" \
 		--amifuse "${AMIFUSEBIN}" \
@@ -291,7 +297,7 @@ clone-fuse:
 
 image-fuse:
 	$(call print-start-time)
-	@pipenv run ./build/ags_imager.py -v -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
+	@$(IMAGE_PREP_CMD)
 	@$(MAKE) clone-fuse
 
 clone-hst:
@@ -310,7 +316,7 @@ clone-hst:
 	clone_backup="$$clone_path.hst-backup"; \
 	cp "$$clone_path" "$$clone_backup"; \
 	trap 'mv -f "$$clone_backup" "$$clone_path" >/dev/null 2>&1 || true' EXIT; \
-	cp ./build/clone-format-only.clonescript "$$clone_path"; \
+	cp build/clone-format-only.clonescript "$$clone_path"; \
 	log="${AGSTEMP}/fs-uae-format-hst.log"; \
 	if ! ${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae >"$$log" 2>&1; then \
 		cat "$$log"; \
@@ -318,7 +324,7 @@ clone-hst:
 	fi; \
 	mv -f "$$clone_backup" "$$clone_path"; \
 	trap - EXIT; \
-	./build/hdf_hst_clone.sh \
+	build/hdf_hst_clone.sh \
 		--hdf "$$hdf" \
 		--src-root "$(subst ",,${AGSTEMP})" \
 		--hst-amiga "$(subst ",,${HSTAMIGABIN})" \
@@ -332,7 +338,7 @@ clone-hst:
 
 image-hst:
 	$(call print-start-time)
-	@pipenv run ./build/ags_imager.py -v -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
+	@$(IMAGE_PREP_CMD)
 	@$(MAKE) clone-hst
 
 clone-amiberry:
@@ -368,37 +374,37 @@ image-amiberry:
 	$(call print-start-time)
 	@$(IMAGE_PREP_CMD)
 	@$(MAKE) clone-amiberry
-	@mv ${AGSDEST}/AmigaVision.hdf ${AGSDEST}/games/Amiga
+	@$(FINALIZE_MAIN_IMAGE)
 	@printf '\a'
 
 pocket-image:
 	$(call print-start-time)
-	@pipenv run ./build/ags_imager.py -v -c configs/AmigaVision-Pocket.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
+	@$(POCKET_IMAGE_PREP_CMD)
 	@$(MAKE) clone-amiberry
 	@mv ${AGSDEST}/AmigaVision-Pocket.hdf ${AGSDEST}/AmigaVision-Pocket
 	@printf '\a'
 
 mini-image:
 	$(call print-start-time)
-	@pipenv run ./build/ags_imager.py -v -c configs/AmigaVision-Mini.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
+	@$(MINI_IMAGE_PREP_CMD)
 	@$(MAKE) clone-amiberry
 	@mv ${AGSDEST}/AmigaVision-Mini.hdf ${AGSDEST}/AmigaVision-Mini
 	@printf '\a'
 
 test-image:
 	$(call print-start-time)
-	@pipenv run ./build/ags_imager.py -v -c configs/Test.yaml --auto-lists -o ${AGSDEST}
+	@$(TEST_IMAGE_PREP_CMD)
 	@$(MAKE) clone-amiberry
 	@printf '\a'
 
 test-dry:
 	$(call print-start-time)
-	@pipenv run ./build/ags_imager.py -v -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
+	@$(TEST_DRY_PREP_CMD)
 	@printf '\a'
 
 pi: image
 	$(call print-start-time)
-	@./build/pi_image.sh \
+	@build/pi_image.sh \
 		--base-img "${REPLAYOS_BASE_IMG}" \
 		--hdf "${AMIGAVISION_HDF}" \
 		--output-img "${REPLAYOS_OUTPUT_IMG}" \
@@ -408,7 +414,7 @@ pi: image
 
 pi-only:
 	$(call print-start-time)
-	@./build/pi_image.sh \
+	@build/pi_image.sh \
 		--base-img "${REPLAYOS_BASE_IMG}" \
 		--hdf "${AMIGAVISION_HDF}" \
 		--output-img "${REPLAYOS_OUTPUT_IMG}" \

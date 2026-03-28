@@ -65,7 +65,7 @@ import ags_paths as paths
 import ags_util as util
 from ags_fs import build_pfs, calculate_pfs_partitions, extract_base_image, convert_filename_uae2a, get_base_hdf_cache_dir
 from ags_make import count_tree_entries, make_autoentries, make_runscripts, make_tree, reset_warning_state, update_progress, warn_missing_archive
-from ags_query import entry_is_notwhdl, get_amiga_whd_dir, get_archive_path, get_entry, get_preferred_entry, get_whd_dir, sanitize_entry
+from ags_query import entry_is_notwhdl, get_amiga_whd_dir, get_archive_path, get_entry, get_missing_archive_entry, get_preferred_entry, get_whd_dir, sanitize_entry
 from ags_strings import strings
 from ags_types import EntryCollection
 from datetime import datetime
@@ -919,6 +919,52 @@ def add_all(db: Connection, c: EntryCollection, category: str, exclude_subcatego
             else:
                 c.by_id[preferred_entry["id"]] = preferred_entry
 
+def iter_requested_menu_names(node):
+    if isinstance(node, str):
+        yield node
+        return
+    if isinstance(node, list):
+        for item in node:
+            yield from iter_requested_menu_names(item)
+        return
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key in {"image", "note", "ordering", "rank", "hidden"}:
+                continue
+            if isinstance(value, dict):
+                yield key
+            else:
+                yield from iter_requested_menu_names(value)
+
+def audit_missing_archives(db: Connection, menu, args) -> None:
+    for name in iter_requested_menu_names(menu):
+        missing_entry = get_missing_archive_entry(db, name)
+        if missing_entry:
+            warn_missing_archive(name, missing_entry["archive_path"])
+
+    categories: list[tuple[str, list[str] | None]] = []
+    if args.all_games:
+        categories.append(("Game", None))
+    if args.all_demos:
+        categories.append(("Demo", ["Disk Magazine", "Slide Show"]))
+    if args.all_demoscene:
+        categories.append(("Demo", None))
+
+    for category, exclude_subcategories in categories:
+        for row in db.cursor().execute(
+            'SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")',
+            (category,),
+        ):
+            archive_path = row["archive_path"]
+            if not archive_path:
+                continue
+            if exclude_subcategories:
+                subcategory = (row["subcategory"] or "").lower()
+                if any(subcategory.startswith(excluded.lower()) for excluded in exclude_subcategories):
+                    continue
+            if not util.is_file(util.path(paths.titles(), archive_path)):
+                warn_missing_archive(row["title_short"] or row["id"], archive_path)
+
 def get_archive_extract_cache_dir(arc_path: str, entry) -> str | None:
     stat = os.stat(arc_path)
     key_source = "|".join([
@@ -1208,6 +1254,9 @@ def main():
 
         if util.is_dir(amiga_ags_path) and collection.by_id:
             save_workspace_ags2_collection_snapshot(clone_path, collection)
+
+        reset_warning_state()
+        audit_missing_archives(db, menu, args)
 
         # extract whdloaders
         if not args.only_ags_tree:
