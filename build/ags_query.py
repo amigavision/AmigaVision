@@ -14,6 +14,11 @@ def sanitize_entry(entry):
     if entry is None:
         return None
     entry = dict(entry)
+    archive_path = entry.get("archive_path")
+    if archive_path:
+        arc_path = util.path(paths.titles(), archive_path)
+        if not util.is_file(arc_path):
+            return None
     if entry_is_notwhdl(entry):
         return entry
     if entry_is_valid(entry) and entry["slave_path"].find("/") > 0:

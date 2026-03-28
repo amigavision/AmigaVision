@@ -8,8 +8,14 @@ import ags_util as util
 
 # -----------------------------------------------------------------------------
 
+def env_path(name):
+    value = os.getenv(name)
+    if value is None:
+        return None
+    return value.strip().strip('"')
+
 def cache_root():
-    return util.path(os.getenv("HOME"), "Library", "Caches", "AmigaVision")
+    return util.path(env_path("HOME"), "Library", "Caches", "AmigaVision")
 
 def cache_generation_file():
     return util.path(cache_root(), "build-cache-generation.txt")
@@ -27,16 +33,22 @@ def cache_generation():
     return "current"
 
 def content():
-    return util.path(os.getenv("AGSCONTENT"))
+    return util.path(env_path("AGSCONTENT"))
+
+def repo_content():
+    return util.path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "content")
 
 def titles():
     return util.path(content(), "titles")
+
+def tracked_titles():
+    return util.path(repo_content(), "titles")
 
 def manifests():
     return util.path(content(), "manifests")
 
 def tmp():
-    return util.path(os.getenv("AGSTEMP"))
+    return util.path(env_path("AGSTEMP"))
 
 def cache():
     return util.path(cache_root(), "build", cache_generation())
@@ -48,8 +60,8 @@ def verify():
             raise IOError("missing {} environment variable - check .env!".format(var))
     if not util.is_dir(content()):
         raise IOError("AGSCONTENT is not a directory - check .env!")
-    if not util.is_file(util.path(os.getenv("FSUAEBIN"))):
+    if not util.is_file(util.path(env_path("FSUAEBIN"))):
         raise IOError("FSUAEBIN is not a file - check .env!")
-    if not util.is_file(util.path(os.getenv("FSUAEROM"))):
+    if not util.is_file(util.path(env_path("FSUAEROM"))):
         raise IOError("FSUAEROM is not a file - check .env!")
     return True
