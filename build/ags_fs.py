@@ -46,6 +46,8 @@ def extract_base_image(base_hdf: str, dest: str):
         util.make_dir(os.path.dirname(cache_dir))
         unpack_dest = cache_dir + ".tmp"
         util.rm_path(unpack_dest)
+        for suffix in [".blkdev", ".xdfmeta"]:
+            util.rm_path(unpack_dest + suffix)
 
     result = subprocess.run(["xdftool", base_hdf, "unpack", unpack_dest, "fsuae"])
     if result.returncode != 0:
