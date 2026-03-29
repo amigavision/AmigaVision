@@ -30,6 +30,18 @@ assign >NIL: LOCALE: SYS:Locale
 version exec.library 46 >NIL:
 if not warn
   assign >NIL: LIBS: SYS:Libs/alternates SYS:Libs
+  if exists SYS:WBStartup/ToolsDaemon
+    rename SYS:WBStartup/ToolsDaemon SYS:Storage/WBStartup/ToolsDaemon
+  endif
+  if exists SYS:WBStartup/ToolsDaemon.info
+    rename SYS:WBStartup/ToolsDaemon.info SYS:Storage/WBStartup/ToolsDaemon.info
+  endif
+  if exists SYS:WBStartup/RTPatch
+    rename SYS:WBStartup/RTPatch SYS:Storage/WBStartup/RTPatch
+  endif
+  if exists SYS:WBStartup/RTPatch.info
+    rename SYS:WBStartup/RTPatch.info SYS:Storage/WBStartup/RTPatch.info
+  endif
 else
   assign >NIL: LIBS: SYS:Libs
 endif
