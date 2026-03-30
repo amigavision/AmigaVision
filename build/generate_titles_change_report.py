@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import csv
 import html
 import re
@@ -53,9 +54,9 @@ def load_current() -> tuple[list[str], dict[str, dict[str, str]]]:
     return read_csv_text(CURRENT_CSV.read_text(encoding="utf-8"))
 
 
-def load_tagged() -> tuple[list[str], dict[str, dict[str, str]]]:
+def load_ref(ref: str) -> tuple[list[str], dict[str, dict[str, str]]]:
     result = subprocess.run(
-        ["git", "show", f"{TAG}:data/db/titles.csv"],
+        ["git", "show", f"{ref}:data/db/titles.csv"],
         cwd=ROOT,
         check=True,
         capture_output=True,
@@ -140,8 +141,8 @@ def build_field_diffs(
     return items
 
 
-def build_rows() -> tuple[list[DiffRow], Counter[str]]:
-    old_fields, old_rows = load_tagged()
+def build_rows(base_ref: str) -> tuple[list[DiffRow], Counter[str]]:
+    old_fields, old_rows = load_ref(base_ref)
     new_fields, new_rows = load_current()
     ordered_fields = [
         field
@@ -202,7 +203,7 @@ def build_rows() -> tuple[list[DiffRow], Counter[str]]:
     return deduped_rows, counts
 
 
-def render_html(rows: list[DiffRow], counts: Counter[str]) -> str:
+def render_html(rows: list[DiffRow], counts: Counter[str], base_ref: str) -> str:
     total = sum(counts.values())
     generated_from = html.escape(str(CURRENT_CSV.relative_to(ROOT)))
     return f"""<!doctype html>
@@ -217,6 +218,11 @@ def render_html(rows: list[DiffRow], counts: Counter[str]) -> str:
       --bg: #f7f3eb;
       --panel: rgba(255, 255, 255, 0.9);
       --panel-strong: #fffdf8;
+      --hero-bg: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,248,235,0.92));
+      --header-bg: rgba(255, 251, 243, 0.96);
+      --row-hover-bg: rgba(255, 251, 243, 0.7);
+      --pill-total-bg: #efe4d2;
+      --pill-total-border: #dbc6aa;
       --text: #261d17;
       --muted: #75665a;
       --line: #d8cabb;
@@ -227,6 +233,36 @@ def render_html(rows: list[DiffRow], counts: Counter[str]) -> str:
       --modified: #8a5a00;
       --modified-bg: #ffefc7;
       --shadow: 0 14px 40px rgba(63, 43, 24, 0.12);
+    }}
+
+    @media (prefers-color-scheme: dark) {{
+      :root {{
+        color-scheme: dark;
+        --bg: #16120f;
+        --panel: rgba(30, 24, 20, 0.92);
+        --panel-strong: #211a15;
+        --hero-bg: linear-gradient(135deg, rgba(41, 32, 26, 0.96), rgba(30, 24, 20, 0.96));
+        --header-bg: rgba(40, 32, 26, 0.96);
+        --row-hover-bg: rgba(53, 42, 34, 0.72);
+        --pill-total-bg: rgba(78, 61, 46, 0.72);
+        --pill-total-border: #6a5441;
+        --text: #f3eadf;
+        --muted: #bcae9f;
+        --line: #4c3d31;
+        --added: #8be0ad;
+        --added-bg: rgba(24, 78, 49, 0.45);
+        --removed: #ff9eac;
+        --removed-bg: rgba(114, 33, 48, 0.45);
+        --modified: #ffd37a;
+        --modified-bg: rgba(116, 80, 15, 0.4);
+        --shadow: 0 18px 46px rgba(0, 0, 0, 0.42);
+      }}
+
+      body {{
+        background:
+          radial-gradient(circle at top left, rgba(210, 148, 65, 0.12), transparent 26rem),
+          linear-gradient(180deg, #1b1612 0%, var(--bg) 100%);
+      }}
     }}
 
     * {{ box-sizing: border-box; }}
@@ -245,7 +281,7 @@ def render_html(rows: list[DiffRow], counts: Counter[str]) -> str:
     }}
 
     .hero {{
-      background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,248,235,0.92));
+      background: var(--hero-bg);
       border: 1px solid rgba(134, 104, 68, 0.18);
       border-radius: 22px;
       box-shadow: var(--shadow);
@@ -288,8 +324,8 @@ def render_html(rows: list[DiffRow], counts: Counter[str]) -> str:
     }}
 
     .pill-total {{
-      background: #efe4d2;
-      border-color: #dbc6aa;
+      background: var(--pill-total-bg);
+      border-color: var(--pill-total-border);
     }}
 
     .pill-modified {{
@@ -335,7 +371,7 @@ def render_html(rows: list[DiffRow], counts: Counter[str]) -> str:
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--muted);
-      background: rgba(255, 251, 243, 0.96);
+      background: var(--header-bg);
       border-bottom: 1px solid var(--line);
       padding: 14px 16px;
     }}
@@ -347,7 +383,7 @@ def render_html(rows: list[DiffRow], counts: Counter[str]) -> str:
     }}
 
     tbody tr:hover {{
-      background: rgba(255, 251, 243, 0.7);
+      background: var(--row-hover-bg);
     }}
 
     .status {{
@@ -434,7 +470,7 @@ def render_html(rows: list[DiffRow], counts: Counter[str]) -> str:
   <div class="page">
     <section class="hero">
       <h1>Changes in <code>{generated_from}</code></h1>
-      <p class="lede">Compared against git tag <code>{TAG}</code>. Each changed field gets its own compact table row, with inline diffs for fast scanning.</p>
+      <p class="lede">Compared against git ref <code>{html.escape(base_ref)}</code>. Each changed field gets its own compact table row, with inline diffs for fast scanning.</p>
       <div class="summary">
         <div class="pill pill-total"><strong>{total}</strong> changed titles</div>
         <div class="pill pill-total"><strong>{len(rows)}</strong> changed fields</div>
@@ -476,11 +512,22 @@ def render_row(row: DiffRow) -> str:
     )
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Generate an HTML report of titles.csv changes versus a git ref.")
+    parser.add_argument("--base-ref", default=TAG, help="Git ref to compare the current working tree against.")
+    parser.add_argument("--output", default=str(OUTPUT_HTML), help="Output HTML file path.")
+    return parser.parse_args()
+
+
 def main() -> None:
-    rows, counts = build_rows()
-    OUTPUT_HTML.write_text(render_html(rows, counts), encoding="utf-8")
+    args = parse_args()
+    output_html = Path(args.output).expanduser()
+    if not output_html.is_absolute():
+        output_html = (ROOT / output_html).resolve()
+    rows, counts = build_rows(args.base_ref)
+    output_html.write_text(render_html(rows, counts, args.base_ref), encoding="utf-8")
     print(
-        f"Wrote {OUTPUT_HTML.relative_to(ROOT)} with "
+        f"Wrote {output_html.relative_to(ROOT)} with "
         f"{sum(counts.values())} changed titles and {len(rows)} changed fields."
     )
 
