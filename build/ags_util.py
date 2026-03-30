@@ -15,6 +15,7 @@ import stat
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 from lhafile import LhaFile
 from ruamel import yaml
@@ -318,17 +319,45 @@ def sorted_natural(lst):
 # -----------------------------------------------------------------------------
 # data extraction
 
+def find_native_lha():
+    candidates = [
+        os.path.expanduser("~/Developer/LhA/lha"),
+        os.path.expanduser("~/.local/bin/lha"),
+        shutil.which("lha"),
+    ]
+    for candidate in candidates:
+        if candidate and os.path.isfile(candidate) and os.access(candidate, os.X_OK):
+            return candidate
+    return None
+
+
+def native_lha_extract(arcpath, outpath):
+    lha_bin = find_native_lha()
+    if not lha_bin:
+        raise RuntimeError("native lha binary not found")
+    make_dir(outpath)
+    subprocess.run(
+        [lha_bin, f"xfqw={outpath}", arcpath],
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
 def lha_extract(arcpath, outpath):
-    arc = LhaFile(arcpath)
-    for filename in [info.filename for info in arc.infolist()]:
-        path = filename.replace("\\", "/")
-        dirname = convert_filename_a2uae(os.path.dirname(path))
-        basename = convert_filename_a2uae(os.path.basename(path))
-        if dirname:
-            make_dir(os.path.join(outpath, dirname))
-        if basename:
-            make_dir(os.path.join(outpath, dirname))
-            open(os.path.join(outpath, dirname, basename), "wb").write(arc.read(filename))
+    try:
+        arc = LhaFile(arcpath)
+        for filename in [info.filename for info in arc.infolist()]:
+            path = filename.replace("\\", "/")
+            dirname = convert_filename_a2uae(os.path.dirname(path))
+            basename = convert_filename_a2uae(os.path.basename(path))
+            if dirname:
+                make_dir(os.path.join(outpath, dirname))
+            if basename:
+                make_dir(os.path.join(outpath, dirname))
+                open(os.path.join(outpath, dirname, basename), "wb").write(arc.read(filename))
+    except Exception:
+        rm_path(outpath)
+        native_lha_extract(arcpath, outpath)
 
 # -----------------------------------------------------------------------------
 # yaml serialization
@@ -620,7 +649,7 @@ def reconcile_preferred_variants(rows, header, changed_ids):
 
 def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
     if not entries:
-        return 0, 0
+        return 0, 0, []
 
     deduped_entries = []
     seen_ids = set()
@@ -656,19 +685,26 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
         if len(row) < len(header):
             row.extend([""] * (len(header) - len(row)))
         changed = False
+        force_fields = set(entry.get("_force_fields", []))
         for field in ("title", "title_short", "category", "subcategory", "hardware", "aga", "release_date", "language", "developer", "publisher", "players", "archive_path", "slave_path", "slave_version", "hol_id", "lemon_id", "demozoo_id", "pouet_id"):
             try:
                 col = header.index(field)
             except ValueError:
                 continue
-            if not row[col] and entry.get(field):
+            entry_value = entry.get(field, "")
+            should_update = False
+            if field in force_fields and row[col] != entry_value:
+                should_update = True
+            elif not row[col] and entry_value:
+                should_update = True
+            if should_update:
                 if field == "title":
-                    row[col] = normalized_title_fields(entry[field], "")[0]
+                    row[col] = normalized_title_fields(entry_value, "")[0]
                 elif field == "title_short":
                     source_title = row[header.index("title")] if "title" in header else entry.get("title", "")
-                    row[col] = normalized_title_fields(source_title, entry[field])[1]
+                    row[col] = normalized_title_fields(source_title, entry_value)[1]
                 else:
-                    row[col] = entry[field]
+                    row[col] = entry_value
                 changed = True
                 if field in ("hol_id", "lemon_id"):
                     report_entries.append({

@@ -531,7 +531,11 @@ def make_runscript(entry, template, quiet: bool) -> str:
         if query.entry_is_notwhdl(entry):
             archive_path = query.get_archive_path(entry)
             if archive_path:
-                runfile_source_path = util.path(paths.tracked_titles(), entry["archive_path"]).replace(".lha", ".run")
+                # New non-WHDLoad imports live in AGSCONTENT first, while some older
+                # checked-in titles still only exist in the repo mirror.
+                runfile_source_path = util.path(paths.titles(), entry["archive_path"]).replace(".lha", ".run")
+                if not util.is_file(runfile_source_path):
+                    runfile_source_path = util.path(paths.tracked_titles(), entry["archive_path"]).replace(".lha", ".run")
                 if util.is_file(runfile_source_path):
                     script = "ags-notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
                     script += "set{}\n".format(whd_vmode.lower())
