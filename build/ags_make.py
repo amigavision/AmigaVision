@@ -221,6 +221,9 @@ def make_entries(
         lookup_start = perf_counter()
         entry, pref_entry = query.get_entry(db, n)
         add_timing(collection, "menu lookup", perf_counter() - lookup_start)
+        preferred_issue = query.get_preferred_entry_issue(db, entry)
+        if preferred_issue:
+            print_warning("invalid preferred version for {} ({})".format(entry["id"], preferred_issue))
         if pref_entry and query.name_is_fuzzy(n): entry = pref_entry
         if not entry:
             missing_entry = query.get_missing_archive_entry(db, n)

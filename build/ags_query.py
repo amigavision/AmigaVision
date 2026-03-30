@@ -98,6 +98,30 @@ def get_preferred_entry(db, entry):
         return None
     return get_entry_by_id(db, entry.get("preferred_version"))
 
+def get_preferred_entry_issue(db, entry):
+    if not entry:
+        return None
+
+    preferred_id = (entry.get("preferred_version") or "").strip().lower()
+    if not preferred_id:
+        return None
+
+    row = db.cursor().execute('SELECT * FROM titles WHERE id = ?', (preferred_id,)).fetchone()
+    if row is None:
+        return "preferred version {} does not exist".format(preferred_id)
+
+    if row_has_missing_archive(row):
+        return "preferred version {} is missing archive {}".format(preferred_id, row["archive_path"])
+
+    preferred_version = (row["preferred_version"] or "").strip().lower()
+    if preferred_version == entry.get("id", "").strip().lower():
+        return "preferred version cycle between {} and {}".format(entry["id"], row["id"])
+
+    if sanitize_entry(row) is None:
+        return "preferred version {} is not launchable".format(preferred_id)
+
+    return None
+
 def get_entry(db, name):
     for row in iter_matching_rows(db, name):
         entry = sanitize_entry(row)

@@ -609,6 +609,8 @@ def reconcile_preferred_variants(rows, header, changed_ids):
             row_key = (row[col_index["title"]], row[col_index["category"]], row[col_index["subcategory"]])
             if row_key != key:
                 continue
+            if row[col_index["category"]].strip().lower() == "game":
+                continue
             archive_path = row[col_index["archive_path"]]
             parsed = parse_archive_variant(archive_path)
             rank = variant_preference_rank(archive_path)
