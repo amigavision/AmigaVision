@@ -1,4 +1,5 @@
 - note: Demos configured to be displayed in\nfull screen integer scaled 16:9 aspect ratio.\n\nOSD > Audio & Video > Aspect Ratio > Full Screen\n\nSome pixel cropping may occur. If you want the\n4:3 versions, use the other listings.
+- rank: 5
 - 3LE-Drama: { scale: 6, vshift: 44 }
 - Andromeda-Rule30: { scale: 6, vshift: 62 }
 - Artwork-Dawn: { scale: 6, vshift: 44 }
@@ -19,6 +20,7 @@
 - Hologon: { scale: 6, vshift: 45 }
 - ISOAGA: { scale: 6, vshift: 42 }
 - Jormas-KanaalinArvoitus: { scale: 6, vshift: 42 }
+- Lemon-Colombia: { scale: 6, vshift: 45 }
 - Lemon-Lemonade: { scale: 6, vshift: 45 }
 - Lemon+TDL-BlastFromThePast: { scale: 6, vshift: 52 }
 - Lemon+TDL-TheFall: { scale: 6, vshift: 44 }
@@ -39,6 +41,14 @@
 - RNO-FourSkin: { scale: 6, vshift: 44 }
 - RNO-Fruitcake: { scale: 6, vshift: 35 }
 - Shaft7AGA: { scale: 6, vshift: 44 }
+- demo-notwhdl--capsule-brutalism-060: { scale: 6, vshift: 45 }
+- demo-notwhdl--ghostown-lasttraintodanzig-060: { scale: 6, vshift: 45 }
+- demo-notwhdl--logicoma-entropychamber-060: { scale: 6, vshift: 45 }
+- demo-notwhdl--spaceballs-disiplin: { scale: 6, vshift: 45 }
+- demo-notwhdl--spaceballs-goonroyale: { scale: 6, vshift: 45 }
+- demo-notwhdl--spaceballs-norwegiankindness: { scale: 6, vshift: 45 }
+- demo-notwhdl--unique-singularities: { scale: 6, vshift: 45 }
+- demo-notwhdl--unique-subside-060: { scale: 6, vshift: 45 }
 - Spaceballs-Dubzilla: { scale: 6, vshift: 42 }
 - Spaceballs-Emperor: { scale: 6, vshift: 46 }
 - Spaceballs-Makt: { scale: 6, vshift: 42 }

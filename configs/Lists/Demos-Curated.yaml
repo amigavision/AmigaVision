@@ -1,0 +1,53 @@
+- Curated:
+  - rank: 3
+  - note: Curated demo scene collections.
+  - image: { ops: { op: "pi", path: "top/curated_content.png" }, size: [320, 128], scale: [1, 1] }
+  - Hoffman's Picks:
+    - note: A hand-picked selection of Amiga demos and intros.
+    - ordering: "ordered"
+    - demo-notwhdl--focusdesign-1992-060
+    - demo-notwhdl--mrsbeanbag-besheep
+    - demo-notwhdl--focusdesign-bekoolfool-060
+    - demo-notwhdl--capsule-brutalism-060
+    - demo-notwhdl--tte-circumvent
+    - demo-notwhdl--abyss-coda
+    - demo-notwhdl--lemon-colombia
+    - demo-notwhdl--melon-cortez
+    - demo-notwhdl--flex-deadahead-060
+    - demo--deprofundis--deprofundis
+    - demo--desirefm--desirefm
+    - demo--abyssdone--abyssdone
+    - demo-notwhdl--spaceballs-disiplin
+    - demo-notwhdl--spaceballs-dubzilla
+    - demo-notwhdl--ghostown-electric
+    - demo-notwhdl--logicoma-entropychamber-060
+    - demo--eon--eon
+    - demo-notwhdl--spaceballs-emperor
+    - demo-notwhdl--rift-faribars
+    - demo-notwhdl--melon-fisherhawkdr
+    - demo-notwhdl--spaceballs-goonroyale
+    - demo-notwhdl--ephidrena-hexel-060
+    - demo-notwhdl--ghostown-humantraffic
+    - demo--insidethemachine--insidethemachine
+    - demo-notwhdl--nature-jesuschristmotocross
+    - demo-notwhdl--ephidrena-knarkzilla-060
+    - demo-notwhdl--noice-lastgoatstanding-060
+    - demo-notwhdl--ghostown-lasttraintodanzig-060
+    - demo-notwhdl--lemon-lemonade
+    - demo-notwhdl--logicoma-logicos
+    - demo-notwhdl--spaceballs-makt
+    - demo-notwhdl--loonies-myluckynumber
+    - demo-notwhdl--lemon-natsunogomu
+    - demo-notwhdl--demostueallstars-nocpuchallenge
+    - demo-notwhdl--spaceballs-norwegiankindness
+    - demo-notwhdl--theblacklotus-oceanmachine-060
+    - demo-notwhdl--andromeda-rule30
+    - demo--rinkadinkredux--rinkadinkredux
+    - demo-notwhdl--unique-singularities
+    - demo-notwhdl--spaceballs-straff
+    - demo-notwhdl--theblacklotus-starstruck-060
+    - demo-notwhdl--unique-subside-060
+    - demo-notwhdl--traction-swookie
+    - demo-notwhdl--lemon+tdl-thefall
+    - demo--tacticaltransmissions--tacticaltransmissions
+    - demo-notwhdl--lgc&lns-waytoorude

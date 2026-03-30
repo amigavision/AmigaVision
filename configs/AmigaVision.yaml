@@ -27,5 +27,7 @@
 - "[ Demo Scene ]":
   - note: A sample of demo scene releases.
   - !include Lists/Demos.yaml
+  - !include Lists/Demos-Curated.yaml
   - !include Lists/Demos-Spotlight.yaml
   - Widescreen: !include Lists/Demos-Widescreen.yaml
+  - !include Lists/Demos-060.yaml
