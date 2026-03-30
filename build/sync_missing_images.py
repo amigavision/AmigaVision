@@ -45,37 +45,6 @@ TITLE_WORD_RE = re.compile(r"[A-Za-z0-9]+")
 STOPWORDS = {"the", "a", "an", "of", "and", "for", "to", "amiga", "edition", "demo", "datadisk", "data", "disk"}
 GENERIC_IMAGE_RE = re.compile(r'https?://[^"\'\s>]+\.(?:png|jpg|jpeg|webp)', re.IGNORECASE)
 
-MANUAL_FETCH_OVERRIDES = {
-    "game--piracydeluxe--piracydeluxe": {
-        "source": "GamesThatWeren't",
-        "url": "https://www.gamesthatwerent.com/2025/12/piracy-deluxe/",
-        "extractor": "gamesthatwerent",
-    },
-    "game--vectorbattleground--vectorbattleground": {
-        "source": "LaunchBox",
-        "url": "https://gamesdb.launchbox-app.com/games/images/407776-vector-battleground",
-        "extractor": "launchbox",
-    },
-    "game--evilsdoomaga--evilsdoomaga": {
-        "source": "Video Games Museum",
-        "url": "https://www.video-games-museum.com/en/game/Evils-Doom/82/3/72527",
-        "extractor": "video_games_museum",
-    },
-    "game--musclesaga--musclesaga": {
-        "source": "YouTube thumbnail",
-        "urls": ["https://i.ytimg.com/vi/i8b0LwjaIyA/maxresdefault.jpg"],
-    },
-    "game--impossiblepossibilityaga--impossiblepossibilityaga": {
-        "source": "Demozoo",
-        "url": "https://demozoo.org/productions/28441/screenshots/",
-        "extractor": "demozoo",
-    },
-    "game--swos2526--swos2526": {
-        "source": "existing SWOS screenshots",
-        "copy_from_id": "game--swos--swos",
-    },
-}
-
 MANUAL_LEMON_URLS = {
     "game--kcmunchkin--kcmunchkin": "https://www.lemonamiga.com/game/k-c-munchkin",
     "game--dylandog05it--dylandog05it": "https://www.lemonamiga.com/game/dylan-dog-05-la-mummia",
@@ -335,144 +304,171 @@ def extract_demozoo_page_images(page_html):
     return images[:6]
 
 
-def extract_gamesthatwerent_images(page_html):
-    urls = []
-    for url in GENERIC_IMAGE_RE.findall(page_html):
-        lowered = url.lower()
-        if "wp-content/uploads" not in lowered:
+def extract_pouet_page_images(page_html):
+    images = []
+    for url in POUET_SCREENSHOT_RE.findall(page_html):
+        if url not in images:
+            images.append(url)
+    return images[:6]
+
+
+def demozoo_search_candidates(*queries):
+    candidates = []
+    seen = set()
+    for query in queries:
+        query = (query or "").strip()
+        if not query:
             continue
-        if "site-icon" in lowered or "gtw-icon" in lowered:
+        url = "https://demozoo.org/search/live/?" + urllib.parse.urlencode({
+            "q": query,
+            "category": "production",
+        })
+        payload = fetch_text(url)
+        try:
+            results = json.loads(payload)
+        except json.JSONDecodeError:
             continue
-        if re.search(r"-\d+x\d+\.(png|jpg|jpeg|webp)$", lowered):
-            continue
-        urls.append(url)
-    return unique_urls(urls)[:6]
-
-
-def extract_launchbox_images(page_html):
-    return unique_urls(
-        url for url in GENERIC_IMAGE_RE.findall(page_html)
-        if "images.launchbox-app.com/" in url.lower()
-    )[:6]
-
-
-def extract_video_games_museum_images(page_html):
-    return unique_urls(
-        url for url in GENERIC_IMAGE_RE.findall(page_html)
-        if "/screenshots/amiga/" in url.lower()
-    )[:6]
-
-
-def extract_override_images(page_html, extractor):
-    if extractor == "demozoo":
-        return extract_demozoo_page_images(page_html)
-    if extractor == "gamesthatwerent":
-        return extract_gamesthatwerent_images(page_html)
-    if extractor == "launchbox":
-        return extract_launchbox_images(page_html)
-    if extractor == "video_games_museum":
-        return extract_video_games_museum_images(page_html)
-    return []
-
-
-def apply_manual_copy_overrides(entries, img_dir, img_highres_dir):
-    copied = []
-    for entry in entries:
-        override = MANUAL_FETCH_OVERRIDES.get(entry["id"])
-        if not override or "copy_from_id" not in override:
-            continue
-        source_id = override["copy_from_id"]
-        source_lowres = img_dir / f"{source_id}.iff"
-        if not source_lowres.exists():
-            continue
-        dest_lowres = img_dir / f"{entry['id']}.iff"
-        if not dest_lowres.exists():
-            dest_lowres.write_bytes(source_lowres.read_bytes())
-        copied_highres = []
-        for src in sorted(img_highres_dir.glob(f"{source_id}-*.iff")):
-            _, _, suffix = src.stem.rpartition("-")
-            if not suffix.isdigit():
+        for item in results:
+            if item.get("type") != "production":
                 continue
-            dest = img_highres_dir / f"{entry['id']}-{suffix}.iff"
-            if not dest.exists():
-                dest.write_bytes(src.read_bytes())
-            copied_highres.append(dest.name)
-        copied.append((entry["id"], source_id, copied_highres))
-    return copied
+            match = re.search(r"/productions/(?P<id>\d+)/", item.get("url", ""))
+            if not match:
+                continue
+            demozoo_id = match.group("id")
+            if demozoo_id in seen:
+                continue
+            seen.add(demozoo_id)
+            candidates.append({
+                "id": demozoo_id,
+                "title": item.get("value", ""),
+                "page_url": urllib.parse.urljoin("https://demozoo.org", item.get("url", "")),
+            })
+    return candidates
 
 
-def fetch_manual_override_images(entries):
-    fetched = []
-    skipped = []
-    fetchable_entries = [entry for entry in entries if not entry["staged"] and entry["id"] in MANUAL_FETCH_OVERRIDES]
-    total = len(fetchable_entries)
-    if total:
-        print(f"Fetching manual-source images for {total} remaining title(s)...")
-    for i, entry in enumerate(fetchable_entries, start=1):
-        override = MANUAL_FETCH_OVERRIDES[entry["id"]]
-        if "copy_from_id" in override:
+def resolve_demozoo_images(entry):
+    attempts = []
+    seen_ids = set()
+    direct_id = (entry.get("demozoo_id") or "").strip()
+    if direct_id:
+        seen_ids.add(direct_id)
+        attempts.append((direct_id, f"https://demozoo.org/productions/{direct_id}/"))
+
+    title = (entry.get("title") or "").strip()
+    developer = (entry.get("developer") or "").strip()
+    queries = []
+    if title and developer:
+        queries.append(f"{title} {developer}")
+    if title:
+        queries.append(title)
+    if developer and title:
+        queries.append(f"{developer} {title}")
+
+    best = pick_best_title_match(title, demozoo_search_candidates(*queries))
+    if best and best["id"] not in seen_ids:
+        attempts.append((best["id"], best["page_url"]))
+
+    for demozoo_id, page_url in attempts:
+        page_html = fetch_text(page_url)
+        image_urls = extract_demozoo_page_images(page_html)
+        if image_urls:
+            return demozoo_id, page_url, image_urls
+    return None, None, []
+
+
+def pouet_search_candidates(*queries):
+    candidates = []
+    seen = set()
+    for query in queries:
+        query = (query or "").strip()
+        if not query:
             continue
-        page_url = override.get("url")
-        image_urls = override.get("urls", [])
-        try:
-            if page_url and not image_urls:
-                page_html = fetch_text(page_url)
-                image_urls = extract_override_images(page_html, override["extractor"])
-        except Exception as err:
-            skipped.append((entry["id"], f"{override['source']} lookup failed: {err}"))
+        url = "https://www.pouet.net/search.php?" + urllib.parse.urlencode({
+            "what": query,
+            "type": "prod",
+        })
+        page_html = fetch_text(url)
+        canonical_match = re.search(r'<link rel="canonical" href="https://www\.pouet\.net/prod\.php\?which=(?P<id>\d+)"', page_html)
+        og_title_match = re.search(r'<meta property="og:title" content="(?P<title>[^"]+)"', page_html)
+        if canonical_match and og_title_match:
+            pouet_id = canonical_match.group("id")
+            if pouet_id not in seen:
+                seen.add(pouet_id)
+                candidates.append({
+                    "id": pouet_id,
+                    "title": html.unescape(og_title_match.group("title")),
+                    "page_url": f"https://www.pouet.net/prod.php?which={pouet_id}",
+                })
             continue
-        if not image_urls:
-            skipped.append((entry["id"], f"no {override['source']} screenshots found"))
-            continue
-        try:
-            written = stage_downloaded_images(entry, image_urls)
-        except Exception as err:
-            skipped.append((entry["id"], f"{override['source']} image fetch failed: {err}"))
-            continue
-        print(f"[{i}/{total}] {entry['id']} - {entry['title']}")
-        if page_url:
-            print(f"  page: {page_url}")
-        print(f"  downloaded: {', '.join(written)}")
-        fetched.append((entry["id"], page_url or override["source"], written))
-    return fetched, skipped
+        for match in POUET_RESULT_RE.finditer(page_html):
+            pouet_id = match.group("id")
+            if pouet_id in seen:
+                continue
+            seen.add(pouet_id)
+            candidates.append({
+                "id": pouet_id,
+                "title": html.unescape(match.group("title")),
+                "page_url": f"https://www.pouet.net/prod.php?which={pouet_id}",
+            })
+    return candidates
+
+
+def resolve_pouet_images(entry):
+    attempts = []
+    seen_ids = set()
+    direct_id = (entry.get("pouet_id") or "").strip()
+    if direct_id:
+        seen_ids.add(direct_id)
+        attempts.append((direct_id, f"https://www.pouet.net/prod.php?which={direct_id}"))
+
+    title = (entry.get("title") or "").strip()
+    developer = (entry.get("developer") or "").strip()
+    queries = []
+    if title and developer:
+        queries.append(f"{title} {developer}")
+    if title:
+        queries.append(title)
+    if developer and title:
+        queries.append(f"{developer} {title}")
+
+    best = pick_best_title_match(title, pouet_search_candidates(*queries))
+    if best and best["id"] not in seen_ids:
+        attempts.append((best["id"], best["page_url"]))
+
+    for pouet_id, page_url in attempts:
+        page_html = fetch_text(page_url)
+        image_urls = extract_pouet_page_images(page_html)
+        if image_urls:
+            return pouet_id, page_url, image_urls
+    return None, None, []
 
 
 def fetch_demozoo_images(entries):
     fetched = []
     skipped = []
-    fetchable_entries = [entry for entry in entries if entry["category"] == "Demo" and not entry["staged"] and (entry.get("demozoo_id") or "").strip()]
+    fetchable_entries = [entry for entry in entries if entry["category"] == "Demo" and not entry["staged"]]
     total = len(fetchable_entries)
     if total:
         print(f"Fetching Demozoo images for {total} missing demo title(s)...")
     for i, entry in enumerate(fetchable_entries, start=1):
-        demozoo_id = entry["demozoo_id"].strip()
-        page_url = f"https://demozoo.org/productions/{demozoo_id}/"
         try:
-            page_html = fetch_text(page_url)
+            demozoo_id, page_url, image_urls = resolve_demozoo_images(entry)
         except Exception as err:
-            skipped.append((entry["id"], f"Demozoo page lookup failed: {err}"))
+            skipped.append((entry["id"], f"Demozoo lookup failed: {err}"))
             continue
-        image_urls = extract_demozoo_page_images(page_html)
         if not image_urls:
             skipped.append((entry["id"], "no Demozoo screenshots found"))
             continue
-        stage_dir = entry["stage_dir"]
-        stage_dir.mkdir(parents=True, exist_ok=True)
-        written = []
-        for index, url in enumerate(image_urls[:6], start=2):
-            try:
-                data, content_type = fetch_url(url)
-            except Exception as err:
-                skipped.append((entry["id"], f"Demozoo image fetch failed: {err}"))
-                written = []
-                break
-            ext = extension_for_content_type(content_type)
-            out_path = stage_dir / f"{index}{ext}"
-            out_path.write_bytes(data)
-            written.append(out_path.name)
+        try:
+            written = stage_downloaded_images(entry, image_urls)
+        except Exception as err:
+            skipped.append((entry["id"], f"Demozoo image fetch failed: {err}"))
+            continue
         if written:
             print(f"[{i}/{total}] {entry['id']} - {entry['title']}")
             print(f"  page: {page_url}")
+            if demozoo_id and demozoo_id != (entry.get("demozoo_id") or "").strip():
+                print(f"  resolved demozoo_id: {demozoo_id}")
             print(f"  downloaded: {', '.join(written)}")
             fetched.append((entry["id"], page_url, written))
     return fetched, skipped
@@ -481,42 +477,29 @@ def fetch_demozoo_images(entries):
 def fetch_pouet_images(entries):
     fetched = []
     skipped = []
-    fetchable_entries = [entry for entry in entries if entry["category"] == "Demo" and not entry["staged"] and (entry.get("pouet_id") or "").strip()]
+    fetchable_entries = [entry for entry in entries if entry["category"] == "Demo" and not entry["staged"]]
     total = len(fetchable_entries)
     if total:
         print(f"Fetching Pouet images for {total} remaining demo title(s)...")
     for i, entry in enumerate(fetchable_entries, start=1):
-        pouet_id = entry["pouet_id"].strip()
-        page_url = f"https://www.pouet.net/prod.php?which={pouet_id}"
         try:
-            page_html = fetch_text(page_url)
+            pouet_id, page_url, image_urls = resolve_pouet_images(entry)
         except Exception as err:
-            skipped.append((entry["id"], f"Pouet page lookup failed: {err}"))
+            skipped.append((entry["id"], f"Pouet lookup failed: {err}"))
             continue
-        image_urls = []
-        for url in POUET_SCREENSHOT_RE.findall(page_html):
-            if url not in image_urls:
-                image_urls.append(url)
         if not image_urls:
             skipped.append((entry["id"], "no Pouet screenshots found"))
             continue
-        stage_dir = entry["stage_dir"]
-        stage_dir.mkdir(parents=True, exist_ok=True)
-        written = []
-        for index, url in enumerate(image_urls[:6], start=2):
-            try:
-                data, content_type = fetch_url(url)
-            except Exception as err:
-                skipped.append((entry["id"], f"Pouet image fetch failed: {err}"))
-                written = []
-                break
-            ext = extension_for_content_type(content_type)
-            out_path = stage_dir / f"{index}{ext}"
-            out_path.write_bytes(data)
-            written.append(out_path.name)
+        try:
+            written = stage_downloaded_images(entry, image_urls)
+        except Exception as err:
+            skipped.append((entry["id"], f"Pouet image fetch failed: {err}"))
+            continue
         if written:
             print(f"[{i}/{total}] {entry['id']} - {entry['title']}")
             print(f"  page: {page_url}")
+            if pouet_id and pouet_id != (entry.get("pouet_id") or "").strip():
+                print(f"  resolved pouet_id: {pouet_id}")
             print(f"  downloaded: {', '.join(written)}")
             fetched.append((entry["id"], page_url, written))
     return fetched, skipped
@@ -984,6 +967,7 @@ def collect_missing(rows, img_dir, img_highres_dir, downloads_dir):
                 "lemon_id": row.get("lemon_id", ""),
                 "demozoo_id": row.get("demozoo_id", ""),
                 "pouet_id": row.get("pouet_id", ""),
+                "developer": row.get("developer", ""),
             })
     return entries
 
@@ -1041,29 +1025,6 @@ def main():
 
     converted = []
     fetched = []
-    skipped = []
-
-    copied = apply_manual_copy_overrides(missing, img_dir, img_highres_dir)
-    if copied:
-        print(f"Copied existing images for {len(copied)} title(s)")
-        for id_, source_id, copied_highres in copied:
-            detail = f"; highres {', '.join(copied_highres)}" if copied_highres else ""
-            print(f"{id_}: from {source_id}{detail}")
-        print()
-        rows = load_rows(csv_path)
-        missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
-
-    fetched, skipped = fetch_manual_override_images(missing)
-    if fetched:
-        print(f"Fetched manual-source images for {len(fetched)} title(s)")
-        for id_, page_url, written in fetched:
-            print(f"{id_}: {page_url} -> {', '.join(written)}")
-        print()
-    if skipped:
-        print(f"Skipped {len(skipped)} manual-source fetches")
-        print()
-    rows = load_rows(csv_path)
-    missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
     skipped = []
 
     fetched, skipped = fetch_demozoo_images(missing)
