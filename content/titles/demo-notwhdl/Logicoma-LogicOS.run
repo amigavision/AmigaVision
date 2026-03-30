@@ -1,3 +1,2 @@
-copy WHD:N/Logicoma-LogicOS/logicOS T: QUIET
-T:logicOS >NIL:
-delete T:logicOS QUIET
+ags-cd N/Logicoma-LogicOS
+logicOS >NIL:
