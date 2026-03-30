@@ -1,7 +1,7 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-hst clone-hst image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp clean-build
+.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-hst clone-hst image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp clean-build
 
 PYTHON ?= python3.11
 SOURCE ?= $(subst ",,${AGSCONTENT})/titles/manual-downloads
@@ -61,6 +61,9 @@ help:
 		'' \
 		'  make initial-downloads [ARCHIVE_FETCH_DEST=...]' \
 		'    Download the demo/game/mags archive paths currently listed in data/db/titles.csv into a local content tree, skipping files already present. Useful for initial contributor setup.' \
+		'' \
+		'  make import-notwhdl-demos [SOURCE=...]' \
+		'    Import repacked non-WHDLoad demo archives from manual-downloads into demo-notwhdl, generate .run launchers, and enrich titles.csv with online Pouet/Demozoo metadata where possible.' \
 		'' \
 		'  make index' \
 		'    Index canonical WHDLoad archives in the $$AGSCONTENT path, update database references, and write the resulting state back to data/db/titles.csv.' \
@@ -140,6 +143,7 @@ env-rm:
 update:
 	$(call print-start-time)
 	@pipenv run python build/pull_archives.py --dest "$(SOURCE)"
+	@pipenv run python build/import_notwhdl_demos.py --source-root "$(SOURCE)" --apply
 	@pipenv run python build/promote_newer_archives.py --apply "$(SOURCE)"
 	@pipenv run build/ags_index.py -v --ingest
 	@pipenv run python build/sync_missing_images.py --fetch-lemon-interactive --apply
@@ -149,6 +153,10 @@ updates: update
 pull-archives:
 	$(call print-start-time)
 	@pipenv run python build/pull_archives.py --dest "$(SOURCE)"
+
+import-notwhdl-demos:
+	$(call print-start-time)
+	@pipenv run python build/import_notwhdl_demos.py --source-root "$(SOURCE)" --apply
 
 initial-downloads:
 	$(call print-start-time)
