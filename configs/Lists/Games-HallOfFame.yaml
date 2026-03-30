@@ -1,6 +1,6 @@
 - Hall of Fame:
   - rank: 2
-  - note: Games inducted into the Megaboys Hall of Fame.\nSorted by genre.
+  - note: Games inducted into the AmigaVision Hall of Fame.\nSorted by genre.
   - image: { ops: { op: "pi", path: "top/hall_of_fame.png" }, size: [320, 128], scale: [1, 1] }
   - Action:
     - image: { op: "pi", path: "hof/action.png" }
