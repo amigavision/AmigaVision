@@ -1,5 +1,5 @@
 ---
-title: AmigaVision Development Update with 118 New Titles + 2,111 Game and Demo Updates
+title: AmigaVision Development Update with 151 New Titles + Thousands of Game and Demo Updates
 published: false
 ---
 
@@ -11,28 +11,27 @@ To find out more about it, visit the [AmigaVision](https://amiga.vision) site.
 
 ## ✅ General Improvements
 
-* **The database has had a major cleanup pass** — since the 2025.05.05 release, **2,262 titles** have been touched in the launcher database, with **2,111 existing game and demo entries updated**, **148 new entries added**, and a few obsolete entries retired.
+* **The database has had a major cleanup pass** — since the previous release, the launcher database has seen a broad round of cleanup, with many existing entries improved and **151 new games and demos** added so far.
 * **Genre and metadata coverage has improved dramatically** — hundreds of titles that were missing categories now have them, older granular labels have been simplified, platform and hardware labels have been cleaned up, and short titles have been improved so the launcher reads more consistently.
-* **High-resolution screenshots have had a major refresh** — missing artwork can now be synced more easily, and a large number of new hi-res screenshots have been added across the library.
-* **Raspberry Pi / RePlayOS support has continued to improve** — documentation, builder scripts, and packaging have all moved forward since the last release.
+* **The demo scene section has grown in both breadth and curation** — in addition to many new productions, the launcher now includes curated scene lists such as **Hoffman’s Picks**, a dedicated **060 Demos** section, and expanded **Widescreen** demo support.
 
 ## 💿 Standalone CD³² MiSTer Setup Improvements
 
-The [CD32](/cd32) work since 2025.05.05 has been substantial.
+The [CD32](/cd32) work since the previous release has been substantial.
 
 * **CD32 is now treated as a proper standalone setup on MiSTer** rather than just a launcher add-on.
 * **Per-game autoloading MGL generation and packaging has been improved**, including better SD/USB/NAS handling.
-* **Per-game 5×PAL presets have been added for CD32 titles**, along with compatibility variants for games that need different `NoFastMem`, `ICache`, or other special setups.
+* **Per-game [5×PAL Overscale](/overscale) presets have been added for CD32 titles**, along with compatibility variants for games that need different `NoFastMem`, `ICache`, or other special setups.
 * **A large number of CD32-specific compatibility fixes have landed**, including changes for titles such as D/Generation, Disposable Hero, Bubble and Squeak, Gulp, Seek & Destroy, Rise of the Robots, Road Avenger, TimeGal, Zool, Zool 2, Impossible Mission, Gunship 2000, and Pirates! Gold.
 
-## 🕹️ 118 New Games *&* Demos
+## 🕹️ 151 New Games *&* Demos
 
-AmigaVision now contains **5,308 hand-tuned game and demo configurations**.
+AmigaVision now contains **5,341 hand-tuned game and demo configurations**.
 
-Compared to 2025.05.05, **118 unique new titles** have been added so far: **101 games** and **17 demos**.
+Compared to our previous release, **151 unique new titles** have been added so far: **106 games** and **45 demos**.
 
 <details>
-<summary><b>Expand for Full List of Updated Games</b></summary>
+<summary><b>Expand for Full List of 106 New Games</b></summary>
 
 <ul>
 <li>A 10 Tank Killer Extra Missions</li>
@@ -40,6 +39,7 @@ Compared to 2025.05.05, **118 unique new titles** have been added so far: **101 
 <li>Agresor</li>
 <li>Arena</li>
 <li>Bad Dudes Vs Dragon Ninja</li>
+<li>Batman</li>
 <li>Blues Brothers 2 Demo</li>
 <li>Breach & Data Disk</li>
 <li>Bush Buck: A Global Treasure</li>
@@ -98,6 +98,8 @@ Compared to 2025.05.05, **118 unique new titles** have been added so far: **101 
 <li>Kings Quest 5 Remastered</li>
 <li>La Aventura Espacial</li>
 <li>La Aventura Original</li>
+<li>Larrie & The Ardies</li>
+<li>Liberation</li>
 <li>Lock N Chase</li>
 <li>Locomotion</li>
 <li>Mouth Man</li>
@@ -140,7 +142,43 @@ Compared to 2025.05.05, **118 unique new titles** have been added so far: **101 
 </details>
 
 <details>
-<summary><b>Expand for Full List of New Demos</b></summary>
+<summary><b>Expand for Full List of 29 Updated Games</b></summary>
+
+<ul>
+<li>Bargon Attack</li>
+<li>Beavers</li>
+<li>Black Viper</li>
+<li>Brutal: Paws of Fury</li>
+<li>Bubble and Squeak</li>
+<li>D/Generation</li>
+<li>Diggers</li>
+<li>Disposable Hero</li>
+<li>Gulp</li>
+<li>Gunship 2000</li>
+<li>Impossible Mission</li>
+<li>John Barnes European Football</li>
+<li>Marvin's Marvellous Adventure</li>
+<li>Mr. Nutz</li>
+<li>Nebulus</li>
+<li>Panza Kick Boxing</li>
+<li>Perihelion</li>
+<li>Phobia</li>
+<li>Pirates! Gold</li>
+<li>Return of the Jedi</li>
+<li>Rise of the Robots</li>
+<li>Road Avenger</li>
+<li>Seek & Destroy</li>
+<li>Super C</li>
+<li>Total Carnage</li>
+<li>Ugh!</li>
+<li>Vital Light</li>
+<li>Zool</li>
+<li>Zool 2</li>
+</ul>
+</details>
+
+<details>
+<summary><b>Expand for Full List of 45 New Demos</b></summary>
 
 <ul>
 <li>3D Demo 3</li>
@@ -155,11 +193,39 @@ Compared to 2025.05.05, **118 unique new titles** have been added so far: **101 
 <li>FFP Planetary Void</li>
 <li>Gevalia</li>
 <li>HAMazing</li>
+<li>Human Traffic</li>
+<li>Jesus Christ Motocross</li>
+<li>Knarkzilla</li>
+<li>Last Goat Standing</li>
+<li>Last Train To Danzig</li>
+<li>Martini Effect</li>
+<li>No CPU Challenge</li>
+<li>Norwegian Kindness</li>
+<li>Ocean Machine</li>
 <li>Pacific BYO 40K</li>
+<li>Reborn</li>
+<li>Revision2012</li>
 <li>Purple Studios Fake One</li>
 <li>Relic</li>
 <li>SCASPTTCC</li>
+<li>Silk Cut</li>
+<li>Singularities</li>
+<li>Smoke And Mirrors</li>
+<li>Starstruck</li>
+<li>Subside</li>
+<li>Swookie</li>
 <li>Tactical Transmissions</li>
+<li>Waffles of Math Construction</li>
+<li>1992</li>
+<li>Be Kool Fool</li>
+<li>Brutalism</li>
+<li>Dead Ahead</li>
+<li>Disiplin</li>
+<li>Entropy Chamber</li>
+<li>Everyway</li>
+<li>Fari Bars</li>
+<li>Final</li>
+<li>Hexel</li>
 </ul>
 </details>
 
@@ -169,7 +235,7 @@ Display correctness continues to be a major focus, and a lot of work has gone in
 
 The following games have had specific PAL, NTSC *&* [5×PAL Overscale](/overscale) fixes since 2025.05.05:
 
-* **5×PAL fixes** landed for Bargon Attack, Beavers, Black Viper, D/Generation, Diggers, Gulp, John Barnes European Football, Marvin’s Marvellous Adventure, Perihelion, Total Carnage, and Vital Light.
+* **5×PAL Overscale fixes** landed for Bargon Attack, Beavers, Black Viper, D/Generation, Diggers, Gulp, John Barnes European Football, Marvin’s Marvellous Adventure, Perihelion, Total Carnage, and Vital Light.
 * **PAL *&* NTSC corrections** landed for Barbarian II (Psygnosis), Nebulus, Panza Kick Boxing, Phobia, Super C, and the French version of Panza.
 * **Offset and display tuning** has also been improved for Brutal: Paws of Fury, Mr. Nutz, Return of the Jedi, and Ugh!
 
@@ -186,15 +252,29 @@ A big, but somewhat invisible improvements in this cycle is how much tidier the 
 
 The demo scene continues to get love in this update cycle.
 
-In addition to the metadata cleanup and title-shortening work for demo scene entries, the launcher has gained **17 new demos and disk magazines so far**, including:
+In addition to the metadata cleanup and title-shortening work for demo scene entries, the launcher has gained **45 new demos and disk magazines so far**, including:
 
 * 3D Demo 3
+* 1992
+* Brutalism
+* Dead Ahead
 * Darkside
 * Desire D Funk
 * Desire FM
 * Desire Is Real
+* Disiplin
+* Entropy Chamber
 * HAMazing
+* Human Traffic
+* Last Train To Danzig
+* Martini Effect
+* Norwegian Kindness
+* Smoke And Mirrors
 * Tactical Transmissions
+
+This release cycle has also significantly expanded AmigaVision’s support for **modern standalone scene productions that are not packaged in WHDLoad format**. Many of these now have proper metadata, screenshots, and launcher entries, which makes the newer Amiga demo scene much easier to browse and enjoy.
+
+To help surface the best of the scene, the Demo section now also includes curated lists such as **Hoffman’s Picks**, a dedicated **060 Demos** category, and more **Widescreen** productions ready for MiSTer users who want to tune them further.
 
 ## 🛠️ Stay Updated *&* Help Us Make AmigaVision Even Better
 
