@@ -32,8 +32,6 @@ endef
 # - `make image-fsuae` keeps the legacy FS-UAE final clone path available as a fallback.
 # - `*-fuse` targets are opt-in experiments using macFUSE + amifuse and may
 #   require reduced macOS startup security settings.
-# - `*-hst` targets use FS-UAE only for `pfsformat`, then copy files directly
-#   with hst-amiga-pfs on the host.
 # - `*-amiberry` targets are kept as explicit aliases around the Amiberry backend.
 # Keep these paths separate from the default build flow.
 
@@ -307,47 +305,6 @@ image-fuse:
 	$(call print-start-time)
 	@$(IMAGE_PREP_CMD)
 	@$(MAKE) clone-fuse
-
-clone-hst:
-	$(call print-start-time)
-	@echo "Running FS-UAE format pass + hst-amiga-pfs import..."
-	@start=$$(date +%s); \
-	if [ ! -d "$(subst ",,${AGSTEMP})" ]; then \
-		echo "Preparing temp build tree..."; \
-		$(MAKE) prepare-image-temp || exit $$?; \
-	fi; \
-	hdf="$(subst ",,${AGSDEST})/AmigaVision.hdf"; \
-	if [ ! -f "$$hdf" ]; then \
-		hdf="$(subst ",,${AMIGAVISION_HDF})"; \
-	fi; \
-	clone_path="$(subst ",,${AGSTEMP})/clone"; \
-	clone_backup="$$clone_path.hst-backup"; \
-	cp "$$clone_path" "$$clone_backup"; \
-	trap 'mv -f "$$clone_backup" "$$clone_path" >/dev/null 2>&1 || true' EXIT; \
-	cp build/clone-format-only.clonescript "$$clone_path"; \
-	log="${AGSTEMP}/fs-uae-format-hst.log"; \
-	if ! ${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae >"$$log" 2>&1; then \
-		cat "$$log"; \
-		exit 1; \
-	fi; \
-	mv -f "$$clone_backup" "$$clone_path"; \
-	trap - EXIT; \
-	build/hdf_hst_clone.sh \
-		--hdf "$$hdf" \
-		--src-root "$(subst ",,${AGSTEMP})" \
-		--hst-amiga "$(subst ",,${HSTAMIGABIN})" \
-		--log-dir "$(subst ",,${AGSTEMP})"; \
-	if [ -f "$(subst ",,${AGSDEST})/AmigaVision.hdf" ]; then \
-		mv "$(subst ",,${AGSDEST})/AmigaVision.hdf" "$(subst ",,${AGSDEST})/games/Amiga"; \
-	fi; \
-	end=$$(date +%s); \
-	echo "Hybrid clone time: $$((end - start))s"
-	@printf '\a'
-
-image-hst:
-	$(call print-start-time)
-	@$(IMAGE_PREP_CMD)
-	@$(MAKE) clone-hst
 
 clone-amiberry:
 	$(call print-start-time)
