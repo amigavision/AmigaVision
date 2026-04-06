@@ -604,10 +604,6 @@ def get_pfs_partition_cache_state(
         "archive_tree_cache_key": archive_tree_cache_key,
         "layers": layers,
         "extra_dirs": extra_dirs,
-        "free_mb": {
-            "dh0": os.getenv("AGS_PFS_FREE_MB_DH0", "128").strip(),
-            "other": os.getenv("AGS_PFS_FREE_MB_OTHER", "256").strip(),
-        },
         "behavior": PFS_PARTITION_BEHAVIOR_FINGERPRINT,
     }
 

@@ -16,14 +16,6 @@ import ags_util as util
 def is_amiga_devicename(name: str):
     return len(name) == 3 and name[0].isalpha() and name[1].isalpha() and name[2].isnumeric()
 
-def get_pfs_free_mb(device_name: str) -> int:
-    default = 128 if device_name == "DH0" else 256
-    env_name = "AGS_PFS_FREE_MB_DH0" if device_name == "DH0" else "AGS_PFS_FREE_MB_OTHER"
-    try:
-        return int(os.getenv(env_name, str(default)).strip())
-    except ValueError:
-        return default
-
 def get_base_hdf_cache_dir(base_hdf: str):
     cache_root = util.path(paths.cache(), "base-hdf")
     stat = os.stat(base_hdf)
@@ -64,7 +56,7 @@ def extract_base_image(base_hdf: str, dest: str):
     return False
 
 def calculate_pfs_partitions(clone_path):
-    FS_OVERHEAD = 1.06 # filesystem size fudge factor
+    FS_OVERHEAD = 1.05 # filesystem size fudge factor
     SECTOR_SIZE = 512 # fixed
     BLOCK_SIZE = 512 # amiga only support RDBs with a 512 byte block size
 
@@ -78,7 +70,7 @@ def calculate_pfs_partitions(clone_path):
     partitions = [] # (partition name, cylinders)
     for f in sorted(os.listdir(clone_path)):
         if util.is_dir(util.path(clone_path, f)) and is_amiga_devicename(f):
-            mb_free = get_pfs_free_mb(f)
+            mb_free = 80 if f == "DH0" else 40
             cyls = int(FS_OVERHEAD * (util.get_dir_size(util.path(clone_path, f), BLOCK_SIZE) + (mb_free * 1024 * 1024))) // cylinder_size
             partitions.append(("DH" + str(len(partitions)), cyls))
             total_cyls += cyls
