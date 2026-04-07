@@ -1,5 +1,5 @@
 ---
-title: AmigaVision Development Update with 151 New Titles + Thousands of Game and Demo Updates
+title: AmigaVision Development Update with 153 New Titles + Thousands of Game and Demo Updates
 published: false
 ---
 
@@ -11,7 +11,7 @@ To find out more about it, visit the [AmigaVision](https://amiga.vision) site.
 
 ## ✅ General Improvements
 
-* **The database has had a major cleanup pass** — since the previous release, the launcher database has seen a broad round of cleanup, with many existing entries improved and **151 new games and demos** added so far.
+* **The database has had a major cleanup pass** — since the previous release, the launcher database has seen a broad round of cleanup, with many existing entries improved and **153 new games and demos** added so far.
 * **Genre and metadata coverage has improved dramatically** — hundreds of titles that were missing categories now have them, older granular labels have been simplified, platform and hardware labels have been cleaned up, and short titles have been improved so the launcher reads more consistently.
 * **The demo scene section has grown in both breadth and curation** — in addition to many new productions, the launcher now includes curated scene lists such as **Hoffman’s Picks**, a dedicated **060 Demos** section, and expanded **Widescreen** demo support.
 
@@ -24,14 +24,14 @@ The [CD32](/cd32) work since the previous release has been substantial.
 * **Per-game [5×PAL Overscale](/overscale) presets have been added for CD32 titles**, along with compatibility variants for games that need different `NoFastMem`, `ICache`, or other special setups.
 * **A large number of CD32-specific compatibility fixes have landed**, including changes for titles such as D/Generation, Disposable Hero, Bubble and Squeak, Gulp, Seek & Destroy, Rise of the Robots, Road Avenger, TimeGal, Zool, Zool 2, Impossible Mission, Gunship 2000, and Pirates! Gold.
 
-## 🕹️ 151 New Games *&* Demos
+## 🕹️ 153 New Games *&* Demos
 
-AmigaVision now contains **5,341 hand-tuned game and demo configurations**.
+AmigaVision now contains **5,344 hand-tuned game and demo configurations**.
 
-Compared to our previous release, **151 unique new titles** have been added so far: **106 games** and **45 demos**.
+Compared to our previous release, **153 unique new titles** have been added so far: **108 games** and **45 demos**.
 
 <details>
-<summary><b>Expand for Full List of 106 New Games</b></summary>
+<summary><b>Expand for Full List of 108 New Games</b></summary>
 
 <ul>
 <li>A 10 Tank Killer Extra Missions</li>
@@ -93,6 +93,7 @@ Compared to our previous release, **151 unique new titles** have been added so f
 <li>It Came From The Desert 2</li>
 <li>Jeanne d'Arc</li>
 <li>Joust</li>
+<li>Kaboomania Demo</li>
 <li>KC Munchkin</li>
 <li>Karateka</li>
 <li>Kings Quest 5 Remastered</li>
@@ -102,6 +103,7 @@ Compared to our previous release, **151 unique new titles** have been added so f
 <li>Liberation</li>
 <li>Lock N Chase</li>
 <li>Locomotion</li>
+<li>Mappy</li>
 <li>Mouth Man</li>
 <li>Movem</li>
 <li>Muscles</li>
@@ -238,6 +240,7 @@ The following games have had specific PAL, NTSC *&* [5×PAL Overscale](/overscal
 * **5×PAL Overscale fixes** landed for Bargon Attack, Beavers, Black Viper, D/Generation, Diggers, Gulp, John Barnes European Football, Marvin’s Marvellous Adventure, Perihelion, Total Carnage, and Vital Light.
 * **PAL *&* NTSC corrections** landed for Barbarian II (Psygnosis), Nebulus, Panza Kick Boxing, Phobia, Super C, and the French version of Panza.
 * **Offset and display tuning** has also been improved for Brutal: Paws of Fury, Mr. Nutz, Return of the Jedi, and Ugh!
+* **A follow-up PAL cleanup pass** also corrected a number of Tynesoft titles that had been marked as NTSC, including Beverly Hills Cop, Formula 1 Grand Prix, Mayday Squad, Plutos, Roller Coaster Rumbler, Summer Challenge, Summer Olympiad, Winter Challenge, and Winter Olympiad 88.
 
 ## 🧹 Metadata Cleanup
 
@@ -273,6 +276,8 @@ In addition to the metadata cleanup and title-shortening work for demo scene ent
 * Tactical Transmissions
 
 This release cycle has also significantly expanded AmigaVision’s support for **modern standalone scene productions that are not packaged in WHDLoad format**. Many of these now have proper metadata, screenshots, and launcher entries, which makes the newer Amiga demo scene much easier to browse and enjoy.
+
+Existing demo manifests have also been refreshed for productions such as **Captured Dreams**, **Darkside**, **Gevalia**, **Legalize It 2**, **Masterpieces**, and **Rampage**, alongside the large batch of new non-WHDLoad additions.
 
 To help surface the best of the scene, the Demo section now also includes curated lists such as **Hoffman’s Picks**, a dedicated **060 Demos** category, and more **Widescreen** productions ready for MiSTer users who want to tune them further.
 
