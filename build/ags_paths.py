@@ -45,7 +45,7 @@ def tracked_titles():
     return util.path(repo_content(), "titles")
 
 def manifests():
-    return util.path(content(), "manifests")
+    return util.path(repo_content(), "manifests")
 
 def tmp():
     return util.path(env_path("AGSTEMP"))
