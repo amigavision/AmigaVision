@@ -339,14 +339,14 @@ def pick_assets_base() -> str:
     """
     choice = ask_choice(
         "Where are the CD32.rom, CD32.hdf and CD32-Saves.hdf files located?",
-        ["SD card-> fat/games/AmigaCD32", "USB drive → usb0/games/AmigaCD32", "Network drive (Samba/CIFS) → fat/cifs/AmigaCD32", "Custom path"],
+        ["SD card-> fat/games/AmigaCD32", "USB drive → usb0/games/AmigaCD32", "Network drive (Samba/CIFS) → fat/cifs/games/AmigaCD32", "Custom path"],
     )
     if choice == 1:
         return "fat/games/AmigaCD32"
     if choice == 2:
         return "usb0/games/AmigaCD32"
     if choice == 3:
-        return "fat/cifs/AmigaCD32"
+        return "fat/cifs/games/AmigaCD32"
     # custom
     custom = input("Enter custom base path (e.g. /fat/games/AmigaCD32): ").strip()
     return norm_base(custom)
@@ -358,14 +358,14 @@ def pick_chd_base() -> str:
     """
     choice = ask_choice(
         "Where are your CD32 CHD files stored?",
-        ["SD card-> fat/games/AmigaCD32", "USB drive → usb0/games/AmigaCD32", "Network drive (Samba/CIFS) → fat/cifs/AmigaCD32", "Custom path"],
+        ["SD card-> fat/games/AmigaCD32", "USB drive → usb0/games/AmigaCD32", "Network drive (Samba/CIFS) → fat/cifs/games/AmigaCD32", "Custom path"],
     )
     if choice == 1:
         return "fat/games/AmigaCD32"
     if choice == 2:
         return "usb0/games/AmigaCD32"
     if choice == 3:
-        return "fat/cifs/AmigaCD32"
+        return "fat/cifs/games/AmigaCD32"
     # custom
     custom = input("Enter custom CHD base path (e.g. fat/games/AmigaCD32): ").strip()
     return norm_base(custom)
@@ -473,11 +473,44 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
 
 
 
+def archive_variant(root: Path, output_dir: Path, variant_name: str) -> None:
+    """Archive a generated variant folder into CD32-Output and remove the temp dir on success."""
+    variant_dir = root / variant_name
+    archive_path = output_dir / f"{variant_name}.7z"
+    if not variant_dir.exists():
+        print(f"[{variant_name}] No {variant_name} directory to archive; skipping {variant_name}.7z step.")
+        return
+
+    try:
+        # Prefer external 7z if available; fall back to shutil.make_archive (zip) if not
+        import shutil as _shutil, subprocess as _subprocess
+        try:
+            _subprocess.run(["7z"], stdout=_subprocess.DEVNULL, stderr=_subprocess.DEVNULL)
+            have_7z = True
+        except Exception:
+            have_7z = False
+
+        if have_7z:
+            _subprocess.check_call(["7z", "a", "-mx=7", str(archive_path), str(variant_dir)])
+        else:
+            zip_path = output_dir / f"{variant_name}.zip"
+            _shutil.make_archive(str(zip_path.with_suffix("")), "zip", root_dir=root, base_dir=variant_name)
+            print(f"[{variant_name}] 7z not found; created {zip_path.name} instead.")
+    except Exception as e:
+        print(f"[{variant_name}] Archiving {variant_name} folder failed: {e}")
+        return
+
+    if archive_path.exists():
+        shutil.rmtree(variant_dir)
+        print(f"[{variant_name}] Archived to CD32-Output/{archive_path.name} and removed ./{variant_name}")
+
+
 def main() -> int:
     """
     Build outputs into a single ./CD32-Output directory.
     - SD preset (assets & CHDs on SD) is written directly under ./CD32-Output
-    - USB preset (assets & CHDs on USB) is generated to ./USB then archived to ./CD32-Output/USB.7z, and the ./USB folder is removed.
+    - USB preset (assets & CHDs on USB) is generated to ./USB then archived to ./CD32-Output/USB.7z
+    - NAS preset (assets & CHDs on NAS/CIFS) is generated to ./NAS then archived to ./CD32-Output/NAS.7z
     """
     root = Path(__file__).resolve().parent
     output_dir = root / "CD32-Output"
@@ -486,47 +519,20 @@ def main() -> int:
     # Presets: (variant_name, assets_base, chd_base)
     sd_preset = ("CD32-Output", "fat/games/AmigaCD32", "fat/games/AmigaCD32")
     usb_preset_tmpdir = ("USB", "usb0/games/AmigaCD32", "usb0/games/AmigaCD32")
+    nas_preset_tmpdir = ("NAS", "fat/cifs/games/AmigaCD32", "fat/cifs/games/AmigaCD32")
 
     codes = []
     # 1) Generate SD directly into CD32-Output
     codes.append(generate_for(*sd_preset))
 
-    # 2) Generate USB into ./USB, then 7z it into ./CD32-Output/USB.7z and remove the ./USB directory
+    # 2) Generate USB into ./USB, then 7z it into ./CD32-Output/USB.7z
     codes.append(generate_for(*usb_preset_tmpdir))
 
-    # Create USB.7z inside CD32-Output
-    usb_dir = root / "USB"
-    usb_archive = output_dir / "USB.7z"
-    if usb_dir.exists():
-        try:
-            # Prefer external 7z if available; fall back to shutil.make_archive (zip) if not
-            import shutil as _shutil, subprocess as _subprocess
-            # Test for 7z
-            try:
-                _subprocess.run(["7z"], stdout=_subprocess.DEVNULL, stderr=_subprocess.DEVNULL)
-                have_7z = True
-            except Exception:
-                have_7z = False
+    # 3) Generate NAS into ./NAS, then 7z it into ./CD32-Output/NAS.7z
+    codes.append(generate_for(*nas_preset_tmpdir))
 
-            if have_7z:
-                # Create archive with top-level folder "USB"
-                _subprocess.check_call(["7z", "a", "-mx=7", str(usb_archive), str(usb_dir)])
-            else:
-                # Fallback to .zip if 7z is not available
-                zip_path = output_dir / "USB.zip"
-                _shutil.make_archive(str(zip_path.with_suffix("")), "zip", root_dir=root, base_dir="USB")
-                print("[USB] 7z not found; created USB.zip instead.")
-        except Exception as e:
-            print(f"[USB] Archiving USB folder failed: {e}")
-            # Keep the USB directory in case of failure
-        else:
-            # Remove the expanded USB folder only if archive exists
-            if usb_archive.exists():
-                import shutil as _shutil
-                _shutil.rmtree(usb_dir)
-                print("[USB] Archived to CD32-Output/USB.7z and removed ./USB")
-    else:
-        print("[USB] No USB directory to archive; skipping USB.7z step.")
+    archive_variant(root, output_dir, "USB")
+    archive_variant(root, output_dir, "NAS")
 
     # Return non-zero if any preset failed
     return 0 if all(c == 0 for c in codes) else 1
