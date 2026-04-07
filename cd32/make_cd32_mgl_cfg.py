@@ -476,26 +476,13 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
 def archive_variant(root: Path, output_dir: Path, variant_name: str) -> None:
     """Archive a generated variant folder into CD32-Output and remove the temp dir on success."""
     variant_dir = root / variant_name
-    archive_path = output_dir / f"{variant_name}.7z"
+    archive_path = output_dir / f"{variant_name}.zip"
     if not variant_dir.exists():
-        print(f"[{variant_name}] No {variant_name} directory to archive; skipping {variant_name}.7z step.")
+        print(f"[{variant_name}] No {variant_name} directory to archive; skipping {variant_name}.zip step.")
         return
 
     try:
-        # Prefer external 7z if available; fall back to shutil.make_archive (zip) if not
-        import shutil as _shutil, subprocess as _subprocess
-        try:
-            _subprocess.run(["7z"], stdout=_subprocess.DEVNULL, stderr=_subprocess.DEVNULL)
-            have_7z = True
-        except Exception:
-            have_7z = False
-
-        if have_7z:
-            _subprocess.check_call(["7z", "a", "-mx=7", str(archive_path), str(variant_dir)])
-        else:
-            zip_path = output_dir / f"{variant_name}.zip"
-            _shutil.make_archive(str(zip_path.with_suffix("")), "zip", root_dir=root, base_dir=variant_name)
-            print(f"[{variant_name}] 7z not found; created {zip_path.name} instead.")
+        shutil.make_archive(str(archive_path.with_suffix("")), "zip", root_dir=root, base_dir=variant_name)
     except Exception as e:
         print(f"[{variant_name}] Archiving {variant_name} folder failed: {e}")
         return
@@ -509,8 +496,8 @@ def main() -> int:
     """
     Build outputs into a single ./CD32-Output directory.
     - SD preset (assets & CHDs on SD) is written directly under ./CD32-Output
-    - USB preset (assets & CHDs on USB) is generated to ./USB then archived to ./CD32-Output/USB.7z
-    - NAS preset (assets & CHDs on NAS/CIFS) is generated to ./NAS then archived to ./CD32-Output/NAS.7z
+    - USB preset (assets & CHDs on USB) is generated to ./USB then archived to ./CD32-Output/USB.zip
+    - NAS preset (assets & CHDs on NAS/CIFS) is generated to ./NAS then archived to ./CD32-Output/NAS.zip
     """
     root = Path(__file__).resolve().parent
     output_dir = root / "CD32-Output"
@@ -525,10 +512,10 @@ def main() -> int:
     # 1) Generate SD directly into CD32-Output
     codes.append(generate_for(*sd_preset))
 
-    # 2) Generate USB into ./USB, then 7z it into ./CD32-Output/USB.7z
+    # 2) Generate USB into ./USB, then zip it into ./CD32-Output/USB.zip
     codes.append(generate_for(*usb_preset_tmpdir))
 
-    # 3) Generate NAS into ./NAS, then 7z it into ./CD32-Output/NAS.7z
+    # 3) Generate NAS into ./NAS, then zip it into ./CD32-Output/NAS.zip
     codes.append(generate_for(*nas_preset_tmpdir))
 
     archive_variant(root, output_dir, "USB")

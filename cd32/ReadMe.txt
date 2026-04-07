@@ -19,11 +19,11 @@ While the CD³² never really got its time to shine because of Commodore's bankr
 
 Simply copy the contents to the root of your MiSTer drive. For platforms that ask, you should of course Merge with the existing files, and overwrite any existing files if asked (e.g. if you already have the main AmigaVision installed, especially the ones that contain a CD32 setup). The unpacked files are the default SD card setup.
 
-If you are not using an external USB drive or a NAS/CIFS share to store your game setup, you can delete `USB.7z` and `NAS.7z`.
+If you are not using an external USB drive or a NAS/CIFS share to store your game setup, you can delete `USB.zip` and `NAS.zip`.
 
-If you *are* using an external USB drive for storing your game setup, there is an included `USB.7z` file included that you should use instead — this unpacks in the same way as the main archive, and you copy these files to your MiSTer USB drive.
+If you *are* using an external USB drive for storing your game setup, there is an included `USB.zip` file that you should use instead — this unpacks in the same way as the main archive, and you copy these files to your MiSTer USB drive.
 
-If you are using a NAS/Samba/CIFS share for your CD32 setup, use the included `NAS.7z` variant instead. That package points the config files at `fat/cifs/games/AmigaCD32`.
+If you are using a NAS/Samba/CIFS share for your CD32 setup, use the included `NAS.zip` variant instead. That package points the config files at `fat/cifs/games/AmigaCD32`.
 
 ### MiSTer.ini settings
 
