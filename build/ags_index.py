@@ -16,6 +16,7 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 from lhafile import LhaFile, is_lhafile
+from lhafile.lhafile import BadLhafile
 from ruamel import yaml
 
 import ags_paths as paths
@@ -714,29 +715,39 @@ def make_manifests(titles_dir, manifests_dir, only_missing=False):
     titles_dir += os.sep
     print("Making manifests...", end="", flush=True)
     count = 0
+    errors = []
     for r, _, f in os.walk(titles_dir):
         for file in f:
             path = util.path(r, file)
             if is_ignored_archive_path(titles_dir, path):
                 continue
-            if make_manifest(titles_dir, manifests_dir, path, only_missing):
+            contents, error = make_manifest(titles_dir, manifests_dir, path, only_missing)
+            if error:
+                errors.append(error)
+                continue
+            if contents:
                 count += 1
                 if count % 100 == 0: print(".", end="", flush=True)
     print("\n", flush=True)
-    return
+    for error in errors:
+        print(error, flush=True)
+    return errors
 
 def make_manifest(titles_dir, manifests_dir, path, only_missing=False):
     yaml_path = manifest_path_for_archive(titles_dir, manifests_dir, path)
     contents = None
     if only_missing and util.is_file(yaml_path):
-        return None
+        return None, None
     if path.endswith(".lha") and is_lhafile(path):
-        contents = make_lha_manifest(path)
+        try:
+            contents = make_lha_manifest(path)
+        except BadLhafile as exc:
+            return None, "lha manifest failed: {} ({})".format(path, exc)
     if contents:
         os.makedirs(os.path.dirname(yaml_path), exist_ok=True)
         with open(yaml_path, 'w') as f:
             yaml.round_trip_dump(contents, f, explicit_start=True, version=(1, 2))
-    return contents
+    return contents, None
 
 def make_lha_manifest(path):
     contents = dict()
@@ -784,7 +795,10 @@ def verify_lha_manifest(manifest_path, lha_path):
                     return "• File '{}' missing in archive '{}'".format(mf, lha_path)
                 else:
                     hasher = hashlib.sha256()
-                    hasher.update(arc.read(mf))
+                    try:
+                        hasher.update(arc.read(mf))
+                    except BadLhafile as exc:
+                        return "• Failed to read file '{}' in '{}' ({})".format(mf, lha_path, exc)
                     if hasher.hexdigest() != md:
                         return "• Incorrect checksum for file '{}' in '{}'".format(mf, lha_path)
     return None
@@ -906,8 +920,8 @@ def main():
         csv_rows_by_id = load_csv_rows_by_id() if sync_csv else {}
 
         if args.make_manifests:
-            make_manifests(titles_dir, manifests_dir, only_missing=args.only_missing)
-            return 0
+            manifest_errors = make_manifests(titles_dir, manifests_dir, only_missing=args.only_missing)
+            return 1 if manifest_errors else 0
 
         if args.verify_manifests:
             verify_manifests(titles_dir, manifests_dir)
