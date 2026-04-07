@@ -392,10 +392,9 @@ pi-only:
 
 cd32:
 	$(call print-start-time)
-	@$(PYTHON) "$(subst ",,${CD32_DISTRO_DIR})/make_cd32_mgl_cfg.py"
-	@cd "$(subst ",,${CD32_DISTRO_DIR})" && bash ./pack "$(DISTRO_DATE)"
+	@PYTHONDONTWRITEBYTECODE=1 $(PYTHON) "$(subst ",,${CD32_DISTRO_DIR})/make_cd32_mgl_cfg.py"
 	@mkdir -p "$(subst ",,${DISTRO_OUT})"
-	@cp "$(subst ",,${CD32_DISTRO_DIR})/!AmigaVision-CD32-MiSTer-$(DISTRO_DATE).zip" "$(subst ",,${DISTRO_OUT})/AmigaVision-CD32-MiSTer-$(DISTRO_DATE).zip"
+	@cd "$(subst ",,${CD32_DISTRO_DIR})" && bash ./pack "$(DISTRO_DATE)" "$(subst ",,${DISTRO_OUT})/!AmigaVision-CD32-MiSTer-$(DISTRO_DATE).zip"
 	@printf '\a'
 
 distros:

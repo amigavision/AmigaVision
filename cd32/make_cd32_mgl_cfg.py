@@ -26,6 +26,8 @@ from pathlib import Path
 import sys
 import re
 import shutil
+import os
+import zipfile
 
 # --------------------------------------------------------------------------------------
 # Hard-coded Default.cfg (exact bytes)
@@ -378,8 +380,11 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
     """
     root = Path(__file__).resolve().parent
     cd32_dir = root / "AmigaCD32"
-    mgl_dir = root / variant_name / "_Console" / "_Amiga CD32 Games"
-    cfg_dir = root / variant_name / "config"
+    variant_dir = Path(variant_name)
+    if not variant_dir.is_absolute():
+        variant_dir = root / variant_dir
+    mgl_dir = variant_dir / "_Console" / "_Amiga CD32 Games"
+    cfg_dir = variant_dir / "config"
 
     mgl_dir.mkdir(parents=True, exist_ok=True)
     cfg_dir.mkdir(parents=True, exist_ok=True)
@@ -395,7 +400,7 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
             (root / "./games").resolve(),
         ]
         for src in extras_to_copy:
-            dst = (root / variant_name / src.name).resolve()
+            dst = (variant_dir / src.name).resolve()
             if src.exists():
                 shutil.copytree(src, dst, dirs_exist_ok=True)
             else:
@@ -466,11 +471,46 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
             except FileNotFoundError:
                 # Soft warning only; continue without aborting
                 print(f"[{variant_name}] Warning: template not found: {src}")
-        print(f"[{variant_name}] {mgl_filename.relative_to(root)}")
+        try:
+            display_path = mgl_filename.relative_to(root)
+        except ValueError:
+            display_path = mgl_filename
+        print(f"[{variant_name}] {display_path}")
 
     print(f"[{variant_name}] Done.")
     return 0
 
+
+def cd32_output_dir() -> Path:
+    """Return the generated CD32 output directory outside the repo when possible."""
+    repo_root = Path(__file__).resolve().parent.parent
+    agsdest = os.getenv("AGSDEST", "").strip().strip('"').strip("'")
+    if agsdest:
+        return Path(agsdest).expanduser() / "CD32-Output"
+    return repo_root.with_name("AmigaVision-Output") / "CD32-Output"
+
+
+def should_skip_zip_entry(path: Path) -> bool:
+    """Skip macOS metadata and other junk files when creating zip archives."""
+    return any(
+        part == ".DS_Store" or part == "__MACOSX" or part.startswith("._")
+        for part in path.parts
+    )
+
+
+def make_zip_archive(source_dir: Path, archive_path: Path) -> None:
+    """Create a zip archive while excluding macOS metadata files."""
+    archive_path.parent.mkdir(parents=True, exist_ok=True)
+    if archive_path.exists():
+        archive_path.unlink()
+    with zipfile.ZipFile(archive_path, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for path in sorted(source_dir.rglob("*")):
+            rel_path = path.relative_to(source_dir.parent)
+            if should_skip_zip_entry(rel_path):
+                continue
+            if path.is_dir():
+                continue
+            archive.write(path, arcname=rel_path.as_posix())
 
 
 def archive_variant(root: Path, output_dir: Path, variant_name: str) -> None:
@@ -482,29 +522,32 @@ def archive_variant(root: Path, output_dir: Path, variant_name: str) -> None:
         return
 
     try:
-        shutil.make_archive(str(archive_path.with_suffix("")), "zip", root_dir=root, base_dir=variant_name)
+        make_zip_archive(variant_dir, archive_path)
     except Exception as e:
         print(f"[{variant_name}] Archiving {variant_name} folder failed: {e}")
         return
 
     if archive_path.exists():
         shutil.rmtree(variant_dir)
-        print(f"[{variant_name}] Archived to CD32-Output/{archive_path.name} and removed ./{variant_name}")
+        print(f"[{variant_name}] Archived to {output_dir / archive_path.name} and removed ./{variant_name}")
 
 
 def main() -> int:
     """
-    Build outputs into a single ./CD32-Output directory.
-    - SD preset (assets & CHDs on SD) is written directly under ./CD32-Output
-    - USB preset (assets & CHDs on USB) is generated to ./USB then archived to ./CD32-Output/USB.zip
-    - NAS preset (assets & CHDs on NAS/CIFS) is generated to ./NAS then archived to ./CD32-Output/NAS.zip
+    Build outputs into a single CD32-Output directory under AGSDEST / AmigaVision-Output.
+    - SD preset (assets & CHDs on SD) is written directly under CD32-Output
+    - USB preset (assets & CHDs on USB) is generated to ./USB then archived to CD32-Output/USB.zip
+    - NAS preset (assets & CHDs on NAS/CIFS) is generated to ./NAS then archived to CD32-Output/NAS.zip
     """
     root = Path(__file__).resolve().parent
-    output_dir = root / "CD32-Output"
+    output_dir = cd32_output_dir()
+    legacy_output_dir = root / "CD32-Output"
+    if legacy_output_dir != output_dir and legacy_output_dir.exists():
+        shutil.rmtree(legacy_output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     # Presets: (variant_name, assets_base, chd_base)
-    sd_preset = ("CD32-Output", "fat/games/AmigaCD32", "fat/games/AmigaCD32")
+    sd_preset = (str(output_dir), "fat/games/AmigaCD32", "fat/games/AmigaCD32")
     usb_preset_tmpdir = ("USB", "usb0/games/AmigaCD32", "usb0/games/AmigaCD32")
     nas_preset_tmpdir = ("NAS", "fat/cifs/games/AmigaCD32", "fat/cifs/games/AmigaCD32")
 

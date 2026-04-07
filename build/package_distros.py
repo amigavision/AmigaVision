@@ -156,12 +156,11 @@ def archive_7z(output_path, input_root, archive_tool, dry_run=False):
     subprocess.run(cmd, cwd=input_root, check=True)
 
 
-def build_cd32_release(args, dry_run=False):
+def build_cd32_release(args, output_path, dry_run=False):
     cd32_root = Path(args.cd32_root)
     require_dir(cd32_root, "CD32 distro root")
     generator = cd32_root / "make_cd32_mgl_cfg.py"
     pack_script = cd32_root / "pack"
-    output_path = cd32_root / f"!AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
     require_file(generator, "CD32 config generator")
     require_file(pack_script, "CD32 pack script")
 
@@ -172,7 +171,7 @@ def build_cd32_release(args, dry_run=False):
         output_path.unlink()
 
     log_step("Packing CD32 release archive")
-    run_command(["bash", str(pack_script), args.date_stamp], dry_run=dry_run)
+    run_command(["bash", str(pack_script), args.date_stamp, str(output_path)], dry_run=dry_run)
     if not dry_run:
         require_file(output_path, "Generated CD32 distro archive")
     return output_path
@@ -269,7 +268,10 @@ def package_mister(args, output_dir, archive_tool, cd32_release_path):
 
 
 def package_cd32_mister(args, output_dir, cd32_release_path):
-    output_path = output_dir / f"AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
+    output_path = output_dir / f"!AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
+    if Path(cd32_release_path) == output_path:
+        log_step(f"Using prebuilt CD32 release archive {output_path}")
+        return output_path
     log_step(f"Copying CD32 release archive to {output_path}")
     if args.dry_run:
         echo(f"[dry-run] Would copy {cd32_release_path} -> {output_path}")
@@ -350,6 +352,7 @@ def package_amiga(args, output_dir, xz_tool):
 def main():
     args = parse_args()
     output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
     continue_on_error = args.package == "all"
     packages = (
         ["mister", "cd32-mister", "emulators", "pi", "amiga"]
@@ -367,7 +370,7 @@ def main():
     log_step(f"Writing artifacts to {output_dir}")
     created = []
     failures = []
-    cd32_release_state = {"artifact": None, "error": None}
+    cd32_release_state = {"artifact": None, "error": None, "temp_dir": None}
     for package in packages:
         started_at = time.time()
         log_step(f"Starting package: {package}")
@@ -377,7 +380,12 @@ def main():
                     raise cd32_release_state["error"]
                 if cd32_release_state["artifact"] is None:
                     try:
-                        cd32_release_state["artifact"] = build_cd32_release(args, dry_run=args.dry_run)
+                        if "cd32-mister" in packages:
+                            cd32_output_path = output_dir / f"!AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
+                        else:
+                            cd32_release_state["temp_dir"] = tempfile.TemporaryDirectory(prefix="amigavision-cd32-release-")
+                            cd32_output_path = Path(cd32_release_state["temp_dir"].name) / f"!AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
+                        cd32_release_state["artifact"] = build_cd32_release(args, cd32_output_path, dry_run=args.dry_run)
                     except Exception as exc:
                         cd32_release_state["error"] = exc
                         raise
@@ -416,7 +424,11 @@ def main():
         echo("Failed packages:")
         for package, exc in failures:
             echo(f"- {package}: {exc}")
+        if cd32_release_state["temp_dir"] is not None:
+            cd32_release_state["temp_dir"].cleanup()
         return 1
+    if cd32_release_state["temp_dir"] is not None:
+        cd32_release_state["temp_dir"].cleanup()
     return 0
 
 
