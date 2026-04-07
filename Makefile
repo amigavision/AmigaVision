@@ -1,7 +1,7 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp clean-build
+.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only cd32 distros make-distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp clean-build
 
 PYTHON ?= python3.11
 SOURCE ?= $(subst ",,${AGSCONTENT})/titles/manual-downloads
@@ -116,6 +116,9 @@ help:
 		'' \
 		'  make distros' \
 		'    Prompt for the release date, then package all uploadable platform-specific release artifacts from the built image.' \
+		'' \
+		'  make cd32' \
+		'    Generate the CD32 SD/USB/NAS payloads and build the standalone CD32 zip release in ./cd32.' \
 		'' \
 		'  make screenshots' \
 		'    Create scaled IFF images from arbitrary PNG files placed in screenshots.' \
@@ -387,9 +390,19 @@ pi-only:
 		--size "${REPLAYOS_IMG_SIZE}"
 	@printf '\a'
 
+cd32:
+	$(call print-start-time)
+	@$(PYTHON) "$(subst ",,${CD32_DISTRO_DIR})/make_cd32_mgl_cfg.py"
+	@cd "$(subst ",,${CD32_DISTRO_DIR})" && bash ./pack "$(DISTRO_DATE)"
+	@mkdir -p "$(subst ",,${DISTRO_OUT})"
+	@cp "$(subst ",,${CD32_DISTRO_DIR})/!AmigaVision-CD32-MiSTer-$(DISTRO_DATE).zip" "$(subst ",,${DISTRO_OUT})/AmigaVision-CD32-MiSTer-$(DISTRO_DATE).zip"
+	@printf '\a'
+
 distros:
 	$(call print-start-time)
 	@$(DISTRO_PACKAGE_PROMPT) all
+
+make-distros: distros
 
 distro-mister:
 	$(call print-start-time)

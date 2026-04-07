@@ -5,6 +5,7 @@ date_str=$1
 if [ -z "$date_str" ]; then
   echo "No archive suffix"
 else
-  arc_name="!AmigaVision-CD32-Setup-for-MiSTer-$date_str.zip"
+  arc_name="!AmigaVision-CD32-MiSTer-$date_str.zip"
+  rm -f "$arc_name"
   zip -r "$arc_name" ./CD32-Output ReadMe.txt
 fi
