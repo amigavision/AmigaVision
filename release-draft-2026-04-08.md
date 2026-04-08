@@ -225,7 +225,7 @@ The following games have had specific PAL, NTSC *&* [5×PAL Overscale](/overscal
 
 ## 🧹 Metadata Cleanup
 
-A big — but somewhat invisible improvement — in this release is how much tidier the game and demo library has become.
+A big — but somewhat invisible — improvement in this release is how much tidier the game and demo library has become.
 
 * Hundreds of titles that previously had no genre assigned now do.
 * Genre labels have been simplified into cleaner categories.
