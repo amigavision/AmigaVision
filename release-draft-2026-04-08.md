@@ -7,17 +7,42 @@ We are happy to announce that the next version of [AmigaVision] is shaping up ni
 
 AmigaVision is the ultimate Amiga games *&* demo scene setup for MiSTer *&* Pocket FPGAs, Raspberry Pi + emulators, and real Amiga hardware.
 
-To find out more about it, visit the [AmigaVision](https://amiga.vision) site.
+To find out more, visit the [AmigaVision](https://amiga.vision) site.
 
 ## ✅ General Improvements
 
-* **The database has had a major cleanup pass** — since the previous release, the launcher database has seen a broad round of cleanup, with many existing entries improved and **153 new games and demos** added so far.
-* **Genre and metadata coverage has improved dramatically** — hundreds of titles that were missing categories now have them, older granular labels have been simplified, platform and hardware labels have been cleaned up, and short titles have been improved so the launcher reads more consistently.
-* **The demo scene section has grown in both breadth and curation** — in addition to many new productions, the launcher now includes curated scene lists such as **H0ffman’s Picks**, a dedicated **060 Demos** section, and expanded **Widescreen** demo support.
+* **Support for every major platform** — AmigaVision now has dedicated support and documentation for original Amiga hardware, MiSTer and Analogue Pocket FPGAs, Raspberry Pi, and desktop emulator setups on Mac, Windows, and Linux, well as handheld emulation, including iOS and Android.
+* **~3,000 QR codes to game manuals added** — We have added links to pretty much every commercially published Amiga game with a manual, linking directly to online versions, perfect for loading those game manuals on a phone or a tablet while you are simultaneously playing the game.
+* **Metadata Improvements** — Hundreds of titles that were missing categories now have them, platform and hardware labels have been cleaned up, and short titles have been improved so the launcher reads more consistently.
+* **The demo scene section is much improved** — In addition to many new productions, the launcher now includes curated demoscene lists like **H0ffman’s Picks**, a dedicated **060 Demos** section, and expanded **Widescreen** demo support.
+
+## 🌍 AmigaVision on Every Platform
+
+One of the biggest news in this release is adding a ton of new supported platforms for AmigaVision.
+
+In addition to MiSTer FPGA and original Amiga hardware, the project now explicitly supports and documents:
+
+* **Original Amiga Hardware** — A simple write to an SD or CF card gets you up and running in minutes.
+* **Mac, Windows, and Linux Support** — Finally bringing automatic integer-scale, auto-crop overscale and correct NTSC scaling to Amiga emulators for the first time in the 30-year history of Amiga emulation.
+* **Raspberry Pi** — Specifically tuned to delivering best-in-class low input, output, and audio latency.
+* **Analogue Pocket** — Handheld FPGA Amiga on the go? We have the only Amiga setup for this handheld available.
+* **iOS and Android** — Play your Amiga games on the go, and watch the latest demo scene productions anywhere.
+
+## 📚 ~3,000 Game Manuals Added
+
+Thousands of games now let you jump straight to controls, reference material, and documentation from directly from the launcher instead of hunting for game manuals manually.
+
+
+## 💾 Expanded Real Hardware Support
+
+We have worked hard on supporting real Amiga hardware in the best possible way in this release:
+
+* **68040/68060 accelerator support** via **Mu680x0Libs**.
+* **PCMCIA CompactFlash + SD support** for easier file transfer and storage on real Amiga setups.
 
 ## 💿 Standalone CD³² MiSTer Setup Improvements
 
-The [CD32](/cd32) work since the previous release has been substantial.
+The [CD32](/cd32) work since the previous major release is substantial.
 
 * **CD32 is now treated as a proper standalone setup on MiSTer** rather than just a launcher add-on.
 * **Per-game autoloading MGL generation and packaging has been improved**, including better SD/USB/NAS handling.
@@ -25,11 +50,18 @@ The [CD32](/cd32) work since the previous release has been substantial.
 * **Per-game [5×PAL Overscale](/overscale) presets have been added for CD32 titles**, along with compatibility variants for games that need different `NoFastMem`, `ICache`, or other special setups.
 * **A large number of CD32-specific compatibility fixes have landed**, including changes for titles such as D/Generation, Disposable Hero, Bubble and Squeak, Gulp, Seek & Destroy, Rise of the Robots, Road Avenger, TimeGal, Zool, Zool 2, Impossible Mission, Gunship 2000, Pirates! Gold, and the newly added **Castlevania AGA** setup.
 
+## 📡 BBS & Online Features
+
+AmigaVision's online and BBS features were also improved:
+
+* **Many new BBS listings were added** to the setup.
+* **PPP serial speed was upgraded to 230400 bps**, improving your transfer speeds online.
+
 ## 🕹️ 108 New Games
 
-AmigaVision now contains **5,344 hand-tuned game and demo configurations**.
+AmigaVision now contains **5,344 hand-tuned game and demo configurations** in total.
 
-Compared to our previous release, **108 unique new titles** have been added, and **29** games have been updated:
+**108 unique new titles** have been added since the last release, and **29** games have been updated:
 
 <details>
 <summary><b>Expand for Full List of 108 New Games</b></summary>
@@ -180,7 +212,7 @@ Compared to our previous release, **108 unique new titles** have been added, and
 </ul>
 </details>
 
-## 📺 PAL / NTSC / Overscale Fixes
+## 📺 PAL / NTSC / 5×Overscale Fixes
 
 Display correctness continues to be a major focus, and a lot of work has gone into getting titles to run in the right video mode with the right scaling.
 
@@ -193,18 +225,18 @@ The following games have had specific PAL, NTSC *&* [5×PAL Overscale](/overscal
 
 ## 🧹 Metadata Cleanup
 
-A big, but somewhat invisible improvements in this cycle is how much tidier the library metadata has become.
+A big — but somewhat invisible improvement — in this release is how much tidier the game and demo library has become.
 
-* Hundreds of titles that previously had **no genre assigned** now do.
+* Hundreds of titles that previously had no genre assigned now do.
 * Genre labels have been simplified into cleaner categories.
-* Demo scene titles with repetitive names have had **better short names** added, which makes lists with titles such as “Megademo X” much easier to browse.
-* A large number of entries have had **corrected IDs, better titles, cleaner hardware labels, and generally improved metadata**.
+* Demo scene titles with repetitive names have had better short names added, which makes lists with titles such as “Megademo X” easier to browse.
+* A large number of entries have had corrected IDs, better titles, cleaner hardware labels, and generally improved metadata.
 
 ## 🔥 Demo Scene Productions
 
-The demo scene continues to get love in this update cycle.
+The demo scene continues to get love in this release, as always!
 
-In addition to the metadata cleanup and title-shortening work for demo scene entries, the launcher has gained **45 new demos and disk magazines so far**:
+In addition to the metadata cleanup for demo scene entries, AmigaVision has added 45 new demos and disk magazines:
 
 <details>
 <summary><b>Expand for Full List of 45 New Demos</b></summary>
@@ -258,9 +290,9 @@ In addition to the metadata cleanup and title-shortening work for demo scene ent
 </ul>
 </details>
 
-This release cycle has also significantly expanded AmigaVision’s support for **modern standalone scene productions that are not packaged in WHDLoad format**. Many of these now have proper metadata, screenshots, and launcher entries, which makes the newer Amiga demo scene much easier to browse and enjoy.
+This release cycle has also significantly expanded AmigaVision’s support for modern standalone scene productions that are not packaged in WHDLoad format. These now have proper metadata, screenshots, and launcher entries, which makes the newer Amiga demo scene easy to browse and enjoy.
 
-Existing demo manifests have also been refreshed for productions such as **Captured Dreams**, **Darkside**, **Gevalia**, **Legalize It 2**, **Masterpieces**, and **Rampage**, alongside the large batch of new non-WHDLoad additions.
+Existing demos have also been updated for productions like **Captured Dreams**, **Darkside**, **Gevalia**, **Legalize It 2**, **Masterpieces**, and **Rampage**, alongside the large batch of new demo additions.
 
 To help surface the best of the demoscene, the Demo section now also includes curated lists such as **H0ffman’s Picks**, a dedicated **060 Demos** category, and more **Widescreen** productions.
 
