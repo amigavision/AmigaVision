@@ -1,5 +1,5 @@
 ---
-title: AmigaVision Development Update with ~3,000 Game Manuals Included, 153 New Games/Demos + Thousands of Game and Demo Updates
+title: AmigaVision 2026.XX.XX Updated with Massive Platform Support Expansion, ~3,000 Game Manuals + 153 New Games + Demos
 published: false
 ---
 
@@ -231,7 +231,7 @@ A big — but somewhat invisible — improvement in this release is how much tid
 * Demo scene titles with repetitive names have had better short names added, which makes lists with titles such as “Megademo X” easier to browse.
 * A large number of entries have had corrected IDs, better titles, cleaner hardware labels, and generally improved metadata.
 
-## 🔥 Demo Scene Productions
+## 🔥 45 New Demo Scene Productions
 
 The demo scene continues to get love in this release, as always!
 
