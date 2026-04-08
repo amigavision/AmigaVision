@@ -4751,7 +4751,7 @@ game--lombardracrally1diskde--lombardracrally1diskde;Lombard RAC Rally;Lombard R
 game--lombardracrally2diskde--lombardracrally2diskde;Lombard RAC Rally;Lombard RAC Rally;;game--lombardracrally2disk--lombardracrally2disk;OCS;;0;;;;;;;;;;1988;;German;Red Rat;Mandarin;1;;v2.0;LombardRACRally2DiskDe/LombardRACRally2DiskDe.Slave;game/LombardRACRally_v2.0_2Disk_De.lha;Game;Racing;910;1581;;
 game--blackdawnrebirth--blackdawnrebirth;Black Dawn: Rebirth;Black Dawn Rebirth;;;OCS;;0;;;;;;;;;;2019;;English;ZSoft;Double Sided Games;1;;v1.2;BlackDawnRebirth/BlackDawnRebirth.slave;game/BlackDawnRebirth_v1.2.lha;Game;;6403;4418;;
 game--purplesaturndayntsc--purplesaturndayntsc;Purple Saturn Day;Purple Saturn Day;;;OCS;;3;;;;;;;;;;1989;;English;ERE Informatique;Epyx, Exxos;1;;v2.1;PurpleSaturnDayNTSC/PurpleSaturnDayNTSC.slave;game/PurpleSaturnDay_v2.1_NTSC_0945.lha;Game;Sports;1178;1801;;
-game--metalgear--metalgear;Metal Gear;Metal Gear;;;OCS;;2;;;;;;;;;MSX to Amiga port by Hoffman;2021;;English;Hoffman;Hoffman;1;;v1.1;MetalGear/MetalGear.Slave;game/MetalGear_v1.1.lha;Game;;6422;-2;;
+game--metalgear--metalgear;Metal Gear;Metal Gear;;;OCS;;2;;;;;;;;;MSX to Amiga port by H0ffman;2021;;English;H0ffman;H0ffman;1;;v1.1;MetalGear/MetalGear.Slave;game/MetalGear_v1.1.lha;Game;;6422;-2;;
 game--snakes--snakes;Snakes;Snakes;;;OCS;;0;;;;;;;;;;1992;;English;Excellent Design;Victrix;2;;v0.9;Snakes/Snakes.Slave;game/Snakes_v0.9.lha;Game;;6225;3796;;
 game--germcrazyde--germcrazyde;Germ Crazy;Germ Crazy;;;OCS;;0;;;;;;;;;;1991;;English, German;Open Mind;Electronic Zoo;1;;v1.0;GermCrazyDe/GermCrazyDe.Slave;game/GermCrazy_v1.0_De_0507.lha;Game;;2718;448;;
 demo-notwhdl--andromeda-rule30;Rule 30;Rule 30;;;OCS;;0;;;;;;;;;;2021;Norway;English;;Andromeda;1;;;;demo-notwhdl/Andromeda-Rule30.lha;Demo;Demo;;;296085;89365
@@ -4780,7 +4780,7 @@ game--andromedamission--andromedamission;Mission Andromeda;Mission Andromeda;;;O
 game--andromedamissionde--andromedamissionde;Mission Andromeda;Mission Andromeda;;game--andromedamission--andromedamission;OCS;;0;;;;;;;;;;1988;;German;Demonware;Demonware;1;;v1.0;AndromedaMissionDe/AndromedaMissionDe.slave;game/AndromedaMission_v1.0_De.lha;Game;;2494;2802;;
 game--gloom--gloom;Gloom;Gloom;1;game--gloomaga--gloomaga;OCS;;0;;;;;;;;;;1995;;English;Black Magic;Guildhall;1 (2 with serial link);;v1.4;Gloom/Gloom.slave;game/Gloom_v1.4_1330.lha;Game;Action;2739;1781;;
 game--swos2122--swos2122;Sensible World of Soccer 21/22;Sensible World of Soccer 21/22;;;OCS;;0;4;;;;;;;;Improvement by sensiblesoccer.de;2022;;English;sensiblesoccer.de;sensiblesoccer.de;64 (2 simultaneously);;v2.3;SWOS2122/SWOS2122.slave;game/SensibleWorldOfSoccer2122_v2.3.lha;Game;Sports;-2;-2;;
-game--knightmarekonami--knightmarekonami;Knightmare (Konami);Knightmare (Konami);;;OCS;;2;;;;;;;;;MSX to Amiga port by Hoffman;2022;;English;Hoffman;Hoffman;1;;v1.1;KnightmareKonami/KnightmareKonami.Slave;game/Knightmare_v1.1_Konami.lha;Game;;6494;-2;;
+game--knightmarekonami--knightmarekonami;Knightmare (Konami);Knightmare (Konami);;;OCS;;2;;;;;;;;;MSX to Amiga port by H0ffman;2022;;English;H0ffman;H0ffman;1;;v1.1;KnightmareKonami/KnightmareKonami.Slave;game/Knightmare_v1.1_Konami.lha;Game;;6494;-2;;
 game--morelemmings--morelemmings;More! Lemmings;More! Lemmings;;;OCS;;0;5;;;;;;;;Mega Drive levels pack;2016;;English;AmigaJay;AmigaJay;2;;v1.0;MoreLemmings/MoreLemmings.Slave;game/MoreLemmings_v1.0.lha;Game;Action - Strategy;6243;-2;;
 game--tinyus--tinyus;Tinyus;Tinyus;;;OCS;;0;4;-8;;;;;;;;2021;;English;Pink;Abyss;1;;v1.1;Tinyus/Tinyus.slave;game/Tinyus_v1.1.lha;Game;;6418;4647;;
 demo-notwhdl--spreadpoint-2^5years;2^5 Years;2^5 Years;;;OCS;;0;;;;;;;;;;2022;Switzerland;English;;Spreadpoint;1;;;;demo-notwhdl/Spreadpoint-2^5years.lha;Demo;Demo;;;303917;90613
@@ -5337,7 +5337,7 @@ demo-notwhdl--unique-singularities;Singularities;Singularities;;;AGA;1;;;;;;;;;;
 demo-notwhdl--unique-subside-060;Subside;Subside;;;AGA/060;1;;;;;;;;;;;2016;;English;;Unique;;;;;demo-notwhdl/Unique-Subside-060.lha;Demo;Demo;;;155232;67140
 demo-notwhdl--appendix-reborn;Reborn;Reborn;;;AGA;1;;;;;;;;;;;2007;;English;;Appendix;;;;;demo-notwhdl/Appendix-Reborn.lha;Demo;Intro 64K;;;85660;31825
 demo-notwhdl--desire-wafflesofmathconstruction;Waffles Of Math Construction;Waffles Of Math Construction;;;OCS;;;;;;;;;;;;2022-07-16;;English;;Alcatraz, Desire;;;;;demo-notwhdl/Desire-WafflesOfMathConstruction.lha;Demo;Intro 64K;;;310453;91823
-demo-notwhdl--hoffman-everyway;Everyway;Everyway;;;OCS;;;;;;;;;;;;2016-07-16;;English;;H0ffman;;;;;demo-notwhdl/Hoffman-Everyway.lha;Demo;Intro 64K;;;160452;67790
+demo-notwhdl--hoffman-everyway;Everyway;Everyway;;;OCS;;;;;;;;;;;;2016-07-16;;English;;H0ffman;;;;;demo-notwhdl/H0ffman-Everyway.lha;Demo;Intro 64K;;;160452;67790
 demo-notwhdl--rift-faribars;Fari Bars;Fari Bars;;;OCS;;;;;;;;;;;;2015;;English;;Rift;;;;;demo-notwhdl/Rift-FariBars.lha;Demo;Intro 64K;;;147488;66505
 demo-notwhdl--spaceballs-disiplin;Disiplin;Disiplin;;;OCS;;;;;;;;;;;;2024;;English;;Spaceballs;;;;;demo-notwhdl/Spaceballs-Disiplin.lha;Demo;Intro 64K;;;342186;96548
 game--kaboomaniademoaga--kaboomaniademoaga;Kaboomania Demo;Kaboomania Demo;;;AGA;1;;;;;;;;;;;;;;;;;;v1.3;KaboomaniaDemoAGA/KaboomaniaDemoAGA.slave;game/KaboomaniaDemo_v1.3_AGA.lha;Game;;;;;
