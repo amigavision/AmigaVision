@@ -50,14 +50,14 @@ The [CD32](/cd32) work since the previous major release is substantial.
 * **Per-game [5×PAL Overscale](/overscale) presets have been added for CD32 titles**, along with compatibility variants for games that need different `NoFastMem`, `ICache`, or other special setups.
 * **A large number of CD32-specific compatibility fixes have landed**, including changes for titles such as D/Generation, Disposable Hero, Bubble and Squeak, Gulp, Seek & Destroy, Rise of the Robots, Road Avenger, TimeGal, Zool, Zool 2, Impossible Mission, Gunship 2000, Pirates! Gold, and the newly added **Castlevania AGA** setup.
 
-## 📡 BBS & Online Features
+## 📡 BBS *&* Online Features
 
 AmigaVision's online and BBS features were also improved:
 
 * **Many new BBS listings were added** to the setup.
 * **PPP serial speed was upgraded to 230400 bps**, improving your transfer speeds online.
 
-## 🕹️ 108 New Games + 28 Updated Games
+## 🕹️ 108 New Games *&* 28 Updated Games
 
 AmigaVision now contains **5,344 hand-tuned game and demo configurations** in total.
 
@@ -212,7 +212,7 @@ AmigaVision now contains **5,344 hand-tuned game and demo configurations** in to
 </ul>
 </details>
 
-## 📺 PAL / NTSC / 5×Overscale Fixes
+## 📺 PAL *&* NTSC *&* 5×PAL Overscale Fixes
 
 Display correctness continues to be a major focus, and a lot of work has gone into getting titles to run in the right video mode with the right scaling.
 
