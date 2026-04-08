@@ -25,11 +25,11 @@ The [CD32](/cd32) work since the previous release has been substantial.
 * **Per-game [5×PAL Overscale](/overscale) presets have been added for CD32 titles**, along with compatibility variants for games that need different `NoFastMem`, `ICache`, or other special setups.
 * **A large number of CD32-specific compatibility fixes have landed**, including changes for titles such as D/Generation, Disposable Hero, Bubble and Squeak, Gulp, Seek & Destroy, Rise of the Robots, Road Avenger, TimeGal, Zool, Zool 2, Impossible Mission, Gunship 2000, Pirates! Gold, and the newly added **Castlevania AGA** setup.
 
-## 🕹️ 153 New Games *&* Demos
+## 🕹️ 108 New Games
 
 AmigaVision now contains **5,344 hand-tuned game and demo configurations**.
 
-Compared to our previous release, **153 unique new titles** have been added so far: **108 games** and **45 demos**.
+Compared to our previous release, **108 unique new titles** have been added, and **29** games have been updated:
 
 <details>
 <summary><b>Expand for Full List of 108 New Games</b></summary>
