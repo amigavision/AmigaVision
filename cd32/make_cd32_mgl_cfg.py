@@ -118,7 +118,6 @@ JOYSWAP_TITLES = {
     "seek destroy",
 }
 
-
 # Per-game 5xPAL Overscale VSHIFT mapping
 VSHIFT_MAP_RAW = {
     "Arabian Nights": -4,
@@ -389,18 +388,28 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
     mgl_dir.mkdir(parents=True, exist_ok=True)
     cfg_dir.mkdir(parents=True, exist_ok=True)
 
+    agscontent = os.getenv("AGSCONTENT", "").strip().strip('"').strip("'")
+    content_cd32_root = Path(agscontent).expanduser() / "cd32" if agscontent else None
+
     # Copy distro folders into each preset (SD/USB)
     # Required copies: ../content/distro/Presets/, ../content/distro/Shadow_Masks/,
-    # ../content/distro/Filters/, and ./games/
+    # ../content/distro/Filters/, and the CD32 runtime assets directory.
     try:
         extras_to_copy = [
-            (root / "../content/distro/Presets").resolve(),
-            (root / "../content/distro/Shadow_Masks").resolve(),
-            (root / "../content/distro/Filters").resolve(),
-            (root / "./games").resolve(),
+            ((root / "../content/distro/Presets").resolve(), "Presets"),
+            ((root / "../content/distro/Shadow_Masks").resolve(), "Shadow_Masks"),
+            ((root / "../content/distro/Filters").resolve(), "Filters"),
         ]
-        for src in extras_to_copy:
-            dst = (variant_dir / src.name).resolve()
+
+        runtime_assets_src = (root / "./games").resolve()
+        if content_cd32_root:
+            candidate = (content_cd32_root / "games" / "AmigaCD32").resolve()
+            if candidate.exists():
+                runtime_assets_src = candidate
+        extras_to_copy.append((runtime_assets_src, "games/AmigaCD32"))
+
+        for src, dst_name in extras_to_copy:
+            dst = (variant_dir / dst_name).resolve()
             if src.exists():
                 shutil.copytree(src, dst, dirs_exist_ok=True)
             else:

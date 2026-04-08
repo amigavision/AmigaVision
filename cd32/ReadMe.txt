@@ -148,7 +148,6 @@ The following 68 games will use hand-tuned 5×PAL Overscale presets:
 * Labyrinth of Time
 * Lamborghini American Challenge
 * Legends
-* Lotus Trilogy
 * Marvin's Marvellous Adventure
 * Nigel Mansell's World Championship
 * PGA European Tour
@@ -217,7 +216,6 @@ D-Generation (1993).chd
 Dangerous Streets (1993).chd
 Darkseed (1994).chd
 Death Mask (1994).chd
-Deep Core (1993).chd
 Dennis (1993).chd
 Diggers (1993).chd
 Disposable Hero (1994).chd
