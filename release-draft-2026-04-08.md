@@ -210,51 +210,51 @@ In addition to the metadata cleanup and title-shortening work for demo scene ent
 <summary><b>Expand for Full List of 45 New Demos</b></summary>
 
 <ul>
-<li>1992</li>
-<li>3D Demo 3</li>
-<li>Alcatraz Soil</li>
-<li>Andromeda Murder Scrolls</li>
-<li>Be Kool Fool</li>
-<li>Brutalism</li>
-<li>Captured Dreams</li>
-<li>Darkside</li>
-<li>Dead Ahead</li>
-<li>Desire D Funk</li>
-<li>Desire FM</li>
-<li>Desire Is Real</li>
-<li>Disiplin</li>
-<li>Entropy Chamber</li>
-<li>EPH No Return</li>
-<li>Everyway</li>
-<li>Fari Bars</li>
-<li>FFP Planetary Void</li>
-<li>Final</li>
-<li>Gevalia</li>
-<li>HAMazing</li>
-<li>Hexel</li>
-<li>Human Traffic</li>
-<li>Jesus Christ Motocross</li>
-<li>Knarkzilla</li>
-<li>Last Goat Standing</li>
-<li>Last Train To Danzig</li>
-<li>Martini Effect</li>
-<li>No CPU Challenge</li>
-<li>Norwegian Kindness</li>
-<li>Ocean Machine</li>
-<li>Pacific BYO 40K</li>
-<li>Purple Studios Fake One</li>
-<li>Reborn</li>
-<li>Relic</li>
-<li>Revision 2012</li>
-<li>SCASPTTCC</li>
-<li>Silk Cut</li>
-<li>Singularities</li>
-<li>Smoke And Mirrors</li>
-<li>Starstruck</li>
-<li>Subside</li>
-<li>Swookie</li>
-<li>Tactical Transmissions</li>
-<li>Waffles of Math Construction</li>
+<li>Alcatraz — Soil</li>
+<li>Andromeda — Murder Scrolls</li>
+<li>Appendix — Reborn</li>
+<li>The Black Lotus — Captured Dreams</li>
+<li>The Black Lotus — Darkside</li>
+<li>The Black Lotus — Final</li>
+<li>The Black Lotus — Ocean Machine</li>
+<li>The Black Lotus — Silk Cut</li>
+<li>The Black Lotus — Starstruck</li>
+<li>Capsule — Brutalism</li>
+<li>Demostue Allstars — No CPU Challenge</li>
+<li>Desire — D Funk</li>
+<li>Desire — FM</li>
+<li>Desire — HAMazing</li>
+<li>Desire — Is Real</li>
+<li>Desire — Waffles of Math Construction</li>
+<li>EPH — No Return</li>
+<li>Ephidrena — Hexel</li>
+<li>Ephidrena — Knarkzilla</li>
+<li>FFP — Planetary Void</li>
+<li>Flex — Dead Ahead</li>
+<li>Flex — Martini Effect</li>
+<li>Focus Design — 1992</li>
+<li>Focus Design — Be Kool Fool</li>
+<li>Focus Design — Revision 2012</li>
+<li>Ghostown & Loonies — Smoke And Mirrors</li>
+<li>Ghostown — Human Traffic</li>
+<li>Ghostown — Last Train To Danzig</li>
+<li>H0ffman — Everyway</li>
+<li>Lemon — 3D Demo 3</li>
+<li>Logicoma — Entropy Chamber</li>
+<li>Nature — Jesus Christ Motocross</li>
+<li>Nerve Axis — Relic</li>
+<li>Noice — Last Goat Standing</li>
+<li>Pacific — BYO</li>
+<li>Pattern Syndicate — Tactical Transmissions</li>
+<li>Polka Brothers — Gevalia</li>
+<li>Purple Studios — Fake One</li>
+<li>Rift — Fari Bars</li>
+<li>SCASPTTCC — SCASPTTCC</li>
+<li>Spaceballs — Disiplin</li>
+<li>Spaceballs — Norwegian Kindness</li>
+<li>Traction — Swookie</li>
+<li>Unique — Singularities</li>
+<li>Unique — Subside</li>
 </ul>
 </details>
 
