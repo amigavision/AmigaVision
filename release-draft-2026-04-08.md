@@ -189,7 +189,7 @@ The following games have had specific PAL, NTSC *&* [5×PAL Overscale](/overscal
 * **5×PAL Overscale fixes** landed for Bargon Attack, Beavers, Black Viper, D/Generation, Diggers, Gulp, John Barnes European Football, Marvin’s Marvellous Adventure, Perihelion, Total Carnage, and Vital Light.
 * **PAL *&* NTSC corrections** landed for Barbarian II (Psygnosis), Nebulus, Panza Kick Boxing, Phobia, Super C, and the French version of Panza.
 * **Offset and display tuning** has also been improved for Brutal: Paws of Fury, Mr. Nutz, Ugh!, and Return of the Jedi.
-* **A follow-up PAL cleanup pass** also corrected a number of Tynesoft titles that had been marked as NTSC, including Beverly Hills Cop, Formula 1 Grand Prix, Mayday Squad, Plutos, Roller Coaster Rumbler, Summer Challenge, Summer Olympiad, Winter Challenge, and Winter Olympiad 88.
+* **A PAL cleanup pass** also corrected a number of Tynesoft titles that had been marked as NTSC, including Beverly Hills Cop, Formula 1 Grand Prix, Mayday Squad, Plutos, Roller Coaster Rumbler, Summer Challenge, Summer Olympiad, Winter Challenge, and Winter Olympiad 88.
 
 ## 🧹 Metadata Cleanup
 
