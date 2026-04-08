@@ -1,5 +1,5 @@
 ---
-title: AmigaVision 2026.XX.XX Updated with Massive Platform Support Expansion, ~3,000 Game Manuals + 153 New Games + Demos
+title: AmigaVision 2026.XX.XX Updated with Massive Platform Support Expansion, ~3,000 Game Manuals + 153 New Games and Demos
 published: false
 ---
 
