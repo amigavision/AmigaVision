@@ -95,8 +95,8 @@ Compared to our previous release, **153 unique new titles** have been added so f
 <li>Jeanne d'Arc</li>
 <li>Joust</li>
 <li>Kaboomania Demo</li>
-<li>KC Munchkin</li>
 <li>Karateka</li>
+<li>KC Munchkin</li>
 <li>Kings Quest 5 Remastered</li>
 <li>La Aventura Espacial</li>
 <li>La Aventura Original</li>
@@ -210,18 +210,28 @@ In addition to the metadata cleanup and title-shortening work for demo scene ent
 <summary><b>Expand for Full List of 45 New Demos</b></summary>
 
 <ul>
+<li>1992</li>
 <li>3D Demo 3</li>
 <li>Alcatraz Soil</li>
 <li>Andromeda Murder Scrolls</li>
+<li>Be Kool Fool</li>
+<li>Brutalism</li>
 <li>Captured Dreams</li>
 <li>Darkside</li>
+<li>Dead Ahead</li>
 <li>Desire D Funk</li>
 <li>Desire FM</li>
 <li>Desire Is Real</li>
+<li>Disiplin</li>
+<li>Entropy Chamber</li>
 <li>EPH No Return</li>
+<li>Everyway</li>
+<li>Fari Bars</li>
 <li>FFP Planetary Void</li>
+<li>Final</li>
 <li>Gevalia</li>
 <li>HAMazing</li>
+<li>Hexel</li>
 <li>Human Traffic</li>
 <li>Jesus Christ Motocross</li>
 <li>Knarkzilla</li>
@@ -232,10 +242,10 @@ In addition to the metadata cleanup and title-shortening work for demo scene ent
 <li>Norwegian Kindness</li>
 <li>Ocean Machine</li>
 <li>Pacific BYO 40K</li>
-<li>Reborn</li>
-<li>Revision2012</li>
 <li>Purple Studios Fake One</li>
+<li>Reborn</li>
 <li>Relic</li>
+<li>Revision 2012</li>
 <li>SCASPTTCC</li>
 <li>Silk Cut</li>
 <li>Singularities</li>
@@ -245,16 +255,6 @@ In addition to the metadata cleanup and title-shortening work for demo scene ent
 <li>Swookie</li>
 <li>Tactical Transmissions</li>
 <li>Waffles of Math Construction</li>
-<li>1992</li>
-<li>Be Kool Fool</li>
-<li>Brutalism</li>
-<li>Dead Ahead</li>
-<li>Disiplin</li>
-<li>Entropy Chamber</li>
-<li>Everyway</li>
-<li>Fari Bars</li>
-<li>Final</li>
-<li>Hexel</li>
 </ul>
 </details>
 
