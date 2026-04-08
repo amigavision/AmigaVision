@@ -180,6 +180,32 @@ Compared to our previous release, **153 unique new titles** have been added so f
 </ul>
 </details>
 
+## 📺 PAL / NTSC / Overscale Fixes
+
+Display correctness continues to be a major focus, and a lot of work has gone into getting titles to run in the right video mode with the right scaling.
+
+The following games have had specific PAL, NTSC *&* [5×PAL Overscale](/overscale) fixes since 2025.05.05:
+
+* **5×PAL Overscale fixes** landed for Bargon Attack, Beavers, Black Viper, D/Generation, Diggers, Gulp, John Barnes European Football, Marvin’s Marvellous Adventure, Perihelion, Total Carnage, and Vital Light.
+* **PAL *&* NTSC corrections** landed for Barbarian II (Psygnosis), Nebulus, Panza Kick Boxing, Phobia, Super C, and the French version of Panza.
+* **Offset and display tuning** has also been improved for Brutal: Paws of Fury, Mr. Nutz, Return of the Jedi, and Ugh!
+* **A follow-up PAL cleanup pass** also corrected a number of Tynesoft titles that had been marked as NTSC, including Beverly Hills Cop, Formula 1 Grand Prix, Mayday Squad, Plutos, Roller Coaster Rumbler, Summer Challenge, Summer Olympiad, Winter Challenge, and Winter Olympiad 88.
+
+## 🧹 Metadata Cleanup
+
+A big, but somewhat invisible improvements in this cycle is how much tidier the library metadata has become.
+
+* Hundreds of titles that previously had **no genre assigned** now do.
+* Genre labels have been simplified into cleaner categories.
+* Demo scene titles with repetitive names have had **better short names** added, which makes lists with titles such as “Megademo X” much easier to browse.
+* A large number of entries have had **corrected IDs, better titles, cleaner hardware labels, and generally improved metadata**.
+
+## 🔥 Demo Scene Productions
+
+The demo scene continues to get love in this update cycle.
+
+In addition to the metadata cleanup and title-shortening work for demo scene entries, the launcher has gained **45 new demos and disk magazines so far**:
+
 <details>
 <summary><b>Expand for Full List of 45 New Demos</b></summary>
 
@@ -232,55 +258,21 @@ Compared to our previous release, **153 unique new titles** have been added so f
 </ul>
 </details>
 
-## 📺 PAL / NTSC / Overscale Fixes
-
-Display correctness continues to be a major focus, and a lot of work has gone into getting titles to run in the right video mode with the right scaling.
-
-The following games have had specific PAL, NTSC *&* [5×PAL Overscale](/overscale) fixes since 2025.05.05:
-
-* **5×PAL Overscale fixes** landed for Bargon Attack, Beavers, Black Viper, D/Generation, Diggers, Gulp, John Barnes European Football, Marvin’s Marvellous Adventure, Perihelion, Total Carnage, and Vital Light.
-* **PAL *&* NTSC corrections** landed for Barbarian II (Psygnosis), Nebulus, Panza Kick Boxing, Phobia, Super C, and the French version of Panza.
-* **Offset and display tuning** has also been improved for Brutal: Paws of Fury, Mr. Nutz, Return of the Jedi, and Ugh!
-* **A follow-up PAL cleanup pass** also corrected a number of Tynesoft titles that had been marked as NTSC, including Beverly Hills Cop, Formula 1 Grand Prix, Mayday Squad, Plutos, Roller Coaster Rumbler, Summer Challenge, Summer Olympiad, Winter Challenge, and Winter Olympiad 88.
-
-## 🧹 Metadata Cleanup
-
-A big, but somewhat invisible improvements in this cycle is how much tidier the library metadata has become.
-
-* Hundreds of titles that previously had **no genre assigned** now do.
-* Genre labels have been simplified into cleaner categories.
-* Demo scene titles with repetitive names have had **better short names** added, which makes lists much easier to browse.
-* A large number of entries have had **corrected IDs, better titles, cleaner hardware labels, and generally improved metadata**.
-
-## 🔥 Demo Scene Productions
-
-The demo scene continues to get love in this update cycle.
-
-In addition to the metadata cleanup and title-shortening work for demo scene entries, the launcher has gained **45 new demos and disk magazines so far**, including:
-
-* 3D Demo 3
-* 1992
-* Brutalism
-* Dead Ahead
-* Darkside
-* Desire D Funk
-* Desire FM
-* Desire Is Real
-* Disiplin
-* Entropy Chamber
-* HAMazing
-* Human Traffic
-* Last Train To Danzig
-* Martini Effect
-* Norwegian Kindness
-* Smoke And Mirrors
-* Tactical Transmissions
-
 This release cycle has also significantly expanded AmigaVision’s support for **modern standalone scene productions that are not packaged in WHDLoad format**. Many of these now have proper metadata, screenshots, and launcher entries, which makes the newer Amiga demo scene much easier to browse and enjoy.
 
 Existing demo manifests have also been refreshed for productions such as **Captured Dreams**, **Darkside**, **Gevalia**, **Legalize It 2**, **Masterpieces**, and **Rampage**, alongside the large batch of new non-WHDLoad additions.
 
-To help surface the best of the scene, the Demo section now also includes curated lists such as **Hoffman’s Picks**, a dedicated **060 Demos** category, and more **Widescreen** productions ready for MiSTer users who want to tune them further.
+To help surface the best of the demoscene, the Demo section now also includes curated lists such as **Hoffman’s Picks**, a dedicated **060 Demos** category, and more **Widescreen** productions.
+
+## Recommended Games *&* Demos to Check Out in This Release
+
+### Games
+
+* 
+
+### Demos
+
+* 
 
 ## 🛠️ Stay Updated *&* Help Us Make AmigaVision Even Better
 
