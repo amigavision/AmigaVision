@@ -1,5 +1,5 @@
 ---
-title: AmigaVision Development Update with 153 New Titles + Thousands of Game and Demo Updates
+title: AmigaVision Development Update with ~3,000 Game Manuals Included, 153 New Games/Demos + Thousands of Game and Demo Updates
 published: false
 ---
 
@@ -57,7 +57,7 @@ AmigaVision's online and BBS features were also improved:
 * **Many new BBS listings were added** to the setup.
 * **PPP serial speed was upgraded to 230400 bps**, improving your transfer speeds online.
 
-## 🕹️ 108 New Games
+## 🕹️ 108 New Games + 28 Updated Games
 
 AmigaVision now contains **5,344 hand-tuned game and demo configurations** in total.
 
@@ -218,10 +218,9 @@ Display correctness continues to be a major focus, and a lot of work has gone in
 
 The following games have had specific PAL, NTSC *&* [5×PAL Overscale](/overscale) fixes since 2025.05.05:
 
-* **5×PAL Overscale fixes** landed for Bargon Attack, Beavers, Black Viper, D/Generation, Diggers, Gulp, John Barnes European Football, Marvin’s Marvellous Adventure, Perihelion, Total Carnage, and Vital Light.
-* **PAL *&* NTSC corrections** landed for Barbarian II (Psygnosis), Nebulus, Panza Kick Boxing, Phobia, Super C, and the French version of Panza.
-* **Offset and display tuning** has also been improved for Brutal: Paws of Fury, Mr. Nutz, Ugh!, and Return of the Jedi.
-* **A PAL cleanup pass** also corrected a number of Tynesoft titles that had been marked as NTSC, including Beverly Hills Cop, Formula 1 Grand Prix, Mayday Squad, Plutos, Roller Coaster Rumbler, Summer Challenge, Summer Olympiad, Winter Challenge, and Winter Olympiad 88.
+* **5×PAL Overscale Fixes** for Bargon Attack, Beavers, Black Viper, D/Generation, Diggers, Gulp, John Barnes European Football, Marvin’s Marvellous Adventure, Perihelion, Total Carnage, and Vital Light.
+* **PAL *&* NTSC Corrections** for Barbarian II (Psygnosis), Nebulus, Panza Kick Boxing, Phobia, Super C, and the French version of Panza. We also corrected a number of Tynesoft titles that had been marked as NTSC, including Beverly Hills Cop, Formula 1 Grand Prix, Mayday Squad, Plutos, Roller Coaster Rumbler, Summer Challenge, Summer Olympiad, Winter Challenge, and Winter Olympiad 88.
+* **Offset *&* Display Tuning** has also been improved for Brutal: Paws of Fury, Mr. Nutz, Ugh!, and Return of the Jedi.
 
 ## 🧹 Metadata Cleanup
 
