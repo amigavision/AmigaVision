@@ -21,8 +21,9 @@ The [CD32](/cd32) work since the previous release has been substantial.
 
 * **CD32 is now treated as a proper standalone setup on MiSTer** rather than just a launcher add-on.
 * **Per-game autoloading MGL generation and packaging has been improved**, including better SD/USB/NAS handling.
+* **NAS / CIFS network-share setups are now included for CD32 users**, resolving a long-standing request from people running their CD32 collection from SMB shares.
 * **Per-game [5×PAL Overscale](/overscale) presets have been added for CD32 titles**, along with compatibility variants for games that need different `NoFastMem`, `ICache`, or other special setups.
-* **A large number of CD32-specific compatibility fixes have landed**, including changes for titles such as D/Generation, Disposable Hero, Bubble and Squeak, Gulp, Seek & Destroy, Rise of the Robots, Road Avenger, TimeGal, Zool, Zool 2, Impossible Mission, Gunship 2000, and Pirates! Gold.
+* **A large number of CD32-specific compatibility fixes have landed**, including changes for titles such as D/Generation, Disposable Hero, Bubble and Squeak, Gulp, Seek & Destroy, Rise of the Robots, Road Avenger, TimeGal, Zool, Zool 2, Impossible Mission, Gunship 2000, Pirates! Gold, and the newly added **Castlevania AGA** setup.
 
 ## 🕹️ 153 New Games *&* Demos
 
