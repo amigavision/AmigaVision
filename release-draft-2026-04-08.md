@@ -20,13 +20,14 @@ To find out more, visit the [AmigaVision](https://amiga.vision) site.
 
 One of the biggest news in this release is adding a ton of new supported platforms for AmigaVision.
 
-In addition to MiSTer FPGA and original Amiga hardware, the project now explicitly supports and documents:
+###The project now explicitly supports and documents:
 
 * **Original Amiga Hardware** — A simple write to an SD or CF card gets you up and running in minutes.
-* **Mac, Windows, and Linux Support** — Finally bringing automatic integer-scale, auto-crop overscale and correct NTSC scaling to Amiga emulators for the first time in the 30-year history of Amiga emulation.
+* **Mac, Windows, and Linux** — Finally bringing automatic integer-scale, auto-crop overscale and correct [NTSC PAR](/ntsc) scaling to Amiga emulators for the first time in the 30-year history of Amiga emulation.
 * **Raspberry Pi** — Specifically tuned to delivering best-in-class low input, output, and audio latency.
 * **Analogue Pocket** — Handheld FPGA Amiga on the go? We have the only Amiga setup for this handheld available.
 * **iOS and Android** — Play your Amiga games on the go, and watch the latest demo scene productions anywhere.
+* **MiSTer FPGA** — the [best Amiga available in 2026](/best), and where the project originated.
 
 ## 📚 ~3,000 Game Manuals Added
 
