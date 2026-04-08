@@ -13,7 +13,7 @@ To find out more about it, visit the [AmigaVision](https://amiga.vision) site.
 
 * **The database has had a major cleanup pass** — since the previous release, the launcher database has seen a broad round of cleanup, with many existing entries improved and **153 new games and demos** added so far.
 * **Genre and metadata coverage has improved dramatically** — hundreds of titles that were missing categories now have them, older granular labels have been simplified, platform and hardware labels have been cleaned up, and short titles have been improved so the launcher reads more consistently.
-* **The demo scene section has grown in both breadth and curation** — in addition to many new productions, the launcher now includes curated scene lists such as **Hoffman’s Picks**, a dedicated **060 Demos** section, and expanded **Widescreen** demo support.
+* **The demo scene section has grown in both breadth and curation** — in addition to many new productions, the launcher now includes curated scene lists such as **H0ffman’s Picks**, a dedicated **060 Demos** section, and expanded **Widescreen** demo support.
 
 ## 💿 Standalone CD³² MiSTer Setup Improvements
 
@@ -262,7 +262,7 @@ This release cycle has also significantly expanded AmigaVision’s support for *
 
 Existing demo manifests have also been refreshed for productions such as **Captured Dreams**, **Darkside**, **Gevalia**, **Legalize It 2**, **Masterpieces**, and **Rampage**, alongside the large batch of new non-WHDLoad additions.
 
-To help surface the best of the demoscene, the Demo section now also includes curated lists such as **Hoffman’s Picks**, a dedicated **060 Demos** category, and more **Widescreen** productions.
+To help surface the best of the demoscene, the Demo section now also includes curated lists such as **H0ffman’s Picks**, a dedicated **060 Demos** category, and more **Widescreen** productions.
 
 ## Recommended Games *&* Demos to Check Out in This Release
 
