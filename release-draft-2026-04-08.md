@@ -264,7 +264,7 @@ Existing demo manifests have also been refreshed for productions such as **Captu
 
 To help surface the best of the demoscene, the Demo section now also includes curated lists such as **H0ffman’s Picks**, a dedicated **060 Demos** category, and more **Widescreen** productions.
 
-## Recommended Games *&* Demos to Check Out in This Release
+## 🌟 Recommended Games *&* Demos to Check Out in This Release
 
 ### Games
 
