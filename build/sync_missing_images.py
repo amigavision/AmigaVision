@@ -164,6 +164,7 @@ def pick_best_title_match(query, candidates, minimum_score=0.6):
 
 
 CHROME_APP = "Google Chrome"
+CHROME_STATE_PATH = Path.home() / "Library" / "Caches" / "AmigaVision" / "chrome-automation-window.json"
 
 
 def run_osascript(lines):
@@ -176,34 +177,110 @@ def run_osascript(lines):
     return (proc.stdout or "").strip()
 
 
-def chrome_open(url):
+def load_chrome_state():
+    if not CHROME_STATE_PATH.is_file():
+        return {}
+    try:
+        return json.loads(CHROME_STATE_PATH.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def save_chrome_state(state):
+    try:
+        CHROME_STATE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        CHROME_STATE_PATH.write_text(json.dumps(state), encoding="utf-8")
+    except Exception:
+        pass
+
+
+def chrome_window_exists(window_id):
+    if not window_id:
+        return False
+    try:
+        result = run_osascript([
+            f'tell application "{CHROME_APP}"',
+            f'return (exists window id {int(window_id)})',
+            'end tell',
+        ])
+    except Exception:
+        return False
+    return result.strip().lower() == "true"
+
+
+def chrome_automation_window_id():
+    state = load_chrome_state()
+    window_id = state.get("window_id")
+    if chrome_window_exists(window_id):
+        return int(window_id)
+    window_id = run_osascript([
+        f'tell application "{CHROME_APP}"',
+        'set automationWindow to make new window',
+        'set URL of active tab of automationWindow to "about:blank"',
+        'set minimized of automationWindow to true',
+        'return id of automationWindow',
+        'end tell',
+    ]).strip()
+    if window_id:
+        save_chrome_state({"window_id": int(window_id)})
+        return int(window_id)
+    raise RuntimeError("Could not create Chrome automation window")
+
+
+def chrome_show_automation_window():
+    window_id = chrome_automation_window_id()
     run_osascript([
-        f'tell application "{CHROME_APP}" to activate',
-        f'tell application "{CHROME_APP}" to if (count of windows) is 0 then make new window',
-        f'tell application "{CHROME_APP}" to open location "{url}"',
+        f'tell application "{CHROME_APP}"',
+        f'set minimized of window id {window_id} to false',
+        'activate',
+        'end tell',
+    ])
+
+
+def chrome_hide_automation_window():
+    window_id = chrome_automation_window_id()
+    run_osascript([
+        f'tell application "{CHROME_APP}"',
+        f'set minimized of window id {window_id} to true',
+        'end tell',
+    ])
+
+
+def chrome_open(url):
+    window_id = chrome_automation_window_id()
+    run_osascript([
+        f'tell application "{CHROME_APP}"',
+        f'set URL of active tab of window id {window_id} to "{url}"',
+        'end tell',
     ])
     time.sleep(1)
 
 
 def chrome_close_active_tab():
+    window_id = chrome_automation_window_id()
     run_osascript([
-        f'tell application "{CHROME_APP}" to if (count of windows) > 0 then close active tab of front window',
+        f'tell application "{CHROME_APP}"',
+        f'if exists (window id {window_id}) then set URL of active tab of window id {window_id} to "about:blank"',
+        'end tell',
     ])
 
 
 def chrome_source():
-    script = 'tell application "Google Chrome" to tell active tab of front window to execute javascript "document.documentElement.outerHTML"'
+    window_id = chrome_automation_window_id()
+    script = f'tell application "{CHROME_APP}" to tell active tab of window id {window_id} to execute javascript "document.documentElement.outerHTML"'
     return run_osascript([script])
 
 
 def chrome_location():
-    script = 'tell application "Google Chrome" to tell active tab of front window to execute javascript "document.location.href"'
+    window_id = chrome_automation_window_id()
+    script = f'tell application "{CHROME_APP}" to tell active tab of window id {window_id} to execute javascript "document.location.href"'
     return run_osascript([script]).strip()
 
 
 def chrome_execute_javascript(js):
+    window_id = chrome_automation_window_id()
     escaped = js.replace("\\", "\\\\").replace('"', '\\"')
-    script = f'tell application "Google Chrome" to tell active tab of front window to execute javascript "{escaped}"'
+    script = f'tell application "{CHROME_APP}" to tell active tab of window id {window_id} to execute javascript "{escaped}"'
     return run_osascript([script])
 
 
@@ -788,10 +865,12 @@ def fetch_browser_interactive_images(entries, chrome_downloads_dir, source_name,
                 skipped.append((entry["id"], f"could not read Chrome page: {err}"))
                 continue
             if not page_ready_fn(page_html):
+                chrome_show_automation_window()
                 answer = input(f"  page still blocked; solve {source_name} protection in Chrome, then press Enter to continue or type 's' to skip: ").strip().lower()
                 if answer == "s":
                     print("  skipped: manually skipped")
                     skipped.append((entry["id"], "manually skipped"))
+                    chrome_hide_automation_window()
                     continue
                 try:
                     page_html = wait_for_page_after_manual_retry(page_ready_fn)
@@ -801,11 +880,14 @@ def fetch_browser_interactive_images(entries, chrome_downloads_dir, source_name,
                         raise SystemExit("Chrome is not ready for interactive scraping. Enable View > Developer > Allow JavaScript from Apple Events and rerun.")
                     print(f"  skipped: could not read Chrome page: {err}")
                     skipped.append((entry["id"], f"could not read Chrome page: {err}"))
+                    chrome_hide_automation_window()
                     continue
                 if not page_ready_fn(page_html):
                     print("  skipped: protection still active")
                     skipped.append((entry["id"], "protection still active"))
+                    chrome_hide_automation_window()
                     continue
+                chrome_hide_automation_window()
             image_urls = extract_images_fn(page_html)
             if not image_urls and predictable_images_fn:
                 image_urls = predictable_images_fn(entry)
