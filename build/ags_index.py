@@ -172,8 +172,11 @@ def load_csv_rows_by_id(csv_path="data/db/titles.csv"):
 def needs_remote_game_enrichment(existing_row):
     if existing_row is None:
         return True
-    if existing_row.get("hol_id") or existing_row.get("lemon_id"):
-        return False
+    hol_id = (existing_row.get("hol_id") or "").strip()
+    lemon_id = (existing_row.get("lemon_id") or "").strip()
+    has_known_external_id = hol_id not in ("", "0") or lemon_id not in ("", "0")
+    if has_known_external_id:
+        return not (existing_row.get("release_date") or "").strip()
     fields = (
         "title",
         "subcategory",
@@ -188,7 +191,7 @@ def needs_remote_game_enrichment(existing_row):
     )
     return any(not existing_row.get(field) for field in fields)
 
-def csv_enrichment_fields(archive_path, existing_row=None):
+def csv_enrichment_fields(archive_path, existing_row=None, allow_wikidata_fallback=False):
     title = humanize_archive_name(archive_path)
     entry = {
         "title": title,
@@ -207,7 +210,7 @@ def csv_enrichment_fields(archive_path, existing_row=None):
     if entry["category"] == "Demo":
         entry["publisher"] = infer_demo_publisher(archive_path)
     if entry["category"] == "Game" and needs_remote_game_enrichment(existing_row):
-        entry.update(enrich_game_metadata(archive_path, existing_row))
+        entry.update(enrich_game_metadata(archive_path, existing_row, allow_wikidata_fallback=allow_wikidata_fallback))
         entry["title_short"] = infer_title_short(entry.get("title", title))
     return entry
 
@@ -612,7 +615,24 @@ LIMIT 5
     return None
 
 
-def enrich_game_metadata(archive_path, existing_row=None, relaxed=False):
+def fallback_game_metadata(search_titles, existing_row=None):
+    fallback_title = search_titles[0] if search_titles else ""
+    return {
+        "title": fallback_title,
+        "title_short": infer_title_short(fallback_title),
+        "release_date": "",
+        "language": (existing_row or {}).get("language", "") or "",
+        "developer": (existing_row or {}).get("developer", "") or "",
+        "publisher": (existing_row or {}).get("publisher", "") or "",
+        "players": (existing_row or {}).get("players", "") or "",
+        "country": (existing_row or {}).get("country", "") or "",
+        "subcategory": (existing_row or {}).get("subcategory", "") or "",
+        "hol_id": (existing_row or {}).get("hol_id", "") or "",
+        "lemon_id": (existing_row or {}).get("lemon_id", "") or "",
+    }
+
+
+def enrich_game_metadata(archive_path, existing_row=None, relaxed=False, allow_wikidata_fallback=False):
     search_title = humanize_archive_name(archive_path)
     exact_match = enrich_game_metadata_by_existing_ids(existing_row)
     if exact_match:
@@ -620,6 +640,8 @@ def enrich_game_metadata(archive_path, existing_row=None, relaxed=False):
     search_titles = [search_title]
     if relaxed:
         search_titles = relaxed_search_titles(search_title)
+    if not allow_wikidata_fallback:
+        return fallback_game_metadata(search_titles, existing_row=existing_row)
     return enrich_game_metadata_with_queries(search_titles, existing_row=existing_row)
 
 
@@ -893,6 +915,7 @@ def main():
     parser.add_argument("--apply", dest="apply", action="store_true", default=False, help="apply changes for destructive manifest operations")
     parser.add_argument("--append-missing-csv", dest="append_missing_csv", action="store_true", default=False, help="append missing title IDs to data/db/titles.csv")
     parser.add_argument("--ingest", dest="ingest", action="store_true", default=False, help="index archives, append missing CSV rows, and write CSV")
+    parser.add_argument("--wikidata-fallback", dest="wikidata_fallback", action="store_true", default=False, help="allow Wikidata title-search fallback when Lemon/HoL IDs are unavailable")
     parser.add_argument("--audit", dest="audit", action="store_true", default=False, help="report missing archives, images, and manifests")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
@@ -991,7 +1014,11 @@ def main():
                     if game_enrichment_progress == 1 or game_enrichment_progress % 25 == 0 or game_enrichment_progress == total_game_enrichment:
                         print("\rWikidata: {}/{}".format(game_enrichment_progress, total_game_enrichment), end="", flush=True)
                         printed_wikidata_progress = True
-                enrichment_fields = csv_enrichment_fields(arc["archive_path"], existing_csv_row)
+                enrichment_fields = csv_enrichment_fields(
+                    arc["archive_path"],
+                    existing_csv_row,
+                    allow_wikidata_fallback=args.wikidata_fallback,
+                )
             if not rows:
                 printed_wikidata_progress = finish_progress_line(printed_wikidata_progress)
                 print("• No DB entry:", arc["archive_path"])
