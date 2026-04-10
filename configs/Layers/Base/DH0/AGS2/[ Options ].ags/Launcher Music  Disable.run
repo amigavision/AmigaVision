@@ -1,0 +1,2 @@
+echo "1" >ENV:AVS/mod_play_disabled
+echo "1" >ENVARC:AVS/mod_play_disabled
