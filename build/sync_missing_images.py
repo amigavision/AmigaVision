@@ -11,9 +11,6 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-from ags_screenshot import iff_screenshot
-
-
 LOWRES_CROP = (640, 512)
 LOWRES_SCALE = (320, 256)
 LOWRES_RESAMPLE = (320, 128)
@@ -165,13 +162,24 @@ def pick_best_title_match(query, candidates, minimum_score=0.6):
 
 CHROME_APP = "Google Chrome"
 CHROME_STATE_PATH = Path.home() / "Library" / "Caches" / "AmigaVision" / "chrome-automation-window.json"
+OSASCRIPT_TIMEOUT_SECONDS = 20
 
 
 def run_osascript(lines):
     cmd = ["osascript"]
     for line in lines:
         cmd.extend(["-e", line])
-    proc = subprocess.run(cmd, capture_output=True, text=True)
+    try:
+        proc = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=OSASCRIPT_TIMEOUT_SECONDS,
+        )
+    except subprocess.TimeoutExpired as err:
+        raise RuntimeError(
+            f"osascript timed out after {OSASCRIPT_TIMEOUT_SECONDS}s"
+        ) from err
     if proc.returncode != 0:
         raise RuntimeError((proc.stderr or proc.stdout).strip())
     return (proc.stdout or "").strip()
@@ -1000,6 +1008,8 @@ def wait_for_page_after_manual_retry(check_fn, attempts=20, interval=1):
 
 
 def write_iff(src_path, out_path, colors, crop, scale, resample):
+    from ags_screenshot import iff_screenshot
+
     out_path.parent.mkdir(parents=True, exist_ok=True)
     iff_data, _ = iff_screenshot(str(src_path), colors, crop, scale, resample)
     with open(out_path, "wb") as f:
