@@ -1,5 +1,5 @@
 ---
-title: AmigaVision 2026.XX.XX Updated with Massive Platform Support Expansion, ~3,000 Game Manuals + 153 New Games and Demos
+title: AmigaVision 2026.XX.XX Updated with Massive Platform Support Expansion, ~3,000 Game Manuals + 150 New Games and Demos
 published: false
 ---
 
@@ -13,7 +13,7 @@ To find out more, visit the [AmigaVision](https://amiga.vision) site.
 
 * **Support for every major platform** — AmigaVision now has dedicated support and documentation for original Amiga hardware, MiSTer and Analogue Pocket FPGAs, Raspberry Pi, and desktop emulator setups on Mac, Windows, and Linux, well as handheld emulation, including iOS and Android.
 * **~3,000 QR codes to game manuals added** — We have added links to pretty much every commercially published Amiga game with a manual, linking directly to online versions, perfect for loading those game manuals on a phone or a tablet while you are simultaneously playing the game.
-* **Metadata Improvements** — Hundreds of titles that were missing categories now have them, platform and hardware labels have been cleaned up, and short titles have been improved so the launcher reads more consistently.
+* **Metadata Improvements at scale** — compared to the **2025.05.05** release, **2,885 existing entries** in `titles.csv` now have updated metadata, covering everything from genres, IDs, and short names to hardware labels, regional flags, and launcher-facing cleanup.
 * **The demo scene section is much improved** — In addition to many new productions, the launcher now includes curated demoscene lists like **H0ffman’s Picks**, a dedicated **060 Demos** section, and expanded **Widescreen** demo support.
 
 ## 🌍 AmigaVision on Every Platform
@@ -58,14 +58,14 @@ AmigaVision's online and BBS features were also improved:
 * **Many new BBS listings were added** to the setup.
 * **PPP serial speed was upgraded to 230400 bps**, improving your transfer speeds online.
 
-## 🕹️ 108 New Games *&* 28 Updated Games
+## 🕹️ 150 New Games *&* Demos
 
-AmigaVision now contains **5,344 hand-tuned game and demo configurations** in total.
+AmigaVision now contains **5,342 hand-tuned game and demo configurations** in total.
 
-**108 unique new titles** have been added since the last release, and **29** games have been updated:
+Compared to the **2025.05.05** release, **150 unique new titles** have been added: **102 games** and **48 demos**.
 
 <details>
-<summary><b>Expand for Full List of 108 New Games</b></summary>
+<summary><b>Expand for Full List of 102 New Games</b></summary>
 
 <ul>
 <li>A 10 Tank Killer Extra Missions</li>
@@ -120,7 +120,6 @@ AmigaVision now contains **5,344 hand-tuned game and demo configurations** in to
 <li>Gyruss</li>
 <li>Hyper Sports</li>
 <li>Hyper Wings</li>
-<li>Impossible Possibility</li>
 <li>International Karate</li>
 <li>Iridon</li>
 <li>It Came From The Desert</li>
@@ -137,10 +136,8 @@ AmigaVision now contains **5,344 hand-tuned game and demo configurations** in to
 <li>Liberation</li>
 <li>Lock N Chase</li>
 <li>Locomotion</li>
-<li>Mappy</li>
 <li>Mouth Man</li>
 <li>Movem</li>
-<li>Muscles</li>
 <li>Oilmania</li>
 <li>Out Run Amiga Edition</li>
 <li>Outfall</li>
@@ -150,7 +147,6 @@ AmigaVision now contains **5,344 hand-tuned game and demo configurations** in to
 <li>Police Quest 3 Remastered</li>
 <li>Powder</li>
 <li>Pulsar</li>
-<li>Pulse</li>
 <li>Regresja</li>
 <li>Renegade AGA</li>
 <li>Renegades</li>
@@ -227,19 +223,21 @@ The following games have had specific PAL, NTSC *&* [5×PAL Overscale](/overscal
 
 A big — but somewhat invisible — improvement in this release is how much tidier the game and demo library has become.
 
+* Compared to **2025.05.05**, **2,885 existing entries** have metadata updates in `titles.csv`, spanning **2,312 unique titles**.
+* That includes **2,052 game entries** and **833 demo entries** with changed metadata.
 * Hundreds of titles that previously had no genre assigned now do.
 * Genre labels have been simplified into cleaner categories.
 * Demo scene titles with repetitive names have had better short names added, which makes lists with titles such as “Megademo X” easier to browse.
 * A large number of entries have had corrected IDs, better titles, cleaner hardware labels, and generally improved metadata.
 
-## 🔥 45 New Demo Scene Productions
+## 🔥 48 New Demo Scene Productions
 
 The demo scene continues to get love in this release, as always!
 
-In addition to the metadata cleanup for demo scene entries, AmigaVision has added 45 new demos and disk magazines:
+In addition to the metadata cleanup for demo scene entries, AmigaVision has added **48** new demos and disk magazines:
 
 <details>
-<summary><b>Expand for Full List of 45 New Demos</b></summary>
+<summary><b>Expand for Full List of 48 New Demos</b></summary>
 
 <ul>
 <li>Alcatraz — Soil</li>
@@ -257,7 +255,7 @@ In addition to the metadata cleanup for demo scene entries, AmigaVision has adde
 <li>Desire — FM</li>
 <li>Desire — HAMazing</li>
 <li>Desire — Is Real</li>
-<li>Desire — Waffles of Math Construction</li>
+<li>Desire — Waffles Of Math Construction</li>
 <li>EPH — No Return</li>
 <li>Ephidrena — Hexel</li>
 <li>Ephidrena — Knarkzilla</li>
@@ -266,24 +264,27 @@ In addition to the metadata cleanup for demo scene entries, AmigaVision has adde
 <li>Flex — Martini Effect</li>
 <li>Focus Design — 1992</li>
 <li>Focus Design — Be Kool Fool</li>
-<li>Focus Design — Revision 2012</li>
+<li>Focus Design — Revision2012</li>
 <li>Ghostown & Loonies — Smoke And Mirrors</li>
 <li>Ghostown — Human Traffic</li>
 <li>Ghostown — Last Train To Danzig</li>
 <li>H0ffman — Everyway</li>
+<li>Impulse — Muscles</li>
 <li>Lemon — 3D Demo 3</li>
 <li>Logicoma — Entropy Chamber</li>
+<li>Mystic — Impossible Possibility</li>
 <li>Nature — Jesus Christ Motocross</li>
+<li>Nerve Axis — Pulse</li>
 <li>Nerve Axis — Relic</li>
 <li>Noice — Last Goat Standing</li>
-<li>Pacific — BYO</li>
+<li>Pacific — BYO 40K</li>
 <li>Pattern Syndicate — Tactical Transmissions</li>
 <li>Polka Brothers — Gevalia</li>
 <li>Purple Studios — Fake One</li>
 <li>Rift — Fari Bars</li>
-<li>SCASPTTCC — SCASPTTCC</li>
 <li>Spaceballs — Disiplin</li>
 <li>Spaceballs — Norwegian Kindness</li>
+<li>Spreadpoint & Swiss Cracking Association — TTCC (The Terra Cresta Cracktro)</li>
 <li>Traction — Swookie</li>
 <li>Unique — Singularities</li>
 <li>Unique — Subside</li>
