@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import errno
 import os
 import shutil
 import subprocess
@@ -36,8 +37,10 @@ def parse_args():
     parser.add_argument("--cd32-root", default="cd32")
     parser.add_argument("--main-hdf", required=True)
     parser.add_argument("--saves-hdf", required=True)
+    parser.add_argument("--rom-file", required=True)
     parser.add_argument("--listings-dir", required=True)
     parser.add_argument("--shared-dir", required=True)
+    parser.add_argument("--visuals-dir", required=True)
     parser.add_argument("--pi-script", default="build/pi_image.sh")
     parser.add_argument("--replay-base-img")
     parser.add_argument("--replay-payload-dir", default="replay")
@@ -116,6 +119,31 @@ def find_xz_tool():
     raise FileNotFoundError("xz compression tool not found on PATH")
 
 
+def clone_or_copy_file(src, dest):
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    clonefile = getattr(os, "clonefile", None)
+    if clonefile is not None:
+        try:
+            clonefile(src, dest)
+            shutil.copystat(src, dest, follow_symlinks=True)
+            return
+        except OSError as exc:
+            if exc.errno not in {
+                errno.EXDEV,
+                errno.ENOTSUP,
+                errno.EPERM,
+                errno.EACCES,
+                errno.ENOSYS,
+                errno.EINVAL,
+            }:
+                raise
+    shutil.copy2(src, dest)
+
+
+def clone_or_copy_tree(src, dest, dirs_exist_ok=False):
+    shutil.copytree(src, dest, dirs_exist_ok=dirs_exist_ok, copy_function=clone_or_copy_file)
+
+
 def copy_tree_contents(src_root, dest_root):
     dest_root.mkdir(parents=True, exist_ok=True)
     for child in sorted(src_root.iterdir()):
@@ -123,9 +151,9 @@ def copy_tree_contents(src_root, dest_root):
             continue
         dest = dest_root / child.name
         if child.is_dir():
-            shutil.copytree(child, dest, dirs_exist_ok=True)
+            clone_or_copy_tree(child, dest, dirs_exist_ok=True)
         else:
-            shutil.copy2(child, dest)
+            clone_or_copy_file(child, dest)
 
 
 def replace_path(src, dest):
@@ -135,10 +163,35 @@ def replace_path(src, dest):
         else:
             dest.unlink()
     if src.is_dir():
-        shutil.copytree(src, dest)
+        clone_or_copy_tree(src, dest)
     else:
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(src, dest)
+        clone_or_copy_file(src, dest)
+
+
+def make_stage_dir(parent, prefix, dry_run=False):
+    if dry_run:
+        return tempfile.TemporaryDirectory(prefix=prefix)
+    return tempfile.TemporaryDirectory(prefix=prefix, dir=parent)
+
+
+def write_text(path, content):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
+
+
+def ensure_dir(path):
+    path.mkdir(parents=True, exist_ok=True)
+
+
+def make_amiberry_skeleton(stage_root):
+    for relative in (
+        "Configurations",
+        "conf",
+        "Harddrives",
+        "Roms",
+        "Visuals/Shaders",
+    ):
+        ensure_dir(stage_root / relative)
 
 
 def archive_7z(output_path, input_root, archive_tool, dry_run=False):
@@ -249,7 +302,7 @@ def package_mister(args, output_dir, archive_tool, cd32_release_path):
     require_dir(listings_dir, "Generated listings directory")
 
     output_path = output_dir / f"AmigaVision-MiSTer-{args.date_stamp}.7z"
-    with tempfile.TemporaryDirectory(prefix="amigavision-mister-") as tmp_dir:
+    with make_stage_dir(output_dir, prefix="amigavision-mister-", dry_run=args.dry_run) as tmp_dir:
         stage_root = Path(tmp_dir)
         log_step(f"Staging MiSTer payload from {mister_root}")
         copy_tree_contents(mister_root, stage_root)
@@ -277,29 +330,43 @@ def package_cd32_mister(args, output_dir, cd32_release_path):
         echo(f"[dry-run] Would copy {cd32_release_path} -> {output_path}")
     else:
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(cd32_release_path, output_path)
+        clone_or_copy_file(cd32_release_path, output_path)
     return output_path
 
 
 def package_emulators(args, output_dir, archive_tool):
     main_hdf = Path(args.main_hdf)
     saves_hdf = Path(args.saves_hdf)
+    rom_file = Path(args.rom_file)
     listings_dir = Path(args.listings_dir)
     shared_dir = Path(args.shared_dir)
+    visuals_root = Path(args.visuals_dir)
+    launcher_template = Path("content/distro/games/Amiga/default.uae")
     require_file(main_hdf, "Main AmigaVision HDF")
     require_file(saves_hdf, "AmigaVision saves HDF")
+    require_file(rom_file, "AmigaVision ROM")
     require_dir(listings_dir, "Generated listings directory")
     require_dir(shared_dir, "Shared support directory")
+    require_dir(visuals_root, "AmigaVision Visuals payload")
+    require_file(launcher_template, "Amiberry launcher template")
 
     output_path = output_dir / f"AmigaVision-Emulators-{args.date_stamp}.7z"
-    with tempfile.TemporaryDirectory(prefix="amigavision-emulators-") as tmp_dir:
-        stage_root = Path(tmp_dir) / "AmigaVision"
-        stage_root.mkdir(parents=True, exist_ok=True)
-        log_step("Staging emulator payload")
-        replace_path(main_hdf, stage_root / "AmigaVision.hdf")
-        replace_path(saves_hdf, stage_root / "AmigaVision-Saves.hdf")
-        replace_path(listings_dir, stage_root / "listings")
-        replace_path(shared_dir, stage_root / "shared")
+    with make_stage_dir(output_dir, prefix="amigavision-emulators-", dry_run=args.dry_run) as tmp_dir:
+        stage_root = Path(tmp_dir) / "Amiberry"
+        make_amiberry_skeleton(stage_root)
+        harddrives_root = stage_root / "Harddrives"
+        roms_root = stage_root / "Roms"
+        conf_root = stage_root / "conf"
+        mac_conf_root = stage_root / "Configurations"
+        log_step("Staging reusable Amiberry payload")
+        replace_path(main_hdf, harddrives_root / "AmigaVision.hdf")
+        replace_path(saves_hdf, harddrives_root / "AmigaVision-Saves.hdf")
+        replace_path(rom_file, roms_root / "AmigaVision.rom")
+        replace_path(shared_dir, harddrives_root / "Shared")
+        replace_path(listings_dir, harddrives_root / "listings")
+        replace_path(visuals_root, stage_root / "Visuals")
+        replace_path(launcher_template, conf_root / "default.uae")
+        replace_path(launcher_template, mac_conf_root / "default.uae")
         archive_7z(output_path, Path(tmp_dir), archive_tool, dry_run=args.dry_run)
     return output_path
 
@@ -383,7 +450,11 @@ def main():
                         if "cd32-mister" in packages:
                             cd32_output_path = output_dir / f"!AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
                         else:
-                            cd32_release_state["temp_dir"] = tempfile.TemporaryDirectory(prefix="amigavision-cd32-release-")
+                            cd32_release_state["temp_dir"] = make_stage_dir(
+                                output_dir,
+                                prefix="amigavision-cd32-release-",
+                                dry_run=args.dry_run,
+                            )
                             cd32_output_path = Path(cd32_release_state["temp_dir"].name) / f"!AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
                         cd32_release_state["artifact"] = build_cd32_release(args, cd32_output_path, dry_run=args.dry_run)
                     except Exception as exc:
