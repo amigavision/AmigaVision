@@ -74,7 +74,7 @@ The following games have had specific PAL, NTSC *&* [5×PAL Overscale](/overscal
 
 A big — but somewhat invisible — improvement in this release is how much tidier the game and demo library has become.
 
-* Since the previous release, **2,885 existing entries** have metadata updates, spanning **2,312 unique titles**.
+* Since the previous release, **2,885 existing entries** have received metadata updates, spanning **2,312 unique titles**.
 * That includes **2,052 game entries** and **833 demo entries** with updated metadata.
 * Hundreds of titles that previously had no genre assigned now do.
 * Genre labels have been simplified into cleaner categories.
