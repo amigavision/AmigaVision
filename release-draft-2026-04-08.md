@@ -3,17 +3,17 @@ title: AmigaVision 2026.XX.XX Updated with Massive Platform Support Expansion, ~
 published: false
 ---
 
-We are happy to announce that the next version of [AmigaVision] is shaping up nicely!
+We are happy to announce that a new version of [AmigaVision] is available!
 
 AmigaVision is the ultimate Amiga games *&* demo scene setup for MiSTer *&* Pocket FPGAs, Raspberry Pi + emulators, and real Amiga hardware.
 
 To find out more, visit the [AmigaVision](https://amiga.vision) site.
 
-## ✅ General Improvements
+## ✅ Summary
 
 * **Support for every major platform** — AmigaVision now has dedicated support and documentation for original Amiga hardware, MiSTer and Analogue Pocket FPGAs, Raspberry Pi, and desktop emulator setups on Mac, Windows, and Linux, well as handheld emulation, including iOS and Android.
 * **~3,000 QR codes to game manuals added** — We have added links to pretty much every commercially published Amiga game with a manual, linking directly to online versions, perfect for loading those game manuals on a phone or a tablet while you are simultaneously playing the game.
-* **Metadata Improvements at scale** — compared to the **2025.05.05** release, **2,885 existing entries** in `titles.csv` now have updated metadata, covering everything from genres, IDs, and short names to hardware labels, regional flags, and launcher-facing cleanup.
+* **Metadata improvements at scale** — compared to the last release, **2,885 existing entries** have newly updated metadata, covering everything from genres, IDs, and short names to hardware labels, regional flags, and launcher-facing cleanup.
 * **The demo scene section is much improved** — In addition to many new productions, the launcher now includes curated demoscene lists like **H0ffman’s Picks**, a dedicated **060 Demos** section, and expanded **Widescreen** demo support.
 
 ## 🌍 AmigaVision on Every Platform
@@ -23,15 +23,17 @@ One of the biggest news in this release is adding a ton of new supported platfor
 ###The project now explicitly supports and documents:
 
 * **Original Amiga Hardware** — A simple write to an SD or CF card gets you up and running in minutes.
-* **Mac, Windows, and Linux** — Finally bringing automatic integer-scale, auto-crop overscale and correct [NTSC PAR](/ntsc) scaling to Amiga emulators for the first time in the 30-year history of Amiga emulation.
-* **Raspberry Pi** — Specifically tuned to delivering best-in-class low input, output, and audio latency.
+* **Mac, Windows, and Linux** — Finally bringing automatic integer-scaled, auto-cropped PAL *&* NTSC [overscale](https://amiga.vision/overscale) and correct [NTSC PAR](/ntsc) scaling to Amiga emulators for the first time in the 30-year history of Amiga emulation.
+* **Raspberry Pi** — Specifically tuned to deliver best-in-class low input, output, and audio latency — lower latency than any other Raspberry Pi setup.
 * **Analogue Pocket** — Handheld FPGA Amiga on the go? We have the only Amiga setup for this handheld available.
 * **iOS and Android** — Play your Amiga games on the go, and watch the latest demo scene productions anywhere.
 * **MiSTer FPGA** — the [best Amiga available in 2026](/best), and where the project originated.
 
 ## 📚 ~3,000 Game Manuals Added
 
-Thousands of games now let you jump straight to controls, reference material, and documentation from directly from the launcher instead of hunting for game manuals manually.
+Thousands of games now let you jump straight to controls, reference material, and documentation from directly from the launcher instead of hunting for game manuals manually. Check out this example from the launcher, and try it on your phone/tablet!
+
+![Entry for Airborne Ranger showing link to QR code that brings you to the game manual](https://amiga.vision/images/qr-example.png)
 
 
 ## 💾 Expanded Real Hardware Support
@@ -56,13 +58,34 @@ The [CD32](/cd32) work since the previous major release is substantial.
 AmigaVision's online and BBS features were also improved:
 
 * **Many new BBS listings were added** to the setup.
-* **PPP serial speed was upgraded to 230400 bps**, improving your transfer speeds online.
+* **PPP serial speed was doubled to 230400 bps**, improving your transfer speeds online.
 
-## 🕹️ 150 New Games *&* Demos
+## 📺 PAL *&* NTSC *&* 5×PAL Overscale Fixes
+
+Display correctness continues to be a major focus, and a lot of work has gone into getting titles to run in the right video mode with the right scaling.
+
+The following games have had specific PAL, NTSC *&* [5×PAL Overscale](/overscale) fixes since 2025.05.05:
+
+* **5×PAL Overscale Fixes** for Bargon Attack, Beavers, Black Viper, D/Generation, Diggers, Gulp, John Barnes European Football, Marvin’s Marvellous Adventure, Perihelion, Total Carnage, and Vital Light.
+* **PAL *&* NTSC Corrections** for Barbarian II (Psygnosis), Nebulus, Panza Kick Boxing, Phobia, Super C, and the French version of Panza. We also corrected a number of Tynesoft titles that had been marked as NTSC, including Beverly Hills Cop, Formula 1 Grand Prix, Mayday Squad, Plutos, Roller Coaster Rumbler, Summer Challenge, Summer Olympiad, Winter Challenge, and Winter Olympiad 88.
+* **Offset *&* Display Tuning** has also been improved for Brutal: Paws of Fury, Mr. Nutz, Ugh!, and Return of the Jedi.
+
+## 🧹 Metadata Cleanup
+
+A big — but somewhat invisible — improvement in this release is how much tidier the game and demo library has become.
+
+* Since the previous release, **2,885 existing entries** have metadata updates, spanning **2,312 unique titles**.
+* That includes **2,052 game entries** and **833 demo entries** with updated metadata.
+* Hundreds of titles that previously had no genre assigned now do.
+* Genre labels have been simplified into cleaner categories.
+* Demo scene titles with repetitive names have had better short names added, which makes lists with titles such as “Megademo X” easier to browse.
+* A large number of entries have had corrected IDs, better titles, cleaner hardware labels, and generally improved metadata.
+
+## 🕹️ 150 New Games 
 
 AmigaVision now contains **5,342 hand-tuned game and demo configurations** in total.
 
-Compared to the **2025.05.05** release, **150 unique new titles** have been added: **102 games** and **48 demos**.
+Compared to the previous release, **150 unique new titles** have been added: **102 games** and **48 demos**.
 
 <details>
 <summary><b>Expand for Full List of 102 New Games</b></summary>
@@ -208,27 +231,6 @@ Compared to the **2025.05.05** release, **150 unique new titles** have been adde
 <li>Zool 2</li>
 </ul>
 </details>
-
-## 📺 PAL *&* NTSC *&* 5×PAL Overscale Fixes
-
-Display correctness continues to be a major focus, and a lot of work has gone into getting titles to run in the right video mode with the right scaling.
-
-The following games have had specific PAL, NTSC *&* [5×PAL Overscale](/overscale) fixes since 2025.05.05:
-
-* **5×PAL Overscale Fixes** for Bargon Attack, Beavers, Black Viper, D/Generation, Diggers, Gulp, John Barnes European Football, Marvin’s Marvellous Adventure, Perihelion, Total Carnage, and Vital Light.
-* **PAL *&* NTSC Corrections** for Barbarian II (Psygnosis), Nebulus, Panza Kick Boxing, Phobia, Super C, and the French version of Panza. We also corrected a number of Tynesoft titles that had been marked as NTSC, including Beverly Hills Cop, Formula 1 Grand Prix, Mayday Squad, Plutos, Roller Coaster Rumbler, Summer Challenge, Summer Olympiad, Winter Challenge, and Winter Olympiad 88.
-* **Offset *&* Display Tuning** has also been improved for Brutal: Paws of Fury, Mr. Nutz, Ugh!, and Return of the Jedi.
-
-## 🧹 Metadata Cleanup
-
-A big — but somewhat invisible — improvement in this release is how much tidier the game and demo library has become.
-
-* Compared to **2025.05.05**, **2,885 existing entries** have metadata updates in `titles.csv`, spanning **2,312 unique titles**.
-* That includes **2,052 game entries** and **833 demo entries** with changed metadata.
-* Hundreds of titles that previously had no genre assigned now do.
-* Genre labels have been simplified into cleaner categories.
-* Demo scene titles with repetitive names have had better short names added, which makes lists with titles such as “Megademo X” easier to browse.
-* A large number of entries have had corrected IDs, better titles, cleaner hardware labels, and generally improved metadata.
 
 ## 🔥 48 New Demo Scene Productions
 
