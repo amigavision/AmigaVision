@@ -4,10 +4,10 @@ This file documents ptreplay, a librarybased systemfriendly PT/NT/ST-replayer.
          Copyright (c) 1996 Andreas Pålsson (Pucko/Digital Dreams)
     Copyright (c) 2019 StingRay/[S]carab^Scoopex (stingray_dsd@gmx.de)
 
-                           PTREPLAY.LIBRARY 7.0
+                           PTREPLAY.LIBRARY 7.1
 
 
-ptreplay.library v7.0 is released under the concept of freeware. This
+ptreplay.library v7.1 is released under the concept of freeware. This
 means that it is freely distributable as long as following conditions
 are fulfilled:
 
@@ -40,6 +40,25 @@ this package is include files for Assembler and C.
 
                                    - - -
 
+Notes about V7.1 (StatMat): whilst using this fantastic library to add mod
+playing functionality to the AmigaVision launcher in April 2026, LIMI of
+Offence discovered that the library wasn't correctly disabling the infamous
+low-pass audio filter, causing tunes to sound muffled and quieter than we
+remembered them. However, we also discovered that if a tune was paused with
+PTPause and then resumed with PTResume, the issue went away! After a little
+reverse engineering, StatMat discovered that the PTPlay routine was clearing
+bit #1 in the CIAA_PRA register ($BFE001) with a BCLR instruction, instead of
+setting it with BSET. A one byte patch later and we had v7.1!
+
+We'd like to thank all of the original authors for their sterling work on this
+library. In particular, we would like to remember StingRay for his amazing work
+in the Amiga scene, giving so freely of his talents, resulting in the pleasure
+of so many. We salute you and RIP StingRay. Gone, but certainly not forgotten.
+
+End of V7.1 notes by StatMat
+
+                                   - - -
+
 Notes about V7 (StingRay): Back in December 2018 I was contacted
 by Slummy, he was working on a music disk and the requirements were that
 the code just uses system-friendly routines. Hence he tried ptreplay.library
@@ -59,7 +78,7 @@ To summarise:
 
 I will, most probably, release the full sources of the library in a later
 update, for this I need to clean up the source a bit and add proper
-documention, this hasn't been done yet. For now you only get the 1.3
+documentation, this hasn't been done yet. For now you only get the 1.3
 compatible library and a new asm source in the "Examples" directory showing
 how to use the library. I have also fixed a few mistakes in the documentation,
 in one of the next updates I'll most probably either rewrite the docs or
@@ -70,7 +89,7 @@ is stingray_dsd@gmx.de
 
 End of V7 notes by StingRay
 
-
+                                   - - -
 
 A few weeks ago Mattias Karlsson (Betasoft) decided to pass the development
 on because of lack of time. I volunteered to continue the development
@@ -91,11 +110,14 @@ has a lot of features too)
 
                                    - - -
 
+Changes from 7.0 to 7.1 by StatMat
+------------------------------------------
+*   FIXED: the PTPlay routine now correctly disables the low-pass audio filter
+
 Changes from 6.6 to 7.0 by StingRay
 ------------------------------------------
 *   FIXED: volume slide was completely broken
 * CHANGED: the library now works on Kick 1.x machines
-
 
 Changes from 6.5 to 6.6 by Andreas Pålsson
 ------------------------------------------
