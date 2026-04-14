@@ -30,11 +30,13 @@ One of the biggest news in this release is adding a ton of new supported platfor
 * **iOS and Android** — Play your Amiga games on the go, and watch the latest demo scene productions anywhere.
 * **MiSTer FPGA** — the [best Amiga available in 2026](/best), and where the project originated.
 
-## For the First Time in 30 Years of Amiga Emulators: NTSC Scaling is Now Correct
+## 30-year old scaling issues in Amiga emulators fixed
 
-Amiga emulators have gotten NTSC scaling on the Amiga wrong since their start over 30 years ago. They have shown NTSC Amiga games with a 1:1 Pixel Aspect Ratio (PAR) since the very beginning. You have been able to adjust this manually if you know what you are doing, but they have never done this automatically for you. 
+If you know anything about the AmigaVision project, you know that we care about two things above all else: low video/audio/input latency, and correct Amiga scaling.
 
-In addition, if you want to switch between NTSC and PAL games — which the majority are, but many super influential early games on the Amiga like Defender of the Crown, Wings and Monkey Island — you would have to do per-game setups to get it right, and most people were not aware of this, nor knew how to configure it.
+Amiga emulators have gotten NTSC scaling on the Amiga wrong ever since their start over 30 years ago. They have shown NTSC Amiga games with a 1:1 Pixel Aspect Ratio (PAR) since the very beginning. You have been able to adjust this manually if you know what you are doing, but they have never done this automatically for you. 
+
+In addition, if you want to switch between NTSC and PAL games — the majority of Amiga games are PAL, but many super influential early games on the Amiga like Defender of the Crown, Wings, Marble Madness *&* Monkey Island are NTSC — you would have to do per-game setups to get it right, and most people were not aware of this, nor knew how to configure it.
 
 Amiga NTSC uses a 5:6 PAR (according to how most people adjusted their NTSC monitors and TVs) or 6:7 PAR (according to the NTSC spec that was rarely implemented correctly on Amiga on consumer TVs) like we describe and show in [our description of this](https://amiga.vision/ntsc).
 
@@ -62,6 +64,8 @@ AmigaVision now offers correct NTSC PAR scaling in resolutions that are capable 
 
 We hope and suspect that this scaling approach will also soon come to other Amiga emulators like WinUAE, `puae` and other emulators — but as of this release, AmigaVision has switched to using Amiberry for its Mac, Linux and Windows implementations, since it is the only one that offers correct NTSC scaling and simultaneously does integer scale autocrop properly — all out of the box without you having to configure anything.
 
+(We will endeavour to work with the remaining dominant Amiga emulators to help out there too, so hopefully this can be fixed everywhere soon!)
+
 ## 16:9 Widescreen *&* 21:9 Ultrawide Scaling for Emulators
 
 Did you know that many Amiga demos *&* games — despite running on a platform from 1985 — are designed to run in 16:9 or 16:10 aspect ratios? Or even 21:9 aspect ratios? Truly a computer ahead of its time.
@@ -86,19 +90,19 @@ This, again, is possible only because of the scaler fundamentals we established 
 
 ## 📚 2,955 Game Manuals Added
 
-Thousands of games now let you jump straight to controls, reference material, and documentation from directly from the launcher instead of hunting for game manuals manually. Check out this example from the launcher, and try it on your phone/tablet!
+Thousands of games in the AmigaVision launcher now let you jump straight to controls, reference material, and documentation from directly from the launcher instead of hunting for game manuals manually. Check out this example from the launcher, and try it on your phone/tablet!
 
 ![Entry for Airborne Ranger showing link to QR code that brings you to the game manual](https://amiga.vision/images/qr-example.jpg)
 
-These are explicitly done using QR, so you can have them open on secondary devices while you play Amiga games on your main display.
+These are explicitly pointing to QR links instead of loading on the Amiga itself, so you can have them open on secondary devices while you play Amiga games on your main display.
 
 
 ## 💾 Expanded Real Hardware Support
 
 We have worked hard on supporting real Amiga hardware in the best possible way in this release:
 
-* **68040/68060 accelerator support** via **Mu680x0Libs**.
-* **PCMCIA CompactFlash + SD support** for easier file transfer and storage on real Amiga setups.
+* **68040/68060 accelerator support** via **Mu680x0Libs** has been added.
+* **PCMCIA CompactFlash + SD support** for easier file transfer and storage on real Amiga setups was also added.
 
 ## 💿 Standalone CD³² MiSTer Setup Improvements
 
@@ -293,7 +297,7 @@ Compared to the previous release, **150 unique new titles** have been added: **1
 
 The demo scene continues to get love in this release, as always!
 
-In addition to the metadata cleanup for demo scene entries, AmigaVision has added **48** new demos and disk magazines:
+In addition to the metadata cleanup for demo scene entries, AmigaVision has added **48 new demos:**
 
 <details>
 <summary><b>Expand for Full List of 48 New Demos</b></summary>
@@ -365,6 +369,17 @@ To help surface the best of the demoscene, the Demo section now also includes cu
 ### Demos
 
 * 
+
+## 🤝 Greetings
+
+In traditional Amiga demo scene parlance, "greetings" are a way to express gratitude and admiration for other demo groups or for help they have contributed — this release has been helped very much by our testers and contributors:
+
+* **Dimitris Panokostas** — Author of [Amiberry](https://amiberry.com), who has done a *tremendous* job improving Amiga emulation scaling over the last two years, and has been extremely patient with our ranting about how Amiga scaling has been broken for 30 years, and has gone above and beyond to satisfy our nerdery to deliver an emulator that gets things right — and this will hopefully spread to other Amiga emulators in the future.
+* **StatMat** — for adding music support and QR code manual support to the launcher, and fixing lots of edge case bugs.
+* **AmigaBill** — for featuring us in a 2-hour livestream that let us go in-depth on the new scaling fixes, if you are interested, you can [check it out here](https://www.twitch.tv/videos/2746470548?t=00h26m38s).
+* **Sorgelig** — for continuing to update the MiSTer Amiga core.
+* **robinsonb5** — for chipping away at any MiSTer core bugs and incompatibilities.
+
 
 ## 🛠️ Stay Updated *&* Help Us Make AmigaVision Even Better
 
