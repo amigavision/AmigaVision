@@ -29,6 +29,60 @@ One of the biggest news in this release is adding a ton of new supported platfor
 * **iOS and Android** — Play your Amiga games on the go, and watch the latest demo scene productions anywhere.
 * **MiSTer FPGA** — the [best Amiga available in 2026](/best), and where the project originated.
 
+## For the First Time in 30 Years of Amiga Emulators: NTSC Scaling is Now Correct
+
+Amiga emulators have gotten NTSC scaling on the Amiga wrong since their start over 30 years ago. They have shown NTSC Amiga games with a 1:1 Pixel Aspect Ratio (PAR) since the very beginning. You have been able to adjust this manually if you know what you are doing, but they have never done this automatically for you. 
+
+In addition, if you want to switch between NTSC and PAL games — which the majority are, but many super influential early games on the Amiga like Defender of the Crown, Wings and Monkey Island — you would have to do per-game setups to get it right, and most people were not aware of this, nor knew how to configure it.
+
+Amiga NTSC uses a 5:6 PAR (according to how most people adjusted their NTSC monitors and TVs) or 6:7 PAR (according to the NTSC spec that was rarely implemented correctly on Amiga on consumer TVs) like we describe and show in [our description of this](https://amiga.vision/ntsc).
+
+This results in a lot of people experiencing art in the wrong format, especially early titles e.g. the ones with artwork by the legendary Jim Sachs (Defender of the Crown, Ports of Call):
+
+<figure class="compare before" id="dotc-compare">
+  <div class="compare-stack">
+    <img src="https://amiga.vision/images/dotc-ntsc.png" alt="NTSC" data-caption="NTSC" class="is-active">
+    <img src="https://amiga.vision/images/dotc-pal.png"  alt="PAL"  data-caption="PAL">
+  </div>
+  <figcaption class="compare-caption">NTSC</figcaption>
+</figure>
+
+As you can see, this results in people looking much wider than they are, and mis-represents the original intent of the artist.
+
+NTSC on the Amiga (and DOS PCs!) should never use 1:1 pixel aspect ratios.
+
+AmigaVision fixed this on the MiSTer FPGA platform in 2021, but this has never been available to Amiga emulators running everywhere else.
+
+We have worked with the author of the [Amiberry](https://amiberry.com) Amiga emulator over the past 2 years to address this and many other scaling issues in Amiga emulators. Many large spreadsheets and voice calls were involved, but we got there in the end.
+
+AmigaVision now offers correct NTSC PAR scaling in all resolutions that are high enough to do so, e.g. any display from NNNp and upwards to 8K displays.
+
+Amiberry is now the first Amiga emulator in the 30 years of Amiga emulation to get this right without requiring per-game manual tweaking.
+
+We hope and suspect that this scaling approach will also soon come to other Amiga emulators like WinUAE, `puae` and other emulators — but as of this release, AmigaVision has switched to using Amiberry for its Mac, Linux and Windows implementations, since it is the only one that offers correct NTSC scaling and does integer scale autocrop properly — all out of the box without you having to configure anything.
+
+## 16:9 *&* 21:9 Scaling for Emulators
+
+Did you know that many Amiga demos *&* games — despite running on a platform from 1985 — are designed to run in 16:9 or 16:10 aspect ratios? Or even 21:9 aspect ratios? Truly a computer ahead of its time.
+
+In 2021, we implemented support for 16:9 and 16:10 scaling on MiSTer by adding [5×PAL Overscale](https://amiga.vision/overscale), which makes Amiga games use overscaling automatically on a per-game basis without any manual configuration. The result looks like this on modern 16:9 displays:
+
+![5x scaling](https://amiga.vision/images/gods5x.gif)
+
+![5x scaling](https://amiga.vision/images/flashback5x.gif)
+
+With this release of AmigaVision, we are bringing 16:9, 16:10 — and even 21:9 cinematic aspect ratio scaling for games and demos that support it, like the intro to Pinball Illusions from 1995:
+
+<iframe style="aspect-ratio: 16/9; width: 100%;" src="https://www.youtube.com/embed/I7ONAsXM9Gk" title="YouTube Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+This is *not* stretching anything, this is not doing any interpolation scaling, it is *integer scaled original pixels* with a smart cropping algorithm.
+
+So with today's release, people can experience 16:9, 16:10, and 21:9 Amiga content on emulators too, like this 21:9 demo by Logicoma from 2025, which will display full-width on displays like 1440p and 5K2K 21:9 displays:
+
+<iframe style="aspect-ratio: 16/9; width: 100%;" src="https://www.youtube.com/embed/h-K7a3B9Leg" title="YouTube Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+This, again, is possible only because of the scaler fundamentals we established with our work with the author of [Amiberry](https://amiberry.com) — Dimitris Panokostas — and most of the Amiga emulator audience has never seen these 16:9 and 21:9 Amiga visual presentations. Now, with the latest AmigaVision, they will.
+
 ## 📚 ~3,000 Game Manuals Added
 
 Thousands of games now let you jump straight to controls, reference material, and documentation from directly from the launcher instead of hunting for game manuals manually. Check out this example from the launcher, and try it on your phone/tablet!
