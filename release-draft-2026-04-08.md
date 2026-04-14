@@ -65,7 +65,7 @@ We hope and suspect that this scaling approach will also soon come to other Amig
 
 Did you know that many Amiga demos *&* games — despite running on a platform from 1985 — are designed to run in 16:9 or 16:10 aspect ratios? Or even 21:9 aspect ratios? Truly a computer ahead of its time.
 
-In 2021, we implemented support for 16:9 and 16:10 scaling on MiSTer by adding [5×PAL Overscale](https://amiga.vision/overscale), which makes Amiga games use overscaling automatically on a per-game basis without any manual configuration. The result looks like this on modern 16:9 displays:
+In 2021, we implemented support for 16:9 and 16:10 scaling on MiSTer by adding [5×PAL Overscale](https://amiga.vision/overscale), which makes Amiga games use overscaling automatically on a per-game basis without any manual configuration. While most emulators use 4×PAL scaling, AmigaVision has per-game 5×PAL scaling. The result looks like this on modern 16:9 displays:
 
 ![5x scaling](https://amiga.vision/images/gods5x.gif)
 
