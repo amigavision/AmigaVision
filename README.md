@@ -86,17 +86,11 @@ We often make important changes to the configuration files, `MiSTer.ini` and oth
 
 Follow the instructions for your platform below.
 
-## Setup for Amiga hardware
+## Amiga Hardware Setup {#amiga}
 
-AmigaVision supports any AGA-capable Amiga: Amiga 1200, Amiga 4000, and Amiga CD32 — as long as it has a mass storage device like an SD card or CF card connected via an adapter to the IDE bus.
+* [Installation instructions for Amiga Hardware](/download/amiga)
 
-To set up AmigaVision, choose your favorite disk imaging tool — e.g. [Balena Etcher] for Mac, Linux and Windows, [Win32 Disk Imager] for Windows, or whatever tool you prefer for writing to SD/CF cards.
-
-Simply locate the `games/Amiga/AmigaVision.hdf` file, and load that in your disk imaging tool of choice, and write it to the SD/CF card. If the file requester in the disk imaging tool does not allow you to select `.hdf` files, you may need to rename it to have a different extension, e.g. `.img`, `.bin` or similar.
-
-If your HDF image contains every game in the database, you will need at least a 16GB CF/SD card.
-
-### A note about save files & upgrading on Amiga hardware
+### A note about save files & upgrading on Amiga hardware {#amigasaves}
 
 Note that save files in games will only be written to disk when you quit the game as described in the [Save Files](#save-files) section.
 
@@ -106,128 +100,78 @@ Save files are located in `DH0:WHDSaves` — and are usually small enough that a
 
 If you don't have a way to write to a real floppy or an ADF image, the best way would be to boot the image in an emulator and extract the save files that way. Consult the relevant emulator for your system to figure out how to do this.
 
-### Joystick and Gamepad support on Amiga hardware
+### Joystick and Gamepad support on Amiga hardware {#amigacontrols}
 
 We support single-button Amiga/C64 joysticks, as well as four-button CD32 gamepads, and probably Sega Mega Drive (aka. Sega Genesis) gamepads as well — although we haven't personally tested this.
 
 Many WHDLoad games have been patched to support multiple buttons, so check for those options when starting a game.
 
-## Setup for Raspberry Pi
+## Raspberry Pi Setup {#raspberry}
 
-AmigaVision recommends using [RePlayOS] for Raspberry Pi emulation of Amiga, since it is optimized for low input latency, low audio latency, and low output latency. RePlayOS runs well on any Raspberry Pi 5 with 1GB of RAM — or more, but 1GB is sufficient. Raspberry Pi 3 and 4 are supported, but too slow for the most accurate emulation.
+* [Installation instructions for Raspberry Pi](/download/pi)
+
+AmigaVision uses [RePlayOS] for Raspberry Pi emulation of Amiga, since it is optimized for low input latency, low audio latency, and low output latency. RePlayOS runs well on any Raspberry Pi 5 with 1GB of RAM — or more, but 1GB is sufficient. Raspberry 4 is also supported, but too slow for the most accurate emulation.
 
 With RePlayOS, AmigaVision on Raspberry Pi comes as close as possible to being as low latency as a MiSTer FPGA — still our benchmark for input/output/audio latency — and also has great options for analog output via the [RGB-Pi 2](https://www.mortaca.com) adapter that converts HDMI to SCART RGB without any added latency, similar to MiSTer's Direct Video mode.
 
 AmigaVision on RePlayOS gives you far lower input/output/audio latency than any other Raspberry Pi Amiga setup available today, which translates into the best Amiga gaming experience available on Raspberry Pi.
 
-To install AmigaVision on RePlayOS:
-
-1. Download and install [RePlayOS]. Note that there the current stable release is free, but there is a Patreon if you want to support the author and get the upcoming releases early.
-2. Boot RePlayOS once on the Raspberry Pi, this will make the image create an exFAT partition where you will put the AmigaVision files.
-3. Put the SD card in your computer, all the files will go on the `replay` partition.
-4. Ensure you have all the BIOS files with the [correct names and locations that RePlayOS demands](https://www.replayos.com/addbios/) in the `bios` directory. Note that it will have issues starting Amiga emulation unless all the various Kickstart files are available, even if AmigaVision only needs the 3.1 ROM. Also note that the AmigaVision team cannot supply Kickstart files.
-5. Copy `games/Amiga/AmigaVision.hdf` to `roms/commodore_ami` on the RePlayOS SD card.
-6. Put the SD card back in the Raspberry Pi, you should now be able to start AmigaVision under Commodore Amiga in the menu.
-
-If you also want the setup to boot straight into AmigaVision:
-
-1. Add `AmigaVision.hdf` to your favorites using the RePlayOS launcher UI.
-2. Copy the resulting `.fav` file on the file system into the `_autostart` folder.
-
 While this setup will start on Raspberry Pi 3 and 4, they are too slow to emulate the Amiga properly, so we recommend Raspberry Pi 5 (which also includes the Raspberry 500 and 500+) for proper performance. RePlayOS will automatically switch to the less accurate `puae2021` emulator if it detects a Raspberry Pi 3 or 4.
 
 Do note that if you want to upgrade RePlayOS independently, you will need to re-add the files every time, since it will wipe the drive — RePlayOS does not have in-place upgrades yet. You can avoid this by using a separate external USB or internal NVMe drive and putting the AmigaVision files there instead of on the system boot drive.
 
-## Setup for Emulators
+## Mac/Windows/Linux Setup {#emulators}
 
-We recommend — and include a setup for — the [FS-UAE] Amiga emulator, which supports Mac, Windows and Linux.
+Installing AmigaVision is covered on the [Download page](/download).
 
-1. Download and install [FS-UAE]. Note that you do not need the "FS-UAE Launcher", just the main package.
-2. Copy the `games/Amiga` directory to your preferred location.
-3. Double-click the `AmigaVision.fs-uae` file to run the setup with the preferred settings. Some platforms, like Windows, do not auto-associate this file type with the FS-UAE application, so you might have to right-click and open it with that app. Do not open it with "FS-UAE Launcher", you want the main FS-UAE application. (You can of course also add a shortcut to `AmigaVision.fs-uae` to your Windows start menu, or as an alias in the Mac's Applications folder)
+* [Installation for Mac](/download/mac)
+* [Installation for Windows](/download/windows)
+* [Installation for Linux](/download/linux)
 
 For any additional configuration or customizations, consult the FS-UAE documentation.
 
-## Setup for Pocket
+## Analogue Pocket Setup {#pocket}
 
 AmigaVision also works great with the handheld [Analogue Pocket] FPGA device. Do note that the Amiga core on Analogue Pocket does not support mounting/loading disc images for CD³² yet, but the 3000+ games in the library work great.
 
-* Use any of the Pocket updaters to get the OpenFPGA cores, or manually download the latest version of the [Amiga Pocket Core] and put it on your device.
-* Copy the files in the AmigaVision directory `games/Amiga` (HDFs and ROM files) to the `/Assets/amiga/common` directory on your Pocket SD card.
-* If you already have an existing save file, make sure it is named `AmigaVision-Saves.hdf` — *not* `MegaAGS-Saves.hdf`, which was the old name.
-* Start the Amiga core, enjoy!
+* [Installation instructions for Analogue Pocket](/download/pocket)
 
-### Pocket Controls
+## MiSTer Setup {#mister}
 
-* `Select` button brings up the on-screen keyboard, hit `DEL` to quit a game.
-* `Start` button toggles mouse emulation mode, left/right triggers are the left/right mouse buttons.
-* `A` button selects an entry in the launcher.
-* `B` button goes back to the parent category in the launcher.
+* [Installation instructions for MiSTer](/download/mister)
 
-Many games are updated to support two-button controls, but some require remapping if you prefer button-to-jump instead of up-to-jump (which makes sense on a joystick, but is pretty terrible on a gamepad). Button remapping is done just like in any other Pocket core.
-
-## Setup for MiSTer
-
-Copy the contents of the following directories to the corresponding directories in the top level on MiSTer's file system:
-
-```
-_Computer
-_Console
-config
-Filters
-games
-Presets
-Shadow_Masks
-```
-
-Paste the following recommended core settings to the bottom of your `MiSTer.ini` file in the root of your MiSTer file system — these settings are further explained in the [Video Modes](#mister-video-modes) section. It's especially important to explicity define resolutions for both PAL and NTSC, and *not* rely on the automatic fallback that MiSTer has available:
-
-```
-[Amiga
-+Amiga500
-+Amiga500HD
-+Amiga600HD
-+AmigaCD32]
-video_mode_ntsc=8 ; These two use the recommended setting of 1080p60 and
-video_mode_pal=9  ; 1080p50, adjust if you want a different resolution
-vscale_mode=0
-vsync_adjust=1 ; You can set this to 2 if your display can handle it
-custom_aspect_ratio_1=40:27
-bootscreen=0
-```
-
-Note that *even if* your 16:9 4K TV *can* handle and scale 1440p, we *still recommend* using 1080p output, since that will do proper integer scaling to 4K and make use of the per-game 5×PAL Overscale modes, to reduce the amount of pixels wasted on black bars along the edges.
-
-### Other 16:9 or 16:10 monitor sizes
+### Other 16:9 or 16:10 monitor sizes {#monitors}
 
 The above default settings assume that you are using it with a 16:9 format 1080p or 4K TV or computer monitor. 
 
-If you are using a 1440p computer monitor (great for scaling ~240p retro gaming output, since 240×6 = 1440) — use these settings for the video modes instead, no matter how many pixels wide it is:
+(Note that even if your 16:9 4K TV *can* handle and scale 1440p, we still recommend using 1080p output, since that will do proper integer scaling to 4K and make use of the per-game 5×PAL Overscale modes, to reduce the amount of pixels wasted on black bars along the edges.)
 
-```
+If you are using a 1440p computer monitor — great for scaling ~240p retro gaming output, since 240×6 = 1440 — use these settings for the video modes instead, no matter how many pixels wide it is:
+
+```ini
 video_mode_ntsc=1920,1440,60
 video_mode_pal=1920,1440,50
 ```
 
-Finally, 1920×1200 (16:10) computer monitors are also especially good for scaling ~240p retro gaming output with minimal black borders (since 240×5 = 1200). In that case, use these settings for the video modes:
+Finally, 1920×1200 (16:10) computer monitors are also especially good for scaling ~240p retro gaming output with minimal black borders — since 240×5 = 1200. In that case, use these settings for the video modes:
 
-```
+```ini
 video_mode_ntsc=1920,1200,60
 video_mode_pal=1920,1200,50
 ```
 
-### What about 4:3 monitors or 5:4 monitors?
+### What about 4:3 monitors or 5:4 monitors? {#legacy}
 
 In general, the MiSTer video mode setting is pretty easy to get running — here's an example of what to add if you have a 1600x1200 4:3 monitor, replace the values for whatever display you are using:
 
-```
+```ini
 video_mode_ntsc=1600,1200,60
 video_mode_pal=1600,1200,50
 ```
 
-Replace the resolution values with whatever corresponds to your monitor's native resolution, and the scaler will figure it out.
+Replace the resolution values with whatever corresponds to your monitor's native resolution.
 
-### Using the Amiga Cores
+### Using the Amiga Cores {#cores}
 
 Reboot your MiSTer, you should now have two entries in the `Computer` section: 
 
@@ -563,7 +507,7 @@ AmigaVision was made with the help of these wonderful tools:
 [Arcade Game Selector]:https://github.com/MagerValp/ArcadeGameSelector
 [Balena Etcher]:https://www.balena.io/etcher
 [Win32 Disk Imager]:https://win32diskimager.org
-[FS-UAE]:https://fs-uae.net
+[Amiberry]:https://github.com/BlitterStudio/amiberry
 [Analogue Pocket]:https://analogue.co/pocket
 [Amiga Pocket Core]:https://github.com/Mazamars312/Analogue-Amiga/releases
 [amiga.vision/cd32]:https://amiga.vision/cd32
