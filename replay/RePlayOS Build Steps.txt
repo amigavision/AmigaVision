@@ -1,0 +1,25 @@
+- Flash RePlayOS
+- Boot RePlayOS to create directories
+- Add WiFi info to config, and boot it again
+- Run updater
+
+- Boot RPi OS with front USB of Pi 
+- Insert RePlayOS card
+- Run sudo gparted
+- Resize rootfs partition to 100MB over minimum, apply changes (leaves some space for the OS)
+- Delete replay exFAT partition
+- Create new exFAT partition `replay`, set it to 10100 MiB as long as the image will still fit in that space
+
+- Boot the resized image
+- Set Video → Integer Scale → Vertical + Scanlines: Light
+- Disable Ambiscan
+- Hide empty folders: On
+- Reboot/poweroff delay: disabled
+- Enable RetroFlag reset button to bring up the menu? Or is reset better?
+
+On macOS: 
+- Copy the contents of the `replay (additions)` directory to the root of the new exFAT partition
+- Remove wifi info
+- Create an image with Apple Pi Baker (don't use the Tar XZ format, just a straight image file) (~12m) — e.g. RePlayOS-1.6.2-AutoBoot-16GB.img
+
+You now have a reusable image, let the build script take care of copying AmigaVision.hdf to it, and pack it with reasonable .img.xz settings
