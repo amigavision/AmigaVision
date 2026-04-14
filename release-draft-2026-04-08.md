@@ -83,11 +83,13 @@ So with today's release, people can experience 16:9, 16:10, and 21:9 Amiga conte
 
 This, again, is possible only because of the scaler fundamentals we established with our work with the author of [Amiberry](https://amiberry.com) — Dimitris Panokostas — and most of the Amiga emulator audience has never seen these 16:9 and 21:9 Amiga visual presentations. Now, with the latest AmigaVision, they will.
 
-## 📚 ~3,000 Game Manuals Added
+## 📚 2,955 Game Manuals Added
 
 Thousands of games now let you jump straight to controls, reference material, and documentation from directly from the launcher instead of hunting for game manuals manually. Check out this example from the launcher, and try it on your phone/tablet!
 
-![Entry for Airborne Ranger showing link to QR code that brings you to the game manual](https://amiga.vision/images/qr-example.png)
+![Entry for Airborne Ranger showing link to QR code that brings you to the game manual](https://amiga.vision/images/qr-example.jpg)
+
+These are explicitly done using QR, so you can have them open on secondary devices while you play Amiga games on your main display.
 
 
 ## 💾 Expanded Real Hardware Support
