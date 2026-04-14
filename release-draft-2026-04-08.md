@@ -80,7 +80,7 @@ With this release of AmigaVision, we are bringing 16:9, 16:10 — and even 21:9 
 
 <iframe style="aspect-ratio: 16/9; width: 100%;" src="https://www.youtube.com/embed/I7ONAsXM9Gk" title="YouTube Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-This is *not* stretching anything, this is not doing any interpolation scaling, it is *integer scaled original pixels* with a smart cropping algorithm.
+This is *not* stretching anything, this is not doing any interpolation scaling, it is *integer-scaled original pixels* with a smart cropping algorithm, maintaining the original output.
 
 So with today's release, people can experience 16:9, 16:10, and 21:9 Amiga content on emulators too, like this 21:9 Ultrawide demo by Logicoma from 2025, which will display full-width on displays like 1440p and 5K2K 21:9 displays:
 
