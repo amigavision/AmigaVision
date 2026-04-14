@@ -1,27 +1,31 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sync-images-interactive sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only cd32 distros make-distros distro-mister distro-cd32-mister distro-emulators distro-pi distro-amiga clean clean-temp clean-build
+.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only cd32 distros make-distros mister emulators amiga clean clean-temp clean-build
 
 PYTHON ?= python3.11
 SOURCE ?= $(subst ",,${AGSCONTENT})/titles/manual-downloads
 ARCHIVE_FETCH_DEST ?= ${HOME}/Developer/AmigaVision-Content
 
 AMIBERRYBIN ?= /Applications/Amiberry.app/Contents/MacOS/Amiberry
-REPLAYOS_BASE_IMG ?= ${AGSCONTENT}/base
-REPLAYOS_OUTPUT_IMG ?= ${AGSDEST}/AmigaVision-RPi.img
-REPLAYOS_IMG_SIZE ?= 16g
+REPLAYOS_BASE_IMG ?= $(subst ",,${AGSCONTENT})/replay
+REPLAYOS_OUTPUT_IMG ?= $(subst ",,${DISTRO_OUT})/AmigaVision-RPi-$(DISTRO_DATE).img
+REPLAYOS_COMPRESSED_IMG ?= $(subst ",,${REPLAYOS_OUTPUT_IMG}).xz
+REPLAYOS_IMG_SIZE ?= 14900m
+REPLAYOS_BIOS_DIR ?= $(subst ",,${AGSCONTENT})/replay/bios
 AMIGAVISION_HDF ?= ${AGSDEST}/games/Amiga/AmigaVision.hdf
-AMIGAVISION_FS_UAE ?= content/distro/games/Amiga/AmigaVision.fs-uae
+AMIGAVISION_UAE ?= content/distro/games/Amiga/default.uae
 DISTRO_DATE ?= $(shell date +%Y.%m.%d)
 DISTRO_OUT ?= ${AGSDEST}/distros
 DISTRO_SAVES_HDF ?= ${AGSCONTENT}/distro/games/Amiga/AmigaVision-Saves.hdf
+DISTRO_ROM ?= ${AGSCONTENT}/distro/games/Amiga/AmigaVision.rom
 DISTRO_SHARED_DIR ?= ${AGSCONTENT}/distro/games/Amiga/shared
+DISTRO_VISUALS_DIR ?= ${AGSCONTENT}/distro/games/Amiga/Visuals
 DISTRO_LISTINGS_DIR ?= ${AGSDEST}/games/Amiga/listings
 MISTER_DISTRO_DIR ?= ${AGSCONTENT}/distro
 CD32_DISTRO_DIR ?= ./cd32
-DISTRO_PACKAGE = $(PYTHON) build/package_distros.py --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --pi-script "build/pi_image.sh" --replay-base-img "$(subst ",,${REPLAYOS_BASE_IMG})" --replay-payload-dir "replay" --replay-size "$(REPLAYOS_IMG_SIZE)"
-DISTRO_PACKAGE_PROMPT = bash build/run_distros.sh --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --pi-script "build/pi_image.sh" --replay-base-img "$(subst ",,${REPLAYOS_BASE_IMG})" --replay-payload-dir "replay" --replay-size "$(REPLAYOS_IMG_SIZE)"
+DISTRO_PACKAGE = $(PYTHON) build/package_distros.py --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --pi-script "build/pi_image.sh"
+DISTRO_PACKAGE_PROMPT = bash build/run_distros.sh --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --pi-script "build/pi_image.sh"
 
 define print-start-time
 	@printf 'Start time: %s\n' "$$(date '+%Y-%m-%d %H:%M:%S')"
@@ -42,92 +46,106 @@ POCKET_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-Po
 MINI_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-Mini.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 TEST_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --auto-lists -o ${AGSDEST}
 TEST_DRY_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
-FINALIZE_MAIN_IMAGE = mkdir -p "$(subst ",,${AGSDEST})/games/Amiga" && mv "$(subst ",,${AGSDEST})/AmigaVision.hdf" "$(subst ",,${AGSDEST})/games/Amiga" && cp "$(subst ",,${AMIGAVISION_FS_UAE})" "$(subst ",,${AGSDEST})/games/Amiga/"
+FINALIZE_MAIN_IMAGE = mkdir -p "$(subst ",,${AGSDEST})/games/Amiga" && mv "$(subst ",,${AGSDEST})/AmigaVision.hdf" "$(subst ",,${AGSDEST})/games/Amiga" && cp "$(subst ",,${AMIGAVISION_UAE})" "$(subst ",,${AGSDEST})/games/Amiga/"
 
 help:
 	@printf '%s\n' \
 		'Available top-level make targets:' \
 		'' \
-		'  make env' \
-		'    Set up the Python environment used by the build tools.' \
+		'Standard release flow:' \
+		'make env' \
+		'make update' \
+		'make image' \
+		'make distros' \
 		'' \
-		'  make updates' \
-		'    Alias for make update.' \
+		'make env' \
+		'Set up the Python environment used by the build tools.' \
 		'' \
-		'  make update' \
-		'    Pull archives from the configured source, promote newer manual-downloads archives into the canonical tree, re-index the content database, and run the preferred image sync pipeline.' \
+		'make update' \
+		'Pull archives from the configured source, promote newer manual-downloads archives into the canonical tree, re-index the content database, and run the preferred image sync pipeline.' \
 		'' \
-		'  make initial-downloads [ARCHIVE_FETCH_DEST=...]' \
-		'    Download the demo/game/mags archive paths currently listed in data/db/titles.csv into a local content tree, skipping files already present. Useful for initial contributor setup.' \
+		'make image' \
+		'Create the Amiga HDF image and filesystem specified in configs/AmigaVision.yaml using Amiberry as the final cloner.' \
 		'' \
-		'  make import-notwhdl-demos [SOURCE=...]' \
-		'    Import repacked non-WHDLoad demo archives from manual-downloads into demo-notwhdl, generate .run launchers, and enrich titles.csv with online Pouet/Demozoo metadata where possible.' \
+		'make distros' \
+		'Prompt for the release date, then package all uploadable platform-specific release artifacts from the built image.' \
 		'' \
-		'  make index' \
-		'    Index canonical WHDLoad archives in the $$AGSCONTENT path, update database references, and write the resulting state back to data/db/titles.csv.' \
+		'Other useful targets:' \
 		'' \
-		'  make index-add-missing' \
-		'    Run indexing, write the current SQLite state back to data/db/titles.csv, and then append or backfill missing fields in the CSV using an online Wikidata lookup.' \
+		'make updates' \
+		'Alias for make update.' \
 		'' \
-		'  make prune-missing-archives' \
-		'    Clear archive/slave references in the database for rows whose archive_path no longer exists in the titles tree, then write the result back to data/db/titles.csv.' \
+		'make initial-downloads [ARCHIVE_FETCH_DEST=...]' \
+		'Download the demo/game/mags archive paths currently listed in data/db/titles.csv into a local content tree, skipping files already present. Useful for initial contributor setup.' \
 		'' \
-		'  make manifests' \
-		'    Regenerate all archive manifests under $$AGSCONTENT/manifests.' \
+		'make import-notwhdl-demos [SOURCE=...]' \
+		'Import repacked non-WHDLoad demo archives from manual-downloads into demo-notwhdl, generate .run launchers, and enrich titles.csv with online Pouet/Demozoo metadata where possible.' \
 		'' \
-		'  make missing-manifests' \
-		'    Generate manifests only for archives that do not already have one.' \
+		'make index' \
+		'Index canonical WHDLoad archives in the $$AGSCONTENT path, update database references, and write the resulting state back to data/db/titles.csv.' \
 		'' \
-		'  make verify-manifests' \
-		'    Verify .lha archive contents against the manifests in $$AGSCONTENT/manifests.' \
+		'make index-add-missing' \
+		'Run indexing, write the current SQLite state back to data/db/titles.csv, and then append or backfill missing fields in the CSV using an online Wikidata lookup.' \
 		'' \
-		'  make sync-manifests' \
-		'    Generate missing manifests and report stale manifests whose archive no longer exists.' \
+		'make prune-missing-archives' \
+		'Clear archive/slave references in the database for rows whose archive_path no longer exists in the titles tree, then write the result back to data/db/titles.csv.' \
 		'' \
-		'  make sync-manifests-apply' \
-		'    Generate missing manifests and remove stale manifests.' \
+		'make manifests' \
+		'Regenerate all archive manifests under $$AGSCONTENT/manifests.' \
 		'' \
-		'  make prune-manifests' \
-		'    Report stale manifests without deleting them.' \
+		'make missing-manifests' \
+		'Generate manifests only for archives that do not already have one.' \
 		'' \
-		'  make prune-manifests-apply' \
-		'    Remove stale manifests whose archive no longer exists.' \
+		'make verify-manifests' \
+		'Verify .lha archive contents against the manifests in $$AGSCONTENT/manifests.' \
 		'' \
-		'  make promote-newer-archives [SOURCE=...]' \
-		'    Promote newer .lha archives from the $${AGSCONTENT}/titles/manual-downloads directory into the canonical tree.' \
+		'make sync-manifests' \
+		'Generate missing manifests and report stale manifests whose archive no longer exists.' \
 		'' \
-		'  make missing-images' \
-		'    Print how many titles still lack low-res screenshots.' \
+		'make sync-manifests-apply' \
+		'Generate missing manifests and remove stale manifests.' \
 		'' \
-		'  make sync-images' \
-		'    Preferred image pipeline. Import matching PNGs from data/img_highres/Unprocessed/, fetch missing demo screenshots from Demozoo, Pouet, and Exotica, fetch missing game screenshots from Lemon Amiga in Chrome, then try HoL in Chrome for remaining HoL-linked games, then itch.io, convert staged images into canonical low-res and high-res IFF screenshots, and print the remaining missing count.' \
+		'make prune-manifests' \
+		'Report stale manifests without deleting them.' \
 		'' \
-		'  make sync-images-interactive' \
-		'    Alias for make sync-images.' \
+		'make prune-manifests-apply' \
+		'Remove stale manifests whose archive no longer exists.' \
 		'' \
-		'  make image' \
-		'    Create the Amiga HDF image and filesystem specified in configs/AmigaVision.yaml using Amiberry as the final cloner.' \
+		'make promote-newer-archives [SOURCE=...]' \
+		'Promote newer .lha archives from the $${AGSCONTENT}/titles/manual-downloads directory into the canonical tree.' \
 		'' \
-		'  make image-fsuae' \
-		'    Run the legacy FS-UAE final clone path for configs/AmigaVision.yaml.' \
+		'make missing-images' \
+		'Print how many titles still lack low-res screenshots.' \
 		'' \
-		'  make pi' \
-		'    Build AmigaVision.hdf, inject it and replay/ payload into a RePlayOS base image, and output a 16GB flashable .img.' \
+		'make sync-images' \
+		'Preferred image pipeline. Import matching PNGs from data/img_highres/Unprocessed/, fetch missing demo screenshots from Demozoo, Pouet, and Exotica, fetch missing game screenshots from Lemon Amiga in Chrome, then try HoL in Chrome for remaining HoL-linked games, then itch.io, convert staged images into canonical low-res and high-res IFF screenshots, and print the remaining missing count.' \
 		'' \
-		'  make distros' \
-		'    Prompt for the release date, then package all uploadable platform-specific release artifacts from the built image.' \
+		'make image-fsuae' \
+		'Run the legacy FS-UAE final clone path for configs/AmigaVision.yaml.' \
 		'' \
-		'  make cd32' \
-		'    Generate the CD32 SD/USB/NAS payloads and build the standalone CD32 zip release in ./cd32.' \
+		'make pi' \
+		'Build the Raspberry Pi / RePlayOS package from the configured base image and output an .img.xz sized to fit typical 16GB SD cards.' \
 		'' \
-		'  make screenshots' \
-		'    Create scaled IFF images from arbitrary PNG files placed in screenshots.' \
+		'make amiga' \
+		'Package the real-Amiga hardware release artifact from the built image.' \
 		'' \
-		'  make sqlite' \
-		'    Create SQLite database from data/db/titles.csv (for easier viewing and editing).' \
+		'make emulators' \
+		'Package the reusable Amiberry-based emulator distribution.' \
 		'' \
-		'  make csv' \
-		'    Output the contents of SQLite database to data/db/titles.csv (for committing to version control).'
+		'make mister' \
+		'Package the MiSTer release artifact.' \
+		'' \
+		'make cd32' \
+		'Generate the CD32 SD/USB/NAS payloads and build the CD32 MiSTer release artifact.' \
+		'' \
+		'make screenshots' \
+		'Create scaled IFF images from arbitrary PNG files placed in screenshots.' \
+		'' \
+		'make sqlite' \
+		'Create SQLite database from data/db/titles.csv (for easier viewing and editing).' \
+		'' \
+		'make csv' \
+		'Output the contents of SQLite database to data/db/titles.csv (for committing to version control).'
 
 env:
 	$(call print-start-time)
@@ -213,10 +231,6 @@ missing-images:
 	@pipenv run python build/sync_missing_images.py
 
 sync-images:
-	$(call print-start-time)
-	@pipenv run python build/sync_missing_images.py --fetch-lemon-interactive --apply
-
-sync-images-interactive:
 	$(call print-start-time)
 	@pipenv run python build/sync_missing_images.py --fetch-lemon-interactive --apply
 
@@ -370,29 +384,24 @@ test-dry:
 	@$(TEST_DRY_PREP_CMD)
 	@printf '\a'
 
-pi: image
+pi:
 	$(call print-start-time)
+	@rm -f "${REPLAYOS_OUTPUT_IMG}" "${REPLAYOS_COMPRESSED_IMG}"
 	@build/pi_image.sh \
-		--base-img "${REPLAYOS_BASE_IMG}" \
 		--hdf "${AMIGAVISION_HDF}" \
-		--output-img "${REPLAYOS_OUTPUT_IMG}" \
-		--payload-dir "./replay" \
-		--size "${REPLAYOS_IMG_SIZE}"
+		--output-img "${REPLAYOS_OUTPUT_IMG}"
+	@mkdir -p "$(dir ${REPLAYOS_COMPRESSED_IMG})"
+	@rm -f "${REPLAYOS_COMPRESSED_IMG}"
+	@xz -T0 -1 -v -k -c "${REPLAYOS_OUTPUT_IMG}" > "${REPLAYOS_COMPRESSED_IMG}"
+	@rm -f "${REPLAYOS_OUTPUT_IMG}"
 	@printf '\a'
 
-pi-only:
-	$(call print-start-time)
-	@build/pi_image.sh \
-		--base-img "${REPLAYOS_BASE_IMG}" \
-		--hdf "${AMIGAVISION_HDF}" \
-		--output-img "${REPLAYOS_OUTPUT_IMG}" \
-		--payload-dir "./replay" \
-		--size "${REPLAYOS_IMG_SIZE}"
-	@printf '\a'
+pi-only: pi
+	@:
 
 cd32:
 	$(call print-start-time)
-	@PYTHONDONTWRITEBYTECODE=1 $(PYTHON) "$(subst ",,${CD32_DISTRO_DIR})/make_cd32_mgl_cfg.py"
+	@PYTHONDONTWRITEBYTECODE=1 $(PYTHON) "$(subst ",,${CD32_DISTRO_DIR})/make_cd32_mgl_cfg.py" --quiet
 	@mkdir -p "$(subst ",,${DISTRO_OUT})"
 	@cd "$(subst ",,${CD32_DISTRO_DIR})" && bash ./pack "$(DISTRO_DATE)" "$(subst ",,${DISTRO_OUT})/!AmigaVision-CD32-MiSTer-$(DISTRO_DATE).zip"
 	@printf '\a'
@@ -403,23 +412,15 @@ distros:
 
 make-distros: distros
 
-distro-mister:
+mister:
 	$(call print-start-time)
 	@$(DISTRO_PACKAGE_PROMPT) mister
 
-distro-cd32-mister:
-	$(call print-start-time)
-	@$(DISTRO_PACKAGE_PROMPT) cd32-mister
-
-distro-emulators:
+emulators:
 	$(call print-start-time)
 	@$(DISTRO_PACKAGE_PROMPT) emulators
 
-distro-pi:
-	$(call print-start-time)
-	@$(DISTRO_PACKAGE_PROMPT) pi
-
-distro-amiga:
+amiga:
 	$(call print-start-time)
 	@$(DISTRO_PACKAGE_PROMPT) amiga
 

@@ -29,6 +29,13 @@ import shutil
 import os
 import zipfile
 
+QUIET = False
+
+
+def log_info(message: str) -> None:
+    if not QUIET:
+        print(message)
+
 # --------------------------------------------------------------------------------------
 # Hard-coded Default.cfg (exact bytes)
 # --------------------------------------------------------------------------------------
@@ -322,9 +329,9 @@ def jpath(*parts: str) -> str:
 def ask_choice(prompt: str, options: list[str]) -> int:
     """Prompt for 1..N, return selected index (1-based)."""
     while True:
-        print(prompt)
+        log_info(prompt)
         for i, opt in enumerate(options, 1):
-            print(f"  {i}. {opt}")
+            log_info(f"  {i}. {opt}")
         sel = input("> ").strip()
         if sel.isdigit():
             n = int(sel)
@@ -484,9 +491,9 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
             display_path = mgl_filename.relative_to(root)
         except ValueError:
             display_path = mgl_filename
-        print(f"[{variant_name}] {display_path}")
+        log_info(f"[{variant_name}] {display_path}")
 
-    print(f"[{variant_name}] Done.")
+    log_info(f"[{variant_name}] Done.")
     return 0
 
 
@@ -538,7 +545,7 @@ def archive_variant(root: Path, output_dir: Path, variant_name: str) -> None:
 
     if archive_path.exists():
         shutil.rmtree(variant_dir)
-        print(f"[{variant_name}] Archived to {output_dir / archive_path.name} and removed ./{variant_name}")
+        log_info(f"[{variant_name}] Archived to {output_dir / archive_path.name} and removed ./{variant_name}")
 
 
 def main() -> int:
@@ -548,6 +555,11 @@ def main() -> int:
     - USB preset (assets & CHDs on USB) is generated to ./USB then archived to CD32-Output/USB.zip
     - NAS preset (assets & CHDs on NAS/CIFS) is generated to ./NAS then archived to CD32-Output/NAS.zip
     """
+    global QUIET
+    if "--quiet" in sys.argv[1:]:
+        QUIET = True
+        sys.argv = [sys.argv[0], *[arg for arg in sys.argv[1:] if arg != "--quiet"]]
+
     root = Path(__file__).resolve().parent
     output_dir = cd32_output_dir()
     legacy_output_dir = root / "CD32-Output"

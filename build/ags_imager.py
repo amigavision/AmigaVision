@@ -1428,6 +1428,7 @@ def main():
                     with open(cloner_cfg_amiberry, 'r') as f:
                         cfg = f.read()
                         cfg = cfg.replace("<config_base_name>", config_base_name)
+                        cfg = cfg.replace("$AGSCONTENT", util.path(os.getenv("AGSCONTENT")))
                         cfg = cfg.replace("$AGSTEMP", paths.tmp())
                         cfg = cfg.replace("$AGSDEST", util.path(os.getenv("AGSDEST")))
                         cfg = cfg.replace("$FSUAEROM", os.path.abspath(util.path(os.getenv("FSUAEROM"))))

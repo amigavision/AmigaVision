@@ -42,9 +42,6 @@ def parse_args():
     parser.add_argument("--shared-dir", required=True)
     parser.add_argument("--visuals-dir", required=True)
     parser.add_argument("--pi-script", default="build/pi_image.sh")
-    parser.add_argument("--replay-base-img")
-    parser.add_argument("--replay-payload-dir", default="replay")
-    parser.add_argument("--replay-size", default="16g")
     parser.add_argument("--archive-tool")
     parser.add_argument("--dry-run", action="store_true")
     return parser.parse_args()
@@ -120,6 +117,8 @@ def find_xz_tool():
 
 
 def clone_or_copy_file(src, dest):
+    src = Path(src)
+    dest = Path(dest)
     dest.parent.mkdir(parents=True, exist_ok=True)
     clonefile = getattr(os, "clonefile", None)
     if clonefile is not None:
@@ -170,8 +169,8 @@ def replace_path(src, dest):
 
 def make_stage_dir(parent, prefix, dry_run=False):
     if dry_run:
-        return tempfile.TemporaryDirectory(prefix=prefix)
-    return tempfile.TemporaryDirectory(prefix=prefix, dir=parent)
+        return tempfile.TemporaryDirectory(prefix=prefix, ignore_cleanup_errors=True)
+    return tempfile.TemporaryDirectory(prefix=prefix, dir=parent, ignore_cleanup_errors=True)
 
 
 def write_text(path, content):
@@ -373,29 +372,20 @@ def package_emulators(args, output_dir, archive_tool):
 
 def package_rpi(args, output_dir, xz_tool):
     pi_script = Path(args.pi_script)
-    replay_base = resolve_replay_base_img(args.replay_base_img or "")
-    replay_payload_dir = Path(args.replay_payload_dir)
     main_hdf = Path(args.main_hdf)
     require_file(pi_script, "Raspberry Pi packaging script")
-    require_dir(replay_payload_dir, "RePlayOS payload directory")
     require_file(main_hdf, "Main AmigaVision HDF")
 
     raw_output = output_dir / f"AmigaVision-RPi-{args.date_stamp}.img"
     compressed_output = output_dir / f"AmigaVision-RPi-{args.date_stamp}.img.xz"
-    log_step(f"Building Raspberry Pi image from RePlayOS base image {replay_base.name}")
+    log_step("Building Raspberry Pi image from configured RePlayOS base image")
     run_command(
         [
             str(pi_script),
-            "--base-img",
-            str(replay_base),
             "--hdf",
             str(main_hdf),
             "--output-img",
             str(raw_output),
-            "--payload-dir",
-            str(replay_payload_dir),
-            "--size",
-            args.replay_size,
         ],
         dry_run=args.dry_run,
     )

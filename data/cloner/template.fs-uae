@@ -1,9 +1,9 @@
 [fs-uae]
 accuracy = -1
 amiga_model = A1200
-cpu = 68040-NOMMU
+cpu = 68060-NOMMU
 uae_cpu_speed = max
-jit_compiler = 0
+jit_compiler = 1
 chip_memory = 2048
 motherboard_ram = 32768
 floppy_drive_0 = $AGSTEMP/boot.adf

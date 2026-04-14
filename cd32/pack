@@ -28,6 +28,6 @@ else
   cp "$script_dir/ReadMe.txt" "$stage_dir/ReadMe.txt"
   (
     cd "$stage_dir" || exit 1
-    zip -r "$output_path" . -x '*/.DS_Store' '.DS_Store' '*/._*' '._*' '__MACOSX/*'
+    zip -rq "$output_path" . -x '*/.DS_Store' '.DS_Store' '*/._*' '._*' '__MACOSX/*'
   )
 fi
