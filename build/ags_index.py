@@ -191,7 +191,7 @@ def needs_remote_game_enrichment(existing_row):
     )
     return any(not existing_row.get(field) for field in fields)
 
-def csv_enrichment_fields(archive_path, existing_row=None, allow_wikidata_fallback=False):
+def csv_enrichment_fields(archive_path, existing_row=None):
     title = humanize_archive_name(archive_path)
     entry = {
         "title": title,
@@ -210,7 +210,7 @@ def csv_enrichment_fields(archive_path, existing_row=None, allow_wikidata_fallba
     if entry["category"] == "Demo":
         entry["publisher"] = infer_demo_publisher(archive_path)
     if entry["category"] == "Game" and needs_remote_game_enrichment(existing_row):
-        entry.update(enrich_game_metadata(archive_path, existing_row, allow_wikidata_fallback=allow_wikidata_fallback))
+        entry.update(fallback_game_metadata([title], existing_row=existing_row))
         entry["title_short"] = infer_title_short(entry.get("title", title))
     return entry
 
@@ -915,7 +915,6 @@ def main():
     parser.add_argument("--apply", dest="apply", action="store_true", default=False, help="apply changes for destructive manifest operations")
     parser.add_argument("--append-missing-csv", dest="append_missing_csv", action="store_true", default=False, help="append missing title IDs to data/db/titles.csv")
     parser.add_argument("--ingest", dest="ingest", action="store_true", default=False, help="index archives, append missing CSV rows, and write CSV")
-    parser.add_argument("--wikidata-fallback", dest="wikidata_fallback", action="store_true", default=False, help="allow Wikidata title-search fallback when Lemon/HoL IDs are unavailable")
     parser.add_argument("--audit", dest="audit", action="store_true", default=False, help="report missing archives, images, and manifests")
     parser.add_argument("-v", "--verbose", dest="verbose", action="store_true", default=False, help="verbose output")
 
@@ -977,17 +976,7 @@ def main():
         archives = list(index_whdload_archives(titles_dir, verbose=args.verbose).items())
         total_archives = len(archives)
         exact_rows_by_id, variant_rows_by_base_id = build_db_row_maps(db)
-        total_game_enrichment = sum(
-            1
-            for _, arc in archives
-            if sync_csv
-            and Path(arc["archive_path"]).parts[0] == "game"
-            and needs_remote_game_enrichment(csv_rows_by_id.get(arc["id"]))
-        )
         csv_enrichment_entries = [] if sync_csv else None
-        printed_wikidata_status = False
-        printed_wikidata_progress = False
-        game_enrichment_progress = 0
         if args.verbose:
             print("Correlating archives with title database...")
         for archive_progress, (_, arc) in enumerate(archives, start=1):
@@ -1006,21 +995,11 @@ def main():
             )
             enrichment_fields = None
             if sync_csv:
-                if should_enrich_game and not printed_wikidata_status:
-                    print("Querying Wikidata for game metadata...")
-                    printed_wikidata_status = True
-                if should_enrich_game:
-                    game_enrichment_progress += 1
-                    if game_enrichment_progress == 1 or game_enrichment_progress % 25 == 0 or game_enrichment_progress == total_game_enrichment:
-                        print("\rWikidata: {}/{}".format(game_enrichment_progress, total_game_enrichment), end="", flush=True)
-                        printed_wikidata_progress = True
                 enrichment_fields = csv_enrichment_fields(
                     arc["archive_path"],
                     existing_csv_row,
-                    allow_wikidata_fallback=args.wikidata_fallback,
                 )
             if not rows:
-                printed_wikidata_progress = finish_progress_line(printed_wikidata_progress)
                 print("• No DB entry:", arc["archive_path"])
                 print(arc["id"])
                 print()
@@ -1044,14 +1023,10 @@ def main():
                         **enrichment_fields,
                     })
                 if not row["archive_path"]:
-                    printed_wikidata_progress = finish_progress_line(printed_wikidata_progress)
                     db.cursor().execute("UPDATE titles SET archive_path=?,slave_path=?,slave_version=? WHERE id=?;",
                                         (arc["archive_path"], arc["slave_path"], arc["slave_version"], row["id"]))
                     print("archive added: " + arc["archive_path"] + " -> " +row["id"])
                     print()
-
-        if printed_wikidata_progress:
-            print()
 
         if sync_csv:
             db.commit()

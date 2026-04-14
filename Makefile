@@ -85,7 +85,7 @@ help:
 		'Index canonical WHDLoad archives in the $$AGSCONTENT path, update database references, and write the resulting state back to data/db/titles.csv.' \
 		'' \
 		'make index-add-missing' \
-		'Run indexing, write the current SQLite state back to data/db/titles.csv, and then append or backfill missing fields in the CSV using an online Wikidata lookup.' \
+		'Run indexing, write the current SQLite state back to data/db/titles.csv, and then append or backfill missing fields using the current canonical metadata already present in the project.' \
 		'' \
 		'make prune-missing-archives' \
 		'Clear archive/slave references in the database for rows whose archive_path no longer exists in the titles tree, then write the result back to data/db/titles.csv.' \

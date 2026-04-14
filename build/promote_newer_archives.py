@@ -2,11 +2,16 @@
 
 import argparse
 import csv
+import html
 import os
 import re
 import shutil
 from collections import defaultdict
 from pathlib import Path
+
+from ags_index import humanize_name
+from import_notwhdl_demos import demozoo_search, pouet_search
+from sync_missing_images import fetch_text, pick_best_title_match
 
 
 VERSION_RE = re.compile(r"^(?P<name>.+)_v(?P<version>[^_]+)(?P<suffix>(?:_.*)?)\.lha$")
@@ -21,6 +26,14 @@ CANONICAL_TOP_LEVEL_MAP = {
     "mags": "mags",
     "mags-notwhdl": "mags",
 }
+LEMON_SEARCH_RESULT_RE = re.compile(
+    r'href="(?P<href>https://www\.lemonamiga\.com/game/[^"]+|/game/[^"]+|\?game_id=\d+)"[^>]*>(?P<title>[^<]+)</a>',
+    re.IGNORECASE,
+)
+ABIME_SEARCH_RESULT_RE = re.compile(
+    r'href="(?P<href>https://amiga\.abime\.net/games/view/[^"]+|/games/view/[^"]+)"[^>]*>(?P<title>[^<]+)</a>',
+    re.IGNORECASE,
+)
 
 
 def parse_archive_name(filename):
@@ -203,7 +216,67 @@ def determine_new_archive_top_level(titles_dir, archive_name, current_by_name, c
         if preferred in matches:
             return preferred
 
-    return "game"
+    lookup_title = humanize_name(archive_name)
+    if demozoo_search(lookup_title, "") or pouet_search(lookup_title, ""):
+        return "demo"
+
+    if lemon_search(lookup_title) or abime_search(lookup_title):
+        return "game"
+
+    return None
+
+
+def lemon_search(title):
+    if not title:
+        return None
+    query = re.sub(r"\s+", "+", title.strip())
+    attempts = (
+        f"https://www.lemonamiga.com/games/list.php?list_title={query}",
+        f"https://www.lemonamiga.com/games/advanced_search.php?list_title={query}",
+        f"https://www.lemonamiga.com/?search={query}",
+    )
+    for url in attempts:
+        try:
+            page_html = fetch_text(url)
+        except Exception:
+            continue
+        candidates = []
+        for match in LEMON_SEARCH_RESULT_RE.finditer(page_html):
+            href = html.unescape(match.group("href"))
+            if href.startswith("?game_id="):
+                href = "https://www.lemonamiga.com/" + href
+            elif href.startswith("/"):
+                href = "https://www.lemonamiga.com" + href
+            candidates.append({"href": href, "title": html.unescape(match.group("title")).strip()})
+        best = pick_best_title_match(title, candidates, minimum_score=0.75)
+        if best:
+            return best
+    return None
+
+
+def abime_search(title):
+    if not title:
+        return None
+    query = re.sub(r"\s+", "+", title.strip())
+    attempts = (
+        f"https://amiga.abime.net/games/search/?q={query}",
+        f"https://amiga.abime.net/games/list/?search={query}",
+    )
+    for url in attempts:
+        try:
+            page_html = fetch_text(url)
+        except Exception:
+            continue
+        candidates = []
+        for match in ABIME_SEARCH_RESULT_RE.finditer(page_html):
+            href = html.unescape(match.group("href"))
+            if href.startswith("/"):
+                href = "https://amiga.abime.net" + href
+            candidates.append({"href": href, "title": html.unescape(match.group("title")).strip()})
+        best = pick_best_title_match(title, candidates, minimum_score=0.75)
+        if best:
+            return best
+    return None
 
 
 def promote_archives(titles_dir, source_dir, apply=False):
@@ -281,6 +354,9 @@ def promote_archives(titles_dir, source_dir, apply=False):
         selected_entries = [preferred_entry, *select_additional_base_variants(entries, preferred_entry)]
         selected_paths = {path for path, _ in selected_entries}
         top_level = determine_new_archive_top_level(titles_dir, archive_name, current_by_name, csv_title_index)
+        if top_level is None:
+            review_sources.extend(path for path, _ in entries)
+            continue
 
         for source_path, parsed in selected_entries:
             dest_path = titles_dir / top_level / source_path.name
