@@ -1,5 +1,5 @@
 ---
-title: AmigaVision 2026.XX.XX Updated with Massive Platform Expansion, 30-year Old Scaling Bugs Fixed and 2,955 Game Manuals + 150 New Games and Demos
+title: AmigaVision 2026.04.16 Updated with Massive Platform Expansion, 30-year Old Scaling Bugs Fixed and 2,955 Game Manuals + 137 New Games and Demos
 published: false
 ---
 
@@ -142,30 +142,28 @@ A big — but somewhat invisible — improvement in this release is how much tid
 * Demo scene titles with repetitive names have had better short names added, which makes lists with titles such as “Megademo X” easier to browse.
 * A large number of entries have had corrected IDs, better titles, cleaner hardware labels, and generally improved metadata.
 
-## 🕹️ 150 New Games 
+## 🕹️ 137 New Games *&* Demos
 
 AmigaVision now contains **5,342 hand-tuned game and demo configurations** in total.
 
-Compared to the previous release, **150 unique new titles** have been added: **102 games** and **48 demos**.
+Compared to the previous release, **137 unique new titles** have been added: **91 games** and **46 demos**.
 
 <details>
-<summary><b>Expand for Full List of 102 New Games</b></summary>
+<summary><b>Expand for Full List of 91 New Games</b></summary>
 
 <ul>
 <li>A 10 Tank Killer Extra Missions</li>
 <li>Abu Simbel Profanation</li>
 <li>Agresor</li>
-<li>Arena</li>
+<li>Aventura Espacial, La</li>
+<li>Aventura Original, La</li>
 <li>Bad Dudes Vs Dragon Ninja</li>
 <li>Batman</li>
 <li>Blues Brothers 2 Demo</li>
 <li>Breach & Data Disk</li>
 <li>Bush Buck: A Global Treasure</li>
-<li>Cannon Fodder 2</li>
 <li>Challenge Golf</li>
 <li>Crime Time</li>
-<li>Cruise for a Corpse</li>
-<li>Defender</li>
 <li>Diabolik 01: Inafferrabile Criminale</li>
 <li>Diabolik 03: La Fuga</li>
 <li>Diabolik 04: Trappola D'Acciaio</li>
@@ -177,9 +175,7 @@ Compared to the previous release, **150 unique new titles** have been added: **1
 <li>Diabolik 11: Inganno Fatale</li>
 <li>Diabolik 12: Terrore A Teatro</li>
 <li>Dig Dug 2</li>
-<li>Discovery</li>
 <li>Discovery & Data Disks</li>
-<li>Dungeons Of Avalon</li>
 <li>Dungeons Of Avalon 2</li>
 <li>Dylan Dog 01: La Regina Delle Tenebre</li>
 <li>Dylan Dog 03: Storia Di Nessuno</li>
@@ -198,28 +194,24 @@ Compared to the previous release, **150 unique new titles** have been added: **1
 <li>Evils Doom</li>
 <li>F 29 Retaliator</li>
 <li>Fightin Spirit</li>
+<li>Fire Force</li>
 <li>Frutis</li>
-<li>Ghosts 'n Goblins</li>
 <li>Gyrex</li>
 <li>Gyruss</li>
 <li>Hyper Sports</li>
 <li>Hyper Wings</li>
 <li>International Karate</li>
 <li>Iridon</li>
-<li>It Came From The Desert</li>
 <li>It Came From The Desert 2</li>
 <li>Jeanne d'Arc</li>
 <li>Joust</li>
 <li>Kaboomania Demo</li>
-<li>Karateka</li>
 <li>KC Munchkin</li>
 <li>Kings Quest 5 Remastered</li>
-<li>La Aventura Espacial</li>
-<li>La Aventura Original</li>
 <li>Larrie & The Ardies</li>
 <li>Liberation</li>
 <li>Lock N Chase</li>
-<li>Locomotion</li>
+<li>Mappy</li>
 <li>Mouth Man</li>
 <li>Movem</li>
 <li>Oilmania</li>
@@ -233,26 +225,23 @@ Compared to the previous release, **150 unique new titles** have been added: **1
 <li>Pulsar</li>
 <li>Regresja</li>
 <li>Renegade AGA</li>
-<li>Renegades</li>
 <li>Renegades Deluxe</li>
 <li>Rogue Declan Zero</li>
 <li>Rogue Declan Zero Amiga Addict Edition</li>
 <li>Sensible World Of Soccer 2526</li>
 <li>Side Winder</li>
-<li>Sinbad</li>
 <li>Space Quest 4 Remastered</li>
 <li>Space Vegetables</li>
 <li>Starball</li>
 <li>Steve Davis World Snooker</li>
-<li>Syndicate</li>
 <li>The Pursuit To Earth</li>
 <li>Theme Park XMAS Demo</li>
 <li>Track & Field</li>
-<li>UMS</li>
 <li>US Championship V Ball</li>
 <li>Vector Battleground</li>
 <li>Whales Voyage</li>
 <li>Works Team Rally</li>
+<li>Zippy Race</li>
 <li>Zzzep</li>
 </ul>
 </details>
