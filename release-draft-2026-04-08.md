@@ -1,5 +1,5 @@
 ---
-title: AmigaVision 2026.XX.XX Updated with Massive Platform Support Expansion, ~3,000 Game Manuals + 150 New Games and Demos
+title: AmigaVision 2026.XX.XX Updated with Massive Platform Expansion, 30-year Old Scaling Bugs Fixed and 2,955 Game Manuals + 150 New Games and Demos
 published: false
 ---
 
@@ -12,9 +12,10 @@ To find out more, visit the [AmigaVision](https://amiga.vision) site.
 ## ✅ Summary
 
 * **Support for every major platform** — AmigaVision now has dedicated support and documentation for original Amiga hardware, MiSTer and Analogue Pocket FPGAs, Raspberry Pi, and desktop emulator setups on Mac, Windows, and Linux, well as handheld emulation, including iOS and Android.
-* **~3,000 QR codes to game manuals added** — We have added links to pretty much every commercially published Amiga game with a manual, linking directly to online versions, perfect for loading those game manuals on a phone or a tablet while you are simultaneously playing the game.
-* **Metadata improvements at scale** — compared to the last release, **2,885 existing entries** have newly updated metadata, covering everything from genres, IDs, and short names to hardware labels, regional flags, and launcher-facing cleanup.
-* **The demo scene section is much improved** — In addition to many new productions, the launcher now includes curated demoscene lists like **H0ffman’s Picks**, a dedicated **060 Demos** section, and expanded **Widescreen** demo support.
+* **30-year old scaling issues in Amiga emulators fixed** — NTSC scaling has been broken in every Amiga emulator since the introduction of Amiga emulation 30 years ago. This release of AmigaVision fixes that.
+* **2,955 QR codes linking to game manuals added** — We have added links to pretty much every commercially published Amiga game with a manual, linking directly to online versions, perfect for loading those game manuals on a phone or a tablet while you are simultaneously playing the game.
+* **Metadata improvements** — compared to the last release, **2,885 existing entries** have newly updated metadata, covering everything from genres, IDs, and short names to hardware labels, regional flags, and launcher-facing cleanup.
+* **Expanded demo scene section** — In addition to many new productions, the launcher now includes curated demoscene lists like **H0ffman’s Picks**, a dedicated **060 Demos** section, and expanded **Widescreen** demo support.
 
 ## 🌍 AmigaVision on Every Platform
 
@@ -57,7 +58,7 @@ We have worked with the author of the [Amiberry](https://amiberry.com) Amiga emu
 
 AmigaVision now offers correct NTSC PAR scaling in resolutions that are capable of doing so, which is any display from 800p and upwards to 8K displays.
 
-*Amiberry is now the first Amiga emulator in the 30 years of Amiga emulation to get this right without requiring per-game manual tweaking.*
+*Amiberry is now the first Amiga emulator in the 30-year history of Amiga emulation to get this right without requiring per-game manual adjustments.*
 
 We hope and suspect that this scaling approach will also soon come to other Amiga emulators like WinUAE, `puae` and other emulators — but as of this release, AmigaVision has switched to using Amiberry for its Mac, Linux and Windows implementations, since it is the only one that offers correct NTSC scaling and simultaneously does integer scale autocrop properly — all out of the box without you having to configure anything.
 
@@ -81,7 +82,7 @@ So with today's release, people can experience 16:9, 16:10, and 21:9 Amiga conte
 
 <iframe style="aspect-ratio: 16/9; width: 100%;" src="https://www.youtube.com/embed/h-K7a3B9Leg" title="YouTube Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-This, again, is possible only because of the scaler fundamentals we established with our work with the author of [Amiberry](https://amiberry.com) — Dimitris Panokostas — and most of the Amiga emulator audience has never seen these 16:9 and 21:9 Amiga visual presentations. Now, with the latest AmigaVision, they will.
+This, again, is possible only because of the scaler fundamentals we established with our work with the author of [Amiberry](https://amiberry.com) — Dimitris Panokostas — and most of the Amiga emulator audience has never seen these 16:9 and 21:9 Amiga visual presentations delivered in their optimal formats. Now, with the latest AmigaVision, they will.
 
 ## 📚 2,955 Game Manuals Added
 
