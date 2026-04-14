@@ -1,5 +1,5 @@
 ---
-title: AmigaVision 2026.04.16 Updated with Massive Platform Expansion, 30-year Old Scaling Bugs Fixed and 2,955 Game Manuals + 137 New Games and Demos
+title: AmigaVision 2026.04.16 Updated with Massive Platform Expansion, Fixes 30-year Amiga Emulator Scaling Issues, adds 2,955 Game Manuals + 137 New Games and Demos
 published: false
 ---
 
@@ -63,6 +63,8 @@ AmigaVision now offers correct NTSC PAR scaling in resolutions that are capable 
 *Amiberry is now the first Amiga emulator in the 30-year history of Amiga emulation to get this right without requiring per-game manual adjustments.*
 
 We hope and suspect that this scaling approach will also soon come to other Amiga emulators like WinUAE, `puae` and other emulators — but as of this release, AmigaVision has switched to using Amiberry for its Mac, Linux and Windows implementations, since it is the only one that offers correct NTSC scaling and simultaneously does integer scale autocrop properly — all out of the box without you having to configure anything.
+
+There will be a more comprehensive write-up in the near future, but if you want to see us explain the details of how it works, we were recently on a [livestream with AmigaBill](https://www.twitch.tv/videos/2746470548?t=00h26m38s) where we go into detail about it, and the history of Amiga emulator scaling.
 
 (We will endeavour to work with the remaining dominant Amiga emulators to help out there too, so hopefully this can be fixed everywhere soon!)
 
