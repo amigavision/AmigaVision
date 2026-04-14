@@ -364,11 +364,17 @@ To help surface the best of the demoscene, the Demo section now also includes cu
 
 ### Games
 
-* 
+* Sensible Soccer fan? You can now play with the 2026 lineups of players. Always pick Erling Haaland for your team! 😄
+* Want to see how Amiga deals with some arcade classics? Modern ports of **OutRun** and **Renegade** are now available.
+* Italians have it good in this release of AmigaVision, as we have added cult classic game series **Diabolik** and **Dylan Dog**, 29 games in all. Check them out if you understand Italian!
+* We didn't forget our Spanish friends either, **La Aventura Original** *&* **La Aventura Espacial** have been added. If you know Spanish, check them out!
+
 
 ### Demos
 
-* 
+* Fresh off the press! This year's Revision 2026 Amiga Demo winner is **Second Nature** by **Desire *&* TTE** — incredible work, 1-disk OCS Amiga 500 demo that has an incredible amount of cool effects and packs an insane amount of content into 880KB, and of course in glorious 16:9 format! One of the best ways to check out our new emulator support for 16:9 and 21:9 displays!
+* If you are using emulators or have access to a real Amiga with an 060 acceleration, do check out the demos in our dedicated **060 Demos** category!
+* For some hand-picked modern classics to familiarize yourself with what has been happening in the Amiga demo scene in the past years, check out **H0ffman's Picks** for some real modern classics.
 
 ## 🤝 Greetings
 
@@ -378,6 +384,7 @@ In traditional Amiga demo scene parlance, "greetings" are a way to express grati
 * **StatMat** — for adding music support and QR code manual support to the launcher, and fixing lots of edge case bugs.
 * **AmigaBill** — for featuring us in a 2-hour livestream that let us go in-depth on the new scaling fixes, if you are interested, you can [check it out here](https://www.twitch.tv/videos/2746470548?t=00h26m38s).
 * **h0ffman** — for contributing his curated modern demo scene picks, and for assisting with 060 testing and insisting on adding PCMCIA mass storage support.
+* **Desire *&* TTE** — for getting us a WHDLoad version of the winning demo of Revision 2026 hot off the presses! Literally hours before this release of AmigaVision! 😄
 * **Sorgelig** — for continuing to update the MiSTer Amiga core.
 * **robinsonb5** — for chipping away at any MiSTer core bugs and incompatibilities.
 
