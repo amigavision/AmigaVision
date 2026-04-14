@@ -20,7 +20,7 @@ To find out more, visit the [AmigaVision](https://amiga.vision) site.
 
 One of the biggest news in this release is adding a ton of new supported platforms for AmigaVision.
 
-###The project now explicitly supports and documents:
+### The project now explicitly supports and documents:
 
 * **Original Amiga Hardware** — A simple write to an SD or CF card gets you up and running in minutes.
 * **Mac, Windows, and Linux** — Finally bringing automatic integer-scaled, auto-cropped PAL *&* NTSC [overscale](https://amiga.vision/overscale) and correct [NTSC PAR](/ntsc) scaling to Amiga emulators for the first time in the 30-year history of Amiga emulation.
@@ -55,9 +55,9 @@ AmigaVision fixed this on the MiSTer FPGA platform in 2021, but this has never b
 
 We have worked with the author of the [Amiberry](https://amiberry.com) Amiga emulator over the past 2 years to address this and many other scaling issues in Amiga emulators. Many large spreadsheets and voice calls were involved, but we got there in the end.
 
-AmigaVision now offers correct NTSC PAR scaling in all resolutions that are high enough to do so, e.g. any display from NNNp and upwards to 8K displays.
+AmigaVision now offers correct NTSC PAR scaling in resolutions that are capable of doing so, which is any display from 800p and upwards to 8K displays.
 
-Amiberry is now the first Amiga emulator in the 30 years of Amiga emulation to get this right without requiring per-game manual tweaking.
+*Amiberry is now the first Amiga emulator in the 30 years of Amiga emulation to get this right without requiring per-game manual tweaking.*
 
 We hope and suspect that this scaling approach will also soon come to other Amiga emulators like WinUAE, `puae` and other emulators — but as of this release, AmigaVision has switched to using Amiberry for its Mac, Linux and Windows implementations, since it is the only one that offers correct NTSC scaling and does integer scale autocrop properly — all out of the box without you having to configure anything.
 
