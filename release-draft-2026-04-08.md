@@ -61,7 +61,7 @@ AmigaVision now offers correct NTSC PAR scaling in resolutions that are capable 
 
 We hope and suspect that this scaling approach will also soon come to other Amiga emulators like WinUAE, `puae` and other emulators — but as of this release, AmigaVision has switched to using Amiberry for its Mac, Linux and Windows implementations, since it is the only one that offers correct NTSC scaling and does integer scale autocrop properly — all out of the box without you having to configure anything.
 
-## 16:9 *&* 21:9 Scaling for Emulators
+## 16:9 Widescreen *&* 21:9 Ultrawide Scaling for Emulators
 
 Did you know that many Amiga demos *&* games — despite running on a platform from 1985 — are designed to run in 16:9 or 16:10 aspect ratios? Or even 21:9 aspect ratios? Truly a computer ahead of its time.
 
@@ -71,13 +71,13 @@ In 2021, we implemented support for 16:9 and 16:10 scaling on MiSTer by adding [
 
 ![5x scaling](https://amiga.vision/images/flashback5x.gif)
 
-With this release of AmigaVision, we are bringing 16:9, 16:10 — and even 21:9 cinematic aspect ratio scaling for games and demos that support it, like the intro to Pinball Illusions from 1995:
+With this release of AmigaVision, we are bringing 16:9, 16:10 — and even 21:9 Ultrawide cinematic aspect ratio scaling for games and demos that support it, like the intro to Pinball Illusions from 1995:
 
 <iframe style="aspect-ratio: 16/9; width: 100%;" src="https://www.youtube.com/embed/I7ONAsXM9Gk" title="YouTube Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 This is *not* stretching anything, this is not doing any interpolation scaling, it is *integer scaled original pixels* with a smart cropping algorithm.
 
-So with today's release, people can experience 16:9, 16:10, and 21:9 Amiga content on emulators too, like this 21:9 demo by Logicoma from 2025, which will display full-width on displays like 1440p and 5K2K 21:9 displays:
+So with today's release, people can experience 16:9, 16:10, and 21:9 Amiga content on emulators too, like this 21:9 Ultrawide demo by Logicoma from 2025, which will display full-width on displays like 1440p and 5K2K 21:9 displays:
 
 <iframe style="aspect-ratio: 16/9; width: 100%;" src="https://www.youtube.com/embed/h-K7a3B9Leg" title="YouTube Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
