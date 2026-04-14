@@ -59,7 +59,7 @@ AmigaVision now offers correct NTSC PAR scaling in resolutions that are capable 
 
 *Amiberry is now the first Amiga emulator in the 30 years of Amiga emulation to get this right without requiring per-game manual tweaking.*
 
-We hope and suspect that this scaling approach will also soon come to other Amiga emulators like WinUAE, `puae` and other emulators — but as of this release, AmigaVision has switched to using Amiberry for its Mac, Linux and Windows implementations, since it is the only one that offers correct NTSC scaling and does integer scale autocrop properly — all out of the box without you having to configure anything.
+We hope and suspect that this scaling approach will also soon come to other Amiga emulators like WinUAE, `puae` and other emulators — but as of this release, AmigaVision has switched to using Amiberry for its Mac, Linux and Windows implementations, since it is the only one that offers correct NTSC scaling and simultaneously does integer scale autocrop properly — all out of the box without you having to configure anything.
 
 ## 16:9 Widescreen *&* 21:9 Ultrawide Scaling for Emulators
 
