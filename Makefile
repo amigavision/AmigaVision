@@ -408,6 +408,16 @@ cd32:
 
 distros:
 	$(call print-start-time)
+	@echo "Building all the distros will take around an hour on a MacBook M1."
+	@check_path="$(subst ",,${DISTRO_OUT})"; \
+	while [ ! -d "$$check_path" ]; do \
+		check_path="$$(dirname "$$check_path")"; \
+	done; \
+	free_kb="$$(df -Pk "$$check_path" | awk 'NR==2 {print $$4}')"; \
+	if [ "$$free_kb" -lt 23068672 ]; then \
+		echo "Building all the distros requires 22GB or more of free space."; \
+		exit 1; \
+	fi
 	@$(DISTRO_PACKAGE_PROMPT) all
 
 make-distros: distros
