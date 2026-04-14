@@ -167,10 +167,58 @@ def replace_path(src, dest):
         clone_or_copy_file(src, dest)
 
 
+def purge_macos_metadata(root):
+    root = Path(root)
+    if not root.exists():
+        return
+    for candidate in root.rglob("*"):
+        if candidate.name == ".DS_Store" or candidate.name.startswith("._"):
+            try:
+                candidate.unlink()
+            except FileNotFoundError:
+                pass
+
+
+def cleanup_stage_dir(path, attempts=5, delay=0.2):
+    path = Path(path)
+    if not path.exists():
+        return
+    last_error = None
+    for _ in range(attempts):
+        purge_macos_metadata(path)
+        try:
+            shutil.rmtree(path)
+            return
+        except FileNotFoundError:
+            return
+        except OSError as exc:
+            last_error = exc
+            if exc.errno not in {errno.ENOTEMPTY, errno.EBUSY, errno.EPERM, errno.EACCES}:
+                raise
+            time.sleep(delay)
+    if last_error is not None:
+        raise last_error
+
+
+class StageDir:
+    def __init__(self, path):
+        self.name = str(path)
+
+    def cleanup(self):
+        cleanup_stage_dir(self.name)
+
+    def __enter__(self):
+        return self.name
+
+    def __exit__(self, exc_type, exc, tb):
+        self.cleanup()
+        return False
+
+
 def make_stage_dir(parent, prefix, dry_run=False):
     if dry_run:
-        return tempfile.TemporaryDirectory(prefix=prefix, ignore_cleanup_errors=True)
-    return tempfile.TemporaryDirectory(prefix=prefix, dir=parent, ignore_cleanup_errors=True)
+        return StageDir(tempfile.mkdtemp(prefix=prefix))
+    return StageDir(tempfile.mkdtemp(prefix=prefix, dir=parent))
 
 
 def write_text(path, content):
