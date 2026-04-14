@@ -371,7 +371,7 @@ In traditional Amiga demo scene parlance, "greetings" are a way to express grati
 
 * **Dimitris Panokostas** — author of [Amiberry](https://amiberry.com), who has done a *tremendous* job improving Amiga emulation scaling over the last two years, and has been extremely patient with our ranting about how Amiga scaling has been broken for 30 years. He has gone above and beyond to satisfy our nerdy requests to deliver an emulator that gets things right — and this will hopefully spread to other Amiga emulators in the future.
 * **StatMat** — for adding music support and QR code manual support to the launcher, and fixing lots of edge case bugs.
-* **AmigaBill** — for featuring us in a 2-hour livestream that let us go in-depth on the new scaling fixes, if you are interested, you can [check it out here](https://www.twitch.tv/videos/2746470548?t=00h26m38s).
+* **AmigaBill** — for featuring us in a 2-hour livestream that let us go in-depth on the new scaling fixes, latency, emulators, accuracy and everything that's new in this release. If you are interested, you can [check it out here](https://www.twitch.tv/videos/2746470548?t=00h26m38s).
 * **h0ffman** — for contributing his curated modern demo scene picks, and for assisting with 060 testing and insisting on adding PCMCIA mass storage support.
 * **Desire *&* TTE** — for getting us a WHDLoad version of the winning demo of Revision 2026 hot off the presses! Literally hours before this release of AmigaVision! 😄
 * **Sorgelig** — for continuing to update the MiSTer Amiga core.
