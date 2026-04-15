@@ -13,6 +13,7 @@ To find out more, visit the [AmigaVision](https://amiga.vision) site.
 
 * **Support for every major platform** — AmigaVision now has dedicated support and documentation for original Amiga hardware, MiSTer and Analogue Pocket FPGAs, Raspberry Pi, and desktop emulator setups on Mac, Windows, and Linux, well as handheld emulation, including iOS and Android.
 * **30-year old scaling issues in Amiga emulators fixed** — NTSC scaling has been broken in every Amiga emulator since the introduction of Amiga emulation 30 years ago. This release of AmigaVision fixes that.
+* **Overscale support in emulators** — The emulator support now lets you use AmigaVision's overscale support to experience Amiga games in 16:9, 16:10 or even 21:9 without stretching the image, and while doing integer scaling, every pixel is kept intact.
 * **2,955 QR codes linking to game manuals added** — We have added links to pretty much every commercially published Amiga game with a manual, linking directly to online versions, perfect for loading those game manuals on a phone or a tablet while you are simultaneously playing the game.
 * **Metadata improvements** — compared to the last release, **2,885 existing entries** have newly updated metadata, covering everything from genres, IDs, and short names to hardware labels, regional flags, and launcher-facing cleanup.
 * **Expanded demo scene section** — In addition to many new productions, the launcher now includes curated demoscene lists like **H0ffman’s Picks**, a dedicated **060 Demos** section, and expanded **Widescreen** demo support.
@@ -92,7 +93,7 @@ This, again, is possible only because of the scaler fundamentals we established 
 
 ## 📚 2,955 Game Manuals Added
 
-Thousands of games in the AmigaVision launcher now let you jump straight to controls, reference material, and documentation from directly from the launcher instead of hunting for game manuals manually. Check out this example from the launcher, and try it on your phone/tablet!
+Thousands of games in the AmigaVision launcher now let you jump straight to controls, reference material, and documentation directly from the launcher instead of hunting for game manuals manually. Check out this example from the launcher, and try it on your phone/tablet!
 
 ![Entry for Airborne Ranger showing link to QR code that brings you to the game manual](https://amiga.vision/images/qr-example.jpg)
 
@@ -357,6 +358,7 @@ To help surface the best of the demoscene, the Demo section now also includes cu
 
 * Sensible Soccer fan? You can now play with the 2026 lineups of players. Always pick Erling Haaland for your team! 😄
 * Want to see how Amiga deals with some arcade classics? Modern ports of **OutRun** and **Renegade** are now available.
+* Running the CD32 setup on MiSTer? The modern **Castlevania** for Amiga (not a port, but a reimagining of the X68000 version) is available with a CD soundtrack in the CD32 version, and comes highly recommended if you're running our CD32 setup on MiSTer!
 * Italians have it good in this release of AmigaVision, as we have added cult classic game series **Diabolik** and **Dylan Dog**, 29 games in all. Check them out if you understand Italian!
 * We didn't forget our Spanish friends either, **La Aventura Original** *&* **La Aventura Espacial** have been added. If you know Spanish, check them out!
 
