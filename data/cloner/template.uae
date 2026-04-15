@@ -7,6 +7,7 @@ amiberry.scaling_method=2
 shaders_path=$AGSCONTENT/distro/games/Amiga/Visuals/Shaders
 
 use_gui=no
+open_gui=F12
 kickstart_rom_file=$FSUAEROM
 floppy0=$AGSTEMP/boot.adf
 floppy_speed=0

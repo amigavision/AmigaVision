@@ -14,6 +14,7 @@ amiberry.gfx_auto_crop=true
 amiberry.scaling_method=2
 
 use_gui=no
+open_gui=F12
 use_debugger=false
 warpboot=true
 kickstart_rom_file=kickstart.rom

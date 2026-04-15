@@ -17,6 +17,7 @@ amiberry.scaling_method=2
 amiberry.expansion_gui_page=a1000wom512k
 ; common
 use_gui=no
+open_gui=F12
 use_debugger=false
 kickstart_rom_file=AmigaVision.rom
 kickstart_rom_file_id=1483A091,KS ROM v3.1 (A1200)
