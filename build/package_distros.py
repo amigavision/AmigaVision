@@ -143,10 +143,11 @@ def clone_or_copy_tree(src, dest, dirs_exist_ok=False):
     shutil.copytree(src, dest, dirs_exist_ok=dirs_exist_ok, copy_function=clone_or_copy_file)
 
 
-def copy_tree_contents(src_root, dest_root):
+def copy_tree_contents(src_root, dest_root, excluded_names=None):
+    excluded = set(excluded_names or ())
     dest_root.mkdir(parents=True, exist_ok=True)
     for child in sorted(src_root.iterdir()):
-        if child.name in IGNORED_NAMES or child.name.startswith("."):
+        if child.name in IGNORED_NAMES or child.name.startswith(".") or child.name in excluded:
             continue
         dest = dest_root / child.name
         if child.is_dir():
@@ -342,17 +343,25 @@ def list_archive_contents(artifact_path, archive_tool=None, xz_tool=None, dry_ru
 
 def package_mister(args, output_dir, archive_tool, cd32_release_path):
     mister_root = Path(args.mister_root)
+    built_root = output_dir.parent
     main_hdf = Path(args.main_hdf)
     listings_dir = Path(args.listings_dir)
     require_dir(mister_root, "MiSTer distro root")
+    require_dir(built_root, "Built MiSTer output root")
     require_file(main_hdf, "Main AmigaVision HDF")
     require_dir(listings_dir, "Generated listings directory")
 
     output_path = output_dir / f"AmigaVision-MiSTer-{args.date_stamp}.7z"
     with make_stage_dir(output_dir, prefix="amigavision-mister-", dry_run=args.dry_run) as tmp_dir:
         stage_root = Path(tmp_dir)
-        log_step(f"Staging MiSTer payload from {mister_root}")
+        log_step(f"Staging MiSTer payload from built output root {built_root}")
+        copy_tree_contents(built_root, stage_root, excluded_names={"distros", "CD32-Output"})
+        log_step(f"Overlaying canonical MiSTer content from {mister_root}")
         copy_tree_contents(mister_root, stage_root)
+        visuals_dir = stage_root / "games" / "Amiga" / "Visuals"
+        if visuals_dir.exists():
+            log_step("Removing emulator-only Visuals payload from MiSTer package")
+            shutil.rmtree(visuals_dir)
         log_step("Injecting built AmigaVision.hdf into MiSTer package")
         replace_path(main_hdf, stage_root / "games" / "Amiga" / "AmigaVision.hdf")
         log_step("Injecting generated listings into MiSTer package")
@@ -476,69 +485,69 @@ def main():
     created = []
     failures = []
     cd32_release_state = {"artifact": None, "error": None, "temp_dir": None}
-    for package in packages:
-        started_at = time.time()
-        log_step(f"Starting package: {package}")
-        try:
-            if package in {"mister", "cd32-mister"}:
-                if cd32_release_state["error"] is not None:
-                    raise cd32_release_state["error"]
-                if cd32_release_state["artifact"] is None:
-                    try:
-                        if "cd32-mister" in packages:
-                            cd32_output_path = output_dir / f"!AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
-                        else:
-                            cd32_release_state["temp_dir"] = make_stage_dir(
-                                output_dir,
-                                prefix="amigavision-cd32-release-",
-                                dry_run=args.dry_run,
-                            )
-                            cd32_output_path = Path(cd32_release_state["temp_dir"].name) / f"!AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
-                        cd32_release_state["artifact"] = build_cd32_release(args, cd32_output_path, dry_run=args.dry_run)
-                    except Exception as exc:
-                        cd32_release_state["error"] = exc
-                        raise
-            if package == "mister":
-                created.append(package_mister(args, output_dir, archive_tool, cd32_release_state["artifact"]))
-            elif package == "cd32-mister":
-                created.append(package_cd32_mister(args, output_dir, cd32_release_state["artifact"]))
-            elif package == "emulators":
-                created.append(package_emulators(args, output_dir, archive_tool))
-            elif package == "pi":
-                created.append(package_rpi(args, output_dir, xz_tool))
-            elif package == "amiga":
-                created.append(package_amiga(args, output_dir, xz_tool))
-            else:
-                raise AssertionError(f"Unhandled package type: {package}")
-            list_archive_contents(created[-1], archive_tool=archive_tool, xz_tool=xz_tool, dry_run=args.dry_run)
-            log_step(f"Finished package: {package} in {format_duration(time.time() - started_at)}")
-        except Exception as exc:
-            duration = format_duration(time.time() - started_at)
-            if not continue_on_error:
-                raise
-            failures.append((package, exc))
-            log_step(f"Failed package: {package} after {duration}")
-            echo(f"  Reason: {exc}")
+    try:
+        for package in packages:
+            started_at = time.time()
+            log_step(f"Starting package: {package}")
+            try:
+                if package in {"mister", "cd32-mister"}:
+                    if cd32_release_state["error"] is not None:
+                        raise cd32_release_state["error"]
+                    if cd32_release_state["artifact"] is None:
+                        try:
+                            if "cd32-mister" in packages:
+                                cd32_output_path = output_dir / f"!AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
+                            else:
+                                cd32_release_state["temp_dir"] = make_stage_dir(
+                                    output_dir,
+                                    prefix="amigavision-cd32-release-",
+                                    dry_run=args.dry_run,
+                                )
+                                cd32_output_path = Path(cd32_release_state["temp_dir"].name) / f"!AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
+                            cd32_release_state["artifact"] = build_cd32_release(args, cd32_output_path, dry_run=args.dry_run)
+                        except Exception as exc:
+                            cd32_release_state["error"] = exc
+                            raise
+                if package == "mister":
+                    created.append(package_mister(args, output_dir, archive_tool, cd32_release_state["artifact"]))
+                elif package == "cd32-mister":
+                    created.append(package_cd32_mister(args, output_dir, cd32_release_state["artifact"]))
+                elif package == "emulators":
+                    created.append(package_emulators(args, output_dir, archive_tool))
+                elif package == "pi":
+                    created.append(package_rpi(args, output_dir, xz_tool))
+                elif package == "amiga":
+                    created.append(package_amiga(args, output_dir, xz_tool))
+                else:
+                    raise AssertionError(f"Unhandled package type: {package}")
+                list_archive_contents(created[-1], archive_tool=archive_tool, xz_tool=xz_tool, dry_run=args.dry_run)
+                log_step(f"Finished package: {package} in {format_duration(time.time() - started_at)}")
+            except Exception as exc:
+                duration = format_duration(time.time() - started_at)
+                if not continue_on_error:
+                    raise
+                failures.append((package, exc))
+                log_step(f"Failed package: {package} after {duration}")
+                echo(f"  Reason: {exc}")
 
-    echo("")
-    if failures:
-        log_step("Packaging completed with some failures")
-    else:
-        log_step("Packaging complete")
-    echo("Artifacts:")
-    for artifact in created:
-        echo(f"- {artifact}")
-    if failures:
         echo("")
-        echo("Failed packages:")
-        for package, exc in failures:
-            echo(f"- {package}: {exc}")
+        if failures:
+            log_step("Packaging completed with some failures")
+        else:
+            log_step("Packaging complete")
+        echo("Artifacts:")
+        for artifact in created:
+            echo(f"- {artifact}")
+        if failures:
+            echo("")
+            echo("Failed packages:")
+            for package, exc in failures:
+                echo(f"- {package}: {exc}")
+            return 1
+        return 0
+    finally:
         if cd32_release_state["temp_dir"] is not None:
             cd32_release_state["temp_dir"].cleanup()
-        return 1
-    if cd32_release_state["temp_dir"] is not None:
-        cd32_release_state["temp_dir"].cleanup()
-    return 0
 
 
 if __name__ == "__main__":
