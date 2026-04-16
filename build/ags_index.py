@@ -1033,11 +1033,14 @@ def main():
             util.write_csv()
             report_path = Path("data/db/index-add-missing-report.html").resolve()
             added, updated, report_entries = util.append_missing_title_rows(csv_enrichment_entries)
-            if added or updated:
+            skipped = sum(1 for entry in report_entries if entry.get("status") == "skipped")
+            if added or updated or skipped:
                 if added:
                     print("• Appended {} missing title ID(s) to data/db/titles.csv".format(added))
                 if updated:
                     print("• Filled inferred title/title_short/category/subcategory/AGA/language/developer/publisher/players/HOL/Lemon fields for {} existing row(s)".format(updated))
+                if skipped:
+                    print("• Skipped {} new game row(s) missing required metadata; review the ID verification report".format(skipped))
                 util.write_id_verification_report(report_entries, report_path=str(report_path))
                 print("• Wrote ID verification report to {}".format(report_path))
                 print()

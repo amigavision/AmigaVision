@@ -674,6 +674,7 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
     row_index = {row[0]: idx for idx, row in enumerate(rows[1:], start=1) if row}
     existing_ids = set(row_index.keys())
     missing_entries = [entry for entry in deduped_entries if entry["id"] not in existing_ids]
+    skipped_entries = []
     blank_columns = max(len(header) - 1, 0)
     row_template = {column: "" for column in header}
     updated = 0
@@ -734,6 +735,27 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
             })
 
     for entry in missing_entries:
+        if entry.get("category") == "Game":
+            missing_required_fields = [
+                field
+                for field in ("release_date", "developer", "publisher", "subcategory")
+                if not (entry.get(field) or "").strip()
+            ]
+            if missing_required_fields:
+                skipped_entries.append({
+                    "id": entry["id"],
+                    "title": entry.get("title", ""),
+                    "title_short": entry.get("title_short", ""),
+                    "subcategory": entry.get("subcategory", ""),
+                    "hol_id": entry.get("hol_id", ""),
+                    "lemon_id": entry.get("lemon_id", ""),
+                    "demozoo_id": entry.get("demozoo_id", ""),
+                    "pouet_id": entry.get("pouet_id", ""),
+                    "status": "skipped",
+                    "reason": "missing required game metadata",
+                    "missing_fields": ", ".join(missing_required_fields),
+                })
+                continue
         row = dict(row_template)
         row["id"] = entry["id"]
         row["title"] = entry.get("title", "")
@@ -777,7 +799,7 @@ def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
 
     deduped_report = []
     seen_report_ids = set()
-    for entry in report_entries:
+    for entry in report_entries + skipped_entries:
         if entry["id"] in seen_report_ids:
             continue
         seen_report_ids.add(entry["id"])
@@ -794,7 +816,12 @@ def write_id_verification_report(entries, report_path="data/db/index-add-missing
         title = html.escape(entry.get("title", "") or entry["id"])
         title_short = html.escape(entry.get("title_short", "") or "")
         subcategory = html.escape(entry.get("subcategory", "") or "")
-        rows.append(f"<tr><td>{title}</td><td>{title_short}</td><td>{subcategory}</td><td>{hol_link}</td><td>{lemon_link}</td></tr>")
+        status = html.escape(entry.get("status", "written"))
+        missing_fields = html.escape(entry.get("missing_fields", "") or "")
+        reason = html.escape(entry.get("reason", "") or "")
+        rows.append(
+            f"<tr><td>{title}</td><td>{title_short}</td><td>{subcategory}</td><td>{hol_link}</td><td>{lemon_link}</td><td>{status}</td><td>{missing_fields}</td><td>{reason}</td></tr>"
+        )
 
     report_html = """<!doctype html>
 <html lang="en">
@@ -812,10 +839,10 @@ def write_id_verification_report(entries, report_path="data/db/index-add-missing
 </head>
 <body>
   <h1>ID Verification</h1>
-  <p>Rows appended or updated during the latest index-add-missing run.</p>
+  <p>Rows appended or updated during the latest index-add-missing run. Skipped rows need manual review before they can be added.</p>
   <table>
     <thead>
-      <tr><th>Title</th><th>Title Short</th><th>Subcategory</th><th>Hall of Light</th><th>Lemon Amiga</th></tr>
+      <tr><th>Title</th><th>Title Short</th><th>Subcategory</th><th>Hall of Light</th><th>Lemon Amiga</th><th>Status</th><th>Missing Fields</th><th>Reason</th></tr>
     </thead>
     <tbody>
       {rows}
