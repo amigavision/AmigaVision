@@ -68,14 +68,20 @@ def make_canonical_name(entry) -> str | None:
     max_len = MAX_FILENAME_LENGTH - 5
     if not (isinstance(entry, dict)):
         return None
-    entry_id = entry.get("id")
-    if entry_id:
-        # These filenames are internal runscript paths, so prefer the stable
-        # unique database id over display-oriented names that can collide.
-        return sanitize_name(entry_id).replace("#", "")[:max_len].strip()
-
-    name = sanitize_name(entry.get("title_short") or entry.get("title") or "")
-    return name.replace("#", "")[:max_len].strip() or None
+    name = sanitize_name(entry["title_short"])
+    meta = ""
+    # add group name for demos
+    if entry.get("category", "").lower() == "demo":
+        groups = query.get_publishers(entry)
+        if len(groups):
+            meta += "(" + groups[0] + ")"
+    # add hardware info
+    meta += "(" + query.get_hardware_short(entry) + ")"
+    # add language
+    if entry.get("category", "").lower() == "game":
+        languages = list(map(lambda s: util.language_code(s), query.get_languages(entry)))
+        meta += "[" + "-".join(languages) + "]"
+    return "{} {}".format(name, meta).replace("#", "")[:max_len].strip()
 
 def sanitize_name(name: str) -> str:
     name = name.replace("/", "-").replace("\\", "-").replace(": ", " ").replace(":", " ").replace("\"", "")
