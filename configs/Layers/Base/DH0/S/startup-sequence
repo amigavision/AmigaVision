@@ -1,3 +1,8 @@
+version scsi.device 43 >NIL:
+if warn
+  loadmodule devs:scsi.device reverse ; Supports drives larger than 4GB on 3.0 Amigas
+endif
+
 setpatch QUIET ; We use Mu680x0Libs that detect 68040 or 68060 automatically
 version >NIL:
 
