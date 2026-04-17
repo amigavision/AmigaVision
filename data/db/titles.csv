@@ -5312,9 +5312,9 @@ game--liberationcd32--liberationcd32;Liberation;Liberation;;;CD32;1;;;;;;;;;;;19
 game--larrie--larrie;Larrie & The Ardies;Larrie & The Ardies;;;OCS;;;;;;;;;;;;1987;;English;Capital Software;Kingsoft;1 or 2;;v1.0;Larrie/Larrie.Slave;game/_generic/Larrie.lha;Game;;833;4316;;
 demo-notwhdl--capsule-brutalism-060;Brutalism;Brutalism;;;AGA/060;1;;;;;;;;;;;2019;;English;;Capsule;;;;;demo-notwhdl/Capsule-Brutalism-060.lha;Demo;Demo;;;202827;81062
 demo-notwhdl--demostueallstars-nocpuchallenge;No CPU Challenge;No CPU Challenge;;;AGA;1;;;;;;;;;;;2025;;English;;Demostue Allstars;;;;;demo-notwhdl/DemostueAllstars-NoCpuChallenge.lha;Demo;Demo;;;376675;104753
-demo-notwhdl--ephidrena-hexel-060;Hexel;Hexel;;;AGA/060;1;;;;;;;;;;;2018;;English;;Ephidrena;;;;;demo-notwhdl/Ephidrena-Hexel-060.lha;Demo;Demo;;;185606;75786
-demo-notwhdl--ephidrena-knarkzilla-060;Knarkzilla;Knarkzilla;;;AGA/060;1;;;;;;;;;;;2019;;English;;Ephidrena;;;;;demo-notwhdl/Ephidrena-Knarkzilla-060.lha;Demo;Demo;;;202829;81085
-demo-notwhdl--flex-deadahead-060;Dead Ahead;Dead Ahead;;;AGA/060;1;;;;;;;;;;;2025;;English;;Flex;;;;;demo-notwhdl/Flex-DeadAhead-060.lha;Demo;Demo;;;372606;104201
+demo-notwhdl--ephidrena-hexel-060;Hexel;Hexel;;;AGA/060;1;;;;;;;;Takes a while to load, be patient;;;2018;;English;;Ephidrena;;;;;demo-notwhdl/Ephidrena-Hexel-060.lha;Demo;Demo;;;185606;75786
+demo-notwhdl--ephidrena-knarkzilla-060;Knarkzilla;Knarkzilla;;;AGA/060;1;;;;;;;;Takes a while to load, be patient;;;2019;;English;;Ephidrena;;;;;demo-notwhdl/Ephidrena-Knarkzilla-060.lha;Demo;Demo;;;202829;81085
+demo-notwhdl--flex-deadahead-060;Dead Ahead;Dead Ahead;;;AGA/060;1;;;;;;;;Takes a while to load, be patient;;;2025;;English;;Flex;;;;;demo-notwhdl/Flex-DeadAhead-060.lha;Demo;Demo;;;372606;104201
 demo-notwhdl--flex-martinieffect;Martini Effect;Martini Effect;;;AGA;1;;;;;;;;;;;2021-04-04;;English;;Flex;;;;;demo-notwhdl/Flex-MartiniEffect.lha;Demo;Demo;;;292543;88640
 demo-notwhdl--focusdesign-1992-060;1992;1992;;;AGA/060;1;;;;;;;;;;;2020;;English;;Focus Design;;;;;demo-notwhdl/FocusDesign-1992-060.lha;Demo;Demo;;;274566;84825
 demo-notwhdl--focusdesign-bekoolfool-060;Be Kool Fool;Be Kool Fool;;;AGA/060;1;;;;;;;;;;;2015;;English;;Focus Design;;;;;demo-notwhdl/FocusDesign-BeKoolFool-060.lha;Demo;Demo;;;144249;66249
@@ -5324,12 +5324,12 @@ demo-notwhdl--ghostown-lasttraintodanzig-060;Last Train To Danzig;Last Train To 
 demo-notwhdl--ghostown-smokeandmirrors;Smoke And Mirrors;Smoke And Mirrors;;;AGA;1;;;;;;;;;;;2013-03-31;;English;;Ghostown, Loonies;;;;;demo-notwhdl/Ghostown-SmokeAndMirrors.lha;Demo;Demo;;;59938;61215
 demo-notwhdl--logicoma-entropychamber-060;Entropy Chamber;Entropy Chamber;;;AGA/060;1;;;;;;;;;;;2025;;English;;Logicoma;;;;;demo-notwhdl/Logicoma-EntropyChamber-060.lha;Demo;Demo;;;371379;103994
 demo-notwhdl--nature-jesuschristmotocross;Jesus Christ Motocross;Jesus Christ Motocross;;;AGA/060;1;;;;;;;;;;;2009;;English;;Nature;;;;;demo-notwhdl/Nature-JesusChristMotocross.lha;Demo;Demo;;;5117;52968
-demo-notwhdl--noice-lastgoatstanding-060;Last Goat Standing;Last Goat Standing;;;AGA/060;1;;;;;;;;;;;2021;;English;;Noice;;;;;demo-notwhdl/Noice-LastGoatStanding-060.lha;Demo;Demo;;;292542;88629
+demo-notwhdl--noice-lastgoatstanding-060;Last Goat Standing;Last Goat Standing;;;AGA/060;1;;;;;;;;Takes a while to load, be patient;;;2021;;English;;Noice;;;;;demo-notwhdl/Noice-LastGoatStanding-060.lha;Demo;Demo;;;292542;88629
 demo-notwhdl--spaceballs-norwegiankindness;Norwegian Kindness;Norwegian Kindness;;;AGA;1;;;;;;;;;;;2011;;English;;Spaceballs;;;;;demo-notwhdl/SpaceBalls-NorwegianKindness.lha;Demo;Demo;;;1778;56651
 demo-notwhdl--theblacklotus-final;Final;Final;;;AGA;1;;;;;;;;;;;1998;;English;;The Black Lotus;;;;;demo-notwhdl/TheBlackLotus-Final.lha;Demo;Demo;;;37235;3694
 demo-notwhdl--theblacklotus-oceanmachine-060;Ocean Machine;Ocean Machine;;;AGA/060;1;;;;;;;;;;;2005;;English;;The Black Lotus;;;;;demo-notwhdl/TheBlackLotus-OceanMachine-060.lha;Demo;Demo;;;4;16337
 demo-notwhdl--theblacklotus-silkcut-060;Silk Cut;Silk Cut;;;AGA/060;1;;;;;;;;;;;2004-04-12;;English;;The Black Lotus;;;;;demo-notwhdl/TheBlackLotus-SilkCut-060.lha;Demo;Demo;;;8;12034
-demo-notwhdl--theblacklotus-starstruck-060;Starstruck;Starstruck;;;AGA/060;1;;;;;;;;;;;2006;;English;;The Black Lotus;;;;;demo-notwhdl/TheBlackLotus-Starstruck-060.lha;Demo;Demo;;;25001;25778
+demo-notwhdl--theblacklotus-starstruck-060;Starstruck;Starstruck;;;AGA/060;1;;;;;;;;Takes a while to load, be patient;;;2006;;English;;The Black Lotus;;;;;demo-notwhdl/TheBlackLotus-Starstruck-060.lha;Demo;Demo;;;25001;25778
 demo-notwhdl--traction-swookie;Swookie;Swookie;;;AGA;1;;;;;;;;;;;2013;;English;;Traction;;;;;demo-notwhdl/Traction-Swookie.lha;Demo;Demo;;;95398;62227
 demo-notwhdl--unique-singularities;Singularities;Singularities;;;AGA;1;;;;;;;;;;;2017;;English;;Unique;;;;;demo-notwhdl/Unique-Singularities.lha;Demo;Demo;;;170900;69702
 demo-notwhdl--unique-subside-060;Subside;Subside;;;AGA/060;1;;;;;;;;;;;2016;;English;;Unique;;;;;demo-notwhdl/Unique-Subside-060.lha;Demo;Demo;;;155232;67140
