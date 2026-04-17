@@ -613,6 +613,9 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
         if entry.get("unavailable", False):
             c.progress_current += 1
             continue
+        if "MT-32" in entry.get("hardware", ""):
+            c.progress_current += 1
+            continue
         letter = entry.get("title_short", "z")[0].upper()
         if letter.isnumeric():
             letter = "#"
