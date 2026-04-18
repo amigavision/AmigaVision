@@ -3,9 +3,13 @@ title: AmigaVision 2026.04.18 Fast-Follow Update Available
 published: false
 ---
 
+AmigaVision is the ultimate Amiga games *&* demo scene setup for MiSTer *&* Pocket FPGAs, Raspberry Pi + emulators, and real Amiga hardware.
+
+To find out more, visit the [AmigaVision](https://amiga.vision) site.
+
 Whenever you ship the most significant update in your project's history, you have to plan for a fast-follow release to fix the issues that will inevitably surface — which we did. Thank you to all our Amiga fans that identified a ton of very obscure issues in a setup with ~5000 game and demo configurations within the first few days! We couldn't do this without you.
 
-This planned fast-follow update for [AmigaVision](https://amiga.vision) covers the fixes and cleanup that landed after the [2026.04.16](https://amiga.vision/2026.04.16) release.
+This pre-planned fast-follow update for [AmigaVision](https://amiga.vision) covers the fixes and cleanup that landed after the [2026.04.16](https://amiga.vision/2026.04.16) release.
 
 Please see the original [2026.04.16 announcement](https://amiga.vision/2026.04.16) for the details of the massive update of what's new in AmigaVision, these were the issues we found and fixed in the past few days:
 
