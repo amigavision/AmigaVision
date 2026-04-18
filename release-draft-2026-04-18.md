@@ -23,4 +23,4 @@ Please see the original [2026.04.16 announcement](https://amiga.vision/2026.04.1
 * **Launch path fixes** — [Aventura Espacial & Aventura Original](https://github.com/amigavision/AmigaVision/issues/368) work now.
 * **Disabling Launcher Music Now Persists** — [disabling launcher music did not persist across reboots](https://github.com/amigavision/AmigaVision/issues/370).
 * **MiST support (hopefullly) restored** — [MiST FPGA support](https://github.com/amigavision/AmigaVision/issues/373) was not working, but should hopefully be fixed by the `scsi.device` fixes that also makes it not work on Kickstart 3.0 and 3.1 on real hardware. Any MiST users out there, join our testing team! We don't have the hardware, so we rely on your verification. 😄
-* **Corrupt archives fixed** — The [Darkage: DeepMeet & Flex: DeadAhead](https://github.com/amigavision/AmigaVision/issues/375) demos were using bad LhA archives, they now work again.
+* **Corrupt archives fixed** — The [Darkage: DeepMeet & Flex: Dead Ahead](https://github.com/amigavision/AmigaVision/issues/375) demos were using bad LhA archives, they now work again.
