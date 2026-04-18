@@ -5,14 +5,14 @@ published: false
 
 Whenever you ship the most significant update in your project's history, you have to plan for a fast-follow release to fix the issues that will inevitably surface — which we did. Thank you to all our Amiga fans that identified a ton of very obscure issues in a setup with ~5000 game and demo configurations within the first few days! We couldn't do this without you.
 
-This planned fast-follow update for [AmigaVision](https://amiga.vision) covers the fixes and cleanup that landed after the `2026.04.16` release.
+This planned fast-follow update for [AmigaVision](https://amiga.vision) covers the fixes and cleanup that landed after the [2026.04.16](https://amiga.vision/2026.04.16) release.
 
-Please see the original [2026.04.16 announcement](https://amiga.vision/2026.04.16) for the massive update of what's new in AmigaVision, these were the issues we found and fixed in the past few days:
+Please see the original [2026.04.16 announcement](https://amiga.vision/2026.04.16) for the details of the massive update of what's new in AmigaVision, these were the issues we found and fixed in the past few days:
 
 ## 🔧 Fixes Included in This Update
 
 * **Raspberry Pi NTSC/PAL native screen refresh rate switching works again** — [Automatic PAL/NTSC switching now works correctly again](https://github.com/amigavision/AmigaVision/issues/367). The new RePlayOS releases changed the format of how this was configured, causing 50hz games/demos to run in 60hz, which is obvious unacceptable to us latency/scaling nerds. 😅
-** **Improved emulator timing defaults** — Amiberry-based setups now use [cycle-exact and wait-for-blitter](https://github.com/amigavision/AmigaVision/issues/354) settings. This fixes a large number of demos and games in one fell swoop on emulators. Since we switched to an entirely new emulator as the back-end for AmigaVision, this was expected — thank you to all our amazing testers for finding these issues within days of release!
+* **Improved emulator timing defaults** — Amiberry-based setups now use [cycle-exact and wait-for-blitter](https://github.com/amigavision/AmigaVision/issues/354) settings. This fixes a large number of demos and games in one fell swoop on emulators. Since we switched to an entirely new emulator as the back-end for AmigaVision, this was expected — thank you to all our amazing testers for finding these issues within days of release!
 * **Kickstart 3.0/3.1 real hardware support added** — Hilariously, we did a lot of testing on original hardware, but all our testers had upgraded Amigas with newer ROMs and 060s etc. — causing this release to not work on unmodified Amiga 1200s with Kickstart 3.0 or 3.1. [This should now work](https://github.com/amigavision/AmigaVision/issues/364), but if you have a 3.0/3.1 Amiga, please help us verify this!
 * **Metadata drift corrected** — A substantial metadata cleanup pass landed after `2026.04.16`, addressing reports of [erroneous metadata](https://github.com/amigavision/AmigaVision/issues/355) and games like [Shadow of the Beast not working](https://github.com/amigavision/AmigaVision/issues/357).
 * **Favorites compatibility restored** — [Existing Favorites entries accidentally broke](https://github.com/amigavision/AmigaVision/issues/362) — No data should be lost, the entries just didn't launch, and that should now work again.
