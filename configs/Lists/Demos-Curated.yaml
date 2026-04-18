@@ -1,9 +1,9 @@
-- Curated:
+- Curated Demos:
   - rank: 3
   - note: Curated demo scene collections.
   - image: { ops: { op: "pi", path: "top/curated_content.png" }, size: [320, 128], scale: [1, 1] }
-  - H0ffman's Picks:
-    - note: A hand-picked selection of Amiga demos and intros.
+  - H0ffman's Modern Picks:
+    - note: A hand-picked selection of Amiga demos and intros of modern Amiga demos.
     - demo-notwhdl--focusdesign-1992-060
     - demo-notwhdl--mrsbeanbag-besheep
     - demo-notwhdl--focusdesign-bekoolfool-060
