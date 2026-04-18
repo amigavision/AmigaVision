@@ -1266,12 +1266,13 @@ def main():
                     print(" > Reusing cached archive workspace")
                 else:
                     util.rm_path(workspace_archive_path)
-                    print(" > Restoring cached archive tree...")
+                    print(" > Checking cached archive tree...")
                     with timed_step(timings, "archive tree restore"):
                         archive_tree_restored = restore_archive_tree_cache(archive_tree_cache_key, clone_path)
                     if archive_tree_restored:
                         print(" > Using cached archive tree")
                     else:
+                        print(" > Rebuilding archive tree...")
                         extract_entries(clone_path, collection.ids(), verbose=True)
                         print(" > Saving cached archive tree...")
                         with timed_step(timings, "archive tree save"):
