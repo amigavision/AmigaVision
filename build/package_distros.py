@@ -341,7 +341,7 @@ def list_archive_contents(artifact_path, archive_tool=None, xz_tool=None, dry_ru
     raise ValueError(f"Unsupported artifact type for listing: {artifact_path}")
 
 
-def package_mister(args, output_dir, archive_tool, cd32_release_path):
+def package_mister(args, output_dir, archive_tool):
     mister_root = Path(args.mister_root)
     built_root = output_dir.parent
     main_hdf = Path(args.main_hdf)
@@ -366,12 +366,6 @@ def package_mister(args, output_dir, archive_tool, cd32_release_path):
         replace_path(main_hdf, stage_root / "games" / "Amiga" / "AmigaVision.hdf")
         log_step("Injecting generated listings into MiSTer package")
         replace_path(listings_dir, stage_root / "games" / "Amiga" / "listings")
-        nested_cd32_name = f"AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
-        log_step(f"Embedding optional CD32 setup archive {nested_cd32_name} into MiSTer package")
-        if args.dry_run:
-            echo(f"[dry-run] Would embed {cd32_release_path} as {stage_root / nested_cd32_name}")
-        else:
-            replace_path(cd32_release_path, stage_root / nested_cd32_name)
         archive_7z(output_path, stage_root, archive_tool, dry_run=args.dry_run)
     return output_path
 
@@ -490,7 +484,7 @@ def main():
             started_at = time.time()
             log_step(f"Starting package: {package}")
             try:
-                if package in {"mister", "cd32-mister"}:
+                if package == "cd32-mister":
                     if cd32_release_state["error"] is not None:
                         raise cd32_release_state["error"]
                     if cd32_release_state["artifact"] is None:
@@ -509,7 +503,7 @@ def main():
                             cd32_release_state["error"] = exc
                             raise
                 if package == "mister":
-                    created.append(package_mister(args, output_dir, archive_tool, cd32_release_state["artifact"]))
+                    created.append(package_mister(args, output_dir, archive_tool))
                 elif package == "cd32-mister":
                     created.append(package_cd32_mister(args, output_dir, cd32_release_state["artifact"]))
                 elif package == "emulators":
