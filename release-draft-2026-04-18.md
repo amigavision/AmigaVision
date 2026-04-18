@@ -1,5 +1,5 @@
 ---
-title: AmigaVision 2026.04.18 Fast-Follow Update Release Available
+title: AmigaVision 2026.04.18 Fast-Follow Update Available
 published: false
 ---
 
