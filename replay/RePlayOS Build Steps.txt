@@ -11,7 +11,10 @@
 - Create new exFAT partition `replay`, set it to 10100 MiB as long as the image will still fit in that space
 
 - Boot the resized image
-- Set Video → Integer Scale → Vertical + Scanlines: Light
+- Set Video → Integer Scale → Vertical
+- Set Video → Scanlines: Light
+- Set Video → Video Mode = LCD Native@60/NRR
+- Video → Set LCD Type = TV/PC VRR
 - Disable Ambiscan
 - Hide empty folders: On
 - Reboot/poweroff delay: disabled
