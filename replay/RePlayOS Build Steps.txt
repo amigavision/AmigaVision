@@ -20,6 +20,11 @@
 - Reboot/poweroff delay: disabled
 - Enable RetroFlag reset button to bring up the menu? Or is reset better?
 
+Load up the core:
+- Video → Crop: Automatic
+- Video → Crop Mode: Vertical
+
+
 On macOS: 
 - Copy the contents of the `replay (additions)` directory to the root of the new exFAT partition
 - Remove wifi info
