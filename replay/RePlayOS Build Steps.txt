@@ -20,14 +20,19 @@
 - Reboot/poweroff delay: disabled
 - Enable RetroFlag reset button to bring up the menu? Or is reset better?
 
-Load up the core:
-- Video → Crop: Automatic
-- Video → Crop Mode: Vertical
 
 
 On macOS: 
 - Copy the contents of the `replay (additions)` directory to the root of the new exFAT partition
 - Remove wifi info
+- Add the HDF
+
+Back on the Pi:
+- Boot it up
+- Video → Crop: Automatic
+- Video → Crop Mode: Vertical
+
+
 - Create an image with Apple Pi Baker (don't use the Tar XZ format, just a straight image file) (~12m) — e.g. RePlayOS-1.6.2-AutoBoot-16GB.img
 
 You now have a reusable image, let the build script take care of copying AmigaVision.hdf to it, and pack it with reasonable .img.xz settings
