@@ -12,13 +12,42 @@ menu_x = 3
 menu_y = 13
 menu_width = 30
 menu_height = 23
+menu_color = $0fff
 screenshot_x = 238
 screenshot_y = 0
 text_x = 238
 text_y = 133
 text_width = 54
 text_height = 8
+text_color = $0888
+text_background = $0000
 blue_button_action = back
 favs_path = WHDSaves:Favorites/
 favs_name = Favorites
 favs_empty = Favorites_empty.txt
+hide_parent_dir = 0
+
+qrcode_x = 582
+qrcode_y = 90
+qrcode_label_x = 584
+qrcode_label_y = 78
+qrcode_color = $09ae
+
+mod_file_path = Data:Music/7 Launcher BGM
+
+# 0 - 64
+mod_volume = 64
+
+mod_play_delay = 3
+mod_fadeout_duration = 0
+
+# The length of this list should be equal to font_size + font_leading
+
+# Red tint
+#copper_text_colors = $0f77, $0e66, $0d55, $0c44, $0933, $0822, $0811, $0800
+
+# Green tint
+#copper_text_colors = $07f7, $06e6, $05d5, $04c4, $03a3, $0292, $0181, $0080
+
+# Blue tint
+copper_text_colors = $0fff, $0eee, $0dde, $0cce, $09ad, $089d, $088d, $088c
