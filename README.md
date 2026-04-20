@@ -88,7 +88,7 @@ Follow the instructions for your platform below.
 
 ## Amiga Hardware Setup {#amiga}
 
-* [Installation instructions for Amiga Hardware](/download/amiga)
+* [Installation instructions for Amiga Hardware](https://amiga.vision/download/amiga)
 
 ### A note about save files & upgrading on Amiga hardware {#amigasaves}
 
@@ -108,7 +108,7 @@ Many WHDLoad games have been patched to support multiple buttons, so check for t
 
 ## Raspberry Pi Setup {#raspberry}
 
-* [Installation instructions for Raspberry Pi](/download/pi)
+* [Installation instructions for Raspberry Pi](https://amiga.vision/download/pi)
 
 AmigaVision uses [RePlayOS] for Raspberry Pi emulation of Amiga, since it is optimized for low input latency, low audio latency, and low output latency. RePlayOS runs well on any Raspberry Pi 5 with 1GB of RAM — or more, but 1GB is sufficient. Raspberry 4 is also supported, but too slow for the most accurate emulation.
 
@@ -122,11 +122,11 @@ Do note that if you want to upgrade RePlayOS independently, you will need to re-
 
 ## Mac/Windows/Linux Setup {#emulators}
 
-Installing AmigaVision is covered on the [Download page](/download).
+Installing AmigaVision is covered on the [Download page](https://amiga.vision/download).
 
-* [Installation for Mac](/download/mac)
-* [Installation for Windows](/download/windows)
-* [Installation for Linux](/download/linux)
+* [Installation for Mac](https://amiga.vision/download/mac)
+* [Installation for Windows](https://amiga.vision/download/windows)
+* [Installation for Linux](https://amiga.vision/download/linux)
 
 For any additional configuration or customizations, consult the FS-UAE documentation.
 
@@ -134,11 +134,11 @@ For any additional configuration or customizations, consult the FS-UAE documenta
 
 AmigaVision also works great with the handheld [Analogue Pocket] FPGA device. Do note that the Amiga core on Analogue Pocket does not support mounting/loading disc images for CD³² yet, but the 3000+ games in the library work great.
 
-* [Installation instructions for Analogue Pocket](/download/pocket)
+* [Installation instructions for Analogue Pocket](https://amiga.vision/download/pocket)
 
 ## MiSTer Setup {#mister}
 
-* [Installation instructions for MiSTer](/download/mister)
+* [Installation instructions for MiSTer](https://amiga.vision/download/mister)
 
 ### Other 16:9 or 16:10 monitor sizes {#monitors}
 
@@ -519,6 +519,7 @@ AmigaVision was made with the help of these wonderful tools:
 [Tablecruncher]:https://tablecruncher.com
 [Python]:https://www.python.org
 [Xee]:https://theunarchiver.com/xee
+[FS-UAE]:https://fs-uae.net
 
 [David Lindecrantz]:https://github.com/Optiroc
 [Alex Limi]:https://limi.net
