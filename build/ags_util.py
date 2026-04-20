@@ -91,7 +91,7 @@ def argparse_is_dir(parser: argparse.ArgumentParser, arg: str):
 
 def make_dir(path: str):
     if not os.path.exists(path):
-        os.makedirs(path)
+        os.makedirs(path, exist_ok=True)
 
 def rm_path(path: str):
     if os.path.islink(path) or os.path.isfile(path):
