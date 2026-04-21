@@ -18,23 +18,16 @@ These were the issues we found and fixed in the past few days:
 ## 🖥️ Platform Updates
 
 * **Proper Raspberry Pi NTSC/PAL native screen refresh rate switching works again** — [Automatic PAL/NTSC switching now works correctly](https://github.com/amigavision/AmigaVision/issues/367). The new RePlayOS releases changed the format of how this was configured, causing 50hz games/demos to run in 60hz, which is obviously unacceptable to us latency/scaling nerds. 😅
-* **AutoCrop scaling now available on Raspberry Pi** —  [AutoCrop scaling is now enabled](https://github.com/amigavision/AmigaVision/issues/381) in the Raspberry Pi / RePlayOS setup. Do note that this is *not* the revolutionary 16:9 and 21:9 scaling we do in our emulator setup and MiSTer, but it is a great improvement while we are waiting for a `libretro` core for Amiberry to be added to RePlayOS and RetroArch.
+* **AutoCrop scaling now available on Raspberry Pi** —  [AutoCrop scaling is now enabled](https://github.com/amigavision/AmigaVision/issues/381) in the Raspberry Pi *&* RePlayOS setups. Do note that this is *not* the revolutionary 16:9 and 21:9 scaling we do in our emulator setup and MiSTer, but it is a great improvement while we are waiting for a `libretro` core for Amiberry to be added to RePlayOS and RetroArch.
 * **Improved emulator timing defaults** — Amiberry-based setups now use [cycle-exact and wait-for-blitter](https://github.com/amigavision/AmigaVision/issues/354) settings. This fixes a large number of demos and games in one fell swoop on emulators. Since we switched to an entirely new emulator as the back-end for AmigaVision, issues such as these were expected — thank you to all our amazing testers for finding these issues within days of release! And if you have other suggestions for settings that will improve the experience, [file tickets in the issue tracker](https://github.com/amigavision/AmigaVision/issues)!
 * **MiSTer audio improved** — The MiSTer setup now uses A1200 PWM audio for noticeably clearer sound. Make sure to do a complete clean reinstall to experience this improvement.
 * **MiSTer CD32 packaging clarified** — The standalone CD32 setup is no longer bundled into the main MiSTer setup, which avoids confusion now that CD32 has its own dedicated package.
-
----
-
-* **Kickstart 3.0/3.1 real hardware support added** — Hilariously, we did a lot of testing on original hardware, but all our testers had upgraded Amigas with newer ROMs and 060s etc. — causing this release to not work on unmodified Amiga 1200s with Kickstart 3.0 or 3.1. [This should now work](https://github.com/amigavision/AmigaVision/issues/364), but if you have a 3.0/3.1 Amiga, please help us verify this!
-* **MiST support (hopefully) restored** — [MiST FPGA support](https://github.com/amigavision/AmigaVision/issues/373) was not working, but should hopefully be fixed by the `scsi.device` fixes that also make this release of AmigaVision work on Kickstart 3.0 and 3.1 on real hardware. Any MiST users out there, join our testing team! We don't have the hardware, so we rely on your verification. 😄
-
 
 ## 🎮 Game, Demo *&* App Updates
 
 * **Metadata drift corrected** — We did a substantial metadata cleanup pass after the 2026.04.16 release, addressing bugs like [erroneous metadata](https://github.com/amigavision/AmigaVision/issues/355) and games like [Shadow of the Beast not working](https://github.com/amigavision/AmigaVision/issues/357). These should now behave correctly again.
 * **King's Quest V Remastered** — The remastered and MT-32 variants were cleaned up so they no longer clutter the main lists with duplicates, and QR-code manual links were added for all of them.
 * **Bad Dudes labeling improved** — The launcher now makes it easier to distinguish which *Bad Dudes vs Dragon Ninja* entry is the modern remake.
-* **Castlevania CD32 and AGA fixed** — There was a typo in the CD32 launcher and AGA entries for the modern Castlevania version — these have been fixed.
 * **Launch path fixes** — [Aventura Espacial & Aventura Original](https://github.com/amigavision/AmigaVision/issues/368) work now.
 * **Corrupt archives fixed** — The [Darkage: DeepMeet & Flex: Dead Ahead](https://github.com/amigavision/AmigaVision/issues/375) demos were using bad LhA archives, they now work again.
 * **Karateka fixed** — Karateka ST port got corrected artwork and metadata cleanup, resolving [Karateka ST port doesn't load](https://github.com/amigavision/AmigaVision/issues/376).
@@ -49,3 +42,33 @@ These were the issues we found and fixed in the past few days:
 * **Launcher timing bug fixed** — A timing issue that could cause graphics corruption in the launcher has been fixed.
 * **Launcher navigation improved** — Esc now brings you up one level in the menus, similar to how backspace works. Esc at the top level brings you to Workbench.
 * **"Exit to Workbench" entry added** There's now a dedicated entry in the menu to quit the launcher and go to Workbench.
+
+## 🛠️ Stay Updated *&* Help Us Make AmigaVision Even Better
+
+If you find any bugs or settings that need improvements, file a ticket on the [AmigaVision] web site.
+
+AmigaVision is an open source project, and we welcome contributions from the community.
+
+You can follow us on [Bluesky], [Mastodon], [YouTube], [Twitch] or via [RSS], and updates will be posted when new releases happen.
+
+## ⬇️ Download
+
+You can get AmigaVision for every platform *&* device from the [Download] section.
+
+**Enjoy the best of what the Amiga platform has to offer!**
+
+---
+
+Original announcement follows, for those of you that didn't catch it when originally announced:
+
+---
+
+
+
+[AmigaVision]:https://amiga.vision
+[Download]:https://amiga.vision/download
+[Mastodon]:https://mastodon.social/@amiga_vision
+[Bluesky]:https://bsky.app/profile/amiga.vision
+[YouTube]:https://youtube.com/@amiga_vision
+[Twitch]:https://twitch.tv/amiga_vision
+[RSS]:https://amiga.vision/feed.xml
