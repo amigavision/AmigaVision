@@ -1,7 +1,12 @@
-version scsi.device 43 >NIL:
-if warn
-  loadmodule devs:scsi.device reverse ; Supports drives larger than 4GB on 3.0 Amigas
-endif
+; We don't have a way to invoke this safely on MiSTer yet, but leaving
+; it in here, so 3.0/3.1 users can tell us whether this works for them
+; ags-uname | Search PIPE: amiga QUIET
+; if not warn ; Only run on real Amigas
+;   version scsi.device 43 >NIL:
+;   if warn
+;     loadmodule devs:scsi.device reverse ; Support drives larger than 4GB on 3.0 Amigas
+;   endif
+; endIf
 
 setpatch QUIET ; We use Mu680x0Libs that detect 68040 or 68060 automatically
 version >NIL:
