@@ -97,6 +97,99 @@ def print_collection_timing_summary(collection):
     for label, duration in sorted(collection.timing.items()):
         print("  {:<24} {:>8.2f}s".format(label, duration))
 
+
+def is_exclusion_key(key: str) -> bool:
+    return key in {"Exclude", "_Exclude", "_exclude"}
+
+
+def collect_excluded_titles(menu) -> set[str]:
+    excluded = set()
+    if not isinstance(menu, list):
+        return excluded
+    for item in menu:
+        if isinstance(item, list):
+            excluded.update(collect_excluded_titles(item))
+            continue
+        if not isinstance(item, dict):
+            continue
+        for key, value in item.items():
+            if is_exclusion_key(key):
+                if isinstance(value, list):
+                    for row in value:
+                        if isinstance(row, str):
+                            excluded.add(row)
+                continue
+            if isinstance(value, list):
+                excluded.update(collect_excluded_titles(value))
+    return excluded
+
+
+def resolve_excluded_entry_ids(db: Connection, excluded_names: set[str]) -> set[str]:
+    excluded_ids = set()
+    for name in excluded_names:
+        entry, pref_entry = get_entry(db, name)
+        if entry and entry.get("id"):
+            excluded_ids.add(entry["id"].lower())
+        if pref_entry and pref_entry.get("id"):
+            excluded_ids.add(pref_entry["id"].lower())
+    return excluded_ids
+
+
+def menu_item_is_excluded(name: str, excluded_names: set[str], excluded_ids: set[str], db: Connection, cache: dict[str, bool]) -> bool:
+    if name in excluded_names:
+        return True
+    cached = cache.get(name)
+    if cached is not None:
+        return cached
+    entry, pref_entry = get_entry(db, name)
+    entry_ids = set()
+    if entry and entry.get("id"):
+        entry_ids.add(entry["id"].lower())
+    if pref_entry and pref_entry.get("id"):
+        entry_ids.add(pref_entry["id"].lower())
+    matched = bool(entry_ids & excluded_ids)
+    cache[name] = matched
+    return matched
+
+
+def prune_excluded_titles(menu, excluded_names: set[str], db: Connection, excluded_ids: set[str], match_cache: dict[str, bool] | None = None):
+    if not isinstance(menu, list):
+        return menu
+    if match_cache is None:
+        match_cache = {}
+    pruned = []
+    for item in menu:
+        if isinstance(item, str):
+            if not menu_item_is_excluded(item, excluded_names, excluded_ids, db, match_cache):
+                pruned.append(item)
+            continue
+        if isinstance(item, list):
+            nested = prune_excluded_titles(item, excluded_names, db, excluded_ids, match_cache)
+            if nested:
+                pruned.append(nested)
+            continue
+        if not isinstance(item, dict):
+            pruned.append(item)
+            continue
+        next_item = {}
+        for key, value in item.items():
+            if is_exclusion_key(key):
+                continue
+            if isinstance(value, dict):
+                if menu_item_is_excluded(key, excluded_names, excluded_ids, db, match_cache):
+                    continue
+                next_item[key] = value
+                continue
+            if isinstance(value, list):
+                nested = prune_excluded_titles(value, excluded_names, db, excluded_ids, match_cache)
+                if nested or key in {"image", "note", "ordering", "rank", "hidden"}:
+                    next_item[key] = nested
+                continue
+            next_item[key] = value
+        if next_item:
+            pruned.append(next_item)
+    return pruned
+
 # -----------------------------------------------------------------------------
 
 def fingerprint_file(path: str) -> dict:
@@ -842,6 +935,12 @@ def make_clone_progress_lines(clone_path: str) -> list[str]:
         ("DH0", util.path(clone_path, "DH0")),
         ("DH1/Music", util.path(clone_path, "DH1", "Music")),
     ]
+    whd_stats_paths = [
+        ("DH1/WHD/D", util.path(clone_path, "DH1", "WHD", "D")),
+        ("DH1/WHD/G", util.path(clone_path, "DH1", "WHD", "G")),
+        ("DH1/WHD/M", util.path(clone_path, "DH1", "WHD", "M")),
+        ("DH1/WHD/N", util.path(clone_path, "DH1", "WHD", "N")),
+    ]
     lines = [
         "Clone payload summary:",
         "  Stage                    Files   Dirs   Size",
@@ -859,13 +958,21 @@ def make_clone_progress_lines(clone_path: str) -> list[str]:
             )
     lines.append("")
     lines.append("  WHD subdirectories:")
-    for label in ["D", "G", "M", "N"]:
-        if util.is_dir(util.path(clone_path, "DH1", "WHD", label)):
-            lines.append("    DH1/WHD/{}".format(label))
+    lines.append("  Stage                    Files   Dirs   Size")
+    for label, path in whd_stats_paths:
+        if util.is_dir(path):
+            stats = util.get_tree_stats(path)
+            lines.append(
+                "  {:<22} {:>7} {:>6} {:>8}".format(
+                    label,
+                    stats["files"],
+                    stats["dirs"],
+                    util.format_bytes(stats["bytes"]),
+                )
+            )
     lines.append("")
     lines.append("Amiga clone stages:")
     lines.append("  DH0")
-    lines.append("  Disk icon")
     lines.append("  WHD (D, G, M, N)")
     lines.append("  Music")
     return lines
@@ -1105,6 +1212,12 @@ def main():
             menu = util.yaml_load(args.config_file)
             if not isinstance(menu, list):
                 raise ValueError("config file not a list ({})".format(args.config_file))
+            excluded_titles = sorted(collect_excluded_titles(menu))
+            if excluded_titles:
+                excluded_title_set = set(excluded_titles)
+                excluded_entry_ids = resolve_excluded_entry_ids(db, excluded_title_set)
+                print(" > Excluding {} Mini title(s) from config ({} resolved IDs)".format(len(excluded_titles), len(excluded_entry_ids)))
+                menu = prune_excluded_titles(menu, excluded_title_set, db, excluded_entry_ids)
             with open(runscript_template_path, 'r') as f:
                 runscript_template = f.read()
 

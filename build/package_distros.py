@@ -16,6 +16,7 @@ IGNORED_NAMES = {".DS_Store", ".gitignore", "pack", "__pycache__"}
 SEVENZIP_CANDIDATES = ("7zz", "7z", "7za")
 SEVENZIP_COMPRESSION_ARGS = ("-mx=5", "-myx=3")
 XZ_PRESET = 6
+FAT32_MAX_FILE_BYTES = (4 * 1024 * 1024 * 1024) - 1
 
 
 def parse_args():
@@ -24,7 +25,7 @@ def parse_args():
     )
     parser.add_argument(
         "package",
-        choices=("all", "mister", "cd32-mister", "emulators", "pi", "amiga"),
+        choices=("all", "mister", "cd32-mister", "emulators", "mini", "pi", "amiga"),
         help="Package to build.",
     )
     parser.add_argument("--date-stamp", required=True, help="Release date stamp, e.g. 2025.05.05")
@@ -41,6 +42,9 @@ def parse_args():
     parser.add_argument("--listings-dir", required=True)
     parser.add_argument("--shared-dir", required=True)
     parser.add_argument("--visuals-dir", required=True)
+    parser.add_argument("--mini-root", default="content/distro_mini")
+    parser.add_argument("--mini-hdf")
+    parser.add_argument("--mini-uae")
     parser.add_argument("--pi-script", default="build/pi_image.sh")
     parser.add_argument("--archive-tool")
     parser.add_argument("--dry-run", action="store_true")
@@ -57,6 +61,25 @@ def timestamp():
 
 def log_step(message):
     echo(f"[{timestamp()}] {message}")
+
+
+def warn_if_exceeds_fat32_limit(path, label):
+    path = Path(path)
+    if not path.is_file():
+        return
+    size = path.stat().st_size
+    if size <= FAT32_MAX_FILE_BYTES:
+        return
+    log_step(
+        "WARNING: {} is {} bytes ({:.2f} GiB), which exceeds the FAT32 file size "
+        "limit of {} bytes ({:.2f} GiB).".format(
+            label,
+            size,
+            size / (1024 ** 3),
+            FAT32_MAX_FILE_BYTES,
+            FAT32_MAX_FILE_BYTES / (1024 ** 3),
+        )
+    )
 
 
 def format_duration(seconds):
@@ -421,6 +444,45 @@ def package_emulators(args, output_dir, archive_tool):
     return output_path
 
 
+def package_mini(args, output_dir, archive_tool):
+    mini_root = Path(args.mini_root)
+    mini_hdf = Path(args.mini_hdf) if args.mini_hdf else None
+    mini_uae = Path(args.mini_uae) if args.mini_uae else None
+    saves_hdf = Path(args.saves_hdf)
+    shared_dir = Path(args.shared_dir)
+    require_dir(mini_root, "Mini distro root")
+    if mini_hdf is None:
+        raise FileNotFoundError("Mini HDF path not provided")
+    require_file(mini_hdf, "Mini AmigaVision HDF")
+    require_file(saves_hdf, "AmigaVision saves HDF")
+    require_dir(shared_dir, "Shared support directory")
+    warn_if_exceeds_fat32_limit(mini_hdf, "Mini AmigaVision HDF")
+
+    output_path = output_dir / f"AmigaVision-Mini-{args.date_stamp}.7z"
+    with make_stage_dir(output_dir, prefix="amigavision-mini-", dry_run=args.dry_run) as tmp_dir:
+        stage_root = Path(tmp_dir)
+        log_step(f"Staging Mini payload from canonical Mini content in {mini_root}")
+        copy_tree_contents(mini_root, stage_root)
+        log_step("Injecting built Mini HDF into Mini package")
+        replace_path(mini_hdf, stage_root / "AmigaVision-Mini.hdf")
+        log_step("Injecting shared saves HDF into Mini package")
+        replace_path(saves_hdf, stage_root / "AmigaVision-Saves.hdf")
+        log_step("Injecting shared folder into Mini package")
+        replace_path(shared_dir, stage_root / "Shared")
+        if mini_uae is not None and mini_uae.is_file():
+            log_step("Injecting Mini UAE launcher into Mini package")
+            replace_path(mini_uae, stage_root / "AmigaVision-Mini.uae")
+        readme_markdown = stage_root / "AmigaVision-Mini-ReadMe.md"
+        readme_text = stage_root / "AmigaVision-Mini-ReadMe.txt"
+        if readme_markdown.exists():
+            log_step("Renaming Mini README for packaged distro")
+            replace_path(readme_markdown, readme_text)
+            if not args.dry_run and readme_markdown.exists():
+                readme_markdown.unlink()
+        archive_7z(output_path, stage_root, archive_tool, dry_run=args.dry_run)
+    return output_path
+
+
 def package_rpi(args, output_dir, xz_tool):
     pi_script = Path(args.pi_script)
     main_hdf = Path(args.main_hdf)
@@ -463,13 +525,13 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
     continue_on_error = args.package == "all"
     packages = (
-        ["mister", "cd32-mister", "emulators", "pi", "amiga"]
+        ["mister", "cd32-mister", "emulators", "mini", "pi", "amiga"]
         if args.package == "all"
         else [args.package]
     )
 
     archive_tool = None
-    if any(package in {"mister", "emulators"} for package in packages):
+    if any(package in {"mister", "emulators", "mini"} for package in packages):
         archive_tool = find_archive_tool(args.archive_tool)
     xz_tool = None
     if any(package in {"pi", "amiga"} for package in packages):
@@ -508,6 +570,8 @@ def main():
                     created.append(package_cd32_mister(args, output_dir, cd32_release_state["artifact"]))
                 elif package == "emulators":
                     created.append(package_emulators(args, output_dir, archive_tool))
+                elif package == "mini":
+                    created.append(package_mini(args, output_dir, archive_tool))
                 elif package == "pi":
                     created.append(package_rpi(args, output_dir, xz_tool))
                 elif package == "amiga":
