@@ -29,4 +29,4 @@
   - !include Lists/Demos.yaml
   - !include Lists/Demos-Spotlight.yaml
 
-- !include Lists/Pocket-Additions.yaml
+- !include Lists/Mini-Additions.yaml

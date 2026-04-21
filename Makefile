@@ -1,7 +1,7 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry pocket-image mini-image test-image test-dry pi pi-only cd32 distros make-distros mister emulators amiga clean clean-temp clean-build
+.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry mini-image test-image test-dry pi pi-only cd32 distros make-distros mister emulators amiga clean clean-temp clean-build
 
 PYTHON ?= python3.11
 SOURCE ?= $(subst ",,${AGSCONTENT})/titles/manual-downloads
@@ -42,7 +42,6 @@ endef
 default: help
 
 IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
-POCKET_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-Pocket.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 MINI_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-Mini.yaml --all-demos --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 TEST_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --auto-lists -o ${AGSDEST}
 TEST_DRY_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
@@ -359,13 +358,6 @@ image-amiberry:
 	@$(FINALIZE_MAIN_IMAGE)
 	@printf '\a'
 
-pocket-image:
-	$(call print-start-time)
-	@$(POCKET_IMAGE_PREP_CMD)
-	@$(MAKE) clone-amiberry
-	@mv ${AGSDEST}/AmigaVision-Pocket.hdf ${AGSDEST}/AmigaVision-Pocket
-	@printf '\a'
-
 mini-image:
 	$(call print-start-time)
 	@$(MINI_IMAGE_PREP_CMD)
@@ -454,5 +446,4 @@ clean-build:
 	fi
 	@rm -f "$(subst ",,${AGSDEST})/AmigaVision.hdf" \
 		"$(subst ",,${AGSDEST})/games/Amiga/AmigaVision.hdf" \
-		"$(subst ",,${AGSDEST})/AmigaVision-Pocket.hdf" \
 		"$(subst ",,${AGSDEST})/AmigaVision-Mini.hdf"
