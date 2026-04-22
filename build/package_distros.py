@@ -378,7 +378,18 @@ def package_mister(args, output_dir, archive_tool):
     with make_stage_dir(output_dir, prefix="amigavision-mister-", dry_run=args.dry_run) as tmp_dir:
         stage_root = Path(tmp_dir)
         log_step(f"Staging MiSTer payload from built output root {built_root}")
-        copy_tree_contents(built_root, stage_root, excluded_names={"distros", "CD32-Output"})
+        copy_tree_contents(
+            built_root,
+            stage_root,
+            excluded_names={
+                "distros",
+                "CD32-Output",
+                "AmigaVision-Mini",
+                "AmigaVision-Mini.hdf",
+                "AmigaVision-Mini.uae",
+                "games",
+            },
+        )
         log_step(f"Overlaying canonical MiSTer content from {mister_root}")
         copy_tree_contents(mister_root, stage_root)
         visuals_dir = stage_root / "games" / "Amiga" / "Visuals"
