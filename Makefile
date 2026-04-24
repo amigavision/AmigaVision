@@ -4,6 +4,8 @@ export
 .PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry mini-image test-image test-dry pi pi-only cd32 distros make-distros mister emulators mini amiga clean clean-temp clean-build
 
 PYTHON ?= python3.11
+PIP_BUILD_CONSTRAINT ?= $(CURDIR)/build/pip-build-constraints.txt
+export PIP_BUILD_CONSTRAINT
 SOURCE ?= $(subst ",,${AGSCONTENT})/titles/manual-downloads
 ARCHIVE_FETCH_DEST ?= ${HOME}/Developer/AmigaVision-Content
 

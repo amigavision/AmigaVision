@@ -20,10 +20,10 @@ if exists tmp:DH1/Disk.info
 endif
 if exists tmp:DH1/WHD
   echo "Cloning DH1: WHD (D/G/M/N)..."
-  copy tmp:DH1/WHD DH1:WHD all clone quiet
+  copy tmp:DH1/WHD/#? DH1:WHD all clone quiet
 endif
 echo "Cloning DH1: Music..."
-copy tmp:DH1/Music DH1: all clone quiet
+copy tmp:DH1/Music/#? DH1:Music all clone quiet
 echo ""
 echo "Done!"
 UAEquit

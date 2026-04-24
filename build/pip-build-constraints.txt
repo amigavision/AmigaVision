@@ -1,0 +1,3 @@
+# Optiroc's pinned amitools fork still imports pkg_resources during build.
+# setuptools 81+ removed that compatibility module from isolated build envs.
+setuptools<81

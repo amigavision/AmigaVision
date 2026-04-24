@@ -9,7 +9,7 @@ autopep8 = "*"
 
 [packages]
 #amitools = {path = "../amitools", editable = true}
-amitools = "~=0.8.1"
+amitools = {git = "https://github.com/amigavision/amitools.git", ref = "2e165cad2e0d3759a39fce9c18d32d3fb8ce2fd6", editable = true}
 lhafile = "~=0.3.0"
 pillow = "~=12.2.0"
 ruamel-yaml = "~=0.17.32"
