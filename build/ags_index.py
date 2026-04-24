@@ -763,7 +763,7 @@ def make_manifest(titles_dir, manifests_dir, path, only_missing=False):
     if path.endswith(".lha") and is_lhafile(path):
         try:
             contents = make_lha_manifest(path)
-        except BadLhafile as exc:
+        except (BadLhafile, RuntimeError) as exc:
             return None, "lha manifest failed: {} ({})".format(path, exc)
     if contents:
         os.makedirs(os.path.dirname(yaml_path), exist_ok=True)

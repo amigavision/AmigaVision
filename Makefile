@@ -54,6 +54,7 @@ IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision.yaml --al
 MINI_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-Mini.yaml --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 TEST_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --auto-lists -o ${AGSDEST}
 TEST_DRY_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
+MAKE_MANIFESTS_CMD = pipenv run build/ags_index.py --make-manifests
 FINALIZE_MAIN_IMAGE = mkdir -p "$(subst ",,${AGSDEST})/games/Amiga" && mv "$(subst ",,${AGSDEST})/AmigaVision.hdf" "$(subst ",,${AGSDEST})/games/Amiga" && cp "$(subst ",,${AMIGAVISION_UAE})" "$(subst ",,${AGSDEST})/games/Amiga/"
 
 help:
@@ -265,6 +266,7 @@ invalidate-build-cache:
 
 prepare-image-temp:
 	$(call print-start-time)
+	@$(MAKE_MANIFESTS_CMD)
 	@$(IMAGE_PREP_CMD)
 
 clone-fsuae:
@@ -293,6 +295,7 @@ clone-fsuae:
 
 image:
 	$(call print-start-time)
+	@$(MAKE_MANIFESTS_CMD)
 	@$(IMAGE_PREP_CMD)
 	@$(MAKE) clone-amiberry
 	@$(FINALIZE_MAIN_IMAGE)
@@ -300,6 +303,7 @@ image:
 
 image-fsuae:
 	$(call print-start-time)
+	@$(MAKE_MANIFESTS_CMD)
 	@$(IMAGE_PREP_CMD)
 	@$(MAKE) clone-fsuae
 	@$(FINALIZE_MAIN_IMAGE)
@@ -331,6 +335,7 @@ clone-fuse:
 
 image-fuse:
 	$(call print-start-time)
+	@$(MAKE_MANIFESTS_CMD)
 	@$(IMAGE_PREP_CMD)
 	@$(MAKE) clone-fuse
 
@@ -365,6 +370,7 @@ clone-amiberry:
 
 image-amiberry:
 	$(call print-start-time)
+	@$(MAKE_MANIFESTS_CMD)
 	@$(IMAGE_PREP_CMD)
 	@$(MAKE) clone-amiberry
 	@$(FINALIZE_MAIN_IMAGE)
@@ -372,6 +378,7 @@ image-amiberry:
 
 mini-image:
 	$(call print-start-time)
+	@$(MAKE_MANIFESTS_CMD)
 	@$(MINI_IMAGE_PREP_CMD)
 	@$(MAKE) clone-amiberry
 	@$(MINI_UAE_GEN)
@@ -380,12 +387,14 @@ mini-image:
 
 test-image:
 	$(call print-start-time)
+	@$(MAKE_MANIFESTS_CMD)
 	@$(TEST_IMAGE_PREP_CMD)
 	@$(MAKE) clone-amiberry
 	@printf '\a'
 
 test-dry:
 	$(call print-start-time)
+	@$(MAKE_MANIFESTS_CMD)
 	@$(TEST_DRY_PREP_CMD)
 	@printf '\a'
 
