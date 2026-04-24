@@ -254,6 +254,31 @@ def ensure_dir(path):
     path.mkdir(parents=True, exist_ok=True)
 
 
+def pick_mini_launcher_template(root):
+    preferred = (
+        "Start AmigaVision_ol.uae",
+        "Start AmigaVision (Mouse+Joystick)_ol.uae",
+        "Start AmigaVision (2 Joysticks)_ol.uae",
+    )
+    root = Path(root)
+    candidates = [root / name for name in preferred if (root / name).is_file()]
+    discovered = sorted(
+        path for path in root.glob("*_ol.uae") if path.is_file() and path not in candidates
+    )
+    candidates.extend(discovered)
+    return candidates[0] if candidates else None
+
+
+def generate_mini_launcher(src, dest):
+    text = Path(src).read_text(encoding="utf-8")
+    text = (
+        text.replace("/mnt/AmigaVision-Mini.hdf", "AmigaVision-Mini.hdf")
+        .replace("/mnt/AmigaVision-Saves.hdf", "AmigaVision-Saves.hdf")
+        .replace("/mnt/Shared", "Shared")
+    )
+    write_text(dest, text)
+
+
 def make_amiberry_skeleton(stage_root):
     for relative in (
         "Configurations",
@@ -384,10 +409,12 @@ def package_mister(args, output_dir, archive_tool):
             excluded_names={
                 "distros",
                 "CD32-Output",
+                "AmigaVision.hdf",
                 "AmigaVision-Mini",
                 "AmigaVision-Mini.hdf",
                 "AmigaVision-Mini.uae",
                 "games",
+                "listings",
             },
         )
         log_step(f"Overlaying canonical MiSTer content from {mister_root}")
@@ -460,13 +487,11 @@ def package_mini(args, output_dir, archive_tool):
     mini_hdf = Path(args.mini_hdf) if args.mini_hdf else None
     mini_uae = Path(args.mini_uae) if args.mini_uae else None
     saves_hdf = Path(args.saves_hdf)
-    shared_dir = Path(args.shared_dir)
     require_dir(mini_root, "Mini distro root")
     if mini_hdf is None:
         raise FileNotFoundError("Mini HDF path not provided")
     require_file(mini_hdf, "Mini AmigaVision HDF")
     require_file(saves_hdf, "AmigaVision saves HDF")
-    require_dir(shared_dir, "Shared support directory")
     warn_if_exceeds_fat32_limit(mini_hdf, "Mini AmigaVision HDF")
 
     output_path = output_dir / f"AmigaVision-Mini-{args.date_stamp}.7z"
@@ -478,11 +503,15 @@ def package_mini(args, output_dir, archive_tool):
         replace_path(mini_hdf, stage_root / "AmigaVision-Mini.hdf")
         log_step("Injecting shared saves HDF into Mini package")
         replace_path(saves_hdf, stage_root / "AmigaVision-Saves.hdf")
-        log_step("Injecting shared folder into Mini package")
-        replace_path(shared_dir, stage_root / "Shared")
-        if mini_uae is not None and mini_uae.is_file():
-            log_step("Injecting Mini UAE launcher into Mini package")
+        launcher_template = pick_mini_launcher_template(stage_root)
+        if launcher_template is not None:
+            log_step(f"Generating Mini UAE launcher from {launcher_template.name}")
+            generate_mini_launcher(launcher_template, stage_root / "AmigaVision-Mini.uae")
+        elif mini_uae is not None and mini_uae.is_file():
+            log_step("Injecting prebuilt Mini UAE launcher into Mini package")
             replace_path(mini_uae, stage_root / "AmigaVision-Mini.uae")
+        else:
+            log_step("No Mini UAE launcher template found; skipping generated Mini launcher")
         readme_markdown = stage_root / "AmigaVision-Mini-ReadMe.md"
         readme_text = stage_root / "AmigaVision-Mini-ReadMe.txt"
         if readme_markdown.exists():

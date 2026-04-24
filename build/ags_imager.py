@@ -1564,17 +1564,6 @@ def main():
                     if name == ".DS_Store":
                         os.remove(path)
 
-        # create title listings
-        with timed_step(timings, "write listings"):
-            list_dir = util.path(out_dir, "games", "Amiga", "listings")
-            util.rm_path(list_dir)
-            util.make_dir(list_dir)
-            for list_def in [("Game", "games.txt"), ("Demo", "demos.txt")]:
-                content_path = util.path(amiga_ags_path, "RunQuiet", list_def[0])
-                if util.is_dir(content_path):
-                    listing = "\n".join(sorted(os.listdir(util.path(amiga_ags_path, "Run", list_def[0])), key=str.casefold))
-                    open(util.path(list_dir, list_def[1]), mode="w", encoding="latin-1", errors="replace").write(listing)
-
         # run post-build script
         post_build_sh_path = util.path(os.path.dirname(args.config_file), config_base_name) + ".sh"
         if util.is_file(post_build_sh_path):

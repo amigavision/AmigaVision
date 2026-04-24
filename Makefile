@@ -15,8 +15,7 @@ REPLAYOS_OUTPUT_IMG ?= $(subst ",,${DISTRO_OUT})/AmigaVision-RPi-$(DISTRO_DATE).
 REPLAYOS_COMPRESSED_IMG ?= $(subst ",,${REPLAYOS_OUTPUT_IMG}).xz
 REPLAYOS_IMG_SIZE ?= 14900m
 REPLAYOS_BIOS_DIR ?= $(subst ",,${AGSCONTENT})/replay/bios
-AMIGAVISION_HDF ?= ${AGSDEST}/games/Amiga/AmigaVision.hdf
-AMIGAVISION_UAE ?= content/distro/games/Amiga/default.uae
+AMIGAVISION_HDF ?= ${AGSDEST}/AmigaVision.hdf
 DISTRO_DATE ?= $(shell date +%Y.%m.%d)
 DISTRO_OUT ?= ${AGSDEST}/distros
 FAT32_MAX_FILE_BYTES ?= 4294967295
@@ -24,17 +23,15 @@ DISTRO_SAVES_HDF ?= ${AGSCONTENT}/distro/games/Amiga/AmigaVision-Saves.hdf
 DISTRO_ROM ?= ${AGSCONTENT}/distro/games/Amiga/AmigaVision.rom
 DISTRO_SHARED_DIR ?= ${AGSCONTENT}/distro/games/Amiga/shared
 DISTRO_VISUALS_DIR ?= ${AGSCONTENT}/distro/games/Amiga/Visuals
-DISTRO_LISTINGS_DIR ?= ${AGSDEST}/games/Amiga/listings
+DISTRO_LISTINGS_DIR ?= ${AGSDEST}/listings
 MINI_HDF ?= ${AGSDEST}/AmigaVision-Mini.hdf
 MINI_UAE ?= ${AGSDEST}/AmigaVision-Mini.uae
 MINI_DISTRO_DIR ?= ./content/distro_mini
-MINI_UAE_SOURCE ?= content/distro_mini/Start AmigaVision_ol.uae
 MISTER_DISTRO_DIR ?= ${AGSCONTENT}/distro
 CD32_DISTRO_DIR ?= ./cd32
 DISTRO_PACKAGE = $(PYTHON) build/package_distros.py --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh"
 DISTRO_PACKAGE_PROMPT = bash build/run_distros.sh --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh"
 MINI_FAT32_WARN = $(PYTHON) -c 'import os, sys; path = sys.argv[1]; limit = int(sys.argv[2]); exists = os.path.isfile(path); size = os.path.getsize(path) if exists else 0; gib = size / (1024 ** 3) if exists else 0.0; limit_gib = limit / (1024 ** 3); status = "WARNING" if exists and size > limit else "OK"; msg = f"{status}: Mini HDF size is {size} bytes ({gib:.2f} GiB); FAT32 limit is {limit} bytes ({limit_gib:.2f} GiB)." if exists else f"WARNING: Mini HDF not found at {path}"; print(msg)' "$(subst ",,${MINI_HDF})" "$(FAT32_MAX_FILE_BYTES)"
-MINI_UAE_GEN = $(PYTHON) -c 'from pathlib import Path; import sys; src = Path(sys.argv[1]); dst = Path(sys.argv[2]); text = src.read_text(encoding="utf-8"); text = text.replace("/mnt/AmigaVision-Mini.hdf", "AmigaVision-Mini.hdf").replace("/mnt/AmigaVision-Saves.hdf", "AmigaVision-Saves.hdf").replace("/mnt/Shared", "Shared"); dst.write_text(text, encoding="utf-8")' "$(subst ",,${MINI_UAE_SOURCE})" "$(subst ",,${MINI_UAE})"
 
 define print-start-time
 	@printf 'Start time: %s\n' "$$(date '+%Y-%m-%d %H:%M:%S')"
@@ -54,8 +51,9 @@ IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision.yaml --al
 MINI_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-Mini.yaml --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 TEST_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --auto-lists -o ${AGSDEST}
 TEST_DRY_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
-MAKE_MANIFESTS_CMD = pipenv run build/ags_index.py --make-manifests
-FINALIZE_MAIN_IMAGE = mkdir -p "$(subst ",,${AGSDEST})/games/Amiga" && mv "$(subst ",,${AGSDEST})/AmigaVision.hdf" "$(subst ",,${AGSDEST})/games/Amiga" && cp "$(subst ",,${AMIGAVISION_UAE})" "$(subst ",,${AGSDEST})/games/Amiga/"
+MAKE_MANIFESTS_CMD = pipenv run build/ags_index.py --make-manifests --only-missing
+MAKE_LISTINGS_CMD = $(PYTHON) build/generate_listings.py "$(subst ",,${AGSTEMP})/DH0/AGS2" "$(subst ",,${DISTRO_LISTINGS_DIR})"
+FINALIZE_MAIN_IMAGE = test -f "$(subst ",,${AMIGAVISION_HDF})"
 
 help:
 	@printf '%s\n' \
@@ -326,9 +324,6 @@ clone-fuse:
 		--src-root "$(subst ",,${AGSTEMP})" \
 		--amifuse "${AMIFUSEBIN}" \
 		--temp-root "$(subst ",,${AGSTEMP})"; \
-	if [ -f "$(subst ",,${AGSDEST})/AmigaVision.hdf" ]; then \
-		mv "$(subst ",,${AGSDEST})/AmigaVision.hdf" "$(subst ",,${AGSDEST})/games/Amiga"; \
-	fi; \
 	end=$$(date +%s); \
 	echo "amifuse clone time: $$((end - start))s"
 	@printf '\a'
@@ -381,7 +376,6 @@ mini-image:
 	@$(MAKE_MANIFESTS_CMD)
 	@$(MINI_IMAGE_PREP_CMD)
 	@$(MAKE) clone-amiberry
-	@$(MINI_UAE_GEN)
 	@$(MINI_FAT32_WARN)
 	@printf '\a'
 
@@ -433,16 +427,19 @@ distros:
 		exit 1; \
 	fi
 	@$(MAKE) mini-image
+	@$(MAKE_LISTINGS_CMD)
 	@$(DISTRO_PACKAGE_PROMPT) all
 
 make-distros: distros
 
 mister:
 	$(call print-start-time)
+	@$(MAKE_LISTINGS_CMD)
 	@$(DISTRO_PACKAGE_PROMPT) mister
 
 emulators:
 	$(call print-start-time)
+	@$(MAKE_LISTINGS_CMD)
 	@$(DISTRO_PACKAGE_PROMPT) emulators
 
 mini:
@@ -473,6 +470,5 @@ clean-build:
 	fi
 	@rm -rf "$(subst ",,${AGSDEST})/AmigaVision-Mini"
 	@rm -f "$(subst ",,${AGSDEST})/AmigaVision.hdf" \
-		"$(subst ",,${AGSDEST})/games/Amiga/AmigaVision.hdf" \
 		"$(subst ",,${AGSDEST})/AmigaVision-Mini.hdf" \
 		"$(subst ",,${AGSDEST})/AmigaVision-Mini.uae"
