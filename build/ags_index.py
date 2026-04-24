@@ -775,6 +775,8 @@ def make_lha_manifest(path):
     contents = dict()
     arc = LhaFile(path)
     for n in arc.namelist():
+        if n.endswith("/"):
+            continue
         hasher = hashlib.sha256()
         hasher.update(arc.read(n))
         contents[n] = "{}".format(hasher.hexdigest())
