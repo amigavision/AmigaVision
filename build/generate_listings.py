@@ -11,21 +11,30 @@ def main():
 
     src = Path(sys.argv[1])
     dst = Path(sys.argv[2])
-    run_root = src / "Run"
-    mapping = {"Game": "games.txt", "Demo": "demos.txt"}
-
-    missing = [str(run_root / kind) for kind in mapping if not (run_root / kind).is_dir()]
-    if missing:
-        raise SystemExit("Missing listing source directories: " + ", ".join(missing))
-
     dst.mkdir(parents=True, exist_ok=True)
     for path in dst.glob("*.txt"):
         if path.is_file():
             path.unlink()
 
-    for kind, filename in mapping.items():
-        names = sorted(os.listdir(run_root / kind), key=str.casefold)
-        (dst / filename).write_text("\n".join(names), encoding="latin-1", errors="replace")
+    all_games_root = src / "[ All Games - By Title ].ags"
+    if not all_games_root.is_dir():
+        raise SystemExit(f"Missing all-games tree: {all_games_root}")
+
+    game_names = sorted(
+        {
+            path.stem
+            for path in all_games_root.rglob("*.run")
+            if path.is_file()
+        },
+        key=str.casefold,
+    )
+    (dst / "games.txt").write_text("\n".join(game_names), encoding="latin-1", errors="replace")
+
+    run_demo_root = src / "Run" / "Demo"
+    if not run_demo_root.is_dir():
+        raise SystemExit(f"Missing demo run directory: {run_demo_root}")
+    demo_names = sorted(os.listdir(run_demo_root), key=str.casefold)
+    (dst / "demos.txt").write_text("\n".join(demo_names), encoding="latin-1", errors="replace")
 
 
 if __name__ == "__main__":

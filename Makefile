@@ -1,7 +1,7 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry mini-image test-image test-dry pi pi-only cd32 distros make-distros mister emulators mini amiga clean clean-temp clean-build
+.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images listings sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry mini-image test-image test-dry pi pi-only cd32 distros make-distros mister emulators mini amiga clean clean-temp clean-build
 
 PYTHON ?= python3.11
 PIP_BUILD_CONSTRAINT ?= $(CURDIR)/build/pip-build-constraints.txt
@@ -127,6 +127,9 @@ help:
 		'make sync-images' \
 		'Preferred image pipeline. Import matching PNGs from data/img_highres/Unprocessed/, fetch missing demo screenshots from Demozoo, Pouet, and Exotica, fetch missing game screenshots from Lemon Amiga in Chrome, then try HoL in Chrome for remaining HoL-linked games, then itch.io, convert staged images into canonical low-res and high-res IFF screenshots, and print the remaining missing count.' \
 		'' \
+		'make listings' \
+		'Generate games.txt and demos.txt from the current AGS2 temp tree for distro packaging.' \
+		'' \
 		'make image-fsuae' \
 		'Run the legacy FS-UAE final clone path for configs/AmigaVision.yaml.' \
 		'' \
@@ -243,6 +246,10 @@ missing-images:
 sync-images:
 	$(call print-start-time)
 	@pipenv run python build/sync_missing_images.py --fetch-lemon-interactive --apply
+
+listings:
+	$(call print-start-time)
+	@$(MAKE_LISTINGS_CMD)
 
 sqlite:
 	$(call print-start-time)
