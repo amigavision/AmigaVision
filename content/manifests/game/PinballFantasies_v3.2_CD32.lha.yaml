@@ -1,7 +1,6 @@
 %YAML 1.2
 ---
 PinballFntsiesCD32.info: d89758bd6f980ec5c98336782682facbcf67163111b0994408181210ba1f78f7
-PinballFntsiesCD32/data/highs/Pinball/: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 PinballFntsiesCD32/data/Libs/lowlevel.library: b19c3aa7648d3a790d8f3f2614c2ff107b7f02c3dab591030a8f7eb434ba3ef4
 PinballFntsiesCD32/data/Libs/nonvolatile.library: a02b30049cb14d56ca06fc443aacc73d5b5d79fa3c3f453b1c130a8b5541a91f
 PinballFntsiesCD32/data/pinball: c1e499dcf42e4cbda2b01612ce8dd6df8ca60ce87ccdba3c46dade3883d6fb9f

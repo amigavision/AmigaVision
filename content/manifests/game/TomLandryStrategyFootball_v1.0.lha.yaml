@@ -1,7 +1,6 @@
 %YAML 1.2
 ---
 TomLandryFootball.info: 265b6df361fc9f43097c4434c99372a03a298f3da790f513f51ce61354466acb
-TomLandryFootball/data/c/: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 TomLandryFootball/data/comp_defpcts: 8167b533a9a1632a9a60423e2f27a9c0a8c70e9616912d64d7001ae9175c5bfe
 TomLandryFootball/data/comp_offpcts: 36d4482a1669d24d82ae2df74c7a4ea158ae5cc85d7758a7bbd639f8af40192e
 TomLandryFootball/data/devs/ramdrive.device: e167cd7f2eb5f059154855fc9382a774df05cd8965ce2e00177d11c50485b2a5
