@@ -1,4 +1,4 @@
-- note: Demos configured to be displayed in\nfull screen integer scaled 16:9 aspect ratio.\n\nOSD > Audio & Video > Aspect Ratio > Full Screen\n\nSome pixel cropping may occur. If you want the\n4:3 versions, use the other listings.
+- note: Demos configured to be displayed in\nfull screen integer scaled 16:9 aspect ratio.\n\nOn MiSTerL\nOSD > Audio & Video > Aspect Ratio > Full Screen\n\nSome pixel cropping may occur. If you want the\n4:3 versions, use the other listings.
 - rank: 5
 - 3LE-Drama: { scale: 6, vshift: 44 }
 - Andromeda-Rule30: { scale: 6, vshift: 62 }
