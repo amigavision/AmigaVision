@@ -24,3 +24,14 @@ demo--swelteringforest--swelteringforest - blank screen after intro title
 
 demo--switchbackaga--switchbackaga - instant crash
 
+demo--absenceoflight--absenceoflight
+absence of a picture more like! Messing with left and right mouse buttons does change song but blank screen
+
+demo--projectbeat--projectbeat
+crashes loading first image
+
+demo--8bitjungle--8bitjungle
+CANNOT FIND IN GUI - DOS-Error #205 (object not found) on reading "DSK1mainpart.bin"
+
+demo--soundsofgnome--soundsofgnome--soundsofgnome
+Very glitchy - crashes when pressing anything, nothing plays
