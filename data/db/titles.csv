@@ -4845,7 +4845,7 @@ mags-notwhdl--eurochart47;Eurochart #47;Eurochart 47;;;AGA;1;0;;;;;;;;;;2004-01;
 mags-notwhdl--eurochart48;Eurochart #48;Eurochart 48;;;AGA;1;0;;;;;;;;;;2006-03;;English;;Iris;1;;;;mags-notwhdl/Eurochart48.lha;Demo;Disk Magazine;;;109861;24389
 game--greenberet--greenberet;Green Beret;Green Beret;;;OCS;;0;;;;;;;;;Amiga port by Dante;2022;;English;Dante Retro Dev;Dante Retro Dev;1;;v1.0;GreenBeret/GreenBeret.slave;game/GreenBeret_v1.0.lha;Game;Platform;6512;4695;;
 game-notwhdl--tritus;Tritus;Tritus;;;OCS;;0;;;;;;;;;;1994;;English;Davin Pearson;F1 Licenceware;3;;;;game-notwhdl/Tritus.lha;Game;;4660;1608;;
-demo-notwhdl--ds!up-a1;aSCII eXPRESS issue #01;ASCII Express 01;;;OCS;;0;;;;;;;;;;2022-03;Sweden, Finland, Germany;English;;Divine Stylerz, Up Rough;1;;;;demo-notwhdl/dS!UP-A1.lha;Demo;Disk Magazine;;;;
+demo-notwhdl--asciiexpress01;ASCII Express issue #01;ASCII Express 01;;;OCS;;0;;;;;;;;;;2022-03;Sweden, Finland, Germany;English;;Divine Stylerz, Up Rough;1;;;;demo-notwhdl/ASCIIExpress01.lha;Demo;Disk Magazine;;;;
 game--redzonentsc--redzonentsc;Red Zone;Red Zone;1;game--redzone--redzone;OCS;;0;5;;;;;;;;;1992;;English;Psygnosis;Psygnosis;1;CUSTOM4=2;v3.1;RedZoneNTSC/RedZoneNTSC.slave;game/RedZone_v3.1_NTSC.lha;Game;Racing;1215;1808;;
 game--blastaball--blastaball;Blastaball;Blastaball;;;OCS;;0;;;;;;;;;;1987;;English;Icon Design;Mastertronic;2;;v1.0;Blastaball/Blastaball.Slave;game/Blastaball_v1.0_1557.lha;Game;Sports;140;168;;
 demo--megademosargon--megademosargon;Megademo;Sargon Megademo;;;OCS;;0;;;;;;;;;;1989;Germany;English;;Sargon;1;;v1.0;MegademoSargon/MegademoSargon.Slave;demo/Megademo_v1.0_Sargon.lha;Demo;Demo;;;;
