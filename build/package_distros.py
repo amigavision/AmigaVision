@@ -282,7 +282,6 @@ def generate_mini_launcher(src, dest):
 def make_amiberry_skeleton(stage_root):
     for relative in (
         "Configurations",
-        "conf",
         "Harddrives",
         "Roms",
         "Visuals/Shaders",
@@ -467,7 +466,6 @@ def package_emulators(args, output_dir, archive_tool):
         make_amiberry_skeleton(stage_root)
         harddrives_root = stage_root / "Harddrives"
         roms_root = stage_root / "Roms"
-        conf_root = stage_root / "conf"
         mac_conf_root = stage_root / "Configurations"
         log_step("Staging reusable Amiberry payload")
         replace_path(main_hdf, harddrives_root / "AmigaVision.hdf")
@@ -476,7 +474,6 @@ def package_emulators(args, output_dir, archive_tool):
         replace_path(shared_dir, harddrives_root / "Shared")
         replace_path(listings_dir, harddrives_root / "listings")
         replace_path(visuals_root, stage_root / "Visuals")
-        replace_path(launcher_template, conf_root / "default.uae")
         replace_path(launcher_template, mac_conf_root / "default.uae")
         archive_7z(output_path, Path(tmp_dir), archive_tool, dry_run=args.dry_run)
     return output_path
