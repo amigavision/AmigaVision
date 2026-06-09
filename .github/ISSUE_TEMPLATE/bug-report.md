@@ -11,7 +11,7 @@ assignees: ''
 
 
 
-### List the exact steps to show the issue:
+### List the exact steps to demonstrate the issue:
 
 1. 
 2. 
