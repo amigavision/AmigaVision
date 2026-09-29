@@ -1,4 +1,4 @@
-c:ags-uname >RAM:system.txt
+c:ags-uname >RAM:system.txt ; Check if this is an emulator or MiSTer FPGA, or real hardware
 set emumister "false"
 
 search >NIL: RAM:system.txt "mister"
