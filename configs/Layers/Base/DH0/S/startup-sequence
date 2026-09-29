@@ -1,12 +1,30 @@
-; We don't have a way to invoke this safely on MiSTer yet, but leaving
-; it in here, so 3.0/3.1 users can tell us whether this works for them
-; ags-uname | Search PIPE: amiga QUIET
-; if not warn ; Only run on real Amigas
-;   version scsi.device 43 >NIL:
-;   if warn
-;     loadmodule devs:scsi.device reverse ; Support drives larger than 4GB on 3.0 Amigas
-;   endif
-; endIf
+c:ags-uname >RAM:system.txt
+set emumister "false"
+
+search >NIL: RAM:system.txt "mister"
+if not warn
+  set emumister "true"
+endif
+
+search >NIL: RAM:system.txt "uae"
+if not warn
+  set emumister "true"
+endif
+
+if "$emumister" EQ "false"
+  version exec.library 47 >NIL:
+  if warn
+    version scsi.device 43 >NIL:
+    if warn
+      if exists DEVS:scsi.device
+        loadmodule DEVS:scsi.device reverse ; Support drives larger than 4GB on real hardware with 3.0/3.1 Kickstarts
+      endif
+    endif
+  endif
+endif
+
+delete >NIL: RAM:system.txt
+unset emumister
 
 setpatch QUIET ; We use Mu680x0Libs that detect 68040 or 68060 automatically
 version >NIL:
