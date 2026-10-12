@@ -1,7 +1,7 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images listings sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry mini-image test-image test-dry pi pi-only cd32 distros make-distros mister emulators mini amiga clean clean-temp clean-build
+.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images listings sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry mini-image test-image test-dry pi cd32 distros make-distros mister emulators mini amiga clean clean-temp clean-build
 
 PYTHON ?= python3.11
 PIP_BUILD_CONSTRAINT ?= $(CURDIR)/build/pip-build-constraints.txt
@@ -407,12 +407,9 @@ pi:
 		--output-img "${REPLAYOS_OUTPUT_IMG}"
 	@mkdir -p "$(dir ${REPLAYOS_COMPRESSED_IMG})"
 	@rm -f "${REPLAYOS_COMPRESSED_IMG}"
-	@xz -T0 -1 -v -k -c "${REPLAYOS_OUTPUT_IMG}" > "${REPLAYOS_COMPRESSED_IMG}"
+	@bash -o pipefail -c 'xz -T0 -1 -v -k -c "$$1" 2>&1 > "$$2" | awk '\''{printf "%5s  %7s/s  %s\n", $$1, $$6, $$7}'\''' _ "${REPLAYOS_OUTPUT_IMG}" "${REPLAYOS_COMPRESSED_IMG}"
 	@rm -f "${REPLAYOS_OUTPUT_IMG}"
 	@printf '\a'
-
-pi-only: pi
-	@:
 
 cd32:
 	$(call print-start-time)
