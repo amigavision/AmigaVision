@@ -47,7 +47,8 @@ def iff_screenshot(path, colors, crop_sz, scale_sz, resample_sz=None, mode_id=0x
     img = img.resize(scale_sz, Image.Resampling.NEAREST)
     if scale_sz != resample_sz:
         img = img.resize(resample_sz, Image.Resampling.LANCZOS)
-    img = img.quantize(colors=colors, method=0, kmeans=4, dither=Image.Dither.NONE)
+    # Keep indices 240-255 free for the launcher interface.
+    img = img.quantize(colors=min(colors, 240), method=0, kmeans=4, dither=Image.Dither.NONE)
 
     # Trim palette to number of used colors
     w, h = img.size
@@ -56,7 +57,7 @@ def iff_screenshot(path, colors, crop_sz, scale_sz, resample_sz=None, mode_id=0x
     trimmed_pal = img.getpalette()[:used_colors * 3]
 
     # Encode
-    return (iff.ilbm(w, h, img.load(), trimmed_pal, mode_id, 1), img)
+    return (iff.ilbm(w, h, img.load(), trimmed_pal, mode_id, 0), img)
 
 # -----------------------------------------------------------------------------
 # CLI interface
@@ -74,7 +75,7 @@ def main():
     parser.add_argument("-i", "--in_image", dest="in_image", required=True, metavar="FILE", help="input image")
     parser.add_argument("-o", "--out_iff", dest="out_iff", metavar="FILE", help="output IFF image")
     parser.add_argument("-p", "--out_png", dest="out_png", metavar="FILE", help="output PNG image")
-    parser.add_argument("-c", "--colors", dest="colors", type=int, default=256, help="number of colors")
+    parser.add_argument("-c", "--colors", dest="colors", type=int, default=240, help="number of colors (maximum 240; last 16 reserved for launcher)")
     parser.add_argument("--crop", dest="crop", type=str, default="640x512", help="crop size (in high-res interlaced point size)")
     parser.add_argument("--scale", dest="scale", type=str, default="320x256", help="scale size (nearest neighbour)")
     parser.add_argument("--resample", dest="resample", type=str, default=None, help="resample size (anti aliased)")
@@ -84,7 +85,7 @@ def main():
     try:
         args = parser.parse_args()
 
-        colors = min(256, max(2, args.colors))
+        colors = min(240, max(2, args.colors))
 
         crop_sz = interpret_size(args.crop)
         scale_sz = interpret_size(args.scale)
