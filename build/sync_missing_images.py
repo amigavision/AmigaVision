@@ -19,7 +19,7 @@ LOWRES_COLORS = 128
 HIGHRES_CROP = (640, 512)
 HIGHRES_SCALE = (360, 288)
 HIGHRES_RESAMPLE = (360, 288)
-HIGHRES_COLORS = 256
+HIGHRES_COLORS = 240  # Leave the last 16 palette entries reserved for the AGS interface.
 
 ORDER_RE = re.compile(r"^(?P<index>\d+)(?:[ _.-].*)?$")
 LEMON_SCREENSHOT_RE = re.compile(r"(?P<url>(?:https://www\.lemonamiga\.com)?/uploads/amiga/images/games/screens/[^\"'\s>]+)", re.IGNORECASE)
