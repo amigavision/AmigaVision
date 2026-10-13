@@ -3,6 +3,7 @@
 # AGSImager: Make AGS entries
 
 import operator
+import os
 import shutil
 import sys
 import textwrap
@@ -368,6 +369,10 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
     elif entry:
         open(base_path + ".txt", mode="w", encoding="latin-1", errors="replace").write(make_note(entry, note))
 
+    # Remember exact menu filenames, including ranked and overridden entries.
+    if entry and "id" in entry and "image" not in entry:
+        collection.image_entries[os.path.relpath(base_path, ags_path)] = entry["id"]
+
     # make image
     if entry and "image" in entry:
         make_image(base_path + ".iff", entry["image"])
@@ -643,7 +648,7 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
                     ensure_image(util.path(ne_path, language + ".iff"), img_ops)
             if languages and not query.has_english_language(entry) and not entry.get("preferred_version", None):
                 start = perf_counter()
-                make_entry(c, ne_path, entry, util.path(ne_path, "{}.ags".format(strings["dirs"]["unique_nonenglish"])))
+                make_entry(c, path, entry, util.path(ne_path, "{}.ags".format(strings["dirs"]["unique_nonenglish"])))
                 add_timing(c, "auto make_entry", perf_counter() - start)
                 img_ops =  { "ops": { "op": "pi", "path": "flags/eu barcode.png" }, "size": [320, 128 ], "scale": [1, 1] }
                 ensure_image(util.path(ne_path, strings["dirs"]["unique_nonenglish"] + ".iff"), img_ops)
@@ -749,3 +754,41 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
 if __name__ == "__main__":
     print("not runnable")
     sys.exit(1)
+
+
+def make_hires_tree(ags_path, hires_path, collection):
+    """Clone the completed launcher and replace its configuration and title images."""
+    util.rm_path(hires_path)
+    ignore_empty = shutil.ignore_patterns("skin-empty*.iff")
+    util.copytree(ags_path, hires_path, ignore=ignore_empty)
+    util.copytree(util.path("data", "ags2-highres"), hires_path, ignore=ignore_empty)
+    shutil.copyfile(util.path(hires_path, "AGS2.conf"), util.path(hires_path, "AGS2.conf.base"))
+    image_root = Path(util.path("data", "img_highres"))
+    images = {}
+    for source in sorted(image_root.glob("*.iff")) + sorted((image_root / "qr").glob("*.iff")):
+        images.setdefault(source.stem, source)
+    missing = 0
+    for relpath, entry_id in collection.image_entries.items():
+        base = Path(hires_path) / relpath
+        # Remove medium-resolution slides and QR images from title entries.
+        for suffix in [".iff", "-QR.iff"] + [f"-{i}.iff" for i in range(1, 10)]:
+            image = Path(str(base) + suffix)
+            if image.is_file():
+                image.unlink()
+        found = False
+        for key, suffix in [(entry_id, ".iff"), (entry_id + "-qr", "-QR.iff")] + [
+            (entry_id + f"-{i}", f"-{i}.iff") for i in range(1, 10)
+        ]:
+            if key in images:
+                shutil.copyfile(images[key], str(base) + suffix)
+                found = found or suffix != "-QR.iff"
+        if found and not Path(str(base) + ".iff").is_file():
+            for index in [3, 2, 1, 4, 5, 6, 7, 8, 9]:
+                slide = Path(str(base) + f"-{index}.iff")
+                if slide.is_file():
+                    shutil.copyfile(slide, str(base) + ".iff")
+                    break
+        if not found:
+            missing += 1
+    if missing:
+        print(f" > HiRes: {missing} menu entries have no high-resolution screenshot; leaving thumbnails absent")

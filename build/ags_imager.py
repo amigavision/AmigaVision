@@ -64,7 +64,7 @@ from sqlite3 import Connection
 import ags_paths as paths
 import ags_util as util
 from ags_fs import build_pfs, calculate_pfs_partitions, extract_base_image, convert_filename_uae2a, get_base_hdf_cache_dir
-from ags_make import count_tree_entries, make_autoentries, make_runscripts, make_tree, reset_warning_state, update_progress, warn_missing_archive
+from ags_make import make_hires_tree, count_tree_entries, make_autoentries, make_runscripts, make_tree, reset_warning_state, update_progress, warn_missing_archive
 from ags_query import entry_is_notwhdl, get_amiga_whd_dir, get_archive_path, get_entry, get_missing_archive_entry, get_preferred_entry, get_whd_dir, sanitize_entry
 from ags_strings import strings
 from ags_types import EntryCollection
@@ -251,7 +251,7 @@ def fingerprint_python_defs(path: str, names: list[str]) -> str:
     })
 
 AGS2_TREE_BEHAVIOR_FINGERPRINT = hash_payload([
-    fingerprint_python_defs("build/ags_make.py", ["make_tree", "make_entries", "make_entry", "make_runscripts", "make_runscript"]),
+    fingerprint_python_defs("build/ags_make.py", ["make_tree", "make_entries", "make_entry", "make_autoentries", "make_runscripts", "make_runscript"]),
     fingerprint_python_defs("build/ags_query.py", ["get_entry", "get_missing_archive_entry", "get_missing_archive_entry_by_id", "get_preferred_entry", "name_is_fuzzy", "get_runscript_paths", "get_amiga_whd_dir", "get_whd_slavename", "entry_is_notwhdl"]),
     fingerprint_python_defs("build/ags_compositor.py", ["compose", "out_iff"]),
 ])
@@ -420,6 +420,7 @@ def get_ags2_tree_cache_paths(cache_key: str) -> tuple[str, str]:
 def load_collection_snapshot(path: str, collection: EntryCollection) -> None:
     with open(path, "r", encoding="utf-8") as f:
         snapshot = json.load(f)
+    collection.image_entries = snapshot.get("image_entries", {})
     collection.by_id = {entry["id"]: entry for entry in snapshot.get("entries", [])}
     collection.path_sort_rank = {k: int(v) for k, v in snapshot.get("path_sort_rank", {}).items()}
     collection.path_ids = {
@@ -431,6 +432,7 @@ def load_collection_snapshot(path: str, collection: EntryCollection) -> None:
 def save_collection_snapshot(path: str, collection: EntryCollection) -> None:
     util.make_dir(os.path.dirname(path))
     snapshot = {
+        "image_entries": collection.image_entries,
         "entries": list(collection.by_id.values()),
         "path_sort_rank": collection.path_sort_rank,
         "path_ids": sorted([list(row) for row in collection.path_ids]),
@@ -441,6 +443,7 @@ def save_collection_snapshot(path: str, collection: EntryCollection) -> None:
 def relativize_collection_snapshot(snapshot: dict, root_path: str) -> dict:
     normalized_root = os.path.abspath(root_path)
     rel_snapshot = {
+        "image_entries": snapshot.get("image_entries", {}),
         "entries": snapshot.get("entries", []),
         "path_sort_rank": {},
         "path_ids": [],
@@ -453,6 +456,7 @@ def relativize_collection_snapshot(snapshot: dict, root_path: str) -> dict:
     return rel_snapshot
 
 def merge_collection_snapshot(snapshot: dict, collection: EntryCollection, root_path: str | None = None) -> None:
+    collection.image_entries.update(snapshot.get("image_entries", {}))
     normalized_root = os.path.abspath(root_path) if root_path else None
     for entry in snapshot.get("entries", []):
         if isinstance(entry, dict) and entry.get("id"):
@@ -562,6 +566,7 @@ def save_menu_subtree_cache(cache_key: str, subtree_ags_path: str, collection: E
     util.make_dir(tmp_root)
     util.clone_tree(subtree_ags_path, util.path(tmp_root, "AGS2"))
     rel_snapshot = relativize_collection_snapshot({
+        "image_entries": collection.image_entries,
         "entries": list(collection.by_id.values()),
         "path_sort_rank": collection.path_sort_rank,
         "path_ids": [list(row) for row in collection.path_ids],
@@ -601,6 +606,7 @@ def build_top_level_menu_with_cache(
             make_tree(db, subtree_collection, subtree_root, [item], template=runscript_template, verbose=verbose)
             util.clone_tree(subtree_root, amiga_ags_path)
             merge_collection_snapshot(relativize_collection_snapshot({
+                "image_entries": subtree_collection.image_entries,
                 "entries": list(subtree_collection.by_id.values()),
                 "path_sort_rank": subtree_collection.path_sort_rank,
                 "path_ids": [list(row) for row in subtree_collection.path_ids],
@@ -696,6 +702,8 @@ def get_pfs_partition_cache_state(
         "autoentries_cache_key": autoentries_cache_key or "",
         "archive_tree_cache_key": archive_tree_cache_key,
         "layers": layers,
+        "hires_assets": hash_payload([fingerprint_tree("data/ags2-highres"), fingerprint_tree("data/img_highres")]),
+        "hires_behavior": fingerprint_python_defs("build/ags_make.py", ["make_hires_tree"]),
         "extra_dirs": extra_dirs,
         "behavior": PFS_PARTITION_BEHAVIOR_FINGERPRINT,
     }
@@ -902,6 +910,7 @@ def extract_autoentries_collection_delta(ags_path: str, before_path_ids: set, be
             delta_sort_rank[relpath] = int(rank)
     return {
         "entries": [],
+        "image_entries": {path: entry_id for path, entry_id in collection.image_entries.items() if is_autoentries_relpath(path)},
         "path_ids": delta_path_ids,
         "path_sort_rank": delta_sort_rank,
     }
@@ -1477,6 +1486,9 @@ def main():
                     cachefile = "{}\n".format(len(cache))
                     for line in cache: cachefile += "{}\n".format(convert_filename_uae2a(line))
                     open(util.path(path, ".dir"), mode="w", encoding="latin-1", errors="replace").write(cachefile)
+
+        with timed_step(timings, "build high-resolution launcher"):
+            make_hires_tree(amiga_ags_path, util.path(amiga_boot_path, "AGS-HiRes"), collection)
 
         # build PFS container
         if not args.only_ags_tree:

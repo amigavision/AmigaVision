@@ -8,6 +8,8 @@ class EntryCollection:
         self.by_id = dict()
         # {"entry_id", "path"}
         self.path_ids = set()
+        # Menu image base paths relative to the AGS root: entry ID
+        self.image_entries = dict()
         # runfile_path: int
         self.path_sort_rank = dict()
         # list of entries with overrides
