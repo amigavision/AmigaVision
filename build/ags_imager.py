@@ -703,7 +703,7 @@ def get_pfs_partition_cache_state(
         "archive_tree_cache_key": archive_tree_cache_key,
         "layers": layers,
         "hires_assets": hash_payload([fingerprint_tree("data/ags2-highres"), fingerprint_tree("data/img_highres")]),
-        "hires_behavior": fingerprint_python_defs("build/ags_make.py", ["make_hires_tree"]),
+        "hires_behavior": fingerprint_python_defs("build/ags_make.py", ["make_hires_tree", "make_hires_artwork"]),
         "extra_dirs": extra_dirs,
         "behavior": PFS_PARTITION_BEHAVIOR_FINGERPRINT,
     }

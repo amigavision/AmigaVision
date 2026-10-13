@@ -756,11 +756,40 @@ if __name__ == "__main__":
     sys.exit(1)
 
 
+def make_hires_artwork(ags_path, hires_path, collection):
+    """Restore category artwork height and center it in the HiRes screenshot frame."""
+    from PIL import Image
+    from repair_hires_palettes import decode, encode_uncompressed, read_chunks
+
+    title_images = {
+        relpath + suffix
+        for relpath in collection.image_entries
+        for suffix in [".iff", "-QR.iff"] + [f"-{i}.iff" for i in range(1, 10)]
+    }
+    converted = 0
+    for source in Path(ags_path).rglob("*.iff"):
+        relpath = source.relative_to(ags_path)
+        if str(relpath) in title_images or source.name.startswith("skin-") or source.stem.lower().endswith("-qr"):
+            continue
+        image, mode = decode(read_chunks(source))
+        image = image.convert("RGB").resize((image.width, image.height * 2), Image.Resampling.NEAREST)
+        image.thumbnail((360, 288), Image.Resampling.LANCZOS)
+        frame = Image.new("RGB", (360, 288), "black")
+        frame.paste(image, ((360 - image.width) // 2, (288 - image.height) // 2))
+        indexed = frame.quantize(colors=240, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+        destination = Path(hires_path) / relpath
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_bytes(encode_uncompressed(indexed, mode))
+        converted += 1
+    print(f" > HiRes: converted {converted} category/navigation images")
+
+
 def make_hires_tree(ags_path, hires_path, collection):
     """Clone the completed launcher and replace its configuration and title images."""
     util.rm_path(hires_path)
     ignore_empty = shutil.ignore_patterns("skin-empty*.iff")
     util.copytree(ags_path, hires_path, ignore=ignore_empty)
+    make_hires_artwork(ags_path, hires_path, collection)
     util.copytree(util.path("data", "ags2-highres"), hires_path, ignore=ignore_empty)
     shutil.copyfile(util.path(hires_path, "AGS2.conf"), util.path(hires_path, "AGS2.conf.base"))
     image_root = Path(util.path("data", "img_highres"))
