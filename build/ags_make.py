@@ -771,6 +771,13 @@ def make_hires_artwork(ags_path, hires_path, collection):
         relpath = source.relative_to(ags_path)
         if str(relpath) in title_images or source.name.startswith("skin-") or source.stem.lower().endswith("-qr"):
             continue
+        override = Path(util.path("data", "img_highres")) / relpath
+        if override.is_file():
+            destination = Path(hires_path) / relpath
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(override, destination)
+            converted += 1
+            continue
         image, mode = decode(read_chunks(source))
         image = image.convert("RGB").resize((image.width, image.height * 2), Image.Resampling.NEAREST)
         image.thumbnail((360, 288), Image.Resampling.LANCZOS)
