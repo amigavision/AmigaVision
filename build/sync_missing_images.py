@@ -27,6 +27,10 @@ DEMOZOO_SCREENSHOT_RE = re.compile(
     r'(?P<url>https://media\.demozoo\.org/screens/o/[^"\'>\s]+)|"original_url":\s*"(?P<json>https://media\.demozoo\.org/screens/o/[^"]+)"',
     re.IGNORECASE,
 )
+POUET_RESULT_RE = re.compile(
+    r"<a\s+[^>]*href=['\"](?:https://www\.pouet\.net/)?prod\.php\?which=(?P<id>\d+)['\"][^>]*>(?P<title>[^<]+)</a>",
+    re.IGNORECASE,
+)
 POUET_SCREENSHOT_RE = re.compile(r'https://content\.pouet\.net/files/screenshots/[^"\'\)\s]+', re.IGNORECASE)
 ABIME_SCREENSHOT_RE = re.compile(
     r'(?P<url>(?:https://amiga\.abime\.net)?/screen/[^"\'\s>]+)|<meta\s+property="og:image"\s+content="(?P<og>https://amiga\.abime\.net/screen/[^"]+)"',
@@ -36,7 +40,7 @@ EXOTICA_RESULT_RE = re.compile(r"<div class='mw-search-result-heading'><a href=\
 EXOTICA_IMAGE_RE = re.compile(r'<a href="/wiki/File:[^"]+" class="image"[^>]*><img[^>]+src="(?P<src>/mediawiki/files/[^"]+)"[^>]+width="(?P<width>\d+)"[^>]+height="(?P<height>\d+)"', re.IGNORECASE)
 ITCH_RESULT_RE = re.compile(r'<a class="title game_link"[^>]+href="(?P<href>https://[^"]+)"[^>]*>(?P<title>.*?)</a>', re.IGNORECASE)
 ITCH_OG_IMAGE_RE = re.compile(r'<meta content="(?P<url>https://img\.itch\.zone/[^"]+)" property="og:image"/>', re.IGNORECASE)
-ITCH_SCREENSHOT_RE = re.compile(r'<a data-image_lightbox="true"[^>]+href="(?P<url>https://img\.itch\.zone/[^"]+)"', re.IGNORECASE)
+ITCH_SCREENSHOT_RE = re.compile(r'<a\b(?=[^>]*\bdata-image_lightbox=[\"\']true[\"\'])(?=[^>]*\bhref=[\"\'](?P<url>https://img\.itch\.zone/[^\"\']+)[\"\'])[^>]*>', re.IGNORECASE)
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 TITLE_WORD_RE = re.compile(r"[A-Za-z0-9]+")
 STOPWORDS = {"the", "a", "an", "of", "and", "for", "to", "amiga", "edition", "demo", "datadisk", "data", "disk"}
@@ -69,6 +73,7 @@ def parse_args():
     parser.add_argument("--chrome-downloads-dir", default=str(Path.home() / "Downloads"))
     parser.add_argument("--fetch-lemon-interactive", action="store_true")
     parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--include-missing-highres", action="store_true", help="also fetch titles with medium-resolution images but no high-resolution screenshot")
     return parser.parse_args()
 
 
@@ -1024,7 +1029,7 @@ def lowres_source_index(indices):
     return min(indices) if indices else None
 
 
-def collect_missing(rows, img_dir, img_highres_dir, downloads_dir):
+def collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=False):
     highres_counts = {}
     for path in img_highres_dir.glob("*.iff"):
         if path.name.startswith("!"):
@@ -1045,13 +1050,13 @@ def collect_missing(rows, img_dir, img_highres_dir, downloads_dir):
         lowres_path = img_dir / f"{id_}.iff"
         stage_dir = downloads_dir / id_
         staged = ordered_images(stage_dir) if stage_dir.is_dir() else []
-        if not lowres_path.is_file():
+        if not lowres_path.is_file() or (include_highres and not highres_counts.get(id_, 0) and not (img_highres_dir / f"{id_}.iff").is_file()):
             entries.append({
                 "id": id_,
                 "title": row.get("title", ""),
                 "category": row.get("category", ""),
                 "subcategory": row.get("subcategory", ""),
-                "lowres_exists": False,
+                "lowres_exists": lowres_path.is_file(),
                 "highres_count": highres_counts.get(id_, 0),
                 "stage_dir": stage_dir,
                 "staged": staged,
@@ -1087,12 +1092,14 @@ def sync_images(entries, img_dir, img_highres_dir):
         lowres_src = stage_by_index[lowres_index]
 
         lowres_dest = img_dir / f"{entry['id']}.iff"
-        write_iff(lowres_src, lowres_dest, LOWRES_COLORS, LOWRES_CROP, LOWRES_SCALE, LOWRES_RESAMPLE)
+        if not lowres_dest.is_file():
+            write_iff(lowres_src, lowres_dest, LOWRES_COLORS, LOWRES_CROP, LOWRES_SCALE, LOWRES_RESAMPLE)
 
         written_highres = []
         for index, src in staged:
             highres_dest = img_highres_dir / f"{entry['id']}-{index}.iff"
-            write_iff(src, highres_dest, HIGHRES_COLORS, HIGHRES_CROP, HIGHRES_SCALE, HIGHRES_RESAMPLE)
+            if not highres_dest.is_file():
+                write_iff(src, highres_dest, HIGHRES_COLORS, HIGHRES_CROP, HIGHRES_SCALE, HIGHRES_RESAMPLE)
             written_highres.append(highres_dest.name)
 
         converted.append((entry["id"], lowres_src.name, written_highres))
@@ -1108,12 +1115,12 @@ def main():
     unprocessed_dir = Path(args.unprocessed_dir)
 
     rows = load_rows(csv_path)
-    missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
+    missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
     imported = import_unprocessed_images(missing, unprocessed_dir)
     if imported:
         print(f"Imported {imported} local unprocessed image(s) into staging")
         rows = load_rows(csv_path)
-        missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
+        missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
 
     converted = []
     fetched = []
@@ -1129,7 +1136,7 @@ def main():
         print(f"Skipped {len(skipped)} Demozoo fetches")
         print()
     rows = load_rows(csv_path)
-    missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
+    missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
     skipped = []
 
     fetched, skipped = fetch_pouet_images(missing)
@@ -1142,7 +1149,7 @@ def main():
         print(f"Skipped {len(skipped)} Pouet fetches")
         print()
     rows = load_rows(csv_path)
-    missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
+    missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
     skipped = []
 
     fetched, skipped = fetch_exotica_images(missing)
@@ -1155,7 +1162,7 @@ def main():
         print(f"Skipped {len(skipped)} Exotica fetches")
         print()
     rows = load_rows(csv_path)
-    missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
+    missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
     skipped = []
 
     if args.fetch_lemon_interactive:
@@ -1171,7 +1178,7 @@ def main():
                 print(f"{id_}: {reason}")
             print()
         rows = load_rows(csv_path)
-        missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
+        missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
         skipped = []
 
         fetched, skipped = fetch_abime_interactive_images(missing, args.chrome_downloads_dir)
@@ -1186,7 +1193,7 @@ def main():
                 print(f"{id_}: {reason}")
             print()
         rows = load_rows(csv_path)
-        missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
+        missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
         skipped = []
 
         fetched, skipped = fetch_hol_interactive_images(missing, args.chrome_downloads_dir)
@@ -1201,7 +1208,7 @@ def main():
                 print(f"{id_}: {reason}")
             print()
         rows = load_rows(csv_path)
-        missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
+        missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
         skipped = []
 
     fetched, skipped = fetch_itch_images(missing)
@@ -1214,7 +1221,7 @@ def main():
         print(f"Skipped {len(skipped)} itch.io fetches")
         print()
     rows = load_rows(csv_path)
-    missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
+    missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
     skipped = []
 
     if args.apply:
@@ -1230,7 +1237,7 @@ def main():
                 print(f"{id_}: {reason}")
             print()
         rows = load_rows(csv_path)
-        missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
+        missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
 
     print(f"Missing low-res images remaining: {len(missing)}")
     if missing:
