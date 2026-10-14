@@ -790,7 +790,7 @@ def make_hires_tree(ags_path, hires_path, collection):
     ignore_empty = shutil.ignore_patterns("skin-empty*.iff")
     util.copytree(ags_path, hires_path, ignore=ignore_empty)
     make_hires_artwork(ags_path, hires_path, collection)
-    util.copytree(util.path("data", "ags2-highres"), hires_path, ignore=ignore_empty)
+    util.copytree(util.path("data", "ags2-highres"), hires_path)
     shutil.copyfile(util.path(hires_path, "AGS2.conf"), util.path(hires_path, "AGS2.conf.base"))
     image_root = Path(util.path("data", "img_highres"))
     images = {}
