@@ -219,6 +219,94 @@ def fingerprint_tree(path: str) -> list[dict]:
 def hash_payload(payload) -> str:
     return hashlib.sha1(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
+def launcher_content_fingerprint(path: str, file_hashes=None) -> str:
+    """Ignore rewritten timestamps while detecting every launcher input change."""
+    digest = hashlib.sha1()
+    previous = dict(file_hashes or {})
+    if file_hashes is not None:
+        file_hashes.clear()
+    for root, dirs, files in os.walk(path):
+        dirs.sort()
+        digest.update(json.dumps([os.path.relpath(root, path), dirs]).encode("utf-8"))
+        for name in sorted(files):
+            if name == ".DS_Store":
+                continue
+            full_path = util.path(root, name)
+            relative = os.path.relpath(full_path, path)
+            stat = os.stat(full_path)
+            signature = [stat.st_size, stat.st_mtime_ns]
+            cached = previous.get(relative)
+            if cached and cached[:2] == signature:
+                content_hash = cached[2]
+            else:
+                file_digest = hashlib.sha1()
+                with open(full_path, "rb") as source:
+                    for block in iter(lambda: source.read(1024 * 1024), b""):
+                        file_digest.update(block)
+                content_hash = file_digest.hexdigest()
+            if file_hashes is not None:
+                file_hashes[relative] = signature + [content_hash]
+            digest.update(json.dumps([name, content_hash]).encode("utf-8"))
+    return digest.hexdigest()
+
+def build_or_reuse_hires_launcher(ags_path, hires_path, collection, workspace_state):
+    # Full builds replace DH0. Keep the reusable tree beside it, not inside it.
+    cache_path = util.path(os.path.dirname(os.path.dirname(hires_path)), ".hires-launcher-cache")
+    manifest_path = cache_path + ".json"
+    try:
+        with open(manifest_path, encoding="utf-8") as source:
+            manifest = json.load(source)
+    except (OSError, ValueError):
+        manifest = {}
+    file_hashes = manifest.get("medium_file_hashes", {})
+    cache_key = hash_payload({
+        "medium_tree": launcher_content_fingerprint(ags_path, file_hashes),
+        "image_entries": collection.image_entries,
+        "assets": [fingerprint_tree("data/ags2-highres"), fingerprint_tree("data/img_highres")],
+        "behavior": fingerprint_python_defs("build/ags_make.py", ["make_hires_tree", "make_hires_artwork"]),
+        "encoder": [fingerprint_file("build/repair_hires_palettes.py"), fingerprint_file("build/iff_ilbm.py")],
+    })
+    if (manifest.get("key") == cache_key and util.is_dir(cache_path)
+            and manifest.get("output") == hires_output_fingerprint(cache_path)):
+        print(" > Restoring cached hi-res launcher tree")
+    else:
+        print(" > Building hi-res launcher cache")
+        if os.path.exists(manifest_path):
+            os.remove(manifest_path)
+        make_hires_tree(ags_path, cache_path, collection)
+        manifest = {"key": cache_key, "output": hires_output_fingerprint(cache_path)}
+    manifest["medium_file_hashes"] = file_hashes
+    temporary = manifest_path + ".tmp"
+    with open(temporary, "w", encoding="utf-8") as destination:
+        json.dump(manifest, destination)
+    os.replace(temporary, manifest_path)
+    util.rm_path(hires_path)
+    restore_hires_tree(cache_path, hires_path)
+    workspace_state.pop("hires_cache_key", None)
+    workspace_state.pop("hires_output_fingerprint", None)
+
+def restore_hires_tree(cache_path, hires_path):
+    """Use APFS copy-on-write clones rather than copying gigabytes of pixels."""
+    start = perf_counter()
+    if sys.platform == "darwin":
+        result = subprocess.run(["/bin/cp", "-cpR", cache_path, hires_path], capture_output=True, text=True)
+        if result.returncode == 0:
+            print(f" > Cloned hi-res tree in {perf_counter() - start:.2f}s")
+            return
+        # Other volumes may not support cloning. Discard any partial restore.
+        util.rm_path(hires_path)
+        print(" > Filesystem cloning unavailable; copying hi-res tree")
+    util.copytree(cache_path, hires_path)
+    print(f" > Copied hi-res tree in {perf_counter() - start:.2f}s")
+
+def hires_output_fingerprint(path):
+    """Validate generated files without rereading all screenshot pixel data."""
+    return hash_payload([
+        {"path": row["path"], "is_dir": True} if row["is_dir"] else row
+        for row in fingerprint_tree(path)
+        if os.path.basename(row["path"]) != ".DS_Store"
+    ])
+
 def fingerprint_python_defs(path: str, names: list[str]) -> str:
     with open(path, "r", encoding="utf-8") as f:
         source = f.read()
@@ -704,6 +792,7 @@ def get_pfs_partition_cache_state(
         "layers": layers,
         "hires_assets": hash_payload([fingerprint_tree("data/ags2-highres"), fingerprint_tree("data/img_highres")]),
         "hires_behavior": fingerprint_python_defs("build/ags_make.py", ["make_hires_tree", "make_hires_artwork"]),
+        "hires_encoder": [fingerprint_file("build/repair_hires_palettes.py"), fingerprint_file("build/iff_ilbm.py")],
         "extra_dirs": extra_dirs,
         "behavior": PFS_PARTITION_BEHAVIOR_FINGERPRINT,
     }
@@ -1487,8 +1576,8 @@ def main():
                     for line in cache: cachefile += "{}\n".format(convert_filename_uae2a(line))
                     open(util.path(path, ".dir"), mode="w", encoding="latin-1", errors="replace").write(cachefile)
 
-        with timed_step(timings, "build high-resolution launcher"):
-            make_hires_tree(amiga_ags_path, util.path(amiga_boot_path, "AGS-HiRes"), collection)
+        with timed_step(timings, "build hi-res launcher"):
+            build_or_reuse_hires_launcher(amiga_ags_path, util.path(amiga_boot_path, "AGS-HiRes"), collection, workspace_state)
 
         # build PFS container
         if not args.only_ags_tree:

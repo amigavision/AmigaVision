@@ -757,38 +757,29 @@ if __name__ == "__main__":
 
 
 def make_hires_artwork(ags_path, hires_path, collection):
-    """Restore category artwork height and center it in the HiRes screenshot frame."""
-    from PIL import Image
-    from repair_hires_palettes import decode, encode_uncompressed, read_chunks
+    """Copy pre-rendered category/navigation artwork without image conversion."""
 
     title_images = {
         relpath + suffix
         for relpath in collection.image_entries
         for suffix in [".iff", "-QR.iff"] + [f"-{i}.iff" for i in range(1, 10)]
     }
-    converted = 0
+    copied = 0
     for source in Path(ags_path).rglob("*.iff"):
         relpath = source.relative_to(ags_path)
         if str(relpath) in title_images or source.name.startswith("skin-") or source.stem.lower().endswith("-qr"):
             continue
         override = Path(util.path("data", "img_highres")) / relpath
-        if override.is_file():
-            destination = Path(hires_path) / relpath
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(override, destination)
-            converted += 1
-            continue
-        image, mode = decode(read_chunks(source))
-        image = image.convert("RGB").resize((image.width, image.height * 2), Image.Resampling.NEAREST)
-        image.thumbnail((360, 288), Image.Resampling.LANCZOS)
-        frame = Image.new("RGB", (360, 288), "black")
-        frame.paste(image, ((360 - image.width) // 2, (288 - image.height) // 2))
-        indexed = frame.quantize(colors=240, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE)
+        if not override.is_file():
+            raise FileNotFoundError(
+                f"Missing static hi-res artwork: {override}. "
+                "Add the pre-rendered 360x288, uncompressed, 240-color IFF before building."
+            )
         destination = Path(hires_path) / relpath
         destination.parent.mkdir(parents=True, exist_ok=True)
-        destination.write_bytes(encode_uncompressed(indexed, mode))
-        converted += 1
-    print(f" > HiRes: converted {converted} category/navigation images")
+        shutil.copyfile(override, destination)
+        copied += 1
+    print(f" > HiRes: copied {copied} static category/navigation images")
 
 
 def make_hires_tree(ags_path, hires_path, collection):
