@@ -21,7 +21,7 @@ import sys
 
 from PIL import Image
 
-import iff_ilbm as iff
+from repair_hires_palettes import black_padding_palette, encode_uncompressed
 
 # -----------------------------------------------------------------------------
 
@@ -50,14 +50,9 @@ def iff_screenshot(path, colors, crop_sz, scale_sz, resample_sz=None, mode_id=0x
     # Keep indices 240-255 free for the launcher interface.
     img = img.quantize(colors=min(colors, 240), method=0, kmeans=4, dither=Image.Dither.NONE)
 
-    # Trim palette to number of used colors
-    w, h = img.size
-    data = img.load()
-    used_colors = max([data[x,y] for x in range(w) for y in range(h)]) + 1
-    trimmed_pal = img.getpalette()[:used_colors * 3]
-
-    # Encode
-    return (iff.ilbm(w, h, img.load(), trimmed_pal, mode_id, 0), img)
+    # The launcher also displays the word-aligned padding at the right edge.
+    img = black_padding_palette(img)
+    return (encode_uncompressed(img, mode_id), img)
 
 # -----------------------------------------------------------------------------
 # CLI interface
