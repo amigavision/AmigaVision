@@ -121,6 +121,8 @@ if not warn
       if warn
         assign WHDSaves: SYS:WHDSaves
       endif
+      ; Favorites need long filenames on both internal and dedicated PFS saves volumes.
+      setfnsize >NIL: WHDSaves: 107
       ; A missing shared table makes MiSTer stop reloading it until the core is reloaded.
       if exists ENV:disable_vadjust
         assign >NIL: exists MiSTer:
