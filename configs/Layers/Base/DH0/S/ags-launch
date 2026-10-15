@@ -24,4 +24,18 @@ if exists "AGS:RunQuiet/Demo/<TITLE>"
   skip DONE
 endif
 
+; Some titles have no quiet script (for example slideshows and Issues).
+if exists "AGS:Run/Game/<TITLE>"
+  execute "AGS:Run/Game/<TITLE>"
+  skip DONE
+endif
+if exists "AGS:Run/Demo/<TITLE>"
+  execute "AGS:Run/Demo/<TITLE>"
+  skip DONE
+endif
+if exists "AGS:Run/Issues/<TITLE>"
+  execute "AGS:Run/Issues/<TITLE>"
+  skip DONE
+endif
+
 LAB DONE
