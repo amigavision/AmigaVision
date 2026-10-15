@@ -48,7 +48,7 @@ def make_nsfw_option(db, ags_path, collection):
             menu_paths.add(relative.as_posix()[:-4])
 
     lines = ['; Generated from titles.csv NSFW tags. Deletes installed files permanently.',
-             'FailAt 21', 'Echo "Removing NSFW titles from both launchers and WHD0:..."']
+             'FailAt 21', 'Echo "Removing NSFW titles, be patient while we delete the files"']
     for root in ('SYS:AGS2/', 'SYS:AGS-HiRes/'):
         for path in sorted(menu_paths):
             base = literal_pattern(convert_filename_uae2a(root + path))
@@ -60,12 +60,21 @@ def make_nsfw_option(db, ags_path, collection):
             lines.append('Delete >NIL: ' + shell_quote(literal_pattern(convert_filename_uae2a(root + folder + '/.dir'))) + ' FORCE QUIET')
     for path in sorted(content_dirs):
         lines.append('Delete >NIL: ' + shell_quote(literal_pattern('WHD0:' + path)) + ' ALL FORCE QUIET')
-    lines += ['Echo "NSFW titles removed. Restart the launcher to refresh all menus."', 'Wait 3']
+    # Run cleanup after this script returns: AmigaDOS may lock an executing file.
+    cleanup = ['; Remove the completed option after its executing script closes.', 'Wait 2']
+    for root in ('SYS:AGS2/', 'SYS:AGS-HiRes/'):
+        base = literal_pattern(root + '[ Options ].ags/Remove NSFW Titles')
+        cleanup.append('Delete >NIL: ' + shell_quote(base + '(.run|.txt|.iff|-QR.iff|-[1-9].iff)') + ' FORCE QUIET')
+        cleanup.append('Delete >NIL: ' + shell_quote(literal_pattern(root + '[ Options ].ags/.dir')) + ' FORCE QUIET')
+    cleanup.insert(1, 'FailAt 21')
+    Path(ags_path, 'RemoveNSFWCleanup').write_text('\n'.join(cleanup) + '\n', encoding='latin-1')
+    lines += ['Echo "NSFW titles removed."', 'Wait 3',
+              'Run >NIL: Execute "AGS:RemoveNSFWCleanup"']
     option = Path(ags_path) / '[ Options ].ags' / 'Remove NSFW Titles'
     option.parent.mkdir(parents=True, exist_ok=True)
     option.with_suffix('.run').write_text('\n'.join(lines) + '\n', encoding='latin-1')
     option.with_suffix('.txt').write_text(
-        'Permanently delete NSFW titles, menu entries, and screenshots from both launchers.\n'
+        'Permanently delete NSFW titles.\n'
         'Removes installed content; saved games are retained.\n'
-        'Rebuild the image to restore removed titles.\n', encoding='latin-1')
+        'Note that this is permanent, re-download to restore.\n', encoding='latin-1')
     return menu_paths, content_dirs
