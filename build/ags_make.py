@@ -563,10 +563,10 @@ def make_runscript(entry, template, quiet: bool) -> str:
                 if util.is_file(runfile_source_path):
                     script = "ags-notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
                     script += "set{}\n".format(whd_vmode.lower())
-                    script += "ags-vadjust s={} v={} h={} {}\n".format(vadjust_scale, vadjust_vshift, vadjust_hshift, vadjust_sachs)
+                    script += "IF NOT EXISTS ENV:disable_vadjust\n  ags-vadjust s={} v={} h={} {}\nENDIF\n".format(vadjust_scale, vadjust_vshift, vadjust_hshift, vadjust_sachs)
                     with open(runfile_source_path, 'r') as f: script += f.read()
                     script += "setvmode $AGSVMode\n"
-                    script += "ags-vadjust\n"
+                    script += "IF NOT EXISTS ENV:disable_vadjust\n  ags-vadjust\nENDIF\n"
                     script += "ags-notify\n"
                 else:
                     script = "echo \"Title not available.\"" + "\n" + "wait 2"

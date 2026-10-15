@@ -1,0 +1,7 @@
+echo "1" >ENV:disable_vadjust
+echo "1" >ENVARC:disable_vadjust
+; Keep the shared table present so MiSTer continues reloading crop changes.
+assign >NIL: exists MiSTer:
+if not warn
+  copy >NIL: SYS:Prefs/Presets/AmigaVision/vadjust-disabled.dat MiSTer:Amiga_vadjust.dat
+endif
