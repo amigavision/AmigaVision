@@ -452,6 +452,8 @@ def package_emulators(args, output_dir, archive_tool):
     shared_dir = Path(args.shared_dir)
     visuals_root = Path(args.visuals_dir)
     launcher_template = Path("content/distro/games/Amiga/default.uae")
+    custom_shader_path = Path("Shaders/crt/shaders/crt-easymode-halation/crt-easymode-halation.glsl")
+    custom_shader = Path("content/distro_emulators/Visuals") / custom_shader_path
     require_file(main_hdf, "Main AmigaVision HDF")
     require_file(saves_hdf, "AmigaVision saves HDF")
     require_file(rom_file, "AmigaVision ROM")
@@ -459,6 +461,7 @@ def package_emulators(args, output_dir, archive_tool):
     require_dir(shared_dir, "Shared support directory")
     require_dir(visuals_root, "AmigaVision Visuals payload")
     require_file(launcher_template, "Amiberry launcher template")
+    require_file(custom_shader, "Versioned AmigaVision CRT shader")
 
     output_path = output_dir / f"AmigaVision-Emulators-{args.date_stamp}.7z"
     with make_stage_dir(output_dir, prefix="amigavision-emulators-", dry_run=args.dry_run) as tmp_dir:
@@ -474,6 +477,8 @@ def package_emulators(args, output_dir, archive_tool):
         replace_path(shared_dir, harddrives_root / "Shared")
         replace_path(listings_dir, harddrives_root / "listings")
         replace_path(visuals_root, stage_root / "Visuals")
+        log_step("Applying versioned AmigaVision CRT shader")
+        replace_path(custom_shader, stage_root / "Visuals" / custom_shader_path)
         replace_path(launcher_template, mac_conf_root / "default.uae")
         archive_7z(output_path, Path(tmp_dir), archive_tool, dry_run=args.dry_run)
     return output_path
