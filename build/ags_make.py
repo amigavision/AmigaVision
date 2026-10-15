@@ -296,6 +296,8 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
         if "scale" in options or "vshift" in options or "hshift" in options or "slave_args" in options:
             has_overrides = True
         entry.update(options)
+        if "note" in options:
+            note = options["note"]
 
     # skip if entry already added at path
     path_id = (entry["id"], path)
@@ -372,7 +374,7 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
 
     # make note
     if options and options.get("unavailable", False):
-        note = strings["note"]["title"] + entry["title"] + "\n\n" + strings["note"]["unavailable"]
+        note = wrap_note(note) if note else strings["note"]["title"] + entry["title"] + "\n\n" + strings["note"]["unavailable"]
         open(base_path + ".txt", mode="w", encoding="latin-1", errors="replace").write(note)
     elif entry:
         open(base_path + ".txt", mode="w", encoding="latin-1", errors="replace").write(make_note(entry, note))
@@ -803,6 +805,9 @@ def report_missing_launcher_images(ags_path, hires_path, collection):
                 continue
             missing.setdefault(entry_id, []).append(path)
         count = sum(len(paths) for paths in missing.values())
+        if not missing:
+            print(f" > {label}: All entries have screenshots")
+            continue
         print(f" > {label}: {count} menu entries have no screenshot ({len(missing)} titles)")
         for entry_id, paths in sorted(missing.items()):
             title = collection.by_id.get(entry_id, {}).get('title') or Path(paths[0]).name
