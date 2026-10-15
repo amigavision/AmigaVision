@@ -13,7 +13,6 @@
   - Nothing to see here:
     - rank: 1
     - note: Intentionally left blank.
-  - AmigaDealerDemo
 
 - !include Lists/Games-HallOfFame.yaml
 - !include Lists/Games-Charts.yaml
@@ -26,6 +25,8 @@
 
 - "[ Demo Scene ]":
   - note: A sample of demo scene releases.
+  - Dealer Demos:
+    - AmigaDealerDemo
   - !include Lists/Demos.yaml
   - !include Lists/Demos-Curated.yaml
   - !include Lists/Demos-Spotlight.yaml
