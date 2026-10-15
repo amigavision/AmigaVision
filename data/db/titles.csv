@@ -4770,7 +4770,6 @@ game--supercars2aga--supercars2aga;Super Cars II;Super Cars II (AGA);;;AGA;1;0;;
 demo-notwhdl--nature-bayeu;Bayeu;Bayeu;;;OCS;;0;;;;;;;;;;2020;Sweden;English;;Nature;1;;;;demo-notwhdl/Nature-Bayeu.lha;Demo;Demo;;;274564;84863
 game--wiz--wiz;Wiz: Quest for the Magic Lantern;Wiz;;;OCS;;0;;;;;;;;;;2020;;English;Mutation Software;Mutation Software;1;;v1.2;Wiz/Wiz.Slave;game/Wiz_v1.2.lha;Game;;6380;4549;;
 demo-notwhdl--melon-welcomeintro;Welcome Intro;Welcome Intro;;;OCS;;0;5;27;;;;;;;;2021;France;English;;Melon Dezign;1;;;;demo-notwhdl/Melon-WelcomeIntro.lha;Demo;Intro;;;302337;90290
-game-notwhdl--karateka;Karateka;Karateka;;;OCS;;0;;;;;;;;;ST to Amiga port by Meynaf;2016;;English;Andromeda Software;Brøderbund;1;;;;game-notwhdl/Karateka.lha;Game;;-2;3665;;
 game-notwhdl--kiwitale;The Kiwi's Tale;Kiwi's Tale;;;OCS;;0;;;;;;;;;;2018;;English;Earok;Earok;2;;;;game-notwhdl/KiwiTale.lha;Game;;-2;4337;;
 game--andromedamission--andromedamission;Mission Andromeda;Mission Andromeda;;;OCS;;0;;;;;;;;;;1988;;English;Demonware;Demonware;1;;v1.0;AndromedaMission/AndromedaMission.Slave;game/AndromedaMission_v1.0.lha;Game;;2494;2802;;
 game--andromedamissionde--andromedamissionde;Mission Andromeda;Mission Andromeda;1;game--missionandromedade--missionandromedade;OCS;;0;;;;;;;;;;1988;;German;Demonware;Demonware;1;;v1.0;AndromedaMissionDe/AndromedaMissionDe.slave;game/AndromedaMission_v1.0_De.lha;Game;;2494;2802;;
@@ -5194,7 +5193,7 @@ game--fightinspiritfiles--fightinspiritfiles;Fightin' Spirit;Fightin' Spirit;1;g
 game--zzzep--zzzep;Zzzep;Zzzep;;;OCS;;;;;;;;;;;;1990;;English;;Amiga Fun;1;;v1.0;Zzzep/Zzzep.slave;game/Zzzep_v1.0.lha;Game;;5351;2063;;
 game--kcmunchkin--kcmunchkin;KC Munchkin;KC Munchkin;;;OCS;;;;;;;;;;;;2018;;English;;;1;;v1.0;KCMunchkin/KCMunchkin.slave;game/KCMunchkin_v1.0.lha;Game;;;4274;;
 game--gyrex--gyrex;Gyrex;Gyrex;;;OCS;;;;;;;;;;;;1988;;English;PDG;Exocet Software;1;;v1.0;Gyrex/Gyrex.slave;game/Gyrex_v1.0.lha;Game;;1179;3346;;
-game--karatekast--karatekast;Karateka;Karateka (Atari ST);;;OCS;;4;;;;;;;;;;2012;United States;English;Jordan Mechner;Broderbund;1;;v1.0;KaratekaST/KaratekaST.slave;game/Karateka_v1.0_AtariST.lha;Game;Action;6123;3665;;
+game--karatekast--karatekast;Karateka;Karateka;;;OCS;;4;;;;;;;;;ST to Amiga port by Meynaf;2016;United States;English;Andromeda Software;Brøderbund;1;;v1.0;KaratekaST/KaratekaST.slave;game/Karateka_v1.0_AtariST.lha;Game;Action;6123;3665;;
 game--agresorpl--agresorpl;Agresor;Agresor;;;OCS;;0;;;;;;;;;;1994;;Polish;Pandemonium;Gracomm;1;;v1.0;AgresorPl/AgresorPl.slave;game/Agresor_v1.0_Pl.lha;Game;;6839;;;
 game--syndicatedeuncut--syndicatedeuncut;Syndicate;Syndicate Uncut;;;OCS;;4;;;;;;;;;;1993-06-06;United Kingdom;German;Bullfrog Productions;Electronic Arts;1;;v2.7;SyndicateDeUncut/SyndicateDeUncut.slave;game/Syndicate_v2.7_De_Uncut.lha;Game;Strategy;2249;1031;;
 game--regresjapl--regresjapl;Regresja;Regresja;;;OCS;;0;;;;;;;;;;1994;;Polish;Pandemonium;Gracomm;0;;v1.0;RegresjaPl/RegresjaPl.slave;game/Regresja_v1.0_Pl.lha;Game;;5979;;;
