@@ -178,7 +178,7 @@ update:
 	@pipenv run python build/import_notwhdl_demos.py --source-root "$(SOURCE)" --apply
 	@pipenv run python build/promote_newer_archives.py --apply "$(SOURCE)"
 	@pipenv run build/ags_index.py -v --ingest
-	@pipenv run python build/sync_missing_images.py --fetch-lemon-interactive --apply
+	@pipenv run python build/sync_missing_images.py --include-missing-highres --fetch-lemon-interactive --apply
 
 updates: update
 
