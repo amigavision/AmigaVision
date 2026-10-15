@@ -11,12 +11,10 @@
 # preferred_version: Use this version instead if title is fuzzy matched (i.e. not using precise name in yaml config)
 # hardware: Hardware the title was originally targeting (OCS, OCS/CD, OCS/CDTV, AGA, AGA/CD, AGA/CD32, etc)
 # aga: Title is AGA only (1=true)
-# ntsc: Video mode and pixel aspect ratio
-#   0 = PAL title that will be run at 50Hz (PAL, 16:15 PAR @ 4X, 1:1 PAR @ 5X)
-#   1 = PAL title that will be run at 60Hz (PAL60, 16:15 PAR @ 4X, 1:1 PAR @ 5X)
-#   2 = "World" title that will be run at 60Hz (NTSC, 16:15 PAR @ 4X, 1:1 PAR @ 5X)
-#   3 = NTSC title that will be run at 60Hz (NTSC, 16:15 PAR @ 4X, 1:1 PAR @ 5X)
-#   4 = NTSC title that will be run at 60Hz and was likely designed for narrow PAR ("Sachs NTSC", 5:6 PAR @ 5X)
+# ntsc: Video mode and pixel aspect ratio (blank defaults to PAL)
+#   0 = PAL at 50Hz (16:15 PAR @ 4X, 1:1 PAR @ 5X)
+#   1 = NTSC at 60Hz (5:6 PAR @ 5X; NTSC crop correction)
+#   2 = PAL60 at 60Hz (16:15 PAR @ 4X, 1:1 PAR @ 5X)
 # scale: Viewport integer scale factor at 1080p (PAL: 4-6, NTSC: 5-6)
 # vshift: Viewport vertical shift (higher value -> screen is shifted up)
 #   Expressible range (higher values allowed but have no effect):

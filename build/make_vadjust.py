@@ -36,7 +36,7 @@
 # Reverse adjusted for 16:15 -> 1500 ~> 748x270 (hires)
 # 754-748 = 6 -> 0:12 SHR crop
 
-# 5:6 PAR for 5X at 40:27 (Jim Sachs mode)
+# 5:6 PAR for 5X at 40:27 (NTSC pixel aspect ratio)
 # 1600x1080 -> 320 -> *(5/6) ~= 268
 # Add 52 LR pixels of overscan -> 208 SHR pixels -> 132:76 SHR crop -> 0:20
 
@@ -62,8 +62,8 @@ BASE_HL = 152
 BASE_HR = 76
 PAL4_HL = 12
 PAL4_HR = 0
-SACHS_HL = 20
-SACHS_HR = 0
+NTSC_HL = 20
+NTSC_HR = 0
 
 PAL4_HL_EXPAND = 0
 PAL4_HR_EXPAND = 0
@@ -108,25 +108,25 @@ modes = [
     (0x0223C5E4, "PAL SuperHiRes Laced--", False, True)
  ]
 
-def make_vadjust(scale=0, v_shift=0, sachs=False):
+def make_vadjust(scale=0, v_shift=0, ntsc=False):
     out = bytes()
 
     for mode in modes:
         id = mode[0]
-        ntsc = bool(mode[2])
+        mode_is_ntsc = bool(mode[2])
         lace = bool(mode[3])
 
         # get base values
-        if ntsc:
+        if mode_is_ntsc:
             sf = scale if scale in [5, 6] else 5
             ((l, r), (t, b)) = base_values["ntsc"][sf]
-            if sachs and sf == 5:
-                (l, r) = (SACHS_HL, SACHS_HR)
+            if ntsc and sf == 5:
+                (l, r) = (NTSC_HL, NTSC_HR)
         else:
             sf = scale if scale in [4, 5, 6] else 4
             ((l, r), (t, b)) = base_values["pal"][sf]
-            if sachs and sf == 5:
-                (l, r) = (SACHS_HL, SACHS_HR)
+            if ntsc and sf == 5:
+                (l, r) = (NTSC_HL, NTSC_HR)
         # interlace adjustment
         if lace:
             b -= 1
@@ -161,13 +161,13 @@ def main():
     parser.add_argument("-o", "--out", dest="out_vadjust", metavar="FILE", help="output file")
     parser.add_argument("--scale", dest="scale", type=int, default=0, help="create viewport crops with forced scale factor (5 or 6)")
     parser.add_argument("--vshift", dest="v_shift", type=int, default=0, help="set vertical shift (positive values move visible image up)")
-    parser.add_argument("--sachs", dest="sachs", action="store_true", default=False, help="jim sachs mode (5:6 PAR for 5X scale)")
+    parser.add_argument("--ntsc", dest="ntsc", action="store_true", default=False, help="NTSC pixel aspect ratio (5:6 PAR for 5X scale)")
 
     try:
         args = parser.parse_args()
 
         if args.out_vadjust:
-            out = make_vadjust(scale=args.scale, v_shift=args.v_shift, sachs=args.sachs)
+            out = make_vadjust(scale=args.scale, v_shift=args.v_shift, ntsc=args.ntsc)
             with open(args.out_vadjust, "wb") as f:
                 f.write(out)
         return 0

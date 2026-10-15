@@ -435,25 +435,13 @@ def make_note(entry, add_note):
             s = s[:max_w - 2].strip() + ".."
         return s
 
-    if entry.get("ntsc", 0) == 4:
+    if util.parse_int(entry.get("ntsc", 0)) == 1:
         if entry.get("scale", 0) == 6:
             system += "·6×NTSC"
             aspect_ratio = "16:9"
         else:
             system += "·5×NTSC"
-    elif entry.get("ntsc", 0) == 3:
-        if entry.get("scale", 0) == 6:
-            system += "·6×NTSC"
-            aspect_ratio = "16:9"
-        else:
-            system += "·5×NTSC"
-    elif entry.get("ntsc", 0) == 2:
-        if entry.get("scale", 0) == 6:
-            system += "·6×NTSC"
-            aspect_ratio = "16:9"
-        else:
-            system += "·5×NTSC"
-    elif entry.get("ntsc", 0) == 1:
+    elif util.parse_int(entry.get("ntsc", 0)) == 2:
         if entry.get("scale", 0) == 6:
             system += "·6×PAL60"
             aspect_ratio = "16:9"
@@ -548,8 +536,8 @@ def make_runscript(entry, template, quiet: bool) -> str:
         vadjust_vshift = min(max(vadjust_vshift, VSHIFT_MIN), VSHIFT_MAX)
         # horizontal shift
         vadjust_hshift = util.parse_int(entry.get("hshift", 0))
-        # jim sachs mode
-        vadjust_sachs = "JS" if util.parse_int(entry.get("ntsc", 0)) == 4 else ""
+        # NTSC pixel proportions (NTSC is the ags-vadjust switch).
+        vadjust_ntsc = "NTSC" if util.parse_int(entry.get("ntsc", 0)) == 1 else ""
         if not vadjust_scale: vadjust_scale = 0
 
         if query.entry_is_notwhdl(entry):
@@ -564,7 +552,7 @@ def make_runscript(entry, template, quiet: bool) -> str:
                     script = "ags-notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
                     script += "IF EXISTS ENV:whdlvmode\n  setvmode $whdlvmode\nELSE\n"
                     script += "  set{}\n".format(whd_vmode.lower())
-                    script += "  IF NOT EXISTS ENV:disable_vadjust\n    ags-vadjust s={} v={} h={} {}\n  ENDIF\nENDIF\n".format(vadjust_scale, vadjust_vshift, vadjust_hshift, vadjust_sachs)
+                    script += "  IF NOT EXISTS ENV:disable_vadjust\n    ags-vadjust s={} v={} h={} {}\n  ENDIF\nENDIF\n".format(vadjust_scale, vadjust_vshift, vadjust_hshift, vadjust_ntsc)
                     with open(runfile_source_path, 'r') as f: script += f.read()
                     script += "setvmode $AGSVMode\n"
                     script += "IF NOT EXISTS ENV:whdlvmode\n  IF NOT EXISTS ENV:disable_vadjust\n    ags-vadjust\n  ENDIF\nENDIF\n"
@@ -597,7 +585,7 @@ def make_runscript(entry, template, quiet: bool) -> str:
                         "VADJUST_SCALE": vadjust_scale,
                         "VADJUST_VSHIFT": vadjust_vshift,
                         "VADJUST_HSHIFT": vadjust_hshift,
-                        "VADJUST_SACHS": vadjust_sachs
+                        "VADJUST_NTSC": vadjust_ntsc
                     })
             else:
                 script = "echo \"Title not available.\"" + "\n" + "wait 2"

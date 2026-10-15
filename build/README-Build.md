@@ -31,6 +31,20 @@ The normal end-to-end release process is:
 4. `make distros`
    Prompt for the release date, then package all platform-specific release artifacts from the built image.
 
+## Title video modes
+
+The `ntsc` field in `data/db/titles.csv` controls the title's video mode and pixel proportions:
+
+| Value | Mode | Pixel proportions |
+|---|---|---|
+| `0` or blank | PAL, 50Hz | 16:15 at 4×; square pixels at 5× |
+| `1` | NTSC, 60Hz | 5:6 at 5×, using the `ags-vadjust` `NTSC` correction |
+| `2` | PAL60, 60Hz | Standard crop without `NTSC`; 16:15 at 4×, square pixels at 5× |
+
+Both `1` and `2` select NTSC timing in generated launch scripts. The NTSC pixel-aspect correction applies at 5×; 6× retains the existing widescreen crop. The launcher metadata distinguishes NTSC from PAL60. The MiSTer Overscale toggle and Force PAL/NTSC options continue to override the generated crop or timing as before.
+
+The field was migrated from the previous numbering: old `4` becomes `1`, old PAL60 `1` becomes `2`, and old World/standard NTSC `2`/`3` are consolidated into NTSC `1`. Use only `0`, `1`, or `2` for new entries.
+
 ## Other Useful Targets
 
 If you only need a specific packaged output instead of the full release set, use:
