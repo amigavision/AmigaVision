@@ -135,7 +135,16 @@
     - KickOff2
     - CannonFodderCD32
     - BeneathAStlSky
-    - Delphine-Collection: { unavailable: True }
+    - Delphine-Collection:
+        unavailable: True
+        note: |
+          Games in this collection:
+
+          Another World
+          Flashback
+          Future Wars
+          Operation Stealth
+          Cruise for a Corpse
     - DungeonMaster
     - Frontier
     - PinballIllusions
@@ -148,7 +157,14 @@
     - Syndicate
     - IndianaJonesAtlantisAdv
     - Gods
-    - Greatest-Collection: { unavailable: True }
+    - Greatest-Collection:
+        unavailable: True
+        note: |
+          Games in this collection:
+
+          Dune
+          Lure of the Temptress
+          Jimmy White's Whirlwind Snooker
     - EyeOfTheBeholder
     - ChaosEngine
     - CruiseForACorpse
@@ -160,7 +176,15 @@
     - RoboCop3
     - SecretOfMonkeyIsland
     - AlienBreed2
-    - Award-Winners-Gold: { unavailable: True }
+    - Award-Winners-Gold:
+        unavailable: True
+        note: |
+          Games in this collection:
+
+          Elite
+          Jimmy White's Whirlwind Snooker
+          Sensible Soccer: European Champions - 92/93 Edition
+          Zool
     - Banshee
     - BodyBlows
     - Dune2
@@ -539,7 +563,7 @@
     - Benefactor
     - DeluxeGalaga
     - Lionheart
-    - Napalm: { unavailable: True }
+    - Napalm: { unavailable: True, note: "Requires RTG and a fast CPU, not included." }
     - WastedDreams
     - Genetic-Species: { unavailable: True }
     - Perihelion
