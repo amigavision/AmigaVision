@@ -582,6 +582,7 @@ def make_runscript(entry, template, quiet: bool) -> str:
                         whd_cargs += " " + entry["slave_args"]
                     whd_qtkey = "" if "QuitKey=" in whd_cargs else "$whdlqtkey"
                     whd_spdly = "0" if quiet else "$whdlspdly"
+                    whd_spdly_setup = "" if quiet else "IF NOT EXISTS ENV:whdlspdly\n  echo 200 >ENV:whdlspdly\nENDIF"
                     script = util.apply_template(template, {
                         "TITLE": entry.get("title", "Unknown"),
                         "PATH": whd_entrypath,
@@ -589,6 +590,8 @@ def make_runscript(entry, template, quiet: bool) -> str:
                         "CUST_ARGS": whd_cargs,
                         "QUIT_KEY": whd_qtkey,
                         "SPLASH_DELAY": whd_spdly,
+                        "SPLASH_DELAY_SETUP": whd_spdly_setup,
+                        "CONFIG_DELAY": " ConfigDelay=0" if quiet else "",
                         "VIDEO_MODE": whd_vmode,
                         "VADJUST_SCALE": vadjust_scale,
                         "VADJUST_VSHIFT": vadjust_vshift,
