@@ -1,3 +1,6 @@
 IF EXISTS ENV:whdlvmode
   DELETE >NIL: ENV:whdlvmode
 ENDIF
+IF EXISTS ENVARC:whdlvmode
+  DELETE >NIL: ENVARC:whdlvmode
+ENDIF

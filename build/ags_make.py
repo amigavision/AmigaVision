@@ -562,11 +562,12 @@ def make_runscript(entry, template, quiet: bool) -> str:
                     runfile_source_path = util.path(paths.tracked_titles(), entry["archive_path"]).replace(".lha", ".run")
                 if util.is_file(runfile_source_path):
                     script = "ags-notify TITLE=\"{}\"\n".format(entry.get("title", "Unknown"))
-                    script += "set{}\n".format(whd_vmode.lower())
-                    script += "IF NOT EXISTS ENV:disable_vadjust\n  ags-vadjust s={} v={} h={} {}\nENDIF\n".format(vadjust_scale, vadjust_vshift, vadjust_hshift, vadjust_sachs)
+                    script += "IF EXISTS ENV:whdlvmode\n  setvmode $whdlvmode\nELSE\n"
+                    script += "  set{}\n".format(whd_vmode.lower())
+                    script += "  IF NOT EXISTS ENV:disable_vadjust\n    ags-vadjust s={} v={} h={} {}\n  ENDIF\nENDIF\n".format(vadjust_scale, vadjust_vshift, vadjust_hshift, vadjust_sachs)
                     with open(runfile_source_path, 'r') as f: script += f.read()
                     script += "setvmode $AGSVMode\n"
-                    script += "IF NOT EXISTS ENV:disable_vadjust\n  ags-vadjust\nENDIF\n"
+                    script += "IF NOT EXISTS ENV:whdlvmode\n  IF NOT EXISTS ENV:disable_vadjust\n    ags-vadjust\n  ENDIF\nENDIF\n"
                     script += "ags-notify\n"
                 else:
                     script = "echo \"Title not available.\"" + "\n" + "wait 2"

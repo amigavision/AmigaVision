@@ -1,5 +1,6 @@
-Launch titles in forced NTSC video mode.
+Force NTSC for titles. Saved across reboots.
 
-Please note that this setting is not saved
-to disk. After a reboot games will load in
-their default video mode again.
+Only use this for a NTSC-only CRT.
+Do not use on HDMI.
+Many games and nearly all demos will not work.
+Select Default to restore each title's video mode.

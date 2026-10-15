@@ -1,5 +1,6 @@
-Launch titles in forced PAL video mode.
+Force PAL for titles. Saved across reboots.
 
-Please note that this setting is not saved
-to disk. After a reboot games will load in
-their default video mode again.
+Only use this for a PAL-only CRT.
+Do not use on HDMI.
+Some NTSC titles may not work correctly.
+Select Default to restore each title's video mode.

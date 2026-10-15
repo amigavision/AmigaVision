@@ -1,2 +1,3 @@
-Launch titles in the per-game configured
-video mode (default).
+Use each title's configured video mode (default).
+Clears the saved PAL/NTSC override.
+This is the recommended setting.
