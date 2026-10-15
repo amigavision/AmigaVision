@@ -1,0 +1,4 @@
+echo "NTSC" >ENV:whdlvmode
+IF NOT EXISTS ENV:disable_vadjust
+  ags-vadjust
+ENDIF
