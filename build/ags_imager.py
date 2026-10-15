@@ -65,6 +65,7 @@ import ags_paths as paths
 import ags_util as util
 from ags_fs import build_pfs, calculate_pfs_partitions, extract_base_image, convert_filename_uae2a, get_base_hdf_cache_dir
 from ags_make import make_hires_tree, count_tree_entries, make_autoentries, make_runscripts, make_tree, reset_warning_state, update_progress, warn_missing_archive
+from ags_nsfw import make_nsfw_option
 from ags_query import entry_is_notwhdl, get_amiga_whd_dir, get_archive_path, get_entry, get_missing_archive_entry, get_preferred_entry, get_whd_dir, sanitize_entry
 from ags_strings import strings
 from ags_types import EntryCollection
@@ -1545,6 +1546,9 @@ def main():
                             raise IOError("--add-dir source not found ({})".format(d[0]))
                     workspace_state["add_dirs_cache_state"] = add_dirs_cache_state
                     workspace_state["add_dirs_destinations"] = add_dirs_destinations
+
+        # Generate after layers so the option covers the final menu filenames.
+        make_nsfw_option(db, amiga_ags_path, collection)
 
         # create directory caches
         with timed_step(timings, "build dir caches"):
