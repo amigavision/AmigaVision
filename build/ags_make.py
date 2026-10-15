@@ -4,6 +4,7 @@
 
 import operator
 import os
+import re
 import shutil
 import sys
 import textwrap
@@ -242,8 +243,15 @@ def make_entries(
                 print_warning("invalid entry: {}".format(n))
                 continue
             else:
-                disp_name = n.replace("-", " ")
-                entry = { "id": n, "title": disp_name, "title_short": disp_name, "unavailable": True }
+                disp_name = options.get("disp_name") or n.replace("-", " ")
+                # Human-readable unavailable menu names can still use canonical
+                # game IDs for their artwork, without adding fictitious DB rows.
+                slug = re.sub(r'[^a-z0-9]', '', n.lower())
+                artwork_id = f'game--{slug}--{slug}'
+                if not (Path('data/img', artwork_id + '.iff').is_file()
+                        or Path('data/img_highres', artwork_id + '-2.iff').is_file()):
+                    artwork_id = n
+                entry = { "id": artwork_id, "title": disp_name, "title_short": disp_name, "unavailable": True }
         if entry:
             collection.by_id[entry["id"]] = entry
 
@@ -782,6 +790,27 @@ def make_hires_artwork(ags_path, hires_path, collection):
     print(f" > HiRes: copied {copied} static category/navigation images")
 
 
+def report_missing_launcher_images(ags_path, hires_path, collection):
+    """Report the actual built menu thumbnails, including restored cache trees."""
+    for label, root in (("Med-res", ags_path), ("Hi-res", hires_path)):
+        available = set()
+        for directory, _, filenames in os.walk(root):
+            relative = Path(directory).relative_to(root)
+            available.update((relative / name).as_posix() for name in filenames if name.endswith('.iff'))
+        missing = {}
+        for path, entry_id in collection.image_entries.items():
+            if any(path + suffix in available for suffix in ['.iff'] + [f'-{i}.iff' for i in range(1, 10)]):
+                continue
+            missing.setdefault(entry_id, []).append(path)
+        count = sum(len(paths) for paths in missing.values())
+        print(f" > {label}: {count} menu entries have no screenshot ({len(missing)} titles)")
+        for entry_id, paths in sorted(missing.items()):
+            title = collection.by_id.get(entry_id, {}).get('title') or Path(paths[0]).name
+            print(f"   - {title} ({entry_id})")
+            for path in sorted(paths):
+                print(f"     {path}")
+
+
 def make_hires_tree(ags_path, hires_path, collection):
     """Clone the completed launcher and replace its configuration and title images."""
     util.rm_path(hires_path)
@@ -794,7 +823,6 @@ def make_hires_tree(ags_path, hires_path, collection):
     images = {}
     for source in sorted(image_root.glob("*.iff")) + sorted((image_root / "qr").glob("*.iff")):
         images.setdefault(source.stem, source)
-    missing = 0
     for relpath, entry_id in collection.image_entries.items():
         base = Path(hires_path) / relpath
         # Remove medium-resolution slides and QR images from title entries.
@@ -815,7 +843,3 @@ def make_hires_tree(ags_path, hires_path, collection):
                 if slide.is_file():
                     shutil.copyfile(slide, str(base) + ".iff")
                     break
-        if not found:
-            missing += 1
-    if missing:
-        print(f" > HiRes: {missing} menu entries have no high-resolution screenshot; leaving thumbnails absent")

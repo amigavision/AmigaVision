@@ -702,30 +702,30 @@ def index_whdload_archives(basedir, verbose=False):
                     print("{} is not a valid lha file".format(path), flush=True)
                     continue
                 db_path = path.split(basedir)[1]
-                slave_category = db_path.split(os.sep)[0]
+                container_category = db_path.split(os.sep)[0]
 
-                if slave_category in ["game", "demo", "mags"]:
+                if container_category in ["game", "demo", "mags"]:
                     arc = LhaFile(path)
                     for n in arc.namelist():
                         n = n.replace("\\", "/")
                         if n.lower().endswith(".slave"):
                             if len(n.split("/")) > 2:
-                                pass  # skip slaves beneath root
+                                pass  # skip containers beneath root
                             else:
-                                slave_id = slave_category + "--" + n[:-6].replace("/", "--").lower()
-                                slave_ver = "v1.0"
+                                container_id = container_category + "--" + n[:-6].replace("/", "--").lower()
+                                container_version = "v1.0"
                                 try:
                                     verstr = file[:-4].split("_")[1]
                                     if verstr.startswith("v"):
-                                        slave_ver = verstr
+                                        container_version = verstr
                                 except Exception:
                                     pass
-                                d[slave_id] = {"id": slave_id, "archive_path": db_path, "slave_path": n, "slave_version": slave_ver}
+                                d[container_id] = {"id": container_id, "archive_path": db_path, "slave_path": n, "slave_version": container_version}
 
-                elif slave_category in ["game-notwhdl", "demo-notwhdl", "mags-notwhdl"]:
-                    slave_id = slave_category + "--" + os.path.splitext(os.path.basename(path))[0].lower()
+                elif container_category in ["game-notwhdl", "demo-notwhdl", "mags-notwhdl"]:
+                    container_id = container_category + "--" + os.path.splitext(os.path.basename(path))[0].lower()
                     if util.is_file(path.replace(".lha", ".run")):
-                        d[slave_id] = {"id": slave_id, "archive_path": db_path, "slave_path": None, "slave_version": None}
+                        d[container_id] = {"id": container_id, "archive_path": db_path, "slave_path": None, "slave_version": None}
 
     print("\n", flush=True)
     return d
@@ -903,6 +903,52 @@ def build_db_row_maps(db):
             variant_rows_by_base_id["--".join(parts[:-1])].append(row)
     return exact_rows_by_id, variant_rows_by_base_id
 
+def refresh_archive_reference(db, row, arc, titles_dir, replace_missing=False):
+    """Reconnect a stable container ID after its previous archive has been retired."""
+    previous = row["archive_path"]
+    if previous and (not replace_missing or util.is_file(util.path(titles_dir, previous))):
+        return False
+    if not util.is_file(util.path(titles_dir, arc["archive_path"])):
+        return False
+    db.execute("UPDATE titles SET archive_path=?,slave_path=?,slave_version=? WHERE id=?;",
+               (arc["archive_path"], arc["slave_path"], arc["slave_version"], row["id"]))
+    if previous:
+        print(f"archive updated: {previous} -> {arc['archive_path']} ({row['id']})")
+    else:
+        print(f"archive added: {arc['archive_path']} -> {row['id']}")
+    return True
+
+def renamed_container_rows(rows_by_id, archives, titles_dir):
+    """Match renamed containers only for an unambiguous archive family and variant."""
+    def family(path):
+        path = Path(path)
+        match = re.fullmatch(r"(.+)_v[^_]+(_.*)?\.lha", path.name, re.IGNORECASE)
+        if not match:
+            return None
+        return (str(path.parent).casefold(), match[1].casefold(), (match[2] or "").casefold())
+
+    candidates = defaultdict(list)
+    for arc in archives.values():
+        key = family(arc["archive_path"])
+        if key:
+            candidates[key].append(arc)
+    missing = defaultdict(list)
+    for row in rows_by_id.values():
+        parts = row["id"].split("--")
+        base_id = "--".join(parts[:-1]) if len(parts) > 3 else row["id"]
+        if base_id in archives or not row["archive_path"]:
+            continue
+        if util.is_file(util.path(titles_dir, row["archive_path"])):
+            continue
+        key = family(row["archive_path"])
+        if key:
+            missing[key].append((base_id, row))
+    remapped = defaultdict(list)
+    for key, rows in missing.items():
+        if len(candidates[key]) == 1 and len({base_id for base_id, _ in rows}) == 1:
+            remapped[candidates[key][0]["id"]].extend(row for _, row in rows)
+    return remapped
+
 # -----------------------------------------------------------------------------
 
 def main():
@@ -966,18 +1012,21 @@ def main():
         for r in db.cursor().execute("SELECT * FROM titles"):
             if r["archive_path"] and not util.is_file(util.path(titles_dir, r["archive_path"])):
                 missing_db_archive_refs += 1
-                label = "• Archive reference removed from DB:" if prune_missing_archive_refs else "• Archive reference missing from titles tree:"
-                print(label, r["id"])
-                print(r["archive_path"])
+                if not args.ingest:
+                    label = "• Archive reference removed from DB:" if prune_missing_archive_refs else "• Archive reference missing from titles tree:"
+                    print(label, r["id"])
+                    print(r["archive_path"])
                 if prune_missing_archive_refs:
                     db.cursor().execute("UPDATE titles SET archive_path=NULL,slave_path=NULL,slave_version=NULL WHERE id=?;", (r["id"],))
                     removed_db_archive_refs += 1
-                print()
+                if not args.ingest:
+                    print()
 
         # enumerate whdl archives, correlate with db
         archives = list(index_whdload_archives(titles_dir, verbose=args.verbose).items())
         total_archives = len(archives)
         exact_rows_by_id, variant_rows_by_base_id = build_db_row_maps(db)
+        renamed_rows = renamed_container_rows(exact_rows_by_id, dict(archives), titles_dir) if sync_csv else {}
         csv_enrichment_entries = [] if sync_csv else None
         if args.verbose:
             print("Correlating archives with title database...")
@@ -987,9 +1036,10 @@ def main():
             if exact_row:
                 rows.append(exact_row)
             rows.extend(variant_rows_by_base_id.get(arc["id"], []))
+            rows.extend(renamed_rows.get(arc["id"], []))
             if args.verbose and (archive_progress == 1 or archive_progress % 250 == 0 or archive_progress == total_archives):
                 print("Correlating archives... {}/{}".format(archive_progress, total_archives), flush=True)
-            existing_csv_row = csv_rows_by_id.get(arc["id"])
+            existing_csv_row = csv_rows_by_id.get(arc["id"]) or (csv_rows_by_id.get(rows[0]["id"]) if rows else None)
             should_enrich_game = (
                 sync_csv
                 and Path(arc["archive_path"]).parts[0] == "game"
@@ -1024,13 +1074,16 @@ def main():
                         "slave_version": arc["slave_version"],
                         **enrichment_fields,
                     })
-                if not row["archive_path"]:
-                    db.cursor().execute("UPDATE titles SET archive_path=?,slave_path=?,slave_version=? WHERE id=?;",
-                                        (arc["archive_path"], arc["slave_path"], arc["slave_version"], row["id"]))
-                    print("archive added: " + arc["archive_path"] + " -> " +row["id"])
+                if refresh_archive_reference(db, row, arc, titles_dir, replace_missing=sync_csv):
                     print()
 
         if sync_csv:
+            if args.ingest:
+                unresolved = [row for row in db.execute("SELECT id,archive_path FROM titles")
+                              if row["archive_path"] and not util.is_file(util.path(titles_dir, row["archive_path"]))]
+                print(f"Archive reconciliation: {len(unresolved)} missing reference(s) remain")
+                for row in unresolved:
+                    print(f"• Archive reference missing from titles tree: {row['id']} ({row['archive_path']})")
             db.commit()
             util.write_csv()
             report_path = Path("data/db/index-add-missing-report.html").resolve()
@@ -1068,7 +1121,7 @@ def main():
                 print()
             elif missing_db_archive_refs:
                 print("• Found {} missing archive reference(s); DB rows were left unchanged".format(missing_db_archive_refs))
-                print("• Run 'make prune-missing-archives' to clear archive/slave references for those rows")
+                print("• Run 'make prune-missing-archives' to clear archive/container references for those rows")
                 print()
 
         # list missing content

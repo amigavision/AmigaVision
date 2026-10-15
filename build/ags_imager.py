@@ -66,6 +66,7 @@ import ags_util as util
 from ags_fs import build_pfs, calculate_pfs_partitions, extract_base_image, convert_filename_uae2a, get_base_hdf_cache_dir
 from ags_make import make_hires_tree, count_tree_entries, make_autoentries, make_runscripts, make_tree, reset_warning_state, update_progress, warn_missing_archive
 from ags_nsfw import make_nsfw_option
+from ags_make import report_missing_launcher_images
 from ags_query import entry_is_notwhdl, get_amiga_whd_dir, get_archive_path, get_entry, get_missing_archive_entry, get_preferred_entry, get_whd_dir, sanitize_entry
 from ags_strings import strings
 from ags_types import EntryCollection
@@ -276,6 +277,7 @@ def build_or_reuse_hires_launcher(ags_path, hires_path, collection, workspace_st
             os.remove(manifest_path)
         make_hires_tree(ags_path, cache_path, collection)
         manifest = {"key": cache_key, "output": hires_output_fingerprint(cache_path)}
+    report_missing_launcher_images(ags_path, cache_path, collection)
     manifest["medium_file_hashes"] = file_hashes
     temporary = manifest_path + ".tmp"
     with open(temporary, "w", encoding="utf-8") as destination:

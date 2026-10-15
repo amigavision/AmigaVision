@@ -1239,10 +1239,13 @@ def main():
         rows = load_rows(csv_path)
         missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
 
-    print(f"Missing low-res images remaining: {len(missing)}")
-    if missing:
-        print("Remaining entries:")
-        for entry in sorted(missing, key=lambda item: ((item.get("title") or item["id"]).lower(), item["id"])):
+    lowres_missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir)
+    all_missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=True)
+    highres_missing = [entry for entry in all_missing
+                      if not entry["highres_count"] and not (img_highres_dir / f"{entry['id']}.iff").is_file()]
+    for resolution, entries in (("low-res", lowres_missing), ("hi-res", highres_missing)):
+        print(f"Missing {resolution} images remaining: {len(entries)}")
+        for entry in sorted(entries, key=lambda item: ((item.get("title") or item["id"]).lower(), item["id"])):
             print(f"- {missing_entry_label(entry)}")
 
     return 0

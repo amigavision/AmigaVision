@@ -48,7 +48,7 @@ def make_nsfw_option(db, ags_path, collection):
             menu_paths.add(relative.as_posix()[:-4])
 
     lines = ['; Generated from titles.csv NSFW tags. Deletes installed files permanently.',
-             'FailAt 21', 'Echo "Removing NSFW titles, be patient while we delete the files"']
+             'FailAt 21', 'Echo "Removing NSFW titles, be patient while we delete the files..."']
     for root in ('SYS:AGS2/', 'SYS:AGS-HiRes/'):
         for path in sorted(menu_paths):
             base = literal_pattern(convert_filename_uae2a(root + path))
