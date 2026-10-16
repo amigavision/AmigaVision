@@ -54,6 +54,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from contextlib import contextmanager
 from time import perf_counter
@@ -340,6 +341,8 @@ def fingerprint_python_defs(path: str, names: list[str]) -> str:
     })
 
 AGS2_TREE_BEHAVIOR_FINGERPRINT = hash_payload([
+    fingerprint_file('build/ags_ecs.py'),
+    fingerprint_file('configs/ecs-preferred-versions.json'),
     fingerprint_python_defs("build/ags_make.py", ["make_tree", "make_entries", "make_entry", "make_autoentries", "make_runscripts", "make_runscript"]),
     fingerprint_python_defs("build/ags_query.py", ["get_entry", "get_missing_archive_entry", "get_missing_archive_entry_by_id", "get_preferred_entry", "name_is_fuzzy", "get_runscript_paths", "get_amiga_whd_dir", "get_whd_slavename", "entry_is_notwhdl"]),
     fingerprint_python_defs("build/ags_compositor.py", ["compose", "out_iff"]),
@@ -373,6 +376,8 @@ def get_ags2_tree_cache_state(menu, db_path: str, base_ags2: str, runscript_temp
             "all_demos": bool(args.all_demos),
             "all_demoscene": bool(args.all_demoscene),
             "auto_lists": bool(args.auto_lists),
+            "chipset_profile": getattr(args, "chipset_profile", "any"),
+            "ecs_workspace": paths.tmp() if getattr(args, "chipset_profile", "any") == "ecs" else None,
         }),
         "behavior": AGS2_TREE_BEHAVIOR_FINGERPRINT,
     }
@@ -630,6 +635,8 @@ def get_menu_subtree_cache_state(item, index: int, db_path: str, base_ags2: str,
             "all_demos": bool(args.all_demos),
             "all_demoscene": bool(args.all_demoscene),
             "auto_lists": bool(args.auto_lists),
+            "chipset_profile": getattr(args, "chipset_profile", "any"),
+            "ecs_workspace": paths.tmp() if getattr(args, "chipset_profile", "any") == "ecs" else None,
         }),
         "behavior": AGS2_TREE_BEHAVIOR_FINGERPRINT,
     }
@@ -936,6 +943,8 @@ def get_autoentries_cache_state(collection: EntryCollection, args) -> dict:
             "all_demos": bool(args.all_demos),
             "all_demoscene": bool(args.all_demoscene),
             "auto_lists": bool(args.auto_lists),
+            "chipset_profile": getattr(args, "chipset_profile", "any"),
+            "ecs_workspace": paths.tmp() if getattr(args, "chipset_profile", "any") == "ecs" else None,
         }),
         "behavior": AUTOENTRIES_BEHAVIOR_FINGERPRINT,
     }
@@ -1094,6 +1103,13 @@ def inject_clone_progress(clone_script_path: str, clone_path: str) -> None:
 # -----------------------------------------------------------------------------
 
 def add_all(db: Connection, c: EntryCollection, category: str, exclude_subcategories=None) -> None:
+    if getattr(db, 'ecs_selector', None):
+        for row in db.execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
+            entry = db.ecs_selector.resolve(row['id'])
+            if entry and not any((entry.get('subcategory') or '').lower().startswith(s.lower())
+                                 for s in (exclude_subcategories or [])):
+                c.by_id[entry['id']] = entry
+        return
     for r in db.cursor().execute('SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")', (category,)):
         entry = sanitize_entry(r)
         if not entry and r["archive_path"]:
@@ -1270,6 +1286,8 @@ def main():
     parser.add_argument("--all-demoscene", dest="all_demoscene", action="store_true", default=False, help="include all demo scene content")
     parser.add_argument("--auto-lists", dest="auto_lists", action="store_true", default=False, help="create automatic lists")
     parser.add_argument("--only-ags-tree", dest="only_ags_tree", action="store_true", default=False, help="only generate AGS tree")
+    parser.add_argument('--chipset-profile', choices=['any', 'ecs'], default='any', help='Select compatible canonical versions for the build')
+    parser.add_argument('--temp-dir', help='Override the temporary workspace after .env has loaded')
 
     
     print("Build started: ")
@@ -1278,11 +1296,30 @@ def main():
     try:
         paths.verify()
         args = parser.parse_args()
+        if args.temp_dir:
+            os.environ['AGSTEMP'] = os.path.abspath(args.temp_dir)
+        elif args.chipset_profile == 'ecs':
+            os.environ['AGSTEMP'] = paths.tmp() + '-ECS'
+        if args.chipset_profile == 'ecs':
+            os.environ['AGSCACHEGEN'] = 'ecs'
+            if not Path('data/img_ecs/manifest.json').is_file():
+                raise FileNotFoundError('Static ECS artwork missing; run make ecs-artwork first')
         timings = []
 
         with timed_step(timings, "db setup"):
             db = util.get_db(True)
             collection = EntryCollection()
+            if args.chipset_profile == 'ecs':
+                from ags_ecs import ECSSelector, ECSDatabase, make_sanitizer
+                overrides = json.loads(Path('configs/ecs-preferred-versions.json').read_text())
+                sanitize_ecs = make_sanitizer(sanitize_entry)
+                selector = ECSSelector(db.execute('SELECT * FROM titles'), sanitize_ecs, overrides)
+                selector.report.extend(sanitize_ecs.excluded)
+                selector.write_report(util.path(args.out_dir or paths.tmp(), 'ecs-selection-report.json'))
+                ambiguous = [r for r in selector.report if r['status'] == 'ambiguous']
+                if ambiguous:
+                    raise ValueError('Ambiguous ECS fallback families; curate configs/ecs-preferred-versions.json: ' + ', '.join(r['title'] for r in ambiguous))
+                db = ECSDatabase(db, selector)
 
         if args.out_dir:
             out_dir = args.out_dir
@@ -1548,6 +1585,9 @@ def main():
                     workspace_state["add_dirs_destinations"] = add_dirs_destinations
 
         # Generate after layers so the option covers the final menu filenames.
+        if args.chipset_profile == 'ecs':
+            from ags_ecs import prepare_menu
+            prepare_menu(amiga_ags_path)
         make_nsfw_option(db, amiga_ags_path, collection)
 
         # create directory caches
@@ -1585,7 +1625,12 @@ def main():
                     open(util.path(path, ".dir"), mode="w", encoding="latin-1", errors="replace").write(cachefile)
 
         with timed_step(timings, "build hi-res launcher"):
-            build_or_reuse_hires_launcher(amiga_ags_path, util.path(amiga_boot_path, "AGS-HiRes"), collection, workspace_state)
+            if args.chipset_profile == 'ecs':
+                from ags_ecs import install_launcher
+                install_launcher(amiga_ags_path, collection)
+                util.rm_path(util.path(amiga_boot_path, 'AGS-HiRes'))
+            else:
+                build_or_reuse_hires_launcher(amiga_ags_path, util.path(amiga_boot_path, "AGS-HiRes"), collection, workspace_state)
 
         # build PFS container
         if not args.only_ags_tree:

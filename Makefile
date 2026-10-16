@@ -1,7 +1,7 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images listings sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry mini-image test-image test-dry pi cd32 distros make-distros mister emulators mini amiga clean clean-temp clean-build
+.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images listings sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry mini-image test-image test-dry pi cd32 distros make-distros mister emulators mini amiga amiga-ecs clean clean-temp clean-build
 
 PYTHON ?= python3.11
 PIP_BUILD_CONSTRAINT ?= $(CURDIR)/build/pip-build-constraints.txt
@@ -16,6 +16,7 @@ REPLAYOS_COMPRESSED_IMG ?= $(subst ",,${REPLAYOS_OUTPUT_IMG}).xz
 REPLAYOS_IMG_SIZE ?= 14900m
 REPLAYOS_BIOS_DIR ?= $(subst ",,${AGSCONTENT})/replay/bios
 AMIGAVISION_HDF ?= ${AGSDEST}/AmigaVision.hdf
+ECS_HDF ?= ${AGSDEST}/AmigaVision-ECS.hdf
 DISTRO_DATE ?= $(shell date +%Y.%m.%d)
 DISTRO_OUT ?= ${AGSDEST}/distros
 FAT32_MAX_FILE_BYTES ?= 4294967295
@@ -26,11 +27,12 @@ DISTRO_VISUALS_DIR ?= ${AGSCONTENT}/distro/games/Amiga/Visuals
 DISTRO_LISTINGS_DIR ?= ${AGSDEST}/listings
 MINI_HDF ?= ${AGSDEST}/AmigaVision-Mini.hdf
 MINI_UAE ?= ${AGSDEST}/AmigaVision-Mini.uae
+ECS_TEMP ?= $(subst ",,${AGSTEMP})-ECS
 MINI_DISTRO_DIR ?= ./content/distro_mini
 MISTER_DISTRO_DIR ?= ${AGSCONTENT}/distro
 CD32_DISTRO_DIR ?= ./cd32
-DISTRO_PACKAGE = $(PYTHON) build/package_distros.py --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh"
-DISTRO_PACKAGE_PROMPT = bash build/run_distros.sh --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh"
+DISTRO_PACKAGE = $(PYTHON) build/package_distros.py --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --ecs-hdf "$(subst ",,${ECS_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh"
+DISTRO_PACKAGE_PROMPT = bash build/run_distros.sh --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --ecs-hdf "$(subst ",,${ECS_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh"
 MINI_FAT32_WARN = $(PYTHON) -c 'import os, sys; path = sys.argv[1]; limit = int(sys.argv[2]); exists = os.path.isfile(path); size = os.path.getsize(path) if exists else 0; gib = size / (1024 ** 3) if exists else 0.0; limit_gib = limit / (1024 ** 3); status = "WARNING" if exists and size > limit else "OK"; msg = f"{status}: Mini HDF size is {size} bytes ({gib:.2f} GiB); FAT32 limit is {limit} bytes ({limit_gib:.2f} GiB)." if exists else f"WARNING: Mini HDF not found at {path}"; print(msg)' "$(subst ",,${MINI_HDF})" "$(FAT32_MAX_FILE_BYTES)"
 
 define print-start-time
@@ -51,6 +53,7 @@ IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision.yaml --al
 MINI_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-Mini.yaml --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 TEST_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --auto-lists -o ${AGSDEST}
 TEST_DRY_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
+ECS_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
 MAKE_MANIFESTS_CMD = pipenv run build/ags_index.py --make-manifests --only-missing
 MAKE_LISTINGS_CMD = $(PYTHON) build/generate_listings.py "$(subst ",,${AGSTEMP})/DH0/AGS2" "$(subst ",,${DISTRO_LISTINGS_DIR})"
 FINALIZE_MAIN_IMAGE = test -f "$(subst ",,${AMIGAVISION_HDF})"
@@ -78,6 +81,15 @@ help:
 		'Prompt for the release date, then package all uploadable platform-specific release artifacts from the built image.' \
 		'' \
 		'Other useful targets:' \
+		'' \
+		'make ecs-artwork' \
+		'Pre-render changed ECS thumbnails from the existing high-resolution IFF masters, without dithering.' \
+		'' \
+		'make ecs-dry / make ecs-image' \
+		'Build the shared ECS menu or AmigaVision-ECS.hdf using one hi-res interlaced 16-color launcher and a separate workspace.' \
+		'' \
+		'make backfill-ecs-archives / make backfill-ecs-metadata / make backfill-ecs-metadata-apply' \
+		'Backfill non-AGA WHDLoad archives (excluding JST), preview metadata imports, or apply confirmed redundant variants.' \
 		'' \
 		'make updates' \
 		'Alias for make update.' \
@@ -139,6 +151,9 @@ help:
 		'make amiga' \
 		'Package the real-Amiga hardware release artifact from the built image.' \
 		'' \
+		'make amiga-ecs' \
+		'Package the built ECS image as .img.xz for Raspberry Pi Imager.' \
+		'' \
 		'make emulators' \
 		'Package the reusable Amiberry-based emulator distribution.' \
 		'' \
@@ -186,6 +201,17 @@ updates: update
 pull-archives:
 	$(call print-start-time)
 	@pipenv run python build/pull_archives.py --dest "$(SOURCE)"
+
+# Full historical backfill; intentionally does not advance normal pull history.
+.PHONY: backfill-ecs-archives backfill-ecs-metadata backfill-ecs-metadata-apply
+backfill-ecs-archives:
+	@pipenv run python build/pull_archives.py --backfill-non-aga --dest "$(SOURCE)/ecs-backfill"
+
+backfill-ecs-metadata:
+	@pipenv run python build/backfill_ecs_metadata.py --source "$(SOURCE)/ecs-backfill"
+
+backfill-ecs-metadata-apply:
+	@pipenv run python build/backfill_ecs_metadata.py --source "$(SOURCE)/ecs-backfill" --apply
 
 import-notwhdl-demos:
 	$(call print-start-time)
@@ -306,6 +332,21 @@ image:
 	@$(MAKE) clone-amiberry
 	@$(FINALIZE_MAIN_IMAGE)
 	@printf '\a'
+
+.PHONY: ecs-artwork ecs-image ecs-dry
+ecs-artwork:
+	@pipenv run python build/ecs_artwork.py
+
+ecs-dry:
+	@mkdir -p "$(ECS_TEMP)" "$(subst ",,${AGSDEST})"
+	@AGSTEMP="$(ECS_TEMP)" AGSCACHEGEN=ecs $(ECS_IMAGE_PREP_CMD) --only-ags-tree
+
+ecs-image:
+	@mkdir -p "$(ECS_TEMP)" "$(subst ",,${AGSDEST})"
+	@$(MAKE_MANIFESTS_CMD)
+	@AGSTEMP="$(ECS_TEMP)" AGSCACHEGEN=ecs $(ECS_IMAGE_PREP_CMD)
+	@$(MAKE) clone-amiberry AGSTEMP="$(ECS_TEMP)"
+	@test -f "$(subst ",,${AGSDEST})/AmigaVision-ECS.hdf"
 
 image-fsuae:
 	$(call print-start-time)
@@ -454,6 +495,10 @@ mini:
 amiga:
 	$(call print-start-time)
 	@$(DISTRO_PACKAGE_PROMPT) amiga
+
+amiga-ecs:
+	$(call print-start-time)
+	@$(DISTRO_PACKAGE_PROMPT) amiga-ecs
 
 clean-temp:
 	$(call print-start-time)

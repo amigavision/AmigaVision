@@ -25,7 +25,7 @@ def parse_args():
     )
     parser.add_argument(
         "package",
-        choices=("all", "mister", "cd32-mister", "emulators", "mini", "pi", "amiga"),
+        choices=("all", "mister", "cd32-mister", "emulators", "mini", "pi", "amiga", "amiga-ecs"),
         help="Package to build.",
     )
     parser.add_argument("--date-stamp", required=True, help="Release date stamp, e.g. 2025.05.05")
@@ -37,6 +37,7 @@ def parse_args():
     parser.add_argument("--mister-root", default="content/distro")
     parser.add_argument("--cd32-root", default="cd32")
     parser.add_argument("--main-hdf", required=True)
+    parser.add_argument("--ecs-hdf", help="Built ECS HDF for the amiga-ecs package")
     parser.add_argument("--saves-hdf", required=True)
     parser.add_argument("--rom-file", required=True)
     parser.add_argument("--listings-dir", required=True)
@@ -552,11 +553,15 @@ def package_rpi(args, output_dir, xz_tool):
 
 
 def package_amiga(args, output_dir, xz_tool):
-    main_hdf = Path(args.main_hdf)
-    require_file(main_hdf, "Main AmigaVision HDF")
+    ecs = args.package == "amiga-ecs"
+    if ecs and not args.ecs_hdf:
+        raise ValueError("--ecs-hdf is required for amiga-ecs")
+    main_hdf = Path(args.ecs_hdf if ecs else args.main_hdf)
+    require_file(main_hdf, "ECS AmigaVision HDF" if ecs else "Main AmigaVision HDF")
 
-    output_path = output_dir / f"AmigaVision-Amiga-{args.date_stamp}.img.xz"
-    log_step("Compressing AmigaVision.hdf for real Amiga hardware")
+    variant = "Amiga-ECS" if ecs else "Amiga"
+    output_path = output_dir / f"AmigaVision-{variant}-{args.date_stamp}.img.xz"
+    log_step(f"Compressing {main_hdf.name} for real Amiga hardware")
     compress_xz(main_hdf, output_path, xz_tool, dry_run=args.dry_run)
     return output_path
 
@@ -576,7 +581,7 @@ def main():
     if any(package in {"mister", "emulators", "mini"} for package in packages):
         archive_tool = find_archive_tool(args.archive_tool)
     xz_tool = None
-    if any(package in {"pi", "amiga"} for package in packages):
+    if any(package in {"pi", "amiga", "amiga-ecs"} for package in packages):
         xz_tool = find_xz_tool()
 
     log_step(f"Writing artifacts to {output_dir}")
@@ -616,7 +621,7 @@ def main():
                     created.append(package_mini(args, output_dir, archive_tool))
                 elif package == "pi":
                     created.append(package_rpi(args, output_dir, xz_tool))
-                elif package == "amiga":
+                elif package in {"amiga", "amiga-ecs"}:
                     created.append(package_amiga(args, output_dir, xz_tool))
                 else:
                     raise AssertionError(f"Unhandled package type: {package}")

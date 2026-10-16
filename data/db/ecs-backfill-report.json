@@ -1,0 +1,2118 @@
+[
+  {
+    "archive": "3DDemo3_v1.0_PartyEdition_Lemon.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Academy_v1.2_2943.lha",
+    "status": "existing",
+    "ids": [
+      "game--academy--academy"
+    ]
+  },
+  {
+    "archive": "AddamsFamily_v1.4_BETA_0419.lha",
+    "status": "existing",
+    "ids": [
+      "game--addamsfamily--addamsfamily"
+    ]
+  },
+  {
+    "archive": "AdidasChampionshipFootball_v1.1_Image.lha",
+    "status": "existing",
+    "ids": [
+      "game--adidaschampfootballimage--adidaschampfootballimage"
+    ]
+  },
+  {
+    "archive": "AgonyDemo_v1.1.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Alianator_v1.0_1905.lha",
+    "status": "existing",
+    "ids": [
+      "game--alianator--alianator"
+    ]
+  },
+  {
+    "archive": "Alien3_v2.2.lha",
+    "status": "existing",
+    "ids": [
+      "game--alien3--alien3"
+    ]
+  },
+  {
+    "archive": "AllTerrainRacingXmasDemo_v1.2.lha",
+    "status": "existing",
+    "ids": [
+      "game--allterrainracingxmasdemo--allterrainracingxmasdemo"
+    ]
+  },
+  {
+    "archive": "Almighty_v1.0_Manitou.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "AmericanPoker_v1.0_Pl.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "AmiRobbo2Demo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "AmiRobbo_v1.0_Pl.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "AnarchyParty1991Slideshow_v1.0_Razor1911.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "AnarchyPartySlideshow_v1.0_Quartz.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "ArabianNights_v2.0_1454.lha",
+    "status": "existing",
+    "ids": [
+      "game--arabiannights--arabiannights"
+    ]
+  },
+  {
+    "archive": "ArmourGeddon_v1.1_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--armourgeddonntsc--armourgeddonntsc"
+    ]
+  },
+  {
+    "archive": "ArtificialDreams_v1.1_0493.lha",
+    "status": "existing",
+    "ids": [
+      "game--artificialdreams--artificialdreams"
+    ]
+  },
+  {
+    "archive": "Atlantyda_v1.1_Pl.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "AwesomeDemo_v1.0_1450.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "B17FlyingFortressDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "BatmanTheMovie_v1.72_NTSC.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": [
+      "game--batmanthemovie--batmanthemovie",
+      "game--batmanthemovie2disk--batmanthemovie2disk"
+    ]
+  },
+  {
+    "archive": "BattleCommand_v2.0_0858.lha",
+    "status": "existing",
+    "ids": [
+      "game--battlecommand--battlecommand"
+    ]
+  },
+  {
+    "archive": "BattleCommand_v2.0_NTSC_2044.lha",
+    "status": "existing",
+    "ids": [
+      "game--battlecommandntsc--battlecommandntsc"
+    ]
+  },
+  {
+    "archive": "BattleSquadronDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "BernhardSumnerMusicDisk1_v1.0_Relay.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Bivouac_v1.3_Fr.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "BlackDawn2_v1.2.lha",
+    "status": "existing",
+    "ids": [
+      "game--blackdawn2--blackdawn2"
+    ]
+  },
+  {
+    "archive": "BlackDawn2_v1.2_Shareware.lha",
+    "status": "existing",
+    "ids": [
+      "game--blackdawn2sw--blackdawn2sw"
+    ]
+  },
+  {
+    "archive": "Blockbuster_v1.2_NTSC_2058.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "BodyBlows_v2.0_Fast_1147.lha",
+    "status": "existing",
+    "ids": [
+      "game--bodyblowsfast--bodyblowsfast"
+    ]
+  },
+  {
+    "archive": "Breach&DataDisk_v1.1_NTSC_1487.lha",
+    "status": "existing",
+    "ids": [
+      "game--breach&datadiskntsc--breach&datadiskntsc"
+    ]
+  },
+  {
+    "archive": "Breach_v1.1.lha",
+    "status": "existing",
+    "ids": [
+      "game--breach--breach"
+    ]
+  },
+  {
+    "archive": "BurgerTime_v1.0.lha",
+    "status": "existing",
+    "ids": [
+      "game--burgertime--burgertime"
+    ]
+  },
+  {
+    "archive": "CadaverDemos_v1.2.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "CastleMaster&TheCrypt_v2.0_0612.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "ChaosEngineDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Citadel_v1.4_RemonsteredEdition.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "ConquestsOfTheLongbow_v1.1-B_MT32.lha",
+    "status": "existing",
+    "ids": [
+      "game--conquestsofthelongbowmt32--conquestsofthelongbowmt32"
+    ]
+  },
+  {
+    "archive": "CrashGarrett_v1.1.lha",
+    "status": "existing",
+    "ids": [
+      "game--crashgarrett--crashgarrett"
+    ]
+  },
+  {
+    "archive": "Cybernoid_v1.3_OldTileSet.lha",
+    "status": "existing",
+    "ids": [
+      "game--cybernoidoldtileset--cybernoidoldtileset"
+    ]
+  },
+  {
+    "archive": "DangerFreak_v1.0_0975.lha",
+    "status": "existing",
+    "ids": [
+      "game--dangerfreak--dangerfreak"
+    ]
+  },
+  {
+    "archive": "DangerousStreets_v1.3_1019.lha",
+    "status": "existing",
+    "ids": [
+      "game--dangerousstreets--dangerousstreets"
+    ]
+  },
+  {
+    "archive": "DarkHellBBSTrackmo_v1.0_Atomic.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Defender_v1.1_Acid_AmigaFormat.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "Denaris_v2.0_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--denarisntsc--denarisntsc"
+    ]
+  },
+  {
+    "archive": "DevilsTempleDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Diabolik02_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Diabolik05_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "DonkeyKong_v1.0_Bignonia.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "DonkeyKong_v1.2.lha",
+    "status": "existing",
+    "ids": [
+      "game--donkeykong--donkeykong"
+    ]
+  },
+  {
+    "archive": "DragonScape_v1.1_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--dragonscapentsc--dragonscapentsc"
+    ]
+  },
+  {
+    "archive": "DragonsLair&EscapeFromSingesCastle_v1.2a_Fast_1360&0980.lha",
+    "status": "existing",
+    "ids": [
+      "game--dragonslair&escapefast--dragonslair&escapefast"
+    ]
+  },
+  {
+    "archive": "DragonsLair&EscapeFromSingesCastle_v1.2a_Slow_1360&0980.lha",
+    "status": "existing",
+    "ids": [
+      "game--dragonslair&escapeslow--dragonslair&escapeslow"
+    ]
+  },
+  {
+    "archive": "Dune2_v1.1_1548.lha",
+    "status": "existing",
+    "ids": [
+      "game--dune2--dune2"
+    ]
+  },
+  {
+    "archive": "Dune2_v1.1_It.lha",
+    "status": "existing",
+    "ids": [
+      "game--dune2it--dune2it"
+    ]
+  },
+  {
+    "archive": "DylanDog02_v1.0_It_2695.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "DylanDog12_v1.0_It_2907.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "DylanDog16_v1.0a_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Dynamo_v1.4_0995.lha",
+    "status": "existing",
+    "ids": [
+      "game--dynamo--dynamo"
+    ]
+  },
+  {
+    "archive": "ElectronsAtWork_v1.1_TheElectronicKnights.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "ElevatorAction_v1.02_ECS.lha",
+    "status": "existing",
+    "ids": [
+      "game--elevatoractionecs--elevatoractionecs"
+    ]
+  },
+  {
+    "archive": "ElevatorAction_v1.02_OCS.lha",
+    "status": "existing",
+    "ids": [
+      "game--elevatoractionocs--elevatoractionocs"
+    ]
+  },
+  {
+    "archive": "Elf_v1.3_Ocean_EnFrEs.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "Eliminator_v1.3_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--eliminatorntsc--eliminatorntsc"
+    ]
+  },
+  {
+    "archive": "EscapeFromThePlanetOfTheRobotMonsters_v1.7_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--escaperobotmonstersntsc--escaperobotmonstersntsc"
+    ]
+  },
+  {
+    "archive": "EurekaMaths4Eme3Eme_v1.0_Fr.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "EurekaMaths6Eme5Eme_v1.0_Fr.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Evolution_v1.0_Desire.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Exile_v1.0_Desire.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Exit1_v1.0_Vectors.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Exit2_v1.0_Vectors.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Exit3_v1.0_Vectors.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Exit4_v1.0_Vectors.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "F29Retaliator_v2.0_0022.lha",
+    "status": "existing",
+    "ids": [
+      "game--f29retaliator--f29retaliator"
+    ]
+  },
+  {
+    "archive": "F29Retaliator_v2.0_Early2Disk.lha",
+    "status": "existing",
+    "ids": [
+      "game--f29retaliatorearly--f29retaliatorearly"
+    ]
+  },
+  {
+    "archive": "FightinSpirit_v1.3_Image.lha",
+    "status": "existing",
+    "ids": [
+      "game--fightinspiritimage--fightinspiritimage"
+    ]
+  },
+  {
+    "archive": "FirstPersonPinball_v1.0_0418.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "FirstSamurai_v2.1_A1200Version_NONAGA.lha",
+    "status": "existing",
+    "ids": [
+      "game--firstsamuraia1200version--firstsamuraia1200version"
+    ]
+  },
+  {
+    "archive": "FliesAttackOnEarth_v1.0.lha",
+    "status": "existing",
+    "ids": [
+      "game--fliesattackonearth--fliesattackonearth"
+    ]
+  },
+  {
+    "archive": "FliesAttackOnEarth_v1.0_De_3036.lha",
+    "status": "existing",
+    "ids": [
+      "game--fliesattackonearthde--fliesattackonearthde"
+    ]
+  },
+  {
+    "archive": "FluchtAusColditz_v1.4a_De.lha",
+    "status": "existing",
+    "ids": [
+      "game--fluchtauscolditzde--fluchtauscolditzde"
+    ]
+  },
+  {
+    "archive": "ForestDumbForever_v1.1_Pl.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "ForgottenMine2Preview_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "GearWorks_v1.0_NTSC_1028.lha",
+    "status": "existing",
+    "ids": [
+      "game--gearworksntsc--gearworksntsc"
+    ]
+  },
+  {
+    "archive": "GhostBattle_v1.3.lha",
+    "status": "existing",
+    "ids": [
+      "game--ghostbattle--ghostbattle"
+    ]
+  },
+  {
+    "archive": "GhoulsNGhosts_v1.3_1Disk_1985.lha",
+    "status": "existing",
+    "ids": [
+      "game--ghoulsnghosts1disk--ghoulsnghosts1disk"
+    ]
+  },
+  {
+    "archive": "GoForTheRecord_v1.0_Quartz.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "GodsDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Gods_v3.2_0666.lha",
+    "status": "existing",
+    "ids": [
+      "game--gods--gods"
+    ]
+  },
+  {
+    "archive": "GreatGianaSisters_v1.7_2945.lha",
+    "status": "existing",
+    "ids": [
+      "game--greatgianasisters--greatgianasisters"
+    ]
+  },
+  {
+    "archive": "GreatestBits2_v1.0_Pussy.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "GridStart_v1.1_AltVersion.lha",
+    "status": "existing",
+    "ids": [
+      "game--gridstartalt--gridstartalt"
+    ]
+  },
+  {
+    "archive": "Gyruss_v1.0_2MB.lha",
+    "status": "existing",
+    "ids": [
+      "game--gyruss2mb--gyruss2mb"
+    ]
+  },
+  {
+    "archive": "HareRaisingHavoc_v1.0.lha",
+    "status": "existing",
+    "ids": [
+      "game--hareraisinghavoc--hareraisinghavoc"
+    ]
+  },
+  {
+    "archive": "HighwayHawks_v1.2_BETA.lha",
+    "status": "existing",
+    "ids": [
+      "game--highwayhawks--highwayhawks"
+    ]
+  },
+  {
+    "archive": "HighwayPatrol2_v1.3_2305.lha",
+    "status": "existing",
+    "ids": [
+      "game--highwaypatrol2--highwaypatrol2"
+    ]
+  },
+  {
+    "archive": "HighwayPatrol2_v1.3_Fast_2305.lha",
+    "status": "existing",
+    "ids": [
+      "game--highwaypatrol2fast--highwaypatrol2fast"
+    ]
+  },
+  {
+    "archive": "Hologon_v1.2_512k_TheElectronicKnights.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Hugo_v1.0_Es_Spanish_hack_by_K-teto.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "HyperSports_v0.93.lha",
+    "status": "existing",
+    "ids": [
+      "game--hypersports--hypersports"
+    ]
+  },
+  {
+    "archive": "InviyyaDemo_v1.1.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "JOESlideshow2_v1.0_Scoopex.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "JoanOfArc_v1.1_NTSC_2318.lha",
+    "status": "existing",
+    "ids": [
+      "game--joanofarcntsc--joanofarcntsc"
+    ]
+  },
+  {
+    "archive": "KickOff2CompetitionVersion_v1.09a.lha",
+    "status": "existing",
+    "ids": [
+      "game--kickoff2cv--kickoff2cv"
+    ]
+  },
+  {
+    "archive": "KickOff2PlusWorldCup90_v1.09a_0168.lha",
+    "status": "existing",
+    "ids": [
+      "game--kickoff2pluswc90--kickoff2pluswc90"
+    ]
+  },
+  {
+    "archive": "KickOff2PlusWorldCup90_v1.09a_De_0689.lha",
+    "status": "existing",
+    "ids": [
+      "game--kickoff2pluswc90de--kickoff2pluswc90de"
+    ]
+  },
+  {
+    "archive": "KickOff2PlusWorldCup90_v1.09a_Fr.lha",
+    "status": "existing",
+    "ids": [
+      "game--kickoff2pluswc90fr--kickoff2pluswc90fr"
+    ]
+  },
+  {
+    "archive": "KickOff2PlusWorldCup90_v1.09a_It_2573.lha",
+    "status": "existing",
+    "ids": [
+      "game--kickoff2pluswc90it--kickoff2pluswc90it"
+    ]
+  },
+  {
+    "archive": "KickOff2_v1.09a_2191.lha",
+    "status": "existing",
+    "ids": [
+      "game--kickoff2--kickoff2"
+    ]
+  },
+  {
+    "archive": "KickOff2_v1.09a_De_1245.lha",
+    "status": "existing",
+    "ids": [
+      "game--kickoff2de--kickoff2de"
+    ]
+  },
+  {
+    "archive": "KickOff2_v1.09a_Es_2507.lha",
+    "status": "existing",
+    "ids": [
+      "game--kickoff2es--kickoff2es"
+    ]
+  },
+  {
+    "archive": "KickOff2_v1.09a_Fr.lha",
+    "status": "existing",
+    "ids": [
+      "game--kickoff2fr--kickoff2fr"
+    ]
+  },
+  {
+    "archive": "KickOff2_v1.09a_It_2574.lha",
+    "status": "existing",
+    "ids": [
+      "game--kickoff2it--kickoff2it"
+    ]
+  },
+  {
+    "archive": "KingpinDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "KingsBounty_v1.0_FasterVersion.lha",
+    "status": "existing",
+    "ids": [
+      "game--kingsbountyfv--kingsbountyfv"
+    ]
+  },
+  {
+    "archive": "KingsQuest5_v1.3_De_MT32.lha",
+    "status": "existing",
+    "ids": [
+      "game--kingsquest5demt32--kingsquest5demt32"
+    ]
+  },
+  {
+    "archive": "KingsQuest5_v1.3_It_MT32.lha",
+    "status": "existing",
+    "ids": [
+      "game--kingsquest5itmt32--kingsquest5itmt32"
+    ]
+  },
+  {
+    "archive": "KingsQuest5_v1.3_MT32.lha",
+    "status": "existing",
+    "ids": [
+      "game--kingsquest5mt32--kingsquest5mt32"
+    ]
+  },
+  {
+    "archive": "KninPeaks_v0.1_Reality.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "LCDDreams_v1.0_Fast.lha",
+    "status": "existing",
+    "ids": [
+      "game--lcddreamsfast--lcddreamsfast"
+    ]
+  },
+  {
+    "archive": "LEssentialMathsNiveau6eme_v1.0_Fr.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Larrie_v1.1_Crysys.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "LastActionHero_v1.2_Hack_by_AmigaLive.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "LastSoldier_v1.1_Pl.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "LegalizeIt2_v1.2_Anarchy.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "LegendOfFaerghail_v2.1_2844.lha",
+    "status": "existing",
+    "ids": [
+      "game--legendoffaerghail--legendoffaerghail"
+    ]
+  },
+  {
+    "archive": "Legion_v1.0_Pl.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Legion_v1.1a_BETA.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Lemmings2Demo_v1.0_0786.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "LemmingsDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "LemmingsHolidayDemo_v1.1.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Liberation_v1.0_0617.lha",
+    "status": "existing",
+    "ids": [
+      "game--liberation--liberation"
+    ]
+  },
+  {
+    "archive": "LionheartDemo_v1.2.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "LionheartDemo_v1.2_1MB.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "LockNChase_v1.02.lha",
+    "status": "existing",
+    "ids": [
+      "game--locknchase--locknchase"
+    ]
+  },
+  {
+    "archive": "LureOfTheTemptress_v2.2_2030.lha",
+    "status": "existing",
+    "ids": [
+      "game--lureofthetemptress--lureofthetemptress"
+    ]
+  },
+  {
+    "archive": "LureOfTheTemptress_v2.2_De.lha",
+    "status": "existing",
+    "ids": [
+      "game--lureofthetemptressde--lureofthetemptressde"
+    ]
+  },
+  {
+    "archive": "LureOfTheTemptress_v2.2_Fr_2040.lha",
+    "status": "existing",
+    "ids": [
+      "game--lureofthetemptressfr--lureofthetemptressfr"
+    ]
+  },
+  {
+    "archive": "LureOfTheTemptress_v2.2_It_2028.lha",
+    "status": "existing",
+    "ids": [
+      "game--lureofthetemptressit--lureofthetemptressit"
+    ]
+  },
+  {
+    "archive": "MadBomberVersion2_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "MagicPocketsDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "MagicPockets_v3.3_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--magicpocketsntsc--magicpocketsntsc"
+    ]
+  },
+  {
+    "archive": "MagicSerpent_v1.0_CDTV.lha",
+    "status": "existing",
+    "ids": [
+      "game--magicserpentcdtv--magicserpentcdtv"
+    ]
+  },
+  {
+    "archive": "ManhattanDealers_v2.1_De.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "ManiacMansion_v1.6_It.lha",
+    "status": "existing",
+    "ids": [
+      "game--maniacmansionit--maniacmansionit"
+    ]
+  },
+  {
+    "archive": "Masterpieces_v1.0_Kefrens.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "MaxxParty_v1.0_Intense.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "MaydaySquad_v2.0_Fr.lha",
+    "status": "existing",
+    "ids": [
+      "game--maydaysquadfr--maydaysquadfr"
+    ]
+  },
+  {
+    "archive": "MeanStreets_v1.2_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--meanstreetsntsc--meanstreetsntsc"
+    ]
+  },
+  {
+    "archive": "MegaBlock2_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Megademo_v1.0_ArcadiaTeam.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "MetagalacticLlamas_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "MoebiusGoatlizard_v0.1.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "MoonPatrol_v1.01_ECS.lha",
+    "status": "existing",
+    "ids": [
+      "game--moonpatrolecs--moonpatrolecs"
+    ]
+  },
+  {
+    "archive": "MoonPatrol_v1.01_OCS.lha",
+    "status": "existing",
+    "ids": [
+      "game--moonpatrolocs--moonpatrolocs"
+    ]
+  },
+  {
+    "archive": "MurdersInSpace_v1.4_Es_Files.lha",
+    "status": "existing",
+    "ids": [
+      "game--murdersinspaceesfiles--murdersinspaceesfiles"
+    ]
+  },
+  {
+    "archive": "MurdersInSpace_v1.4_Es_Image.lha",
+    "status": "existing",
+    "ids": [
+      "game--murdersinspaceesimage--murdersinspaceesimage"
+    ]
+  },
+  {
+    "archive": "MurdersInSpace_v1.4_Image_2344.lha",
+    "status": "existing",
+    "ids": [
+      "game--murdersinspaceimage--murdersinspaceimage"
+    ]
+  },
+  {
+    "archive": "MusicForTheLost_v1.0_Abyss.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "MusicThingy_v1.01_Exit.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Nebulus2_v1.6_Image_1713.lha",
+    "status": "existing",
+    "ids": [
+      "game--nebulus2image--nebulus2image"
+    ]
+  },
+  {
+    "archive": "Neutralizer2Demo_v0.1_BETA.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "NewZealandStoryDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "NewtronsMusicBox_v1.0_Orix.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "NightWalk_v1.0_BETA.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "NinjaGaiden2_v0.1_BETA.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "NoisesOfPansy_v1.0_Exit&Erotic.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Obitus_v1.5_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--obitusntsc--obitusntsc"
+    ]
+  },
+  {
+    "archive": "OrkDemo_v1.0_1452.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Oswald_v1.2_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--oswaldntsc--oswaldntsc"
+    ]
+  },
+  {
+    "archive": "Outlands&DizzyDice_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Paladin&DataDisk_v1.1_2982.lha",
+    "status": "existing",
+    "ids": [
+      "game--paladin&datadisk--paladin&datadisk"
+    ]
+  },
+  {
+    "archive": "PassagersDuVent2_v1.0_Fr.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "PassagersDuVent_v1.0_Fr.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "PasseggeriDelVento_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Phoenix_v1.02.lha",
+    "status": "existing",
+    "ids": [
+      "game--phoenix--phoenix"
+    ]
+  },
+  {
+    "archive": "PiracyDeluxeDeletedLevel_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "PizzaConnection_v1.0_De.lha",
+    "status": "existing",
+    "ids": [
+      "game--pizzaconnectionde--pizzaconnectionde"
+    ]
+  },
+  {
+    "archive": "Polychrome_v1.0_Intense.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Quartzbox_v1.0_Quartz.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Rampage_v1.0_TheElectronicKnights.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Realms_v1.3_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--realmsntsc--realmsntsc"
+    ]
+  },
+  {
+    "archive": "Red41Demo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "RedBaron_v2.1.lha",
+    "status": "existing",
+    "ids": [
+      "game--redbaron--redbaron"
+    ]
+  },
+  {
+    "archive": "ReisendeImWind2_v1.0_De.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "ReisendeImWind_v1.0_De.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Renegades_v1.0.lha",
+    "status": "existing",
+    "ids": [
+      "game--renegades--renegades",
+      "game--renegades--renegadeseditor"
+    ]
+  },
+  {
+    "archive": "RevengeOfDefender_v1.0_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--revengeofdefenderntsc--revengeofdefenderntsc"
+    ]
+  },
+  {
+    "archive": "RicercaDellAugelloDelTempo_v1.5_It_Files.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "RicercaDellAugelloDelTempo_v1.5_It_Image.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "RoboCop2_v1.2_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--robocop2ntsc--robocop2ntsc"
+    ]
+  },
+  {
+    "archive": "RuffNTumble_v2.7_512k_0199.lha",
+    "status": "existing",
+    "ids": [
+      "game--ruffntumble512k--ruffntumble512k"
+    ]
+  },
+  {
+    "archive": "SDI_v1.2_Cinemaware_0720.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "Scramble_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "ScreamingWings_v1.1_Image_3021.lha",
+    "status": "existing",
+    "ids": [
+      "game--screamingwingsimage--screamingwingsimage"
+    ]
+  },
+  {
+    "archive": "ShadowOfTheBeast2Demo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "ShadowOfTheBeastDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "ShadowOfTheBeast_v2.6_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--shadowofthebeastntsc--shadowofthebeastntsc"
+    ]
+  },
+  {
+    "archive": "ShadowSorcerer_v1.2_Es.lha",
+    "status": "existing",
+    "ids": [
+      "game--shadowsorcereres--shadowsorcereres"
+    ]
+  },
+  {
+    "archive": "SideWinder_v1.2.lha",
+    "status": "existing",
+    "ids": [
+      "game--sidewinder--sidewinder"
+    ]
+  },
+  {
+    "archive": "Siedler_v1.7_LowMem_De_0401.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "SiliconSounds_v1.0_Quartz.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Simulman01_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Simulman02_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Simulman03_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Simulman04_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Simulman05_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Simulman06_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Simulman07_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Simulman08_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Simulman09_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Simulman10_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Simulman11_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Sixiang_v1.1_AltVersion.lha",
+    "status": "existing",
+    "ids": [
+      "game--sixiangalt--sixiangalt"
+    ]
+  },
+  {
+    "archive": "SkautKwatermaster_v1.0a_Pl.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Skull&Crossbones_v1.3_0385.lha",
+    "status": "existing",
+    "ids": [
+      "game--skull&crossbones--skull&crossbones"
+    ]
+  },
+  {
+    "archive": "SoundDisk_v1.0_ArcadiaTeam.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "SoundMania_v1.0_Pussy.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "SpaceAceDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "SpacePanicDemo_v1.1_De.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "SpellBound_v1.3_Psygnosis_Image_0783.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "Spiderman2_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Spiderman3_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Spiderman_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "SunTracker2_v1.0_Analog&Powerlords&Demons.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "SuperHangOn_v1.7a_0816.lha",
+    "status": "existing",
+    "ids": [
+      "game--superhangon--superhangon"
+    ]
+  },
+  {
+    "archive": "SuperHangOn_v1.7a_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--superhangonntsc--superhangonntsc"
+    ]
+  },
+  {
+    "archive": "SuperSpaceInvaders_v2.0_0585.lha",
+    "status": "existing",
+    "ids": [
+      "game--superspaceinvaders--superspaceinvaders"
+    ]
+  },
+  {
+    "archive": "TVSportsBasketball2223_v1.3.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "TVSportsBasketball2223_v1.3_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "TVSportsBasketball_v1.3_It.lha",
+    "status": "existing",
+    "ids": [
+      "game--tvsportsbasketballit--tvsportsbasketballit"
+    ]
+  },
+  {
+    "archive": "Tapper_v1.0.lha",
+    "status": "existing",
+    "ids": [
+      "game--tapper--tapper"
+    ]
+  },
+  {
+    "archive": "Technocop_v1.2_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--technocopntsc--technocopntsc"
+    ]
+  },
+  {
+    "archive": "TemplosSagrados_v1.0_Es.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Tex01_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Tex02_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Tex03_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Tex04_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Tex05_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Tex06_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Tex07_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Tex08_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Tex09_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Tex10_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Tex11_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Tex12_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "TexPiomboCaldoPart1_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "TexPiomboCaldoPart2_v1.0_It.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "TimeRunners01_v1.0a_2593.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners01--timerunners01"
+    ]
+  },
+  {
+    "archive": "TimeRunners02_v1.0a_2713.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners02--timerunners02"
+    ]
+  },
+  {
+    "archive": "TimeRunners03_v1.0a_2714.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners03--timerunners03"
+    ]
+  },
+  {
+    "archive": "TimeRunners04_v1.0_2753.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners04--timerunners04"
+    ]
+  },
+  {
+    "archive": "TimeRunners05_v1.0a_2715.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners05--timerunners05"
+    ]
+  },
+  {
+    "archive": "TimeRunners06_v1.0a_2716.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners06--timerunners06"
+    ]
+  },
+  {
+    "archive": "TimeRunners07_v1.0a_2717.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners07--timerunners07"
+    ]
+  },
+  {
+    "archive": "TimeRunners08_v1.0a_2718.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners08--timerunners08"
+    ]
+  },
+  {
+    "archive": "TimeRunners09_v1.0a_2719.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners09--timerunners09"
+    ]
+  },
+  {
+    "archive": "TimeRunners10_v1.0a.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners10--timerunners10"
+    ]
+  },
+  {
+    "archive": "TimeRunners11_v1.0_2720.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners11--timerunners11"
+    ]
+  },
+  {
+    "archive": "TimeRunners12_v1.0_2721.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners12--timerunners12"
+    ]
+  },
+  {
+    "archive": "TimeRunners13_v1.0_2722.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners13--timerunners13"
+    ]
+  },
+  {
+    "archive": "TimeRunners14_v1.0_2723.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners14--timerunners14"
+    ]
+  },
+  {
+    "archive": "TimeRunners15_v1.0_2724.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners15--timerunners15"
+    ]
+  },
+  {
+    "archive": "TimeRunners16_v1.0_2725.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners16--timerunners16"
+    ]
+  },
+  {
+    "archive": "TimeRunners17_v1.0_2726.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners17--timerunners17"
+    ]
+  },
+  {
+    "archive": "TimeRunners18_v1.0_2727.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners18--timerunners18"
+    ]
+  },
+  {
+    "archive": "TimeRunners19_v1.0_2728.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners19--timerunners19"
+    ]
+  },
+  {
+    "archive": "TimeRunners20_v1.0_2729.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners20--timerunners20"
+    ]
+  },
+  {
+    "archive": "TimeRunners21_v1.0_2754.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners21--timerunners21"
+    ]
+  },
+  {
+    "archive": "TimeRunners22_v1.0_2730.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners22--timerunners22"
+    ]
+  },
+  {
+    "archive": "TimeRunners23_v1.0_2731.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners23--timerunners23"
+    ]
+  },
+  {
+    "archive": "TimeRunners24_v1.0_2732.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners24--timerunners24"
+    ]
+  },
+  {
+    "archive": "TimeRunners25_v1.0_2733.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners25--timerunners25"
+    ]
+  },
+  {
+    "archive": "TimeRunners26_v1.0_2734.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners26--timerunners26"
+    ]
+  },
+  {
+    "archive": "TimeRunners27_v1.0_2735.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners27--timerunners27"
+    ]
+  },
+  {
+    "archive": "TimeRunners28_v1.0_2736.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners28--timerunners28"
+    ]
+  },
+  {
+    "archive": "TimeRunners29_v1.0_2737.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners29--timerunners29"
+    ]
+  },
+  {
+    "archive": "TimeRunners30_v1.0_2738.lha",
+    "status": "existing",
+    "ids": [
+      "game--timerunners30--timerunners30"
+    ]
+  },
+  {
+    "archive": "Tony&FriendsInKelloggsLand_v1.0_Hack_by_Earok.lha",
+    "status": "existing",
+    "ids": [
+      "game--tony&friends--tony&friends"
+    ]
+  },
+  {
+    "archive": "TotalRecall_v1.0_Image_1769.lha",
+    "status": "existing",
+    "ids": [
+      "game--totalrecallimage--totalrecallimage"
+    ]
+  },
+  {
+    "archive": "Transhuman_v0.1_TheElectronicKnights_BETA.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "TurboOutRun_v2.0_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--turbooutrunntsc--turbooutrunntsc"
+    ]
+  },
+  {
+    "archive": "Turrican2Demo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Turrican3Demo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Turrican3_v1.6_Image_2633.lha",
+    "status": "existing",
+    "ids": [
+      "game--turrican3image--turrican3image"
+    ]
+  },
+  {
+    "archive": "TurricanDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "UMS&DataDisks_v1.0_0753&1694&1794.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "UNSquadron_v1.2_Hack_by_Earok.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "USChampionshipVBall_v1.10.lha",
+    "status": "existing",
+    "ids": [
+      "game--uschampionshipvball--uschampionshipvball"
+    ]
+  },
+  {
+    "archive": "Ultima6_v1.2_0294.lha",
+    "status": "existing",
+    "ids": [
+      "game--ultima6--ultima6"
+    ]
+  },
+  {
+    "archive": "Ultima6_v1.2_NTSC.lha",
+    "status": "existing",
+    "ids": [
+      "game--ultima6ntsc--ultima6ntsc"
+    ]
+  },
+  {
+    "archive": "Universe_v1.5_AltVersion.lha",
+    "status": "existing",
+    "ids": [
+      "game--universealt--universealt"
+    ]
+  },
+  {
+    "archive": "VectorUpYourAss_v1.0_NewWave.lha",
+    "status": "deferred",
+    "reason": "non-game collection"
+  },
+  {
+    "archive": "Walker_v1.1_Crunched_0159.lha",
+    "status": "existing",
+    "ids": [
+      "game--walkercrunched--walkercrunched"
+    ]
+  },
+  {
+    "archive": "Walker_v1.1_Crunched_NoSpeech_0159.lha",
+    "status": "existing",
+    "ids": [
+      "game--walkercrunchednospeech--walkercrunchednospeech"
+    ]
+  },
+  {
+    "archive": "Walker_v1.1_NoSpeech_0159.lha",
+    "status": "existing",
+    "ids": [
+      "game--walkernospeech--walkernospeech"
+    ]
+  },
+  {
+    "archive": "WhalesVoyage_v1.0.lha",
+    "status": "existing",
+    "ids": [
+      "game--whalesvoyage--whalesvoyage"
+    ]
+  },
+  {
+    "archive": "WhoFramedRogerRabbit_v2.0_PreRelease.lha",
+    "status": "existing",
+    "ids": [
+      "game--whoframedrogerrabbitpr--whoframedrogerrabbitpr"
+    ]
+  },
+  {
+    "archive": "WonderDogSE_v1.0_Hack_by_Earok.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "WonderboyInMonsterlandSE_v1.1_Hack_by_Earok.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "WrathOfTheDemon_v1.01_0606.lha",
+    "status": "existing",
+    "ids": [
+      "game--wrathofthedemon--wrathofthedemon"
+    ]
+  },
+  {
+    "archive": "WrathOfTheDemon_v1.0_CDTV.lha",
+    "status": "existing",
+    "ids": [
+      "game--wrathofthedemoncdtv--wrathofthedemoncdtv"
+    ]
+  },
+  {
+    "archive": "Xenon2Audio_v0.2b_BETA.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Xenon2Demo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "YoJoeDemo_v1.0.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "ZaZelaznaBrama_v1.1_Pl.lha",
+    "status": "review",
+    "reason": "no unique existing family/language",
+    "matches": []
+  },
+  {
+    "archive": "Ziriax_v1.3_UltimateEdition_Ross.lha",
+    "status": "review",
+    "reason": "special variant requires metadata review"
+  },
+  {
+    "archive": "Zool_v3.2_BETA.lha",
+    "status": "existing",
+    "ids": [
+      "game--zool--zool"
+    ]
+  },
+  {
+    "archive": "AigleDOr_v1.2_512k_Fr_2600.lha",
+    "status": "added",
+    "id": "game--aigledor512kfr--aigledor512kfr",
+    "preferred_version": "game--goldeneagle--goldeneagle"
+  },
+  {
+    "archive": "AirSupport_v1.2_512k_1320.lha",
+    "status": "added",
+    "id": "game--airsupport512k--airsupport512k",
+    "preferred_version": "game--airsupportntsc--airsupportntsc"
+  },
+  {
+    "archive": "AirSupport_v1.2_512k_NTSC_1325.lha",
+    "status": "added",
+    "id": "game--airsupport512kntsc--airsupport512kntsc",
+    "preferred_version": "game--airsupportntsc--airsupportntsc"
+  },
+  {
+    "archive": "ArabianNights_v2.0_512k_1454.lha",
+    "status": "added",
+    "id": "game--arabiannights512k--arabiannights512k",
+    "preferred_version": "game--arabiannights--arabiannights"
+  },
+  {
+    "archive": "BushBuck_v1.0_512k_1962.lha",
+    "status": "added",
+    "id": "game--bushbuck512k--bushbuck512k",
+    "preferred_version": "game--bushbuck--bushbuck"
+  },
+  {
+    "archive": "BushBuck_v1.0_512k_De_1421.lha",
+    "status": "added",
+    "id": "game--bushbuck512kde--bushbuck512kde",
+    "preferred_version": "game--bushbuckde--bushbuckde"
+  },
+  {
+    "archive": "Elfmania_v2.0_512k_0114.lha",
+    "status": "added",
+    "id": "game--elfmania512k--elfmania512k",
+    "preferred_version": "game--elfmania--elfmania"
+  },
+  {
+    "archive": "GoldenEagle_v1.2_512k.lha",
+    "status": "added",
+    "id": "game--goldeneagle512k--goldeneagle512k",
+    "preferred_version": "game--goldeneagle--goldeneagle"
+  },
+  {
+    "archive": "HiredGuns_v1.0_512k_1114.lha",
+    "status": "added",
+    "id": "game--hiredguns512k--hiredguns512k",
+    "preferred_version": "game--hiredguns--hiredguns"
+  },
+  {
+    "archive": "HiredGunsDemo_v1.0_512k.lha",
+    "status": "added",
+    "id": "game--hiredgunsdemo512k--hiredgunsdemo512k",
+    "preferred_version": "game--hiredguns--hiredguns"
+  },
+  {
+    "archive": "MaxRally_v1.3_LowMem.lha",
+    "status": "added",
+    "id": "game--maxrallylowmem--maxrallylowmem",
+    "preferred_version": "game--maxrallyaga--maxrallyaga"
+  },
+  {
+    "archive": "MoonBase_v1.1_512k_2660.lha",
+    "status": "added",
+    "id": "game--moonbase512k--moonbase512k",
+    "preferred_version": "game--moonbase--moonbase"
+  },
+  {
+    "archive": "MoonBase_v1.1_512k_Fr.lha",
+    "status": "added",
+    "id": "game--moonbase512kfr--moonbase512kfr",
+    "preferred_version": "game--moonbase--moonbase"
+  },
+  {
+    "archive": "Settlers_v1.7_LowMem_0143.lha",
+    "status": "added",
+    "id": "game--settlerslowmem--settlerslowmem",
+    "preferred_version": "game--settlers--settlers"
+  },
+  {
+    "archive": "Settlers_v1.7_LowMem_Fr_2378.lha",
+    "status": "added",
+    "id": "game--settlerslowmemfr--settlerslowmemfr",
+    "preferred_version": "game--settlers--settlers"
+  },
+  {
+    "archive": "SinkOrSwim_v1.2_512k_1065.lha",
+    "status": "added",
+    "id": "game--sinkorswim512k--sinkorswim512k",
+    "preferred_version": "game--sinkorswim--sinkorswim"
+  },
+  {
+    "archive": "SpaceQuestEnhanced_v2.2_512k_2222.lha",
+    "status": "added",
+    "id": "game--spacequestenhanced512k--spacequestenhanced512k",
+    "preferred_version": "game--spacequestenhanced--spacequestenhanced"
+  },
+  {
+    "archive": "SuperSillySkidmarks_v2.2_LowMem_CD.lha",
+    "status": "added",
+    "id": "game--supersillyskidmarkslmcd--supersillyskidmarkslmcd",
+    "preferred_version": "game--supersillyskidmarkscd--supersillyskidmarkscd"
+  },
+  {
+    "archive": "SuperSkidmarks+_v2.2_LowMem_CD.lha",
+    "status": "added",
+    "id": "game--superskidmarks+lmcd--superskidmarks+lmcd",
+    "preferred_version": "game--superskidmarks+cd--superskidmarks+cd"
+  },
+  {
+    "archive": "SuperSkidmarksFarmYardEdition_v2.2_LowMem_CD.lha",
+    "status": "added",
+    "id": "game--superskidmarksfyedlmcd--superskidmarksfyedlmcd",
+    "preferred_version": "game--superskidmarksfyedcd--superskidmarksfyedcd"
+  },
+  {
+    "archive": "SuperSkidmarks_v2.2_LowMem_CD.lha",
+    "status": "added",
+    "id": "game--superskidmarkslmcd--superskidmarkslmcd",
+    "preferred_version": "game--superskidmarks--superskidmarks"
+  },
+  {
+    "archive": "SuperSkidmarks_v2.2_LowMem_1797.lha",
+    "status": "added",
+    "id": "game--superskidmarkslowmem--superskidmarkslowmem",
+    "preferred_version": "game--superskidmarks--superskidmarks"
+  },
+  {
+    "archive": "Sword_v1.1_512k.lha",
+    "status": "added",
+    "id": "game--sword512k--sword512k",
+    "preferred_version": "game--sword--sword"
+  },
+  {
+    "archive": "TubularWorlds_v1.2_512k.lha",
+    "status": "added",
+    "id": "game--tubularworlds512k--tubularworlds512k",
+    "preferred_version": "game--tubularworldsaga--tubularworldsaga"
+  },
+  {
+    "archive": "Uridium2_v3.1.0_1MB_0276.lha",
+    "status": "added",
+    "id": "game--uridium21mb--uridium21mb",
+    "preferred_version": "game--uridium22mb--uridium22mb"
+  },
+  {
+    "archive": "Zaxxon_v2.0_512k.lha",
+    "status": "added",
+    "id": "game--zaxxon512k--zaxxon512k",
+    "preferred_version": "game--zaxxon--zaxxon"
+  }
+]

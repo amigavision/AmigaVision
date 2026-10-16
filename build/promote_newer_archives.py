@@ -127,7 +127,7 @@ def find_candidates(source_dir):
     candidates = {}
     by_basename = {}
     for path in source_dir.rglob("*.lha"):
-        if "imported" in path.relative_to(source_dir).parts:
+        if any(part in {"imported", "ecs-backfill"} for part in path.relative_to(source_dir).parts):
             continue
         parsed = parse_archive_name(path.name)
         if not parsed:

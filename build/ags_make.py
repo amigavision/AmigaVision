@@ -228,6 +228,15 @@ def make_entries(
         # use preferred entry if found, except when name was ID-like
         lookup_start = perf_counter()
         entry, pref_entry = query.get_entry(db, n)
+        if entry and entry.get('_ecs_replaced') and isinstance(options, dict):
+            # A shared list's AGA slave/video overrides do not describe its
+            # replacement slave. Keep display overrides only.
+            options = {k: v for k, v in options.items() if k in {'disp_name', 'note'}}
+        if getattr(db, 'ecs_selector', None) and not entry:
+            # Known AGA-only entries have no ECS equivalent; omit them from
+            # shared menus instead of creating unavailable launch scripts.
+            if next(query.iter_matching_rows(db, n), None) is not None:
+                continue
         add_timing(collection, "menu lookup", perf_counter() - lookup_start)
         preferred_issue = query.get_preferred_entry_issue(db, entry)
         if preferred_issue:

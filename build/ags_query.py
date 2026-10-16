@@ -82,6 +82,8 @@ def sanitize_entry(entry):
 def get_entry_by_id(db, entry_id):
     if not entry_id:
         return None
+    if getattr(db, 'ecs_selector', None):
+        return db.ecs_selector.resolve(entry_id.lower())
     row = db.cursor().execute('SELECT * FROM titles WHERE id = ?', (entry_id.lower(),)).fetchone()
     return sanitize_entry(row)
 
@@ -99,6 +101,8 @@ def get_preferred_entry(db, entry):
     return get_entry_by_id(db, entry.get("preferred_version"))
 
 def get_preferred_entry_issue(db, entry):
+    if getattr(db, 'ecs_selector', None):
+        return None
     if not entry:
         return None
 
@@ -124,6 +128,11 @@ def get_preferred_entry_issue(db, entry):
 
 def get_entry(db, name):
     for row in iter_matching_rows(db, name):
+        if getattr(db, 'ecs_selector', None):
+            resolved = db.ecs_selector.resolve(row['id'])
+            if resolved and resolved['id'] != row['id']:
+                resolved = dict(resolved, _ecs_replaced=row['id'])
+            return resolved, None
         entry = sanitize_entry(row)
         if entry:
             return entry, get_preferred_entry(db, entry)

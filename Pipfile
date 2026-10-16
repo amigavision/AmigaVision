@@ -14,6 +14,7 @@ lhafile = "~=0.3.0"
 pillow = "~=12.2.0"
 ruamel-yaml = "~=0.17.32"
 Wand = "~=0.6.11"
+numpy = "~=2.3.0"
 
 [requires]
 python_version = "3.11"

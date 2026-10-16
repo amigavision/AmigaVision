@@ -9,13 +9,40 @@ from PIL import Image
 from ags_index import renamed_container_rows
 from ags_screenshot import iff_screenshot
 from repair_hires_palettes import decode, read_chunks
+from pull_archives import is_non_aga_whdload_path
 from promote_newer_archives import (
     archive_revision_key, choose_preferred_new_candidate, parse_archive_name,
-    promote_archives, report_pending_archives, suffixes_compatible, version_key,
+    promote_archives, report_pending_archives, suffixes_compatible, version_key, find_candidates,
 )
 
 
 class ArchiveUpdatesTest(unittest.TestCase):
+    def test_normal_update_does_not_promote_ecs_review_staging(self):
+        with tempfile.TemporaryDirectory() as folder:
+            source = Path(folder)
+            review = source / 'ecs-backfill'; review.mkdir()
+            (review / 'Example_v2.0.lha').write_bytes(b'review')
+            (source / 'Other_v1.0.lha').write_bytes(b'normal')
+            _, basenames = find_candidates(source)
+            self.assertEqual(set(basenames), {'Other_v1.0.lha'})
+
+    def test_ecs_backfill_excludes_other_packaging_and_aga(self):
+        root = '/WHDLoad/Commodore Amiga - '
+        for collection, archive in [
+            ('WHDLoad - Games', 'Example_v1.0.lha'),
+            ('WHDLoad - Games', 'FirstSamurai_v2.1_A1200Version_NONAGA.lha'),
+            ('WHDLoad - Demos', 'Example_v1.0_ECS.lha'),
+        ]:
+            self.assertTrue(is_non_aga_whdload_path(root + collection + '/E/' + archive))
+        for collection, archive in [
+            ('JST - Games', 'Example_v1.0.lha'),
+            ('HD Loaders - Games', 'Example_v1.0.lha'),
+            ('WHDLoad - Games', 'Example_v1.0_JST.lha'),
+            ('WHDLoad - Games', 'Example_v1.0_AGA.lha'),
+            ('WHDLoad - Games', 'Example_v1.0_CD32.lha'),
+        ]:
+            self.assertFalse(is_non_aga_whdload_path(root + collection + '/E/' + archive))
+
     def test_dated_revisions(self):
         old = parse_archive_name("Castlevania_v1.2_AGA_November2025.lha")
         new = parse_archive_name("Castlevania_v1.2_AGA_September2026.lha")

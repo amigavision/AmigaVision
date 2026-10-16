@@ -3,10 +3,12 @@
 import argparse
 import json
 import os
+import re
 import shlex
 import shutil
 import subprocess
 from datetime import datetime, timedelta, timezone
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 MEGACMD_APP_BIN = "/Applications/MEGAcmd.app/Contents/MacOS"
@@ -143,11 +145,25 @@ def required_env(name):
     return value
 
 
+def is_low_memory_archive(path):
+    return bool(re.search(r'(?:^|_)(?:lowmem|lowmemory|lowram|512k|512kb|1mb)(?:_|\.)', Path(path).name, re.IGNORECASE))
+
+
+def is_non_aga_whdload_path(path):
+    # The shared root is named WHDLoad even for JST and generic HD loaders.
+    # Require the collection label rather than matching that root.
+    return (any(" - whdload - " in part.lower() for part in Path(path).parts)
+            and not re.search(r"(?:^|[^a-z0-9])(aga|cd32|jst)(?:$|[^a-z0-9])", path, re.IGNORECASE))
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--titles-dir", default=str(Path(os.getenv("AGSCONTENT", "content")) / "titles"), help="Canonical titles directory")
     parser.add_argument("--dest", default=str(Path(os.getenv("AGSCONTENT", "content")) / "titles" / "manual-downloads"), help="Download staging directory")
     parser.add_argument("--state-path", default="data/cache/archive-fetch-state.json", help="Local state file used to track seen remote archive paths")
+    parser.add_argument("--backfill-non-aga", action="store_true", help="Check all upstream paths for missing non-AGA, non-CD32 WHDLoad archives, excluding JST; leave incremental pull state unchanged")
+    parser.add_argument("--dry-run", action="store_true", help="List missing candidates without downloading or updating pull state")
+    parser.add_argument("--jobs", type=int, default=1, choices=range(1, 9), help="Concurrent archive downloads (1-8; default 1)")
     args = parser.parse_args()
 
     sync_cmd_template = os.getenv("ARCHIVE_FETCH_SYNC_CMD", "").strip()
@@ -160,6 +176,8 @@ def main():
     remote_ref = required_env("ARCHIVE_FETCH_REMOTE")
 
     if sync_cmd_template:
+        if args.backfill_non_aga or args.dry_run:
+            raise SystemExit("Filtered backfills and dry runs require list/get commands, not ARCHIVE_FETCH_SYNC_CMD")
         missing = [name for name, cmd in (
             ("ARCHIVE_FETCH_SYNC_CMD", validate_template_binary(sync_cmd_template)),
         ) if not cmd]
@@ -206,7 +224,10 @@ def main():
 
         state = load_state(state_path)
         known_remote_paths = set(state.get("remote_paths", []))
-        if known_remote_paths:
+        if args.backfill_non_aga:
+            candidate_paths = [path for path in remote_paths if is_non_aga_whdload_path(path)]
+            print("Found {} non-AGA/non-CD32 candidate archive(s), excluding JST".format(len(candidate_paths)))
+        elif known_remote_paths:
             candidate_paths = [path for path in remote_paths if path not in known_remote_paths]
             print("Found {} unseen remote archive(s) since last successful pull".format(len(candidate_paths)))
         elif cutoff_days > 0:
@@ -231,21 +252,41 @@ def main():
         skipped = 0
         skipped_basenames = []
         total = len(candidate_paths)
+        pending_downloads = []
         for index, remote_path in enumerate(candidate_paths, start=1):
             basename = Path(remote_path).name
             if basename in existing_basenames:
                 skipped += 1
                 skipped_basenames.append(basename)
                 continue
-            print("Downloading [{}/{}] {}".format(index, total, basename), flush=True)
-            get_path = normalize_remote_path_for_get(remote_path)
-            run(render_command(get_cmd_template, remote=remote_ref, path=get_path, dest=str(dest_dir)))
+            print("{} [{}/{}] {}".format("Would download" if args.dry_run else "Downloading", index, total, basename), flush=True)
+            if args.dry_run:
+                existing_basenames.add(basename)
+                downloaded += 1
+                continue
+            pending_downloads.append(remote_path)
             existing_basenames.add(basename)
             downloaded += 1
 
-        save_state(state_path, remote_paths)
-        print("Downloaded {} new archive(s); skipped {} existing archive(s)".format(downloaded, skipped))
-        if skipped_basenames:
+        def download(remote_path):
+            get_path = normalize_remote_path_for_get(remote_path)
+            run(render_command(get_cmd_template, remote=remote_ref, path=get_path, dest=str(dest_dir)), capture_output=True)
+            print("Downloaded: {}".format(Path(remote_path).name), flush=True)
+
+        if pending_downloads:
+            with ThreadPoolExecutor(max_workers=args.jobs) as executor:
+                # Exhaust the iterator so failed downloads propagate before state is saved.
+                list(executor.map(download, pending_downloads))
+
+        if args.backfill_non_aga and not args.dry_run:
+            staged_names = {path.name for path in dest_dir.glob('*.lha')}
+            inventory = [path for path in candidate_paths if Path(path).name in staged_names]
+            (dest_dir / 'upstream-inventory.json').write_text(json.dumps(inventory, indent=2) + '\n')
+
+        if not args.dry_run and not args.backfill_non_aga:
+            save_state(state_path, remote_paths)
+        print("{} {} new archive(s); skipped {} existing archive(s)".format("Would download" if args.dry_run else "Downloaded", downloaded, skipped))
+        if skipped_basenames and not args.backfill_non_aga:
             print("Skipped existing archive basenames:")
             for basename in skipped_basenames:
                 print(basename)
