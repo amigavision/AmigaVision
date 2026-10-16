@@ -716,7 +716,7 @@ def index_whdload_archives(basedir, verbose=False):
                                 container_version = "v1.0"
                                 try:
                                     verstr = file[:-4].split("_")[1]
-                                    if verstr.startswith("v"):
+                                    if verstr.lower().startswith(("v", "beta")):
                                         container_version = verstr
                                 except Exception:
                                     pass
@@ -928,22 +928,28 @@ def renamed_container_rows(rows_by_id, archives, titles_dir):
         return (str(path.parent).casefold(), match[1].casefold(), (match[2] or "").casefold())
 
     candidates = defaultdict(list)
+    containers = defaultdict(list)
     for arc in archives.values():
+        containers[(arc["archive_path"], arc["slave_path"])].append(arc)
         key = family(arc["archive_path"])
         if key:
             candidates[key].append(arc)
     missing = defaultdict(list)
+    remapped = defaultdict(list)
     for row in rows_by_id.values():
         parts = row["id"].split("--")
         base_id = "--".join(parts[:-1]) if len(parts) > 3 else row["id"]
         if base_id in archives or not row["archive_path"]:
+            continue
+        matches = containers[(row["archive_path"], row["slave_path"])]
+        if len(matches) == 1:
+            remapped[matches[0]["id"]].append(row)
             continue
         if util.is_file(util.path(titles_dir, row["archive_path"])):
             continue
         key = family(row["archive_path"])
         if key:
             missing[key].append((base_id, row))
-    remapped = defaultdict(list)
     for key, rows in missing.items():
         if len(candidates[key]) == 1 and len({base_id for base_id, _ in rows}) == 1:
             remapped[candidates[key][0]["id"]].extend(row for _, row in rows)

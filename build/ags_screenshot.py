@@ -21,7 +21,8 @@ import sys
 
 from PIL import Image
 
-from repair_hires_palettes import black_padding_palette, encode_uncompressed
+from repair_hires_palettes import black_padding_palette
+import iff_ilbm
 
 # -----------------------------------------------------------------------------
 
@@ -52,7 +53,7 @@ def iff_screenshot(path, colors, crop_sz, scale_sz, resample_sz=None, mode_id=0x
 
     # The launcher also displays the word-aligned padding at the right edge.
     img = black_padding_palette(img)
-    return (encode_uncompressed(img, mode_id), img)
+    return (iff_ilbm.ilbm(*img.size, img.load(), img.getpalette(), mode=mode_id, pack=1), img)
 
 # -----------------------------------------------------------------------------
 # CLI interface

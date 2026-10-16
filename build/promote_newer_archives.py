@@ -14,9 +14,14 @@ from import_notwhdl_demos import demozoo_search, pouet_search
 from sync_missing_images import fetch_text, pick_best_title_match
 
 
-VERSION_RE = re.compile(r"^(?P<name>.+)_v(?P<version>[^_]+)(?P<suffix>(?:_.*)?)\.lha$")
+VERSION_RE = re.compile(r"^(?P<name>.+)_(?:v(?P<version>[^_]+)|(?P<beta>Beta\d+))(?P<suffix>(?:_.*)?)\.lha$", re.IGNORECASE)
 TOKEN_RE = re.compile(r"\d+|[A-Za-z]+")
 NUMERIC_SUFFIX_RE = re.compile(r"^(?:_\d+(?:&\d+)*)$")
+MONTHS = {name.lower(): index for index, name in enumerate((
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+), start=1)}
+DATE_SUFFIX_RE = re.compile(r"^(" + "|".join(MONTHS) + r")(\d{4})$", re.IGNORECASE)
 NONWHDL_TOP_LEVELS = {"game-notwhdl", "demo-notwhdl", "mags-notwhdl"}
 CANONICAL_TOP_LEVEL_MAP = {
     "game": "game",
@@ -40,14 +45,22 @@ def parse_archive_name(filename):
     match = VERSION_RE.match(filename)
     if not match:
         return None
-    return {
+    parsed = {
         "name": match.group("name"),
-        "version": match.group("version"),
+        "version": match.group("version") or match.group("beta"),
         "suffix": match.group("suffix"),
     }
+    # Some older packages put their language after a dot in the version.
+    language = re.search(r"\.(De|Fr|En|Es|It|Pl)$", parsed["version"], re.IGNORECASE)
+    if language:
+        parsed["version"] = parsed["version"][:language.start()]
+        parsed["suffix"] = "_" + language[1] + parsed["suffix"]
+    return parsed
 
 
 def version_key(version):
+    if version.lower().startswith("beta"):
+        return ((-1, int(version[4:])),)
     key = []
     for token in TOKEN_RE.findall(version.lower()):
         if token.isdigit():
@@ -57,14 +70,21 @@ def version_key(version):
     return tuple(key)
 
 
+def variant_suffix(suffix):
+    # Disk IDs and release dates are revisions, not chipset/language/CPU variants.
+    return tuple(token.lower() for token in suffix.strip("_").split("_") if token
+                 and not re.fullmatch(r"\d{4}(?:&\d{4})*", token)
+                 and not DATE_SUFFIX_RE.fullmatch(token))
+
+
 def suffixes_compatible(current_suffix, candidate_suffix):
-    if current_suffix == candidate_suffix:
-        return True
-    if not current_suffix and NUMERIC_SUFFIX_RE.match(candidate_suffix or ""):
-        return True
-    if not candidate_suffix and NUMERIC_SUFFIX_RE.match(current_suffix or ""):
-        return True
-    return False
+    return variant_suffix(current_suffix) == variant_suffix(candidate_suffix)
+
+
+def archive_revision_key(parsed):
+    dates = [DATE_SUFFIX_RE.fullmatch(token) for token in parsed["suffix"].split("_")]
+    date = max(((int(m[2]), MONTHS[m[1].lower()]) for m in dates if m), default=(0, 0))
+    return version_key(parsed["version"]), date
 
 
 def normalized_title(value):
@@ -112,7 +132,7 @@ def find_candidates(source_dir):
         parsed = parse_archive_name(path.name)
         if not parsed:
             continue
-        candidates.setdefault(parsed["name"], []).append((version_key(parsed["version"]), parsed["suffix"], path))
+        candidates.setdefault(parsed["name"], []).append((archive_revision_key(parsed), parsed["suffix"], path))
         by_basename[path.name] = path
     for archive_name in candidates:
         candidates[archive_name].sort()
@@ -173,8 +193,8 @@ def variant_rank(suffix):
 
 
 def choose_preferred_new_candidate(entries):
-    latest_version = max(version_key(parsed["version"]) for _, parsed in entries)
-    latest_entries = [(path, parsed) for path, parsed in entries if version_key(parsed["version"]) == latest_version]
+    latest_version = max(archive_revision_key(parsed) for _, parsed in entries)
+    latest_entries = [(path, parsed) for path, parsed in entries if archive_revision_key(parsed) == latest_version]
     return min(latest_entries, key=lambda item: variant_rank(item[1]["suffix"]))
 
 
@@ -294,7 +314,7 @@ def promote_archives(titles_dir, source_dir, apply=False):
         current_by_name[parsed["name"]].append(archive_path)
 
     for archive_path, parsed in current_archives:
-        current_version = version_key(parsed["version"])
+        current_version = archive_revision_key(parsed)
         replacement = by_basename.get(archive_path.name)
         newer = [
             candidate_path
@@ -389,15 +409,44 @@ def promote_archives(titles_dir, source_dir, apply=False):
     return promoted, added, missing, skipped, unmatched_sources
 
 
+def report_pending_archives(titles_dir, source_dir):
+    pending = sorted(path for path in source_dir.rglob("*.lha")
+                     if "imported" not in path.relative_to(source_dir).parts)
+    print(f"\nUpdate summary: {len(pending)} downloaded archive(s) still need attention")
+    current = defaultdict(list)
+    for path, parsed in collect_current_archives(titles_dir):
+        current[parsed["name"].lower()].append(parsed)
+    for path in pending:
+        parsed = parse_archive_name(path.name)
+        if not parsed:
+            reason = "unrecognized filename; not imported"
+        else:
+            matches = current.get(parsed["name"].lower(), [])
+            compatible = [item for item in matches if suffixes_compatible(item["suffix"], parsed["suffix"])]
+            if compatible and all(archive_revision_key(item) > archive_revision_key(parsed) for item in compatible):
+                reason = "older than installed version"
+            elif matches:
+                reason = "edition/language/CPU variant or same-version revision; review required"
+            else:
+                reason = "new title; not imported"
+        print(f" - {path.relative_to(source_dir)} — {reason}")
+    return len(pending)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("source_dir", help="Directory to scan for newer .lha archives")
     parser.add_argument("--titles-dir", default=str(Path(os.getenv("AGSCONTENT", "content")) / "titles"), help="Canonical titles directory")
     parser.add_argument("--apply", action="store_true", default=False, help="Copy newer archives into place and move replaced archives into a sibling retired/ directory")
+    parser.add_argument("--report-pending", action="store_true", help="Only list every remaining staged archive and why it needs attention")
     args = parser.parse_args()
 
     titles_dir = Path(args.titles_dir).resolve()
     source_dir = Path(args.source_dir).resolve()
+
+    if args.report_pending:
+        report_pending_archives(titles_dir, source_dir)
+        return 0
 
     promoted, added, _, skipped, unmatched_sources = promote_archives(titles_dir, source_dir, apply=args.apply)
 
