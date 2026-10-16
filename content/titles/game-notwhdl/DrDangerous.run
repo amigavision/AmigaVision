@@ -1,0 +1,10 @@
+ags-cd N/DrDangerous
+IF EXISTS WHDSaves:DrDangerous
+  copy WHDSaves:DrDangerous/#? savedata/ ALL CLONE QUIET
+ENDIF
+"Dr._Dangerous_and_Secrets_of_the_Temple_of_Xol'Tan_hotfix_2" >NIL:
+ags-cd N/DrDangerous
+IF NOT EXISTS WHDSaves:DrDangerous
+  makedir WHDSaves:DrDangerous
+ENDIF
+copy savedata/#? WHDSaves:DrDangerous ALL CLONE QUIET

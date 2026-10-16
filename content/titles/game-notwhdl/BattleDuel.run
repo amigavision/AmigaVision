@@ -1,0 +1,14 @@
+ags-cd N/BattleDuel
+stack >NIL: 65536
+IF NOT EXISTS WHDSaves:BattleDuel
+  makedir WHDSaves:BattleDuel
+ENDIF
+IF NOT EXISTS WHDSaves:BattleDuel/Settings
+  makedir WHDSaves:BattleDuel/Settings
+ENDIF
+IF NOT EXISTS WHDSaves:BattleDuel/Settings/Default.set
+  copy Settings/Default.set WHDSaves:BattleDuel/Settings/Default.set QUIET
+ENDIF
+assign BDSAVE: WHDSaves:BattleDuel
+BattleDuel >NIL:
+assign BDSAVE: REMOVE
