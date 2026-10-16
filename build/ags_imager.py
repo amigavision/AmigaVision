@@ -1575,6 +1575,10 @@ def main():
                         cd_files.append("F{}".format(file))
                 cache += [k for k, _ in sorted(cd_ranked.items(), key=lambda a:a[1])] + cd_files
 
+                # A missing run file exits AGS; keep this action last at the root.
+                if path == amiga_ags_path:
+                    cache.append("F[ Exit to Workbench ]")
+
                 if cache:
                     cachefile = "{}\n".format(len(cache))
                     for line in cache: cachefile += "{}\n".format(convert_filename_uae2a(line))
