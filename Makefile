@@ -347,6 +347,8 @@ ecs-image:
 	@AGSTEMP="$(ECS_TEMP)" AGSCACHEGEN=ecs $(ECS_IMAGE_PREP_CMD)
 	@$(MAKE) clone-amiberry AGSTEMP="$(ECS_TEMP)"
 	@test -f "$(subst ",,${AGSDEST})/AmigaVision-ECS.hdf"
+	@echo "Removing completed ECS temp workspace..."
+	@rm -rf "$(subst ",,$(ECS_TEMP))"
 
 image-fsuae:
 	$(call print-start-time)
@@ -502,13 +504,13 @@ amiga-ecs:
 
 clean-temp:
 	$(call print-start-time)
-	@echo "Removing temp workspace..."
-	@rm -rf "$(subst ",,${AGSTEMP})"
+	@echo "Removing main and ECS temp workspaces..."
+	@rm -rf "$(subst ",,${AGSTEMP})" "$(subst ",,$(ECS_TEMP))"
 
 clean-build:
 	$(call print-start-time)
-	@echo "Removing temp workspace, rotating current build cache, and clearing generated HDF outputs..."
-	@rm -rf "$(subst ",,${AGSTEMP})"
+	@echo "Removing main and ECS temp workspaces, rotating current build cache, and clearing generated HDF outputs..."
+	@rm -rf "$(subst ",,${AGSTEMP})" "$(subst ",,$(ECS_TEMP))"
 	@cache_gen="$$(cat "${HOME}/Library/Caches/AmigaVision/build-cache-generation.txt" 2>/dev/null || echo current)"; \
 	cache_dir="${HOME}/Library/Caches/AmigaVision/build/$$cache_gen"; \
 	if [ -d "$$cache_dir" ]; then \

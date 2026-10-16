@@ -1,0 +1,8 @@
+ags-cd N/Imperial
+IF NOT EXISTS WHDSaves:Imperial
+  makedir WHDSaves:Imperial
+  copy #? WHDSaves:Imperial/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:Imperial
+stack >NIL: 30000
+Imperial >NIL:

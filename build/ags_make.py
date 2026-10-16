@@ -633,7 +633,7 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
             c.progress_current += 1
             continue
         letter = entry.get("title_short", "z")[0].upper()
-        if letter.isnumeric():
+        if not letter.isalpha():
             letter = "#"
         year, year_img = normalize_release_year(entry.get("release_date", ""))
 
@@ -670,7 +670,7 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
                 sort_group = sort_group[4:]
             sort_group = sort_group[:AGS_LIST_WIDTH]
             group_letter = sort_group[0].upper() if sort_group else None
-            if group_letter and group_letter.isnumeric():
+            if group_letter and not group_letter.isalpha():
                 group_letter = "#"
             if entry.get("subcategory", "").lower().startswith("disk mag"):
                 start = perf_counter()

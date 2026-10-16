@@ -1,0 +1,12 @@
+ags-cd N/FieldsOfGloryAGA
+IF NOT EXISTS WHDSaves:FieldsOfGloryAGA
+  makedir WHDSaves:FieldsOfGloryAGA
+  copy #? WHDSaves:FieldsOfGloryAGA/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:FieldsOfGloryAGA
+stack >NIL: 30000
+assign FOG1: WHDSaves:FieldsOfGloryAGA
+assign FOG2: WHDSaves:FieldsOfGloryAGA
+FOG >NIL:
+assign FOG1: REMOVE
+assign FOG2: REMOVE

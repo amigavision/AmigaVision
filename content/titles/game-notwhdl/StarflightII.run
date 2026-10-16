@@ -1,0 +1,8 @@
+ags-cd N/StarflightII
+IF NOT EXISTS WHDSaves:StarflightII
+  makedir WHDSaves:StarflightII
+  copy #? WHDSaves:StarflightII/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:StarflightII
+stack >NIL: 30000
+SF2 >NIL:

@@ -1,0 +1,13 @@
+ags-cd N/GlobalEffect
+IF NOT EXISTS WHDSaves:GlobalEffect
+  makedir WHDSaves:GlobalEffect
+  copy #? WHDSaves:GlobalEffect/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:GlobalEffect
+stack >NIL: 30000
+assign Global_Disk1: 1
+assign Global_Disk2: 2
+execute Run_Game
+path Global_Disk1:c REMOVE
+assign Global_Disk1: REMOVE
+assign Global_Disk2: REMOVE
