@@ -5162,17 +5162,17 @@ demo--gevaliaaga--gevaliaaga;Gevalia;Gevalia AGA;;;AGA;1;;;;;;;;;;;1994;;English
 demo--captureddreamsaga--captureddreamsaga;Captured Dreams;Captured Dreams;1;demo--captureddreamsagadec--captureddreamsagadec;AGA;1;;;;;;;;;;;1997;;English;;Black Lotus;;;v1.0;CapturedDreamsAGA/CapturedDreamsAGA.Slave;demo/CapturedDreams_v1.0_BlackLotus_AGA.lha;Demo;Demo;;;40;22
 demo--darksideaga--darksideaga;Darkside;Darkside;1;demo--darksideagadec--darksideagadec;AGA;1;;;;;;;;;;;1996;;English;;Black Lotus;;;v1.0;DarksideAGA/DarksideAGA.Slave;demo/Darkside_v1.0_BlackLotus_AGA.lha;Demo;Demo;;;32369;3588
 demo--relicaga--relicaga;Relic;Relic;;;AGA;1;;;;;;;;;;;1998;;English;;Nerve Axis;;;v1.0;RelicAGA/RelicAGA.slave;demo/Relic_v1.0_NerveAxis_AGA.lha;Demo;Demo;;;20963;194
-demo--desireisreal--desireisreal;Desire Is Real;Desire Is Real;;;OCS;;;;;;;;;;;;2024;;English;;;;;v0.1;DesireIsReal/DesireIsReal.slave;demo/_generic/DesireIsReal_v0.1.lha;Demo;Demo;;;336642;
-demo--pacificbyo40k--pacificbyo40k;Pacific BYO 40K;Pacific BYO 40K;;;OCS;;;;;;;;;;;;2024;;English;;;;;v0.1;PacificBYO40K/PacificBYO40K.slave;demo/_generic/PacificBYO40K_v0.1.lha;Demo;Demo;;;336656;
-demo--andromedamurderscrolls--andromedamurderscrolls;Andromeda Murder Scrolls;Andromeda Murder Scrolls;;;OCS;;;;;;;;;;;;2024;;English;;;;;v0.1;AndromedaMurderScrolls/AndromedaMurderScrolls.slave;demo/_generic/AndromedaMurderScrolls_v0.1.lha;Demo;Demo;;;336638;
-demo--ephnoreturn--ephnoreturn;EPH No Return;EPH No Return;;;OCS;;;;;;;;;;;;2024;;English;;;;;v0.1;EPHNoReturn/EPHNoReturn.slave;demo/_generic/EPHNoReturn_v0.1.lha;Demo;Demo;;;336658;
-demo--alcatrazsoil--alcatrazsoil;Alcatraz Soil;Alcatraz Soil;;;OCS;;;;;;;;;;;;2024;;English;;;;;v0.1;AlcatrazSoil/AlcatrazSoil.slave;demo/_generic/AlcatrazSoil_v0.1.lha;Demo;Demo;;;336653;
-demo--purplestudiosfakeone--purplestudiosfakeone;Purple Studios Fake One;Purple Studios Fake One;;;OCS;;;;;;;;;;;;2023;;English;;;;;v0.1;PurpleStudiosFakeOne/PurpleStudiosFakeOne.slave;demo/_generic/PurpleStudiosFakeOne_v0.1.lha;Demo;Demo;;;326628;
+demo--desireisreal--desireisreal;Is Real;Is Real;;;OCS;;;;;;;;;;;;2024;;English;;Desire;;;v0.1;DesireIsReal/DesireIsReal.slave;demo/_generic/DesireIsReal_v0.1.lha;Demo;Demo;;;336642;
+demo--pacificbyo40k--pacificbyo40k;Pacific BYO 40K;Pacific BYO 40K;;;OCS;;;;;;;;;;;;2024;;English;;Pacific;;;v0.1;PacificBYO40K/PacificBYO40K.slave;demo/_generic/PacificBYO40K_v0.1.lha;Demo;Demo;;;336656;
+demo--andromedamurderscrolls--andromedamurderscrolls;A Murder of Scrolls;Murder of Scrolls;;;OCS;;;;;;;;;;;;2024;;English;;Andromeda;;;v0.1;AndromedaMurderScrolls/AndromedaMurderScrolls.slave;demo/_generic/AndromedaMurderScrolls_v0.1.lha;Demo;Demo;;;336638;
+demo--ephnoreturn--ephnoreturn;Point of No Return;Point of No Return;;;OCS;;;;;;;;;;;;2024;;English;;Ephidrena;;;v0.1;EPHNoReturn/EPHNoReturn.slave;demo/_generic/EPHNoReturn_v0.1.lha;Demo;Demo;;;336658;
+demo--alcatrazsoil--alcatrazsoil;Soil;Soil;;;OCS;;;;;;;;;;;;2024;;English;;Alcatraz;;;v0.1;AlcatrazSoil/AlcatrazSoil.slave;demo/_generic/AlcatrazSoil_v0.1.lha;Demo;Demo;;;336653;
+demo--purplestudiosfakeone--purplestudiosfakeone;Fake One;Fake One;;;OCS;;;;;;;;;;;;2023;;English;;Purple Studios;;;v0.1;PurpleStudiosFakeOne/PurpleStudiosFakeOne.slave;demo/_generic/PurpleStudiosFakeOne_v0.1.lha;Demo;Demo;;;326628;
 demo--scaspttcc--scaspttcc;TTCC (The Terra Cresta Cracktro);TTCC;;;OCS;;;;;;;;;;;;2023;;English;;Spreadpoint, Swiss Cracking Association;;;v0.1;SCASPTTCC/SCASPTTCC.slave;demo/_generic/SCASPTTCC_v0.1.lha;Demo;Crack Intro;;;325649;94566
-demo--desiredfunk--desiredfunk;Desire D Funk;Desire D Funk;;;OCS;;;;;;;;;;;;2023;;English;;;;;v0.1;DesireDFunk/DesireDFunk.slave;demo/_generic/DesireDFunk_v0.1.lha;Demo;Demo;;;325466;
+demo--desiredfunk--desiredfunk;D-Funk;D-Funk;;;OCS;;;;;;;;;;;;2023;;English;;Desire;;;v0.1;DesireDFunk/DesireDFunk.slave;demo/_generic/DesireDFunk_v0.1.lha;Demo;Demo;;;325466;
 demo--desirefm--desirefm;Desire FM;Desire FM;;;OCS;;;;;;;;;;;;2024-01-20;;English;;Desire;;;v0.1;DesireFM/DesireFM.slave;demo/_generic/DesireFM_v0.1.lha;Demo;Intro 40K;;;336657;95888
-demo--ffpplanetaryvoid--ffpplanetaryvoid;FFP Planetary Void;FFP Planetary Void;;;OCS;;;;;;;;;;;;;;English;;;;;v0.1;FFPPlanetaryVoid/FFPPlanetaryVoid.slave;demo/_generic/FFPPlanetaryVoid_v0.1.lha;Demo;Demo;;;336645;
-demo--desirehamazing--desirehamazing;HAMazing;HAMazing;;;OCS;;;;;;;;;;;;;;English;;;;;v0.1;DesireHAMazing/DesireHAMazing.slave;demo/_generic/DesireHAMazing_v0.1.lha;Demo;Demo;;;323822;
+demo--ffpplanetaryvoid--ffpplanetaryvoid;Planetary Void;Planetary Void;;;OCS;;;;;;;;;;;;;;English;;Five Finger Punch;;;v0.1;FFPPlanetaryVoid/FFPPlanetaryVoid.slave;demo/_generic/FFPPlanetaryVoid_v0.1.lha;Demo;Demo;;;336645;
+demo--desirehamazing--desirehamazing;HAMazing;HAMazing;;;OCS;;;;;;;;;;;;2023-05-06;;English;;Desire;;;v0.1;DesireHAMazing/DesireHAMazing.slave;demo/_generic/DesireHAMazing_v0.1.lha;Demo;Demo;;;323822;
 game--outfall--outfall;Outfall;Outfall;;;OCS;;;;;;;;;;;;1995;;English;;F1 Licenceware;2;;v1.0;Outfall/Outfall.slave;game/Outfall_v1.0.lha;Game;;4559;4872;;
 game--track&fieldaga--track&fieldaga;Track & Field;Track & Field;;;AGA;1;;;;;;;;;;;2025;;English;JOTD;Konami;4;;v1.09;Track&FieldAGA/Track&FieldAGA.slave;game/Track&Field_v1.09_AGA.lha;Game;Sports;0;5164;;
 game--dylandog03it--dylandog03it;Dylan Dog 03: Storia Di Nessuno;Dylan Dog 03: Storia Di Ness;;;OCS;;0;;;;;;;;;;1993;;Italian;Simulmondo;Simulmondo;1;;v1.0;DylanDog03It/DylanDog03It.slave;game/DylanDog03_v1.0_It_2696.lha;Game;;5136;4574;;
@@ -5310,26 +5310,26 @@ demo-notwhdl--demostueallstars-nocpuchallenge;No CPU Challenge;No CPU Challenge;
 demo-notwhdl--ephidrena-hexel-060;Hexel;Hexel;;;AGA/060;1;;;;;;;;Takes a while to load, be patient;;;2018;;English;;Ephidrena;;;;;demo-notwhdl/Ephidrena-Hexel-060.lha;Demo;Demo;;;185606;75786
 demo-notwhdl--ephidrena-knarkzilla-060;Knarkzilla;Knarkzilla;;;AGA/060;1;;;;;;;;Takes a while to load, be patient;;;2019;;English;;Ephidrena;;;;;demo-notwhdl/Ephidrena-Knarkzilla-060.lha;Demo;Demo;;;202829;81085
 demo-notwhdl--flex-deadahead-060;Dead Ahead;Dead Ahead;;;AGA/060;1;;;;;;;;Takes a while to load, be patient;;;2025;;English;;Flex;;;;;demo-notwhdl/Flex-DeadAhead-060.lha;Demo;Demo;;;372606;104201
-demo-notwhdl--flex-martinieffect;Martini Effect;Martini Effect;;;AGA;1;;;;;;;;;;;2021-04-04;;English;;Flex;;;;;demo-notwhdl/Flex-MartiniEffect.lha;Demo;Demo;;;292543;88640
+demo-notwhdl--flex-martinieffect;Martini Effect;Martini Effect;;;AGA/060;1;;;;;;;;Takes a long time to load, be patient;;;2021-04-04;;English;;Flex;;;;;demo-notwhdl/Flex-MartiniEffect.lha;Demo;Demo;;;292543;88640
 demo-notwhdl--focusdesign-1992-060;1992;1992;;;AGA/060;1;;;;;;;;;;;2020;;English;;Focus Design;;;;;demo-notwhdl/FocusDesign-1992-060.lha;Demo;Demo;;;274566;84825
 demo-notwhdl--focusdesign-bekoolfool-060;Be Kool Fool;Be Kool Fool;;;AGA/060;1;;;;;;;;;;;2015;;English;;Focus Design;;;;;demo-notwhdl/FocusDesign-BeKoolFool-060.lha;Demo;Demo;;;144249;66249
-demo-notwhdl--focusdesign-revision2012;Revision2012;Revision2012;;;AGA;1;;;;;;;;;;;2012-02-11;;English;;Focus Design;;;;;demo-notwhdl/FocusDesign-Revision2012.lha;Demo;Demo;;;27258;58665
+demo-notwhdl--focusdesign-revision2012;Revision 2012;Revision 2012;;;AGA;1;;;;;;;;;;;2012-02-11;;English;;Focus Design;;;;;demo-notwhdl/FocusDesign-Revision2012.lha;Demo;Demo;;;27258;58665
 demo-notwhdl--ghostown-humantraffic;Human Traffic;Human Traffic;;;AGA;1;;;;;;;;;;;2011;;English;;Ghostown;;;;;demo-notwhdl/Ghostown-HumanTraffic.lha;Demo;Demo;;;4352;56883
 demo-notwhdl--ghostown-lasttraintodanzig-060;Last Train To Danzig;Last Train To Danzig;;;AGA/060;1;;;;;;;;;;;2015;;English;;Ghostown;;;;;demo-notwhdl/Ghostown-LastTrainToDanzig-060.lha;Demo;Demo;;;147380;66492
 demo-notwhdl--ghostown-smokeandmirrors;Smoke And Mirrors;Smoke And Mirrors;;;AGA;1;;;;;;;;;;;2013-03-31;;English;;Ghostown, Loonies;;;;;demo-notwhdl/Ghostown-SmokeAndMirrors.lha;Demo;Demo;;;59938;61215
 demo-notwhdl--logicoma-entropychamber-060;Entropy Chamber;Entropy Chamber;;;AGA/060;1;;;;;;;;;;;2025;;English;;Logicoma;;;;;demo-notwhdl/Logicoma-EntropyChamber-060.lha;Demo;Demo;;;371379;103994
 demo-notwhdl--nature-jesuschristmotocross;Jesus Christ Motocross;Jesus Christ Motocross;;;AGA/060;1;;;;;;;;;;;2009;;English;;Nature;;;;;demo-notwhdl/Nature-JesusChristMotocross.lha;Demo;Demo;;;5117;52968
 demo-notwhdl--noice-lastgoatstanding-060;Last Goat Standing;Last Goat Standing;;;AGA/060;1;;;;;;;;Takes a while to load, be patient;;;2021;;English;;Noice;;;;;demo-notwhdl/Noice-LastGoatStanding-060.lha;Demo;Demo;;;292542;88629
-demo-notwhdl--spaceballs-norwegiankindness;Norwegian Kindness;Norwegian Kindness;;;AGA;1;;;;;;;;;;;2011;;English;;Spaceballs;;;;;demo-notwhdl/SpaceBalls-NorwegianKindness.lha;Demo;Demo;;;1778;56651
-demo-notwhdl--theblacklotus-final;Final;Final;;;AGA;1;;;;;;;;;;;1998;;English;;The Black Lotus;;;;;demo-notwhdl/TheBlackLotus-Final.lha;Demo;Demo;;;37235;3694
+demo-notwhdl--spaceballs-norwegiankindness;Norwegian Kindness;Norwegian Kindness;;;AGA/060;1;;;;;;;;;;;2011;;English;;Spaceballs;;;;;demo-notwhdl/SpaceBalls-NorwegianKindness.lha;Demo;Demo;;;1778;56651
+demo-notwhdl--theblacklotus-rift-060;Rift;Rift;;;AGA/060;1;;;;;;;;;;;2014;;English;;The Black Lotus;;;;;demo-notwhdl/TheBlackLotus-Final.lha;Demo;Demo;;;109185;62977
 demo-notwhdl--theblacklotus-oceanmachine-060;Ocean Machine;Ocean Machine;;;AGA/060;1;;;;;;;;;;;2005;;English;;The Black Lotus;;;;;demo-notwhdl/TheBlackLotus-OceanMachine-060.lha;Demo;Demo;;;4;16337
 demo-notwhdl--theblacklotus-silkcut-060;Silkcut;Silkcut;;;AGA/060;1;;;;;;;;;;;2004-04-12;;English;;The Black Lotus;;;;;demo-notwhdl/TheBlackLotus-SilkCut-060.lha;Demo;Demo;;;8;12034
 demo-notwhdl--theblacklotus-starstruck-060;Starstruck;Starstruck;;;AGA/060;1;;;;;;;;Takes a while to load, be patient;;;2006;;English;;The Black Lotus;;;;;demo-notwhdl/TheBlackLotus-Starstruck-060.lha;Demo;Demo;;;25001;25778
 demo-notwhdl--traction-swookie;Swookie;Swookie;;;AGA;1;;;;;;;;;;;2013;;English;;Traction;;;;;demo-notwhdl/Traction-Swookie.lha;Demo;Demo;;;95398;62227
 demo-notwhdl--unique-singularities;Singularities;Singularities;;;AGA;1;;;;;;;;;;;2017;;English;;Unique;;;;;demo-notwhdl/Unique-Singularities.lha;Demo;Demo;;;170900;69702
 demo-notwhdl--unique-subside-060;Subside;Subside;;;AGA/060;1;;;;;;;;;;;2016;;English;;Unique;;;;;demo-notwhdl/Unique-Subside-060.lha;Demo;Demo;;;155232;67140
-demo-notwhdl--appendix-reborn;Reborn;Reborn;;;AGA;1;;;;;;;;;;;2007;;English;;Appendix;;;;;demo-notwhdl/Appendix-Reborn.lha;Demo;Intro 64K;;;85660;31825
-demo-notwhdl--desire-wafflesofmathconstruction;Waffles Of Math Construction;Waffles Of Math Construction;;;OCS;;;;;;;;;;;;2022-07-16;;English;;Alcatraz, Desire;;;;;demo-notwhdl/Desire-WafflesOfMathConstruction.lha;Demo;Intro 64K;;;310453;91823
+demo-notwhdl--appendix-reborn;Reborn;Reborn;;;AGA;1;;;;;;;;Takes a long time to load, be patient;;;2007;;English;;Appendix;;;;;demo-notwhdl/Appendix-Reborn.lha;Demo;Intro 64K;;;85660;31825
+demo-notwhdl--desire-wafflesofmathconstruction;Waffles of Math Construction;Waffles of Math Construction;;;OCS;;;;;;;;;;;;2022-07-16;;English;;Alcatraz, Desire;;;;;demo-notwhdl/Desire-WafflesOfMathConstruction.lha;Demo;Intro 64K;;;310453;91823
 demo-notwhdl--hoffman-everyway;Everyway;Everyway;;;OCS;;;;;;;;;;;;2016-07-16;;English;;H0ffman;;;;;demo-notwhdl/Hoffman-Everyway.lha;Demo;Intro 64K;;;160452;67790
 demo-notwhdl--rift-faribars;Fari Bars;Fari Bars;;;OCS;;;;;;;;;;;;2015;;English;;Rift;;;;;demo-notwhdl/Rift-FariBars.lha;Demo;Intro 64K;;;147488;66505
 demo-notwhdl--spaceballs-disiplin;Disiplin;Disiplin;;;OCS;;;;;;;;;;;;2024;;English;;Spaceballs;;;;;demo-notwhdl/Spaceballs-Disiplin.lha;Demo;Intro 64K;;;342186;96548

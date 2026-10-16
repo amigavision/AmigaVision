@@ -660,8 +660,8 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
             if sort_group.startswith("The "):
                 sort_group = sort_group[4:]
             sort_group = sort_group[:AGS_LIST_WIDTH]
-            group_letter = sort_group[0].upper()
-            if group_letter.isnumeric():
+            group_letter = sort_group[0].upper() if sort_group else None
+            if group_letter and group_letter.isnumeric():
                 group_letter = "#"
             if entry.get("subcategory", "").lower().startswith("disk mag"):
                 start = perf_counter()
@@ -701,10 +701,11 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
                 make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".ags"))
                 add_timing(c, "auto make_entry", perf_counter() - start)
                 ensure_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos"]), letter + ".iff"), {"op":"tx", "txt": letter})
-                start = perf_counter()
-                make_entry(c, path, group_entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".ags"), prefix=sort_group)
-                add_timing(c, "auto make_entry", perf_counter() - start)
-                ensure_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".iff"), {"op":"tx", "txt": group_letter})
+                if sort_group:
+                    start = perf_counter()
+                    make_entry(c, path, group_entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".ags"), prefix=sort_group)
+                    add_timing(c, "auto make_entry", perf_counter() - start)
+                    ensure_image(util.path(d_path, "{}.ags".format(strings["dirs"]["demos_group"]), group_letter + ".iff"), {"op":"tx", "txt": group_letter})
                 start = perf_counter()
                 make_entry(c, path, entry, util.path(d_path, "{}.ags".format(strings["dirs"]["demos_year"]), year + ".ags"))
                 add_timing(c, "auto make_entry", perf_counter() - start)
@@ -719,10 +720,8 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
 
         if demos and entry.get("category", "").lower() == "demo":
             groups = query.get_publishers(entry)
-            if not groups:
-                c.progress_current += 1
-                continue
-            for sort_group in groups:
+            # Missing group credits must not hide titles from alphabet/year lists.
+            for sort_group in groups or [""]:
                 countries = query.get_countries(entry)
                 if not countries:
                     add_demo(entry, sort_group, None)
