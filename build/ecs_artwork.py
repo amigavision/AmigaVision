@@ -84,7 +84,14 @@ def main():
         key = str(source)
         manifest['sources'][key] = digest
         dest = args.output/relative
-        if previous.get('version') == VERSION and previous.get('sources', {}).get(key) == digest and dest.is_file():
+        previous_digest = previous.get('sources', {}).get(key)
+        # Preserve the one-time skin lettering conversion when migrating its
+        # historical fingerprint to the normal source hash. Changed sources
+        # still regenerate normally.
+        legacy_skin = skin and previous_digest == hashlib.sha256(
+            source.read_bytes()+b'ecs-skin-enclosed-lettering-black-v2').hexdigest()
+        if (previous.get('version') == VERSION and dest.is_file()
+                and (previous_digest == digest or legacy_skin)):
             continue
         jobs.append((str(source), str(dest), skin))
     print(f'Converting {len(jobs)} changed/missing ECS images; reusing {len(sources)-len(jobs)}', flush=True)
