@@ -1,1 +1,2 @@
-Enable the background music in the launcher (default).
+    Enable background music in the launcher
+                   (Default)

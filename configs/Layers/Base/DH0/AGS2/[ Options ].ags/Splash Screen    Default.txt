@@ -1,2 +1,2 @@
-Show and automatically close
-splash/options window.
+          Show and automatically close
+             splash/options window.

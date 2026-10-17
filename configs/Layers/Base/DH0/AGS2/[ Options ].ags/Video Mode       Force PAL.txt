@@ -1,6 +1,7 @@
-Force PAL for titles. Saved across reboots.
+  Force PAL for titles. Saved across reboots.
 
-Only use this for a PAL-only CRT.
-Do not use on HDMI.
-Some NTSC titles may not work correctly.
-Select Default to restore each title's video mode.
+       Only use this for a PAL-only CRT.
+              Do not use on HDMI.
+    Some NTSC titles may not work correctly.
+  Select Default to restore each title's video
+                     mode.

@@ -1,3 +1,4 @@
-Your personal favorites.
+            Your personal favorites.
 
-Press Yellow button or Tab to add or remove a title.
+ Press Yellow button or Tab to add or remove a
+                     title.

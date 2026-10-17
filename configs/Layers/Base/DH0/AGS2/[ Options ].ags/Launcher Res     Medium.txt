@@ -1,3 +1,3 @@
-Switch the launcher to medium resolution.
+   Switch the launcher to medium resolution.
 
-The selection lasts until reboot.
+       The selection lasts until reboot.

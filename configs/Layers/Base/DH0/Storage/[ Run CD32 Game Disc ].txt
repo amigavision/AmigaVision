@@ -1,7 +1,7 @@
-Run CD32 Games from CHD or BIN/CUE disc images.
+   Run CD32 games from CHD or BIN/CUE images.
 
-Mount the game CD in MiSTer's "Drives" menu section
-as a Secondary Master drive. Then select "Boot".
+   Mount the CD in MiSTer's "Drives" menu as
+     Secondary Master, then select "Boot".
 
-Check https://amiga.vision/cd32 for settings if a
-game does not work.
+     If a game fails, check the settings at
+           https://amiga.vision/cd32

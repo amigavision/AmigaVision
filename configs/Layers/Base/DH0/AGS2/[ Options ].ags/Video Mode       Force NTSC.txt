@@ -1,6 +1,7 @@
-Force NTSC for titles. Saved across reboots.
+  Force NTSC for titles. Saved across reboots.
 
-Only use this for a NTSC-only CRT.
-Do not use on HDMI.
-Many games and nearly all demos will not work.
-Select Default to restore each title's video mode.
+       Only use this for a NTSC-only CRT.
+              Do not use on HDMI.
+ Many games and nearly all demos will not work.
+  Select Default to restore each title's video
+                     mode.

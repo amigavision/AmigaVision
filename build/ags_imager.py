@@ -27,15 +27,15 @@
 # killaga: Use killaga hack when invoking whdload (1=true)
 # gamepad: Title supports more than one button (1=true)
 # lightgun: Title supports light gun (1=true)
-# note: Extra text displayed in info box as "Note:"
-# issues: Extra text displayed in info box as "Issues:"
-# hack: Extra text displayed in info box as "Hack info:"
+# note: Extra prose displayed in the centered info box (without a label)
+# issues: Known problems, displayed alongside notes and hack information
+# hack: Modification/port information, displayed without a label
 # release_date: Release date (YYYY or YYYY-MM-DD)
 # country: Country of origin (comma separated list)
 # language: Languages supported (comma separated list)
 # developer: Developer (comma separated list)
 # publisher: Publisher (comma separated list)
-# players: Number of players supported (displayed in info box)
+# players: Display wording, e.g. "4 Players (2 Simultaneously)"
 # slave_args: Extra arguments passed in whdl invokation
 # slave_version: WHDL install version (set by ags_index)
 # slave_path: Path to WHDL slave in archive (set by ags_index)
@@ -343,7 +343,7 @@ def fingerprint_python_defs(path: str, names: list[str]) -> str:
 AGS2_TREE_BEHAVIOR_FINGERPRINT = hash_payload([
     fingerprint_file('build/ags_ecs.py'),
     fingerprint_file('configs/ecs-preferred-versions.json'),
-    fingerprint_python_defs("build/ags_make.py", ["make_tree", "make_entries", "make_entry", "make_autoentries", "make_runscripts", "make_runscript"]),
+    fingerprint_python_defs("build/ags_make.py", ["make_tree", "make_entries", "make_entry", "make_autoentries", "make_runscripts", "make_runscript", "AGS_INFO_WIDTH", "AGS_INFO_HEIGHT", "make_note", "metadata_system", "metadata_blocks", "metadata_date", "metadata_wrap", "wrap_note"]),
     fingerprint_python_defs("build/ags_query.py", ["get_entry", "get_missing_archive_entry", "get_missing_archive_entry_by_id", "get_preferred_entry", "name_is_fuzzy", "get_runscript_paths", "get_amiga_whd_dir", "get_whd_slavename", "entry_is_notwhdl"]),
     fingerprint_python_defs("build/ags_compositor.py", ["compose", "out_iff"]),
 ])
@@ -359,7 +359,7 @@ PFS_PARTITION_BEHAVIOR_FINGERPRINT = hash_payload([
 ])
 
 AUTOENTRIES_BEHAVIOR_FINGERPRINT = hash_payload([
-    fingerprint_python_defs("build/ags_make.py", ["make_autoentries", "make_entry", "make_image", "wrap_note"]),
+    fingerprint_python_defs("build/ags_make.py", ["make_autoentries", "make_entry", "make_image", "wrap_note", "AGS_INFO_WIDTH", "AGS_INFO_HEIGHT", "make_note", "metadata_system", "metadata_blocks", "metadata_date", "metadata_wrap"]),
     fingerprint_python_defs("build/ags_query.py", ["has_english_language", "get_languages", "get_publishers", "get_countries"]),
     fingerprint_python_defs("build/ags_strings.py", ["strings"]),
     fingerprint_python_defs("build/ags_compositor.py", ["compose", "out_iff"]),

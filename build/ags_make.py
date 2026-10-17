@@ -20,7 +20,8 @@ from ags_strings import strings
 from ags_types import EntryCollection
 from make_vadjust import VSHIFT_MAX, VSHIFT_MIN
 
-AGS_INFO_WIDTH = 54
+AGS_INFO_WIDTH = 48
+AGS_INFO_HEIGHT = 8
 AGS_LIST_WIDTH = 30
 MAX_FILENAME_LENGTH = 96
 WARNED_MISSING_ARCHIVES = set()
@@ -93,15 +94,16 @@ def sanitize_name(name: str) -> str:
 
 def wrap_note(text: str) -> str:
     wrapped = []
-    for line in text.replace("\\n", "\n").splitlines():
+    for line in text.replace("\\\\n", "\n").replace("\\n", "\n").strip("\n").splitlines():
         if not line.strip():
             wrapped.append("")
-        elif line != line.strip():
-            # Preserve intentionally padded lines exactly as authored.
-            wrapped.append(line)
         else:
-            wrapped.append(textwrap.fill(line, AGS_INFO_WIDTH))
-    return "\n".join(wrapped)
+            wrapped.extend(textwrap.wrap(line.strip(), AGS_INFO_WIDTH))
+    if len(wrapped) > AGS_INFO_HEIGHT:
+        print_warning("launcher description exceeds {} lines: {}".format(AGS_INFO_HEIGHT, text.strip()[:60]))
+        wrapped = wrapped[:AGS_INFO_HEIGHT]
+        wrapped[-1] = wrapped[-1][:AGS_INFO_WIDTH - 2].rstrip(" .") + ".."
+    return "\n".join(line.center(AGS_INFO_WIDTH).rstrip() if line else "" for line in wrapped)
 
 def normalize_release_year(release_date: str) -> tuple[str, str]:
     year, _, _ = util.parse_date(release_date or "")
@@ -383,7 +385,7 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
 
     # make note
     if options and options.get("unavailable", False):
-        note = wrap_note(note) if note else strings["note"]["title"] + entry["title"] + "\n\n" + strings["note"]["unavailable"]
+        note = wrap_note(note if note else entry["title"] + "\n\n" + strings["note"]["unavailable"])
         open(base_path + ".txt", mode="w", encoding="latin-1", errors="replace").write(note)
     elif entry:
         open(base_path + ".txt", mode="w", encoding="latin-1", errors="replace").write(make_note(entry, note))
@@ -433,81 +435,122 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
 # -----------------------------------------------------------------------------
 # create note from entry
 
-def make_note(entry, add_note):
-    max_w = AGS_INFO_WIDTH
-    note = ""
+def metadata_system(entry):
     system = entry["hardware"].replace("/", "·")
     aspect_ratio = None
 
-    def trunc(s: str) -> str:
-        if len(s) > max_w:
-            s = s[:max_w - 2].strip() + ".."
-        return s
-
     if util.parse_int(entry.get("ntsc", 0)) == 1:
-        if entry.get("scale", 0) == 6:
+        if util.parse_int(entry.get("scale") or 0) == 6:
             system += "·6×NTSC"
             aspect_ratio = "16:9"
         else:
             system += "·5×NTSC"
     elif util.parse_int(entry.get("ntsc", 0)) == 2:
-        if entry.get("scale", 0) == 6:
+        if util.parse_int(entry.get("scale") or 0) == 6:
             system += "·6×PAL60"
             aspect_ratio = "16:9"
         else:
             system += "·5×PAL60"
     else:
-        if entry.get("scale", 0) == 6:
+        if util.parse_int(entry.get("scale") or 0) == 6:
             system += "·6×PAL"
             aspect_ratio = "16:9"
-        elif entry.get("scale", 0) == 5:
+        elif util.parse_int(entry.get("scale") or 0) == 5:
             system += "·5×PAL"
         else:
             system += "·4×PAL"
 
-    if entry.get("lightgun", False):
+    if util.parse_int(entry.get("lightgun") or 0):
         system += "·Light Gun"
-    elif entry.get("gamepad", False):
+    if util.parse_int(entry.get("gamepad") or 0):
         system += "·Game Pad"
     if aspect_ratio:
         system += " ({})".format(aspect_ratio)
 
-    if "category" in entry and entry["category"].lower() == "game":
-        note += trunc("{}{}".format(strings["note"]["title"], entry["title"])) + "\n"
-        note += trunc("{}{}".format(strings["note"]["developer"], entry["developer"])) + "\n"
-        note += trunc("{}{}".format(strings["note"]["publisher"], entry["publisher"])) + "\n"
-        note += ("{}{}".format(strings["note"]["release_date"], entry["release_date"]))[:max_w] + "\n"
-        note += ("{}{}".format(strings["note"]["players"], entry["players"]))[:max_w] + "\n"
-        if entry.get("language"):
-            language = util.prettify_names(entry["language"])
-            note += trunc("{}{}".format(strings["note"]["language"], language)) + "\n"
-        note += ("{}{}".format(strings["note"]["system"], system))[:max_w] + "\n"
-        if entry.get("issues"):
-            note += trunc("{}{}".format(strings["note"]["issues"], entry["issues"])) + "\n"
-        elif entry.get("hack"):
-            note += trunc("{}{}".format(strings["note"]["hack"], entry["hack"])) + "\n"
+    return system
 
-    elif "category" in entry and entry["category"].lower() == "demo":
-        group = util.prettify_names(entry["publisher"])
-        note += ("{}{}".format(strings["note"]["title"], entry["title"]))[:max_w] + "\n"
-        note += ("{}{}".format(strings["note"]["group"], group))[:max_w] + "\n"
-        if entry.get("country"):
-            country = util.prettify_names(entry["country"])
-            note += trunc("{}{}".format(strings["note"]["country"], country)) + "\n"
-        note += ("{}{}".format(strings["note"]["release_date"], entry["release_date"]))[:max_w] + "\n"
-        if entry.get("subcategory", "").lower() != "demo":
-            note += ("{}{}".format(strings["note"]["category"], entry["subcategory"]))[:max_w] + "\n"
-        else:
-            note += "{}Demo\n".format(strings["note"]["category"])
-        note += ("{}{}".format(strings["note"]["system"], system))[:max_w] + "\n"
-        if entry.get("issues"):
-            note += trunc("{}{}".format(strings["note"]["issues"], entry["issues"])) + "\n"
 
-    if add_note and isinstance(add_note, str):
-            note += trunc("{}{}".format(strings["note"]["note"], add_note)) + "\n"
-    elif entry.get("note"):
-            note += trunc("{}{}".format(strings["note"]["note"], entry["note"])) + "\n"
-    return note
+def make_note(entry, add_note):
+    max_w = AGS_INFO_WIDTH
+    system = metadata_system(entry)
+    blocks = metadata_blocks(entry, add_note, system)
+    wrapped = [(field, metadata_wrap(text)) for field, text in blocks]
+    if sum(len(lines) for _, lines in wrapped) > AGS_INFO_HEIGHT:
+        print_warning("metadata exceeds {} lines: {}".format(AGS_INFO_HEIGHT, entry.get("id", entry.get("title", ""))))
+        # Every semantic field keeps a line, including issues and hardware.
+        # Shorten descriptive text first; the audit exposes any such fallback.
+        for field in ("note", "hack", "credits", "language", "title", "country_type", "genre_players", "issues", "hardware"):
+            for key, lines in wrapped:
+                while key == field and len(lines) > 1 and sum(len(value) for _, value in wrapped) > AGS_INFO_HEIGHT:
+                    lines.pop()
+                    lines[-1] = lines[-1][:max_w - 2].rstrip(" .") + ".."
+    if (sum(len(lines) for _, lines in wrapped) <= 6
+            and wrapped and wrapped[0][0] == "title" and wrapped[0][1]):
+        wrapped[0][1].append("")
+    return "".join(line.center(max_w).rstrip() + "\n" for _, lines in wrapped for line in lines)
+
+
+def metadata_wrap(text):
+    """Wrap authored prose before centering; output is written as Latin-1."""
+    return [line for paragraph in str(text).replace("\\\\n", "\n").replace("\\n", "\n").splitlines()
+            for line in textwrap.wrap(paragraph.strip(), AGS_INFO_WIDTH)]
+
+
+def metadata_date(value):
+    value = (value or "").strip()
+    if re.fullmatch(r"\d{3}[xX]", value):
+        return value[:3] + "0s"
+    if re.fullmatch(r"\d{2}[xX]{2}", value):
+        return ""  # Entirely unknown year, rather than an invented date.
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+        from datetime import date
+        try:
+            day = date.fromisoformat(value)
+            months = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+            return "{} {} {}".format(day.day, months[day.month - 1], day.year)
+        except ValueError:
+            pass
+    return value
+
+
+def metadata_blocks(entry, add_note, system):
+    """Semantic lines, shared with the metadata audit (before wrapping/clipping)."""
+    blocks = []
+    def add(field, value):
+        if value and str(value).strip():
+            blocks.append((field, str(value).strip()))
+
+    add("title", entry.get("title"))
+    category = entry.get("category", "").lower()
+    seen = set()
+    credits = [metadata_date(entry.get("release_date"))]
+    for field in (("developer", "publisher") if category == "game" else ("publisher",)):
+        names = []
+        for name in entry.get(field, "").split(", "):
+            name = name.strip()
+            if name and name.casefold() not in seen:
+                names.append(name)
+                seen.add(name.casefold())
+        credits.append(", ".join(names))
+    add("credits", " · ".join(part for part in credits if part))
+    if category == "game":
+        players = entry.get("players", "").strip()
+        # Legacy/imported numeric counts still render naturally. Rich wording lives in CSV.
+        if players.isdigit() and players != "0":
+            players += " Player" if players == "1" else " Players"
+        if players == "0":
+            players = ""
+        add("genre_players", " · ".join(part for part in (entry.get("subcategory", "").strip(), players) if part))
+        language = entry.get("language", "").strip()
+        if language.casefold() != "english":
+            add("language", language)
+    elif category == "demo":
+        add("country_type", " · ".join(part for part in (entry.get("country", "").strip(), entry.get("subcategory", "").strip() or "Demo") if part))
+    add("note", add_note if isinstance(add_note, str) and add_note else entry.get("note"))
+    add("issues", entry.get("issues"))
+    add("hack", entry.get("hack"))
+    add("hardware", system)
+    return blocks
 
 # -----------------------------------------------------------------------------
 # make run scripts
