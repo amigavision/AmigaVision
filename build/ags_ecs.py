@@ -182,7 +182,7 @@ def patch_menu_text_pen(source, destination):
     Path(destination).write_bytes(original.replace(sequence, replacement))
 
 
-def install_launcher(ags_path, collection, image_root='data/img_ecs'):
+def install_launcher(ags_path, collection, image_root='data/img_ecs', launcher_root='data/ags2-ecs'):
     """Replace generated menu images with pre-rendered hi-res ECS artwork."""
     import hashlib
     import shutil
@@ -199,7 +199,7 @@ def install_launcher(ags_path, collection, image_root='data/img_ecs'):
 
     def copy(relative, destination, launcher=False):
         original = Path('data/ags2-highres' if launcher else 'data/img_highres')/relative
-        source = static/('launcher' if launcher else '')/relative
+        source = (Path(launcher_root) if launcher else static)/relative
         expected = manifest['sources'].get(str(original))
         if not source.is_file() or not expected or hashlib.sha256(original.read_bytes()).hexdigest() != expected:
             raise FileNotFoundError(f'Missing/stale ECS artwork {source}; run make ecs-artwork')
@@ -243,7 +243,7 @@ def install_launcher(ags_path, collection, image_root='data/img_ecs'):
             missing.append(entry_id)
     for name in ['skin-bg-highres.iff','skin-empty-highres.iff','About-qr.iff']:
         copy(Path(name), root/name, launcher=True)
-    config = Path('data/ags2-ecs/AGS2.conf')
+    config = Path(launcher_root)/'AGS2.conf'
     for name in ['AGS2.conf','AGS2.conf.base']:
         shutil.copyfile(config, root/name)
     for path in (root/'[ Options ].ags').glob('Launcher Res*'):

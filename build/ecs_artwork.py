@@ -67,6 +67,7 @@ def convert(job):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=Path('data/img_ecs'))
+    parser.add_argument('--launcher-output', type=Path, default=Path('data/ags2-ecs'))
     parser.add_argument('--jobs', type=int, default=min(4, os.cpu_count() or 1))
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
@@ -75,15 +76,14 @@ def main():
     jobs = []
     manifest = {'version': VERSION, 'sources': {}}
     # Navigation artwork lives alongside the high-resolution title masters.
-    sources = [(p, p.relative_to('data/img_highres'), False)
+    sources = [(p, args.output/p.relative_to('data/img_highres'), False)
                for p in sorted(Path('data/img_highres').rglob('*.iff'))]
-    sources += [(p, Path('launcher')/p.name, p.name.startswith('skin-'))
+    sources += [(p, args.launcher_output/p.name, p.name.startswith('skin-'))
                 for p in sorted(Path('data/ags2-highres').glob('*.iff'))]
-    for source, relative, skin in sources:
+    for source, dest, skin in sources:
         digest = hashlib.sha256(source.read_bytes()).hexdigest()
         key = str(source)
         manifest['sources'][key] = digest
-        dest = args.output/relative
         previous_digest = previous.get('sources', {}).get(key)
         # Preserve the one-time skin lettering conversion when migrating its
         # historical fingerprint to the normal source hash. Changed sources
