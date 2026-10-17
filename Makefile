@@ -337,11 +337,11 @@ image:
 ecs-artwork:
 	@pipenv run python build/ecs_artwork.py
 
-ecs-dry:
+ecs-dry: ecs-artwork
 	@mkdir -p "$(ECS_TEMP)" "$(subst ",,${AGSDEST})"
 	@AGSTEMP="$(ECS_TEMP)" AGSCACHEGEN=ecs $(ECS_IMAGE_PREP_CMD) --only-ags-tree
 
-ecs-image:
+ecs-image: ecs-artwork
 	@mkdir -p "$(ECS_TEMP)" "$(subst ",,${AGSDEST})"
 	@$(MAKE_MANIFESTS_CMD)
 	@AGSTEMP="$(ECS_TEMP)" AGSCACHEGEN=ecs $(ECS_IMAGE_PREP_CMD)
