@@ -1,0 +1,5 @@
+ags-cd N/AdventuresInRetro02
+stack >NIL: 65536
+assign LIBS: libs ADD
+DMC.exe >NIL:
+assign LIBS: libs REMOVE

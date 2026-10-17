@@ -29,7 +29,7 @@ demo--megamix1--megamix1;Megamix 1;RAF Megamix 1;;;OCS;;0;;;;;;;;;;1990;Netherla
 demo--multica--multica;Multica;Multica;;;OCS;;0;;;;;;;;;;1992;Norway;English;;Andromeda;1;;v1.0;Multica/Multica.slave;demo/Multica_v1.0_Andromeda.lha;Demo;Demo;;;4171;5420
 demo--materialized--materialized;Materialized;Materialized;;;OCS;;0;;;;;;;;;;1990;Norway;English;;Cryptoburners;1;;v1.0;Materialized/Materialized.Slave;demo/Materialized_v1.0_Cryptoburners.lha;Demo;Demo;;;113574;9166
 demo--musabox--musabox;Musabox #1;Falcons Musabox 1;;;OCS;;0;;;;;;;;;;1991;Finland;English;;Falcons;1;;v1.0;Musabox/Musabox.Slave;demo/Musabox_v1.0_Falcons.lha;Demo;Music Disk;;;;
-demo--musicdisk181sttrack--musicdisk181sttrack;Music Disk 1;The 81st Track Music Disk 1;;;OCS;;0;;;;;;;;;;1991;UK;English;;The 81st Track;1;;v1.01;MusicDisk181stTrack/MusicDisk181stTrack.Slave;demo/MusicDisk1_v1.01_81stTrack.lha;Demo;Music Disk;;;;
+demo--musicdisk181sttrack--musicdisk181sttrack;Music Disk 1;81st Track Music Disk 1;;;OCS;;0;;;;;;;;;;1991;UK;English;;The 81st Track;1;;v1.01;MusicDisk181stTrack/MusicDisk181stTrack.Slave;demo/MusicDisk1_v1.01_81stTrack.lha;Demo;Music Disk;;;;
 demo--megademoacme--megademoacme;Megademo;Acme Megademo;;;OCS;;0;;;;;;;;;;1990;Sweden;English;;Acme;1;;v1.0;MegademoAcme/MegademoAcme.Slave;demo/Megademo_v1.0_Acme.lha;Demo;Demo;;;;
 demo--musicdiskthrust--musicdiskthrust;Music Pack 1;Thrust Music Pack 1;;;OCS;;0;;;;;;;;;;1988;Germany;English;;Thrust;1;;v1.0;MusicDiskThrust/MusicDiskThrust.Slave;demo/MusicDisk_v1.0_Thrust.lha;Demo;Music Disk;;;;
 demo--musicdream1--musicdream1;Music Dream 1;Phenomena Music Dream 1;;;OCS;;0;;;;;;;Left mouse button to select track;;;1991;Sweden;English;;Phenomena;1;;v1.0;MusicDream1/MusicDream1.Slave;demo/MusicDream1_v1.0_Phenomena.lha;Demo;Music Disk;;;;
@@ -94,7 +94,7 @@ demo--megademo2vortex42--megademo2vortex42;Megademo 2;Vortex 42 Megademo 2;;;OCS
 demo--minimegademodoom--minimegademodoom;Mini Megademo;Doom Mini Megademo;;;OCS;;0;;;;;;;;;;1992;UK;English;;Doom;1;;v1.0;MiniMegademoDoom/MiniMegademoDoom.Slave;demo/MiniMegademo_v1.0_Doom.lha;Demo;Demo;;;;
 demo--magnumicetro--magnumicetro;Magnum Icetro;Magnum Icetro;;;OCS;;0;;;;;;;;;;1994;Sweden;English;;Depth;1;;v1.0;MagnumIcetro/MagnumIcetro.Slave;demo/MagnumIcetro_v1.0_Depth.lha;Demo;Music Disk;;;175292;57207
 demo--megademo2scoopex--megademo2scoopex;Megademo 2;Scoopex Megademo 2;;;OCS;;0;;;;;;;;;;1990;Germany, Sweden, Austria;English;;Scoopex;1;;v1.0;Megademo2Scoopex/Megademo2Scoopex.Slave;demo/Megademo2_v1.0_Scoopex.lha;Demo;Demo;;;;
-demo--musicdisk281sttrack--musicdisk281sttrack;Music Disk 2;The 81st Track Music Disk 2;;;OCS;;0;;;;;;;;;;1992;UK;English;;The 81st Track;1;;v1.0;MusicDisk281stTrack/MusicDisk281stTrack.Slave;demo/MusicDisk2_v1.0_81stTrack.lha;Demo;Music Disk;;;;
+demo--musicdisk281sttrack--musicdisk281sttrack;Music Disk 2;81st Track Music Disk 2;;;OCS;;0;;;;;;;;;;1992;UK;English;;The 81st Track;1;;v1.0;MusicDisk281stTrack/MusicDisk281stTrack.Slave;demo/MusicDisk2_v1.0_81stTrack.lha;Demo;Music Disk;;;;
 demo--musiccompilation--musiccompilation;Music Compilation;Random Access Music;;;OCS;;0;5;4;;;;;;;;1989;Netherlands;English;;Random Access;1;;v1.0;MusicCompilation/MusicCompilation.Slave;demo/MusicCompilation_v1.0_RandomAccess.lha;Demo;Music Disk;;;;
 demo--muzzax3--muzzax3;Muzzax 3;Byterapers Muzzax 3;;;OCS;;0;;;;;;;;;;1989;Finland, Sweden;English;;Byterapers;1;;v1.0;Muzzax3/Muzzax3.Slave;demo/Muzzax3_v1.0_Byterapers.lha;Demo;Music Disk;;;;
 demo--miserydentro2--miserydentro2;Misery Dentro 2;Misery Dentro 2;;;OCS;;0;;;;;;;;;;1993;Germany;English;;Masque, TRSI;1;;v1.0;MiseryDentro2/MiseryDentro2.Slave;demo/MiseryDentro2_v1.0_Tristar&RedSectorInc.lha;Demo;Demo;;;8969;3191
@@ -645,7 +645,7 @@ demo--terminalfuckup--terminalfuckup;Terminal Fuckup;Terminal Fuckup;;;OCS;;0;;;
 demo--technologicaldeath--technologicaldeath;Technological Death;Technological Death;;;OCS;;0;;;;;;;;;;1993;Poland;English;;Mad Elks;1;;v1.0;TechnologicalDeath/TechnologicalDeath.slave;demo/TechnologicalDeath_v1.0_MadElks.lha;Demo;Demo;;;9497;2955
 demo--eroticon6--eroticon6;The Triple Breasted Whore of Eroticon 6;Triple Breasted Whore of Eroticon 6;;;OCS;;0;;;;;;;;;;1991;UK;English;;LSD;1;;v1.01;Eroticon6/Eroticon6.slave;demo/TripleBreastedWhoreOfEroticon6_v1.01_LSD.lha;Demo;Music Disk;;;;
 demo--technotrance--technotrance;Techno Trance;Techno Trance;;;OCS;;0;;;;;;;;;;1991;Denmark;English;;Bastards;1;;v1.1;TechnoTrance/TechnoTrance.slave;demo/TechnoTrance_v1.1_Bastards.lha;Demo;Music Disk;;;;
-demo--party2slideshow--party2slideshow;The Party II Slideshow;The Party II Slideshow;;;OCS;;0;;;;;;;;;;1993;Finland;English;;Decnite;1;;v1.0;Party2Slideshow/Party2Slideshow.Slave;demo/Party2Slideshow_v1.0_Decnite.lha;Demo;Slide Show;;;;
+demo--party2slideshow--party2slideshow;The Party II Slideshow;Party II Slideshow;;;OCS;;0;;;;;;;;;;1993;Finland;English;;Decnite;1;;v1.0;Party2Slideshow/Party2Slideshow.Slave;demo/Party2Slideshow_v1.0_Decnite.lha;Demo;Slide Show;;;;
 demo--musics3--musics3;Enemies Musics III;Enemies Musics III;;;OCS;;0;;;;;;;;;;1990;Denmark;English;;The Enemies;1;;v1.0;Musics3/Musics3.Slave;demo/Musics3_v1.0_Enemies.lha;Demo;Music Disk;;;;
 demo--dogscogsaga--dogscogsaga;The Dog's Cogs;Dog's Cogs;;;AGA;1;0;;;;;;;;;;1995;UK;English;;Nerve Axis;1;;v1.1;DogsCogsAGA/DogsCogsAGA.Slave;demo/DogsCogs_v1.1_NerveAxis_AGA.lha;Demo;Music Disk;;;;
 demo--punisher--punisher;The Punisher;Punisher, The;;;OCS;;0;;;;;;;;;;1992;UK;English;;Digital;1;;v1.0;Punisher/Punisher.Slave;demo/Punisher_v1.0_Digital.lha;Demo;Demo;;;189177;12335
@@ -656,7 +656,7 @@ demo--lastsun--lastsun;The Last Sun;Last Sun;;;OCS;;0;;;;;;;;;;1989;France;Engli
 demo--whiteroom--whiteroom;The White Room;White Room;;;OCS;;0;;;;;;;;;;1992;Belgium, Hungary;English;;Genesis, Live Act;1;;v1.0;WhiteRoom/WhiteRoom.Slave;demo/WhiteRoom_v1.0_Genesis&LiveAct.lha;Demo;Demo;;;;
 demo--teatime--teatime;The Long Dark Teatime of the Soul;Long Dark Teatime of the Soul;;;OCS;;0;;;;;;;;;;1992;UK;English;;LSD;1;;v1.01;Teatime/TeaTime.slave;demo/LongDarkTeatimeOfTheSoul_v1.01_LSD.lha;Demo;Music Disk;;;;
 demo--tagaga--tagaga;T.A.G.;TAG;;;AGA;1;0;;;;;;;;;;1993;Netherlands;English;;Jetset, Skid Row;1;;v1.0;TagAGA/TagAGA.Slave;demo/Tag_v1.0_Jetset&SkidRow_AGA.lha;Demo;Demo;;;146759;2995
-demo--wallkefrens--wallkefrens;The Wall;The Wall;;;OCS;;0;;;;;;;;;;1990;Denmark;English;;Kefrens;1;;v1.0;WallKefrens/WallKefrens.Slave;demo/Wall_v1.0_Kefrens.lha;Demo;Demo;;;;
+demo--wallkefrens--wallkefrens;The Wall;Wall;;;OCS;;0;;;;;;;;;;1990;Denmark;English;;Kefrens;1;;v1.0;WallKefrens/WallKefrens.Slave;demo/Wall_v1.0_Kefrens.lha;Demo;Demo;;;;
 demo--animatunesaga--animatunesaga;The Animatunes;Animatunes;;;AGA;1;0;;;;;;;;;;1994;France;English;;New Generation Crew;1;;v1.0;AnimatunesAGA/AnimatunesAGA.slave;demo/Animatunes_v1.0_NewGenerationCrew_AGA.lha;Demo;Demo;;;;
 demo--100mostrememberedc64tunes--100mostrememberedc64tunes;The 100 Most Remembered C64 Game Tunes;100 Most Remembered C64 Game Tunes;;;OCS;;0;;;;;;;;;;1990;Sweden;English;;Defjam & CCS;1;;v1.01;100MostRememberedC64Tunes/100MostRememberedC64Tunes.slave;demo/100MostRememberedGamesOnThe64_v1.01_PerHaakanSundell&RonBirk.lha;Demo;Music Disk;;;;
 demo--technomania--technomania;Technomania;Technomania;;;OCS;;0;;;;;;;;;;1991;Germany;English;;Shining 8;1;;v1.0;Technomania/Technomania.Slave;demo/Technomania_v1.0_Shining8.lha;Demo;Music Disk;;;;
@@ -687,7 +687,7 @@ demo--trash--trash;Trash;Trash;;;OCS;;0;;;;;;;;;;1992;UK;English;;Digital;1;;v1.
 demo--tympanicmembrane--tympanicmembrane;Tympanic Membrane;Tympanic Membrane;;;OCS;;0;;;;;;;;;;1993;UK;English;;Panacea;1;;v1.0;TympanicMembrane/TympanicMembrane.Slave;demo/TympanicMembrane_v1.0_Panacea.lha;Demo;Music Disk;;;;
 demo--beginning--beginning;The Beginning;Beginning;;;OCS;;0;;;;;;;;;;1990;Finland;English;;Byterapers;1;;v1.0;Beginning/Beginning.Slave;demo/Beginning_v1.0_Byterapers.lha;Demo;Demo;;;;
 demo--tuneshow3--tuneshow3;Tuneshow III;Tuneshow III;;;OCS;;0;;;;;;;;;;1990;Germany;English;;The Acoustic Revolution;1;;v1.0;TuneShow3/TuneShow3.Slave;demo/TuneShow3_v1.0_AcousticRevolution.lha;Demo;Music Disk;;;;
-demo--wallsplit--wallsplit;The Wall;The Wall;;;OCS;;0;;;;;;;;;;1991;UK;English;;Split Dimension;1;;v1.0;WallSplit/WallSplit.slave;demo/Wall_v1.0_Split.lha;Demo;Demo;;;;
+demo--wallsplit--wallsplit;The Wall;Wall;;;OCS;;0;;;;;;;;;;1991;UK;English;;Split Dimension;1;;v1.0;WallSplit/WallSplit.slave;demo/Wall_v1.0_Split.lha;Demo;Demo;;;;
 demo--tekknobert--tekknobert;Tekkno Bert: The Final Collapse;Tekkno Bert;;;OCS;;0;;;;;;;;;;1992;Germany;English;;Wildfire;1;;v1.0;Tekknobert/Tekknobert.Slave;demo/Tekknobert_v1.0_Wildfire.lha;Demo;Music Disk;;;;
 demo--bestofpearl--bestofpearl;The Best of Pearl;Best of Pearl;;;OCS;;0;;;;;;;;;;1991;Germany, Sweden;English;;Byte Busters;1;;v1.0;BestOfPearl/BestOfPearl.Slave;demo/BestOfPearl_v1.0_ByteBusters.lha;Demo;Music Disk;;;;
 demo--thirddimension--thirddimension;Third Dimension;Third Dimension;;;OCS;;0;;;;;;;;;;1990;Norway;English;;Cryptoburners;1;;v1.0;ThirdDimension/ThirdDimension.Slave;demo/ThirdDimension_v1.0_Cryptoburners.lha;Demo;Demo;;;;
@@ -4291,7 +4291,7 @@ game-notwhdl--onescapee;OnEscapee;OnEscapee;;;AGA/CD;1;0;;;;;;;;;;1997;;English;
 game--mixedupmothergoose--mixedupmothergoose;Mixed-Up Mother Goose (Enhanced);Mixed-Up Mother Goose (Enhanced);;;OCS;;1;;;;;;;;;;1991;;English;Sierra;Sierra;1;;v1.0;MixedUpMotherGoose/MixedUpMotherGoose.Slave;game/MixedUpMotherGoose_v1.0_2680.lha;Game;;2496;3594;;
 game--feudallords--feudallords;Feudal Lords;Feudal Lords;;;OCS;;1;;;;;;;;;;1991;;English;Plato;Impressions;4 (taking turns);CUSTOM3=1;v1.1;FeudalLords/FeudalLords.Slave;game/FeudalLords_v1.1_2991.lha;Game;;519;2387;;
 demo-notwhdl--melon-tetris;The Tetris Intro;Tetris Intro;;;OCS;;0;;;;;;;;;;1992;Denmark;English;;Melon Dezign;1;;;;demo-notwhdl/Melon-Tetris.lha;Demo;Intro 40K;;;;
-demo-notwhdl--rebels-tp2-40k;The Party II 40K Intro;The Party II 40K;;;OCS;;0;;;;;;;;;;1992;Finland;English;;Rebels;1;;;;demo-notwhdl/Rebels-TP2-40K.lha;Demo;Intro 40K;;;;
+demo-notwhdl--rebels-tp2-40k;The Party II 40K Intro;Party II 40K;;;OCS;;0;;;;;;;;;;1992;Finland;English;;Rebels;1;;;;demo-notwhdl/Rebels-TP2-40K.lha;Demo;Intro 40K;;;;
 demo-notwhdl--skandal-tangentopolis;Tangentopolis;Tangentopolis;;;OCS;;0;;;;;;;;Graphical glitches on MiSTer;;1992;Italy;English;;Skandal;1;;;;demo-notwhdl/Skandal-Tangentopolis.lha;Demo;Intro 40K;;;5338;27616
 demo-notwhdl--stellar-bananamen;Bananamen;Bananamen;;;OCS;;0;;;;;;;;;;1993;Finland;English;;Stellar;1;;;;demo-notwhdl/Stellar-Bananamen.lha;Demo;Intro 40K;;;447;8174
 demo-notwhdl--loonies-myluckynumber;My Lucky Number;My Lucky Number;;;OCS;;0;;;;;;;;;;2018;Denmark;English;;Loonies;1;;;;demo-notwhdl/Loonies-MyLuckyNumber.lha;Demo;Intro 64K;;;183437;74681
@@ -4419,7 +4419,7 @@ demo-notwhdl--loonies-octorubber;Octorubber;Octorubber;;;OCS;;0;;;;;;;;;;2014;De
 demo-notwhdl--melon-kingsongboy;King Song Boy;King Song Boy;;;OCS;;0;;;;;;;;;;1992;France;English;;Melon Dezign;1;;;;demo-notwhdl/Melon-KingSongBoy.lha;Demo;Intro 40K;;;;
 demo-notwhdl--spaceballs-dubzilla;Dubzilla;Dubzilla;;;OCS;;0;;;;;;;;;;2014;Norway;English;;Spaceballs;1;;;;demo-notwhdl/Spaceballs-Dubzilla.lha;Demo;Intro 64K;;;124378;64257
 demo-notwhdl--spaceballs-rubzilla;Rubzilla;Rubzilla;;;OCS;;0;;;;;;;;;;2014;Norway;English;;Spaceballs;1;;;;demo-notwhdl/Spaceballs-Rubzilla.lha;Demo;Demo;;;121257;64056
-demo-notwhdl--lego-thereal40k;The Real 40K;The Real 40K;;;OCS;;0;;;;;;;;;;1993;Germany;English;;Lego;1;;;;demo-notwhdl/Lego-TheReal40K.lha;Demo;Intro 40K;;;;
+demo-notwhdl--lego-thereal40k;The Real 40K;Real 40K;;;OCS;;0;;;;;;;;;;1993;Germany;English;;Lego;1;;;;demo-notwhdl/Lego-TheReal40K.lha;Demo;Intro 40K;;;;
 demo-notwhdl--melon-whereismyconscience;Where Is My Conscience?;Where Is My Conscience;;;OCS;;0;;;;;;;;;;1994;France;English;;Melon Dezign;1;;;;demo-notwhdl/Melon-WhereIsMyConscience.lha;Demo;Intro 64K;;;89556;396
 demo-notwhdl--ministry-cytron;Cytron Crack Intro;Cytron;;;OCS;;0;5;0;;;;;;;;1992;France;English;;Melon Dezign;1;;;;demo-notwhdl/Ministry-Cytron.lha;Demo;Crack Intro;;;;
 demo-notwhdl--infect-equation;Equation;Equation;;;OCS;;0;;;;;;;;;;1993;Sweden;English;;Infect;1;;;;demo-notwhdl/Infect-Equation.lha;Demo;Intro 40K;;;26951;12450
@@ -4521,10 +4521,10 @@ mags--scenetalk5--scenetalk5;Scene Talk #5;Scene Talk 5;;;OCS;;0;;;;;;;;;;1993-1
 mags--scenetalk6--scenetalk6;Scene Talk #6;Scene Talk 6;;;OCS;;0;;;;;;;;;;1993-12;;English;;Mystic;1;;v1.0;SceneTalk6/SceneTalk6.Slave;mags/SceneTalk6_v1.0_Mystic.lha;Demo;Disk Magazine;;;;
 mags--scenetalk7--scenetalk7;Scene Talk #7;Scene Talk 7;;;OCS;;0;;;;;;;;;;1994-08;;English;;Mystic;1;;v1.0;SceneTalk7/SceneTalk7.Slave;mags/SceneTalk7_v1.0_Mystic.lha;Demo;Disk Magazine;;;;
 mags--scenetalk8--scenetalk8;Scene Talk #8;Scene Talk 8;;;OCS;;0;;;;;;;;;;1995-04;;English;;Mystic;1;;v1.0;SceneTalk8/SceneTalk8.Slave;mags/SceneTalk8_v1.0_Mystic.lha;Demo;Disk Magazine;;;;
-mags--scene1--scene1;The Scene #1;The Scene 1;;;OCS;;0;;;;;;;;;;1990-04-23;;English;;Mystix;1;;v1.0;Scene1/Scene1.Slave;mags/Scene1_v1.0_Mystix.lha;Demo;Disk Magazine;;;;
-mags--scene2abel--scene2abel;The Scene #2;The Scene 2;;;OCS;;0;;;;;;;;;;1990-06-05;;English;;Abel;1;;v1.0;Scene2Abel/Scene2Abel.Slave;mags/Scene2_v1.0_Abel.lha;Demo;Disk Magazine;;;;
-mags--scene3decay--scene3decay;The Scene #3;The Scene 3;;;OCS;;0;;;;;;;;;;1990-08-01;;English;;Decay;1;;v1.0;Scene3Decay/Scene3Decay.slave;mags/Scene3_v1.0_Decay.lha;Demo;Disk Magazine;;;;
-mags--scene4prophecy--scene4prophecy;The Scene #4;The Scene 4;;;OCS;;0;;;;;;;;;;1991;;English;;Prophecy;1;;v1.0;Scene4Prophecy/Scene4Prophecy.Slave;mags/Scene4_v1.0_Prophecy.lha;Demo;Disk Magazine;;;;
+mags--scene1--scene1;The Scene #1;Scene 1;;;OCS;;0;;;;;;;;;;1990-04-23;;English;;Mystix;1;;v1.0;Scene1/Scene1.Slave;mags/Scene1_v1.0_Mystix.lha;Demo;Disk Magazine;;;;
+mags--scene2abel--scene2abel;The Scene #2;Scene 2;;;OCS;;0;;;;;;;;;;1990-06-05;;English;;Abel;1;;v1.0;Scene2Abel/Scene2Abel.Slave;mags/Scene2_v1.0_Abel.lha;Demo;Disk Magazine;;;;
+mags--scene3decay--scene3decay;The Scene #3;Scene 3;;;OCS;;0;;;;;;;;;;1990-08-01;;English;;Decay;1;;v1.0;Scene3Decay/Scene3Decay.slave;mags/Scene3_v1.0_Decay.lha;Demo;Disk Magazine;;;;
+mags--scene4prophecy--scene4prophecy;The Scene #4;Scene 4;;;OCS;;0;;;;;;;;;;1991;;English;;Prophecy;1;;v1.0;Scene4Prophecy/Scene4Prophecy.Slave;mags/Scene4_v1.0_Prophecy.lha;Demo;Disk Magazine;;;;
 mags--stolendata07--stolendata07;Stolen Data #07;Stolen Data 07;;;OCS;;0;;;;;;;;;;1991-10;;English;;Anarchy;1;;v1.0;StolenData07/StolenData07.Slave;mags/StolenData07_v1.0_Anarchy&FlashProductions.lha;Demo;Disk Magazine;;;;
 mags--stolendata08--stolendata08;Stolen Data #08;Stolen Data 08;;;OCS;;0;;;;;;;;;;1992-04;;English;;Anarchy;1;;v1.0;StolenData08/StolenData08.Slave;mags/StolenData08_v1.0_Anarchy.lha;Demo;Disk Magazine;;;;
 mags--grapevine05--grapevine05;Grapevine #05;Grapevine 05;;;OCS;;0;;;;;;;;;;1991-10;;English;;LSD;1;;v1.0;Grapevine05/Grapevine05.Slave;mags/Grapevine05_v1.0_LSD.lha;Demo;Disk Magazine;;;;
@@ -4613,7 +4613,7 @@ game--blackdawn2--blackdawn2;Black Dawn II;Black Dawn II;;;OCS;;0;;;;;;;;;;1994;
 game--blackdawn6--blackdawn6;Black Dawn VI: Hellbound;Black Dawn VI;;;OCS;;0;;;;;;;;;;1995;;English;ZSoft;F1 Licenceware;1;;v1.0;BlackDawn6/BlackDawn6.Slave;game/BlackDawn6_v1.0.lha;Game;;4119;2272;;
 game--legionsofdawn--legionsofdawn;Black Dawn III: Legions of Dawn;Black Dawn III;;;OCS;;0;;;;;;;;;;1995;;English;Black Dragon;F1 Licenceware;1;;v1.0;LegionsOfDawn/LegionsOfDawn.Slave;game/LegionsOfDawn_v1.0.lha;Game;;4009;2273;;
 demo-notwhdl--offence-towardsdarkertimes;Towards Darker Times;Towards Darker Times;;;OCS;;0;;;;;;;;;;2020;Norway;English;;Offence;1;;;;demo-notwhdl/Offence-TowardsDarkerTimes.lha;Demo;Intro 4K;;;280563;86220
-demo-notwhdl--retream-thecure;The Cure;The Cure;;;AGA/030;1;0;5;27;;;;;;;;2020;Italy;English;;Retream;1;;;;demo-notwhdl/Retream-TheCure.lha;Demo;Demo;;;280575;86222
+demo-notwhdl--retream-thecure;The Cure;Cure;;;AGA/030;1;0;5;27;;;;;;;;2020;Italy;English;;Retream;1;;;;demo-notwhdl/Retream-TheCure.lha;Demo;Demo;;;280575;86222
 game--jamespond3cd32fr--jamespond3cd32fr;James Pond 3: Operation Starfi5h;James Pond 3;1;game--jamespond3aga--jamespond3aga;CD32;1;0;5;22;;;1;;;;;1994;;French;Vectordean;Millennium;1;CUSTOM2=1;v2.1;JamesPond3CD32Fr/JamesPond3CD32Fr.slave;game/JamesPond3_v2.1_CD32_Fr.lha;Game;;785;729;;
 game--dunegr--dunegr;Dune;Dune;;game--dune--dune;OCS;;0;5;20;;;;;;;;1992;;Greek;Cryo;Virgin;1;;v3.1;DuneGr/DuneGr.Slave;game/Dune_v3.1_Gr.lha;Game;Adventure;439;354;;
 game--smarty&thenastygluttons--smarty&thenastygluttons;Smarty and the Nasty Gluttons;Smarty and the Nasty Gluttons;;;OCS;;0;;;;;;;;;;2020;;English;Eero Tunkelo;Eero Tunkelo;1;;v1.1;Smarty&TheNastyGluttons/Smarty&TheNastyGluttons.slave;game/Smarty&TheNastyGluttons_v1.1.lha;Game;;-2;4457;;
@@ -4694,7 +4694,7 @@ game--beaverscd32--beaverscd32;Beavers;Beavers;1;game--beavers--beavers;CD32;1;1
 game--veteran--veteran;Veteran;Veteran;;;OCS;;1;;;;;;;;;;1988;;English;Paradox (Eidersoft);Keypunch, Software Horizons;1;;v1.0;Veteran/Veteran.Slave;game/Veteran_v1.0_2970.lha;Game;;1566;1107;;
 game--downatthetrolls--downatthetrolls;Down at the Trolls;Down at the Trolls;1;game--realmofthetrolls2disk--realmofthetrolls2disk;OCS;;1;;;;;;;;;;1988;;English;Rainbow Arts;Rainbow Arts;8 (taking turns);;v1.2;DownAtTheTrolls/DownAtTheTrolls.Slave;game/DownAtTheTrolls_v1.2_3009.lha;Game;;399;4067;;
 game--realmofthetrolls1disk--realmofthetrolls1disk;Realm of the Trolls;Realm of the Trolls;1;game--realmofthetrolls2disk--realmofthetrolls2disk;OCS;;1;;;;;;;;;;1988;;English;Rainbow Arts;GO!, Rainbow Arts;8 (taking turns);;v1.2;RealmOfTheTrolls1Disk/RealmOfTheTrolls1Disk.Slave;game/RealmOfTheTrolls_v1.2_1Disk_3010.lha;Game;;399;4067;;
-demo-notwhdl--lemon-thefall;The Fall;The Fall;1;demo--fall--fall;OCS;;0;;;;;;;;;;2018;UK, France, Netherlands, Germany;English;;Lemon, The Deadliners;1;;;;demo-notwhdl/Lemon+TDL-TheFall.lha;Demo;Demo;;;185607;75773
+demo-notwhdl--lemon-thefall;The Fall;Fall;1;demo--fall--fall;OCS;;0;;;;;;;;;;2018;UK, France, Netherlands, Germany;English;;Lemon, The Deadliners;1;;;;demo-notwhdl/Lemon+TDL-TheFall.lha;Demo;Demo;;;185607;75773
 game--battleshipntsc--battleshipntsc;Battleship;Battleship;;;OCS;;1;;;;;;;;;;1987;;English;Elite;Epyx;2 (taking turns);;v2.1;BattleshipNTSC/BattleshipNTSC.slave;game/Battleship_v2.1_NTSC.lha;Game;Strategy;75;140;;
 game--skyfighter--skyfighter;Sky Fighter;Sky Fighter;;;OCS;;1;;;;;;;;;;1987;;English;Digital Artwork;Rainbow Arts;2 (taking turns);;v1.0;SkyFighter/SkyFighter.Slave;game/SkyFighter_v1.0_2117.lha;Game;;3677;3281;;
 game--skyblaster--skyblaster;Skyblaster;Skyblaster;;;OCS;;1;;;;;;;;;;1989;;English;Expert-Software;DigiTek, reLINE;2 (taking turns);;v1.0;Skyblaster/Skyblaster.Slave;game/Skyblaster_v1.0_2047.lha;Game;;3401;4548;;
@@ -4780,7 +4780,7 @@ game--tinyus--tinyus;Tinyus;Tinyus;;;OCS;;0;4;-8;;;;;;;;2021;;English;Pink;Abyss
 demo-notwhdl--spreadpoint-2^5years;2^5 Years;2^5 Years;;;OCS;;0;;;;;;;;;;2022;Switzerland;English;;Spreadpoint;1;;;;demo-notwhdl/Spreadpoint-2^5years.lha;Demo;Demo;;;303917;90613
 demo-notwhdl--nectarine-preampii;PreAmp II;PreAmp II;;;OCS;;0;;-2;;;;;;;;2021;Germany, Norway, Sweden;English;;Nectarine;1;;;;demo-notwhdl/Nectarine-PreAmpII.lha;Demo;Music Disk;;;299970;89859
 demo-notwhdl--cheesylistening;Cheesy Listening;Cheesy Listening;;;OCS;;0;;;;;;;;;;2022;Germany, Norway;English;;Alcatraz, Offence, Rebels;1;;;;demo-notwhdl/CheesyListening.lha;Demo;Music Disk;;;305249;90905
-demo-notwhdl--rmcthecave;The Cave;The Cave;;;OCS;;0;;;;;;;;;;2022;UK;English;;RMC;1;;;;demo-notwhdl/RMCTheCave.lha;Demo;Intro 40K;;;;
+demo-notwhdl--rmcthecave;The Cave;Cave;;;OCS;;0;;;;;;;;;;2022;UK;English;;RMC;1;;;;demo-notwhdl/RMCTheCave.lha;Demo;Intro 40K;;;;
 game--worldcupusa94--worldcupusa94;World Cup USA 94;World Cup USA 94;;;OCS;;0;5;;;;;;;;;1994;;English, German, French, Italian;Tiertex;U.S. Gold;2;;v1.0;WorldCupUSA94/WorldCupUSA94.Slave;game/WorldCupUSA94_v1.0_0163.lha;Game;Sports;1765;2692;;
 game-notwhdl--finalodyssey;Final Odyssey;Final Odyssey;;;AGA/CD;1;0;;;;;;;;;;1997;;English;Peter Spinaze;Vulcan;1;;;;game-notwhdl/FinalOdyssey.lha;Game;;542;1601;;
 game--pokernights&datadisks--pokernights&datadisks;Poker Nights: Teresa Personally;Poker Nights;;;OCS;;0;;;;;;;;;;1993;;English;Escal;VTO Pictures;1;CUSTOM1=1;v1.2;PokerNights&DataDisks/PokerNights&DataDisks.slave;game/PokerNights&DataDisks_v1.2.lha;Game;;740;3335;;
@@ -4851,7 +4851,7 @@ game--turrican2aga--turrican2aga;Turrican II: The Final Fight;Turrican II (AGA);
 demo-notwhdl--fnuque-hexjunkie;Hex Junkie;Hex Junkie;;;OCS;;0;;;;;;;;;;2022;Denmark;English;;Fnuque;1;;;;demo-notwhdl/Fnuque-HexJunkie.lha;Demo;Intro 4K;;;307601;91342
 demo-notwhdl--logicoma-logicos;Logic OS;Logic OS;;;OCS;;0;5;24;;;;;;;;2022;UK, Denmark;English;;Logicoma, Loonies;1;;;;demo-notwhdl/Logicoma-LogicOS.lha;Demo;Intro 64K;;;307338;91307
 demo-notwhdl--koney-ketamuskolar;Ketamuskolar;Ketamuskolar;;;OCS;;0;;;;;;;;;;2022;Italy;English;;Koney;1;;;;demo-notwhdl/Koney-Ketamuskolar.lha;Demo;Intro 40K;;;308147;91430
-demo-notwhdl--nihirashi-nh05thered;NH-05: The Red;The Red;;;OCS;;0;;-8;;;;;;;;2022;Georgia;English;;Nihirashi;1;;;;demo-notwhdl/Nihirashi-NH05TheRed.lha;Demo;Demo;;;;
+demo-notwhdl--nihirashi-nh05thered;NH-05: The Red;Red;;;OCS;;0;;-8;;;;;;;;2022;Georgia;English;;Nihirashi;1;;;;demo-notwhdl/Nihirashi-NH05TheRed.lha;Demo;Demo;;;;
 game--streetcatntsc--streetcatntsc;Street Cat;Street Cat;1;game--badcat--badcat;OCS;;1;;;;;;;;;;1987;;English;Rainbow Arts;Euro Gold Starline, GO!, Rainbow Arts;4 (taking turns);;v1.0;StreetCatNTSC/StreetCatNTSC.Slave;game/StreetCat_v1.0_NTSC.lha;Game;;2135;2596;;
 game--preycd32--preycd32;Prey: An Alien Encounter;Prey: An Alien Encounter;;;CD32;1;0;;;;;;;;;;1994;;English;KirkMoreno Multimedia;Almathera;1;;v1.0;PreyCD32/PreyCD32.Slave;game/Prey_v1.0_CD32.lha;Game;;1146;536;;
 game--moonbase--moonbase;Moonbase: Lunar Colony Simulator;Moonbase;;;OCS;;0;;;;;;;;;;1991;;English;Wesson;Wesson;1;;v1.1;MoonBase/MoonBase.slave;game/MoonBase_v1.1_2660.lha;Game;Strategy;2505;4066;;
@@ -5552,3 +5552,16 @@ game--wolfende--wolfende;Wolfen: Die Bestie ist unter uns;Wolfen;1;;OCS;;0;;;;;;
 game--beetle--beetle;Beetle;Beetle;;;OCS;;0;;;;;;;;;;1993;;English;Unique Styles;Unique Styles;2;SAVEDIR=Beetle;v1.1;Beetle/Beetle.slave;game/Beetle.lha;Game;Platform;;3667;;
 game-notwhdl--gauntletst;Gauntlet (Atari ST Port);Gauntlet (ST Port);;;OCS/020;;0;;;;;;;;;;2012;;English;Atari Games, U.S. Gold, Meynaf;Meynaf;2;;;;game-notwhdl/GauntletST.lha;Game;Action;;4285;;
 game-notwhdl--starflightii;Starflight II: Trade Routes of the Cloud Nebula;Starflight II;;;OCS;;0;;;;;;;;;;1991;;English;Binary Systems;Electronic Arts;1;;;;game-notwhdl/StarflightII.lha;Game;Adventure;;;;
+demo--ghostownhaujobb-theloop--ghostownhaujobb-theloop;The Loop;Loop;;;OCS;;0;;;;;;;Final release (2024).;;;2023;;English;;Ghostown, Haujobb;1;DATA=data CUSTOM=loop.exe;v1.0;GhostownHaujobb-TheLoop/GhostownHaujobb-TheLoop.slave;demo/GhostownHaujobb-TheLoop.lha;Demo;Demo;;;322618;94131
+game--tinypixeladventure--game;Tiny Pixel Adventure;Tiny Pixel Adventure;;;OCS;;0;;;;;;;V6 update, 6 October 2026.;;;2025;;English;;HooGames2017;1;DATA=data;v1.0;TinyPixelAdventure/game.slave;game/TinyPixelAdventure.lha;Game;Platform;;;;
+game--thelostpixelaga--game_4mbfast;The Lost Pixel;Lost Pixel;;;AGA;1;0;;;;;;;Game v1.3. Requires 4 MB Fast RAM.;;;2024;;English;;Amiga Factory;1;DATA=data;v1.0;TheLostPixelAGA/Game_4MbFast.Slave;game/TheLostPixelAGA.lha;Game;Platform;;;;
+game--trappedinthetomb--trappedinthetomb;Trapped in the Tomb;Trapped in the Tomb;;;ECS;;0;;;;;;;;;;2025;;English;;Marggines;1;DATA=data;v1.0;TrappedInTheTomb/TrappedInTheTomb.slave;game/TrappedInTheTomb.lha;Game;Platform;;;;
+game-notwhdl--fastfood2;Fast Food 2;Fast Food 2;;;AGA;1;0;;;;;;;Game jam release. High-score saving is not implemented by the game.;;;2025;;English;;Acidbottle;1;;;;game-notwhdl/FastFood2.lha;Game;Arcade;;;;
+game-notwhdl--ecliptic;Ecliptic;Ecliptic;;;OCS;;0;;;;;;;Requires AmigaOS 3.1, 2 MB RAM and PAL. Release 3 August 2026.;;;;;English;;bwldrbst;1;;;;game-notwhdl/Ecliptic.lha;Game;Role Playing;;;;
+game-notwhdl--yeet;Yeet;Yeet;;;OCS;;0;;;;;;;Version 1.0.4.;;;2025;;English;;zooperdan;1;;;;game-notwhdl/Yeet.lha;Game;Puzzle;;;;
+game-notwhdl--amiklotski;AmiKlotski;AmiKlotski;;;OCS;;0;;;;;;;;;;2025;;English;;zooperdan;1;;;;game-notwhdl/AmiKlotski.lha;Game;Puzzle;;;;
+game-notwhdl--untangle;Untangle;Untangle;;;OCS;;0;;;;;;;"Version 1.2. Workbench game; requires AmigaOS 3.0.";;;2024;;English;;Grzegorz Kraszewski;1;;;;game-notwhdl/Untangle.lha;Game;Puzzle;;;;
+game-notwhdl--pumpkin;Pumpkin;Pumpkin;;;OCS;;0;;;;;;;;;;2024;;English;;Electric Black Sheep;1;;;;game-notwhdl/Pumpkin.lha;Game;Maze;;;;
+game-notwhdl--stardustwars;Star Dust Wars: Director's Cut;Star Dust Wars: DC;;;OCS;;0;;;;;;;"Streams from disk; fast storage recommended.";;;2024;;English;;Electric Black Sheep;1;;;;game-notwhdl/StarDustWars.lha;Game;Shoot Em Up;;;;
+mags-notwhdl--adventuresinretro01;Adventures in Retro #01;Adventures in Retro 01;;;OCS;;0;;;;;;;;;;2026-04;;English;;woody.cool;1;;;;mags-notwhdl/AdventuresInRetro01.lha;Demo;Disk Magazine;;;;
+mags-notwhdl--adventuresinretro02;Adventures in Retro #02;Adventures in Retro 02;;;OCS;;0;;;;;;;;;;2026-05;;English;;woody.cool;1;;;;mags-notwhdl/AdventuresInRetro02.lha;Demo;Disk Magazine;;;;

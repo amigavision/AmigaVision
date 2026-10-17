@@ -1,0 +1,13 @@
+ags-cd N/Untangle
+stack >NIL: 65536
+IF EXISTS WHDSaves:Untangle/Untangle.state
+  copy WHDSaves:Untangle/Untangle.state Untangle.state QUIET
+ENDIF
+Untangle >NIL:
+ags-cd N/Untangle
+IF NOT EXISTS WHDSaves:Untangle
+  makedir WHDSaves:Untangle
+ENDIF
+IF EXISTS Untangle.state
+  copy Untangle.state WHDSaves:Untangle/Untangle.state QUIET
+ENDIF
