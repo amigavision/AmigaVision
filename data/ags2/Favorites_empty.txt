@@ -1,4 +1,4 @@
               No favorites added!
 
- Press Yellow Button or TAB to add or remove a
-                     title.
+           Press Yellow Button or TAB
+           to add or remove a title.
