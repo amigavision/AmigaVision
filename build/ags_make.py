@@ -98,7 +98,7 @@ def wrap_note(text: str) -> str:
         if not line.strip():
             wrapped.append("")
         else:
-            wrapped.extend(textwrap.wrap(line.strip(), AGS_INFO_WIDTH))
+            wrapped.extend(balanced_wrap(line.strip()))
     if len(wrapped) > AGS_INFO_HEIGHT:
         print_warning("launcher description exceeds {} lines: {}".format(AGS_INFO_HEIGHT, text.strip()[:60]))
         wrapped = wrapped[:AGS_INFO_HEIGHT]
@@ -467,7 +467,7 @@ def metadata_system(entry):
     if aspect_ratio:
         system += " ({})".format(aspect_ratio)
 
-    return system
+    return system.replace("·", " · ")
 
 
 def make_note(entry, add_note):
@@ -490,10 +490,45 @@ def make_note(entry, add_note):
     return "".join(line.center(max_w).rstrip() + "\n" for _, lines in wrapped for line in lines)
 
 
+def balanced_wrap(text):
+    """Balance centered lines without increasing their greedy wrapping count."""
+    greedy = textwrap.wrap(text, AGS_INFO_WIDTH)
+    if len(greedy) < 2:
+        return greedy
+    # Retain textwrap's handling of words longer than the available width.
+    words = text.split()
+    if any(len(word) > AGS_INFO_WIDTH for word in words):
+        return greedy
+    count = len(greedy)
+    target = (sum(map(len, words)) + len(words) - count) / count
+    states = {(0, 0): ((0, 0, 0), [])}
+    for line_number in range(count):
+        for start in range(len(words)):
+            state = states.get((line_number, start))
+            if state is None:
+                continue
+            for end in range(start + 1, len(words) + 1):
+                line = " ".join(words[start:end])
+                if len(line) > AGS_INFO_WIDTH:
+                    break
+                remaining = count - line_number - 1
+                if len(words) - end < remaining:
+                    break
+                # Prefer two words per continuation, then intact separators,
+                # then similar line lengths. Explicit newlines stay separate.
+                score = (state[0][0] + int(line_number > 0 and end - start < 2),
+                         state[0][1] + int(words[start] == "·") + int(words[end - 1] == "·"),
+                         state[0][2] + (len(line) - target) ** 2)
+                key = (line_number + 1, end)
+                if key not in states or score < states[key][0]:
+                    states[key] = (score, state[1] + [line])
+    return states.get((count, len(words)), (None, greedy))[1]
+
+
 def metadata_wrap(text):
     """Wrap authored prose before centering; output is written as Latin-1."""
     return [line for paragraph in str(text).replace("\\\\n", "\n").replace("\\n", "\n").splitlines()
-            for line in textwrap.wrap(paragraph.strip(), AGS_INFO_WIDTH)]
+            for line in balanced_wrap(paragraph.strip())]
 
 
 def metadata_date(value):

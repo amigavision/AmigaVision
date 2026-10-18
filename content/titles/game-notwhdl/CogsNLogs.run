@@ -1,0 +1,12 @@
+ags-cd N/CogsNLogs
+IF EXISTS WHDSaves:CogsNLogs/savedata
+  copy WHDSaves:CogsNLogs/savedata savedata ALL CLONE QUIET
+ENDIF
+game.exe >NIL:
+ags-cd N/CogsNLogs
+IF EXISTS savedata
+  IF NOT EXISTS WHDSaves:CogsNLogs
+    makedir WHDSaves:CogsNLogs
+  ENDIF
+  copy savedata WHDSaves:CogsNLogs/savedata ALL CLONE QUIET
+ENDIF

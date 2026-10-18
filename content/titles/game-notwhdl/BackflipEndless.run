@@ -1,0 +1,12 @@
+ags-cd N/BackflipEndless
+IF EXISTS WHDSaves:BackflipEndless/savedata
+  copy WHDSaves:BackflipEndless/savedata savedata ALL CLONE QUIET
+ENDIF
+backflip_endless >NIL:
+ags-cd N/BackflipEndless
+IF EXISTS savedata
+  IF NOT EXISTS WHDSaves:BackflipEndless
+    makedir WHDSaves:BackflipEndless
+  ENDIF
+  copy savedata WHDSaves:BackflipEndless/savedata ALL CLONE QUIET
+ENDIF

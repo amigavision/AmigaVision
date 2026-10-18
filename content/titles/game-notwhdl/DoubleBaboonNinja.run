@@ -1,0 +1,15 @@
+ags-cd N/DoubleBaboonNinja
+IF EXISTS WHDSaves:DoubleBaboonNinja/datas/scores.dat
+  copy WHDSaves:DoubleBaboonNinja/datas/scores.dat datas/scores.dat ALL CLONE QUIET
+ENDIF
+DoubleBaboon >NIL:
+ags-cd N/DoubleBaboonNinja
+IF EXISTS datas/scores.dat
+  IF NOT EXISTS WHDSaves:DoubleBaboonNinja
+    makedir WHDSaves:DoubleBaboonNinja
+  ENDIF
+  IF NOT EXISTS WHDSaves:DoubleBaboonNinja/datas
+    makedir WHDSaves:DoubleBaboonNinja/datas
+  ENDIF
+  copy datas/scores.dat WHDSaves:DoubleBaboonNinja/datas/scores.dat ALL CLONE QUIET
+ENDIF

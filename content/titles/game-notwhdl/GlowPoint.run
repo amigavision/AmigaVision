@@ -1,0 +1,12 @@
+ags-cd N/GlowPoint
+IF EXISTS WHDSaves:GlowPoint/HIGHSCORE.DAT
+  copy WHDSaves:GlowPoint/HIGHSCORE.DAT HIGHSCORE.DAT ALL CLONE QUIET
+ENDIF
+GlowPoint >NIL:
+ags-cd N/GlowPoint
+IF EXISTS HIGHSCORE.DAT
+  IF NOT EXISTS WHDSaves:GlowPoint
+    makedir WHDSaves:GlowPoint
+  ENDIF
+  copy HIGHSCORE.DAT WHDSaves:GlowPoint/HIGHSCORE.DAT ALL CLONE QUIET
+ENDIF

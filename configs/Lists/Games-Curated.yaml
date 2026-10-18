@@ -1,6 +1,33 @@
 - Curated Content:
   - note: Curated collections from around the net.
   - image: { ops: { op: "pi", path: "top/curated_content.png" }, size: [320, 128], scale: [1, 1] }
+  - AmiGameJam 2025:
+    # Explicit numbers preserve the third-place tie and the published gap at 17.
+    # https://itch.io/jam/amigamejam2025/results
+    - ordering: "ordered"
+    - note: "Return of the Arcade. Public vote results, March 2026."
+    # Official banner logo, cropped to omit the surrounding sponsors.
+    # https://itch.io/jam/amigamejam2025
+    - image: { ops: { op: "pi", path: "list/amigamejam2025.png" }, size: [320, 128], scale: [1, 1] }
+    - game--echodrome--echodrome: { disp_name: "01 Echodrome" }
+    - game-notwhdl--doublebaboonninja: { disp_name: "02 Double Baboon Ninja (Demo)" }
+    - game--wingsoffear2--wingsoffear2agademo: { disp_name: "03 Wings of Fear II (Demo)" }
+    - game-notwhdl--creepycrawlers: { disp_name: "03 Creepy Crawlers" }
+    - game-notwhdl--cakerush: { disp_name: "05 Cake Rush" }
+    - game--blueandred--game: { disp_name: "06 Blue And Red" }
+    - game--osirisinfection--osiris_infection: { disp_name: "07 Osiris Infection" }
+    - game--microlytetankzone--microlyte: { disp_name: "08 Microlyte Tankzone" }
+    - game-notwhdl--pauldron: { disp_name: "09 Pauldron" }
+    - game-notwhdl--glowpoint: { disp_name: "10 GlowPoint" }
+    - game-notwhdl--strikeforceomega: { disp_name: "11 Strike Force Omega (Demo)" }
+    - game--kaboomaniademo--kaboomaniademo: { disp_name: "12 Kaboomania (Demo)" }
+    - game-notwhdl--santaspresentdrop5: { disp_name: "13 Santa's Present Drop 5" }
+    - game--arpegio--game: { disp_name: "14 Arpegio" }
+    - game-notwhdl--submarineattack: { disp_name: "15 Submarine Attack" }
+    - game-notwhdl--backflipendless: { disp_name: "16 Backflip Endless" }
+    - game-notwhdl--burn: { disp_name: "18 Burn" }
+    - game-notwhdl--movimientoconstante: { disp_name: "19 Movimiento Constante" }
+    - game-notwhdl--cogsnlogs: { disp_name: "20 Cogs N Logs (Demo)" }
   - Alex Limi's Collection:
     - note: Amiga games worth your time, according to Alex Limi.
     - "[ Multiplayer ]":

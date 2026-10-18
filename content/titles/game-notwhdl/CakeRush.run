@@ -1,0 +1,12 @@
+ags-cd N/CakeRush
+IF EXISTS WHDSaves:CakeRush/savedata
+  copy WHDSaves:CakeRush/savedata savedata ALL CLONE QUIET
+ENDIF
+cake_rush_1.2 >NIL:
+ags-cd N/CakeRush
+IF EXISTS savedata
+  IF NOT EXISTS WHDSaves:CakeRush
+    makedir WHDSaves:CakeRush
+  ENDIF
+  copy savedata WHDSaves:CakeRush/savedata ALL CLONE QUIET
+ENDIF

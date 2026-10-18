@@ -343,7 +343,7 @@ def fingerprint_python_defs(path: str, names: list[str]) -> str:
 AGS2_TREE_BEHAVIOR_FINGERPRINT = hash_payload([
     fingerprint_file('build/ags_ecs.py'),
     fingerprint_file('configs/ecs-preferred-versions.json'),
-    fingerprint_python_defs("build/ags_make.py", ["make_tree", "make_entries", "make_entry", "make_autoentries", "make_runscripts", "make_runscript", "AGS_INFO_WIDTH", "AGS_INFO_HEIGHT", "make_note", "metadata_system", "metadata_blocks", "metadata_date", "metadata_wrap", "wrap_note"]),
+    fingerprint_python_defs("build/ags_make.py", ["make_tree", "make_entries", "make_entry", "make_autoentries", "make_runscripts", "make_runscript", "AGS_INFO_WIDTH", "AGS_INFO_HEIGHT", "make_note", "metadata_system", "metadata_blocks", "metadata_date", "metadata_wrap", "balanced_wrap", "wrap_note"]),
     fingerprint_python_defs("build/ags_query.py", ["get_entry", "get_missing_archive_entry", "get_missing_archive_entry_by_id", "get_preferred_entry", "name_is_fuzzy", "get_runscript_paths", "get_amiga_whd_dir", "get_whd_slavename", "entry_is_notwhdl"]),
     fingerprint_python_defs("build/ags_compositor.py", ["compose", "out_iff"]),
 ])
@@ -359,7 +359,7 @@ PFS_PARTITION_BEHAVIOR_FINGERPRINT = hash_payload([
 ])
 
 AUTOENTRIES_BEHAVIOR_FINGERPRINT = hash_payload([
-    fingerprint_python_defs("build/ags_make.py", ["make_autoentries", "make_entry", "make_image", "wrap_note", "AGS_INFO_WIDTH", "AGS_INFO_HEIGHT", "make_note", "metadata_system", "metadata_blocks", "metadata_date", "metadata_wrap"]),
+    fingerprint_python_defs("build/ags_make.py", ["make_autoentries", "make_entry", "make_image", "wrap_note", "AGS_INFO_WIDTH", "AGS_INFO_HEIGHT", "make_note", "metadata_system", "metadata_blocks", "metadata_date", "metadata_wrap", "balanced_wrap"]),
     fingerprint_python_defs("build/ags_query.py", ["has_english_language", "get_languages", "get_publishers", "get_countries"]),
     fingerprint_python_defs("build/ags_strings.py", ["strings"]),
     fingerprint_python_defs("build/ags_compositor.py", ["compose", "out_iff"]),
@@ -1315,7 +1315,7 @@ def main():
                 sanitize_ecs = make_sanitizer(sanitize_entry)
                 selector = ECSSelector(db.execute('SELECT * FROM titles'), sanitize_ecs, overrides)
                 selector.report.extend(sanitize_ecs.excluded)
-                selector.write_report(util.path(args.out_dir or paths.tmp(), 'ecs-selection-report.json'))
+                selector.write_report(util.path(paths.cache(), 'ecs-selection-report.json'))
                 ambiguous = [r for r in selector.report if r['status'] == 'ambiguous']
                 if ambiguous:
                     raise ValueError('Ambiguous ECS fallback families; curate configs/ecs-preferred-versions.json: ' + ', '.join(r['title'] for r in ambiguous))
