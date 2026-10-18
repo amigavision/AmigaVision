@@ -150,8 +150,7 @@ To force a complete transactional rebuild:
 make image IMAGE_CLONE_ARGS=--full
 ```
 
-The optional FS-UAE and FUSE targets retain their full-build paths. Direct
-`build/ags_imager.py` calls use that legacy path unless `--incremental` is passed;
+Direct `build/ags_imager.py` calls prepare a full image unless `--incremental` is passed;
 with `--incremental`, image allocation is deferred until `clone-amiberry` runs.
 Do not launch the generated config directly for an incremental workspace.
 

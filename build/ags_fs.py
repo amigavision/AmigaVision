@@ -42,6 +42,7 @@ def extract_base_image(base_hdf: str, dest: str):
         for suffix in [".blkdev", ".xdfmeta"]:
             util.rm_path(unpack_dest + suffix)
 
+    # The upstream "fsuae" export format writes .uaem attributes for Amiberry.
     result = subprocess.run(["xdftool", "--read-only", base_hdf, "unpack", unpack_dest, "fsuae"])
     if result.returncode != 0:
         raise IOError("failed to unpack base HDF ({})".format(base_hdf))

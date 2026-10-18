@@ -59,14 +59,12 @@ def cache():
     return util.path(cache_root(), "build", cache_generation())
 
 def verify():
-    vars = ["AGSCONTENT", "AGSDEST", "AGSTEMP", "FSUAEBIN", "FSUAEROM"]
+    vars = ["AGSCONTENT", "AGSDEST", "AGSTEMP", "KICKSTART_ROM"]
     for var in vars:
         if os.getenv(var) is None:
             raise IOError("missing {} environment variable - check .env!".format(var))
     if not util.is_dir(content()):
         raise IOError("AGSCONTENT is not a directory - check .env!")
-    if not util.is_file(util.path(env_path("FSUAEBIN"))):
-        raise IOError("FSUAEBIN is not a file - check .env!")
-    if not util.is_file(util.path(env_path("FSUAEROM"))):
-        raise IOError("FSUAEROM is not a file - check .env!")
+    if not util.is_file(util.path(env_path("KICKSTART_ROM"))):
+        raise IOError("KICKSTART_ROM is not a file - check .env!")
     return True

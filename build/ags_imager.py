@@ -2016,10 +2016,9 @@ def main():
         if not args.only_ags_tree:
             with timed_step(timings, "setup cloner"):
                 cloner_adf = util.path("data", "cloner", "boot.adf")
-                cloner_cfg = util.path("data", "cloner", "template.fs-uae")
                 cloner_cfg_amiberry = util.path("data", "cloner", "template.uae")
                 clone_script = util.path(os.path.dirname(args.config_file), config_base_name) + ".clonescript"
-                if util.is_file(cloner_adf) and util.is_file(cloner_cfg) and util.is_file(cloner_cfg_amiberry) and util.is_file(clone_script):
+                if util.is_file(cloner_adf) and util.is_file(cloner_cfg_amiberry) and util.is_file(clone_script):
                     print("Copying cloner config...")
                     output_hdf_path = util.path(out_dir, config_base_name + ".hdf")
                     target_hdf_link_path = util.path(clone_path, "target.hdf")
@@ -2027,14 +2026,6 @@ def main():
                     util.make_dir(os.path.dirname(target_hdf_link_path))
                     util.rm_path(target_hdf_link_path)
                     os.symlink(output_hdf_path, target_hdf_link_path)
-                    # create fs-uae config from template
-                    with open(cloner_cfg, 'r') as f:
-                        cfg = f.read()
-                        cfg = cfg.replace("<config_base_name>", config_base_name)
-                        cfg = cfg.replace("$AGSTEMP", paths.tmp())
-                        cfg = cfg.replace("$AGSDEST", util.path(os.getenv("AGSDEST")))
-                        cfg = cfg.replace("$FSUAEROM", util.path(os.getenv("FSUAEROM")))
-                        open(util.path(clone_path, "cfg.fs-uae"), mode="w").write(cfg)
                     # create amiberry config from template
                     with open(cloner_cfg_amiberry, 'r') as f:
                         cfg = f.read()
@@ -2042,9 +2033,9 @@ def main():
                         cfg = cfg.replace("$AGSCONTENT", util.path(os.getenv("AGSCONTENT")))
                         cfg = cfg.replace("$AGSTEMP", paths.tmp())
                         cfg = cfg.replace("$AGSDEST", util.path(os.getenv("AGSDEST")))
-                        cfg = cfg.replace("$FSUAEROM", os.path.abspath(util.path(os.getenv("FSUAEROM"))))
+                        cfg = cfg.replace("$KICKSTART_ROM", os.path.abspath(util.path(os.getenv("KICKSTART_ROM"))))
                         open(util.path(clone_path, "cfg.uae"), mode="w").write(cfg)
-                    # copy clone script and write fs-uae metadata
+                    # copy clone script and write Amiga file metadata
                     clone_script_output = util.path(clone_path, "clone")
                     shutil.copyfile(clone_script, clone_script_output)
                     open(util.path(clone_path, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.00")
@@ -2056,7 +2047,7 @@ def main():
                         write_clone_progress(clone_path, progress_lines)
                         inject_clone_progress(clone_script_output, clone_path, progress_lines)
                 else:
-                    raise IOError("cloner config files not found ({}, {}, {}, {})".format(cloner_adf, cloner_cfg, cloner_cfg_amiberry, clone_script))
+                    raise IOError("cloner config files not found ({}, {}, {})".format(cloner_adf, cloner_cfg_amiberry, clone_script))
 
         # clean output directory
         with timed_step(timings, "cleanup temp tree"):

@@ -8,7 +8,7 @@ shaders_path=$AGSCONTENT/distro/games/Amiga/Visuals/Shaders
 
 use_gui=no
 open_gui=F12
-kickstart_rom_file=$FSUAEROM
+kickstart_rom_file=$KICKSTART_ROM
 floppy0=$AGSTEMP/boot.adf
 floppy_speed=0
 floppy_volume=0

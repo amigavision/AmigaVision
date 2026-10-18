@@ -71,6 +71,7 @@ def verify_hdf(image, directory):
     """Check native files and every .uaem directly against a read-only FFS image."""
     from amitools.fs.blkdev.BlkDevFactory import BlkDevFactory
     from amitools.fs.ADFSVolume import ADFSVolume
+    # Upstream name for the .uaem metadata format also used by Amiberry.
     from amitools.fs.MetaInfoFSUAE import MetaInfoFSUAE
     from amitools.fs.MetaDB import MetaDB
     before = file_hash(image)

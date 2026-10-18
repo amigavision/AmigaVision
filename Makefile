@@ -1,7 +1,7 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images listings sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-fsuae image-fuse clone-fsuae clone-fuse image-amiberry clone-amiberry mini-image test-image test-dry pi cd32 distros make-distros mister emulators mini amiga amiga-ecs clean clean-temp clean-build
+.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images listings sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-amiberry clone-amiberry mini-image test-image test-dry pi cd32 distros make-distros mister emulators mini amiga amiga-ecs clean clean-temp clean-build
 
 PYTHON ?= python3.11
 PIP_BUILD_CONSTRAINT ?= $(CURDIR)/build/pip-build-constraints.txt
@@ -39,13 +39,7 @@ define print-start-time
 	@printf 'Start time: %s\n' "$$(date '+%Y-%m-%d %H:%M:%S')"
 endef
 
-# Clone backends:
-# - `make image` uses Amiberry as the default final cloner backend.
-# - `make image-fsuae` keeps the legacy FS-UAE final clone path available as a fallback.
-# - `*-fuse` targets are opt-in experiments using macFUSE + amifuse and may
-#   require reduced macOS startup security settings.
-# - `*-amiberry` targets are kept as explicit aliases around the Amiberry backend.
-# Keep these paths separate from the default build flow.
+# Amiberry is the image cloner; *-amiberry targets are explicit aliases.
 
 default: help
 
@@ -145,9 +139,6 @@ help:
 		'' \
 		'make listings' \
 		'Generate games.txt and demos.txt from the current AGS2 temp tree for distro packaging.' \
-		'' \
-		'make image-fsuae' \
-		'Run the legacy FS-UAE final clone path for configs/AmigaVision.yaml.' \
 		'' \
 		'make pi' \
 		'Build the Raspberry Pi / RePlayOS package from the configured base image and output an .img.xz sized to fit typical 16GB SD cards.' \
@@ -305,34 +296,6 @@ prepare-image-temp:
 	@$(MAKE_MANIFESTS_CMD)
 	@$(IMAGE_PREP_CMD)
 
-clone-fsuae:
-	$(call print-start-time)
-	@echo "Running FS-UAE..."
-	@start=$$(date +%s); \
-	if [ ! -d "$(subst ",,${AGSTEMP})" ]; then \
-		echo "Preparing temp build tree..."; \
-		$(MAKE) prepare-image-temp || exit $$?; \
-	fi; \
-	if [ ! -f "$(subst ",,${AGSTEMP})/cfg.fs-uae" ]; then \
-		echo "error: $(subst ",,${AGSTEMP})/cfg.fs-uae not found after preparing the temp build tree."; \
-		exit 1; \
-	fi; \
-	if [ ! -e "$(subst ",,${AGSTEMP})/target.hdf" ]; then \
-		echo "error: $(subst ",,${AGSTEMP})/target.hdf not found after preparing the temp build tree."; \
-		exit 1; \
-	fi; \
-	if [ -f "$(subst ",,${AGSTEMP})/image-update-plan.json" ]; then \
-		echo "error: incremental workspace requires clone-amiberry; use make image-fsuae for a full FS-UAE build."; \
-		exit 1; \
-	fi; \
-	log="${AGSTEMP}/fs-uae-image.log"; \
-	if ! ${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae >"$$log" 2>&1; then \
-		cat "$$log"; \
-		exit 1; \
-	fi; \
-	end=$$(date +%s); \
-	echo "FS-UAE clone time: $$((end - start))s"
-
 image:
 	$(call print-start-time)
 	@$(MAKE_MANIFESTS_CMD)
@@ -359,48 +322,6 @@ ecs-image: ecs-artwork
 	@rm -rf "$(subst ",,$(ECS_TEMP))"
 	@echo "Removing completed ECS build cache..."
 	@rm -rf "${HOME}/Library/Caches/AmigaVision/build/ecs"
-
-# Legacy clone backends use fully prepared images.
-image-fsuae image-fuse clone-fsuae clone-fuse: IMAGE_UPDATE_ARGS =
-
-image-fsuae:
-	$(call print-start-time)
-	@$(MAKE_MANIFESTS_CMD)
-	@$(IMAGE_PREP_CMD)
-	@$(MAKE) clone-fsuae
-	@$(FINALIZE_MAIN_IMAGE)
-	@printf '\a'
-
-clone-fuse:
-	$(call print-start-time)
-	@echo "Running amifuse..."
-	@start=$$(date +%s); \
-	if [ ! -d "$(subst ",,${AGSTEMP})" ]; then \
-		echo "Preparing temp build tree..."; \
-		$(MAKE) prepare-image-temp || exit $$?; \
-	fi; \
-	if [ -f "$(subst ",,${AGSTEMP})/image-update-plan.json" ]; then \
-		echo "error: incremental workspace requires clone-amiberry; use make image-fuse for a full FUSE build."; \
-		exit 1; \
-	fi; \
-	hdf="$(subst ",,${AGSDEST})/AmigaVision.hdf"; \
-	if [ ! -f "$$hdf" ]; then \
-		hdf="$(subst ",,${AMIGAVISION_HDF})"; \
-	fi; \
-	build/hdf_fuse_clone.sh \
-		--hdf "$$hdf" \
-		--src-root "$(subst ",,${AGSTEMP})" \
-		--amifuse "${AMIFUSEBIN}" \
-		--temp-root "$(subst ",,${AGSTEMP})"; \
-	end=$$(date +%s); \
-	echo "amifuse clone time: $$((end - start))s"
-	@printf '\a'
-
-image-fuse:
-	$(call print-start-time)
-	@$(MAKE_MANIFESTS_CMD)
-	@$(IMAGE_PREP_CMD)
-	@$(MAKE) clone-fuse
 
 clone-amiberry:
 	$(call print-start-time)
