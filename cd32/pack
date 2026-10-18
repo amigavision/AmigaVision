@@ -15,7 +15,7 @@ else
     agsdest="${agsdest%\'}"
     output_dir="$agsdest/CD32-Output"
   else
-    output_dir="$(cd "$script_dir/../.." && pwd)/AmigaVision-Output/CD32-Output"
+    output_dir="$(cd "$script_dir/../.." && pwd)/AV-Output/CD32-Output"
   fi
   arc_name="!AmigaVision-CD32-MiSTer-$date_str.zip"
   if [ -z "$output_path" ]; then

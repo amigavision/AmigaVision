@@ -503,7 +503,7 @@ def cd32_output_dir() -> Path:
     agsdest = os.getenv("AGSDEST", "").strip().strip('"').strip("'")
     if agsdest:
         return Path(agsdest).expanduser() / "CD32-Output"
-    return repo_root.with_name("AmigaVision-Output") / "CD32-Output"
+    return repo_root.with_name("AV-Output") / "CD32-Output"
 
 
 def should_skip_zip_entry(path: Path) -> bool:
@@ -550,7 +550,7 @@ def archive_variant(root: Path, output_dir: Path, variant_name: str) -> None:
 
 def main() -> int:
     """
-    Build outputs into a single CD32-Output directory under AGSDEST / AmigaVision-Output.
+    Build outputs into a single CD32-Output directory under AGSDEST / AV-Output.
     - SD preset (assets & CHDs on SD) is written directly under CD32-Output
     - USB preset (assets & CHDs on USB) is generated to ./USB then archived to CD32-Output/USB.zip
     - NAS preset (assets & CHDs on NAS/CIFS) is generated to ./NAS then archived to CD32-Output/NAS.zip

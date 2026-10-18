@@ -18,7 +18,7 @@ import ags_util as util
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_CONTENT_ROOT = Path(os.getenv("AGSCONTENT", "~/Developer/AmigaVision-Content")).expanduser()
+DEFAULT_CONTENT_ROOT = Path(os.getenv("AGSCONTENT", "~/Developer/AV-Content")).expanduser()
 DEFAULT_SOURCE_ROOT = DEFAULT_CONTENT_ROOT / "titles" / "manual-downloads"
 DEFAULT_TITLES_DIR = DEFAULT_CONTENT_ROOT / "titles"
 DEFAULT_CSV_PATH = ROOT / "data" / "db" / "titles.csv"

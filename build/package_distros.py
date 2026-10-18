@@ -326,7 +326,7 @@ def build_cd32_release(args, output_path, dry_run=False):
     return output_path
 
 
-def compress_xz(src_path, dest_path, xz_tool, dry_run=False):
+def compress_xz(src_path, dest_path, xz_tool, dry_run=False, preset=XZ_PRESET):
     log_step(f"Compressing {src_path.name} -> {dest_path.name}")
     if dry_run:
         echo(f"[dry-run] Would compress {src_path} -> {dest_path}")
@@ -336,7 +336,7 @@ def compress_xz(src_path, dest_path, xz_tool, dry_run=False):
         dest_path.unlink()
     with dest_path.open("wb") as dest:
         subprocess.run(
-            [xz_tool, "-T0", f"-{XZ_PRESET}", "-v", "-k", "-c", str(src_path)],
+            [xz_tool, "-T0", f"-{preset}", "-v", "-k", "-c", str(src_path)],
             check=True,
             stdout=dest,
         )
@@ -545,7 +545,7 @@ def package_rpi(args, output_dir, xz_tool):
         ],
         dry_run=args.dry_run,
     )
-    compress_xz(raw_output, compressed_output, xz_tool, dry_run=args.dry_run)
+    compress_xz(raw_output, compressed_output, xz_tool, dry_run=args.dry_run, preset=1)
     if not args.dry_run and raw_output.exists():
         log_step(f"Removing intermediate image {raw_output.name}")
         raw_output.unlink()
@@ -568,7 +568,7 @@ def package_amiga(args, output_dir, xz_tool):
 
 def main():
     args = parse_args()
-    output_dir = Path(args.output_dir)
+    output_dir = Path(args.output_dir).expanduser().resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     continue_on_error = args.package == "all"
     packages = (

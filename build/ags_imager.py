@@ -46,11 +46,14 @@
 # lemon_id: Lemon Amiga ID
 
 import argparse
+from av_base_tree import directory_fingerprint, stage_directory
+from ags_image_update import prepare_plan, PLAN_NAME
 import ast
 import hashlib
 import json
 import os
 import shutil
+import stat as stat_module
 import subprocess
 import sys
 import tempfile
@@ -66,7 +69,7 @@ from ags_fs import build_pfs, calculate_pfs_partitions, extract_base_image, conv
 from ags_make import make_hires_tree, count_tree_entries, make_autoentries, make_runscripts, make_tree, reset_warning_state, update_progress, warn_missing_archive
 from ags_nsfw import make_nsfw_option
 from ags_make import report_missing_launcher_images
-from ags_query import entry_is_notwhdl, get_amiga_whd_dir, get_archive_path, get_entry, get_missing_archive_entry, get_preferred_entry, get_whd_dir, sanitize_entry
+from ags_query import audit_missing_archive_entries, entry_is_notwhdl, get_amiga_whd_dir, get_archive_path, get_entry, get_missing_archive_entry, get_preferred_entry, get_whd_dir, sanitize_entry
 from ags_strings import strings
 from ags_types import EntryCollection
 from datetime import datetime
@@ -211,7 +214,7 @@ def fingerprint_tree(path: str) -> list[dict]:
             stat = os.stat(full_path)
             rows.append({
                 "path": os.path.relpath(full_path, path),
-                "is_dir": os.path.isdir(full_path),
+                "is_dir": stat_module.S_ISDIR(stat.st_mode),
                 "size": stat.st_size,
                 "mtime_ns": stat.st_mtime_ns,
             })
@@ -235,10 +238,10 @@ def launcher_content_fingerprint(path: str, file_hashes=None) -> str:
             full_path = util.path(root, name)
             relative = os.path.relpath(full_path, path)
             stat = os.stat(full_path)
-            signature = [stat.st_size, stat.st_mtime_ns]
+            signature = [stat.st_dev, stat.st_ino, stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns]
             cached = previous.get(relative)
-            if cached and cached[:2] == signature:
-                content_hash = cached[2]
+            if cached and cached[:-1] == signature:
+                content_hash = cached[-1]
             else:
                 file_digest = hashlib.sha1()
                 with open(full_path, "rb") as source:
@@ -267,25 +270,30 @@ def build_or_reuse_hires_launcher(ags_path, hires_path, collection, workspace_st
         "behavior": fingerprint_python_defs("build/ags_make.py", ["make_hires_tree", "make_hires_artwork"]),
         "encoder": [fingerprint_file("build/repair_hires_palettes.py"), fingerprint_file("build/iff_ilbm.py")],
     })
-    if (manifest.get("key") == cache_key and util.is_dir(cache_path)
-            and manifest.get("output") == hires_output_fingerprint(cache_path)):
-        print(" > Restoring cached hi-res launcher tree")
+    staged_valid = (manifest.get("key") == cache_key and util.is_dir(hires_path)
+                    and manifest.get("output") == hires_output_fingerprint(hires_path))
+    if staged_valid:
+        print(" > Reusing staged hi-res launcher tree")
     else:
-        print(" > Building hi-res launcher cache")
-        if os.path.exists(manifest_path):
-            os.remove(manifest_path)
-        make_hires_tree(ags_path, cache_path, collection)
-        manifest = {"key": cache_key, "output": hires_output_fingerprint(cache_path)}
-    report_missing_launcher_images(ags_path, cache_path, collection)
+        if (manifest.get("key") == cache_key and util.is_dir(cache_path)
+                and manifest.get("output") == hires_output_fingerprint(cache_path)):
+            print(" > Restoring cached hi-res launcher tree")
+        else:
+            print(" > Building hi-res launcher cache")
+            if os.path.exists(manifest_path):
+                os.remove(manifest_path)
+            make_hires_tree(ags_path, cache_path, collection)
+            manifest = {"key": cache_key, "output": hires_output_fingerprint(cache_path)}
+        util.rm_path(hires_path)
+        restore_hires_tree(cache_path, hires_path)
+    report_missing_launcher_images(ags_path, hires_path, collection)
     manifest["medium_file_hashes"] = file_hashes
     temporary = manifest_path + ".tmp"
     with open(temporary, "w", encoding="utf-8") as destination:
         json.dump(manifest, destination)
     os.replace(temporary, manifest_path)
-    util.rm_path(hires_path)
-    restore_hires_tree(cache_path, hires_path)
-    workspace_state.pop("hires_cache_key", None)
-    workspace_state.pop("hires_output_fingerprint", None)
+    workspace_state["hires_cache_key"] = cache_key
+    workspace_state["hires_output_fingerprint"] = manifest["output"]
 
 def restore_hires_tree(cache_path, hires_path):
     """Use APFS copy-on-write clones rather than copying gigabytes of pixels."""
@@ -1089,12 +1097,12 @@ def make_clone_progress_lines(clone_path: str) -> list[str]:
     lines.append("  Music")
     return lines
 
-def write_clone_progress(clone_path: str) -> None:
+def write_clone_progress(clone_path: str, lines=None) -> None:
     with open(util.path(clone_path, "clone-progress"), mode="w", encoding="latin-1", errors="replace") as f:
-        f.write("\n".join(make_clone_progress_lines(clone_path)) + "\n")
+        f.write("\n".join(lines if lines is not None else make_clone_progress_lines(clone_path)) + "\n")
 
-def inject_clone_progress(clone_script_path: str, clone_path: str) -> None:
-    progress_block = "\n".join('echo "{}"'.format(line.replace('"', "'")) for line in make_clone_progress_lines(clone_path))
+def inject_clone_progress(clone_script_path: str, clone_path: str, lines=None) -> None:
+    progress_block = "\n".join('echo "{}"'.format(line.replace('"', "'")) for line in (lines if lines is not None else make_clone_progress_lines(clone_path)))
     with open(clone_script_path, "r", encoding="latin-1", errors="replace") as f:
         script = f.read()
     script = script.replace(
@@ -1159,8 +1167,10 @@ def iter_requested_menu_names(node):
                 yield from iter_requested_menu_names(value)
 
 def audit_missing_archives(db: Connection, menu, args) -> None:
-    for name in iter_requested_menu_names(menu):
-        missing_entry = get_missing_archive_entry(db, name)
+    names = list(iter_requested_menu_names(menu))
+    requested, missing_rows = audit_missing_archive_entries(db, names)
+    for name in names:
+        missing_entry = requested.get(name)
         if missing_entry:
             warn_missing_archive(name, missing_entry["archive_path"])
 
@@ -1173,19 +1183,15 @@ def audit_missing_archives(db: Connection, menu, args) -> None:
         categories.append(("Demo", None))
 
     for category, exclude_subcategories in categories:
-        for row in db.cursor().execute(
-            'SELECT * FROM titles WHERE category=? AND (redundant IS NULL OR redundant="")',
-            (category,),
-        ):
-            archive_path = row["archive_path"]
-            if not archive_path:
+        for row in missing_rows:
+            if row['category'] != category or row['redundant'] not in (None, ''):
                 continue
             if exclude_subcategories:
                 subcategory = (row["subcategory"] or "").lower()
                 if any(subcategory.startswith(excluded.lower()) for excluded in exclude_subcategories):
                     continue
-            if not util.is_file(util.path(paths.titles(), archive_path)):
-                warn_missing_archive(row["title_short"] or row["id"], archive_path)
+            warn_missing_archive(row["title_short"] or row["id"], row["archive_path"])
+
 
 def get_archive_extract_cache_dir(arc_path: str, entry) -> str | None:
     stat = os.stat(arc_path)
@@ -1281,7 +1287,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", dest="config_file", required=True, metavar="FILE", type=lambda x: util.argparse_is_file(parser, x),  help="configuration file")
     parser.add_argument("-o", "--out-dir", dest="out_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="output directory")
-    parser.add_argument("-b", "--base-hdf", dest="base_hdf", metavar="FILE", help="base HDF image")
+    parser.add_argument("--incremental", action="store_true", help="prepare a transactional incremental Amiberry image update")
+    parser.add_argument("--image-size-bytes", type=int, default=16_000_000_000,
+                        help="maximum whole-image size in decimal bytes (default: 16 GB; 0 sizes to payload)")
+    parser.add_argument("--boot-extra-bytes", type=int, default=200_000_000,
+                        help="additional DH0 reserve in decimal bytes (default: 200 MB)")
+    base_source = parser.add_mutually_exclusive_group()
+    base_source.add_argument("-b", "--base-hdf", dest="base_hdf", metavar="FILE", help="use a legacy base HDF instead of the native base directory")
+    base_source.add_argument("--base-dir", metavar="DIR", help="native base directory (default: AGSBASE or sibling AV-Base checkout)")
     parser.add_argument("-a", "--ags-dir", dest="ags_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="AGS2 configuration directory")
     parser.add_argument("-d", "--add-dir", dest="add_dirs", action="append", help="add dir to amiga filesystem (example '~/Amiga/Music::DH1:Music')")
 
@@ -1300,6 +1313,8 @@ def main():
     try:
         paths.verify()
         args = parser.parse_args()
+        if args.image_size_bytes < 0 or args.boot_extra_bytes < 0:
+            raise ValueError("Image size and DH0 reserve must be nonnegative")
         if args.temp_dir:
             os.environ['AGSTEMP'] = os.path.abspath(args.temp_dir)
         elif args.chipset_profile == 'ecs':
@@ -1364,16 +1379,24 @@ def main():
 
         db_path = "data/db/titles.sqlite3"
 
-        # extract base image
-        base_hdf: str | None = args.base_hdf
-        if not base_hdf:
-            base_hdf = util.path(paths.content(), "base", "base.hdf")
-        if not util.is_file(base_hdf):
-            raise IOError("base HDF not found ({})".format(base_hdf))
-        base_hdf_state = {
-            "base_hdf": os.path.abspath(base_hdf),
-            "base_hdf_cache_dir": get_base_hdf_cache_dir(base_hdf),
-        }
+        # Native DH0 is authoritative; legacy HDF input remains an explicit override.
+        base_hdf = None
+        base_directory = None if args.base_hdf else os.path.abspath(args.base_dir or paths.base())
+        if base_directory:
+            if not util.is_dir(base_directory):
+                raise IOError("native base directory not found ({}); clone AV-Base alongside AmigaVision or set AGSBASE".format(base_directory))
+            base_hdf_state = {
+                "base_hdf": base_directory,
+                "base_hdf_cache_dir": "native-v1-" + directory_fingerprint(base_directory),
+            }
+        else:
+            base_hdf = args.base_hdf
+            if not util.is_file(base_hdf):
+                raise IOError("base HDF not found ({})".format(base_hdf))
+            base_hdf_state = {
+                "base_hdf": os.path.abspath(base_hdf),
+                "base_hdf_cache_dir": get_base_hdf_cache_dir(base_hdf),
+            }
 
         with timed_step(timings, "workspace init"):
             with timed_step(timings, "workspace cleanup"):
@@ -1385,12 +1408,16 @@ def main():
                 util.make_dir(amiga_boot_path)
 
         if not args.only_ags_tree:
-            with timed_step(timings, "extract base hdf"):
-                print("Extracting base HDF image: {}".format(base_hdf))
+            with timed_step(timings, "stage base directory" if base_directory else "extract base hdf"):
                 util.rm_path(amiga_boot_path)
-                used_cache = extract_base_image(base_hdf, amiga_boot_path)
-                if used_cache:
-                    print(" > Using cached base HDF unpack")
+                if base_directory:
+                    print("Staging native base directory: {}".format(base_directory))
+                    stage_directory(base_directory, amiga_boot_path)
+                else:
+                    print("Extracting base HDF image: {}".format(base_hdf))
+                    used_cache = extract_base_image(base_hdf, amiga_boot_path)
+                    if used_cache:
+                        print(" > Using cached base HDF unpack")
                 workspace_state["base_hdf"] = base_hdf_state["base_hdf"]
                 workspace_state["base_hdf_cache_dir"] = base_hdf_state["base_hdf_cache_dir"]
 
@@ -1511,7 +1538,8 @@ def main():
             save_workspace_ags2_collection_snapshot(clone_path, collection)
 
         reset_warning_state()
-        audit_missing_archives(db, menu, args)
+        with timed_step(timings, "audit missing archives"):
+            audit_missing_archives(db, menu, args)
 
         # extract whdloaders
         if not args.only_ags_tree:
@@ -1645,12 +1673,19 @@ def main():
         # build PFS container
         if not args.only_ags_tree:
             with timed_step(timings, "build pfs image"):
-                layer_sources = []
-                for layer in layers:
-                    for src, dst in layer.items():
-                        layer_sources.append((util.path(config_dir, src), dst))
-                pfs_partition_cache_key = get_pfs_partition_cache_key(
-                    get_pfs_partition_cache_state(
+                output_image = util.path(out_dir, config_base_name + ".hdf")
+                if args.incremental:
+                    prepare_plan(clone_path, output_image, None, config_base_name,
+                                 util.path("data", "pfs3", "pfs3.bin"),
+                                 image_size_bytes=args.image_size_bytes,
+                                 boot_extra_bytes=args.boot_extra_bytes)
+                    print(" > Reusing existing partition layout; capacity is checked during incremental comparison")
+                else:
+                    layer_sources = []
+                    for layer in layers:
+                        for src, dst in layer.items():
+                            layer_sources.append((util.path(config_dir, src), dst))
+                    pfs_cache_state = get_pfs_partition_cache_state(
                         base_hdf_state["base_hdf_cache_dir"],
                         menu_subtree_cache_keys,
                         autoentries_cache_key,
@@ -1658,15 +1693,18 @@ def main():
                         layer_sources,
                         args.add_dirs,
                     )
-                )
-                pfs_partitions = restore_pfs_partition_cache(pfs_partition_cache_key, workspace_state)
-                if pfs_partitions is None:
-                    with timed_step(timings, "calculate pfs sizes"):
-                        pfs_partitions = calculate_pfs_partitions(clone_path)
-                    save_pfs_partition_cache(pfs_partition_cache_key, pfs_partitions, workspace_state)
-                else:
-                    print(" > Using cached partition sizes")
-                build_pfs(util.path(out_dir, config_base_name + ".hdf"), clone_path, True, partitions=pfs_partitions)
+                    pfs_cache_state["image_size_bytes"] = args.image_size_bytes
+                    pfs_cache_state["boot_extra_bytes"] = args.boot_extra_bytes
+                    pfs_partition_cache_key = get_pfs_partition_cache_key(pfs_cache_state)
+                    pfs_partitions = restore_pfs_partition_cache(pfs_partition_cache_key, workspace_state)
+                    if pfs_partitions is None:
+                        with timed_step(timings, "calculate pfs sizes"):
+                            pfs_partitions = calculate_pfs_partitions(clone_path, args.image_size_bytes, args.boot_extra_bytes)
+                        save_pfs_partition_cache(pfs_partition_cache_key, pfs_partitions, workspace_state)
+                    else:
+                        print(" > Using cached partition sizes")
+                    Path(clone_path, PLAN_NAME).unlink(missing_ok=True)
+                    build_pfs(output_image, clone_path, True, partitions=list(pfs_partitions))
 
         with timed_step(timings, "prune caches"):
             prune_build_caches(
@@ -1715,18 +1753,24 @@ def main():
                     clone_script_output = util.path(clone_path, "clone")
                     shutil.copyfile(clone_script, clone_script_output)
                     open(util.path(clone_path, "clone.uaem"), mode="w").write("-s--rwed 2020-02-02 22:22:22.00")
-                    write_clone_progress(clone_path)
-                    inject_clone_progress(clone_script_output, clone_path)
+                    if args.incremental:
+                        # The updater generates its own script after comparison.
+                        Path(clone_path, "clone-progress").unlink(missing_ok=True)
+                    else:
+                        progress_lines = make_clone_progress_lines(clone_path)
+                        write_clone_progress(clone_path, progress_lines)
+                        inject_clone_progress(clone_script_output, clone_path, progress_lines)
                 else:
                     raise IOError("cloner config files not found ({}, {}, {}, {})".format(cloner_adf, cloner_cfg, cloner_cfg_amiberry, clone_script))
 
         # clean output directory
         with timed_step(timings, "cleanup temp tree"):
-            for r, _, f in os.walk(clone_path):
-                for name in f:
-                    path = util.path(r, name)
-                    if name == ".DS_Store":
-                        os.remove(path)
+            # Incremental comparison filters host files in its existing payload walk.
+            if not args.incremental or args.only_ags_tree:
+                for r, _, f in os.walk(clone_path):
+                    for name in f:
+                        if name == ".DS_Store":
+                            os.remove(util.path(r, name))
 
         # run post-build script
         post_build_sh_path = util.path(os.path.dirname(args.config_file), config_base_name) + ".sh"

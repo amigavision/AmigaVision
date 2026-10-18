@@ -3,6 +3,7 @@
 # AGSImager: Query entries and paths
 
 import sys
+import sqlite3
 from typing import Tuple
 
 import ags_paths as paths
@@ -143,6 +144,35 @@ def get_missing_archive_entry(db, name):
         if row_has_missing_archive(row):
             return dict(row)
     return None
+
+def audit_missing_archive_entries(db, names):
+    """Check archive paths once, then resolve menu aliases against missing rows only."""
+    missing, exists = [], {}
+    for row in db.cursor().execute('SELECT * FROM titles'):
+        archive = row['archive_path']
+        if not archive:
+            continue
+        if archive not in exists:
+            exists[archive] = util.is_file(util.path(paths.titles(), archive))
+        if not exists[archive]:
+            missing.append(dict(row))
+    if not missing:
+        return {}, []
+    # Keep SQLite's exact/LIKE behavior and pattern priority. Available rows
+    # cannot produce warnings, so they need not participate in alias matching.
+    with sqlite3.connect(':memory:') as lookup:
+        lookup.row_factory = sqlite3.Row
+        lookup.execute('CREATE TABLE titles (id TEXT, archive_path TEXT)')
+        lookup.executemany('INSERT INTO titles VALUES (?, ?)',
+                           [(row['id'], row['archive_path']) for row in missing])
+        by_id = {row['id']: row for row in missing}
+        requested = {}
+        for name in dict.fromkeys(names):
+            row = next(iter_matching_rows(lookup, name), None)
+            if row is not None:
+                requested[name] = by_id[row['id']]
+    return requested, missing
+
 
 def entry_is_valid(entry):
     if not (isinstance(entry, dict)): return False

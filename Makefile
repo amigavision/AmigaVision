@@ -7,7 +7,7 @@ PYTHON ?= python3.11
 PIP_BUILD_CONSTRAINT ?= $(CURDIR)/build/pip-build-constraints.txt
 export PIP_BUILD_CONSTRAINT
 SOURCE ?= $(subst ",,${AGSCONTENT})/titles/manual-downloads
-ARCHIVE_FETCH_DEST ?= ${HOME}/Developer/AmigaVision-Content
+ARCHIVE_FETCH_DEST ?= ${AGSCONTENT}
 
 AMIBERRYBIN ?= /Applications/Amiberry.app/Contents/MacOS/Amiberry
 REPLAYOS_BASE_IMG ?= $(subst ",,${AGSCONTENT})/replay
@@ -49,11 +49,15 @@ endef
 
 default: help
 
-IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
-MINI_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-Mini.yaml --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
-TEST_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --auto-lists -o ${AGSDEST}
-TEST_DRY_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
-ECS_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
+# Optional source override; the native AV-Base checkout is the default.
+IMAGE_UPDATE_ARGS ?= --incremental
+IMAGE_CLONE_ARGS ?=
+BASE_IMAGE_ARGS ?=
+IMAGE_PREP_CMD = pipenv run build/ags_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
+MINI_IMAGE_PREP_CMD = pipenv run build/ags_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
+TEST_IMAGE_PREP_CMD = pipenv run build/ags_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --auto-lists -o ${AGSDEST}
+TEST_DRY_PREP_CMD = pipenv run build/ags_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
+ECS_IMAGE_PREP_CMD = pipenv run build/ags_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
 MAKE_MANIFESTS_CMD = pipenv run build/ags_index.py --make-manifests --only-missing
 MAKE_LISTINGS_CMD = $(PYTHON) build/generate_listings.py "$(subst ",,${AGSTEMP})/DH1/AGS2" "$(subst ",,${DISTRO_LISTINGS_DIR})"
 FINALIZE_MAIN_IMAGE = test -f "$(subst ",,${AMIGAVISION_HDF})"
@@ -75,7 +79,7 @@ help:
 		'Pull archives from the configured source, promote newer manual-downloads archives into the canonical tree, re-index the content database, and run the preferred image sync pipeline.' \
 		'' \
 		'make image' \
-		'Create the Amiga HDF image and filesystem specified in configs/AmigaVision.yaml using Amiberry as the final cloner.' \
+		'Create or incrementally update AmigaVision.hdf using Amiberry. Use IMAGE_CLONE_ARGS=--full to force a complete rebuild.' \
 		'' \
 		'make distros' \
 		'Prompt for the release date, then package all uploadable platform-specific release artifacts from the built image.' \
@@ -317,6 +321,10 @@ clone-fsuae:
 		echo "error: $(subst ",,${AGSTEMP})/target.hdf not found after preparing the temp build tree."; \
 		exit 1; \
 	fi; \
+	if [ -f "$(subst ",,${AGSTEMP})/image-update-plan.json" ]; then \
+		echo "error: incremental workspace requires clone-amiberry; use make image-fsuae for a full FS-UAE build."; \
+		exit 1; \
+	fi; \
 	log="${AGSTEMP}/fs-uae-image.log"; \
 	if ! ${FSUAEBIN} ${AGSTEMP}/cfg.fs-uae >"$$log" 2>&1; then \
 		cat "$$log"; \
@@ -349,6 +357,11 @@ ecs-image: ecs-artwork
 	@test -f "$(subst ",,${AGSDEST})/AmigaVision-ECS.hdf"
 	@echo "Removing completed ECS temp workspace..."
 	@rm -rf "$(subst ",,$(ECS_TEMP))"
+	@echo "Removing completed ECS build cache..."
+	@rm -rf "${HOME}/Library/Caches/AmigaVision/build/ecs"
+
+# Legacy clone backends use fully prepared images.
+image-fsuae image-fuse clone-fsuae clone-fuse: IMAGE_UPDATE_ARGS =
 
 image-fsuae:
 	$(call print-start-time)
@@ -365,6 +378,10 @@ clone-fuse:
 	if [ ! -d "$(subst ",,${AGSTEMP})" ]; then \
 		echo "Preparing temp build tree..."; \
 		$(MAKE) prepare-image-temp || exit $$?; \
+	fi; \
+	if [ -f "$(subst ",,${AGSTEMP})/image-update-plan.json" ]; then \
+		echo "error: incremental workspace requires clone-amiberry; use make image-fuse for a full FUSE build."; \
+		exit 1; \
 	fi; \
 	hdf="$(subst ",,${AGSDEST})/AmigaVision.hdf"; \
 	if [ ! -f "$$hdf" ]; then \
@@ -401,16 +418,17 @@ clone-amiberry:
 		echo "error: $(subst ",,${AGSTEMP})/clone not found after preparing the temp build tree."; \
 		exit 1; \
 	fi; \
-	if [ ! -e "$(subst ",,${AGSTEMP})/target.hdf" ]; then \
+	if [ ! -e "$(subst ",,${AGSTEMP})/target.hdf" ] && [ ! -f "$(subst ",,${AGSTEMP})/image-update-plan.json" ]; then \
 		echo "error: $(subst ",,${AGSTEMP})/target.hdf not found after preparing the temp build tree."; \
 		exit 1; \
 	fi; \
 	log="${AGSTEMP}/amiberry-image.log"; \
-	if ! "${AMIBERRYBIN}" -f "${AGSTEMP}/cfg.uae" --log >"$$log" 2>&1; then \
+	if ! pipenv run python build/ags_image_update.py --workspace "$(subst ",,${AGSTEMP})" --emulator "${AMIBERRYBIN}" $(IMAGE_CLONE_ARGS) >"$$log" 2>&1; then \
 		cat "$$log"; \
 		exit 1; \
 	fi; \
 	end=$$(date +%s); \
+	cat "$$log"; \
 	echo "Amiberry clone time: $$((end - start))s"
 	@printf '\a'
 
@@ -445,22 +463,11 @@ test-dry:
 
 pi:
 	$(call print-start-time)
-	@rm -f "${REPLAYOS_OUTPUT_IMG}" "${REPLAYOS_COMPRESSED_IMG}"
-	@build/pi_image.sh \
-		--hdf "${AMIGAVISION_HDF}" \
-		--output-img "${REPLAYOS_OUTPUT_IMG}"
-	@mkdir -p "$(dir ${REPLAYOS_COMPRESSED_IMG})"
-	@rm -f "${REPLAYOS_COMPRESSED_IMG}"
-	@bash -o pipefail -c 'xz -T0 -1 -v -k -c "$$1" 2>&1 > "$$2" | awk '\''{printf "%5s  %7s/s  %s\n", $$1, $$6, $$7}'\''' _ "${REPLAYOS_OUTPUT_IMG}" "${REPLAYOS_COMPRESSED_IMG}"
-	@rm -f "${REPLAYOS_OUTPUT_IMG}"
-	@printf '\a'
+	@$(DISTRO_PACKAGE_PROMPT) pi
 
 cd32:
 	$(call print-start-time)
-	@PYTHONDONTWRITEBYTECODE=1 $(PYTHON) "$(subst ",,${CD32_DISTRO_DIR})/make_cd32_mgl_cfg.py" --quiet
-	@mkdir -p "$(subst ",,${DISTRO_OUT})"
-	@cd "$(subst ",,${CD32_DISTRO_DIR})" && bash ./pack "$(DISTRO_DATE)" "$(subst ",,${DISTRO_OUT})/!AmigaVision-CD32-MiSTer-$(DISTRO_DATE).zip"
-	@printf '\a'
+	@$(DISTRO_PACKAGE_PROMPT) cd32-mister
 
 distros:
 	$(call print-start-time)

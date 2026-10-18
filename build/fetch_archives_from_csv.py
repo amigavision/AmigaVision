@@ -13,7 +13,10 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_DEST = Path("~/Developer/AmigaVision-Content").expanduser()
+DEFAULT_DEST = Path(os.path.expandvars(
+    (os.getenv("ARCHIVE_FETCH_DEST") or os.getenv("AGSCONTENT") or str(ROOT / "content"))
+    .strip().strip('"').strip("'")
+)).expanduser()
 ALLOWED_TOP_LEVELS = {"demo", "game", "mags"}
 VERSION_RE = re.compile(r"^(?P<name>.+)_v(?P<version>[^_]+)(?P<suffix>(?:_.*)?)\.lha$")
 TOKEN_RE = re.compile(r"\d+|[A-Za-z]+")

@@ -35,6 +35,11 @@ def cache_generation():
 def content():
     return util.path(env_path("AGSCONTENT"))
 
+def base():
+    """Versioned DH0 payload; default to the sibling AV-Base checkout."""
+    return env_path("AGSBASE") or os.path.abspath(util.path(
+        os.path.dirname(__file__), "..", "..", "AV-Base"))
+
 def repo_content():
     return util.path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "content")
 

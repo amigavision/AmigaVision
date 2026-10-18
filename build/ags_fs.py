@@ -3,6 +3,7 @@
 # AGSImager: Native filesystem functions
 
 import os
+import math
 import shutil
 import subprocess
 import sys
@@ -41,7 +42,7 @@ def extract_base_image(base_hdf: str, dest: str):
         for suffix in [".blkdev", ".xdfmeta"]:
             util.rm_path(unpack_dest + suffix)
 
-    result = subprocess.run(["xdftool", base_hdf, "unpack", unpack_dest, "fsuae"])
+    result = subprocess.run(["xdftool", "--read-only", base_hdf, "unpack", unpack_dest, "fsuae"])
     if result.returncode != 0:
         raise IOError("failed to unpack base HDF ({})".format(base_hdf))
 
@@ -55,7 +56,7 @@ def extract_base_image(base_hdf: str, dest: str):
         util.rm_path(unpack_dest)
     return False
 
-def calculate_pfs_partitions(clone_path):
+def calculate_pfs_partitions(clone_path, image_size_bytes=0, boot_extra_bytes=0):
     FS_OVERHEAD = 1.05 # filesystem size fudge factor
     SECTOR_SIZE = 512 # fixed
     BLOCK_SIZE = 512 # amiga only support RDBs with a 512 byte block size
@@ -71,9 +72,19 @@ def calculate_pfs_partitions(clone_path):
     for f in sorted(os.listdir(clone_path)):
         if util.is_dir(util.path(clone_path, f)) and is_amiga_devicename(f):
             mb_free = 80 if f == "DH0" else 40
-            cyls = int(FS_OVERHEAD * (util.get_dir_size(util.path(clone_path, f), BLOCK_SIZE) + (mb_free * 1024 * 1024))) // cylinder_size
+            cyls = math.ceil((FS_OVERHEAD * (util.get_dir_size(util.path(clone_path, f), BLOCK_SIZE) + (mb_free * 1024 * 1024)) + (boot_extra_bytes if f == "DH0" else 0)) / cylinder_size)
             partitions.append(("DH" + str(len(partitions)), cyls))
             total_cyls += cyls
+    if image_size_bytes:
+        if [name for name, _ in partitions] != ["DH0", "DH1"]:
+            raise ValueError("Fixed-size images require DH0 and DH1")
+        # build_pfs reserves one RDB cylinder and one trailing cylinder.
+        available_cylinders = image_size_bytes // cylinder_size - 2
+        boot_cylinders = partitions[0][1]
+        data_cylinders = available_cylinders - boot_cylinders
+        if data_cylinders < partitions[1][1]:
+            raise ValueError("Payload and partition reserves do not fit the {}-byte image limit".format(image_size_bytes))
+        partitions = [("DH0", boot_cylinders), ("DH1", data_cylinders)]
     return partitions
 
 def build_pfs(hdf_path, clone_path, verbose, partitions=None):
@@ -112,14 +123,14 @@ def build_pfs(hdf_path, clone_path, verbose, partitions=None):
         "+", "init",
         "rdb_cyls={}".format(num_cyls_rdb),
         "rdb_flags=0x2"
-    ])
+    ], check=True)
 
     if verbose: print(" > Adding filesystem...")
     r = subprocess.run([
         "rdbtool", hdf_path,
         "fsadd", pfs3_bin,
         "fs=PDS3"
-    ], stdout=subprocess.PIPE)
+    ], stdout=subprocess.PIPE, check=True)
 
     if verbose:
         print(" > Adding partitions...")
@@ -140,17 +151,17 @@ def build_pfs(hdf_path, clone_path, verbose, partitions=None):
         "num_buffer={}".format(num_buffers),
         "bootable=True",
         "pri=1"
-    ], stdout=subprocess.PIPE)
+    ], stdout=subprocess.PIPE, check=True)
 
     # add subsequent partitions
     for part in partitions:
         if verbose: print("    > {} ({}MB)".format(part[0], (part[1] * cylinder_size) // (1024 * 1024)))
-        r = subprocess.run(["rdbtool", hdf_path, "free"], stdout=subprocess.PIPE, universal_newlines=True)
+        r = subprocess.run(["rdbtool", hdf_path, "free"], stdout=subprocess.PIPE, universal_newlines=True, check=True)
         free = make_tuple(r.stdout.splitlines()[0])
         free_start = int(free[0])
         free_end = int(free[1])
         part_start = free_start
-        part_end = part_start + part[1]
+        part_end = part_start + part[1] - 1
         if part_end > free_end:
             part_end = free_end
         r = subprocess.run([
@@ -164,7 +175,7 @@ def build_pfs(hdf_path, clone_path, verbose, partitions=None):
             "max_transfer=0x0001FE00",
             "mask=0x7FFFFFFE",
             "num_buffer={}".format(num_buffers)
-        ], stdout=subprocess.PIPE)
+        ], stdout=subprocess.PIPE, check=True)
     return
 
 # -----------------------------------------------------------------------------
