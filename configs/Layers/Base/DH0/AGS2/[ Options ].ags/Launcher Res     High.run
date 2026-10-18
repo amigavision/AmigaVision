@@ -1,3 +1,0 @@
-if exists SYS:AGS-HiRes/AGS2
-  assign AGS: SYS:AGS-HiRes
-endif

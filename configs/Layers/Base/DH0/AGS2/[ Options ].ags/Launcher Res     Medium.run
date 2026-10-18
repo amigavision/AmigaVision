@@ -1,3 +1,0 @@
-if exists SYS:AGS2/AGS2
-  assign AGS: SYS:AGS2
-endif

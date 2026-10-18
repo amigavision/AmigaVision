@@ -55,7 +55,7 @@ TEST_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --auto
 TEST_DRY_PREP_CMD = pipenv run build/ags_imager.py -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
 ECS_IMAGE_PREP_CMD = pipenv run build/ags_imager.py -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
 MAKE_MANIFESTS_CMD = pipenv run build/ags_index.py --make-manifests --only-missing
-MAKE_LISTINGS_CMD = $(PYTHON) build/generate_listings.py "$(subst ",,${AGSTEMP})/DH0/AGS2" "$(subst ",,${DISTRO_LISTINGS_DIR})"
+MAKE_LISTINGS_CMD = $(PYTHON) build/generate_listings.py "$(subst ",,${AGSTEMP})/DH1/AGS2" "$(subst ",,${DISTRO_LISTINGS_DIR})"
 FINALIZE_MAIN_IMAGE = test -f "$(subst ",,${AMIGAVISION_HDF})"
 
 help:

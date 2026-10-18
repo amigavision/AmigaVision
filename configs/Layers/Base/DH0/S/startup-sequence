@@ -113,9 +113,9 @@ endif
 
 assign >NIL: exists Data:
 if not warn
-  if exists Amiga:AGS2
+  if exists Data:AGS2
     if exists Data:WHD
-      assign AGS: Amiga:AGS2
+      assign AGS: Data:AGS2
       assign WHD0: Data:WHD
       assign >NIL: exists WHDSaves:
       if warn

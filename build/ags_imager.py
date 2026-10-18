@@ -341,6 +341,7 @@ def fingerprint_python_defs(path: str, names: list[str]) -> str:
     })
 
 AGS2_TREE_BEHAVIOR_FINGERPRINT = hash_payload([
+    "launcher-on-DH1-v1",
     fingerprint_file('build/ags_ecs.py'),
     fingerprint_file('configs/ecs-preferred-versions.json'),
     fingerprint_python_defs("build/ags_make.py", ["make_tree", "make_entries", "make_entry", "make_autoentries", "make_runscripts", "make_runscript", "AGS_INFO_WIDTH", "AGS_INFO_HEIGHT", "make_note", "metadata_system", "metadata_blocks", "metadata_date", "metadata_wrap", "balanced_wrap", "wrap_note"]),
@@ -354,6 +355,7 @@ ARCHIVE_TREE_BEHAVIOR_FINGERPRINT = hash_payload([
 ])
 
 PFS_PARTITION_BEHAVIOR_FINGERPRINT = hash_payload([
+    "launcher-on-DH1-v1",
     fingerprint_python_defs("build/ags_fs.py", ["get_pfs_free_mb", "calculate_pfs_partitions", "build_pfs"]),
     fingerprint_python_defs("build/ags_util.py", ["get_dir_size"]),
 ])
@@ -1041,6 +1043,8 @@ def save_autoentries_cache(cache_key: str, amiga_ags_path: str, collection_delta
 def make_clone_progress_lines(clone_path: str) -> list[str]:
     stats_paths = [
         ("DH0", util.path(clone_path, "DH0")),
+        ("DH1/AGS2", util.path(clone_path, "DH1", "AGS2")),
+        ("DH1/AGS-HiRes", util.path(clone_path, "DH1", "AGS-HiRes")),
         ("DH1/Music", util.path(clone_path, "DH1", "Music")),
     ]
     whd_stats_paths = [
@@ -1326,7 +1330,8 @@ def main():
 
         clone_path = paths.tmp()
         amiga_boot_path = util.path(clone_path, "DH0")
-        amiga_ags_path = util.path(amiga_boot_path, "AGS2")
+        amiga_data_path = util.path(clone_path, "DH1")
+        amiga_ags_path = util.path(amiga_data_path, "AGS2")
         util.make_dir(clone_path)
         workspace_state = load_workspace_state(clone_path)
         prune_interrupted_cache_artifacts()
@@ -1388,6 +1393,11 @@ def main():
                     print(" > Using cached base HDF unpack")
                 workspace_state["base_hdf"] = base_hdf_state["base_hdf"]
                 workspace_state["base_hdf_cache_dir"] = base_hdf_state["base_hdf_cache_dir"]
+
+        # Old base images and workspaces may still contain system-disk launchers.
+        # Rebuild them on DH1 instead of retaining a second, stale copy on DH0.
+        for launcher_name in ("AGS2", "AGS-HiRes"):
+            util.rm_path(util.path(amiga_boot_path, launcher_name))
 
         # copy base AGS2 config
         print("Building AGS2 tree...")
@@ -1628,9 +1638,9 @@ def main():
             if args.chipset_profile == 'ecs':
                 from ags_ecs import install_launcher
                 install_launcher(amiga_ags_path, collection)
-                util.rm_path(util.path(amiga_boot_path, 'AGS-HiRes'))
+                util.rm_path(util.path(amiga_data_path, 'AGS-HiRes'))
             else:
-                build_or_reuse_hires_launcher(amiga_ags_path, util.path(amiga_boot_path, "AGS-HiRes"), collection, workspace_state)
+                build_or_reuse_hires_launcher(amiga_ags_path, util.path(amiga_data_path, "AGS-HiRes"), collection, workspace_state)
 
         # build PFS container
         if not args.only_ags_tree:
