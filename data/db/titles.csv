@@ -5583,3 +5583,5 @@ game-notwhdl--burn;Burn;Burn;;;OCS;;0;;;;;;;;May be unstable on newer AmigaOS;;2
 game-notwhdl--movimientoconstante;Movimiento Constante;Movimiento Constante;;;OCS;;0;;;;;;;;;;2025;;Spanish;DJCaye;DJCaye;1 Player;;;;game-notwhdl/MovimientoConstante.lha;Game;Puzzle;;;;
 game-notwhdl--cogsnlogs;Cogs N Logs (Demo);Cogs N Logs (Demo);;;AGA;1;0;;;;;;;Keyboard: arrows, Space, C;Early prototype;;2025;;English;RetroGamma;RetroGamma;1 Player;;;;game-notwhdl/CogsNLogs.lha;Game;Platform;;;;
 game-notwhdl--rastan;Rastan (Demo);Rastan (Demo);;;OCS;;0;;;;;;;v0.56. Work in progress.;;;2026;;English;basementApe;basementApe;1 Player;;;;game-notwhdl/Rastan.lha;Game;Platform;;;;
+game-notwhdl--knockout2;Knock Out 2;Knock Out 2;;;OCS;;0;;;;;;;;;;1996;;English;Ben Wyatt;;8 Players (Simultaneous);;;;game-notwhdl/KnockOut2.lha;Game;Racing;;2766;;
+game-notwhdl--achtungdiekurve;Achtung! Die Kurve...;Achtung! Die Kurve...;;;OCS;;0;;;;1;;;;;;;;English, Czech;Kevin Updike;K-Soft;6 Players (Simultaneous);;;;game-notwhdl/AchtungDieKurve.lha;Game;Racing;;3717;;
