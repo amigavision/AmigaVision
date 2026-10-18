@@ -870,13 +870,16 @@ def make_hires_artwork(ags_path, hires_path, collection):
     print(f" > HiRes: copied {copied} static category/navigation images")
 
 
-def report_missing_launcher_images(ags_path, hires_path, collection):
+def report_missing_launcher_images(ags_path, hires_path, collection, medium_files=None, hires_files=None):
     """Report the actual built menu thumbnails, including restored cache trees."""
-    for label, root in (("Med-res", ags_path), ("Hi-res", hires_path)):
-        available = set()
-        for directory, _, filenames in os.walk(root):
-            relative = Path(directory).relative_to(root)
-            available.update((relative / name).as_posix() for name in filenames if name.endswith('.iff'))
+    for label, root, inventory in (("Med-res", ags_path, medium_files), ("Hi-res", hires_path, hires_files)):
+        if inventory is not None:
+            available = {name for name in inventory if name.endswith('.iff')}
+        else:
+            available = set()
+            for directory, _, filenames in os.walk(root):
+                relative = Path(directory).relative_to(root)
+                available.update((relative / name).as_posix() for name in filenames if name.endswith('.iff'))
         missing = {}
         for path, entry_id in collection.image_entries.items():
             if any(path + suffix in available for suffix in ['.iff'] + [f'-{i}.iff' for i in range(1, 10)]):

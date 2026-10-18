@@ -58,7 +58,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed, wait, FIRST_COMPLETED
 from contextlib import contextmanager
 from time import perf_counter
 from sqlite3 import Connection
@@ -204,21 +204,87 @@ def fingerprint_file(path: str) -> dict:
         "mtime_ns": stat.st_mtime_ns,
     }
 
-def fingerprint_tree(path: str) -> list[dict]:
+def walk_tree_stats(path):
+    """Read each entry's metadata once and reuse scandir's directory entries."""
+    def visit(relative):
+        try:
+            with os.scandir(os.path.join(path, relative)) as scan:
+                entries = [(entry.name, entry.stat(), entry.is_symlink()) for entry in scan]
+        except FileNotFoundError:
+            if not relative:
+                return
+            raise
+        dirs = sorted((row for row in entries if stat_module.S_ISDIR(row[1].st_mode)), key=lambda row: row[0])
+        files = sorted((row for row in entries if not stat_module.S_ISDIR(row[1].st_mode)), key=lambda row: row[0])
+        yield relative, dirs, files
+        for name, _, symlink in dirs:
+            if not symlink:
+                yield from visit(os.path.join(relative, name))
+    yield from visit("")
+
+
+def fingerprint_tree(path: str, workers=1) -> list[dict]:
+    if workers > 1:
+        return parallel_tree_inventory(path, workers)
+    return [
+        {"path": os.path.join(relative, name), "is_dir": stat_module.S_ISDIR(st.st_mode),
+         "size": st.st_size, "mtime_ns": st.st_mtime_ns}
+        for relative, dirs, files in walk_tree_stats(path)
+        for name, st, _ in dirs + files
+    ]
+
+
+def ordered_inventory(rows):
+    """Restore the legacy traversal order after a sparse update, in memory."""
+    children = {}
+    for row in rows:
+        children.setdefault(os.path.dirname(row["path"]), []).append(row)
+    def visit(parent):
+        entries = children.get(parent, [])
+        dirs = sorted((r for r in entries if r["is_dir"]), key=lambda r: r["path"])
+        files = sorted((r for r in entries if not r["is_dir"]), key=lambda r: r["path"])
+        yield from dirs
+        yield from files
+        for row in dirs:
+            yield from visit(row["path"])
+    return list(visit(""))
+
+
+def parallel_tree_inventory(path, workers=4):
+    """Overlap metadata I/O across directories, then restore stable ordering."""
+    def scan(relative):
+        rows, dirs = [], []
+        try:
+            with os.scandir(os.path.join(path, relative)) as entries:
+                for entry in entries:
+                    st = entry.stat()
+                    is_dir = stat_module.S_ISDIR(st.st_mode)
+                    name = os.path.join(relative, entry.name)
+                    rows.append({"path": name, "is_dir": is_dir,
+                                 "size": st.st_size, "mtime_ns": st.st_mtime_ns})
+                    if is_dir and not entry.is_symlink():
+                        dirs.append(name)
+        except FileNotFoundError:
+            if relative:
+                raise
+        return rows, dirs
     rows = []
-    for root, dirs, files in os.walk(path):
-        dirs.sort()
-        files.sort()
-        for name in dirs + files:
-            full_path = util.path(root, name)
-            stat = os.stat(full_path)
-            rows.append({
-                "path": os.path.relpath(full_path, path),
-                "is_dir": stat_module.S_ISDIR(stat.st_mode),
-                "size": stat.st_size,
-                "mtime_ns": stat.st_mtime_ns,
-            })
-    return rows
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        pending = {pool.submit(scan, "")}
+        while pending:
+            done, pending = wait(pending, return_when=FIRST_COMPLETED)
+            for future in done:
+                records, dirs = future.result()
+                rows.extend(records)
+                pending.update(pool.submit(scan, name) for name in dirs)
+    return ordered_inventory(rows)
+
+
+def hires_inventory_fingerprint(rows):
+    return hash_payload([
+        {"path": row["path"], "is_dir": True} if row["is_dir"] else row
+        for row in rows if os.path.basename(row["path"]) != ".DS_Store"
+    ])
 
 def hash_payload(payload) -> str:
     return hashlib.sha1(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
@@ -229,15 +295,13 @@ def launcher_content_fingerprint(path: str, file_hashes=None) -> str:
     previous = dict(file_hashes or {})
     if file_hashes is not None:
         file_hashes.clear()
-    for root, dirs, files in os.walk(path):
-        dirs.sort()
-        digest.update(json.dumps([os.path.relpath(root, path), dirs]).encode("utf-8"))
-        for name in sorted(files):
+    for relative_root, dirs, files in walk_tree_stats(path):
+        digest.update(json.dumps([relative_root or ".", [row[0] for row in dirs]]).encode("utf-8"))
+        for name, stat, _ in files:
             if name == ".DS_Store":
                 continue
-            full_path = util.path(root, name)
-            relative = os.path.relpath(full_path, path)
-            stat = os.stat(full_path)
+            relative = os.path.join(relative_root, name)
+            full_path = os.path.join(path, relative)
             signature = [stat.st_dev, stat.st_ino, stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns]
             cached = previous.get(relative)
             if cached and cached[:-1] == signature:
@@ -253,7 +317,7 @@ def launcher_content_fingerprint(path: str, file_hashes=None) -> str:
             digest.update(json.dumps([name, content_hash]).encode("utf-8"))
     return digest.hexdigest()
 
-def build_or_reuse_hires_launcher(ags_path, hires_path, collection, workspace_state):
+def build_or_reuse_hires_launcher(ags_path, hires_path, collection, workspace_state, append_delta=None, source_trees=None):
     # Full builds replace DH0. Keep the reusable tree beside it, not inside it.
     cache_path = util.path(os.path.dirname(os.path.dirname(hires_path)), ".hires-launcher-cache")
     manifest_path = cache_path + ".json"
@@ -262,31 +326,81 @@ def build_or_reuse_hires_launcher(ags_path, hires_path, collection, workspace_st
             manifest = json.load(source)
     except (OSError, ValueError):
         manifest = {}
-    file_hashes = manifest.get("medium_file_hashes", {})
-    cache_key = hash_payload({
-        "medium_tree": launcher_content_fingerprint(ags_path, file_hashes),
-        "image_entries": collection.image_entries,
-        "assets": [fingerprint_tree("data/ags2-highres"), fingerprint_tree("data/img_highres")],
+    file_hashes = dict(manifest.get("medium_file_hashes", {}))
+    previous_hashes = dict(file_hashes)
+    medium_fingerprint = launcher_content_fingerprint(ags_path, file_hashes)
+    hires_basis = {
+        "assets": [source_trees[root] if source_trees is not None and root in source_trees else fingerprint_tree(root)
+                   for root in ("data/ags2-highres", "data/img_highres")],
         "behavior": fingerprint_python_defs("build/ags_make.py", ["make_hires_tree", "make_hires_artwork"]),
         "encoder": [fingerprint_file("build/repair_hires_palettes.py"), fingerprint_file("build/iff_ilbm.py")],
-    })
+    }
+    cache_key = hash_payload({"medium_tree": medium_fingerprint,
+                              "image_entries": collection.image_entries, **hires_basis})
+    # New title artwork may be added, but changed encoder/rendering behavior
+    # always requires replacing the entire hi-res output.
+    rendering_basis = {k: v for k, v in hires_basis.items() if k != "assets"}
+    staged_rows = (fingerprint_tree(hires_path, workers=4)
+                   if util.is_dir(hires_path) and (manifest.get("key") == cache_key or append_delta is not None)
+                   else None)
+    staged_output = hires_inventory_fingerprint(staged_rows) if staged_rows is not None else None
+    if (append_delta is not None and manifest.get("key") != cache_key and manifest.get("output") == staged_output
+            and manifest.get("rendering_basis") == rendering_basis and util.is_dir(hires_path)):
+        changed = [name for name, value in file_hashes.items()
+                   if previous_hashes.get(name, [None])[-1] != value[-1]]
+        # The append path cannot remove files. Unexpected changes use the normal
+        # complete rebuild, including deletions introduced by a layer.
+        if previous_hashes.keys() <= file_hashes.keys():
+            with tempfile.TemporaryDirectory(prefix="hires-append-", dir=os.path.dirname(hires_path)) as temporary:
+                medium = Path(temporary, "medium")
+                medium.mkdir()
+                for name in changed:
+                    target = medium / name
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(Path(ags_path, name), target)
+                output = Path(temporary, "hires")
+                sparse_collection = EntryCollection()
+                changed_names = set(changed)
+                suffixes = [".iff", "-QR.iff"] + [f"-{i}.iff" for i in range(1, 10)]
+                sparse_collection.image_entries = {
+                    name: entry_id for name, entry_id in collection.image_entries.items()
+                    if name in append_delta.image_entries or any(name + suffix in changed_names for suffix in suffixes)
+                }
+                make_hires_tree(str(medium), str(output), sparse_collection)
+                # Invalidate first so interrupted merges cannot be reused.
+                Path(manifest_path).unlink(missing_ok=True)
+                # copytree uses copy2, preserving the known source file mtimes.
+                # Update only this sparse inventory instead of rescanning DH1.
+                updated = {row["path"]: row for row in staged_rows}
+                updated.update({row["path"]: row for row in fingerprint_tree(str(output))})
+                util.copytree(str(output), hires_path)
+                staged_rows = ordered_inventory(updated.values())
+            staged_output = hires_inventory_fingerprint(staged_rows)
+            manifest = {"key": cache_key, "output": staged_output}
+            print(" > Appended hi-res title files and updated directory indexes")
     staged_valid = (manifest.get("key") == cache_key and util.is_dir(hires_path)
-                    and manifest.get("output") == hires_output_fingerprint(hires_path))
+                    and manifest.get("output") == staged_output)
     if staged_valid:
         print(" > Reusing staged hi-res launcher tree")
     else:
-        if (manifest.get("key") == cache_key and util.is_dir(cache_path)
-                and manifest.get("output") == hires_output_fingerprint(cache_path)):
+        cached_rows = fingerprint_tree(cache_path, workers=4) if manifest.get("key") == cache_key and util.is_dir(cache_path) else None
+        if cached_rows is not None and manifest.get("output") == hires_inventory_fingerprint(cached_rows):
             print(" > Restoring cached hi-res launcher tree")
         else:
             print(" > Building hi-res launcher cache")
             if os.path.exists(manifest_path):
                 os.remove(manifest_path)
             make_hires_tree(ags_path, cache_path, collection)
-            manifest = {"key": cache_key, "output": hires_output_fingerprint(cache_path)}
+            cached_rows = fingerprint_tree(cache_path, workers=4)
+            manifest = {"key": cache_key, "output": hires_inventory_fingerprint(cached_rows)}
         util.rm_path(hires_path)
         restore_hires_tree(cache_path, hires_path)
-    report_missing_launcher_images(ags_path, hires_path, collection)
+        staged_rows = cached_rows
+    report_missing_launcher_images(
+        ags_path, hires_path, collection,
+        medium_files=file_hashes,
+        hires_files=(row["path"] for row in staged_rows if not row["is_dir"]))
+    manifest["rendering_basis"] = rendering_basis
     manifest["medium_file_hashes"] = file_hashes
     temporary = manifest_path + ".tmp"
     with open(temporary, "w", encoding="utf-8") as destination:
@@ -311,11 +425,7 @@ def restore_hires_tree(cache_path, hires_path):
 
 def hires_output_fingerprint(path):
     """Validate generated files without rereading all screenshot pixel data."""
-    return hash_payload([
-        {"path": row["path"], "is_dir": True} if row["is_dir"] else row
-        for row in fingerprint_tree(path)
-        if os.path.basename(row["path"]) != ".DS_Store"
-    ])
+    return hires_inventory_fingerprint(fingerprint_tree(path, workers=4))
 
 def fingerprint_python_defs(path: str, names: list[str]) -> str:
     with open(path, "r", encoding="utf-8") as f:
@@ -391,6 +501,120 @@ def get_ags2_tree_cache_state(menu, db_path: str, base_ags2: str, runscript_temp
         }),
         "behavior": AGS2_TREE_BEHAVIOR_FINGERPRINT,
     }
+
+def append_input_state(db, cache_state, source_trees=None):
+    """Keep row identities independently of the SQLite container's mtime."""
+    assets = {}
+    for root in ("data/img", "data/img_highres", "data/ags2-highres"):
+        rows = []
+        for relative, dirs, files in walk_tree_stats(root):
+            for name, st, _ in dirs + files:
+                path = os.path.join(relative, name)
+                rows.append({"path": path, "is_dir": stat_module.S_ISDIR(st.st_mode),
+                             "size": st.st_size, "mtime_ns": st.st_mtime_ns})
+            for name, st, _ in files:
+                assets[os.path.join(root, relative, name)] = [st.st_dev, st.st_ino, st.st_size, st.st_mtime_ns, st.st_ctime_ns]
+        if source_trees is not None and root != "data/img":
+            source_trees[root] = rows
+    return {
+        "inputs": {"append_version": 1, **{k: v for k, v in cache_state.items() if k != "db"}},
+        "rows": {row["id"]: hash_payload(dict(row)) for row in db.execute("SELECT * FROM titles")},
+        "archive_inputs": {row["id"]: fingerprint_file(util.path(paths.titles(), row["archive_path"]))
+                           if row["archive_path"] and util.is_file(util.path(paths.titles(), row["archive_path"])) else None
+                           for row in db.execute("SELECT id, archive_path FROM titles")},
+        "preferences": [row[0].strip().lower() for row in db.execute("SELECT preferred_version FROM titles WHERE preferred_version IS NOT NULL")],
+        "assets": assets,
+    }
+
+
+def append_only_ids(previous, current, menu):
+    """Reject changes that could alter an existing title or curated lookup."""
+    if not previous or previous.get("inputs") != current["inputs"]:
+        return None
+    if any(current["rows"].get(k) != v for k, v in previous["rows"].items()):
+        return None
+    if any(current["archive_inputs"].get(k) != v for k, v in previous.get("archive_inputs", {}).items()):
+        return None
+    if any(current["assets"].get(k) != v for k, v in previous["assets"].items()):
+        return None
+    added = set(current["rows"]) - set(previous["rows"])
+    if added.intersection(previous.get("preferences", [])):
+        return None
+    for path in set(current["assets"]) - set(previous["assets"]):
+        stem = Path(path).stem.lower()
+        if not any(stem == i.lower() or stem.startswith(i.lower() + "-") for i in added):
+            return None
+    # Use SQLite LIKE itself, including its wildcard/case rules. Checking only
+    # the added IDs avoids repeating thousands of searches over the full DB.
+    from sqlite3 import connect
+    from ags_query import get_entry_lookup_patterns
+    with connect(":memory:") as lookup:
+        lookup.execute("CREATE TABLE additions (id TEXT)")
+        lookup.executemany("INSERT INTO additions VALUES (?)", [(i,) for i in added])
+        for name in iter_requested_menu_names(menu):
+            for pattern in [name.lower()] + get_entry_lookup_patterns(name.lower()):
+                if lookup.execute("SELECT 1 FROM additions WHERE id LIKE ? LIMIT 1", (pattern,)).fetchone():
+                    return None
+    return added
+
+
+def merge_new_tree(source, destination, reject_runs=False):
+    """Preflight before any writes; Amiga names are case insensitive."""
+    files = [p for p in Path(source).rglob("*") if p.is_file()]
+    directories = {}
+    for p in files:
+        target = Path(destination) / p.relative_to(source)
+        if reject_runs and (p.suffix == ".run" or p.relative_to(source).parts[0] in {"Run", "RunQuiet"}):
+            parent = target.parent
+            if parent not in directories:
+                directories[parent] = {n.name.casefold() for n in parent.iterdir()} if parent.is_dir() else set()
+            if target.name.casefold() in directories[parent]:
+                return False
+    util.copytree(str(source), str(destination))
+    return True
+
+
+def try_append_launcher(db, args, menu, previous, current, clone_path, ags_path,
+                        collection, runscript_template, workspace_state):
+    if args.chipset_profile != "any" or not util.is_dir(ags_path):
+        return None
+    added = append_only_ids(previous, current, menu)
+    if added is None or not restore_workspace_ags2_collection_snapshot(clone_path, collection):
+        return None
+    selected = EntryCollection()
+    if args.all_games:
+        add_all(db, selected, "Game")
+    if args.all_demos:
+        add_all(db, selected, "Demo", exclude_subcategories=["Disk Magazine", "Slide Show"])
+    if args.all_demoscene:
+        add_all(db, selected, "Demo")
+    # Sanitation/preferred resolution must leave every existing auto entry intact.
+    if any(i not in collection.by_id and i not in added for i in selected.by_id):
+        return None
+    delta = EntryCollection()
+    delta.by_id = {i: e for i, e in selected.by_id.items() if i not in collection.by_id}
+    with tempfile.TemporaryDirectory(prefix="ags-append-", dir=clone_path) as temporary:
+        medium = util.path(temporary, "medium")
+        util.make_dir(medium)
+        if args.all_games or args.all_demos or args.all_demoscene or args.auto_lists:
+            make_autoentries(delta, medium, games=args.all_games | args.auto_lists,
+                             demos=args.all_demos | args.all_demoscene | args.auto_lists)
+        make_runscripts(delta, medium, template=runscript_template)
+        # Persist invalidation before touching the reusable tree. An interruption
+        # must force a full rebuild, never reuse a partially appended workspace.
+        workspace_state.pop("append_inputs", None)
+        workspace_state.pop("ags2_cache_key", None)
+        save_workspace_state(clone_path, workspace_state)
+        if not merge_new_tree(medium, ags_path, reject_runs=True):
+            return None
+        snapshot_path = util.path(temporary, "collection.json")
+        save_collection_snapshot(snapshot_path, delta)
+        with open(snapshot_path) as source:
+            snapshot = relativize_collection_snapshot(json.load(source), medium)
+        merge_collection_snapshot(snapshot, collection, ags_path)
+    print(" > Appended {} selected title(s); preserved existing launcher entries".format(len(delta.by_id)))
+    return delta
+
 
 def get_ags2_tree_cache_key(cache_state: dict) -> str:
     return hash_payload(cache_state)
@@ -743,6 +967,49 @@ def get_archive_tree_cache_state(entries) -> dict:
         "archives": hash_payload(sorted(archive_keys, key=lambda row: row["id"])),
         "behavior": ARCHIVE_TREE_BEHAVIOR_FINGERPRINT,
     }
+
+def archive_entry_states(entries):
+    result = {}
+    for entry in entries:
+        archive = get_archive_path(entry)
+        result[entry["id"]] = {
+            "cache": get_archive_extract_cache_dir(archive, entry) if archive else None,
+            "destination": get_amiga_whd_dir(entry),
+        }
+    return result
+
+
+def try_append_archives(clone_path, entries, current, workspace_state):
+    previous = workspace_state.get("archive_entries")
+    if (not previous or workspace_state.get("archive_behavior") != ARCHIVE_TREE_BEHAVIOR_FINGERPRINT
+            or not Path(clone_path, "DH1", "WHD").is_dir()
+            or any(current.get(i) != value for i, value in previous.items())):
+        return False
+    added = [entry for entry in entries if entry["id"] not in previous]
+    with tempfile.TemporaryDirectory(prefix="archive-append-", dir=clone_path) as temporary:
+        extract_entries(temporary, added, verbose=True)
+        source = Path(temporary, "DH1", "WHD")
+        target = Path(clone_path, "DH1", "WHD")
+        if source.is_dir():
+            # Archives can contain additional top-level files. Check actual
+            # extraction results, including non-WHDLoad titles, before merging.
+            names = {}
+            for item in source.rglob("*"):
+                if not item.is_file():
+                    continue
+                destination = target / item.relative_to(source)
+                parent = destination.parent
+                if parent not in names:
+                    names[parent] = {p.name.casefold() for p in parent.iterdir()} if parent.is_dir() else set()
+                if destination.name.casefold() in names[parent]:
+                    return False
+            workspace_state.pop("archive_entries", None)
+            workspace_state.pop("archive_tree_cache_key", None)
+            save_workspace_state(clone_path, workspace_state)
+            util.copytree(str(source), str(target))
+    print(" > Appended {} archive(s); preserved existing extracted files".format(len(added)))
+    return True
+
 
 def get_archive_tree_cache_key(cache_state: dict) -> str:
     return hash_payload(cache_state)
@@ -1437,7 +1704,16 @@ def main():
 
         ags2_cache_state = get_ags2_tree_cache_state(menu, db_path, base_ags2, runscript_template_path, args.config_file, args)
         ags2_cache_key = get_ags2_tree_cache_key(ags2_cache_state)
-        used_ags2_cache = False
+        hires_source_trees = {}
+        with timed_step(timings, "check entry changes"):
+            current_append_inputs = append_input_state(db, ags2_cache_state, hires_source_trees) if args.chipset_profile == "any" else None
+        append_delta = None
+        if workspace_state.get("ags2_cache_key") != ags2_cache_key and current_append_inputs:
+            with timed_step(timings, "append launcher entries"):
+                append_delta = try_append_launcher(
+                    db, args, menu, workspace_state.get("append_inputs"), current_append_inputs,
+                    clone_path, amiga_ags_path, collection, runscript_template, workspace_state)
+        used_ags2_cache = append_delta is not None
         menu_subtree_cache_keys = []
         if supports_top_level_menu_cache(menu):
             menu_subtree_cache_keys = get_menu_subtree_cache_keys(
@@ -1453,7 +1729,9 @@ def main():
         pfs_partition_cache_key = None
 
         with timed_step(timings, "copy ags2 base"):
-            if workspace_state.get("ags2_cache_key") == ags2_cache_key and util.is_dir(amiga_ags_path) and (
+            if used_ags2_cache:
+                pass
+            elif workspace_state.get("ags2_cache_key") == ags2_cache_key and util.is_dir(amiga_ags_path) and (
                 restore_workspace_ags2_collection_snapshot(clone_path, collection)
                 or restore_ags2_collection_snapshot(ags2_cache_key, collection)
             ):
@@ -1461,6 +1739,7 @@ def main():
                 print(" > Reusing cached AGS2 workspace")
             elif not restore_ags2_tree_cache(ags2_cache_key, amiga_ags_path, collection):
                 report_ags2_tree_cache_miss(ags2_cache_state)
+                collection = EntryCollection()
                 util.rm_path(amiga_ags_path)
                 util.copytree(base_ags2, amiga_ags_path)
             else:
@@ -1531,6 +1810,11 @@ def main():
             save_ags2_tree_state(ags2_cache_state)
             workspace_state["ags2_cache_key"] = ags2_cache_key
 
+        if append_delta is not None:
+            workspace_state["appended_workspace"] = True
+        elif not used_ags2_cache:
+            workspace_state.pop("appended_workspace", None)
+
         if args.all_games or args.all_demos or args.all_demoscene or args.auto_lists:
             autoentries_cache_key = get_autoentries_cache_key(get_autoentries_cache_state(collection, args))
 
@@ -1546,12 +1830,20 @@ def main():
             with timed_step(timings, "extract archives"):
                 print("Extracting {} content archives...".format(len(collection.by_id.items())))
                 archive_tree_cache_key = get_archive_tree_cache_key(get_archive_tree_cache_state(collection.ids()))
+                current_archive_entries = archive_entry_states(collection.ids())
                 archive_tree_restored = False
                 workspace_archive_path = util.path(clone_path, "DH1", "WHD")
                 if workspace_state.get("archive_tree_cache_key") == archive_tree_cache_key and util.is_dir(workspace_archive_path):
                     archive_tree_restored = True
                     print(" > Reusing cached archive workspace")
+                elif try_append_archives(clone_path, list(collection.ids()), current_archive_entries, workspace_state):
+                    archive_tree_restored = True
+                    workspace_state["appended_workspace"] = True
                 else:
+                    # Invalidate before replacing the staged tree.
+                    workspace_state.pop("archive_entries", None)
+                    workspace_state.pop("archive_tree_cache_key", None)
+                    save_workspace_state(clone_path, workspace_state)
                     util.rm_path(workspace_archive_path)
                     print(" > Checking cached archive tree...")
                     with timed_step(timings, "archive tree restore"):
@@ -1565,6 +1857,8 @@ def main():
                         with timed_step(timings, "archive tree save"):
                             save_archive_tree_cache(archive_tree_cache_key, clone_path)
                 workspace_state["archive_tree_cache_key"] = archive_tree_cache_key
+                workspace_state["archive_entries"] = current_archive_entries
+                workspace_state["archive_behavior"] = ARCHIVE_TREE_BEHAVIOR_FINGERPRINT
                 archive_extract_cache_keys = get_archive_extract_cache_keys(collection.ids())
 
         layers = []
@@ -1668,7 +1962,7 @@ def main():
                 install_launcher(amiga_ags_path, collection)
                 util.rm_path(util.path(amiga_data_path, 'AGS-HiRes'))
             else:
-                build_or_reuse_hires_launcher(amiga_ags_path, util.path(amiga_data_path, "AGS-HiRes"), collection, workspace_state)
+                build_or_reuse_hires_launcher(amiga_ags_path, util.path(amiga_data_path, "AGS-HiRes"), collection, workspace_state, append_delta, source_trees=hires_source_trees)
 
         # build PFS container
         if not args.only_ags_tree:
@@ -1707,15 +2001,16 @@ def main():
                     build_pfs(output_image, clone_path, True, partitions=list(pfs_partitions))
 
         with timed_step(timings, "prune caches"):
-            prune_build_caches(
-                base_hdf_state["base_hdf_cache_dir"],
-                ags2_cache_key,
-                menu_subtree_cache_keys,
-                autoentries_cache_key,
-                archive_tree_cache_key,
-                archive_extract_cache_keys,
-                pfs_partition_cache_key,
-            )
+            if not workspace_state.get("appended_workspace"):
+                prune_build_caches(
+                    base_hdf_state["base_hdf_cache_dir"],
+                    ags2_cache_key,
+                    menu_subtree_cache_keys,
+                    autoentries_cache_key,
+                    archive_tree_cache_key,
+                    archive_extract_cache_keys,
+                    pfs_partition_cache_key,
+                )
 
         # set up cloner environment
         if not args.only_ags_tree:
@@ -1779,6 +2074,8 @@ def main():
                 r = subprocess.call(["sh", post_build_sh_path])
                 if r != 0: return r
 
+        if current_append_inputs is not None:
+            workspace_state["append_inputs"] = current_append_inputs
         save_workspace_state(clone_path, workspace_state)
 
         # done
