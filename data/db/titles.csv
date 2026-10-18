@@ -5582,3 +5582,4 @@ game-notwhdl--backflipendless;Backflip Endless;Backflip Endless;;;OCS;;0;;;;;;;;
 game-notwhdl--burn;Burn;Burn;;;OCS;;0;;;;;;;;May be unstable on newer AmigaOS;;2026;;English;RiPpEr253;RiPpEr253;2 Players;;;;game-notwhdl/Burn.lha;Game;Platform;;;;
 game-notwhdl--movimientoconstante;Movimiento Constante;Movimiento Constante;;;OCS;;0;;;;;;;;;;2025;;Spanish;DJCaye;DJCaye;1 Player;;;;game-notwhdl/MovimientoConstante.lha;Game;Puzzle;;;;
 game-notwhdl--cogsnlogs;Cogs N Logs (Demo);Cogs N Logs (Demo);;;AGA;1;0;;;;;;;Keyboard: arrows, Space, C;Early prototype;;2025;;English;RetroGamma;RetroGamma;1 Player;;;;game-notwhdl/CogsNLogs.lha;Game;Platform;;;;
+game-notwhdl--rastan;Rastan (Demo);Rastan (Demo);;;OCS;;0;;;;;;;v0.56. Work in progress.;;;2026;;English;basementApe;basementApe;1 Player;;;;game-notwhdl/Rastan.lha;Game;Platform;;;;
