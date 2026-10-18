@@ -22,6 +22,32 @@ from ruamel import yaml
 import ags_paths as paths
 import ags_util as util
 
+
+class ArchiveProgress:
+    """Keep terminal progress on one line and redirected logs compact."""
+
+    def __init__(self, label, enabled=True):
+        self.label = label
+        self.interactive = enabled and sys.stdout.isatty()
+        self.width = 0
+
+    def update(self, count, total=None):
+        if self.interactive:
+            message = f"{self.label}... {count:,}"
+            if total is not None:
+                message += f"/{total:,}"
+            print("\r" + message.ljust(self.width), end="", flush=True)
+            self.width = len(message)
+
+    def clear(self):
+        if self.width:
+            print("\r" + " " * self.width + "\r", end="", flush=True)
+            self.width = 0
+
+    def finish(self, count):
+        self.clear()
+        print(f"{self.label}: {count:,} complete", flush=True)
+
 # -----------------------------------------------------------------------------
 # Manifest paths
 
@@ -207,6 +233,11 @@ def csv_enrichment_fields(archive_path, existing_row=None):
         "hol_id": "",
         "lemon_id": "",
     }
+    if existing_row and existing_row.get("hardware"):
+        # A curated OCS-compatible CD32 compilation must not acquire an AGA
+        # requirement merely because its archive filename contains CD32.
+        entry["hardware"] = existing_row["hardware"]
+        entry["aga"] = existing_row.get("aga") or ""
     if entry["category"] == "Demo":
         entry["publisher"] = infer_demo_publisher(archive_path)
     if entry["category"] == "Game" and needs_remote_game_enrichment(existing_row):
@@ -686,19 +717,20 @@ def sync_manifests(titles_dir, manifests_dir, apply=False):
 def index_whdload_archives(basedir, verbose=False):
     basedir += os.sep
     print("Enumerating archives...", flush=True)
+    progress = ArchiveProgress("Enumerating archives", enabled=verbose)
     count = 0
     d = {}
     for r, _, f in os.walk(basedir):
         for file in f:
             if file.endswith(".lha"):
-                count += 1
                 path = util.path(r, file)
-                if verbose and count % 100 == 0:
-                    rel_path = path.split(basedir, 1)[1]
-                    print("Enumerating archives... [{}] {}".format(count, rel_path), flush=True)
                 if is_ignored_archive_path(basedir, path):
                     continue
+                count += 1
+                if verbose and count % 100 == 0:
+                    progress.update(count)
                 if not is_lhafile(path):
+                    progress.clear()
                     print("{} is not a valid lha file".format(path), flush=True)
                     continue
                 db_path = path.split(basedir)[1]
@@ -727,7 +759,7 @@ def index_whdload_archives(basedir, verbose=False):
                     if util.is_file(path.replace(".lha", ".run")):
                         d[container_id] = {"id": container_id, "archive_path": db_path, "slave_path": None, "slave_version": None}
 
-    print("\n", flush=True)
+    progress.finish(count)
     return d
 
 # -----------------------------------------------------------------------------
@@ -903,7 +935,7 @@ def build_db_row_maps(db):
             variant_rows_by_base_id["--".join(parts[:-1])].append(row)
     return exact_rows_by_id, variant_rows_by_base_id
 
-def refresh_archive_reference(db, row, arc, titles_dir, replace_missing=False):
+def refresh_archive_reference(db, row, arc, titles_dir, replace_missing=False, before_report=None):
     """Reconnect a stable container ID after its previous archive has been retired."""
     previous = row["archive_path"]
     if previous and (not replace_missing or util.is_file(util.path(titles_dir, previous))):
@@ -912,6 +944,8 @@ def refresh_archive_reference(db, row, arc, titles_dir, replace_missing=False):
         return False
     db.execute("UPDATE titles SET archive_path=?,slave_path=?,slave_version=? WHERE id=?;",
                (arc["archive_path"], arc["slave_path"], arc["slave_version"], row["id"]))
+    if before_report:
+        before_report()
     if previous:
         print(f"archive updated: {previous} -> {arc['archive_path']} ({row['id']})")
     else:
@@ -939,11 +973,14 @@ def renamed_container_rows(rows_by_id, archives, titles_dir):
     for row in rows_by_id.values():
         parts = row["id"].split("--")
         base_id = "--".join(parts[:-1]) if len(parts) > 3 else row["id"]
-        if base_id in archives or not row["archive_path"]:
+        if not row["archive_path"]:
             continue
         matches = containers[(row["archive_path"], row["slave_path"])]
         if len(matches) == 1:
-            remapped[matches[0]["id"]].append(row)
+            if matches[0]["id"] != base_id:
+                remapped[matches[0]["id"]].append(row)
+            continue
+        if base_id in archives:
             continue
         if util.is_file(util.path(titles_dir, row["archive_path"])):
             continue
@@ -1033,9 +1070,11 @@ def main():
         total_archives = len(archives)
         exact_rows_by_id, variant_rows_by_base_id = build_db_row_maps(db)
         renamed_rows = renamed_container_rows(exact_rows_by_id, dict(archives), titles_dir) if sync_csv else {}
+        renamed_targets = {row["id"]: target for target, rows in renamed_rows.items() for row in rows}
         csv_enrichment_entries = [] if sync_csv else None
         if args.verbose:
             print("Correlating archives with title database...")
+        correlation_progress = ArchiveProgress("Correlating archives", enabled=args.verbose)
         for archive_progress, (_, arc) in enumerate(archives, start=1):
             rows = []
             exact_row = exact_rows_by_id.get(arc["id"])
@@ -1043,8 +1082,15 @@ def main():
                 rows.append(exact_row)
             rows.extend(variant_rows_by_base_id.get(arc["id"], []))
             rows.extend(renamed_rows.get(arc["id"], []))
+            # An exact archive/slave match takes precedence over a legacy ID
+            # that is also present in another installed archive.
+            rows = [row for row in rows if renamed_targets.get(row["id"], arc["id"]) == arc["id"]]
             if args.verbose and (archive_progress == 1 or archive_progress % 250 == 0 or archive_progress == total_archives):
-                print("Correlating archives... {}/{}".format(archive_progress, total_archives), flush=True)
+                correlation_progress.update(archive_progress, total_archives)
+            if not rows and arc["id"] in renamed_targets:
+                # The curated row deliberately selects a different installed
+                # package. This older container is not a missing title.
+                continue
             existing_csv_row = csv_rows_by_id.get(arc["id"]) or (csv_rows_by_id.get(rows[0]["id"]) if rows else None)
             should_enrich_game = (
                 sync_csv
@@ -1058,6 +1104,7 @@ def main():
                     existing_csv_row,
                 )
             if not rows:
+                correlation_progress.clear()
                 print("• No DB entry:", arc["archive_path"])
                 print(arc["id"])
                 print()
@@ -1080,9 +1127,11 @@ def main():
                         "slave_version": arc["slave_version"],
                         **enrichment_fields,
                     })
-                if refresh_archive_reference(db, row, arc, titles_dir, replace_missing=sync_csv):
+                if refresh_archive_reference(db, row, arc, titles_dir, replace_missing=sync_csv,
+                                             before_report=correlation_progress.clear):
                     print()
 
+        correlation_progress.finish(total_archives)
         if sync_csv:
             if args.ingest:
                 unresolved = [row for row in db.execute("SELECT id,archive_path FROM titles")
@@ -1106,6 +1155,8 @@ def main():
                 print("• Wrote ID verification report to {}".format(report_path))
                 print()
             else:
+                # Resolved findings should leave no generated report behind.
+                report_path.unlink(missing_ok=True)
                 print("No missing title IDs or inferred CSV fields needed to be updated in data/db/titles.csv")
                 print()
             if args.ingest:
@@ -1119,7 +1170,7 @@ def main():
                     print("Language cleanup:")
                     print("• No archive-backed rows are missing Language metadata")
                     print()
-            elif report_path.is_file():
+            elif report_entries and report_path.is_file():
                 subprocess.run(["open", str(report_path)], check=False)
         else:
             if removed_db_archive_refs:

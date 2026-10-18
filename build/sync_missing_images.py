@@ -38,9 +38,6 @@ ABIME_SCREENSHOT_RE = re.compile(
 )
 EXOTICA_RESULT_RE = re.compile(r"<div class='mw-search-result-heading'><a href=\"(?P<href>/wiki/[^\"]+)\" title=\"(?P<title>[^\"]+)\"", re.IGNORECASE)
 EXOTICA_IMAGE_RE = re.compile(r'<a href="/wiki/File:[^"]+" class="image"[^>]*><img[^>]+src="(?P<src>/mediawiki/files/[^"]+)"[^>]+width="(?P<width>\d+)"[^>]+height="(?P<height>\d+)"', re.IGNORECASE)
-ITCH_RESULT_RE = re.compile(r'<a class="title game_link"[^>]+href="(?P<href>https://[^"]+)"[^>]*>(?P<title>.*?)</a>', re.IGNORECASE)
-ITCH_OG_IMAGE_RE = re.compile(r'<meta content="(?P<url>https://img\.itch\.zone/[^"]+)" property="og:image"/>', re.IGNORECASE)
-ITCH_SCREENSHOT_RE = re.compile(r'<a\b(?=[^>]*\bdata-image_lightbox=[\"\']true[\"\'])(?=[^>]*\bhref=[\"\'](?P<url>https://img\.itch\.zone/[^\"\']+)[\"\'])[^>]*>', re.IGNORECASE)
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".webp"}
 TITLE_WORD_RE = re.compile(r"[A-Za-z0-9]+")
 STOPWORDS = {"the", "a", "an", "of", "and", "for", "to", "amiga", "edition", "demo", "datadisk", "data", "disk"}
@@ -676,76 +673,6 @@ def fetch_exotica_images(entries):
     return fetched, skipped
 
 
-def resolve_itch_page(title):
-    search_url = "https://itch.io/search?" + urllib.parse.urlencode({"q": f"{title} amiga", "type": "games"})
-    search_html = fetch_text(search_url)
-    candidates = [
-        {
-            "href": html.unescape(match.group("href")),
-            "title": html.unescape(re.sub(r"<[^>]+>", "", match.group("title"))),
-        }
-        for match in ITCH_RESULT_RE.finditer(search_html)
-    ]
-    best = pick_best_title_match(title, candidates)
-    if not best:
-        return None, None
-    return best["href"], fetch_text(best["href"])
-
-
-def extract_itch_images(page_html):
-    images = []
-    og_match = ITCH_OG_IMAGE_RE.search(page_html)
-    if og_match:
-        images.append(html.unescape(og_match.group("url")))
-    for match in ITCH_SCREENSHOT_RE.finditer(page_html):
-        url = html.unescape(match.group("url"))
-        if url not in images:
-            images.append(url)
-    return [(offset, url) for offset, url in enumerate(images[:6], start=2)]
-
-
-def fetch_itch_images(entries):
-    fetched = []
-    skipped = []
-    fetchable_entries = [entry for entry in entries if entry["category"] == "Game" and not entry["staged"]]
-    total = len(fetchable_entries)
-    if total:
-        print(f"Fetching itch.io images for {total} remaining game title(s)...")
-    for i, entry in enumerate(fetchable_entries, start=1):
-        try:
-            page_url, page_html = resolve_itch_page(entry["title"])
-        except Exception as err:
-            skipped.append((entry["id"], f"itch.io lookup failed: {err}"))
-            continue
-        if not page_url or not page_html:
-            skipped.append((entry["id"], "no itch.io page match"))
-            continue
-        images = extract_itch_images(page_html)
-        if not images:
-            skipped.append((entry["id"], "no itch.io screenshots found"))
-            continue
-        stage_dir = entry["stage_dir"]
-        stage_dir.mkdir(parents=True, exist_ok=True)
-        written = []
-        for index, url in images:
-            try:
-                data, content_type = fetch_url(url)
-            except Exception as err:
-                skipped.append((entry["id"], f"itch.io image fetch failed: {err}"))
-                written = []
-                break
-            ext = extension_for_content_type(content_type or extension_from_url(url))
-            out_path = stage_dir / f"{index}{ext}"
-            out_path.write_bytes(data)
-            written.append(out_path.name)
-        if written:
-            print(f"[{i}/{total}] {entry['id']} - {entry['title']}")
-            print(f"  page: {page_url}")
-            print(f"  downloaded: {', '.join(written)}")
-            fetched.append((entry["id"], page_url, written))
-    return fetched, skipped
-
-
 def extract_lemon_images(page_html):
     screenshots = []
     for match in LEMON_SCREENSHOT_RE.finditer(page_html):
@@ -1044,7 +971,9 @@ def collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highr
 
     entries = []
     for row in rows:
-        if not row.get("archive_path"):
+        # Retain excluded variants in the database without fetching or
+        # regenerating artwork for them during the regular update pipeline.
+        if str(row.get("redundant") or "").strip() == "1" or not row.get("archive_path"):
             continue
         id_ = row["id"]
         lowres_path = img_dir / f"{id_}.iff"
@@ -1210,19 +1139,6 @@ def main():
         rows = load_rows(csv_path)
         missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
         skipped = []
-
-    fetched, skipped = fetch_itch_images(missing)
-    if fetched:
-        print(f"Fetched itch.io images for {len(fetched)} title(s)")
-        for id_, page_url, written in fetched:
-            print(f"{id_}: {page_url} -> {', '.join(written)}")
-        print()
-    if skipped:
-        print(f"Skipped {len(skipped)} itch.io fetches")
-        print()
-    rows = load_rows(csv_path)
-    missing = collect_missing(rows, img_dir, img_highres_dir, downloads_dir, include_highres=args.include_missing_highres)
-    skipped = []
 
     if args.apply:
         converted, skipped = sync_images(missing, img_dir, img_highres_dir)

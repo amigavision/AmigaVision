@@ -410,9 +410,12 @@ def promote_archives(titles_dir, source_dir, apply=False):
 
 
 def report_pending_archives(titles_dir, source_dir):
-    pending = sorted(path for path in source_dir.rglob("*.lha")
-                     if "imported" not in path.relative_to(source_dir).parts)
-    print(f"\nUpdate summary: {len(pending)} downloaded archive(s) still need attention")
+    staged = sorted(path for path in source_dir.rglob("*.lha")
+                    if "imported" not in path.relative_to(source_dir).parts)
+    backfill = [path for path in staged if "ecs-backfill" in path.relative_to(source_dir).parts]
+    pending = [path for path in staged if "ecs-backfill" not in path.relative_to(source_dir).parts]
+    print(f"\nUpdate summary: {len(pending)} staged archive(s) remain for manual review")
+    print("This covers the regular download staging area, including leftovers from earlier runs.")
     current = defaultdict(list)
     for path, parsed in collect_current_archives(titles_dir):
         current[parsed["name"].lower()].append(parsed)
@@ -428,8 +431,11 @@ def report_pending_archives(titles_dir, source_dir):
             elif matches:
                 reason = "edition/language/CPU variant or same-version revision; review required"
             else:
-                reason = "new title; not imported"
+                reason = "no matching canonical archive family; not imported"
         print(f" - {path.relative_to(source_dir)} — {reason}")
+    if backfill:
+        print(f"\nHistorical ECS backfill: {len(backfill)} staged archive(s), excluded from regular updates.")
+        print("Run make backfill-ecs-metadata to preview the separate ECS import workflow.")
     return len(pending)
 
 
@@ -438,7 +444,7 @@ def main():
     parser.add_argument("source_dir", help="Directory to scan for newer .lha archives")
     parser.add_argument("--titles-dir", default=str(Path(os.getenv("AGSCONTENT", "content")) / "titles"), help="Canonical titles directory")
     parser.add_argument("--apply", action="store_true", default=False, help="Copy newer archives into place and move replaced archives into a sibling retired/ directory")
-    parser.add_argument("--report-pending", action="store_true", help="Only list every remaining staged archive and why it needs attention")
+    parser.add_argument("--report-pending", action="store_true", help="List regular staged archives for review and summarize the separate historical ECS backlog")
     args = parser.parse_args()
 
     titles_dir = Path(args.titles_dir).resolve()
