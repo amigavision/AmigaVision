@@ -11,7 +11,20 @@ Use the Amiberry or WinUAE `.uae` file with this folder layout:
   Visuals/Shaders/  (Amiberry CRT shader and its dependencies)
 ```
 
-All paths are relative to the emulator working directory. Launch the emulator from that directory; placing a configuration in a Configurations subfolder does not by itself establish its path base. In WinUAE, verify the resolved ROM and disk paths in the GUI on first load, then save the configuration with relative paths enabled. Existing images and ROMs must be supplied separately.
+All paths are relative to the emulator working directory. WinUAE sets that directory itself to its selected data root during startup, so a shortcut's Start in field does not reliably select it. For a standard installation using Public Documents, use this layout:
+
+```
+C:\Users\Public\Documents\Amiga Files\WinUAE\
+  Configurations\AmigaVision-WinUAE.uae
+  ROMs\AmigaVision.rom
+  HardDrives\AmigaVision.hdf
+  HardDrives\AmigaVision-Saves.hdf
+  HardDrives\Shared\
+```
+
+Keep the executable in its existing installation directory. Load the configuration through WinUAE's Configurations panel and verify the resolved ROM and disk paths. Enable relative paths in the Paths panel before saving if you want WinUAE to preserve relative paths. Custom or portable installations may select a different data root; the configuration directory alone does not determine that root. For Amiberry, launch from the folder containing ROMs, HardDrives, and Visuals. Existing images and ROMs must be supplied separately.
+
+Windows path handling was checked against https://github.com/tonioni/WinUAE/blob/master/od-win32/win32.cpp (startup data-root selection and SetCurrentDirectory).
 
 The source configuration is unchanged. Both copies preserve its PAL AGA/A1200 chipset, 68030 and 68881, cycle exact settings, disabled JIT, RAM sizes, audio, mouse and keyboard joystick layout 2, borderless fullscreen, and three writable mounts (including their boot priorities).
 
