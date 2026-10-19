@@ -494,11 +494,6 @@ def get_ags2_tree_cache_state(menu, db_path: str, base_ags2: str, runscript_temp
         "db": hash_payload(fingerprint_file(db_path)),
         "base_ags2": hash_payload(fingerprint_tree(base_ags2)),
         "runscript_template": hash_payload(fingerprint_file(runscript_template_path)),
-        "native_runscripts": hash_payload([
-            {"path": str(script.resolve()), "sha256": hashlib.sha256(script.read_bytes()).hexdigest()}
-            for root in (paths.titles(), paths.tracked_titles())
-            for script in sorted(Path(root).rglob("*.run"))
-        ]),
         "args": hash_payload({
             "all_games": bool(args.all_games),
             "all_demos": bool(args.all_demos),
@@ -535,23 +530,34 @@ def append_input_state(db, cache_state, source_trees=None):
     }
 
 
-def append_only_ids(previous, current, menu):
+def append_only_ids(previous, current, menu, reasons=None):
     """Reject changes that could alter an existing title or curated lookup."""
-    if not previous or previous.get("inputs") != current["inputs"]:
+    def reject(reason):
+        if reasons is not None:
+            reasons.append(reason)
         return None
+
+    # Older caches tracked every .run file globally. Script edits now require
+    # a manual cache clear, and new scripts must not block title additions.
+    previous_inputs = {k: v for k, v in (previous or {}).get("inputs", {}).items()
+                       if k != "native_runscripts"}
+    if not previous or previous_inputs != current["inputs"]:
+        changed = [key for key, value in current["inputs"].items()
+                   if previous_inputs.get(key) != value]
+        return reject("launcher inputs changed: " + ", ".join(changed))
     if any(current["rows"].get(k) != v for k, v in previous["rows"].items()):
-        return None
+        return reject("existing database entries changed or were removed")
     if any(current["archive_inputs"].get(k) != v for k, v in previous.get("archive_inputs", {}).items()):
-        return None
+        return reject("existing archives changed or were removed")
     if any(current["assets"].get(k) != v for k, v in previous["assets"].items()):
-        return None
+        return reject("existing artwork changed or was removed")
     added = set(current["rows"]) - set(previous["rows"])
     if added.intersection(previous.get("preferences", [])):
-        return None
+        return reject("a new title changes an existing preferred-version link")
     for path in set(current["assets"]) - set(previous["assets"]):
         stem = Path(path).stem.lower()
         if not any(stem == i.lower() or stem.startswith(i.lower() + "-") for i in added):
-            return None
+            return reject("new artwork is not confined to the added titles")
     # Use SQLite LIKE itself, including its wildcard/case rules. Checking only
     # the added IDs avoids repeating thousands of searches over the full DB.
     from sqlite3 import connect
@@ -562,7 +568,7 @@ def append_only_ids(previous, current, menu):
         for name in iter_requested_menu_names(menu):
             for pattern in [name.lower()] + get_entry_lookup_patterns(name.lower()):
                 if lookup.execute("SELECT 1 FROM additions WHERE id LIKE ? LIMIT 1", (pattern,)).fetchone():
-                    return None
+                    return reject("a new title matches an existing curated lookup")
     return added
 
 
@@ -586,7 +592,10 @@ def try_append_launcher(db, args, menu, previous, current, clone_path, ags_path,
                         collection, runscript_template, workspace_state):
     if args.chipset_profile != "any" or not util.is_dir(ags_path):
         return None
-    added = append_only_ids(previous, current, menu)
+    reasons = []
+    added = append_only_ids(previous, current, menu, reasons)
+    if added is None:
+        print(" > Incremental launcher append unavailable: " + "; ".join(reasons))
     if added is None or not restore_workspace_ags2_collection_snapshot(clone_path, collection):
         return None
     selected = EntryCollection()
