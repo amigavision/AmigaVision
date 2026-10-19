@@ -101,11 +101,11 @@ gfx_vsync=false
 gfx_vsyncmode=normal
 gfx_vsync_picasso=false
 gfx_vsyncmode_picasso=normal
-gfx_lores=true
-gfx_resolution=lores
+gfx_lores=false
+gfx_resolution=hires
 gfx_lores_mode=normal
 gfx_flickerfixer=false
-gfx_linemode=none
+gfx_linemode=double
 gfx_fullscreen_amiga=fullwindow
 gfx_fullscreen_picasso=false
 gfx_center_horizontal=none
@@ -180,8 +180,12 @@ input.analog_joystick_offset=-5
 input.mouse_speed=100
 input.autofire_speed=600
 input.autoswitch=false
-; *** WHDLoad Booter. Options
-; Approximation of Amiberry auto-crop; CRT shader must be selected in WinUAE.
+; Scaler and CRT filter settings transposed from the WinUAE 6.0.3 save.
 gfx_filter_autoscale=auto
 gfx_filter_keep_aspect=tv
 gfx_filter_aspect_ratio=-1:-1
+gfx_filter=D3D:CRT-Pi-SmartRes.fx
+gfx_filter_mode=2x
+gfx_filter_mode2=4x
+gfx_filter_mode_lace=2x
+gfx_filter_mode2_lace=4x
