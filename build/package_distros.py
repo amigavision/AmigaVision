@@ -11,6 +11,8 @@ import time
 import zipfile
 from pathlib import Path
 
+from artifact_checksums import write_checksums
+
 
 IGNORED_NAMES = {".DS_Store", ".gitignore", "pack", "__pycache__"}
 SEVENZIP_CANDIDATES = ("7zz", "7z", "7za")
@@ -626,6 +628,10 @@ def main():
                 else:
                     raise AssertionError(f"Unhandled package type: {package}")
                 list_archive_contents(created[-1], archive_tool=archive_tool, xz_tool=xz_tool, dry_run=args.dry_run)
+                if args.dry_run:
+                    log_step(f"[dry-run] Would write SHA-256 and MD5 checksums for {created[-1].name}")
+                else:
+                    write_checksums(created[-1])
                 log_step(f"Finished package: {package} in {format_duration(time.time() - started_at)}")
             except Exception as exc:
                 duration = format_duration(time.time() - started_at)

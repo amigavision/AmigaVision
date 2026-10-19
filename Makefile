@@ -1,7 +1,7 @@
 -include .env
 export
 .DEFAULT_GOAL := default
-.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images listings sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-amiberry clone-amiberry mini-image test-image test-dry pi cd32 distros make-distros mister emulators mini amiga amiga-ecs clean clean-temp clean-build
+.PHONY: default help env env-rm update updates pull-archives import-notwhdl-demos initial-downloads index index-add-missing prune-missing-archives manifests missing-manifests verify-manifests prune-manifests prune-manifests-apply sync-manifests sync-manifests-apply promote-newer-archives missing-images fetch-images fetch-images-interactive convert-images sync-images listings sqlite csv screenshots invalidate-build-cache prepare-image-temp image image-amiberry clone-amiberry mini-image test-image test-dry pi cd32 distros make-distros mister emulators mini amiga amiga-ecs pistorm pistorm-ecs clean clean-temp clean-build
 
 PYTHON ?= python3.11
 PIP_BUILD_CONSTRAINT ?= $(CURDIR)/build/pip-build-constraints.txt
@@ -16,6 +16,11 @@ REPLAYOS_COMPRESSED_IMG ?= $(subst ",,${REPLAYOS_OUTPUT_IMG}).xz
 REPLAYOS_IMG_SIZE ?= 14900m
 REPLAYOS_BIOS_DIR ?= $(subst ",,${AGSCONTENT})/replay/bios
 AMIGAVISION_HDF ?= ${AGSDEST}/AmigaVision.hdf
+# Experimental native-chipset Emu68 image; classic PiStorm uses the ECS HDF.
+PISTORM_MODEL ?= pistorm32lite
+PISTORM_HDF ?= $(if $(filter pistorm,$(PISTORM_MODEL)),$(ECS_HDF),$(AMIGAVISION_HDF))
+PISTORM_ROM ?= $(KICKSTART_ROM)
+PISTORM_OUTPUT ?=
 ECS_HDF ?= ${AGSDEST}/AmigaVision-ECS.hdf
 DISTRO_DATE ?= $(shell date +%Y.%m.%d)
 DISTRO_OUT ?= ${AGSDEST}/distros
@@ -148,6 +153,12 @@ help:
 		'' \
 		'make amiga-ecs' \
 		'Package the built ECS image as .img.xz for Raspberry Pi Imager.' \
+		'' \
+		'make pistorm' \
+		'Experimental PiStorm32-lite image from the built AGA HDF.' \
+		'' \
+		'make pistorm-ecs' \
+		'Experimental classic PiStorm image from the built ECS HDF.' \
 		'' \
 		'make emulators' \
 		'Package the reusable Amiberry-based emulator distribution.' \
@@ -452,3 +463,9 @@ clean-build:
 	@rm -f "$(subst ",,${AGSDEST})/AmigaVision.hdf" \
 		"$(subst ",,${AGSDEST})/AmigaVision-Mini.hdf" \
 		"$(subst ",,${AGSDEST})/AmigaVision-Mini.uae"
+
+# Keep experimental hardware images out of the normal release bundles.
+pistorm-ecs: PISTORM_MODEL = pistorm
+pistorm pistorm-ecs:
+	$(call print-start-time)
+	@pipenv run python build/pistorm_image.py --model "$(PISTORM_MODEL)" --hdf "$(subst ",,$(PISTORM_HDF))" --rom "$(subst ",,$(PISTORM_ROM))" --prompt --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,$(DISTRO_OUT))" $(if $(strip $(PISTORM_OUTPUT)),--output "$(subst ",,$(PISTORM_OUTPUT))") --amiberry "$(AMIBERRYBIN)"
