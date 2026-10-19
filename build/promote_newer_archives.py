@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from archive_exclusions import is_excluded_archive
+
 import argparse
 import csv
 import html
@@ -127,6 +129,8 @@ def find_candidates(source_dir):
     candidates = {}
     by_basename = {}
     for path in source_dir.rglob("*.lha"):
+        if is_excluded_archive(path):
+            continue
         if any(part in {"imported", "ecs-backfill"} for part in path.relative_to(source_dir).parts):
             continue
         parsed = parse_archive_name(path.name)
@@ -411,7 +415,7 @@ def promote_archives(titles_dir, source_dir, apply=False):
 
 def report_pending_archives(titles_dir, source_dir):
     staged = sorted(path for path in source_dir.rglob("*.lha")
-                    if "imported" not in path.relative_to(source_dir).parts)
+                    if "imported" not in path.relative_to(source_dir).parts and not is_excluded_archive(path))
     backfill = [path for path in staged if "ecs-backfill" in path.relative_to(source_dir).parts]
     pending = [path for path in staged if "ecs-backfill" not in path.relative_to(source_dir).parts]
     print(f"\nUpdate summary: {len(pending)} staged archive(s) remain for manual review")

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from archive_exclusions import is_excluded_archive
+
 import argparse
 import csv
 import json
@@ -199,7 +201,8 @@ def list_manual_archives(source_root: Path):
         if not folder.is_dir():
             continue
         for archive_path in sorted(folder.glob("*.lha")):
-            yield archive_path
+            if not is_excluded_archive(archive_path):
+                yield archive_path
 
 
 def archive_top_level_entries(archive_path: Path):

@@ -32,6 +32,10 @@ DISTRO_VISUALS_DIR ?= ${AGSCONTENT}/distro/games/Amiga/Visuals
 DISTRO_LISTINGS_DIR ?= ${AGSDEST}/listings
 MINI_HDF ?= ${AGSDEST}/AmigaVision-Mini.hdf
 MINI_UAE ?= ${AGSDEST}/AmigaVision-Mini.uae
+# Rare ECS builds default to full rebuilds with no retained build caches.
+ECS_INCREMENTAL ?= 0
+ECS_KEEP_CACHE ?= $(ECS_INCREMENTAL)
+ECS_IMAGE_UPDATE_ARGS = $(filter-out --incremental,$(IMAGE_UPDATE_ARGS)) $(if $(filter 1,$(ECS_INCREMENTAL)),--incremental)
 ECS_TEMP ?= $(subst ",,${AGSTEMP})-ECS
 MINI_DISTRO_DIR ?= ./content/distro_mini
 MISTER_DISTRO_DIR ?= ${AGSCONTENT}/distro
@@ -56,7 +60,7 @@ IMAGE_PREP_CMD = pipenv run build/ags_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAG
 MINI_IMAGE_PREP_CMD = pipenv run build/ags_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
 TEST_IMAGE_PREP_CMD = pipenv run build/ags_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --auto-lists -o ${AGSDEST}
 TEST_DRY_PREP_CMD = pipenv run build/ags_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
-ECS_IMAGE_PREP_CMD = pipenv run build/ags_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
+ECS_IMAGE_PREP_CMD = pipenv run build/ags_imager.py $(ECS_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
 MAKE_MANIFESTS_CMD = pipenv run build/ags_index.py --make-manifests --only-missing
 MAKE_LISTINGS_CMD = $(PYTHON) build/generate_listings.py "$(subst ",,${AGSTEMP})/DH1/AGS2" "$(subst ",,${DISTRO_LISTINGS_DIR})"
 FINALIZE_MAIN_IMAGE = test -f "$(subst ",,${AMIGAVISION_HDF})"
@@ -331,8 +335,11 @@ ecs-image: ecs-artwork
 	@test -f "$(subst ",,${AGSDEST})/AmigaVision-ECS.hdf"
 	@echo "Removing completed ECS temp workspace..."
 	@rm -rf "$(subst ",,$(ECS_TEMP))"
-	@echo "Removing completed ECS build cache..."
-	@rm -rf "${HOME}/Library/Caches/AmigaVision/build/ecs"
+	@if [ "$(ECS_KEEP_CACHE)" != "1" ]; then \
+		echo "Removing completed ECS build and image-update caches..."; \
+		pipenv run python build/ags_image_update.py --clear-cache-for "$(subst ",,${AGSDEST})/AmigaVision-ECS.hdf" && \
+		rm -rf "${HOME}/Library/Caches/AmigaVision/build/ecs"; \
+	fi
 
 clone-amiberry:
 	$(call print-start-time)

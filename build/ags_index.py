@@ -2,6 +2,8 @@
 
 # AGSImager: Indexer
 
+from archive_exclusions import is_excluded_archive
+
 import argparse
 import csv
 import hashlib
@@ -64,7 +66,7 @@ def archive_path_for_manifest(titles_dir, manifests_dir, manifest_path):
 def is_ignored_archive_path(titles_dir, archive_path):
     rel_parts = Path(os.path.relpath(archive_path, titles_dir)).parts
     ignored_dirs = {"retired", "manual-downloads", "imported"}
-    return any(part in ignored_dirs for part in rel_parts)
+    return is_excluded_archive(archive_path) or any(part in ignored_dirs for part in rel_parts)
 
 def csv_category_fields(archive_path):
     category_dir = Path(archive_path).parts[0]

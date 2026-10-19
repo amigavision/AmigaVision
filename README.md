@@ -44,3 +44,14 @@ Amiga model, PiStorm model, Pi model, boot/menu behavior, input, game launch/exi
 and whether saves survive a reboot. Try both ordinary WHDLoad titles and native
 (non-WHDLoad) games; the wrapper's compatibility settings apply to WHDLoad games.
 The prototype is deliberately excluded from `make distros` until tested.
+
+ECS image builds (`make ecs-image`) default to full rebuilds and remove their
+temporary workspace, build cache and retained image-update baseline after success.
+Use `make ecs-image ECS_INCREMENTAL=1` to opt back into incremental updates and
+cache retention, or `ECS_KEEP_CACHE=1` to retain caches independently. AGA build
+settings and caches are unchanged.
+
+Archive opt-outs belong in `data/db/excluded_archives.txt` as case-insensitive
+filename globs. They are skipped by archive downloads, initial downloads and
+ingestion. Use this for titles intentionally absent from local storage; the DB's
+`redundant` flag only controls automatic build inclusion.

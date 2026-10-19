@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from archive_exclusions import is_excluded_archive
+
 import argparse
 import csv
 import importlib.util
@@ -38,7 +40,7 @@ def load_csv_archive_paths(csv_path: Path):
         reader = csv.DictReader(f, delimiter=";")
         for row in reader:
             archive_path = (row.get("archive_path") or "").strip()
-            if not archive_path:
+            if not archive_path or is_excluded_archive(archive_path):
                 continue
             top_level = Path(archive_path).parts[0]
             if top_level not in ALLOWED_TOP_LEVELS:

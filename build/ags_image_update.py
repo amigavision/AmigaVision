@@ -565,13 +565,34 @@ def update_locked(workspace, image, plan, emulator, force):
             target.symlink_to(image)
 
 
+def clear_cache(image):
+    """Remove one image's retained update data, respecting the updater lock."""
+    image = Path(image).resolve()
+    with image_lock(image):
+        directory = image_cache_directory(image)
+        names = {'baseline.hdf', 'manifest.json', 'scan-cache.json'}
+        removed = 0
+        for path in directory.iterdir():
+            if path.name in names or (path.name.startswith('baseline.') and path.suffix == '.tmp'):
+                removed += path.stat().st_size
+                path.unlink()
+    # Leave the zero-byte lock inode in place to keep concurrent locking safe.
+    print(f'Removed retained image-update cache for {image} ({removed:,} logical bytes)', flush=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--workspace', required=True)
-    parser.add_argument('--emulator', required=True)
+    parser.add_argument('--workspace')
+    parser.add_argument('--emulator')
+    parser.add_argument('--clear-cache-for', metavar='IMAGE', help='Remove retained update data for this image without building')
     parser.add_argument('--full', action='store_true', help='Force a complete rebuild')
     args = parser.parse_args()
+    if not args.clear_cache_for and (not args.workspace or not args.emulator):
+        parser.error('--workspace and --emulator are required for a build')
     try:
+        if args.clear_cache_for:
+            clear_cache(args.clear_cache_for)
+            return 0
         return run(args.workspace, args.emulator, args.full)
     except (OSError, ValueError, subprocess.CalledProcessError) as error:
         print('Image update failed: ' + str(error), flush=True)

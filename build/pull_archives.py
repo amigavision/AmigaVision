@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+from archive_exclusions import is_excluded_archive, exclusion_patterns
+
 import argparse
 import json
 import os
@@ -175,6 +177,12 @@ def main():
     cutoff_days = int(os.getenv("ARCHIVE_FETCH_CUTOFF_DAYS", "0") or "0")
     remote_ref = required_env("ARCHIVE_FETCH_REMOTE")
 
+    if sync_cmd_template and exclusion_patterns():
+        if list_cmd_template and get_cmd_template:
+            sync_cmd_template = ""
+        else:
+            raise SystemExit("Archive exclusions require ARCHIVE_FETCH_LIST_CMD and ARCHIVE_FETCH_GET_CMD; unfiltered bulk sync is disabled")
+
     if sync_cmd_template:
         if args.backfill_non_aga or args.dry_run:
             raise SystemExit("Filtered backfills and dry runs require list/get commands, not ARCHIVE_FETCH_SYNC_CMD")
@@ -247,6 +255,11 @@ def main():
             raise SystemExit(
                 "No archive fetch state found. Set ARCHIVE_FETCH_CUTOFF_DAYS for the first bootstrap run."
             )
+
+        excluded = [path for path in candidate_paths if is_excluded_archive(path)]
+        candidate_paths = [path for path in candidate_paths if not is_excluded_archive(path)]
+        if excluded:
+            print(f"Excluded {len(excluded)} archive(s) by data/db/excluded_archives.txt")
 
         downloaded = 0
         skipped = 0
