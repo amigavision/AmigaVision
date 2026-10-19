@@ -23,7 +23,7 @@ from ags_types import EntryCollection
 from make_vadjust import VSHIFT_MAX, VSHIFT_MIN
 
 AGS_INFO_WIDTH = 48
-AGS_INFO_HEIGHT = 8
+AGS_INFO_HEIGHT = 7
 AGS_LIST_WIDTH = 30
 MAX_FILENAME_LENGTH = 96
 WARNED_MISSING_ARCHIVES = set()
@@ -582,6 +582,11 @@ def metadata_blocks(entry, add_note, system):
         add("genre_players", " · ".join(part for part in (entry.get("subcategory", "").strip(), players) if part))
         language = entry.get("language", "").strip()
         if language.casefold() != "english":
+            languages = query.get_languages(entry)
+            if len(metadata_wrap(language)) > 2:
+                language = ("English + {} other languages".format(len(languages) - 1)
+                            if query.has_english_language(entry)
+                            else "{} languages".format(len(languages)))
             add("language", language)
     elif category == "demo":
         add("country_type", " · ".join(part for part in (entry.get("country", "").strip(), entry.get("subcategory", "").strip() or "Demo") if part))

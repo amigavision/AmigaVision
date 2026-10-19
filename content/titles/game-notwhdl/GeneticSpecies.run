@@ -1,0 +1,28 @@
+ags-cd N/GeneticSpecies
+FailAt 21
+IF NOT EXISTS WHDSaves:GeneticSpecies
+  makedir WHDSaves:GeneticSpecies
+ENDIF
+IF EXISTS WHDSaves:GeneticSpecies/Genetic.SavedGame
+  copy WHDSaves:GeneticSpecies/Genetic.SavedGame S:Genetic.SavedGame QUIET
+ENDIF
+IF EXISTS WHDSaves:GeneticSpecies/Genetic.Prefs
+  copy WHDSaves:GeneticSpecies/Genetic.Prefs ENVARC:Genetic.Prefs QUIET
+ENDIF
+assign Genetics: ""
+assign LIBS: Genetics:Libs ADD
+assign DEVS: Genetics:Install/AHI/User/Devs ADD
+Genetics:C/AddAudioModes FILES Genetics:Install/AHI/User/Devs/AudioModes/PAULA QUIET
+stack >NIL: 262144
+cd Genetics:GeneticSpecies
+GeneticSpecies.Exe
+IF EXISTS S:Genetic.SavedGame
+  copy S:Genetic.SavedGame WHDSaves:GeneticSpecies/Genetic.SavedGame QUIET
+ENDIF
+IF EXISTS ENVARC:Genetic.Prefs
+  copy ENVARC:Genetic.Prefs WHDSaves:GeneticSpecies/Genetic.Prefs QUIET
+ENDIF
+assign LIBS: Genetics:Libs REMOVE
+assign DEVS: Genetics:Install/AHI/User/Devs REMOVE
+assign Genetics: REMOVE
+FailAt 10

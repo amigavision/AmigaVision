@@ -494,6 +494,11 @@ def get_ags2_tree_cache_state(menu, db_path: str, base_ags2: str, runscript_temp
         "db": hash_payload(fingerprint_file(db_path)),
         "base_ags2": hash_payload(fingerprint_tree(base_ags2)),
         "runscript_template": hash_payload(fingerprint_file(runscript_template_path)),
+        "native_runscripts": hash_payload([
+            {"path": str(script.resolve()), "sha256": hashlib.sha256(script.read_bytes()).hexdigest()}
+            for root in (paths.titles(), paths.tracked_titles())
+            for script in sorted(Path(root).rglob("*.run"))
+        ]),
         "args": hash_payload({
             "all_games": bool(args.all_games),
             "all_demos": bool(args.all_demos),

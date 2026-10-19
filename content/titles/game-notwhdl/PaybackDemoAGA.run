@@ -1,0 +1,35 @@
+ags-cd N/PaybackDemoAGA
+IF NOT EXISTS WHDSaves:PaybackDemoAGA
+  makedir WHDSaves:PaybackDemoAGA
+  copy #? WHDSaves:PaybackDemoAGA/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:PaybackDemoAGA
+IF NOT EXISTS .av-layout-v2
+  FailAt 21
+  delete >NIL: Saves QUIET
+  IF NOT EXISTS Saves
+    makedir Saves
+  ENDIF
+  delete >NIL: Replays QUIET
+  IF NOT EXISTS Replays
+    makedir Replays
+  ENDIF
+  delete >NIL: UserMaps QUIET
+  IF NOT EXISTS UserMaps
+    makedir UserMaps
+  ENDIF
+  echo >.av-layout-v2 "2"
+  FailAt 10
+ENDIF
+stack >NIL: 10000
+IF EXISTS Payback.config
+  copy Payback.config S:Payback.config QUIET
+ENDIF
+IF NOT EXISTS S:Payback.config
+  PaybackDemoSetup.exe
+ENDIF
+IF EXISTS S:Payback.config
+  copy S:Payback.config Payback.config QUIET
+  PaybackDemo.exe
+  copy S:Payback.config Payback.config QUIET
+ENDIF

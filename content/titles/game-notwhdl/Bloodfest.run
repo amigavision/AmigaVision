@@ -1,0 +1,10 @@
+ags-cd N/Bloodfest
+IF NOT EXISTS WHDSaves:Bloodfest
+  makedir WHDSaves:Bloodfest
+  copy #? WHDSaves:Bloodfest/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:Bloodfest
+stack >NIL: 30000
+assign BloodfestSave: saves
+Bloodfest
+assign BloodfestSave: REMOVE

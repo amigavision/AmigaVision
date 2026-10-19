@@ -1,0 +1,8 @@
+ags-cd N/BabeAnoid
+IF NOT EXISTS WHDSaves:BabeAnoid
+  makedir WHDSaves:BabeAnoid
+  copy #? WHDSaves:BabeAnoid/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:BabeAnoid
+stack >NIL: 30000
+BabeAnoid.exe

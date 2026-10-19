@@ -1,0 +1,8 @@
+ags-cd N/AbsoluteZeroAGA
+IF NOT EXISTS WHDSaves:AbsoluteZeroAGA
+  makedir WHDSaves:AbsoluteZeroAGA
+  copy #? WHDSaves:AbsoluteZeroAGA/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:AbsoluteZeroAGA
+stack >NIL: 65536
+Game

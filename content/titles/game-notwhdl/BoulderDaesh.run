@@ -1,0 +1,48 @@
+ags-cd N/BoulderDaesh
+assign AVBoulderData: ""
+IF NOT EXISTS WHDSaves:BoulderDaesh
+  makedir WHDSaves:BoulderDaesh
+  copy #? WHDSaves:BoulderDaesh/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:BoulderDaesh
+IF NOT EXISTS .av-layout-v2
+  FailAt 21
+  delete >NIL: "Caves/User" QUIET
+  IF NOT EXISTS "Caves/User"
+    makedir "Caves/User"
+  ENDIF
+  delete >NIL: "CharacterSets/User" QUIET
+  IF NOT EXISTS "CharacterSets/User"
+    makedir "CharacterSets/User"
+  ENDIF
+  delete >NIL: "Games/User" QUIET
+  IF NOT EXISTS "Games/User"
+    makedir "Games/User"
+  ENDIF
+  delete >NIL: "GraphicSets/User" QUIET
+  IF NOT EXISTS "GraphicSets/User"
+    makedir "GraphicSets/User"
+  ENDIF
+  delete >NIL: "MusicSets/User" QUIET
+  IF NOT EXISTS "MusicSets/User"
+    makedir "MusicSets/User"
+  ENDIF
+  delete >NIL: "Prefs" QUIET
+  IF NOT EXISTS "Prefs"
+    makedir "Prefs"
+  ENDIF
+  delete >NIL: "SampleSets/User" QUIET
+  IF NOT EXISTS "SampleSets/User"
+    makedir "SampleSets/User"
+  ENDIF
+  IF NOT EXISTS Prefs/Misc.prefs
+    copy AVBoulderData:Prefs/Misc.prefs Prefs/Misc.prefs QUIET
+  ENDIF
+  echo >.av-layout-v2 "2"
+  FailAt 10
+ENDIF
+assign AVBoulderData: REMOVE
+copy "Bin/BoulderDäsh_ChipSet" "BoulderDäsh" QUIET
+stack >NIL: 65536
+setpal
+"BoulderDäsh"

@@ -1,0 +1,8 @@
+ags-cd N/OozeTheEscape
+IF NOT EXISTS WHDSaves:OozeTheEscape
+  makedir WHDSaves:OozeTheEscape
+  copy #? WHDSaves:OozeTheEscape/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:OozeTheEscape
+stack >NIL: 30000
+Ooze

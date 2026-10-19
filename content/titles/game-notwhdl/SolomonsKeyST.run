@@ -1,0 +1,9 @@
+ags-cd N/SolomonsKeyST
+IF NOT EXISTS WHDSaves:SolomonsKeyST
+  makedir WHDSaves:SolomonsKeyST
+  copy #? WHDSaves:SolomonsKeyST/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:SolomonsKeyST
+stack >NIL: 30000
+ST
+SK

@@ -1,3 +1,4 @@
 # Archive basenames excluded from downloads and ingestion (case-insensitive globs).
 # Redundant DB entries alone do not block archive downloads.
 DayOfTheTentacle*.lha
+SimonSorcerer2*.lha
