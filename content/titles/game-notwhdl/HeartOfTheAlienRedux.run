@@ -1,0 +1,17 @@
+ags-cd N/HeartOfTheAlienRedux
+FailAt 21
+IF NOT EXISTS WHDSaves:HeartOfTheAlienRedux
+  makedir WHDSaves:HeartOfTheAlienRedux
+ENDIF
+IF EXISTS WHDSaves:HeartOfTheAlienRedux/hota.prefs
+  copy WHDSaves:HeartOfTheAlienRedux/hota.prefs hota.prefs QUIET
+ENDIF
+assign AVHOTA: ""
+assign LIBS: AVHOTA:libs ADD
+stack >NIL: 65536
+setpal
+HOTA-GAME.exe
+copy hota.prefs WHDSaves:HeartOfTheAlienRedux/hota.prefs QUIET
+assign LIBS: AVHOTA:libs REMOVE
+assign AVHOTA: REMOVE
+FailAt 10
