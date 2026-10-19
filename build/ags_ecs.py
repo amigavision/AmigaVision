@@ -5,6 +5,7 @@ import struct
 from collections import defaultdict
 from pathlib import Path
 
+from ags_artwork import is_nsfw, install_nsfw_thumbnail
 from pull_archives import is_low_memory_archive
 
 
@@ -224,6 +225,9 @@ def install_launcher(ags_path, collection, image_root='data/img_ecs', launcher_r
             if artwork_id != entry_id:
                 fallback_artwork.append({'id': entry_id, 'artwork': artwork_id})
         base = root/relpath
+        if is_nsfw(entry):
+            install_nsfw_thumbnail(base, "ecs")
+            continue
         found = False
         for key, suffix in [(artwork_id,'.iff'), (artwork_id+'-qr','-QR.iff')]+[
                 (artwork_id+f'-{i}',f'-{i}.iff') for i in range(1,10)]:

@@ -12,6 +12,8 @@ from pathlib import Path
 from sqlite3 import Connection
 from time import perf_counter
 
+from ags_artwork import is_nsfw, install_nsfw_thumbnail
+
 import ags_compositor as compositor
 import ags_paths as paths
 import ags_query as query
@@ -391,11 +393,13 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
         open(base_path + ".txt", mode="w", encoding="latin-1", errors="replace").write(make_note(entry, note))
 
     # Remember exact menu filenames, including ranked and overridden entries.
-    if entry and "id" in entry and "image" not in entry:
+    if entry and "id" in entry and ("image" not in entry or is_nsfw(entry)):
         collection.image_entries[os.path.relpath(base_path, ags_path)] = entry["id"]
 
     # make image
-    if entry and "image" in entry:
+    if entry and is_nsfw(entry):
+        install_nsfw_thumbnail(base_path, "medium")
+    elif entry and "image" in entry:
         make_image(base_path + ".iff", entry["image"])
     elif entry and "id" in entry:
         for img_path, suffix in get_extra_image_paths(entry["id"]):
@@ -916,6 +920,9 @@ def make_hires_tree(ags_path, hires_path, collection):
             image = Path(str(base) + suffix)
             if image.is_file():
                 image.unlink()
+        if is_nsfw(collection.by_id.get(entry_id, {})):
+            install_nsfw_thumbnail(base, "hires")
+            continue
         found = False
         for key, suffix in [(entry_id, ".iff"), (entry_id + "-qr", "-QR.iff")] + [
             (entry_id + f"-{i}", f"-{i}.iff") for i in range(1, 10)

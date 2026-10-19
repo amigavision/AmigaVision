@@ -333,6 +333,7 @@ def build_or_reuse_hires_launcher(ags_path, hires_path, collection, workspace_st
         "assets": [source_trees[root] if source_trees is not None and root in source_trees else fingerprint_tree(root)
                    for root in ("data/ags2-highres", "data/img_highres")],
         "behavior": fingerprint_python_defs("build/ags_make.py", ["make_hires_tree", "make_hires_artwork"]),
+        "nsfw_artwork": fingerprint_file("build/ags_artwork.py"),
         "encoder": [fingerprint_file("build/repair_hires_palettes.py"), fingerprint_file("build/iff_ilbm.py")],
     }
     cache_key = hash_payload({"medium_tree": medium_fingerprint,
@@ -459,6 +460,7 @@ def fingerprint_python_defs(path: str, names: list[str]) -> str:
     })
 
 AGS2_TREE_BEHAVIOR_FINGERPRINT = hash_payload([
+    fingerprint_file("build/ags_artwork.py"),
     "launcher-on-DH1-v1",
     fingerprint_file('build/ags_ecs.py'),
     fingerprint_file('configs/ecs-preferred-versions.json'),
@@ -479,6 +481,7 @@ PFS_PARTITION_BEHAVIOR_FINGERPRINT = hash_payload([
 ])
 
 AUTOENTRIES_BEHAVIOR_FINGERPRINT = hash_payload([
+    fingerprint_file("build/ags_artwork.py"),
     fingerprint_python_defs("build/ags_make.py", ["make_autoentries", "make_entry", "make_image", "wrap_note", "AGS_INFO_WIDTH", "AGS_INFO_HEIGHT", "make_note", "metadata_system", "metadata_blocks", "metadata_date", "metadata_wrap", "balanced_wrap"]),
     fingerprint_python_defs("build/ags_query.py", ["has_english_language", "get_languages", "get_publishers", "get_countries"]),
     fingerprint_python_defs("build/ags_strings.py", ["strings"]),
