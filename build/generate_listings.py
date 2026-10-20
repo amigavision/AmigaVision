@@ -7,7 +7,7 @@ from pathlib import Path
 
 def main():
     if len(sys.argv) != 3:
-        raise SystemExit("usage: generate_listings.py <ags2-root> <output-dir>")
+        raise SystemExit("usage: generate_listings.py <ags-root> <output-dir>")
 
     src = Path(sys.argv[1])
     dst = Path(sys.argv[2])

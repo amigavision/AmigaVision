@@ -944,6 +944,10 @@ def make_hires_tree(ags_path, hires_path, collection):
     images = {}
     for source in sorted(image_root.glob("*.iff")) + sorted((image_root / "qr").glob("*.iff")):
         images.setdefault(source.stem, source)
+    # Informational menu items (such as About) also have launcher-local QR art.
+    # Their old folder artwork is removed below along with other medium assets.
+    for source in sorted(Path("data/ags2-highres").glob("*-qr.iff")):
+        images.setdefault(source.stem, source)
     for relpath, entry_id in collection.image_entries.items():
         base = Path(hires_path) / relpath
         # Remove medium-resolution slides and QR images from title entries.

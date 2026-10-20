@@ -440,6 +440,8 @@ def package_mister(args, output_dir, archive_tool):
                 "distros",
                 "CD32-Output",
                 "AmigaVision.hdf",
+                "AmigaVision-ECS.hdf",
+                Path(args.ecs_hdf).name if getattr(args, "ecs_hdf", None) else "AmigaVision-ECS.hdf",
                 "AmigaVision-Mini",
                 "AmigaVision-Mini.hdf",
                 "AmigaVision-Mini.uae",
