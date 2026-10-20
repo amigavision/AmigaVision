@@ -513,6 +513,8 @@ def make_note(entry, add_note):
     if (sum(len(lines) for _, lines in wrapped) <= 6
             and wrapped and wrapped[0][0] == "title" and wrapped[0][1]):
         wrapped[0][1].append("")
+        if sum(len(lines) for _, lines in wrapped) < AGS_INFO_HEIGHT:
+            wrapped[0][1].insert(0, "")
     return "".join(line.center(max_w).rstrip() + "\n" for _, lines in wrapped for line in lines)
 
 
