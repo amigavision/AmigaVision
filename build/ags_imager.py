@@ -461,7 +461,7 @@ def fingerprint_python_defs(path: str, names: list[str]) -> str:
 
 AGS2_TREE_BEHAVIOR_FINGERPRINT = hash_payload([
     fingerprint_file("build/ags_artwork.py"),
-    "launcher-on-DH1-v1",
+    "launcher-on-DH1-hires-default-v2",
     fingerprint_file('build/ags_ecs.py'),
     fingerprint_file('configs/ecs-preferred-versions.json'),
     fingerprint_python_defs("build/ags_make.py", ["make_tree", "make_entries", "make_entry", "make_autoentries", "make_runscripts", "make_runscript", "AGS_INFO_WIDTH", "AGS_INFO_HEIGHT", "make_note", "metadata_system", "metadata_blocks", "metadata_date", "metadata_wrap", "balanced_wrap", "wrap_note"]),
@@ -475,7 +475,7 @@ ARCHIVE_TREE_BEHAVIOR_FINGERPRINT = hash_payload([
 ])
 
 PFS_PARTITION_BEHAVIOR_FINGERPRINT = hash_payload([
-    "launcher-on-DH1-v1",
+    "launcher-on-DH1-hires-default-v2",
     fingerprint_python_defs("build/ags_fs.py", ["get_pfs_free_mb", "calculate_pfs_partitions", "build_pfs"]),
     fingerprint_python_defs("build/ags_util.py", ["get_dir_size"]),
 ])
@@ -1335,8 +1335,8 @@ def save_autoentries_cache(cache_key: str, amiga_ags_path: str, collection_delta
 def make_clone_progress_lines(clone_path: str) -> list[str]:
     stats_paths = [
         ("DH0", util.path(clone_path, "DH0")),
-        ("DH1/AGS2", util.path(clone_path, "DH1", "AGS2")),
-        ("DH1/AGS-HiRes", util.path(clone_path, "DH1", "AGS-HiRes")),
+        ("DH1/AGS", util.path(clone_path, "DH1", "AGS")),
+        ("DH1/AGS-MedRes", util.path(clone_path, "DH1", "AGS-MedRes")),
         ("DH1/Music", util.path(clone_path, "DH1", "Music")),
     ]
     whd_stats_paths = [
@@ -1630,7 +1630,7 @@ def main():
         clone_path = paths.tmp()
         amiga_boot_path = util.path(clone_path, "DH0")
         amiga_data_path = util.path(clone_path, "DH1")
-        amiga_ags_path = util.path(amiga_data_path, "AGS2")
+        amiga_ags_path = util.path(amiga_data_path, "AGS" if args.chipset_profile == "ecs" else "AGS-MedRes")
         util.make_dir(clone_path)
         workspace_state = load_workspace_state(clone_path)
         prune_interrupted_cache_artifacts()
@@ -1707,8 +1707,13 @@ def main():
 
         # Old base images and workspaces may still contain system-disk launchers.
         # Rebuild them on DH1 instead of retaining a second, stale copy on DH0.
-        for launcher_name in ("AGS2", "AGS-HiRes"):
+        for launcher_name in ("AGS", "AGS-MedRes", "AGS2", "AGS-HiRes"):
             util.rm_path(util.path(amiga_boot_path, launcher_name))
+
+        # Remove obsolete destinations before base layers populate AGS2 again.
+        util.rm_path(util.path(amiga_data_path, "AGS2"))
+        # Remove the obsolete high-resolution destination from reused workspaces.
+        util.rm_path(util.path(amiga_data_path, "AGS-HiRes"))
 
         # copy base AGS2 config
         print("Building AGS2 tree...")
@@ -1900,6 +1905,13 @@ def main():
                         print(" > '{}' -> '{}'".format(src, dst))
                         util.clone_tree(src_dir, util.path(clone_path, dst[1:]))
 
+        # Base layers retain the historical AGS2 directory as their source name.
+        # Merge those options/notes into the profile's generated launcher tree.
+        legacy_layer = util.path(amiga_data_path, "AGS2")
+        if util.is_dir(legacy_layer):
+            util.clone_tree(legacy_layer, amiga_ags_path)
+            util.rm_path(legacy_layer)
+
         # copy additional directories
         if not args.only_ags_tree and args.add_dirs:
             with timed_step(timings, "copy extra dirs"):
@@ -1957,9 +1969,9 @@ def main():
             if args.chipset_profile == 'ecs':
                 from ags_ecs import install_launcher
                 install_launcher(amiga_ags_path, collection)
-                util.rm_path(util.path(amiga_data_path, 'AGS-HiRes'))
+                util.rm_path(util.path(amiga_data_path, 'AGS-MedRes'))
             else:
-                build_or_reuse_hires_launcher(amiga_ags_path, util.path(amiga_data_path, "AGS-HiRes"), collection, workspace_state, append_delta, source_trees=hires_source_trees)
+                build_or_reuse_hires_launcher(amiga_ags_path, util.path(amiga_data_path, "AGS"), collection, workspace_state, append_delta, source_trees=hires_source_trees)
 
         # build PFS container
         if not args.only_ags_tree:

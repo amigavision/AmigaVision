@@ -12,7 +12,7 @@ from PIL import Image
 import iff_ilbm
 from repair_hires_palettes import decode, read_chunks
 
-VERSION = 'ecs-14-rgb4-no-dither-v5-oklab-hue'
+VERSION = 'ecs-13-rgb4-v6-copper-ui'
 
 
 def encode_ecs(image, mode):
@@ -34,11 +34,10 @@ def quantize_ecs(source, skin=False):
     rgb = source.convert('RGB')
     if skin:
         # Original skin has black, almost-black (1,1,1), and the blue border.
-        pixels = bytes(15 if max(color) > 17 else 14 for color in rgb.getdata())
+        pixels = bytes(13 if max(color) > 17 else 14 for color in rgb.getdata())
         indexed = Image.frombytes('P', source.size, pixels)
-        # White is locked at 15. Both background pen zero and UI pen 14 stay
-        # black across every image; visible monochrome pixels use only 14/15.
-        indexed.putpalette([0,0,0]+[17]*39 + [0,0,0,255,255,255] + [0]*720)
+        # Skin and QR foreground use steady slot 13, never gradient slot 15.
+        indexed.putpalette([0]*39 + [0,153,187,0,0,0,255,255,255] + [0]*720)
         return indexed
     from ecs_palette import quantize_perceptual
     return quantize_perceptual(source)
@@ -56,10 +55,10 @@ def convert(job):
     temporary.write_bytes(blob)
     result, _ = decode(read_chunks(temporary))
     assert result.tobytes() == indexed.tobytes()
-    assert result.getpalette()[42:48] == [0,0,0,255,255,255]
+    assert result.getpalette()[39:48] == [0,153,187,0,0,0,255,255,255]
     assert result.getpalette()[:3] == [0,0,0]
     if skin or is_qr:
-        assert set(result.tobytes()) <= {14,15}
+        assert set(result.tobytes()) <= {13,14}
     temporary.replace(dest)
     return str(dest)
 

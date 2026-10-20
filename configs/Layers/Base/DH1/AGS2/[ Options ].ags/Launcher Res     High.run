@@ -1,3 +1,9 @@
-if exists Data:AGS-HiRes/AGS2
-  assign AGS: Data:AGS-HiRes
+if exists Data:AGS/AGS2
+  assign AGS: Data:AGS
+  echo "high" >ENV:AGSLauncherResolution
+  echo "high" >ENVARC:AGSLauncherResolution
+  assign >NIL: exists Saves:
+  if not warn
+    echo "high" >Saves:AGSLauncherResolution
+  endif
 endif

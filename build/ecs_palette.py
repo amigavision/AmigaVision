@@ -54,12 +54,12 @@ def color_histogram(source):
 
 
 def quantize_perceptual(source):
-    """Fit 13 adaptive RGB4 colors plus black and white, with no dithering.
+    """Fit 13 graphics slots, reserving frame, black, and gradient text, with no dithering.
 
-    Black occupies dynamic slot zero as well as locked UI slot 14 because the
-    launcher clears thumbnail padding with pen zero. Locked white at 15 is also
-    included in the optimization, so neither fixed color wastes an adaptive
-    slot. Five fixed seeds make the result reproducible and avoid poor local
+    Black occupies graphics slot zero as well as locked UI slot 14 because the
+    launcher clears thumbnail padding with pen zero. White occupies graphics
+    slot 1; slots 13, 14, and 15 are reserved for the steady frame, black, and
+    Copper text respectively. Five fixed seeds avoid poor local
     minima. Every palette update selects an actual ECS color, not a rounded
     24-bit centroid. Pixel assignment uses the same perceptual metric.
     """
@@ -70,7 +70,7 @@ def quantize_perceptual(source):
     for trial in range(5):
         rng = np.random.default_rng(trial)
         chosen = [0, 4095]  # Fixed black and white.
-        for _ in range(13):
+        for _ in range(11):
             distance = ((values[:, None] - grid[chosen]) ** 2).sum(axis=2).min(axis=1)
             errors = distance * weights
             if errors.max() < 1e-14:
@@ -96,10 +96,10 @@ def quantize_perceptual(source):
             best = score, chosen, distance.argmin(axis=1)
 
     _, chosen, assignment = best
-    palette = [0, 0, 0] + rgb4[chosen[2:]].reshape(-1).tolist()
-    palette += [0] * (42 - len(palette))
-    palette += [0, 0, 0, 255, 255, 255]
-    lookup = np.array([0, 15] + list(range(1, len(chosen) - 1)), dtype=np.uint8)
+    palette = rgb4[chosen].reshape(-1).tolist()
+    palette += [0] * (39 - len(palette))
+    palette += [0, 153, 187, 0, 0, 0, 255, 255, 255]
+    lookup = np.arange(len(chosen), dtype=np.uint8)
     pixels = lookup[assignment[inverse]].tobytes()
     indexed = Image.frombytes('P', source.size, pixels)
     indexed.putpalette(palette + [0] * 720)

@@ -113,9 +113,20 @@ endif
 
 assign >NIL: exists Data:
 if not warn
-  if exists Data:AGS2
+  if exists Data:AGS
     if exists Data:WHD
-      assign AGS: Data:AGS2
+      assign AGS: Data:AGS
+      ; Prefer the saves-volume setting so it survives system-image upgrades.
+      if exists Saves:AGSLauncherResolution
+        copy >NIL: Saves:AGSLauncherResolution ENV:AGSLauncherResolution
+      endif
+      if exists ENV:AGSLauncherResolution
+        if "$AGSLauncherResolution" EQ "medium"
+          if exists Data:AGS-MedRes/AGS2
+            assign AGS: Data:AGS-MedRes
+          endif
+        endif
+      endif
       assign WHD0: Data:WHD
       assign >NIL: exists WHDSaves:
       if warn

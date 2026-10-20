@@ -167,28 +167,12 @@ def prepare_menu(ags_path):
                     sibling.unlink()
 
 
-def patch_menu_text_pen(source, destination):
-    """Use locked white for text instead of AGS2Menu's hard-coded AGA pen 253.
-
-    The instruction loads D0 before graphics.library/SetAPen (-342). On a
-    four-plane screen pen 253 becomes dynamic slot 13; pen 255 becomes locked
-    slot 15. Match the complete instruction/call sequence and fail if a future
-    launcher changes it. No relocation or instruction size changes are needed.
-    """
-    original = Path(source).read_bytes()
-    sequence = bytes.fromhex('203c000000fd2f4000002c6cffcc4cdf02014eaefeaa')
-    if original.count(sequence) != 1:
-        raise ValueError('Unknown AGS2Menu text-pen code; review the ECS patch')
-    replacement = sequence[:5] + b'\xff' + sequence[6:]
-    Path(destination).write_bytes(original.replace(sequence, replacement))
-
-
 def install_launcher(ags_path, collection, image_root='data/img_ecs', launcher_root='data/ags2-ecs'):
     """Replace generated menu images with pre-rendered hi-res ECS artwork."""
     import hashlib
     import shutil
     root = Path(ags_path)
-    patch_menu_text_pen('data/ags2/AGS2Menu', root/'AGS2Menu')
+    shutil.copyfile(Path(launcher_root)/'AGS2Menu', root/'AGS2Menu')
     static = Path(image_root)
     manifest_path = static/'manifest.json'
     if not manifest_path.is_file():
