@@ -120,6 +120,8 @@ def wrap_note(text: str) -> str:
         print_warning("launcher description exceeds {} lines: {}".format(AGS_INFO_HEIGHT, text.strip()[:60]))
         wrapped = wrapped[:AGS_INFO_HEIGHT]
         wrapped[-1] = wrapped[-1][:AGS_INFO_WIDTH - 2].rstrip(" .") + ".."
+    if wrapped and len(wrapped) < AGS_INFO_HEIGHT:
+        wrapped.insert(0, "")
     return "\n".join(line.center(AGS_INFO_WIDTH).rstrip() if line else "" for line in wrapped)
 
 def normalize_release_year(release_date: str) -> tuple[str, str]:
