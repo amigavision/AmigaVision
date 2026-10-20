@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import ctypes
 import errno
 import os
 import shutil
@@ -10,6 +11,7 @@ import tempfile
 import time
 import zipfile
 from pathlib import Path
+from functools import lru_cache
 
 from artifact_checksums import write_checksums
 
@@ -50,6 +52,10 @@ def parse_args():
     parser.add_argument("--mini-uae")
     parser.add_argument("--pi-script", default="build/pi_image.sh")
     parser.add_argument("--archive-tool")
+    parser.add_argument("--emulator-archive", action="store_false", dest="skip_emulator_archive",
+                        help="Create a 7z archive of the emulator folders.", default=False)
+    parser.add_argument("--skip-emulator-archive", action="store_true",
+                        help="Keep the emulator folders instead of creating a 7z archive.")
     parser.add_argument("--dry-run", action="store_true")
     return parser.parse_args()
 
@@ -142,16 +148,36 @@ def find_xz_tool():
     raise FileNotFoundError("xz compression tool not found on PATH")
 
 
+@lru_cache(maxsize=1)
+def get_clonefile():
+    clonefile = getattr(os, "clonefile", None)
+    if clonefile is not None:
+        return clonefile
+    if sys.platform != "darwin":
+        return None
+    # CPython does not expose clonefile on macOS. Call the native APFS API
+    # directly instead of starting a cp process for every staged file.
+    library = ctypes.CDLL("/usr/lib/libSystem.B.dylib", use_errno=True)
+    native_clonefile = library.clonefile
+    native_clonefile.argtypes = (ctypes.c_char_p, ctypes.c_char_p, ctypes.c_int)
+    native_clonefile.restype = ctypes.c_int
+
+    def clonefile(src, dest):
+        if native_clonefile(os.fsencode(src), os.fsencode(dest), 0) != 0:
+            error = ctypes.get_errno()
+            raise OSError(error, os.strerror(error), os.fspath(src))
+
+    return clonefile
+
+
 def clone_or_copy_file(src, dest):
     src = Path(src)
     dest = Path(dest)
     dest.parent.mkdir(parents=True, exist_ok=True)
-    clonefile = getattr(os, "clonefile", None)
+    clonefile = get_clonefile()
     if clonefile is not None:
         try:
             clonefile(src, dest)
-            shutil.copystat(src, dest, follow_symlinks=True)
-            return
         except OSError as exc:
             if exc.errno not in {
                 errno.EXDEV,
@@ -162,6 +188,9 @@ def clone_or_copy_file(src, dest):
                 errno.EINVAL,
             }:
                 raise
+        else:
+            shutil.copystat(src, dest, follow_symlinks=True)
+            return
     shutil.copy2(src, dest)
 
 
@@ -285,8 +314,7 @@ def generate_mini_launcher(src, dest):
 def make_amiberry_skeleton(stage_root):
     for relative in (
         "Configurations",
-        "Harddrives",
-        "Roms",
+        "ROMs",
         "Visuals/Shaders",
     ):
         ensure_dir(stage_root / relative)
@@ -454,9 +482,14 @@ def package_emulators(args, output_dir, archive_tool):
     listings_dir = Path(args.listings_dir)
     shared_dir = Path(args.shared_dir)
     visuals_root = Path(args.visuals_dir)
-    launcher_template = Path("content/distro/games/Amiga/default.uae")
+    emulator_root = Path("content/distro_emulators")
+    launcher_template = emulator_root / "Amiberry/AmigaVision-Amiberry.uae"
+    amiberry_install = emulator_root / "Amiberry/INSTALL.txt"
     custom_shader_path = Path("Shaders/crt/shaders/crt-easymode-halation/crt-easymode-halation.glsl")
-    custom_shader = Path("content/distro_emulators/Visuals") / custom_shader_path
+    custom_shader = emulator_root / "Amiberry/Visuals" / custom_shader_path
+    winuae_config = emulator_root / "WinUAE/default.uae"
+    winuae_shader = emulator_root / "WinUAE/CRT-Pi-SmartRes.fx"
+    winuae_install = emulator_root / "WinUAE/INSTALL.txt"
     require_file(main_hdf, "Main AmigaVision HDF")
     require_file(saves_hdf, "AmigaVision saves HDF")
     require_file(rom_file, "AmigaVision ROM")
@@ -464,14 +497,21 @@ def package_emulators(args, output_dir, archive_tool):
     require_dir(shared_dir, "Shared support directory")
     require_dir(visuals_root, "AmigaVision Visuals payload")
     require_file(launcher_template, "Amiberry launcher template")
+    require_file(amiberry_install, "Amiberry installation instructions")
     require_file(custom_shader, "Versioned AmigaVision CRT shader")
+    require_file(winuae_config, "WinUAE configuration")
+    require_file(winuae_shader, "WinUAE CRT shader")
+    require_file(winuae_install, "WinUAE installation instructions")
 
-    output_path = output_dir / f"AmigaVision-Emulators-{args.date_stamp}.7z"
+    skip_archive = args.skip_emulator_archive
+    output_path = output_dir / (f"AmigaVision-Emulators-{args.date_stamp}" + ("" if skip_archive else ".7z"))
+    if skip_archive and output_path.exists():
+        raise FileExistsError(f"Emulator output already exists: {output_path}. Choose another output directory or release date.")
     with make_stage_dir(output_dir, prefix="amigavision-emulators-", dry_run=args.dry_run) as tmp_dir:
         stage_root = Path(tmp_dir) / "Amiberry"
         make_amiberry_skeleton(stage_root)
-        harddrives_root = stage_root / "Harddrives"
-        roms_root = stage_root / "Roms"
+        harddrives_root = Path(tmp_dir) / "HardDrives"
+        roms_root = stage_root / "ROMs"
         mac_conf_root = stage_root / "Configurations"
         log_step("Staging reusable Amiberry payload")
         replace_path(main_hdf, harddrives_root / "AmigaVision.hdf")
@@ -483,7 +523,23 @@ def package_emulators(args, output_dir, archive_tool):
         log_step("Applying versioned AmigaVision CRT shader")
         replace_path(custom_shader, stage_root / "Visuals" / custom_shader_path)
         replace_path(launcher_template, mac_conf_root / "default.uae")
-        archive_7z(output_path, Path(tmp_dir), archive_tool, dry_run=args.dry_run)
+        clone_or_copy_file(mac_conf_root / "default.uae", mac_conf_root / "AmigaVision.uae")
+        replace_path(amiberry_install, stage_root / "INSTALL.txt")
+        stage_root = Path(tmp_dir) / "WinUAE"
+        log_step("Staging reusable WinUAE payload")
+        replace_path(rom_file, stage_root / "ROMs/AmigaVision.rom")
+        replace_path(winuae_config, stage_root / "Configurations" / winuae_config.name)
+        clone_or_copy_file(stage_root / "Configurations/default.uae", stage_root / "Configurations/AmigaVision.uae")
+        replace_path(winuae_shader, stage_root / "plugins/filtershaders/direct3d" / winuae_shader.name)
+        replace_path(winuae_install, stage_root / "INSTALL.txt")
+        if skip_archive:
+            if args.dry_run:
+                log_step(f"[dry-run] Would keep emulator folders at {output_path}")
+            else:
+                Path(tmp_dir).rename(output_path)
+                log_step(f"Kept emulator folders at {output_path}; skipping 7z compression")
+        else:
+            archive_7z(output_path, Path(tmp_dir), archive_tool, dry_run=args.dry_run)
     return output_path
 
 
@@ -580,7 +636,8 @@ def main():
     )
 
     archive_tool = None
-    if any(package in {"mister", "emulators", "mini"} for package in packages):
+    if any(package in {"mister", "mini"} or
+           (package == "emulators" and not args.skip_emulator_archive) for package in packages):
         archive_tool = find_archive_tool(args.archive_tool)
     xz_tool = None
     if any(package in {"pi", "amiga", "amiga-ecs"} for package in packages):
@@ -627,8 +684,12 @@ def main():
                     created.append(package_amiga(args, output_dir, xz_tool))
                 else:
                     raise AssertionError(f"Unhandled package type: {package}")
-                list_archive_contents(created[-1], archive_tool=archive_tool, xz_tool=xz_tool, dry_run=args.dry_run)
-                if args.dry_run:
+                unpacked_emulators = package == "emulators" and args.skip_emulator_archive
+                if not unpacked_emulators:
+                    list_archive_contents(created[-1], archive_tool=archive_tool, xz_tool=xz_tool, dry_run=args.dry_run)
+                if unpacked_emulators:
+                    log_step("Uncompressed emulator folders ready; archive checksums skipped")
+                elif args.dry_run:
                     log_step(f"[dry-run] Would write SHA-256 and MD5 checksums for {created[-1].name}")
                 else:
                     write_checksums(created[-1])

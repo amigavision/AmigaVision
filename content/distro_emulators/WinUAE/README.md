@@ -15,7 +15,8 @@ All paths are relative to the emulator working directory. WinUAE sets that direc
 
 ```
 C:\Users\Public\Documents\Amiga Files\WinUAE\
-  Configurations\AmigaVision-WinUAE.uae
+  Configurations\AmigaVision.uae
+  Configurations\default.uae (optional)
   ROMs\AmigaVision.rom
   HardDrives\AmigaVision.hdf
   HardDrives\AmigaVision-Saves.hdf
@@ -33,3 +34,7 @@ WinUAE uses Direct3D 11 with CRT-Pi-SmartRes.fx, hires output, doubled lines, an
 Duplicate Amiberry search paths were collapsed. Host audio device selection was removed so each platform can use its default device. Empty flash/RTC filenames replace source entries that pointed to a directory rather than a persistence file. The WinUAE copy omits the legacy cpu_type alias in favor of explicit cpu_model and fpu_model, and omits Amiberry-specific settings and unused WHDLoad booter options.
 
 WinUAE option names were checked against https://github.com/tonioni/WinUAE/blob/master/cfgfile.cpp. Static checks verified relative paths, preserved core hardware values, and mount counts. Neither configuration has been boot tested here.
+
+The emulator package includes identical `AmigaVision.uae` and `default.uae` configurations for each emulator. Install `AmigaVision.uae` and skip `default.uae` to preserve your existing emulator default; load AmigaVision explicitly when needed. See each packaged `INSTALL.txt` for details.
+
+The emulator archive has three top-level folders: `Amiberry`, `WinUAE`, and `HardDrives`. The HDF images, Shared directory, and listings are shipped only in that shared `HardDrives` folder. Copy its contents into `HardDrives` under your chosen emulator data folder, in addition to installing the emulator-specific files. The configuration paths remain unchanged.

@@ -1,6 +1,6 @@
 ; Relative paths are based on the emulator working directory.
 ; WinUAE selects its data root as the working directory during startup.
-; Put ROMs and HardDrives under that data root; see README.md.
+; Put ROMs and HardDrives under that data root; see INSTALL.txt.
 config_description=AmigaVision (WinUAE)
 config_hardware=true
 config_host=true

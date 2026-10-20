@@ -1,0 +1,36 @@
+AmigaVision for Amiberry
+========================
+
+Install Amiberry if you don’t have it already.
+
+1. Make sure Amiberry is not running.
+
+2. Copy the Configurations, ROMs, and Visuals folders from the Amiberry folder
+   into your Amiberry data folder, merging folders. Back up any existing
+   default.uae before replacing it.
+
+3. Copy the top-level HardDrives folder (beside Amiberry and WinUAE in
+   the extracted package) into this Amiberry data folder. The images are shipped
+   only once in the package; both emulators use these same files.
+
+   After copying both parts, the Amiberry data folder should include:
+
+   Configurations/AmigaVision.uae
+   Configurations/default.uae (Don’t want AmigaVision to autostart? Skip this)
+   ROMs/AmigaVision.rom
+   HardDrives/AmigaVision.hdf
+   HardDrives/AmigaVision-Saves.hdf
+   HardDrives/Shared/
+   HardDrives/listings/
+   Visuals/Shaders/
+
+   NOTE: Back up your existing AmigaVision-Saves.hdf and any files you changed
+   in Shared if this is an upgrade of an earlier AmigaVision install.
+
+4. Start Amiberry. AmigaVision will start automatically.
+   F12 opens the settings while running.
+
+If you don’t want AmigaVision to auto-start, skip copying default.uae. You can
+load the identical AmigaVision.uae from Amiberry’s Configurations panel instead.
+
+Enjoy the best of what the Amiga platform has to offer with AmigaVision!

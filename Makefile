@@ -22,6 +22,7 @@ PISTORM_HDF ?= $(if $(filter pistorm,$(PISTORM_MODEL)),$(ECS_HDF),$(AMIGAVISION_
 PISTORM_ROM ?= $(KICKSTART_ROM)
 PISTORM_OUTPUT ?=
 ECS_HDF ?= ${AGSDEST}/AmigaVision-ECS.hdf
+EMULATORS_ARCHIVE ?= auto
 DISTRO_DATE ?= $(shell date +%Y.%m.%d)
 DISTRO_OUT ?= ${AGSDEST}/distros
 FAT32_MAX_FILE_BYTES ?= 4294967295
@@ -165,7 +166,7 @@ help:
 		'Experimental classic PiStorm image from the built ECS HDF.' \
 		'' \
 		'make emulators' \
-		'Package the reusable Amiberry-based emulator distribution.' \
+		'Package the reusable Amiberry and WinUAE emulator distribution.' \
 		'' \
 		'make mini' \
 		'Package the A500 Mini release artifact from the built Mini image.' \
@@ -432,7 +433,7 @@ mister:
 emulators:
 	$(call print-start-time)
 	@$(MAKE_LISTINGS_CMD)
-	@$(DISTRO_PACKAGE_PROMPT) emulators
+	@$(DISTRO_PACKAGE_PROMPT) $(if $(filter 0,$(EMULATORS_ARCHIVE)),--skip-emulator-archive,$(if $(filter 1,$(EMULATORS_ARCHIVE)),--emulator-archive)) emulators
 
 mini:
 	$(call print-start-time)

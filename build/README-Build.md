@@ -52,7 +52,23 @@ If you only need a specific packaged output instead of the full release set, use
 - `make amiga`
   Package the real-Amiga hardware release artifact.
 - `make emulators`
-  Package the reusable Amiberry-based emulator distribution.
+  Package the reusable Amiberry and WinUAE emulator distribution. Each includes
+  The archive ships one shared top-level `HardDrives` folder alongside `Amiberry`
+  and `WinUAE`, avoiding duplicate HDF images. Copy that folder into the chosen
+  emulator data folder during installation. Each emulator includes
+  identical `Configurations/default.uae` and `Configurations/AmigaVision.uae`
+  files and an `INSTALL.txt`. Users can install only `AmigaVision.uae` to keep
+  their existing emulator default. Interactive
+  runs ask whether to create the 7z archive (default: no). Press Enter to keep
+  `AmigaVision-Emulators-<date>/Amiberry` and `WinUAE` in the selected output
+  directory. Use `make emulators EMULATORS_ARCHIVE=0` to skip compression without
+  the archive prompt, or `EMULATORS_ARCHIVE=1` to create the archive without
+  that prompt. Noninteractive runs also skip the archive by default.
+  Existing uncompressed output folders are preserved; choose a different output
+  directory or date when rebuilding.
+  On macOS, packaging stages files using native copy-on-write clones when the
+  source and staging directory are on the same supporting filesystem (APFS).
+  Other filesystems and cross-volume copies fall back to independent full copies.
 - `make mister`
   Package the MiSTer release artifact.
 - `make cd32`
