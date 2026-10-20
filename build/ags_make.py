@@ -69,6 +69,21 @@ def update_progress(collection: EntryCollection, verbose: bool):
 def add_timing(collection: EntryCollection, label: str, duration: float):
     collection.timing[label] = collection.timing.get(label, 0.0) + duration
 
+def directory_cache_entries(path, dirs, files, sort_ranks):
+    """Honor explicit ranks across folders and entries, then keep folders first."""
+    ranked = []
+    unranked = []
+    for names, suffix, prefix in ((dirs, ".ags", "D"), (files, ".run", "F")):
+        for name in util.sorted_natural([n.removesuffix(suffix) for n in names if n.endswith(suffix)]):
+            filename = util.path(path, name + suffix)
+            item = prefix + name
+            if filename in sort_ranks:
+                ranked.append((item, sort_ranks[filename]))
+            else:
+                unranked.append(item)
+    return [item for item, _ in sorted(ranked, key=lambda item: item[1])] + unranked
+
+
 def make_canonical_name(entry) -> str | None:
     max_len = MAX_FILENAME_LENGTH - 5
     if not (isinstance(entry, dict)):
@@ -231,7 +246,12 @@ def make_entries(
 
         # use preferred entry if found, except when name was ID-like
         lookup_start = perf_counter()
-        entry, pref_entry = query.get_entry(db, n)
+        informational = bool(options and options.get("informational"))
+        if informational:
+            entry = {"id": n, "title": n, "title_short": n}
+            pref_entry = None
+        else:
+            entry, pref_entry = query.get_entry(db, n)
         if entry and entry.get('_ecs_replaced') and isinstance(options, dict):
             # A shared list's AGA slave/video overrides do not describe its
             # replacement slave. Keep display overrides only.
@@ -265,7 +285,7 @@ def make_entries(
                         or Path('data/img_highres', artwork_id + '-2.iff').is_file()):
                     artwork_id = n
                 entry = { "id": artwork_id, "title": disp_name, "title_short": disp_name, "unavailable": True }
-        if entry:
+        if entry and not informational:
             collection.by_id[entry["id"]] = entry
 
         rank = str(pos).zfill(len(str(len(entries)))) if ordering == "ranked" else None
@@ -365,7 +385,9 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
     util.make_dir(path)
 
     # create runfile
-    if has_overrides:
+    if entry.get("informational"):
+        runfile = "; Information only\n"
+    elif has_overrides:
         if not template:
             raise IOError("make_entry: no run script template")
         runfile = make_runscript(entry, template, False)
@@ -386,7 +408,7 @@ def make_entry(collection: EntryCollection, ags_path, entry, path, rank=None, so
         collection.path_sort_rank["{}.run".format(base_path)] = sort_rank
 
     # make note
-    if options and options.get("unavailable", False):
+    if options and (options.get("unavailable", False) or options.get("informational", False)):
         note = wrap_note(note if note else entry["title"] + "\n\n" + strings["note"]["unavailable"])
         open(base_path + ".txt", mode="w", encoding="latin-1", errors="replace").write(note)
     elif entry:

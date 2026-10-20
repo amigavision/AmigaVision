@@ -68,7 +68,7 @@ import ags_util as util
 from ags_fs import build_pfs, calculate_pfs_partitions, extract_base_image, convert_filename_uae2a, get_base_hdf_cache_dir
 from ags_make import make_hires_tree, count_tree_entries, make_autoentries, make_runscripts, make_tree, reset_warning_state, update_progress, warn_missing_archive
 from ags_nsfw import make_nsfw_option
-from ags_make import report_missing_launcher_images
+from ags_make import report_missing_launcher_images, directory_cache_entries
 from ags_query import audit_missing_archive_entries, entry_is_notwhdl, get_amiga_whd_dir, get_archive_path, get_entry, get_missing_archive_entry, get_preferred_entry, get_whd_dir, sanitize_entry
 from ags_strings import strings
 from ags_types import EntryCollection
@@ -1942,27 +1942,7 @@ def main():
         # create directory caches
         with timed_step(timings, "build dir caches"):
             for path, dirs, files in os.walk(amiga_ags_path):
-                cache = []
-
-                cd_files = []
-                cd_ranked = dict()
-                for dir in util.sorted_natural(list(map(lambda n: n.removesuffix(".ags"), filter(lambda d: d.endswith(".ags"), dirs)))):
-                    dirname = "{}/{}.ags".format(path, dir)
-                    if dirname in collection.path_sort_rank:
-                        cd_ranked["D{}".format(dir)] = collection.path_sort_rank[dirname]
-                    else:
-                        cd_files.append("D{}".format(dir))
-                cache += [k for k, _ in sorted(cd_ranked.items(), key=lambda a:a[1])] + cd_files
-
-                cd_files = []
-                cd_ranked = dict()
-                for file in util.sorted_natural(list(map(lambda n: n.removesuffix(".run"), filter(lambda f: f.endswith(".run"), files)))):
-                    filename = "{}/{}.run".format(path, file)
-                    if filename in collection.path_sort_rank:
-                        cd_ranked["F{}".format(file)] = collection.path_sort_rank[filename]
-                    else:
-                        cd_files.append("F{}".format(file))
-                cache += [k for k, _ in sorted(cd_ranked.items(), key=lambda a:a[1])] + cd_files
+                cache = directory_cache_entries(path, dirs, files, collection.path_sort_rank)
 
                 # A missing run file exits AGS; keep this action last at the root.
                 if path == amiga_ags_path:
