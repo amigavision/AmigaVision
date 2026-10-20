@@ -1,0 +1,10 @@
+ags-cd N/NewTek-DemoReel3
+assign DemoReel3: Disk1
+assign DemoReelData: Disk2
+cd DemoReel3:
+stack 65536
+execute ToRAM
+killaga "DemoReelData:Slish" >NIL:
+delete RAM:centisec RAM:mt1 RAM:mt2 RAM:mt3 RAM:mt4 RAM:mt5 RAM:mt6 RAM:mt7 RAM:crash RAM:slide RAM:wall.cu RAM:dr3 QUIET
+assign DemoReelData: REMOVE
+assign DemoReel3: REMOVE

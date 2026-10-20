@@ -1,0 +1,14 @@
+ags-cd N/A1200ShopDemoANZ
+assign ANZD: ""
+assign LIBS: ANZD:Libs ADD
+assign FONTS: ANZD:Fonts ADD
+stack 65536
+setpal
+RexxMast >NIL:
+run >NIL: <NIL: ANZD:A1200/EdPlayer -h
+wait 2 SECS
+ANZD:C/AVPlayer ANZD:A1200/1200demoLM.avf
+RX ANZD:A1200/rexx/kill.ed
+assign FONTS: ANZD:Fonts REMOVE
+assign LIBS: ANZD:Libs REMOVE
+assign ANZD: REMOVE

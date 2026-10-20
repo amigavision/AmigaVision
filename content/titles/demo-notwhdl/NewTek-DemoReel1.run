@@ -1,0 +1,22 @@
+ags-cd N/NewTek-DemoReel1
+assign AVNT1: ""
+assign DemoReel: AVNT1:
+assign nt1: AVNT1:
+assign NT1D: AVNT1:Data
+copy pa RAM: QUIET
+copy a RAM: QUIET
+copy ma RAM: QUIET
+stack 65536
+killaga "s1 DemoReel1" >NIL:
+delete RAM:.fastdir RAM:a2a.fib RAM:a2b.fib RAM:a2c.fib RAM:a2d.fib QUIET
+delete RAM:b1a.fib RAM:b1b.fib RAM:b1d.fib RAM:bedoo RAM:boop.fib2 QUIET
+delete RAM:boopmusic.fib2 RAM:c1a.iff RAM:c1b.iff RAM:c1d.iff RAM:clap.iff QUIET
+delete RAM:dino1.fib2 RAM:dino2.fib2 RAM:drip RAM:eric1a RAM:eric1b QUIET
+delete RAM:ew.fib2 RAM:faa.iff RAM:fab.iff RAM:hello RAM:japaniseharp.fib2 QUIET
+delete RAM:jimmi RAM:laugh RAM:lo.fib2 RAM:newtek.fib2 RAM:ppa.iff QUIET
+delete RAM:ppb.iff RAM:relax.fib2 RAM:static.fib2 RAM:to.fib2 RAM:triangle4.iff QUIET
+delete RAM:triangle5.iff RAM:wa RAM:water1 RAM:water2.fib2 RAM:welcome QUIET
+assign NT1D: REMOVE
+assign nt1: REMOVE
+assign DemoReel: REMOVE
+assign AVNT1: REMOVE
