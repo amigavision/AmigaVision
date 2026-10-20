@@ -302,9 +302,7 @@ screenshots:
 
 invalidate-build-cache:
 	$(call print-start-time)
-	@mkdir -p "${HOME}/Library/Caches/AmigaVision"
-	@date +%Y%m%d%H%M%S > "${HOME}/Library/Caches/AmigaVision/build-cache-generation.txt"
-	@echo "Build cache generation bumped to $$(cat "${HOME}/Library/Caches/AmigaVision/build-cache-generation.txt")"
+	@$(PYTHON) build/invalidate_build_cache.py
 
 prepare-image-temp:
 	$(call print-start-time)

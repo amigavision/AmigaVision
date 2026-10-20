@@ -96,6 +96,11 @@ and comments; timestamps were ignored. The rebuilt base also booted to Workbench
 
 ## Incremental PFS image updates
 
+Run `make invalidate-build-cache` between builds to select a fresh preparation
+cache and delete obsolete default generations, including the legacy `current`
+directory. Named ECS/comparison caches and incremental image baselines are
+preserved. Use `make clean-temp` to remove the main and ECS staging workspaces.
+
 `make image` (and the Amiberry Mini, ECS, and test image targets) now updates an
 existing image when it has a matching successful-build manifest. Preparation
 still stages the desired complete filesystem on the Mac. The final clone hashes
