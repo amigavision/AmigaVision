@@ -1,4 +1,11 @@
-- note: Integer-scaled demos in full-screen 16:9.\n\nMiSTer OSD: Audio & Video >\nAspect Ratio > Full Screen\n\nSome cropping may occur.\nFor 4:3, use the other demo listings.
+- note: |
+    Integer-scaled demos in full-screen 16:9.
+
+    MiSTer OSD: Audio & Video >
+    Aspect Ratio > Full Screen
+
+    Some cropping may occur.
+    For 4:3, use the other demo listings.
 - rank: 5
 - 3LE-Drama: { scale: 6, vshift: 44 }
 - Andromeda-Rule30: { scale: 6, vshift: 62 }
