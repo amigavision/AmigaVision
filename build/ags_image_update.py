@@ -430,7 +430,7 @@ def run(workspace, emulator, force=False):
     plan_path = workspace / PLAN_NAME
     if not plan_path.is_file():
         # Explicit legacy full builds retain their existing clone scripts.
-        return subprocess.run([emulator, '-f', str(workspace / 'cfg.uae'), '--log']).returncode
+        return subprocess.run([emulator, '-f', str(workspace / 'cfg.uae')]).returncode
     plan = json.loads(plan_path.read_text())
     if plan.get('schema') != SCHEMA:
         raise ValueError('Unknown image-update plan version; prepare the build again')
@@ -530,7 +530,7 @@ def update_locked(workspace, image, plan, emulator, force):
         (workspace / 'clone').write_text(make_script(allocated, remove, volumes, full, token), encoding='latin-1')
         host_log = workspace / 'amiberry-clone-host.log'
         with host_log.open('w') as log:
-            result = subprocess.run([emulator, '-f', str(workspace / 'cfg.uae'), '--log'],
+            result = subprocess.run([emulator, '-f', str(workspace / 'cfg.uae')],
                                     stdout=log, stderr=subprocess.STDOUT)
         if result.returncode or not status.is_file() or status.read_text().strip() != 'OK ' + token:
             details_path = workspace / 'image-update-command.log'
