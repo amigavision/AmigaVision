@@ -1,3 +1,4 @@
+
      Enable MiSTer 1080p/4K Overscale Mode.
           This is enabled by default.
 

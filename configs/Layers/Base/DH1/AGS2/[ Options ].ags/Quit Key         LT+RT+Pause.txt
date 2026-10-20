@@ -1,3 +1,4 @@
+
    Always use LT+RT+Pause/Play on the gamepad
                  to quit game.
 

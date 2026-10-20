@@ -1,1 +1,2 @@
+
    Disable background music in the launcher.

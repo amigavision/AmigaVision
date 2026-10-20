@@ -1,3 +1,4 @@
+
    Disable MiSTer 1080p/4K Overscale Mode. We
 recommend disabling this if you're using another
   resolution or live-streaming without a full-

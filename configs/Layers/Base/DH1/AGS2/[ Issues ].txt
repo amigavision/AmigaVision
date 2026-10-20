@@ -1,0 +1,3 @@
+
+      Titles with known issues on MiSTer.
+  (Please report any new or resolved issues!)

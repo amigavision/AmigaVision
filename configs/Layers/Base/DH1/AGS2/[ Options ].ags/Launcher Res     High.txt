@@ -1,3 +1,4 @@
+
     Switch the launcher to high resolution.
 
        The selection lasts until reboot.

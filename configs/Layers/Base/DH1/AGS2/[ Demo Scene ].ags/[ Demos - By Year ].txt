@@ -1,0 +1,6 @@
+
+         Browse demos by release year.
+
+  The selection is thinner from 1996 to 2012.
+  Many demos from this period target high-end
+    Amigas and run poorly on MiSTer/Pocket.
