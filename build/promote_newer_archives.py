@@ -16,7 +16,7 @@ from import_notwhdl_demos import demozoo_search, pouet_search
 from sync_missing_images import fetch_text, pick_best_title_match
 
 
-VERSION_RE = re.compile(r"^(?P<name>.+)_(?:v(?P<version>[^_]+)|(?P<beta>Beta\d+))(?P<suffix>(?:_.*)?)\.lha$", re.IGNORECASE)
+VERSION_RE = re.compile(r"^(?P<name>.+?)_(?:v(?P<version>[^_]+)|(?P<beta>Beta\d+))(?P<suffix>(?:_.*)?)\.lha$", re.IGNORECASE)
 TOKEN_RE = re.compile(r"\d+|[A-Za-z]+")
 NUMERIC_SUFFIX_RE = re.compile(r"^(?:_\d+(?:&\d+)*)$")
 MONTHS = {name.lower(): index for index, name in enumerate((
