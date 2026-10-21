@@ -117,8 +117,11 @@ if not warn
     if exists Data:WHD
       assign AGS: Data:AGS
       ; Prefer the saves-volume setting so it survives system-image upgrades.
-      if exists Saves:AGSLauncherResolution
-        copy >NIL: Saves:AGSLauncherResolution ENV:AGSLauncherResolution
+      assign >NIL: exists Saves:
+      if not warn
+        if exists Saves:AGSLauncherResolution
+          copy >NIL: Saves:AGSLauncherResolution ENV:AGSLauncherResolution
+        endif
       endif
       if exists ENV:AGSLauncherResolution
         if "$AGSLauncherResolution" EQ "medium"
