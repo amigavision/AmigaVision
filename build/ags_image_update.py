@@ -24,6 +24,11 @@ IGNORED = {'.DS_Store', 'Thumbs.db', '__MACOSX'}
 PARTITIONS = {'DH0': 'Amiga', 'DH1': 'Data'}
 
 
+def format_duration(seconds):
+    minutes, seconds = divmod(int(seconds + 0.5), 60)
+    return f'{minutes:02d}m{seconds:02d}s'
+
+
 def digest(path):
     h = hashlib.sha256()
     with Path(path).open('rb') as f:
@@ -463,7 +468,7 @@ def update_locked(workspace, image, plan, emulator, force):
     atomic_json(scan_path, scan_cache)
     del scan_cache
     print(f" > {scan_stats['reused_hashes']} file hashes reused, {scan_stats['hashed_files']} files hashed "
-          f"in {perf_counter() - start:.2f}s", flush=True)
+          f"in {format_duration(perf_counter() - start)}", flush=True)
     plan['minimum_partitions'] = minimum_partitions(current, plan['partitions'])
     reason = reuse_reason(image, state, plan, force)
     remove, selected = changes(state['entries'], current) if reason is None else ([], sorted(current))

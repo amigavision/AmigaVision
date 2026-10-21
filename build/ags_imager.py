@@ -47,7 +47,7 @@
 
 import argparse
 from av_base_tree import directory_fingerprint, stage_directory
-from ags_image_update import prepare_plan, PLAN_NAME
+from ags_image_update import prepare_plan, PLAN_NAME, format_duration
 import ast
 import hashlib
 import json
@@ -91,15 +91,15 @@ def print_timing_summary(timings):
     total = sum(duration for _, duration in timings)
     print("Build timing summary:")
     for label, duration in timings:
-        print("  {:<24} {:>8.2f}s".format(label, duration))
-    print("  {:<24} {:>8.2f}s".format("total", total))
+        print("  {:<24} {:>9}".format(label, format_duration(duration)))
+    print("  {:<24} {:>9}".format("total", format_duration(total)))
 
 def print_collection_timing_summary(collection):
     if not getattr(collection, "timing", None):
         return
     print("AGS timing detail:")
     for label, duration in sorted(collection.timing.items()):
-        print("  {:<24} {:>8.2f}s".format(label, duration))
+        print("  {:<24} {:>9}".format(label, format_duration(duration)))
 
 
 def is_exclusion_key(key: str) -> bool:
@@ -416,13 +416,13 @@ def restore_hires_tree(cache_path, hires_path):
     if sys.platform == "darwin":
         result = subprocess.run(["/bin/cp", "-cpR", cache_path, hires_path], capture_output=True, text=True)
         if result.returncode == 0:
-            print(f" > Cloned hi-res tree in {perf_counter() - start:.2f}s")
+            print(f" > Cloned hi-res tree in {format_duration(perf_counter() - start)}")
             return
         # Other volumes may not support cloning. Discard any partial restore.
         util.rm_path(hires_path)
         print(" > Filesystem cloning unavailable; copying hi-res tree")
     util.copytree(cache_path, hires_path)
-    print(f" > Copied hi-res tree in {perf_counter() - start:.2f}s")
+    print(f" > Copied hi-res tree in {format_duration(perf_counter() - start)}")
 
 def hires_output_fingerprint(path):
     """Validate generated files without rereading all screenshot pixel data."""

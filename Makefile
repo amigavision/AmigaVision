@@ -367,7 +367,8 @@ clone-amiberry:
 	fi; \
 	end=$$(date +%s); \
 	cat "$$log"; \
-	echo "Amiberry clone time: $$((end - start))s"
+	elapsed=$$((end - start)); \
+	printf 'Amiberry clone time: %02dm%02ds\n' "$$((elapsed / 60))" "$$((elapsed % 60))"
 	@printf '\a'
 
 image-amiberry:
