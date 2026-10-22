@@ -69,7 +69,7 @@ import avs_util as util
 from avs_fs import build_pfs, calculate_pfs_partitions, extract_base_image, convert_filename_uae2a, get_base_hdf_cache_dir
 from avs_make import make_hires_tree, count_tree_entries, make_autoentries, make_runscripts, make_tree, reset_warning_state, update_progress, warn_missing_archive
 from avs_nsfw import make_nsfw_option
-from avs_make import report_missing_launcher_images, directory_cache_entries
+from avs_make import report_missing_launcher_images, directory_cache_entries, prepare_menu_ordering
 from avs_query import audit_missing_archive_entries, entry_is_notwhdl, get_amiga_whd_dir, get_archive_path, get_entry, get_missing_archive_entry, get_preferred_entry, get_whd_dir, sanitize_entry
 from avs_strings import strings
 from avs_types import EntryCollection
@@ -181,13 +181,16 @@ def prune_excluded_titles(menu, excluded_names: set[str], db: Connection, exclud
             if is_exclusion_key(key):
                 continue
             if isinstance(value, dict):
+                if any(value.get(k) for k in ('divider', 'file', 'favorites', 'exit')):
+                    next_item[key] = dict(value)
+                    continue
                 if menu_item_is_excluded(key, excluded_names, excluded_ids, db, match_cache):
                     continue
                 next_item[key] = value
                 continue
             if isinstance(value, list):
                 nested = prune_excluded_titles(value, excluded_names, db, excluded_ids, match_cache)
-                if nested or key in {"image", "note", "ordering", "rank", "hidden"}:
+                if nested or key in {"image", "note", "ordering", "rank", "hidden", "label"}:
                     next_item[key] = nested
                 continue
             next_item[key] = value
@@ -465,7 +468,7 @@ AVS_TREE_BEHAVIOR_FINGERPRINT = hash_payload([
     "launcher-on-DH1-hires-default-v2",
     fingerprint_file('build/avs_ecs.py'),
     fingerprint_file('configs/ecs-preferred-versions.json'),
-    fingerprint_python_defs("build/avs_make.py", ["make_tree", "make_entries", "make_entry", "make_autoentries", "make_runscripts", "make_runscript", "AVS_INFO_WIDTH", "AVS_INFO_HEIGHT", "make_note", "metadata_system", "metadata_blocks", "metadata_date", "metadata_wrap", "balanced_wrap", "wrap_note"]),
+    fingerprint_python_defs("build/avs_make.py", ["prepare_menu_ordering", "make_tree", "make_divider", "make_menu_item", "directory_cache_entries", "make_entries", "make_entry", "make_autoentries", "make_runscripts", "make_runscript", "AVS_INFO_WIDTH", "AVS_INFO_HEIGHT", "make_note", "metadata_system", "metadata_blocks", "metadata_date", "metadata_wrap", "balanced_wrap", "wrap_note"]),
     fingerprint_python_defs("build/avs_query.py", ["get_entry", "get_missing_archive_entry", "get_missing_archive_entry_by_id", "get_preferred_entry", "name_is_fuzzy", "get_runscript_paths", "get_amiga_whd_dir", "get_whd_slavename", "entry_is_notwhdl"]),
     fingerprint_python_defs("build/avs_compositor.py", ["compose", "out_iff"]),
 ])
@@ -1444,10 +1447,11 @@ def iter_requested_menu_names(node):
         return
     if isinstance(node, dict):
         for key, value in node.items():
-            if key in {"image", "note", "ordering", "rank", "hidden"}:
+            if key in {"image", "note", "ordering", "rank", "hidden", "label"}:
                 continue
             if isinstance(value, dict):
-                yield key
+                if not any(value.get(k) for k in ('divider', 'informational', 'file', 'favorites', 'exit')):
+                    yield key
             else:
                 yield from iter_requested_menu_names(value)
 
@@ -1659,6 +1663,7 @@ def main():
                 excluded_entry_ids = resolve_excluded_entry_ids(db, excluded_title_set)
                 print(" > Excluding {} Mini title(s) from config ({} resolved IDs)".format(len(excluded_titles), len(excluded_entry_ids)))
                 menu = prune_excluded_titles(menu, excluded_title_set, db, excluded_entry_ids)
+            menu = prepare_menu_ordering(menu)
             with open(runscript_template_path, 'r') as f:
                 runscript_template = f.read()
 
@@ -1889,6 +1894,12 @@ def main():
                 archive_extract_cache_keys = get_archive_extract_cache_keys(collection.ids())
 
         layers = []
+        # DH1/AVS is the shared-layer staging directory for AGA builds. Discard
+        # the previous hi-res output before staging, so removed/renamed assets
+        # cannot leak back into the medium-resolution source tree.
+        shared_layer = util.path(amiga_data_path, "AVS")
+        if shared_layer != amiga_avs_path:
+            util.rm_path(shared_layer)
 
         # copy layers
         with timed_step(timings, "copy layers"):
@@ -1962,8 +1973,10 @@ def main():
                 cache = directory_cache_entries(path, dirs, files, collection.path_sort_rank)
 
                 # A missing run file exits AVS; keep this action last at the root.
-                if path == amiga_avs_path:
-                    cache.append("F[ Exit to Workbench ]")
+                if path == amiga_avs_path and not any(
+                    row == 'FExit to Workbench' for row in cache
+                ):
+                    cache.append("FExit to Workbench")
 
                 if cache:
                     cachefile = "{}\n".format(len(cache))

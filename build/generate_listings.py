@@ -16,7 +16,7 @@ def main():
         if path.is_file():
             path.unlink()
 
-    all_games_root = src / "[ All Games - By Title ].avs"
+    all_games_root = src / "By Title.avs"
     if not all_games_root.is_dir():
         raise SystemExit(f"Missing all-games tree: {all_games_root}")
 

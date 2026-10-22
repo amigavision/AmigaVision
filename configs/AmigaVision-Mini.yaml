@@ -20,7 +20,7 @@
 - !include Lists/Games-Multiplayer.yaml
 - !include Lists/Mini-Exclusions.yaml
 
-- "[ Demo Scene ]":
+- "Demo Scene":
   - note: A sample of demo scene releases.
   - Dealer Demos:
     - note: Demos by Amiga dealers and hardware developers.

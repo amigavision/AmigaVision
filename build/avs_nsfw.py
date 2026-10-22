@@ -63,14 +63,14 @@ def make_nsfw_option(db, avs_path, collection):
     # Run cleanup after this script returns: AmigaDOS may lock an executing file.
     cleanup = ['; Remove the completed option after its executing script closes.', 'Wait 2']
     for root in ('Data:AVS/', 'Data:AVS-MedRes/'):
-        base = literal_pattern(root + '[ Options ].avs/Remove NSFW Titles')
+        base = literal_pattern(root + 'Options.avs/Remove NSFW Titles')
         cleanup.append('Delete >NIL: ' + shell_quote(base + '(.run|.txt|.iff|-QR.iff|-[1-9].iff)') + ' FORCE QUIET')
-        cleanup.append('Delete >NIL: ' + shell_quote(literal_pattern(root + '[ Options ].avs/.dir')) + ' FORCE QUIET')
+        cleanup.append('Delete >NIL: ' + shell_quote(literal_pattern(root + 'Options.avs/.dir')) + ' FORCE QUIET')
     cleanup.insert(1, 'FailAt 21')
     Path(avs_path, 'RemoveNSFWCleanup').write_text('\n'.join(cleanup) + '\n', encoding='latin-1')
     lines += ['Echo "NSFW titles removed."', 'Wait 3',
               'Run >NIL: Execute "AVS:RemoveNSFWCleanup"']
-    option = Path(avs_path) / '[ Options ].avs' / 'Remove NSFW Titles'
+    option = Path(avs_path) / 'Options.avs' / 'Remove NSFW Titles'
     option.parent.mkdir(parents=True, exist_ok=True)
     option.with_suffix('.run').write_text('\n'.join(lines) + '\n', encoding='latin-1')
     option.with_suffix('.txt').write_text(wrap_note(

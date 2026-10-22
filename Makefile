@@ -58,7 +58,7 @@ IMAGE_UPDATE_ARGS ?= --incremental
 IMAGE_CLONE_ARGS ?=
 BASE_IMAGE_ARGS ?=
 IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o ${AVSDEST}
-MINI_IMAGE_PREP_CMD = pipenv run build/avs_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists -d ${AVSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AVSDEST}
+MINI_IMAGE_PREP_CMD = pipenv run build/avs_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists -d "$(subst ",,${AVSCONTENT})/extra_dirs/LessMusic::DH1:Music" -o "$(subst ",,${AVSDEST})" --temp-dir "$(subst ",,${AVSTEMP})"
 TEST_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --auto-lists -o ${AVSDEST}
 TEST_DRY_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --only-avs-tree --auto-lists -o ${AVSDEST}
 ECS_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(ECS_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o ${AVSDEST}
@@ -86,7 +86,7 @@ help:
 		'Create or incrementally update AmigaVision.hdf using Amiberry. Use IMAGE_CLONE_ARGS=--full to force a complete rebuild.' \
 		'' \
 		'make distros' \
-		'Prompt for the release date, then package all uploadable platform-specific release artifacts from the built image.' \
+		'Prompt once for the release version and output directory, then build all distribution artifacts unattended.' \
 		'' \
 		'Other useful targets:' \
 		'' \
@@ -415,18 +415,7 @@ cd32:
 distros:
 	$(call print-start-time)
 	@echo "Building all the distros will take around an hour on a MacBook M1."
-	@check_path="$(subst ",,${DISTRO_OUT})"; \
-	while [ ! -d "$$check_path" ]; do \
-		check_path="$$(dirname "$$check_path")"; \
-	done; \
-	free_kb="$$(df -Pk "$$check_path" | awk 'NR==2 {print $$4}')"; \
-	if [ "$$free_kb" -lt 23068672 ]; then \
-		echo "Building all the distros requires 22GB or more of free space."; \
-		exit 1; \
-	fi
-	@$(MAKE) mini-image
-	@$(MAKE_LISTINGS_CMD)
-	@$(DISTRO_PACKAGE_PROMPT) all
+	@$(DISTRO_PACKAGE_PROMPT) --build-all all
 
 make-distros: distros
 

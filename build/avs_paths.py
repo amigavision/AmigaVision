@@ -15,7 +15,7 @@ def env_path(name):
     return value.strip().strip('"')
 
 def cache_root():
-    return util.path(env_path("HOME"), "Library", "Caches", "AmigaVision")
+    return env_path("AVSCACHE_ROOT") or util.path(env_path("HOME"), "Library", "Caches", "AmigaVision")
 
 def cache_generation_file():
     return util.path(cache_root(), "build-cache-generation.txt")

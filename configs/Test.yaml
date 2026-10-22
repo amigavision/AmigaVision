@@ -75,7 +75,7 @@
 
 - !include Lists/TestInclude/Test.yaml
 
-- "[ Demo Scene ]":
+- "Demo Scene":
   - note: A sample of demo scene releases.
   - !include Lists/TestInclude/Demos.yaml
   - Widescreen: !include Lists/TestInclude/DemosWide.yaml

@@ -421,8 +421,8 @@ def list_archive_contents(artifact_path, archive_tool=None, xz_tool=None, dry_ru
 
 def package_mister(args, output_dir, archive_tool):
     mister_root = Path(args.mister_root)
-    built_root = output_dir.parent
     main_hdf = Path(args.main_hdf)
+    built_root = main_hdf.parent.resolve()
     listings_dir = Path(args.listings_dir)
     require_dir(mister_root, "MiSTer distro root")
     require_dir(built_root, "Built MiSTer output root")
@@ -438,6 +438,10 @@ def package_mister(args, output_dir, archive_tool):
             stage_root,
             excluded_names={
                 "distros",
+                ".build",
+                stage_root.name,
+                output_dir.relative_to(built_root).parts[0]
+                if output_dir.is_relative_to(built_root) and output_dir != built_root else output_path.name,
                 "CD32-Output",
                 "AmigaVision.hdf",
                 "AmigaVision-ECS.hdf",

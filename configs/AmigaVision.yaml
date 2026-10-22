@@ -1,7 +1,7 @@
 --- # AVSImager menu
+- ordering: declared
 - About:
     informational: true
-    rank: 1
     note: |2
                     AmigaVision 2026.11.XX
           The Ultimate Amiga Game & Demo Scene Setup
@@ -11,25 +11,101 @@
              Artwork by PAL of Offence & Optiroc
            Launcher by Magervalp, Optiroc, StatMat
 
+- ----------------:
+    divider: true
+    label: ""
+
+- Favorites:
+    favorites: true
+
+- ----------------:
+    divider: true
+    label: ""
+
+- By Title: []
+- By Year: []
+- Non-English: []
+- !include Lists/Games-Multiplayer.yaml
+
+- ----------------:
+    divider: true
+    label: ""
+
 - !include Lists/Games-HallOfFame.yaml
 - !include Lists/Games-Charts.yaml
 - !include Lists/Games-Curated.yaml
+
+- ----------------:
+    divider: true
+    label: ""
+
 - !include Lists/Games-Decennial.yaml
 - !include Lists/Games-Focus.yaml
 - !include Lists/Games-Gameographies.yaml
-- !include Lists/Games-Multiplayer.yaml
 - !include Lists/Games-SpecialHardware.yaml
 
-- "[ Demo Scene ]":
+- ----------------:
+    divider: true
+    label: ""
+
+- Demo Scene:
+  - ordering: declared
   - note: A sample of demo scene releases.
+  - !include Lists/Demos.yaml
+  - !include Lists/Demos-Curated.yaml
+  - !include Lists/Demos-Spotlight.yaml
+  - Widescreen: !include Lists/Demos-Widescreen.yaml
+  - !include Lists/Demos-060.yaml
   - Dealer Demos:
     - note: Demos by Amiga dealers and hardware developers.
     - AmigaDealerDemo
     - demo-notwhdl--a1200shopdemoanz
     - demo-notwhdl--newtek-demoreel1
     - demo-notwhdl--newtek-demoreel3
-  - !include Lists/Demos.yaml
-  - !include Lists/Demos-Curated.yaml
-  - !include Lists/Demos-Spotlight.yaml
-  - Widescreen: !include Lists/Demos-Widescreen.yaml
-  - !include Lists/Demos-060.yaml
+  - Demos:
+      divider: true
+  - Demos - By Title:
+    - label: " By Title"
+  - Demos - By Group:
+      - label: " By Group"
+  - Demos - By Country:
+    - label: " By Country"
+  - Demos - By Year:
+    - label: " By Year"
+  - 1-64KB:
+    - label: " 1-64KB"
+  - Crack Intros:
+    - label: " Crack Intros"
+  - Disk Mags:
+      divider: true
+  - Disk Mags - By Title:
+    - label: " By Title"
+  - Disk Mags - By Date:
+    - label: " By Date"
+  - Music Disks:
+      divider: true
+  - Music Disks - By Title:
+    - label: " By Title"
+  - Music Disks - By Year:
+    - label: " By Year"
+  - Slide Shows: []
+  - ----------------:
+      divider: true
+      label: ""
+  - Random Demo:
+      file: true
+
+- ----------------:
+    divider: true
+    label: ""
+
+- Options: []
+
+- ----------------:
+    divider: true
+    label: ""
+
+- Random Game:
+    file: true
+- Exit to Workbench:
+    exit: true

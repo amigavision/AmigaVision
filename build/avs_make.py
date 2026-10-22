@@ -71,17 +71,44 @@ def add_timing(collection: EntryCollection, label: str, duration: float):
     collection.timing[label] = collection.timing.get(label, 0.0) + duration
 
 def directory_cache_entries(path, dirs, files, sort_ranks):
-    """Honor explicit ranks across folders and entries, then keep folders first."""
+    """Configured rows first, using their literal directory and script names."""
     ranked = []
     unranked = []
-    for names, suffix, prefix in ((dirs, ".avs", "D"), (files, ".run", "F")):
-        for name in util.sorted_natural([n.removesuffix(suffix) for n in names if n.endswith(suffix)]):
-            filename = util.path(path, name + suffix)
-            item = prefix + name
+    listed_files = set()
+    for name in util.sorted_natural([n for n in files if n.endswith('.menuitem')]):
+        filename = util.path(path, name)
+        prefix = Path(filename).read_text(encoding='ascii').strip()
+        label = name.removesuffix('.menuitem')
+        if prefix not in {'F', 'V', 'E'}:
+            raise ValueError(f'Invalid menu item: {filename}')
+        if prefix == 'F' and label + '.run' not in files:
+            raise FileNotFoundError(f'Configured menu script is missing: {path}/{label}.run')
+        listed_files.add(label + '.run')
+        row = ('F' if prefix == 'E' else prefix) + label
+        if filename in sort_ranks:
+            ranked.append((row, sort_ranks[filename]))
+        else:
+            unranked.append(row)
+    for names, suffix, prefix in ((dirs, '.avs', 'D'), (files, '.run', 'F')):
+        for name in util.sorted_natural([n for n in names if n.endswith(suffix) and n not in listed_files]):
+            filename = util.path(path, name)
+            item = prefix + name.removesuffix(suffix)
+            label_path = Path(filename + ".label")
+            if prefix == "D" and label_path.is_file():
+                item = "A" + name.removesuffix(suffix) + "\t" + label_path.read_text(encoding="latin-1")
             if filename in sort_ranks:
                 ranked.append((item, sort_ranks[filename]))
             else:
                 unranked.append(item)
+    for name in util.sorted_natural([n for n in files if n.endswith('.divider')]):
+        filename = util.path(path, name)
+        label = Path(filename).read_text(encoding='latin-1').strip()
+        # Amiga E StrCopy(..., 0) leaves the previous label unchanged.
+        item = 'S' + (label or ' ')
+        if filename in sort_ranks:
+            ranked.append((item, sort_ranks[filename]))
+        else:
+            unranked.append(item)
     return [item for item, _ in sorted(ranked, key=lambda item: item[1])] + unranked
 
 
@@ -169,6 +196,76 @@ def get_extra_image_paths(entry_id: str) -> list[tuple[Path, str]]:
 # -----------------------------------------------------------------------------
 # create entries from dictionary/tree
 
+def prepare_menu_ordering(node):
+    """Expand declared-order menus into automatic ranks before subtree caching.
+
+    Ranks remain an internal build detail. Unlisted/generated entries retain
+    their existing ordering and sort after the configured entries.
+    """
+    if not isinstance(node, list):
+        return node
+
+    def flatten(rows):
+        for row in rows:
+            if isinstance(row, list):
+                yield from flatten(row)
+            else:
+                yield row
+
+    def without_parent_ranks(rows):
+        result = []
+        for row in rows:
+            if isinstance(row, list):
+                result.append(without_parent_ranks(row))
+            elif isinstance(row, dict):
+                row = {key: value for key, value in row.items() if key != 'rank'}
+                if row:
+                    result.append(row)
+            else:
+                result.append(row)
+        return result
+
+    expanded = list(flatten(node))
+    declared = any(isinstance(row, dict) and row.get('ordering') == 'declared'
+                   for row in expanded)
+    metadata = {'image', 'note', 'ordering', 'rank', 'hidden', 'label'}
+    result = []
+    position = 0
+    for row in expanded if declared else node:
+        if isinstance(row, str):
+            position += 1
+            result.append({row: {'rank': position}} if declared else row)
+            continue
+        if isinstance(row, list):
+            result.append(prepare_menu_ordering(row))
+            continue
+        if not isinstance(row, dict):
+            result.append(row)
+            continue
+        updated = {}
+        for key, value in row.items():
+            if key == 'ordering' and value == 'declared':
+                continue
+            if key in metadata:
+                updated[key] = value
+                continue
+            position += 1
+            if isinstance(value, list):
+                child = prepare_menu_ordering(value)
+                if declared:
+                    child = [{'rank': position}] + without_parent_ranks(child)
+                updated[key] = child
+            elif isinstance(value, dict):
+                updated[key] = dict(value)
+                if declared:
+                    updated[key]['rank'] = position
+            else:
+                updated[key] = value
+        if updated:
+            result.append(updated)
+    return result
+
+
 def make_tree(
         db: Connection, collection: EntryCollection, avs_path, node,
         path=[], template=None, hidden=False, verbose=False
@@ -179,6 +276,7 @@ def make_tree(
         note = None
         ordering = None
         rank = None
+        label = None
 
         for item in node:
             # plain title
@@ -199,24 +297,80 @@ def make_tree(
                     note = str(item.pop("note"))
                 if "ordering" in item:
                     ordering = item.pop("ordering")
+                if "label" in item:
+                    label = item.pop("label")
                 if "rank" in item:
                     rank = item.pop("rank")
                 for key, value in item.items():
-                    if isinstance(value, dict):
+                    if isinstance(value, dict) and any(value.get(k) for k in ('file', 'favorites', 'exit')):
+                        if not hidden:
+                            make_menu_item(collection, avs_path, path, key, value)
+                    elif isinstance(value, dict) and value.get("divider"):
+                        if not hidden:
+                            make_divider(collection, avs_path, path, key, value)
+                    elif isinstance(value, dict):
                         # item has override options
                         entries += [(key, value)]
                     else:
                         # item is a subtree
                         hidden = hidden or item.get("hidden", False)
                         make_tree(db, collection, avs_path, value, path + [key], template=template, hidden=hidden, verbose=verbose)
-        make_entries(db, collection, avs_path, entries, path, note=note, image=image, ordering=ordering, rank=rank, template=template, hidden=hidden, verbose=verbose)
+        make_entries(db, collection, avs_path, entries, path, note=note, image=image, ordering=ordering, rank=rank, label=label, template=template, hidden=hidden, verbose=verbose)
 
 # -----------------------------------------------------------------------------
+def make_menu_item(collection, avs_path, path, name, options):
+    """Place a literal file or virtual Favorites/Exit row in declaration order."""
+    unknown = set(options) - {'file', 'favorites', 'exit', 'rank'}
+    kinds = [key for key in ('file', 'favorites', 'exit') if options.get(key)]
+    if unknown or len(kinds) != 1:
+        raise ValueError(f'Invalid menu item options for {name!r}: {options}')
+    if not name or len(name) > AVS_LIST_WIDTH or any(c in name for c in '\r\n\t/:\\'):
+        raise ValueError(f'Invalid literal menu name: {name!r}')
+    name.encode('latin-1')
+    base = Path(avs_path)
+    for folder in path:
+        base /= folder[:AVS_LIST_WIDTH].strip() + '.avs'
+    base.mkdir(parents=True, exist_ok=True)
+    marker = base / (name + '.menuitem')
+    marker.write_text({'file': 'F', 'favorites': 'V', 'exit': 'E'}[kinds[0]], encoding='ascii')
+    if 'rank' in options:
+        collection.path_sort_rank[str(marker)] = options['rank']
+
+
+def make_divider(collection, avs_path, path, label, options):
+    """Create a non-launchable row, with explicit rank matching folders/files."""
+    unknown = set(options) - {'divider', 'rank', 'label'}
+    if unknown:
+        raise ValueError(f"Divider {label!r}: unsupported options {sorted(unknown)}")
+    label = str(label).strip()
+    if not label or any(c in label for c in '\r\n'):
+        raise ValueError('Divider labels must be nonempty single lines')
+    text = options.get('label', label)
+    if not isinstance(text, str) or any(c in text for c in '\r\n'):
+        raise ValueError('Divider label must be a single-line string (or empty)')
+    text = text.strip()
+    display = text
+    if len(display) > AVS_LIST_WIDTH:
+        raise ValueError(f'Divider exceeds {AVS_LIST_WIDTH} characters: {display}')
+    display.encode('latin-1')
+    base = Path(avs_path)
+    for folder in path:
+        base /= folder[:AVS_LIST_WIDTH].strip() + '.avs'
+    base.mkdir(parents=True, exist_ok=True)
+    marker_name = sanitize_name(label)
+    if 'rank' in options:
+        marker_name += '.' + str(options['rank'])
+    marker = base / (marker_name + '.divider')
+    marker.write_text(display + '\n', encoding='latin-1')
+    if 'rank' in options:
+        collection.path_sort_rank[str(marker)] = options['rank']
+
+
 # create entries from list
 
 def make_entries(
         db: Connection, collection: EntryCollection, avs_path, entries, path,
-        note=None, image=None, ordering=None, rank=None, template=None, hidden=False, verbose=False
+        note=None, image=None, ordering=None, rank=None, label=None, template=None, hidden=False, verbose=False
     ):
     # make dir
     base_path = avs_path
@@ -224,6 +378,11 @@ def make_entries(
         for d in path:
             base_path = util.path(base_path, d[:AVS_LIST_WIDTH].strip() + ".avs")
     if not hidden: util.make_dir(base_path)
+
+    if label is not None and not hidden:
+        if not path or not isinstance(label, str) or not label or len(label) > AVS_LIST_WIDTH or any(c in label for c in "\r\n\t"):
+            raise ValueError(f"Invalid directory label: {label!r}")
+        Path(base_path + ".label").write_text(label, encoding="latin-1")
 
     # set dir sort rank
     if rank is not None:

@@ -29,7 +29,9 @@ The normal end-to-end release process is:
 3. `make image`
    Create the main `AmigaVision.hdf` image using the standard Amiberry-based clone process.
 4. `make distros`
-   Prompt for the release date, then package all platform-specific release artifacts from the built image.
+   Prompt once for the release version (default: today's date) and output directory, then build the Mini image and package all platform-specific releases without further prompts. Press Enter at either prompt to keep its default. The selected directory holds finished packages and a `.build` subdirectory for generated images, listings, caches, and temporary files, so a large external drive can handle the whole run. Existing main HDF and content sources are read from their configured locations.
+
+Full distro runs keep the emulator folders by default. Use `make distros EMULATORS_ARCHIVE=1` to create their 7z archive without adding another prompt. Noninteractive runs use `DISTRO_DATE` and `DISTRO_OUT` directly.
 
 ## Title video modes
 
@@ -227,3 +229,127 @@ and `ags_current` protocol filenames remain compatible with existing cores.
 The bundled launcher executables use the new paths, menu extension, and helper
 port name. Their names were patched in place with zero padding for shorter
 strings, preserving executable sizes, hunk layout, and relocation offsets.
+
+### Non-selectable menu dividers
+
+Menus with `ordering: declared` follow YAML declaration order after expanding
+`!include` files. Configured folders, entries and dividers appear first; generated
+or layered entries not listed in the YAML follow in their existing sort order.
+No per-entry ranks are needed. This setting applies only to that menu, so title
+collections keep their existing alphabetical, release, or numbered ordering.
+The main AmigaVision menu and its Demo Scene submenu enable this mode.
+
+```yaml
+- ordering: declared
+- About:
+    informational: true
+    note: About this collection.
+- Games:
+    divider: true
+- !include Lists/Games-HallOfFame.yaml
+- Spacer after games:
+    divider: true
+    label: ""
+- "Demo Scene":
+  - ordering: declared
+  - !include Lists/Demos.yaml
+  - !include Lists/Demos-Curated.yaml
+```
+
+A menu item with `divider: true` produces a non-selectable row without a
+directory, launch script, screenshot, or metadata panel. Labels render as
+`Games` exactly as written; brackets are never added automatically. An optional
+`label: ""` creates a completely blank row. Spacer names only identify their marker files. In declared-order menus, repeated
+spacer names are supported because their positions distinguish the files. In
+legacy menus, give repeated names distinct ranks. Labels must fit the
+30-character menu width. Supported divider options are `divider`, `label`, and
+`rank`. Legacy menus without `ordering: declared` still support explicit ranks;
+in declared mode these ranks are assigned automatically from the YAML order.
+
+### Literal directories and actions
+
+Menu keys are the actual directory or script names. An empty list reserves a
+folder's position and lets the generator or base layer populate it:
+
+```yaml
+- ordering: declared
+- Favorites:
+    favorites: true
+- By Title: []
+- By Year: []
+- Non-English: []
+- Demo Scene:
+  - ordering: declared
+  - !include Lists/Demos.yaml
+- Options: []
+- Random Game:
+    file: true
+- Exit to Workbench:
+    exit: true
+```
+
+`By Title` is `By Title.avs` on disk, `Options` is `Options.avs`, and `Random Game`
+uses `Random Game.run`. Folder labels can be shortened without changing their
+literal target names:
+
+```yaml
+- Demos - By Year:
+  - label: By Year
+- Music Disks - By Year:
+  - label: By Year
+```
+
+Both display “By Year”, while keeping separate directories and artwork.
+The optional `label` is direct folder metadata, not a reference identifier.
+`file: true` lists an existing `.run` script; a missing script is a build error.
+Favorites uses its configured path in AVS.conf. Exit uses the launcher's existing
+missing-run-file exit behavior. Explicit Favorites and Exit entries replace their
+default automatic positions.
+
+Small `.menuitem` files record these action types and their generated sort order
+through cached builds. They contain only a type character; their filenames are
+the literal menu names. The generated `.dir` uses ordinary `D`/`F` rows, `V` for
+Favorites, and `S` for dividers. Labeled directories use an `A` row containing
+the actual filename, a TAB, and its display label. A `.avs.label` sidecar carries
+this metadata through cached builds. The launcher keeps the real name for paths
+and artwork, and uses the label only for drawing and letter shortcuts.
+
+The generator stores a small `.divider` marker file and emits an `S` row in the
+menu's `.dir` cache. Blank rows contain a single space after `S`; a zero-length
+label would leave the previous label unchanged in the Amiga E parser. This needs the updated AVSMenu binaries in all three profiles;
+old binaries treat unknown prefixes as directories. Divider rows use the existing
+font and Copper gradient. Navigation skips them in both directions, when paging,
+when jumping by initial character, and when initializing/restoring selection.
+Consecutive dividers and leading/trailing dividers are supported. A menu containing
+only dividers has no highlighted or actionable row.
+
+Hi-res navigation combines the saved skin and one-bit text mask directly into
+the visible bitmap, writing each completed word without an intermediate clear
+or full-color staging copy. Constant background planes are left untouched.
+Selection text uses bitmap OR/clear blits, preserving pixels outside the glyph
+mask. This keeps edge scrolling responsive without exposing a cleared list.
+
+Medium-resolution and ECS navigation redraws compose the background, text and selection in a reusable
+off-screen Chip RAM bitmap. A completed viewport is copied to the visible
+RastPort without an extra frame wait; paging and scrolling no longer
+expose the intermediate background restore. The buffer is seeded from the screen
+only once; partial selection redraws copy only the dirty rows to the screen.
+The buffer uses one screen-sized
+bitmap, is freed before screen closure,
+and falls back to native drawing if allocation fails.
+
+`build/launcher/dividers.s` holds the 68000 wrappers and
+`build/launcher/patch_dividers.py` appends them to the recognized launcher versions
+without altering existing relocation records. The patcher requires vasm, validates
+known input hashes and hook instructions, and leaves already patched binaries
+unchanged. For example:
+
+```sh
+python3 build/launcher/patch_dividers.py data/avs-highres/AVSMenu \
+  --assembler /path/to/vasmm68k_mot --output /tmp/AVSMenu
+```
+
+The committed binaries already include the patch; ordinary image builds do not
+need vasm. Python integration checks are in `build/test_menu_dividers.py`. The
+additional `build/launcher/test_dividers_68k.py` checks execute the wrappers with
+machine68k and vasm; `AVS_TEST_MENU` can select any of the three binary paths.

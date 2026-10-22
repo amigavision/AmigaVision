@@ -148,7 +148,7 @@ def prepare_menu(avs_path):
     import os
     import shutil
     root = Path(avs_path)
-    for path in (root/'[ Options ].avs').glob('Launcher Res*'):
+    for path in (root/'Options.avs').glob('Launcher Res*'):
         if path.is_file():
             path.unlink()
     for directory, _, _ in os.walk(root, topdown=False):
@@ -234,7 +234,7 @@ def install_launcher(avs_path, collection, image_root='data/img_ecs', launcher_r
     config = Path(launcher_root)/'AVS.conf'
     for name in ['AVS.conf','AVS.conf.base']:
         shutil.copyfile(config, root/name)
-    for path in (root/'[ Options ].avs').glob('Launcher Res*'):
+    for path in (root/'Options.avs').glob('Launcher Res*'):
         if path.is_file():
             path.unlink()
     (root/'ecs-artwork-report.json').write_text(json.dumps({
