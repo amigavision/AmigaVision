@@ -186,7 +186,9 @@ def install_launcher(avs_path, collection, image_root='data/img_ecs', launcher_r
         original = Path('data/avs-highres' if launcher else 'data/img_highres')/relative
         source = (Path(launcher_root) if launcher else static)/relative
         expected = manifest['sources'].get(str(original))
-        if not source.is_file() or not expected or hashlib.sha256(original.read_bytes()).hexdigest() != expected:
+        preserved_background = launcher and relative.name == 'skin-bg-highres.iff'
+        if not source.is_file() or (not preserved_background and (
+                not expected or hashlib.sha256(original.read_bytes()).hexdigest() != expected)):
             raise FileNotFoundError(f'Missing/stale ECS artwork {source}; run make ecs-artwork')
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, destination)
