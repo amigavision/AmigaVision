@@ -16,7 +16,9 @@ BASELINES = {
 
 def remove_previous_patch(data, end, version):
     """Recover the validated baseline when upgrading earlier divider prototypes."""
-    base = struct.unpack_from('>I', data, end - (20 if version == 1 else 24 if version in (3, 4) else 36 if version in (7, 8) else 40 if version == 9 else 28))[0]
+    footer_offsets = {1: 20, 2: 28, 3: 24, 4: 24, 5: 28, 6: 28,
+                      7: 36, 8: 36, 9: 40, 10: 44, 11: 64, 12: 76, 13: 80, 14: 80}
+    base = struct.unpack_from('>I', data, end - footer_offsets[version])[0]
     result = bytearray(data[:32 + base] + data[end:])
     for offset in (20, 28):
         struct.pack_into('>I', result, offset, base // 4)
@@ -24,6 +26,16 @@ def remove_previous_patch(data, end, version):
                              (0x635a, 'b0ad0010'), (0x6a92, '4eaeffc4'),
                              (0x2ae2, '4e914a80')]:
         result[offset:offset + 4] = bytes.fromhex(original)
+    if version >= 11:
+        for runtime, original in [(0x5722, '0c8000000044'), (0x5a6e, '0c8000000044'),
+                                  (0x62f8, '2c002b46fff8'), (0x6110, '20082f00'),
+                                  (0x6270, '720f2c6cffd4'), (0x59d8, '4cdf00e0')]:
+            result[runtime + 32:runtime + 32 + len(bytes.fromhex(original))] = bytes.fromhex(original)
+    if version >= 12:
+        for runtime, original in [(0x599c, '4fef0004'), (0x5bdc, '2c6cfdf8'), (0x612c, '4fef0010')]:
+            result[runtime + 32:runtime + 36] = bytes.fromhex(original)
+    if version >= 13:
+        result[0x62a0:0x62a4] = bytes.fromhex('20082f00')
     if base == 0xa46c:
         result[0x9250:0x9254] = bytes.fromhex('4eaeffbe')
         result[0x6d62:0x6d66] = bytes.fromhex('4eaefda2')
@@ -36,12 +48,22 @@ def remove_previous_patch(data, end, version):
     return bytes(result)
 
 
-def patch(data, assembler):
+def patch(data, assembler, trace_input=False):
     end = 32 + struct.unpack_from('>I', data, 28)[0] * 4
-    if data[end - 52:end - 44] == b'AVSDIV10':
-        base, *entries = struct.unpack_from('>11I', data, end - 44)
-        return data, base, tuple(entries)
-    if data[end - 48:end - 40] == b'AVSDIV09':
+    if data[end - 88:end - 80] == b'AVSDIV14':
+        if not trace_input:
+            base, *entries = struct.unpack_from('>20I', data, end - 80)
+            return data, base, tuple(entries)
+        data = remove_previous_patch(data, end, 14)
+    elif data[end - 88:end - 80] == b'AVSDIV13':
+        data = remove_previous_patch(data, end, 13)
+    elif data[end - 84:end - 76] == b'AVSDIV12':
+        data = remove_previous_patch(data, end, 12)
+    elif data[end - 72:end - 64] == b'AVSDIV11':
+        data = remove_previous_patch(data, end, 11)
+    elif data[end - 52:end - 44] == b'AVSDIV10':
+        data = remove_previous_patch(data, end, 10)
+    elif data[end - 48:end - 40] == b'AVSDIV09':
         data = remove_previous_patch(data, end, 9)
     elif data[end - 44:end - 36] == b'AVSDIV08':
         data = remove_previous_patch(data, end, 8)
@@ -71,6 +93,8 @@ def patch(data, assembler):
     assert old_select[:2] == bytes.fromhex('6100') or old_select == bytes.fromhex('4eaefda2')
     base = struct.unpack_from('>I', data, 28)[0] * 4
     args = [assembler, '-Fbin', '-m68000', '-quiet', f'-DPATCH_BASE={base}']
+    if trace_input:
+        args.extend(['-DINPUT_TRACE=1', '-I' + str(Path(__file__).parent.resolve())])
     if old_select[:2] == bytes.fromhex('6100'):
         original = 0x6d62 - 30 + struct.unpack('>h', old_select[2:])[0]
         args.append(f'-DORIGINAL_SELECT={original}')
@@ -82,7 +106,7 @@ def patch(data, assembler):
         output = Path(folder) / 'dividers.bin'
         subprocess.run(args + ['-o', str(output), str(Path(__file__).with_name('dividers.s'))], check=True)
         blob = output.read_bytes()
-    entries = struct.unpack_from('>10I', blob)
+    entries = struct.unpack_from('>19I', blob)
     result = bytearray(data[:32 + base] + blob + data[32 + base:])
     for offset in (20, 28):
         struct.pack_into('>I', result, offset, (base + len(blob)) // 4)
@@ -105,6 +129,18 @@ def patch(data, assembler):
         struct.pack_into('>Hh', result, 0x6cb4, 0x6100, target - (0x6cb4 - 30))
         target = base + entries[8]
         struct.pack_into('>Hh', result, 0xa54e, 0x6100, target - (0xa54e - 30))
+    for runtime, original, index in [
+            (0x5722, '0c8000000044', 10), (0x5a6e, '0c8000000044', 10),
+            (0x62f8, '2c002b46fff8', 11), (0x6110, '20082f00', 12),
+            (0x6270, '720f2c6cffd4', 13), (0x59d8, '4cdf00e0', 14),
+            (0x599c, '4fef0004', 15), (0x5bdc, '2c6cfdf8', 16),
+            (0x612c, '4fef0010', 17), (0x6280, '20082f00', 18)]:
+        offset = runtime + 32
+        assert data[offset:offset + len(bytes.fromhex(original))] == bytes.fromhex(original), hex(runtime)
+        target = base + entries[index]
+        struct.pack_into('>Hh', result, offset, 0x6100, target - (runtime + 2))
+        if len(bytes.fromhex(original)) == 6:
+            result[offset + 4:offset + 6] = bytes.fromhex('4e71')
     return bytes(result), base, entries
 
 
@@ -112,8 +148,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('binary', type=Path)
     parser.add_argument('--assembler', default='/tmp/av-vasm/vasmm68k_mot')
+    parser.add_argument('--trace-input', action='store_true', help='Diagnostic build: save keyboard trace to Shared: on exit')
     parser.add_argument('--output', type=Path, required=True)
     args = parser.parse_args()
-    result, _, _ = patch(args.binary.read_bytes(), args.assembler)
+    result, _, _ = patch(args.binary.read_bytes(), args.assembler, trace_input=args.trace_input)
     args.output.write_bytes(result)
     print(f'{args.output}: {len(result)} bytes')

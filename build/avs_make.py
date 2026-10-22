@@ -601,7 +601,8 @@ def make_entry(collection: EntryCollection, avs_path, entry, path, rank=None, so
             meta_title = meta_title.replace(", The", "")
         if len(meta_title) > max_w:
             meta_title = meta_title[:max_w - 2].strip() + ".."
-        if meta_title != unshortened_title:
+        # Favorites reads this canonical name instead of the numbered menu filename.
+        if meta_title != unshortened_title or rank:
             metadata["title"] = meta_title
         if entry["category"] and entry["category"] != "Game":
             if entry.get("subcategory", "").lower().startswith("music disk"):

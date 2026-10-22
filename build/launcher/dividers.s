@@ -1,6 +1,6 @@
 ; Motorola 68000 wrappers. Patch addresses are runtime addresses (file offset - 32).
  org PATCH_BASE
- dc.l parse_type-PATCH_BASE,redraw_gate-PATCH_BASE,char_match-PATCH_BASE,select_guard-PATCH_BASE,favorites_guard-PATCH_BASE,display_text-PATCH_BASE,buffered_redraw-PATCH_BASE,buffer_cleanup-PATCH_BASE,fast_template-PATCH_BASE,direct_nav-PATCH_BASE
+ dc.l parse_type-PATCH_BASE,redraw_gate-PATCH_BASE,char_match-PATCH_BASE,select_guard-PATCH_BASE,favorites_guard-PATCH_BASE,display_text-PATCH_BASE,buffered_redraw-PATCH_BASE,buffer_cleanup-PATCH_BASE,fast_template-PATCH_BASE,direct_nav-PATCH_BASE,return_compare-PATCH_BASE,search_prepare-PATCH_BASE,favorite_assets-PATCH_BASE,favorite_remove_assets-PATCH_BASE,action_complete-PATCH_BASE,char_record-PATCH_BASE,char_wait-PATCH_BASE,favorite_status_done-PATCH_BASE,favorite_removed_message-PATCH_BASE
 parse_type:
  movem.l d0-d1/a0-a1,-(sp)
  move.l -76(a5),a0
@@ -198,30 +198,298 @@ is_empty:
 
 ; Letter shortcuts must continue searching past separator labels.
 char_match:
- movem.l d0-d1/a0,-(sp)
+ movem.l d0-d2/a0-a2,-(sp)
  move.l d7,a0
  cmp.l #4,8(a0)
  beq char_skip
  move.l 4(a0),d1
  swap d1
  and.l #$ffff,d1
- beq char_compare
  move.l (a0),a0
  adda.l d1,a0
+char_indent:
+ cmp.b #32,(a0)
+ bne char_prefix
+ addq.l #1,a0
+ bra char_indent
+char_prefix:
+ lea search_state(pc),a1
+ moveq #0,d2
+ move.w 16(a1),d2
+ beq char_single
+ lea 18(a1),a1
+ subq.w #1,d2
+char_next:
  moveq #0,d0
-label_shortcut:
  move.b (a0)+,d0
- cmp.b #32,d0
- beq label_shortcut
+ cmp.b #97,d0
+ blo char_upper
+ cmp.b #122,d0
+ bhi char_upper
+ sub.b #32,d0
+char_upper:
+ cmp.b (a1)+,d0
+ bne char_result
+ dbra d2,char_next
+ bra char_result
+char_single:
+ moveq #0,d0
+ move.b (a0),d0
  and.b #$df,d0
-char_compare:
  cmp.l 16(a5),d0
- movem.l (sp)+,d0-d1/a0
+char_result:
+ movem.l (sp)+,d0-d2/a0-a2
  rts
 char_skip:
  tst.l d7
- movem.l (sp)+,d0-d1/a0
+ bra char_result
+
+; Treat keypad Enter exactly like Return, including the key-release wait.
+return_compare:
+ cmp.l #$43,d0
+ beq return_equal
+ cmp.l #$44,d0
  rts
+return_equal:
+ cmp.l d0,d0
+ rts
+
+; Called once for each accepted type-to-jump key, before the native search loop.
+search_prepare:
+ movem.l d0-d7/a0-a6,-(sp)
+ lea search_state(pc),a3
+ move.l 16(a5),d4
+ move.l d5,a0
+ move.l 8(a0),a0
+ move.l 20(a0),d3
+ lea search_stamp(pc),a0
+ move.l a0,d1
+ move.l -44(a4),a6
+ jsr -192(a6) ; DOS DateStamp: days, minutes, ticks (50 per second)
+ lea search_state(pc),a3
+ lea search_stamp(pc),a0
+ move.l 4(a0),d0
+ mulu #3000,d0
+ add.l 8(a0),d0
+ move.l d0,d1
+ sub.l 4(a3),d1
+ cmp.l (a3),d3
+ bne search_reset
+ cmp.l #50,d1
+ bhs search_reset
+ cmp.l 8(a3),d5
+ bne search_reset
+ cmp.l 12(a3),d4
+ bne search_append
+ cmp.w #1,16(a3)
+ beq search_record ; repeated initial letter cycles through matches
+search_append:
+ moveq #0,d2
+ move.w 16(a3),d2
+ cmp.w #63,d2
+ bhs search_record
+ move.b d4,18(a3,d2.w)
+ addq.w #1,16(a3)
+ bra search_record
+search_reset:
+ move.w #1,16(a3)
+ move.b d4,18(a3)
+search_record:
+ ifd INPUT_TRACE
+ bsr trace_event
+trace_search_after:
+ endif
+ move.l d3,(a3)
+ move.l d0,4(a3)
+ move.l d5,8(a3)
+ move.l d4,12(a3)
+ movem.l (sp)+,d0-d7/a0-a6
+ move.l d0,d6
+ move.l d6,-8(a5)
+ ; Refining a prefix must consider the currently selected item first.
+ lea search_state(pc),a0
+ cmp.w #1,16(a0)
+ bls search_prepared
+ ; The native loop stops when it reaches start_index. Only start one item
+ ; earlier if the current item already matches; otherwise that first failed
+ ; comparison would immediately terminate the whole refined search.
+ movem.l d0-d7/a0-a6,-(sp)
+ move.l d5,a0
+ move.l 8(a0),a0
+ move.l 20(a0),a0
+ move.l d6,d0
+ lsl.l #2,d0
+ move.l (a0,d0.l),d7
+ bsr char_match
+ movem.l (sp)+,d0-d7/a0-a6
+ bne search_prepared
+ subq.l #1,d6
+search_prepared:
+ rts
+
+; Additional Favorites assets use the same native path and string helpers.
+action_complete:
+ ifd INPUT_TRACE
+ tst.l d0
+ beq.s trace_action_none
+ cmp.l #9,d0
+ beq.s trace_action_log
+ move.l a0,-(sp)
+ lea search_state(pc),a0
+ tst.w 16(a0)
+ move.l (sp)+,a0
+ beq.s trace_action_none
+trace_action_log:
+ bsr trace_event
+trace_action_after:
+trace_action_none:
+ endif
+ tst.l d0
+ beq action_keeps_search
+ cmp.l #9,d0
+ beq action_keeps_search
+ move.l a0,-(sp)
+ lea search_state(pc),a0
+ clr.w 16(a0)
+ move.l (sp)+,a0
+action_keeps_search:
+ move.l (sp)+,a1
+ movem.l (sp)+,d5-d7
+ jmp (a1)
+favorite_assets:
+ movem.l d0-d7/a0-a6,-(sp)
+ lea favorite_qr(pc),a2
+ bsr favorite_copy_one
+ lea favorite_tmd(pc),a2
+ bsr favorite_copy_one
+ ; JAM1 text does not erase the previous progress message.
+ move.l -8(a5),a0
+ move.l (a0),a1
+ move.l 8(a1),a1
+ jsr (a1) ; clear_text restores the skin
+ movem.l (sp)+,d0-d7/a0-a6
+ ; Replay MOVE.L A0,D0 / MOVE.L D0,-(SP) around the BSR return address.
+ move.l a0,d0
+ move.l (sp)+,a1
+ move.l d0,-(sp)
+ jmp (a1)
+favorite_copy_one:
+ move.l a2,d5 ; E string helpers use a2/a3 as scratch registers
+ move.l -28(a5),-(sp) ; src E-string
+ move.l a2,-(sp)
+ move.l -8(a5),a0
+ move.l (a0),a1
+ move.l 24(a1),a1
+ jsr (a1) ; get_item_path(src, suffix)
+ addq.l #8,sp
+ move.l -28(a5),-(sp)
+ bsr.w $9fce ; FileLength
+ addq.l #4,sp
+ cmp.l #-1,d0
+ beq favorite_copy_done
+ move.l -20(a5),-(sp) ; dst
+ move.l -36(a5),-(sp) ; dst_path
+ pea -1.w
+ bsr.w $9c10 ; StrCopy
+ lea 12(sp),sp
+ move.l -20(a5),-(sp)
+ move.l -12(a5),-(sp) ; canonical dst_name
+ pea -1.w
+ bsr.w $9c4a ; StrAdd
+ lea 12(sp),sp
+ move.l -20(a5),-(sp)
+ move.l d5,-(sp)
+ pea -1.w
+ bsr.w $9c4a
+ lea 12(sp),sp
+ move.l -20(a5),d1
+ move.l -28(a5),d2
+ moveq #-1,d3
+ move.l -44(a4),a6
+ jsr -444(a6) ; MakeLink(dst, src, LINK_SOFT), as in native Favorites
+favorite_copy_done:
+ rts
+favorite_remove_assets:
+ movem.l d0-d7/a0-a6,-(sp)
+ lea favorite_qr(pc),a2
+ bsr favorite_remove_one
+ lea favorite_tmd(pc),a2
+ bsr favorite_remove_one
+ movem.l (sp)+,d0-d7/a0-a6
+ moveq #15,d1
+ move.l -44(a4),a6
+ rts
+favorite_remove_one:
+ move.l d6,-(sp)
+ move.l a2,-(sp)
+ move.l d7,a0
+ move.l (a0),a1
+ move.l 24(a1),a1
+ jsr (a1)
+ addq.l #8,sp
+ move.l d6,d1
+ move.l -44(a4),a6
+ jsr -72(a6) ; DeleteFile; missing optional assets are harmless
+ rts
+char_record:
+ ifd INPUT_TRACE
+ tst.l d0
+ beq.s trace_key_none
+ bsr trace_event
+trace_key_after:
+trace_key_none:
+ endif
+ move.l a0,-(sp)
+ lea search_key(pc),a0
+ move.w d6,(a0)
+ move.l (sp)+,a0
+ ; Replay argument cleanup after rawkey_to_ascii.
+ move.l (sp)+,a1
+ addq.l #4,sp
+ jmp (a1)
+char_wait:
+ movem.l d0-d7/a0-a6,-(sp)
+char_wait_same:
+ move.l -520(a4),a6
+ jsr -48(a6)
+ and.l #$ffff,d0
+ cmp.w search_key(pc),d0
+ beq char_wait_same
+ movem.l (sp)+,d0-d7/a0-a6
+ ; A different held key must be handled on the next iteration, not swallowed.
+ addq.l #4,sp
+ bra.w $5bf4
+favorite_status_done:
+ movem.l d0-d7/a0-a6,-(sp)
+ moveq #25,d1
+ move.l -44(a4),a6
+ jsr -198(a6) ; show confirmation for half a second
+ move.l -8(a5),a0
+ bsr.w $6e40 ; load_text clears the confirmation and restores the description
+ movem.l (sp)+,d0-d7/a0-a6
+ move.l (sp)+,a1
+ lea 16(sp),sp
+ jmp (a1)
+favorite_removed_message:
+ movem.l d0-d7/a0-a6,-(sp)
+ move.l d7,a0
+ move.l (a0),a1
+ move.l 8(a1),a1
+ jsr (a1) ; clear Removing favorite... before the completion message
+ movem.l (sp)+,d0-d7/a0-a6
+ move.l a0,d0
+ move.l (sp)+,a1
+ move.l d0,-(sp)
+ jmp (a1)
+ ifd INPUT_TRACE
+ include "typing_trace.s"
+ endif
+search_key: dc.w $ff
+favorite_qr: dc.b '-QR.iff',0
+favorite_tmd: dc.b '.tmd',0
+ cnop 0,4
+search_state: dcb.b 84,0
+search_stamp: dcb.l 3,0
 
 ; Graphics Text receives the packed label offset/length only for A rows.
 display_text:
@@ -443,6 +711,9 @@ buffer_full_span:
  rts
 
 buffer_cleanup:
+ ifd INPUT_TRACE
+ bsr trace_dump
+ endif
  movem.l d0-d7/a0-a6,-(sp)
  move.l buffer_pixels(pc),d0
  beq buffer_freed
@@ -701,5 +972,5 @@ buffer_rport: dcb.b 100,0
  cnop 0,4
 previous:
  dcb.l 4,0
- dc.b "AVSDIV10"
- dc.l PATCH_BASE,parse_type-PATCH_BASE,redraw_gate-PATCH_BASE,char_match-PATCH_BASE,select_guard-PATCH_BASE,favorites_guard-PATCH_BASE,display_text-PATCH_BASE,buffered_redraw-PATCH_BASE,buffer_cleanup-PATCH_BASE,fast_template-PATCH_BASE,direct_nav-PATCH_BASE
+ dc.b "AVSDIV14"
+ dc.l PATCH_BASE,parse_type-PATCH_BASE,redraw_gate-PATCH_BASE,char_match-PATCH_BASE,select_guard-PATCH_BASE,favorites_guard-PATCH_BASE,display_text-PATCH_BASE,buffered_redraw-PATCH_BASE,buffer_cleanup-PATCH_BASE,fast_template-PATCH_BASE,direct_nav-PATCH_BASE,return_compare-PATCH_BASE,search_prepare-PATCH_BASE,favorite_assets-PATCH_BASE,favorite_remove_assets-PATCH_BASE,action_complete-PATCH_BASE,char_record-PATCH_BASE,char_wait-PATCH_BASE,favorite_status_done-PATCH_BASE,favorite_removed_message-PATCH_BASE
