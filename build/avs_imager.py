@@ -67,7 +67,7 @@ from sqlite3 import Connection
 import avs_paths as paths
 import avs_util as util
 from avs_fs import build_pfs, calculate_pfs_partitions, extract_base_image, convert_filename_uae2a, get_base_hdf_cache_dir
-from avs_make import make_hires_tree, count_tree_entries, make_autoentries, make_runscripts, make_tree, reset_warning_state, update_progress, warn_missing_archive
+from avs_make import count_tree_entries, make_autoentries, make_runscripts, make_tree, reset_warning_state, update_progress, warn_missing_archive
 from avs_nsfw import make_nsfw_option
 from avs_make import report_missing_launcher_images, directory_cache_entries, prepare_menu_ordering
 from avs_query import audit_missing_archive_entries, entry_is_notwhdl, get_amiga_whd_dir, get_archive_path, get_entry, get_missing_archive_entry, get_preferred_entry, get_whd_dir, sanitize_entry
@@ -284,153 +284,22 @@ def parallel_tree_inventory(path, workers=4):
     return ordered_inventory(rows)
 
 
-def hires_inventory_fingerprint(rows):
-    return hash_payload([
-        {"path": row["path"], "is_dir": True} if row["is_dir"] else row
-        for row in rows if os.path.basename(row["path"]) != ".DS_Store"
-    ])
-
 def hash_payload(payload) -> str:
     return hashlib.sha1(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
-def launcher_content_fingerprint(path: str, file_hashes=None) -> str:
-    """Ignore rewritten timestamps while detecting every launcher input change."""
-    digest = hashlib.sha1()
-    previous = dict(file_hashes or {})
-    if file_hashes is not None:
-        file_hashes.clear()
-    for relative_root, dirs, files in walk_tree_stats(path):
-        digest.update(json.dumps([relative_root or ".", [row[0] for row in dirs]]).encode("utf-8"))
-        for name, stat, _ in files:
-            if name == ".DS_Store":
-                continue
-            relative = os.path.join(relative_root, name)
-            full_path = os.path.join(path, relative)
-            signature = [stat.st_dev, stat.st_ino, stat.st_size, stat.st_mtime_ns, stat.st_ctime_ns]
-            cached = previous.get(relative)
-            if cached and cached[:-1] == signature:
-                content_hash = cached[-1]
-            else:
-                file_digest = hashlib.sha1()
-                with open(full_path, "rb") as source:
-                    for block in iter(lambda: source.read(1024 * 1024), b""):
-                        file_digest.update(block)
-                content_hash = file_digest.hexdigest()
-            if file_hashes is not None:
-                file_hashes[relative] = signature + [content_hash]
-            digest.update(json.dumps([name, content_hash]).encode("utf-8"))
-    return digest.hexdigest()
-
 def build_or_reuse_hires_launcher(avs_path, hires_path, collection, workspace_state, append_delta=None, source_trees=None):
-    # Full builds replace DH0. Keep the reusable tree beside it, not inside it.
-    cache_path = util.path(os.path.dirname(os.path.dirname(hires_path)), ".hires-launcher-cache")
-    manifest_path = cache_path + ".json"
-    try:
-        with open(manifest_path, encoding="utf-8") as source:
-            manifest = json.load(source)
-    except (OSError, ValueError):
-        manifest = {}
-    file_hashes = dict(manifest.get("medium_file_hashes", {}))
-    previous_hashes = dict(file_hashes)
-    medium_fingerprint = launcher_content_fingerprint(avs_path, file_hashes)
-    hires_basis = {
-        "assets": [source_trees[root] if source_trees is not None and root in source_trees else fingerprint_tree(root)
-                   for root in ("data/avs-highres", "data/img_highres")],
-        "behavior": fingerprint_python_defs("build/avs_make.py", ["make_hires_tree", "make_hires_artwork"]),
-        "nsfw_artwork": fingerprint_file("build/avs_artwork.py"),
-        "encoder": [fingerprint_file("build/repair_hires_palettes.py"), fingerprint_file("build/iff_ilbm.py")],
-    }
-    cache_key = hash_payload({"medium_tree": medium_fingerprint,
-                              "image_entries": collection.image_entries, **hires_basis})
-    # New title artwork may be added, but changed encoder/rendering behavior
-    # always requires replacing the entire hi-res output.
-    rendering_basis = {k: v for k, v in hires_basis.items() if k != "assets"}
-    staged_rows = (fingerprint_tree(hires_path, workers=4)
-                   if util.is_dir(hires_path) and (manifest.get("key") == cache_key or append_delta is not None)
-                   else None)
-    staged_output = hires_inventory_fingerprint(staged_rows) if staged_rows is not None else None
-    if (append_delta is not None and manifest.get("key") != cache_key and manifest.get("output") == staged_output
-            and manifest.get("rendering_basis") == rendering_basis and util.is_dir(hires_path)):
-        changed = [name for name, value in file_hashes.items()
-                   if previous_hashes.get(name, [None])[-1] != value[-1]]
-        # The append path cannot remove files. Unexpected changes use the normal
-        # complete rebuild, including deletions introduced by a layer.
-        if previous_hashes.keys() <= file_hashes.keys():
-            with tempfile.TemporaryDirectory(prefix="hires-append-", dir=os.path.dirname(hires_path)) as temporary:
-                medium = Path(temporary, "medium")
-                medium.mkdir()
-                for name in changed:
-                    target = medium / name
-                    target.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.copy2(Path(avs_path, name), target)
-                output = Path(temporary, "hires")
-                sparse_collection = EntryCollection()
-                changed_names = set(changed)
-                suffixes = [".iff", "-QR.iff"] + [f"-{i}.iff" for i in range(1, 10)]
-                sparse_collection.image_entries = {
-                    name: entry_id for name, entry_id in collection.image_entries.items()
-                    if name in append_delta.image_entries or any(name + suffix in changed_names for suffix in suffixes)
-                }
-                make_hires_tree(str(medium), str(output), sparse_collection)
-                # Invalidate first so interrupted merges cannot be reused.
-                Path(manifest_path).unlink(missing_ok=True)
-                # copytree uses copy2, preserving the known source file mtimes.
-                # Update only this sparse inventory instead of rescanning DH1.
-                updated = {row["path"]: row for row in staged_rows}
-                updated.update({row["path"]: row for row in fingerprint_tree(str(output))})
-                util.copytree(str(output), hires_path)
-                staged_rows = ordered_inventory(updated.values())
-            staged_output = hires_inventory_fingerprint(staged_rows)
-            manifest = {"key": cache_key, "output": staged_output}
-            print(" > Appended hi-res title files and updated directory indexes")
-    staged_valid = (manifest.get("key") == cache_key and util.is_dir(hires_path)
-                    and manifest.get("output") == staged_output)
-    if staged_valid:
-        print(" > Reusing staged hi-res launcher tree")
-    else:
-        cached_rows = fingerprint_tree(cache_path, workers=4) if manifest.get("key") == cache_key and util.is_dir(cache_path) else None
-        if cached_rows is not None and manifest.get("output") == hires_inventory_fingerprint(cached_rows):
-            print(" > Restoring cached hi-res launcher tree")
-        else:
-            print(" > Building hi-res launcher cache")
-            if os.path.exists(manifest_path):
-                os.remove(manifest_path)
-            make_hires_tree(avs_path, cache_path, collection)
-            cached_rows = fingerprint_tree(cache_path, workers=4)
-            manifest = {"key": cache_key, "output": hires_inventory_fingerprint(cached_rows)}
-        util.rm_path(hires_path)
-        restore_hires_tree(cache_path, hires_path)
-        staged_rows = cached_rows
-    report_missing_launcher_images(
-        avs_path, hires_path, collection,
-        medium_files=file_hashes,
-        hires_files=(row["path"] for row in staged_rows if not row["is_dir"]))
-    manifest["rendering_basis"] = rendering_basis
-    manifest["medium_file_hashes"] = file_hashes
-    temporary = manifest_path + ".tmp"
-    with open(temporary, "w", encoding="utf-8") as destination:
-        json.dump(manifest, destination)
-    os.replace(temporary, manifest_path)
-    workspace_state["hires_cache_key"] = cache_key
-    workspace_state["hires_output_fingerprint"] = manifest["output"]
+    from avs_hires_cache import sync_hires_tree
+    cache_path = Path(hires_path).parent.parent / '.hires-launcher-cache'
+    # The previous tree waits outside DH1 while layers are merged into medium.
+    # Publish by rename on the same filesystem, without a second full copy.
+    outputs = sync_hires_tree(avs_path, cache_path, collection, str(cache_path) + '.files.json')
+    util.rm_path(hires_path)
+    os.replace(cache_path, hires_path)
+    Path(str(cache_path) + '.active').unlink(missing_ok=True)
+    report_missing_launcher_images(avs_path, hires_path, collection, hires_files=outputs)
+    workspace_state.pop('hires_cache_key', None)
+    workspace_state.pop('hires_output_fingerprint', None)
 
-def restore_hires_tree(cache_path, hires_path):
-    """Use APFS copy-on-write clones rather than copying gigabytes of pixels."""
-    start = perf_counter()
-    if sys.platform == "darwin":
-        result = subprocess.run(["/bin/cp", "-cpR", cache_path, hires_path], capture_output=True, text=True)
-        if result.returncode == 0:
-            print(f" > Cloned hi-res tree in {format_duration(perf_counter() - start)}")
-            return
-        # Other volumes may not support cloning. Discard any partial restore.
-        util.rm_path(hires_path)
-        print(" > Filesystem cloning unavailable; copying hi-res tree")
-    util.copytree(cache_path, hires_path)
-    print(f" > Copied hi-res tree in {format_duration(perf_counter() - start)}")
-
-def hires_output_fingerprint(path):
-    """Validate generated files without rereading all screenshot pixel data."""
-    return hires_inventory_fingerprint(fingerprint_tree(path, workers=4))
 
 def fingerprint_python_defs(path: str, names: list[str]) -> str:
     with open(path, "r", encoding="utf-8") as f:
@@ -1719,6 +1588,13 @@ def main():
             util.rm_path(util.path(amiga_data_path, launcher_name))
         for launcher_name in ("AVS", "AVS-MedRes", "AVS-HiRes"):
             util.rm_path(util.path(amiga_boot_path, launcher_name))
+
+        # Preserve the existing hi-res files outside DH1 while shared layers
+        # use AVS as their staging name. Subsequent runs only rename this tree.
+        if args.chipset_profile == 'any':
+            from avs_hires_cache import preserve_hires_tree
+            preserve_hires_tree(Path(amiga_data_path) / 'AVS',
+                                Path(clone_path) / '.hires-launcher-cache')
 
         # Remove obsolete destinations before base layers populate AVS again.
         util.rm_path(util.path(amiga_data_path, "AVS"))
