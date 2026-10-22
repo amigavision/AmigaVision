@@ -33320,7 +33320,8 @@
     "data/img_highres/qr/game-notwhdl--championshipmanager94-ese-qr.iff": "d63216ee71fe3a3bda9722c0b2983254e8383b68cd98999f17f285a7c8923906",
     "data/img_highres/qr/game-notwhdl--skillgrid-qr.iff": "757f523d17dd1fe0cebcca8cfb3c90f5d8c4b7822f1b9e15a1ffabd38539ffce",
     "data/avs-highres/About-qr.iff": "925bd09de6b116cc49832efa7fb5d66141da2c0f1dc592e3f25780de95b6e0a2",
-    "data/avs-highres/skin-bg-highres.iff": "650311c004ee133615243dd53265f493383451d460cd2dc86041faf92ae997e3",
-    "data/avs-highres/AmigaVisionEmpty.iff": "0ef3678f0406d01d000803ff343abcbf0b5c8659aac0ebe1b52f4dea3b9cab71"
+    "data/avs-highres/AmigaVisionBG.iff": "e463c8e276e085e09fa63dffa2a77a11c5d6c07a0326c65fb585b51eda6b1119",
+    "data/avs-highres/AmigaVisionEmpty.iff": "0ef3678f0406d01d000803ff343abcbf0b5c8659aac0ebe1b52f4dea3b9cab71",
+    "data/avs-highres/skin-bg-highres.iff": "650311c004ee133615243dd53265f493383451d460cd2dc86041faf92ae997e3"
   }
 }

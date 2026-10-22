@@ -290,7 +290,7 @@ def main():
     checksums = write_checksums(args.output)
     checksum = checksums['sha256']
     md5_checksum = checksums['md5']
-    print(f'Created {args.output}\nSHA256 {checksum}\nMD5 {md5_checksum}\nPrototype: use a 32 GB or larger card; hardware testing required.\nContains the supplied Kickstart ROM; distribute only to licensed testers.')
+    print(f'Created {args.output}\nSHA256 {checksum}\nMD5 {md5_checksum}\nPrototype: hardware testing required.')
 
 
 if __name__ == '__main__':

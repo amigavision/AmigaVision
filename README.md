@@ -34,9 +34,8 @@ PiStorm filenames use `AmigaVision-PiStormAGA-<date>.img.xz` or
 All distro packaging targets write these checksum files beside their finished
 release archives. Each checksum refers to the archive itself. The image has
 a 64 MiB FAT32 boot partition and an embedded Amiga RDB partition. All boot files and the embedded HDF are checked
-before compression. Flash the decompressed **whole image** to a **32 GB or larger
-SD card**. This erases the destination card. It includes the supplied Kickstart
-ROM, so share it only with testers licensed to use that ROM.
+before compression. Flash the decompressed **whole image** to an SD card.
+This erases the destination card.
 
 This prototype uses the Amiga's native video output and the internal WHDSaves
 fallback. It does not configure RTG or networking. Hardware testers should report

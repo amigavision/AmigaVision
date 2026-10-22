@@ -152,15 +152,16 @@ The public HDF is replaced only after the emulator confirms success and PFS has
 had time to flush writes. Failed or interrupted clones preserve the previous
 image and manifest. A lock prevents concurrent clones to the same output.
 
-Main and ECS images are capped at **16,000,000,000 bytes (16 GB decimal)**,
-rounded down to whole cylinders. DH0 receives its normal free-space reserve plus
-**200,000,000 extra bytes (200 MB decimal)**. DH1 gets the rest of the image.
+Main and ECS images are capped at **15,800,000,000 bytes (15.8 GB decimal)**,
+rounded down to whole cylinders, leaving room for PiStorm boot partitions on
+16 GB SD cards. DH0 receives its normal free-space reserve plus
+**100,000,000 extra bytes (100 MB decimal)**. DH1 gets the rest of the image.
 The Mini keeps its existing payload-sized allocation for FAT32 compatibility.
 
 Once an image is built, its partition boundaries stay fixed during incremental
 updates. Added files consume the existing free space; they do not resize DH0 or
 DH1. If a partition no longer fits, a full rebuild can repartition within the same
-16 GB cap. A payload that cannot fit that cap fails without replacing the working
+15.8 GB cap. A payload that cannot fit that cap fails without replacing the working
 image. Changes to the size cap, configuration profile, or PFS filesystem binary
 also trigger a full rebuild. Shell-sensitive deletion paths that cannot be safely
 represented in an AmigaDOS script fall back to a full rebuild.

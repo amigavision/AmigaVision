@@ -1573,10 +1573,10 @@ def main():
     parser.add_argument("-c", "--config", dest="config_file", required=True, metavar="FILE", type=lambda x: util.argparse_is_file(parser, x),  help="configuration file")
     parser.add_argument("-o", "--out-dir", dest="out_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="output directory")
     parser.add_argument("--incremental", action="store_true", help="prepare a transactional incremental Amiberry image update")
-    parser.add_argument("--image-size-bytes", type=int, default=16_000_000_000,
-                        help="maximum whole-image size in decimal bytes (default: 16 GB; 0 sizes to payload)")
-    parser.add_argument("--boot-extra-bytes", type=int, default=200_000_000,
-                        help="additional DH0 reserve in decimal bytes (default: 200 MB)")
+    parser.add_argument("--image-size-bytes", type=int, default=15_800_000_000,
+                        help="maximum whole-image size in decimal bytes (default: 15.8 GB; 0 sizes to payload)")
+    parser.add_argument("--boot-extra-bytes", type=int, default=100_000_000,
+                        help="additional DH0 reserve in decimal bytes (default: 100 MB)")
     base_source = parser.add_mutually_exclusive_group()
     base_source.add_argument("-b", "--base-hdf", dest="base_hdf", metavar="FILE", help="use a legacy base HDF instead of the native base directory")
     base_source.add_argument("--base-dir", metavar="DIR", help="native base directory (default: AVSBASE or sibling AV-Base checkout)")
