@@ -26,7 +26,7 @@ PARTITIONS = {'DH0': 'Amiga', 'DH1': 'Data'}
 
 def format_duration(seconds):
     minutes, seconds = divmod(int(seconds + 0.5), 60)
-    return f'{minutes:02d}m{seconds:02d}s'
+    return f'{minutes}m{seconds:02d}s' if minutes else f'{seconds}s'
 
 
 def digest(path):
