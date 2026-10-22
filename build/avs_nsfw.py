@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from avs_make import make_canonical_name
+from avs_make import make_canonical_name, wrap_note
 from avs_fs import convert_filename_uae2a
 from avs_query import get_amiga_whd_dir, get_runscript_paths
 
@@ -73,8 +73,8 @@ def make_nsfw_option(db, avs_path, collection):
     option = Path(avs_path) / '[ Options ].avs' / 'Remove NSFW Titles'
     option.parent.mkdir(parents=True, exist_ok=True)
     option.with_suffix('.run').write_text('\n'.join(lines) + '\n', encoding='latin-1')
-    option.with_suffix('.txt').write_text(
+    option.with_suffix('.txt').write_text(wrap_note(
         'Permanently delete NSFW titles.\n'
         'Removes installed content; saved games are retained.\n'
-        'Note that this is permanent, re-download to restore.\n', encoding='latin-1')
+        'Note that this is permanent, re-download to restore.\n'), encoding='latin-1')
     return menu_paths, content_dirs
