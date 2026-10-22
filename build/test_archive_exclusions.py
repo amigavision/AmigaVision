@@ -9,7 +9,7 @@ from unittest.mock import patch
 from archive_exclusions import is_excluded_archive
 import pull_archives
 from fetch_archives_from_csv import load_csv_archive_paths
-from ags_index import is_ignored_archive_path
+from avs_index import is_ignored_archive_path
 from import_notwhdl_demos import list_manual_archives
 
 

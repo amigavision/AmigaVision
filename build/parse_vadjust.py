@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# AGSImager: vadjust.dat parsing utility
+# AVSImager: vadjust.dat parsing utility
 
 import argparse
 import os

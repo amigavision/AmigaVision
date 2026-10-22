@@ -29,7 +29,7 @@ date_stamp="${DISTRO_DATE:-$default_date}"
 package_args=()
 emulator_package=false
 archive_choice_explicit=false
-output_dir="${DISTRO_OUT:-${AGSDEST:-$HOME/Developer/AV-Output}/distros}"
+output_dir="${DISTRO_OUT:-${AVSDEST:-$HOME/Developer/AV-Output}/distros}"
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --output-dir)

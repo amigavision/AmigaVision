@@ -1,0 +1,2 @@
+copy AVS:AVS.conf.base TO AVS:AVS.conf QUIET
+echo "hide_parent_dir = 1" >>AVS:AVS.conf

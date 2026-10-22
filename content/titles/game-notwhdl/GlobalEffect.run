@@ -1,4 +1,4 @@
-ags-cd N/GlobalEffect
+avs-cd N/GlobalEffect
 IF NOT EXISTS WHDSaves:GlobalEffect
   makedir WHDSaves:GlobalEffect
   copy #? WHDSaves:GlobalEffect/ ALL CLONE QUIET

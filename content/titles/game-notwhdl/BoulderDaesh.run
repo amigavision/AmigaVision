@@ -1,4 +1,4 @@
-ags-cd N/BoulderDaesh
+avs-cd N/BoulderDaesh
 assign AVBoulderData: ""
 IF NOT EXISTS WHDSaves:BoulderDaesh
   makedir WHDSaves:BoulderDaesh

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# AGSImager: HDF creation utility
+# AVSImager: HDF creation utility
 
 import argparse
 import os

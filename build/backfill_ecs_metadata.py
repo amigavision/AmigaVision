@@ -15,7 +15,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from lhafile import LhaFile
-from ags_index import infer_aga_flag, infer_hardware_from_archive, infer_language_from_archive
+from avs_index import infer_aga_flag, infer_hardware_from_archive, infer_language_from_archive
 from promote_newer_archives import parse_archive_name, archive_revision_key, variant_suffix
 
 SHARED_FIELDS = ('title', 'title_short', 'category', 'subcategory', 'developer',
@@ -37,7 +37,7 @@ def family(name):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', type=Path, required=True)
-    parser.add_argument('--titles-dir', type=Path, default=Path(os.environ.get('AGSCONTENT', 'content')) / 'titles')
+    parser.add_argument('--titles-dir', type=Path, default=Path(os.environ.get('AVSCONTENT', 'content')) / 'titles')
     parser.add_argument('--csv', type=Path, default=Path('data/db/titles.csv'))
     parser.add_argument('--report', type=Path, default=Path('data/db/ecs-backfill-report.json'))
     parser.add_argument('--inventory', type=Path, help='Upstream path inventory (defaults to source/upstream-inventory.json)')

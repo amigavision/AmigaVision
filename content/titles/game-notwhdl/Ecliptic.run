@@ -1,10 +1,10 @@
-ags-cd N/Ecliptic
+avs-cd N/Ecliptic
 stack >NIL: 65536
 IF EXISTS WHDSaves:Ecliptic/save.lst
   copy WHDSaves:Ecliptic/save.lst save.lst QUIET
 ENDIF
 Ecliptic >NIL:
-ags-cd N/Ecliptic
+avs-cd N/Ecliptic
 IF NOT EXISTS WHDSaves:Ecliptic
   makedir WHDSaves:Ecliptic
 ENDIF

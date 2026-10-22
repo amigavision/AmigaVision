@@ -1,4 +1,4 @@
-ags-cd N/SuperFoulEgg
+avs-cd N/SuperFoulEgg
 IF EXISTS WHDSaves:SuperFoulEgg
   copy WHDSaves:SuperFoulEgg/#?.dat "" ALL QUIET
 ENDIF

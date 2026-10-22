@@ -1,0 +1,7 @@
+if exists ENV:disable_vadjust
+  delete >NIL: ENV:disable_vadjust
+endif
+if exists ENVARC:disable_vadjust
+  delete >NIL: ENVARC:disable_vadjust
+endif
+avs-vadjust

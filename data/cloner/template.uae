@@ -4,19 +4,19 @@ config_host=true
 config_version=8.0.0
 amiberry.gfx_auto_crop=true
 amiberry.scaling_method=2
-shaders_path=$AGSCONTENT/distro/games/Amiga/Visuals/Shaders
+shaders_path=$AVSCONTENT/distro/games/Amiga/Visuals/Shaders
 
 use_gui=no
 open_gui=F12
 kickstart_rom_file=$KICKSTART_ROM
-floppy0=$AGSTEMP/boot.adf
+floppy0=$AVSTEMP/boot.adf
 floppy_speed=0
 floppy_volume=0
 filesys_no_fsdb=false
 scsidevice_disable=true
 
-uaehf1=dir,rw,tmp:tmp:$AGSTEMP,0
-uaehf0=hdf,rw,UAE0:$AGSTEMP/target.hdf,0,0,0,512,0,,uae0,0
+uaehf1=dir,rw,tmp:tmp:$AVSTEMP,0
+uaehf0=hdf,rw,UAE0:$AVSTEMP/target.hdf,0,0,0,512,0,,uae0,0
 
 joyport0_mode=mouse
 joyport1_mode=none

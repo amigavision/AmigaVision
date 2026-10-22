@@ -1,3 +1,3 @@
-ags-cd N/Eurochart29
+avs-cd N/Eurochart29
 ;Ecintro.exe >NIL:
 Eurochart29.exe >NIL:

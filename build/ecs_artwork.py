@@ -66,7 +66,7 @@ def convert(job):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=Path('data/img_ecs'))
-    parser.add_argument('--launcher-output', type=Path, default=Path('data/ags2-ecs'))
+    parser.add_argument('--launcher-output', type=Path, default=Path('data/avs-ecs'))
     parser.add_argument('--jobs', type=int, default=min(4, os.cpu_count() or 1))
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
@@ -78,7 +78,7 @@ def main():
     sources = [(p, args.output/p.relative_to('data/img_highres'), False)
                for p in sorted(Path('data/img_highres').rglob('*.iff'))]
     sources += [(p, args.launcher_output/p.name, p.name.startswith('skin-'))
-                for p in sorted(Path('data/ags2-highres').glob('*.iff'))]
+                for p in sorted(Path('data/avs-highres').glob('*.iff'))]
     for source, dest, skin in sources:
         digest = hashlib.sha256(source.read_bytes()).hexdigest()
         key = str(source)

@@ -395,8 +395,8 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
     mgl_dir.mkdir(parents=True, exist_ok=True)
     cfg_dir.mkdir(parents=True, exist_ok=True)
 
-    agscontent = os.getenv("AGSCONTENT", "").strip().strip('"').strip("'")
-    content_cd32_root = Path(agscontent).expanduser() / "cd32" if agscontent else None
+    avscontent = os.getenv("AVSCONTENT", "").strip().strip('"').strip("'")
+    content_cd32_root = Path(avscontent).expanduser() / "cd32" if avscontent else None
 
     # Copy distro folders into each preset (SD/USB)
     # Required copies: ../content/distro/Presets/, ../content/distro/Shadow_Masks/,
@@ -500,9 +500,9 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
 def cd32_output_dir() -> Path:
     """Return the generated CD32 output directory outside the repo when possible."""
     repo_root = Path(__file__).resolve().parent.parent
-    agsdest = os.getenv("AGSDEST", "").strip().strip('"').strip("'")
-    if agsdest:
-        return Path(agsdest).expanduser() / "CD32-Output"
+    avsdest = os.getenv("AVSDEST", "").strip().strip('"').strip("'")
+    if avsdest:
+        return Path(avsdest).expanduser() / "CD32-Output"
     return repo_root.with_name("AV-Output") / "CD32-Output"
 
 
@@ -550,7 +550,7 @@ def archive_variant(root: Path, output_dir: Path, variant_name: str) -> None:
 
 def main() -> int:
     """
-    Build outputs into a single CD32-Output directory under AGSDEST / AV-Output.
+    Build outputs into a single CD32-Output directory under AVSDEST / AV-Output.
     - SD preset (assets & CHDs on SD) is written directly under CD32-Output
     - USB preset (assets & CHDs on USB) is generated to ./USB then archived to CD32-Output/USB.zip
     - NAS preset (assets & CHDs on NAS/CIFS) is generated to ./NAS then archived to CD32-Output/NAS.zip

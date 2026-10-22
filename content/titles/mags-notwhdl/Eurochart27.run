@@ -1,4 +1,4 @@
-ags-cd N/Eurochart27
+avs-cd N/Eurochart27
 assign >NIL: EC27a: ""
 assign >NIL: EC27b: ""
 BrianState >NIL:

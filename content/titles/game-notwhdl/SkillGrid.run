@@ -1,4 +1,4 @@
-ags-cd N/SkillGrid
+avs-cd N/SkillGrid
 IF EXISTS WHDSaves:SkillGrid/h
   copy WHDSaves:SkillGrid/h data QUIET
 ENDIF

@@ -1,4 +1,4 @@
-ags-cd N/FieldsOfGloryAGA
+avs-cd N/FieldsOfGloryAGA
 IF NOT EXISTS WHDSaves:FieldsOfGloryAGA
   makedir WHDSaves:FieldsOfGloryAGA
   copy #? WHDSaves:FieldsOfGloryAGA/ ALL CLONE QUIET

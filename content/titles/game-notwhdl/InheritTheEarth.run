@@ -1,4 +1,4 @@
-ags-cd N/InheritTheEarth
+avs-cd N/InheritTheEarth
 IF EXISTS WHDSaves:InheritTheEarth
   copy WHDSaves:InheritTheEarth/ite.prf S: QUIET
   copy WHDSaves:InheritTheEarth/ite.sav RAM: QUIET

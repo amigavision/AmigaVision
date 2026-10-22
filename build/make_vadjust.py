@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# AGSImager: vadjust.dat creation utility
+# AVSImager: vadjust.dat creation utility
 
 # v_shift expressible range:
 #   NTSC-5X: -16 ... 9

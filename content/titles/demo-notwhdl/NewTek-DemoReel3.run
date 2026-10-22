@@ -1,4 +1,4 @@
-ags-cd N/NewTek-DemoReel3
+avs-cd N/NewTek-DemoReel3
 assign DemoReel3: Disk1
 assign DemoReelData: Disk2
 cd DemoReel3:

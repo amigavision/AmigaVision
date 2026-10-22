@@ -1,4 +1,4 @@
-c:ags-uname >RAM:system.txt ; Check if this is an emulator or MiSTer FPGA, or real hardware
+c:avs-uname >RAM:system.txt ; Check if this is an emulator or MiSTer FPGA, or real hardware
 set emumister "false"
 
 search >NIL: RAM:system.txt "mister"
@@ -101,9 +101,9 @@ alias clear "echo *"*E[0;0H*E[J*" "
 
 ;Mount shared folder
 mount-misterfs
-ags-notify
+avs-notify
 
-;Launch AGS
+;Launch AVS
 assign >NIL: exists Saves:
 if not warn
   if exists Saves:WHDSaves
@@ -113,20 +113,20 @@ endif
 
 assign >NIL: exists Data:
 if not warn
-  if exists Data:AGS
+  if exists Data:AVS
     if exists Data:WHD
-      assign AGS: Data:AGS
+      assign AVS: Data:AVS
       ; Prefer the saves-volume setting so it survives system-image upgrades.
       assign >NIL: exists Saves:
       if not warn
-        if exists Saves:AGSLauncherResolution
-          copy >NIL: Saves:AGSLauncherResolution ENV:AGSLauncherResolution
+        if exists Saves:AVSLauncherResolution
+          copy >NIL: Saves:AVSLauncherResolution ENV:AVSLauncherResolution
         endif
       endif
-      if exists ENV:AGSLauncherResolution
-        if "$AGSLauncherResolution" EQ "medium"
-          if exists Data:AGS-MedRes/AGS2
-            assign AGS: Data:AGS-MedRes
+      if exists ENV:AVSLauncherResolution
+        if "$AVSLauncherResolution" EQ "medium"
+          if exists Data:AVS-MedRes/AVS
+            assign AVS: Data:AVS-MedRes
           endif
         endif
       endif
@@ -144,13 +144,13 @@ if not warn
           copy >NIL: SYS:Prefs/Presets/AmigaVision/vadjust-disabled.dat MiSTer:Amiga_vadjust.dat
         endif
       else
-        ags-vadjust
+        avs-vadjust
       endif
       if exists MiSTer:ags_boot
-        cpr MiSTer:ags_boot T:ags_boot MOVE CLONE SILENT
-        pickfile f T:ags_boot q c ags-launch ""[]"
+        cpr MiSTer:ags_boot T:avs_boot MOVE CLONE SILENT
+        pickfile f T:avs_boot q c avs-launch ""[]"
       endif
-      AGS:AGS2
+      AVS:AVS
     endif
   endif
 endif
@@ -164,11 +164,11 @@ mount CON: from DEVS:KingCON-mountlist
 mount RAW: from DEVS:KingCON-mountlist
 
 ;RTG support
-if `ags-uname` EQ "mister"
+if `avs-uname` EQ "mister"
   assign Picasso96: SYS:Tools/Picasso96
   DEVS:Monitors/MiSTer
 endif
-if `ags-uname` EQ "uae"
+if `avs-uname` EQ "uae"
   assign Picasso96: SYS:Tools/Picasso96
   
 endif

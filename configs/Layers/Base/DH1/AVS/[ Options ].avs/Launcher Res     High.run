@@ -1,0 +1,9 @@
+if exists Data:AVS/AVS
+  assign AVS: Data:AVS
+  echo "high" >ENV:AVSLauncherResolution
+  echo "high" >ENVARC:AVSLauncherResolution
+  assign >NIL: exists Saves:
+  if not warn
+    echo "high" >Saves:AVSLauncherResolution
+  endif
+endif

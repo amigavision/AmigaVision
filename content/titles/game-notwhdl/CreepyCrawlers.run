@@ -1,5 +1,5 @@
-ags-cd N/CreepyCrawlers
+avs-cd N/CreepyCrawlers
 assign FONTS: fonts ADD
 CreepyCrawlers_exe >NIL:
-ags-cd N/CreepyCrawlers
+avs-cd N/CreepyCrawlers
 assign FONTS: fonts REMOVE

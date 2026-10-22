@@ -160,8 +160,8 @@ def is_non_aga_whdload_path(path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--titles-dir", default=str(Path(os.getenv("AGSCONTENT", "content")) / "titles"), help="Canonical titles directory")
-    parser.add_argument("--dest", default=str(Path(os.getenv("AGSCONTENT", "content")) / "titles" / "manual-downloads"), help="Download staging directory")
+    parser.add_argument("--titles-dir", default=str(Path(os.getenv("AVSCONTENT", "content")) / "titles"), help="Canonical titles directory")
+    parser.add_argument("--dest", default=str(Path(os.getenv("AVSCONTENT", "content")) / "titles" / "manual-downloads"), help="Download staging directory")
     parser.add_argument("--state-path", default="data/cache/archive-fetch-state.json", help="Local state file used to track seen remote archive paths")
     parser.add_argument("--backfill-non-aga", action="store_true", help="Check all upstream paths for missing non-AGA, non-CD32 WHDLoad archives, excluding JST; leave incremental pull state unchanged")
     parser.add_argument("--dry-run", action="store_true", help="List missing candidates without downloading or updating pull state")

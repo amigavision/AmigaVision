@@ -1,4 +1,4 @@
-ags-cd N/Statix
+avs-cd N/Statix
 assign >NIL: STX: ""
 failat 61
 Statix_Intro >NIL:

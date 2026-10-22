@@ -3,7 +3,7 @@ IF NOT EXISTS WHDSaves:CurseOfRabenstein
 ENDIF
 assign DF0: DISMOUNT
 assign DF0: WHDSaves:CurseOfRabenstein
-ags-cd N/CurseOfRabenstein
+avs-cd N/CurseOfRabenstein
 INTERP >NIL:
 assign DF0: REMOVE
 mount DF0:

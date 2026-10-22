@@ -1,4 +1,4 @@
-ags-cd N/A1200ShopDemoANZ
+avs-cd N/A1200ShopDemoANZ
 assign ANZD: ""
 assign LIBS: ANZD:Libs ADD
 assign FONTS: ANZD:Fonts ADD

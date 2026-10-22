@@ -16,11 +16,11 @@ from pathlib import Path
 
 from lhafile import LhaFile
 
-import ags_util as util
+import avs_util as util
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_CONTENT_ROOT = Path(os.getenv("AGSCONTENT", "~/Developer/AV-Content")).expanduser()
+DEFAULT_CONTENT_ROOT = Path(os.getenv("AVSCONTENT", "~/Developer/AV-Content")).expanduser()
 DEFAULT_SOURCE_ROOT = DEFAULT_CONTENT_ROOT / "titles" / "manual-downloads"
 DEFAULT_TITLES_DIR = DEFAULT_CONTENT_ROOT / "titles"
 DEFAULT_CSV_PATH = ROOT / "data" / "db" / "titles.csv"
@@ -704,7 +704,7 @@ def write_report(candidates: list[Candidate], report_path: Path):
 
 def write_run_file(run_path: Path, archive_name: str, run_command: str):
     run_path.parent.mkdir(parents=True, exist_ok=True)
-    run_path.write_text(f"ags-cd N/{archive_name}\n{run_command} >NIL:\n", encoding="utf-8")
+    run_path.write_text(f"avs-cd N/{archive_name}\n{run_command} >NIL:\n", encoding="utf-8")
 
 
 def apply_candidates(candidates: list[Candidate], titles_dir: Path, csv_path: Path):

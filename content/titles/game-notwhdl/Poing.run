@@ -1,4 +1,4 @@
-ags-cd N/Poing
+avs-cd N/Poing
 IF EXISTS WHDSaves:Poing1
   copy WHDSaves:Poing1/poing.scores S: QUIET
 ENDIF

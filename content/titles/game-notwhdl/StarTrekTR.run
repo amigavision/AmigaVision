@@ -1,4 +1,4 @@
-ags-cd N/StarTrekTR
+avs-cd N/StarTrekTR
 IF EXISTS WHDSaves:StarTrekTR
   copy WHDSaves:StarTrekTR/STGAME1 "" QUIET
 ELSE

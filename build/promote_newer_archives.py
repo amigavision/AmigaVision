@@ -11,7 +11,7 @@ import shutil
 from collections import defaultdict
 from pathlib import Path
 
-from ags_index import humanize_name
+from avs_index import humanize_name
 from import_notwhdl_demos import demozoo_search, pouet_search
 from sync_missing_images import fetch_text, pick_best_title_match
 
@@ -446,7 +446,7 @@ def report_pending_archives(titles_dir, source_dir):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("source_dir", help="Directory to scan for newer .lha archives")
-    parser.add_argument("--titles-dir", default=str(Path(os.getenv("AGSCONTENT", "content")) / "titles"), help="Canonical titles directory")
+    parser.add_argument("--titles-dir", default=str(Path(os.getenv("AVSCONTENT", "content")) / "titles"), help="Canonical titles directory")
     parser.add_argument("--apply", action="store_true", default=False, help="Copy newer archives into place and move replaced archives into a sibling retired/ directory")
     parser.add_argument("--report-pending", action="store_true", help="List regular staged archives for review and summarize the separate historical ECS backlog")
     args = parser.parse_args()

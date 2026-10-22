@@ -1,4 +1,4 @@
-ags-cd N/NewTek-DemoReel1
+avs-cd N/NewTek-DemoReel1
 assign AVNT1: ""
 assign DemoReel: AVNT1:
 assign nt1: AVNT1:

@@ -1,4 +1,4 @@
-ags-cd N/Imperial
+avs-cd N/Imperial
 IF NOT EXISTS WHDSaves:Imperial
   makedir WHDSaves:Imperial
   copy #? WHDSaves:Imperial/ ALL CLONE QUIET

@@ -1,4 +1,4 @@
-ags-cd N/WastedDreams
+avs-cd N/WastedDreams
 IF EXISTS WHDSaves:WastedDreams
   IF EXISTS WHDSaves:WastedDreams/WDstatus
     copy WHDSaves:WastedDreams/WDstatus S: QUIET

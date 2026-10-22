@@ -1,4 +1,4 @@
-ags-cd N/BattleDuel
+avs-cd N/BattleDuel
 stack >NIL: 65536
 IF NOT EXISTS WHDSaves:BattleDuel
   makedir WHDSaves:BattleDuel

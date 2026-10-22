@@ -7,13 +7,13 @@ if [ -z "$date_str" ]; then
   echo "No archive suffix"
 else
   script_dir="$(cd "$(dirname "$0")" && pwd)"
-  if [ -n "$AGSDEST" ]; then
-    agsdest="${AGSDEST%/}"
-    agsdest="${agsdest#\"}"
-    agsdest="${agsdest%\"}"
-    agsdest="${agsdest#\'}"
-    agsdest="${agsdest%\'}"
-    output_dir="$agsdest/CD32-Output"
+  if [ -n "$AVSDEST" ]; then
+    avsdest="${AVSDEST%/}"
+    avsdest="${avsdest#\"}"
+    avsdest="${avsdest%\"}"
+    avsdest="${avsdest#\'}"
+    avsdest="${avsdest%\'}"
+    output_dir="$avsdest/CD32-Output"
   else
     output_dir="$(cd "$script_dir/../.." && pwd)/AV-Output/CD32-Output"
   fi

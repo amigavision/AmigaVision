@@ -62,7 +62,7 @@ def inventory(csv_path, titles_dir, upstream_paths=()):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--csv', type=Path, default=Path('data/db/titles.csv'))
-    parser.add_argument('--titles-dir', type=Path, default=Path(os.getenv('AGSCONTENT', 'content')) / 'titles')
+    parser.add_argument('--titles-dir', type=Path, default=Path(os.getenv('AVSCONTENT', 'content')) / 'titles')
     parser.add_argument('--upstream-list', type=Path)
     parser.add_argument('--report', type=Path, required=True)
     args = parser.parse_args()

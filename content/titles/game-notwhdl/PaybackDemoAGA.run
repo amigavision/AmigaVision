@@ -1,4 +1,4 @@
-ags-cd N/PaybackDemoAGA
+avs-cd N/PaybackDemoAGA
 IF NOT EXISTS WHDSaves:PaybackDemoAGA
   makedir WHDSaves:PaybackDemoAGA
   copy #? WHDSaves:PaybackDemoAGA/ ALL CLONE QUIET

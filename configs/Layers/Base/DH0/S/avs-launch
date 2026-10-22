@@ -1,0 +1,41 @@
+.K TITLE
+
+if "<TITLE$_NONE_>" EQ "_NONE_"
+  skip DONE
+endif
+if "<TITLE>" EQ "any"
+  pickfile d AVS:RunQuiet/Meta q c execute avs_launch []
+  skip DONE
+endif
+if "<TITLE>" EQ "any_game"
+  pickfile d AVS:RunQuiet/Game q c execute ""AVS:RunQuiet/Game/[]"
+  skip DONE
+endif
+if "<TITLE>" EQ "any_demo"
+  pickfile d AVS:RunQuiet/Demo q c execute ""AVS:RunQuiet/Demo/[]"
+  skip DONE
+endif
+if exists "AVS:RunQuiet/Game/<TITLE>"
+  execute "AVS:RunQuiet/Game/<TITLE>"
+  skip DONE
+endif
+if exists "AVS:RunQuiet/Demo/<TITLE>"
+  execute "AVS:RunQuiet/Demo/<TITLE>"
+  skip DONE
+endif
+
+; Some titles have no quiet script (for example slideshows and Issues).
+if exists "AVS:Run/Game/<TITLE>"
+  execute "AVS:Run/Game/<TITLE>"
+  skip DONE
+endif
+if exists "AVS:Run/Demo/<TITLE>"
+  execute "AVS:Run/Demo/<TITLE>"
+  skip DONE
+endif
+if exists "AVS:Run/Issues/<TITLE>"
+  execute "AVS:Run/Issues/<TITLE>"
+  skip DONE
+endif
+
+LAB DONE

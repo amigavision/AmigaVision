@@ -1,9 +1,0 @@
-if exists Data:AGS-MedRes/AGS2
-  assign AGS: Data:AGS-MedRes
-  echo "medium" >ENV:AGSLauncherResolution
-  echo "medium" >ENVARC:AGSLauncherResolution
-  assign >NIL: exists Saves:
-  if not warn
-    echo "medium" >Saves:AGSLauncherResolution
-  endif
-endif

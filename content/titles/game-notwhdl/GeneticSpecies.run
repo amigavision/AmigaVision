@@ -1,4 +1,4 @@
-ags-cd N/GeneticSpecies
+avs-cd N/GeneticSpecies
 FailAt 21
 IF NOT EXISTS WHDSaves:GeneticSpecies
   makedir WHDSaves:GeneticSpecies

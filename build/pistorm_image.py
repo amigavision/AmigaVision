@@ -95,7 +95,7 @@ def patch_hdf(args, work, candidate):
     shutil.copyfile(ROOT / 'data/cloner/boot.adf', work / 'boot.adf')
     (work / 'target.hdf').symlink_to(candidate)
     config = (ROOT / 'data/cloner/template.uae').read_text()
-    for key, value in {'AGSTEMP': work, 'AGSCONTENT': os.environ.get('AGSCONTENT', ''), 'KICKSTART_ROM': args.rom}.items():
+    for key, value in {'AVSTEMP': work, 'AVSCONTENT': os.environ.get('AVSCONTENT', ''), 'KICKSTART_ROM': args.rom}.items():
         config = config.replace('$' + key, str(value))
     (work / 'cfg.uae').write_text(config)
     lines = ['Stack 65536', 'Assign T: RAM:', 'FailAt 21',
@@ -234,7 +234,7 @@ def main():
     p.add_argument('--hdf', type=Path, required=True)
     p.add_argument('--rom', type=Path, required=True)
     p.add_argument('--output', type=Path, help='Optional explicit artifact filename')
-    p.add_argument('--output-dir', type=Path, default=Path(os.environ.get('DISTRO_OUT', str(Path(os.environ.get('AGSDEST', str(Path.home() / 'Developer/AV-Output'))) / 'distros'))))
+    p.add_argument('--output-dir', type=Path, default=Path(os.environ.get('DISTRO_OUT', str(Path(os.environ.get('AVSDEST', str(Path.home() / 'Developer/AV-Output'))) / 'distros'))))
     p.add_argument('--date-stamp', default=os.environ.get('DISTRO_DATE', date.today().strftime('%Y.%m.%d')))
     p.add_argument('--prompt', action='store_true', help='Prompt for release date and output directory when interactive')
     p.add_argument('--amiberry', type=Path, required=True)

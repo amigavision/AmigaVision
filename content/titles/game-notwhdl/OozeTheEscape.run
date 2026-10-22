@@ -1,4 +1,4 @@
-ags-cd N/OozeTheEscape
+avs-cd N/OozeTheEscape
 IF NOT EXISTS WHDSaves:OozeTheEscape
   makedir WHDSaves:OozeTheEscape
   copy #? WHDSaves:OozeTheEscape/ ALL CLONE QUIET

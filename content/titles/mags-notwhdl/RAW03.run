@@ -1,4 +1,4 @@
-ags-cd N/RAW03
+avs-cd N/RAW03
 assign >NIL: R.A.W: ""
 RAWINTRO >NIL:
 RAW >NIL:

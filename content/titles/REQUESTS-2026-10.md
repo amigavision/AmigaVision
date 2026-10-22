@@ -1,6 +1,6 @@
 # Requested additions, October 2026
 
-The archives live in the configured `$AGSCONTENT/titles` library. Launch scripts,
+The archives live in the configured `$AVSCONTENT/titles` library. Launch scripts,
 SHA-256 manifests and launcher artwork are tracked in this repository.
 
 ## Sources
@@ -24,7 +24,7 @@ SHA-256 manifests and launcher artwork are tracked in this repository.
 - `demo-notwhdl/Haujobb-Megademo2000-060.lha`: rename `hjb-md2k` to `Haujobb-Megademo2000-060`; run `HJB-MD2K.exe`. The production text specifies A4000, 68060/50, 2 MB Chip and 32 MB Fast RAM.
 - `game/WormsDirectorsCut30thAnniversary_v1.3_AGA_12MB.lha`: copy the existing `WormsDirectorsCut_v1.3_AGA_12MB_0605.lha` install, rename its drawer to `WormsDC30AGA12MB`, and unpack every expansion file into its `data` directory. Keep the original `WormsDCAGA12MB.Slave` and `CUSTOM1=1`. The expansion is a separate menu entry and archive.
 
-Repack each drawer with native LhA. Generate manifests with `ags_index.make_manifest`. Copy each non-WHDLoad `.run` beside its archive in the external library, matching the tracked copy.
+Repack each drawer with native LhA. Generate manifests with `avs_index.make_manifest`. Copy each non-WHDLoad `.run` beside its archive in the external library, matching the tracked copy.
 
 ## Existing request
 

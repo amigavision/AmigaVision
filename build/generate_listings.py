@@ -7,7 +7,7 @@ from pathlib import Path
 
 def main():
     if len(sys.argv) != 3:
-        raise SystemExit("usage: generate_listings.py <ags-root> <output-dir>")
+        raise SystemExit("usage: generate_listings.py <avs-root> <output-dir>")
 
     src = Path(sys.argv[1])
     dst = Path(sys.argv[2])
@@ -16,7 +16,7 @@ def main():
         if path.is_file():
             path.unlink()
 
-    all_games_root = src / "[ All Games - By Title ].ags"
+    all_games_root = src / "[ All Games - By Title ].avs"
     if not all_games_root.is_dir():
         raise SystemExit(f"Missing all-games tree: {all_games_root}")
 
@@ -27,7 +27,7 @@ def main():
         if not path.is_file():
             continue
         script = path.read_text(encoding="latin-1")
-        target = re.fullmatch(r'\s*execute "AGS:(Run/(?:Game|Issues)/[^"\r\n]+)"\s*', script, re.IGNORECASE)
+        target = re.fullmatch(r'\s*execute "AVS:(Run/(?:Game|Issues)/[^"\r\n]+)"\s*', script, re.IGNORECASE)
         if target is None:
             raise SystemExit(f"Unrecognized game launch script: {path}")
         relative = target.group(1)

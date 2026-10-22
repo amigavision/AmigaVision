@@ -1,4 +1,4 @@
-ags-cd N/SolomonsKeyST
+avs-cd N/SolomonsKeyST
 IF NOT EXISTS WHDSaves:SolomonsKeyST
   makedir WHDSaves:SolomonsKeyST
   copy #? WHDSaves:SolomonsKeyST/ ALL CLONE QUIET

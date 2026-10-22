@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Repair high-resolution ILBM palettes that overlap AGS interface colors and remove RLE compression."""
+"""Repair high-resolution ILBM palettes that overlap AVS interface colors and remove RLE compression."""
 import argparse
 import struct
 from concurrent.futures import ProcessPoolExecutor
@@ -134,7 +134,7 @@ def inspect(path):
     raw = chunks[b"BODY"]
     if header[9] or depth > 8 or len(raw) != height * depth * stride:
         raise ValueError(f"Invalid uncompressed planar image: {path}")
-    # AGS can display the bitmap's entire word-aligned storage width.
+    # AVS can display the bitmap's entire word-aligned storage width.
     # Check the actual padding pixels, not just the visible image palette.
     padding = stride * 8 - width
     if padding:

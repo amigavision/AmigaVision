@@ -10,7 +10,7 @@ ELSE
   ENDIF
 ENDIF
 
-ags-cd "{{PATH}}"
+avs-cd "{{PATH}}"
 {{SPLASH_DELAY_SETUP}}
 IF NOT EXISTS ENV:whdlqtkey
   echo "" >ENV:whdlqtkey

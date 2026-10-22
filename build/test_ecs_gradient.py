@@ -23,7 +23,7 @@ class ECSGradientTests(unittest.TestCase):
     def test_skin_roundtrip_avoids_gradient_pen(self):
         with tempfile.TemporaryDirectory() as temp:
             destination = Path(temp)/'skin.iff'
-            convert((ROOT/'data/ags2-highres/skin-bg-highres.iff', destination, True))
+            convert((ROOT/'data/avs-highres/skin-bg-highres.iff', destination, True))
             image, _ = decode(read_chunks(destination))
             self.assertLessEqual(set(image.tobytes()), {13,14})
             self.assertEqual(image.getpalette()[39:48], [0,153,187,0,0,0,255,255,255])

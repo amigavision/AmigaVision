@@ -1,4 +1,4 @@
-ags-cd N/Eurochart25
+avs-cd N/Eurochart25
 assign >NIL: EC25a: ""
 assign >NIL: EC25b: ""
 How2ScanAKid.exe >NIL:

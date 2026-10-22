@@ -1,0 +1,918 @@
+#!/usr/bin/env python3
+
+# AVSImager: Utility functions
+
+import argparse
+import csv
+import functools
+import html
+import math
+import os
+import re
+import shutil
+import sqlite3
+import stat
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+from lhafile import LhaFile
+from ruamel import yaml
+
+from avs_fs import convert_filename_a2uae
+
+# -----------------------------------------------------------------------------
+# utility functions
+
+def parse_int(v):
+    try:
+        return int(v)
+    except ValueError:
+        return 0
+
+def parse_date(v):
+    components = v.split("-")[:3]
+    return components + [None] * (3 - len(components))
+
+def parse_date_numeric(v):
+    components = list(map(lambda s: int(s), v.lower().replace("x", "0").split("-")[:3]))
+    return components + [None] * (3 - len(components))
+
+def parse_date_int(v, sortable=False):
+    components = list(map(lambda s: s.zfill(2), v.lower().replace("x", "0").split("-")[:3]))
+    if sortable:
+        return int("".join((components + 3 * ["01"])[:3]))
+    else:
+        return int("".join(components))
+
+def merge(src, dst):
+    for key, value in src.items():
+        if isinstance(value, dict):
+            node = dst.setdefault(key, {})
+            merge(value, node)
+        else:
+            dst[key] = value
+    return dst
+
+def merge_dicts(*dicts):
+    res = {}
+    for d in dicts:
+        res.update(d)
+    return res
+
+def remove_keys(dictionary, keys):
+    d = dict(dictionary)
+    for k in keys:
+        d.pop(k, None)
+    return d
+
+
+def path(*args) -> str:
+    return os.path.expandvars(os.path.join(*args))
+
+def is_file(path: str):
+    return os.path.isfile(path)
+
+def is_dir(path: str):
+    return os.path.isdir(path)
+
+def argparse_is_file(parser: argparse.ArgumentParser, arg: str):
+    if not os.path.isfile(arg):
+        parser.error("File %s does not exist" % arg)
+    else:
+        return arg
+
+def argparse_is_dir(parser: argparse.ArgumentParser, arg: str):
+    if not os.path.isdir(arg):
+        parser.error("Directory %s does not exist" % arg)
+    else:
+        return arg
+
+def make_dir(path: str):
+    if not os.path.exists(path):
+        os.makedirs(path, exist_ok=True)
+
+def rm_path(path: str):
+    if os.path.islink(path) or os.path.isfile(path):
+        os.remove(path)
+    elif os.path.isdir(path):
+        last_error = None
+        for _ in range(5):
+            try:
+                shutil.rmtree(path)
+                return
+            except OSError as err:
+                last_error = err
+                if err.errno != 66:  # Directory not empty
+                    raise
+                time.sleep(0.1)
+        if last_error is not None:
+            raise last_error
+
+def get_dir_size(start_path=".", block_size=1):
+    file_size = 0
+    path_size = 0
+    for dirpath, dirnames, filenames in os.walk(start_path):
+        path = dirpath.replace(os.path.commonprefix([dirpath, start_path]), "")
+        for d in dirnames:
+            path_size += 1 + (math.ceil(len(os.path.join(path, d)) / block_size) * block_size)
+        for f in filenames:
+            if f.endswith(".uaem"):
+                continue
+            path_size += 1 + (math.ceil(len(os.path.join(path, f)) / block_size) * block_size)
+            fp = os.path.join(dirpath, f)
+            file_size += math.ceil(os.path.getsize(fp) / block_size) * block_size
+    return file_size + path_size
+
+def get_tree_stats(start_path="."):
+    file_count = 0
+    dir_count = 0
+    total_size = 0
+    for dirpath, dirnames, filenames in os.walk(start_path):
+        dir_count += len(dirnames)
+        for filename in filenames:
+            if filename.endswith(".uaem"):
+                continue
+            file_count += 1
+            total_size += os.path.getsize(os.path.join(dirpath, filename))
+    return {
+        "files": file_count,
+        "dirs": dir_count,
+        "bytes": total_size,
+    }
+
+def format_bytes(size: int) -> str:
+    units = ["B", "KiB", "MiB", "GiB", "TiB"]
+    value = float(size)
+    unit = units[0]
+    for candidate in units:
+        unit = candidate
+        if value < 1024.0 or candidate == units[-1]:
+            break
+        value /= 1024.0
+    if unit == "B":
+        return "{} {}".format(int(value), unit)
+    return "{:.1f} {}".format(value, unit)
+
+def copytree(src: str, dst: str, symlinks=False, ignore=None):
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+        shutil.copystat(src, dst)
+    lst = os.listdir(src)
+    if ignore:
+        excl = ignore(src, lst)
+        lst = [x for x in lst if x not in excl]
+    for item in lst:
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if symlinks and os.path.islink(s):
+            if os.path.lexists(d):
+                os.remove(d)
+            os.symlink(os.readlink(s), d)
+            try:
+                st = os.lstat(s)
+                mode = stat.S_IMODE(st.st_mode)
+                os.lchmod(d, mode)
+            except:
+                pass
+        elif os.path.isdir(s):
+            copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+
+def linktree(src: str, dst: str):
+    if not os.path.exists(dst):
+        os.makedirs(dst, exist_ok=True)
+        shutil.copystat(src, dst)
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            linktree(s, d)
+        else:
+            if os.path.lexists(d):
+                os.remove(d)
+            try:
+                os.link(s, d)
+            except OSError:
+                shutil.copy2(s, d)
+
+def clonefile_tree(src: str, dst: str) -> bool:
+    if os.name != "posix":
+        return False
+    if not os.path.exists(dst):
+        os.makedirs(dst, exist_ok=True)
+        shutil.copystat(src, dst)
+    # Prefer filesystem-native copy-on-write clones when supported. This is
+    # much faster than walking large cached trees in Python and avoids sharing
+    # mutable hardlinks with the cache.
+    result = subprocess.run(
+        ["cp", "-cR", path(src, "."), dst],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    return result.returncode == 0
+
+def clone_tree(src: str, dst: str):
+    if clonefile_tree(src, dst):
+        return
+    try:
+        linktree(src, dst)
+    except OSError:
+        copytree(src, dst)
+
+def prettify_names(name: str):
+    last_delimiter = name.rfind(", ")
+    if last_delimiter > 0:
+        name = name[:last_delimiter] + " & " + name[last_delimiter + 2:]
+    return name
+
+def apply_template(template: str, dictionary: dict) -> str:
+    for k, v in dictionary.items():
+        template = template.replace("{{" + "{}".format(k) + "}}", "{}".format(v))
+    return template
+
+# -----------------------------------------------------------------------------
+# misc
+
+def language_code(lang: str) -> str:
+    codes = {
+        "croatian": "hr",
+        "czech": "cs",
+        "danish": "da",
+        "dutch": "nl",
+        "english": "en",
+        "finnish": "fi",
+        "fremen": "fm",
+        "french": "fr",
+        "german": "de",
+        "greek": "el",
+        "hungarian": "hu",
+        "italian": "it",
+        "japanese": "ja",
+        "norwegian": "no",
+        "polish": "pl",
+        "spanish": "es",
+        "swedish": "sv",
+    }
+    if lang.lower() in codes:
+        return codes[lang.lower()]
+    else:
+        raise ValueError("no language code for '{}'".format(lang))
+
+def country(lang: str) -> str:
+    codes = {
+        "croatian": "Croatia",
+        "czech": "Czech Republic",
+        "danish": "Denmark",
+        "dutch": "Netherlands",
+        "english": "UK",
+        "finnish": "Finland",
+        "fremen": "Fremen",
+        "french": "France",
+        "german": "Germany",
+        "greek": "Greece",
+        "hungarian": "Hungary",
+        "italian": "Italy",
+        "japanese": "Japan",
+        "norwegian": "Norway",
+        "polish": "Poland",
+        "spanish": "Spain",
+        "swedish": "Sweden",
+    }
+    if lang.lower() in codes:
+        return codes[lang.lower()]
+    else:
+        raise ValueError("no country name for '{}'".format(lang))
+
+def sorted_natural(lst):
+    rom_nums = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10, "XI": 11, "XII": 12, "XIII": 13, "XIV": 14, "XV": 15}
+    alpha_order = r" !\"#$%&'()*+,-./0123456789aàáâãbcçdeèéêëfghiìíîïjklmnñoòóôõpqrsßtuùúûüvwxyýÿzåäæöø:;<=>?@[\]^_`{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿Ð×Þð÷þ"
+    table_order = dict(zip(alpha_order, range(len(alpha_order))))
+
+    def rank(c):
+        if c in table_order: return table_order[c]
+        return len(table_order)
+
+    def deroman(s):
+        wl = s.replace(".", "").replace(":", "").replace(";", "").split(" ")
+        res = [wl.pop(0)]
+        for w in wl:
+            if w in rom_nums: res.append(str(rom_nums[w]))
+            else: res.append(w)
+        return " ".join(res)
+
+    def rom_comp(a, b):
+        if a == b: return 0
+        (ra, rb) = (deroman(a), deroman(b))
+        if len(ra) == 0: return -1
+        if len(rb) == 0: return 1
+        for x in zip(ra.lower(), rb.lower()):
+            (rax, rbx) = (rank(x[0]), rank(x[1]))
+            if rax == rbx: continue
+            return 1 if rax > rbx else -1
+        return 1 if len(ra) > len(rb) else -1
+
+    return sorted(lst, key=functools.cmp_to_key(rom_comp))
+
+# -----------------------------------------------------------------------------
+# data extraction
+
+def find_native_lha():
+    candidates = [
+        os.path.expanduser("~/Developer/LhA/lha"),
+        os.path.expanduser("~/.local/bin/lha"),
+        shutil.which("lha"),
+    ]
+    for candidate in candidates:
+        if candidate and os.path.isfile(candidate) and os.access(candidate, os.X_OK):
+            return candidate
+    return None
+
+
+def native_lha_extract(arcpath, outpath):
+    lha_bin = find_native_lha()
+    if not lha_bin:
+        raise RuntimeError("native lha binary not found")
+    make_dir(outpath)
+    subprocess.run(
+        [lha_bin, f"xfqw={outpath}", arcpath],
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+def lha_extract(arcpath, outpath):
+    try:
+        arc = LhaFile(arcpath)
+        for filename in [info.filename for info in arc.infolist()]:
+            path = filename.replace("\\", "/")
+            dirname = convert_filename_a2uae(os.path.dirname(path))
+            basename = convert_filename_a2uae(os.path.basename(path))
+            if dirname:
+                make_dir(os.path.join(outpath, dirname))
+            if basename:
+                make_dir(os.path.join(outpath, dirname))
+                open(os.path.join(outpath, dirname, basename), "wb").write(arc.read(filename))
+    except Exception:
+        rm_path(outpath)
+        native_lha_extract(arcpath, outpath)
+
+# -----------------------------------------------------------------------------
+# yaml serialization
+
+yaml_path_stack = []
+
+def constr_include(loader, node):
+    global yaml_path_stack
+    p = path(yaml_path_stack[-1], loader.construct_scalar(node))
+    if not is_file(p):
+        raise IOError("yaml include file not found ({})".format(p))
+    yaml_path_stack.append(os.path.dirname(os.path.abspath(p)))
+    with open(p, 'r') as f:
+        d = yaml.safe_load(f)
+    yaml_path_stack.pop()
+    return d
+
+yaml.SafeConstructor.add_constructor(u'!include', constr_include)
+
+def yaml_write(data, path: str):
+    with open(path, 'w') as f:
+        yaml.round_trip_dump(data, f, explicit_start=True, version=(1, 2))
+
+def yaml_load(yaml_path: str):
+    global yaml_path_stack
+    p = path(os.getcwd(), yaml_path)
+    if not is_file(p):
+        raise IOError("yaml file not found ({})".format(p))
+    yaml_path_stack.append(os.path.dirname(os.path.abspath(p)))
+    with open(p, 'r') as f:
+        return yaml.safe_load(f)
+
+# -----------------------------------------------------------------------------
+# database functions
+
+def get_db(verbose: bool):
+    sqlite3_path = "data/db/titles.sqlite3"
+    csv_path = "data/db/titles.csv"
+
+    update_sqlite3 = False
+    if is_file(sqlite3_path):
+        update_sqlite3 = os.path.getmtime(sqlite3_path) < os.path.getmtime(csv_path)
+    else:
+        update_sqlite3 = True
+
+    if update_sqlite3:
+        if verbose:
+            print("Updating title database cache...")
+        read_csv(csv_path, sqlite3_path)
+
+    db = sqlite3.connect(sqlite3_path)
+    db.row_factory = sqlite3.Row
+    return db
+
+
+def write_csv():
+    sqlite3_path = "data/db/titles.sqlite3"
+    csv_path = "data/db/titles.csv"
+
+    if not is_file(sqlite3_path):
+        raise IOError("SQLite database not found ({})".format(sqlite3_path))
+
+    csv.register_dialect("amigavision",
+        delimiter=';',
+        doublequote=True,
+        escapechar=None,
+        lineterminator='\n',
+        quotechar='"',
+        quoting=0,
+        skipinitialspace=False,
+        strict=False
+    )
+
+    conn = sqlite3.connect(sqlite3_path)
+    c = conn.cursor()
+    c.execute("SELECT * FROM titles ORDER BY 'id' ASC")
+    with open(csv_path, "w") as f:
+        csv_out = csv.writer(f, dialect="amigavision")
+        csv_out.writerow([d[0] for d in c.description])
+        for result in c:
+            csv_out.writerow(result)
+    conn.close()
+    csv.unregister_dialect("amigavision")
+
+
+def move_trailing_article(title):
+    title = (title or "").strip()
+    for article in ("The", "A", "An"):
+        suffix = f", {article}"
+        if title.endswith(suffix):
+            return f"{article} {title[:-len(suffix)].strip()}"
+    return title
+
+
+def drop_leading_the(title):
+    return re.sub(r"^The\s+", "", (title or "").strip(), flags=re.IGNORECASE)
+
+
+def cleanup_title_short(value):
+    value = re.sub(r"\s+", " ", (value or "").strip())
+    value = re.sub(r"\s+\)", ")", value)
+    value = re.sub(r"\(\s*$", "", value)
+    value = value.rstrip(" :;,-/(").strip()
+    return value
+
+
+def truncate_on_word_boundary(value, max_length=28):
+    value = cleanup_title_short(value)
+    if len(value) <= max_length:
+        return value
+    clipped = value[:max_length + 1].rstrip()
+    clipped = re.sub(r"\s+\S*$", "", clipped)
+    if not clipped:
+        clipped = value[:max_length]
+    return cleanup_title_short(clipped)
+
+
+def infer_title_short_from_title(title, max_length=28):
+    title = move_trailing_article(title)
+    title = re.sub(r"\s+", " ", (title or "").strip())
+    if not title:
+        return ""
+
+    no_the = cleanup_title_short(drop_leading_the(title))
+    no_article = cleanup_title_short(re.sub(r"^(The|A|An)\s+", "", title, flags=re.IGNORECASE))
+    if len(title) <= max_length:
+        if no_the and no_the != title and len(no_the) <= max_length:
+            return no_the
+        if no_article and no_article != title and len(no_article) <= max_length:
+            return no_article
+        return cleanup_title_short(title)
+
+    candidates = []
+
+    def add_candidate(candidate):
+        candidate = cleanup_title_short(candidate)
+        if candidate and candidate not in candidates:
+            candidates.append(candidate)
+
+    colon_base = cleanup_title_short(title.split(":", 1)[0])
+    if colon_base:
+        add_candidate(colon_base)
+        add_candidate(re.sub(r"^(The|A|An)\s+", "", colon_base, flags=re.IGNORECASE))
+
+    paren_base = cleanup_title_short(re.sub(r"\s*\([^)]*\)", "", title))
+    if paren_base:
+        add_candidate(paren_base)
+
+    if no_the:
+        add_candidate(no_the)
+
+    if no_article:
+        add_candidate(no_article)
+
+    no_disc = cleanup_title_short(re.sub(r"\b(?:Disk|Disc)\b", "", title, flags=re.IGNORECASE))
+    if no_disc:
+        add_candidate(no_disc)
+
+    no_byline = cleanup_title_short(re.sub(r"\s+by\s+.+$", "", title, flags=re.IGNORECASE))
+    if no_byline:
+        add_candidate(no_byline)
+
+    simplified = title
+    simplified = re.sub(r"\bSloppy\b", "", simplified, flags=re.IGNORECASE)
+    simplified = re.sub(r"\b(?:Disk|Disc)\b", "", simplified, flags=re.IGNORECASE)
+    simplified = re.sub(r"\s+", " ", simplified)
+    add_candidate(simplified)
+    for candidate in candidates:
+        if len(candidate) <= max_length:
+            return candidate
+
+    add_candidate(title)
+    for candidate in candidates:
+        shortened = truncate_on_word_boundary(candidate, max_length=max_length)
+        if shortened:
+            return shortened
+
+    return truncate_on_word_boundary(title, max_length=max_length)
+
+
+def normalized_title_fields(title, title_short):
+    title = move_trailing_article((title or "").strip())
+    title_short = (title_short or "").strip()
+    if title_short and (not title or len(title_short) > len(title)):
+        title = move_trailing_article(title_short)
+    if title:
+        title_short = infer_title_short_from_title(title)
+    else:
+        title_short = cleanup_title_short(title_short)
+    return title, title_short
+
+
+VARIANT_ARCHIVE_RE = re.compile(r"^(?P<name>.+)_v(?P<version>[^_]+)(?P<suffix>(?:_.*)?)\.lha$")
+
+
+def parse_archive_variant(archive_path):
+    basename = os.path.basename(archive_path or "")
+    match = VARIANT_ARCHIVE_RE.match(basename)
+    if not match:
+        return None
+    suffix = match.group("suffix") or ""
+    tokens = [token.upper() for token in suffix.strip("_").split("_") if token]
+    return {
+        "name": match.group("name"),
+        "suffix": suffix,
+        "tokens": tokens,
+    }
+
+
+def variant_preference_rank(archive_path):
+    parsed = parse_archive_variant(archive_path)
+    if parsed is None:
+        return None
+    tokens = parsed["tokens"]
+    if "CD32" in tokens:
+        return 0
+    if "AGA" in tokens:
+        return 1
+    if not tokens:
+        return 2
+    return None
+
+
+def reconcile_preferred_variants(rows, header, changed_ids):
+    if not changed_ids:
+        return 0
+
+    col_index = {column: idx for idx, column in enumerate(header)}
+    required = ["id", "title", "category", "subcategory", "archive_path", "redundant", "preferred_version"]
+    if any(column not in col_index for column in required):
+        return 0
+
+    grouped_rows = {}
+    for idx, row in enumerate(rows[1:], start=1):
+        if not row:
+            continue
+        row_id = row[col_index["id"]]
+        if row_id not in changed_ids:
+            continue
+        key = (row[col_index["title"]], row[col_index["category"]], row[col_index["subcategory"]])
+        grouped_rows[key] = True
+
+    updated = 0
+    for key in grouped_rows:
+        candidate_rows = []
+        for idx, row in enumerate(rows[1:], start=1):
+            if not row:
+                continue
+            row_key = (row[col_index["title"]], row[col_index["category"]], row[col_index["subcategory"]])
+            if row_key != key:
+                continue
+            if row[col_index["category"]].strip().lower() == "game":
+                continue
+            archive_path = row[col_index["archive_path"]]
+            parsed = parse_archive_variant(archive_path)
+            rank = variant_preference_rank(archive_path)
+            if parsed is None or rank is None:
+                continue
+            candidate_rows.append((idx, row, parsed, rank))
+
+        if len(candidate_rows) < 2:
+            continue
+
+        names = {parsed["name"] for _, _, parsed, _ in candidate_rows}
+        if len(names) != 1:
+            continue
+
+        best_idx, best_row, _, best_rank = min(candidate_rows, key=lambda item: item[3])
+        if best_rank not in (0, 1):
+            continue
+
+        preferred_id = best_row[col_index["id"]]
+        for idx, row, parsed, rank in candidate_rows:
+            if idx == best_idx:
+                continue
+            if rank is None or rank <= best_rank:
+                continue
+            changed = False
+            if row[col_index["redundant"]] != "1":
+                row[col_index["redundant"]] = "1"
+                changed = True
+            if row[col_index["preferred_version"]] != preferred_id:
+                row[col_index["preferred_version"]] = preferred_id
+                changed = True
+            if changed:
+                rows[idx] = row
+                updated += 1
+
+    return updated
+
+
+def append_missing_title_rows(entries, csv_path="data/db/titles.csv"):
+    if not entries:
+        return 0, 0, []
+
+    deduped_entries = []
+    seen_ids = set()
+    for entry in entries:
+        if entry["id"] in seen_ids:
+            continue
+        seen_ids.add(entry["id"])
+        deduped_entries.append(entry)
+
+    with open(csv_path, "r", newline="") as f:
+        rows = list(csv.reader(f, delimiter=";"))
+
+    if not rows:
+        raise IOError("CSV file is empty ({})".format(csv_path))
+
+    header = rows[0]
+    if not header or header[0] != "id":
+        raise IOError("CSV header is invalid ({})".format(csv_path))
+
+    row_index = {row[0]: idx for idx, row in enumerate(rows[1:], start=1) if row}
+    existing_ids = set(row_index.keys())
+    missing_entries = [entry for entry in deduped_entries if entry["id"] not in existing_ids]
+    skipped_entries = []
+    blank_columns = max(len(header) - 1, 0)
+    row_template = {column: "" for column in header}
+    updated = 0
+    report_entries = []
+
+    for entry in deduped_entries:
+        if entry["id"] not in existing_ids:
+            continue
+        idx = row_index[entry["id"]]
+        row = rows[idx]
+        if len(row) < len(header):
+            row.extend([""] * (len(header) - len(row)))
+        changed = False
+        force_fields = set(entry.get("_force_fields", []))
+        for field in ("title", "title_short", "category", "subcategory", "hardware", "aga", "release_date", "language", "developer", "publisher", "players", "archive_path", "slave_path", "slave_version", "hol_id", "lemon_id", "demozoo_id", "pouet_id"):
+            try:
+                col = header.index(field)
+            except ValueError:
+                continue
+            entry_value = entry.get(field, "")
+            should_update = False
+            if field in force_fields and row[col] != entry_value:
+                should_update = True
+            elif not row[col] and entry_value:
+                should_update = True
+            if should_update:
+                if field == "title":
+                    row[col] = normalized_title_fields(entry_value, "")[0]
+                elif field == "title_short":
+                    source_title = row[header.index("title")] if "title" in header else entry.get("title", "")
+                    row[col] = normalized_title_fields(source_title, entry_value)[1]
+                else:
+                    row[col] = entry_value
+                changed = True
+                if field in ("hol_id", "lemon_id"):
+                    report_entries.append({
+                        "id": entry["id"],
+                        "title": row[header.index("title")] if "title" in header else entry.get("title", ""),
+                        "title_short": row[header.index("title_short")] if "title_short" in header else entry.get("title_short", ""),
+                        "subcategory": row[header.index("subcategory")] if "subcategory" in header else entry.get("subcategory", ""),
+                        "hol_id": row[header.index("hol_id")] if "hol_id" in header else entry.get("hol_id", ""),
+                        "lemon_id": row[header.index("lemon_id")] if "lemon_id" in header else entry.get("lemon_id", ""),
+                        "demozoo_id": row[header.index("demozoo_id")] if "demozoo_id" in header else entry.get("demozoo_id", ""),
+                        "pouet_id": row[header.index("pouet_id")] if "pouet_id" in header else entry.get("pouet_id", ""),
+                    })
+        if changed:
+            rows[idx] = row
+            updated += 1
+            report_entries.append({
+                "id": entry["id"],
+                "title": row[header.index("title")] if "title" in header else entry.get("title", ""),
+                "title_short": row[header.index("title_short")] if "title_short" in header else entry.get("title_short", ""),
+                "subcategory": row[header.index("subcategory")] if "subcategory" in header else entry.get("subcategory", ""),
+                "hol_id": row[header.index("hol_id")] if "hol_id" in header else entry.get("hol_id", ""),
+                "lemon_id": row[header.index("lemon_id")] if "lemon_id" in header else entry.get("lemon_id", ""),
+                "demozoo_id": row[header.index("demozoo_id")] if "demozoo_id" in header else entry.get("demozoo_id", ""),
+                "pouet_id": row[header.index("pouet_id")] if "pouet_id" in header else entry.get("pouet_id", ""),
+            })
+
+    for entry in missing_entries:
+        if entry.get("category") == "Game":
+            missing_required_fields = [
+                field
+                for field in ("release_date", "developer", "publisher", "subcategory")
+                if not (entry.get(field) or "").strip()
+            ]
+            if missing_required_fields:
+                skipped_entries.append({
+                    "id": entry["id"],
+                    "title": entry.get("title", ""),
+                    "title_short": entry.get("title_short", ""),
+                    "subcategory": entry.get("subcategory", ""),
+                    "hol_id": entry.get("hol_id", ""),
+                    "lemon_id": entry.get("lemon_id", ""),
+                    "demozoo_id": entry.get("demozoo_id", ""),
+                    "pouet_id": entry.get("pouet_id", ""),
+                    "status": "skipped",
+                    "reason": "missing required game metadata",
+                    "missing_fields": ", ".join(missing_required_fields),
+                })
+                continue
+        row = dict(row_template)
+        row["id"] = entry["id"]
+        row["title"] = entry.get("title", "")
+        row["title_short"] = entry.get("title_short", "")
+        row["title"], row["title_short"] = normalized_title_fields(row["title"], row["title_short"])
+        row["category"] = entry.get("category", "")
+        row["subcategory"] = entry.get("subcategory", "")
+        row["hardware"] = entry.get("hardware", "")
+        row["aga"] = entry.get("aga", "")
+        row["language"] = entry.get("language", "")
+        row["developer"] = entry.get("developer", "")
+        row["publisher"] = entry.get("publisher", "")
+        row["players"] = entry.get("players", "")
+        row["archive_path"] = entry.get("archive_path", "")
+        row["slave_path"] = entry.get("slave_path", "")
+        row["slave_version"] = entry.get("slave_version", "")
+        row["country"] = entry.get("country", "")
+        row["hol_id"] = entry.get("hol_id", "")
+        row["lemon_id"] = entry.get("lemon_id", "")
+        row["demozoo_id"] = entry.get("demozoo_id", "")
+        row["pouet_id"] = entry.get("pouet_id", "")
+        rows.append([row[column] for column in header])
+        report_entries.append({
+            "id": entry["id"],
+            "title": row["title"],
+            "title_short": row["title_short"],
+            "subcategory": row["subcategory"],
+            "hol_id": row["hol_id"],
+            "lemon_id": row["lemon_id"],
+            "demozoo_id": row["demozoo_id"],
+            "pouet_id": row["pouet_id"],
+        })
+
+    changed_ids = {entry["id"] for entry in deduped_entries}
+    updated += reconcile_preferred_variants(rows, header, changed_ids)
+
+    if updated or missing_entries:
+        with open(csv_path, "w", newline="") as f:
+            writer = csv.writer(f, delimiter=";", lineterminator="\n")
+            writer.writerows(rows)
+
+    deduped_report = []
+    seen_report_ids = set()
+    for entry in report_entries + skipped_entries:
+        if entry["id"] in seen_report_ids:
+            continue
+        seen_report_ids.add(entry["id"])
+        deduped_report.append(entry)
+
+    return len(missing_entries), updated, deduped_report
+
+
+def write_id_verification_report(entries, report_path="data/db/index-add-missing-report.html"):
+    rows = []
+    for entry in entries:
+        hol_link = f'<a href="https://hol.abime.net/{entry["hol_id"]}">{html.escape(entry["hol_id"])}</a>' if entry.get("hol_id") else ""
+        lemon_link = f'<a href="https://www.lemonamiga.com/?game_id={entry["lemon_id"]}">{html.escape(entry["lemon_id"])}</a>' if entry.get("lemon_id") else ""
+        title = html.escape(entry.get("title", "") or entry["id"])
+        title_short = html.escape(entry.get("title_short", "") or "")
+        subcategory = html.escape(entry.get("subcategory", "") or "")
+        status = html.escape(entry.get("status", "written"))
+        missing_fields = html.escape(entry.get("missing_fields", "") or "")
+        reason = html.escape(entry.get("reason", "") or "")
+        rows.append(
+            f"<tr><td>{title}</td><td>{title_short}</td><td>{subcategory}</td><td>{hol_link}</td><td>{lemon_link}</td><td>{status}</td><td>{missing_fields}</td><td>{reason}</td></tr>"
+        )
+
+    report_html = """<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AmigaVision ID Verification</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; margin: 24px; background: #000; color: #fff; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border-bottom: 1px solid #333; text-align: left; padding: 8px; }
+    th { position: sticky; top: 0; background: #000; }
+    a { text-decoration: none; color: #8ab4ff; }
+    code { color: #fff; }
+  </style>
+</head>
+<body>
+  <h1>ID Verification</h1>
+  <p>Rows appended or updated during the latest index-add-missing run. Skipped rows need manual review before they can be added.</p>
+  <table>
+    <thead>
+      <tr><th>Title</th><th>Title Short</th><th>Subcategory</th><th>Hall of Light</th><th>Lemon Amiga</th><th>Status</th><th>Missing Fields</th><th>Reason</th></tr>
+    </thead>
+    <tbody>
+      {rows}
+    </tbody>
+  </table>
+</body>
+</html>
+""".replace("{rows}", "\n      ".join(rows))
+
+    with open(report_path, "w") as f:
+        f.write(report_html)
+
+
+def read_csv(csv_path, new_db_path):
+    if is_file(new_db_path):
+        os.remove(new_db_path)
+    conn = sqlite3.connect(new_db_path)
+    c = conn.cursor()
+    c.execute('''CREATE TABLE "titles" (
+               "id" TEXT NOT NULL UNIQUE,
+               "title" TEXT,
+               "title_short" TEXT,
+               "redundant" INTEGER,
+               "preferred_version" TEXT,
+               "hardware" TEXT,
+               "aga" INTEGER,
+               "ntsc" INTEGER,
+               "scale" INTEGER,
+               "vshift" INTEGER,
+               "hshift" INTEGER,
+               "killaga" INTEGER,
+               "gamepad" INTEGER,
+               "lightgun" INTEGER,
+               "note" TEXT,
+               "issues" TEXT,
+               "hack" TEXT,
+               "release_date" TEXT,
+               "country" TEXT,
+               "language" TEXT,
+               "developer" TEXT,
+               "publisher" TEXT,
+               "players" TEXT,
+               "slave_args" TEXT,
+               "slave_version" TEXT,
+               "slave_path" TEXT,
+               "archive_path" TEXT,
+               "category" TEXT,
+               "subcategory" TEXT,
+               "hol_id" INTEGER,
+               "lemon_id" INTEGER,
+               "demozoo_id" INTEGER,
+               "pouet_id" INTEGER,
+               PRIMARY KEY("id"));''')
+    with open(csv_path, "r") as f:
+        dr = csv.DictReader(f, delimiter=";")
+        r = [(l["id"], l["title"], l["title_short"], l["redundant"], l["preferred_version"], l["hardware"], l["aga"], l["ntsc"], l["scale"],
+              l["vshift"], l["hshift"], l["killaga"], l["gamepad"], l["lightgun"], l["note"], l["issues"], l["hack"], l["release_date"],
+              l["country"], l["language"], l["developer"], l["publisher"], l["players"], l["slave_args"], l["slave_version"],
+              l["slave_path"], l["archive_path"], l["category"], l["subcategory"], l["hol_id"], l["lemon_id"], l.get("demozoo_id", ""), l.get("pouet_id", "")) for l in dr]
+        c.executemany('''INSERT INTO titles (
+                           id, title, title_short, redundant, preferred_version, hardware, aga, ntsc,
+                           scale, vshift, hshift, killaga, gamepad, lightgun, note, issues, hack, release_date,
+                           country, language, developer, publisher, players, slave_args, slave_version, slave_path, archive_path,
+                           category, subcategory, hol_id, lemon_id, demozoo_id, pouet_id)
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);''', r)
+    conn.commit()
+    conn.close()
+
+# -----------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    print("not runnable")
+    sys.exit(1)

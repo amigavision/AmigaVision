@@ -1,6 +1,6 @@
 assign >NIL: EXISTS MiSTer:
 if WARN
-  if `ags-uname` EQ "mister"
+  if `avs-uname` EQ "mister"
     mount MR0:
   else
     makedir RAM:MiSTer >NIL:

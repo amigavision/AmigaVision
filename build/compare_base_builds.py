@@ -27,12 +27,12 @@ def main():
     for label, source_args in [('hdf', ['--base-hdf', str(image)]), ('native', ['--base-dir', str(source)])]:
         stage, output = work/label/'stage', work/label/'output'
         commands.append((label, ['make', 'prepare-image-temp',
-                         'AGSTEMP='+str(stage), 'AGSDEST='+str(output),
-                         'AGSCACHEGEN=base-compare-'+work.name,
+                         'AVSTEMP='+str(stage), 'AVSDEST='+str(output),
+                         'AVSCACHEGEN=base-compare-'+work.name,
                          'BASE_IMAGE_ARGS='+shlex.join(source_args+['--temp-dir',str(stage)])]))
         if args.profile == 'test':
             commands[-1][1].append('IMAGE_PREP_CMD='+shlex.join([
-                'pipenv', 'run', 'build/ags_imager.py', '-c', str(work/'fixture/BaseCompare.yaml'),
+                'pipenv', 'run', 'build/avs_imager.py', '-c', str(work/'fixture/BaseCompare.yaml'),
                 '-o', str(output), *source_args, '--temp-dir', str(stage)]))
     for label, cmd in commands:
         print(label+': '+shlex.join(cmd), flush=True)

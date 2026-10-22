@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-# AGSImager: analyze screenshot to decide optimum vadjust
+# AVSImager: analyze screenshot to decide optimum vadjust
 
 import argparse
 import sys
 
 from PIL import Image
 
-import ags_util as util
+import avs_util as util
 
 # -----------------------------------------------------------------------------
 

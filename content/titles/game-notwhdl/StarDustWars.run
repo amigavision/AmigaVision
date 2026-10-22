@@ -1,10 +1,10 @@
-ags-cd N/StarDustWars
+avs-cd N/StarDustWars
 stack >NIL: 65536
 IF EXISTS WHDSaves:StarDustWars/Record
   copy WHDSaves:StarDustWars/Record Record QUIET
 ENDIF
 StarDustWars >NIL:
-ags-cd N/StarDustWars
+avs-cd N/StarDustWars
 IF NOT EXISTS WHDSaves:StarDustWars
   makedir WHDSaves:StarDustWars
 ENDIF

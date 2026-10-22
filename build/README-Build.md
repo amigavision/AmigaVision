@@ -1,6 +1,6 @@
 # AmigaVision
 
-Amiga HDF image builder using WHDL or custom installs, using the [Arcade Game Selector] launcher as a front-end.
+Amiga HDF image builder using WHDL or custom installs, using the AVS launcher as a front-end.
 
 ## Dependencies
 
@@ -12,8 +12,8 @@ Amiga HDF image builder using WHDL or custom installs, using the [Arcade Game Se
 The final step in the build process uses [Amiberry](https://github.com/BlitterStudio/amiberry) by default to copy all files to a PFS3-formatted HDF image. This is not an ideal setup, but as far as we know, no library exists that supports manipulation of PFS3 volumes without a bunch of dependencies (like C#). As a consequence the entire file tree to be copied first needs to be created on the host filesystem.
 
 ## Prerequisites
-- The AV-Base checkout alongside AmigaVision (or set `AGSBASE` to its location). Its root is the DH0 payload, including UAE `.uaem` metadata sidecars. Git files are excluded from staging; build layers replace the base startup files as usual.
-- WHDLoad archives (LhA compressed) in `$AGSCONTENT/titles/game` and `$AGSCONTENT/titles/demo` (all subdirectories are scanned)
+- The AV-Base checkout alongside AmigaVision (or set `AVSBASE` to its location). Its root is the DH0 payload, including UAE `.uaem` metadata sidecars. Git files are excluded from staging; build layers replace the base startup files as usual.
+- WHDLoad archives (LhA compressed) in `$AVSCONTENT/titles/game` and `$AVSCONTENT/titles/demo` (all subdirectories are scanned)
 - An [Amiberry](https://github.com/BlitterStudio/amiberry) binary at the path defined in `$AMIBERRYBIN`.
 
 ## Standard Release Flow
@@ -38,7 +38,7 @@ The `ntsc` field in `data/db/titles.csv` controls the title's video mode and pix
 | Value | Mode | Pixel proportions |
 |---|---|---|
 | `0` or blank | PAL, 50Hz | 16:15 at 4×; square pixels at 5× |
-| `1` | NTSC, 60Hz | 5:6 at 5×, using the `ags-vadjust` `NTSC` correction |
+| `1` | NTSC, 60Hz | 5:6 at 5×, using the `avs-vadjust` `NTSC` correction |
 | `2` | PAL60, 60Hz | Standard crop without `NTSC`; 16:15 at 4×, square pixels at 5× |
 
 Both `1` and `2` select NTSC timing in generated launch scripts. The NTSC pixel-aspect correction applies at 5×; 6× retains the existing widescreen crop. The launcher metadata distinguishes NTSC from PAL60. The MiSTer Overscale toggle and Force PAL/NTSC options continue to override the generated crop or timing as before.
@@ -84,7 +84,7 @@ For all other targets and maintenance tasks, run:
 
 ## Native base source
 
-Builds use the root of the sibling `AV-Base` checkout by default. Set `AGSBASE`
+Builds use the root of the sibling `AV-Base` checkout by default. Set `AVSBASE`
 in `.env` or pass `--base-dir DIR` to use another checkout. Keep all `.uaem`
 sidecars, `.info` icons, and escaped filenames unchanged. Git control files and
 host bookkeeping are excluded from the staged Amiga volume.
@@ -98,7 +98,7 @@ Run `make test-image` for the smaller test build. To keep its files separate:
 
 ```sh
 mkdir -p /tmp/av-native-test/output /tmp/av-native-test/stage
-make test-image AGSDEST=/tmp/av-native-test/output AGSTEMP=/tmp/av-native-test/stage
+make test-image AVSDEST=/tmp/av-native-test/output AVSTEMP=/tmp/av-native-test/stage
 ```
 
 For a legacy HDF comparison, override the source explicitly:
@@ -171,14 +171,14 @@ To force a complete transactional rebuild:
 make image IMAGE_CLONE_ARGS=--full
 ```
 
-Direct `build/ags_imager.py` calls prepare a full image unless `--incremental` is passed;
+Direct `build/avs_imager.py` calls prepare a full image unless `--incremental` is passed;
 with `--incremental`, image allocation is deferred until `clone-amiberry` runs.
 Do not launch the generated config directly for an incremental workspace.
 
 Planning and transaction regression tests:
 
 ```sh
-pipenv run python build/test_ags_image_update.py
+pipenv run python build/test_avs_image_update.py
 ```
 
 ## Warm-build work reuse
@@ -211,3 +211,18 @@ Missing-archive auditing checks each distinct archive path once. Menu aliases ar
 matched using the existing SQLite lookup rules against missing rows only, rather
 than repeatedly searching the complete title database. The `audit missing
 archives` timing row makes this verification visible even on cached builds.
+
+## Launcher naming
+
+The launcher uses `AVS:`, `AVS`, `AVSMenu`, `AVSHelper`, `AVS.conf`, and `.avs`
+menu directories. Launcher assets live in `data/avs`, `data/avs-highres`, and
+`data/avs-ecs`; Python build modules use the `avs_` prefix. Local environment
+variables use `AVSCONTENT`, `AVSDEST`, `AVSTEMP`, `AVSBASE`, and `AVSCACHEGEN`.
+
+Older AV-Base launcher commands, fonts, and scripts are renamed in the staged
+copy. The original base checkout is preserved. MiSTer's core-owned `ags_boot`
+and `ags_current` protocol filenames remain compatible with existing cores.
+
+The bundled launcher executables use the new paths, menu extension, and helper
+port name. Their names were patched in place with zero padding for shorter
+strings, preserving executable sizes, hunk layout, and relocation offsets.

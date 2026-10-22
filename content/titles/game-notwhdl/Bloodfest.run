@@ -1,4 +1,4 @@
-ags-cd N/Bloodfest
+avs-cd N/Bloodfest
 IF NOT EXISTS WHDSaves:Bloodfest
   makedir WHDSaves:Bloodfest
   copy #? WHDSaves:Bloodfest/ ALL CLONE QUIET

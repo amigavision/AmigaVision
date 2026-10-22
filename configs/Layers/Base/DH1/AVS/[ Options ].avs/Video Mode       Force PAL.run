@@ -1,0 +1,5 @@
+echo "PAL" >ENV:whdlvmode
+echo "PAL" >ENVARC:whdlvmode
+IF NOT EXISTS ENV:disable_vadjust
+  avs-vadjust
+ENDIF

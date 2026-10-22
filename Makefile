@@ -6,40 +6,40 @@ export
 PYTHON ?= python3.11
 PIP_BUILD_CONSTRAINT ?= $(CURDIR)/build/pip-build-constraints.txt
 export PIP_BUILD_CONSTRAINT
-SOURCE ?= $(subst ",,${AGSCONTENT})/titles/manual-downloads
-ARCHIVE_FETCH_DEST ?= ${AGSCONTENT}
+SOURCE ?= $(subst ",,${AVSCONTENT})/titles/manual-downloads
+ARCHIVE_FETCH_DEST ?= ${AVSCONTENT}
 
 AMIBERRYBIN ?= /Applications/Amiberry.app/Contents/MacOS/Amiberry
-REPLAYOS_BASE_IMG ?= $(subst ",,${AGSCONTENT})/replay
+REPLAYOS_BASE_IMG ?= $(subst ",,${AVSCONTENT})/replay
 REPLAYOS_OUTPUT_IMG ?= $(subst ",,${DISTRO_OUT})/AmigaVision-RPi-$(DISTRO_DATE).img
 REPLAYOS_COMPRESSED_IMG ?= $(subst ",,${REPLAYOS_OUTPUT_IMG}).xz
 REPLAYOS_IMG_SIZE ?= 14900m
-REPLAYOS_BIOS_DIR ?= $(subst ",,${AGSCONTENT})/replay/bios
-AMIGAVISION_HDF ?= ${AGSDEST}/AmigaVision.hdf
+REPLAYOS_BIOS_DIR ?= $(subst ",,${AVSCONTENT})/replay/bios
+AMIGAVISION_HDF ?= ${AVSDEST}/AmigaVision.hdf
 # Experimental native-chipset Emu68 image; classic PiStorm uses the ECS HDF.
 PISTORM_MODEL ?= pistorm32lite
 PISTORM_HDF ?= $(if $(filter pistorm,$(PISTORM_MODEL)),$(ECS_HDF),$(AMIGAVISION_HDF))
 PISTORM_ROM ?= $(KICKSTART_ROM)
 PISTORM_OUTPUT ?=
-ECS_HDF ?= ${AGSDEST}/AmigaVision-ECS.hdf
+ECS_HDF ?= ${AVSDEST}/AmigaVision-ECS.hdf
 EMULATORS_ARCHIVE ?= auto
 DISTRO_DATE ?= $(shell date +%Y.%m.%d)
-DISTRO_OUT ?= ${AGSDEST}/distros
+DISTRO_OUT ?= ${AVSDEST}/distros
 FAT32_MAX_FILE_BYTES ?= 4294967295
-DISTRO_SAVES_HDF ?= ${AGSCONTENT}/distro/games/Amiga/AmigaVision-Saves.hdf
-DISTRO_ROM ?= ${AGSCONTENT}/distro/games/Amiga/AmigaVision.rom
-DISTRO_SHARED_DIR ?= ${AGSCONTENT}/distro/games/Amiga/shared
-DISTRO_VISUALS_DIR ?= ${AGSCONTENT}/distro/games/Amiga/Visuals
-DISTRO_LISTINGS_DIR ?= ${AGSDEST}/listings
-MINI_HDF ?= ${AGSDEST}/AmigaVision-Mini.hdf
-MINI_UAE ?= ${AGSDEST}/AmigaVision-Mini.uae
+DISTRO_SAVES_HDF ?= ${AVSCONTENT}/distro/games/Amiga/AmigaVision-Saves.hdf
+DISTRO_ROM ?= ${AVSCONTENT}/distro/games/Amiga/AmigaVision.rom
+DISTRO_SHARED_DIR ?= ${AVSCONTENT}/distro/games/Amiga/shared
+DISTRO_VISUALS_DIR ?= ${AVSCONTENT}/distro/games/Amiga/Visuals
+DISTRO_LISTINGS_DIR ?= ${AVSDEST}/listings
+MINI_HDF ?= ${AVSDEST}/AmigaVision-Mini.hdf
+MINI_UAE ?= ${AVSDEST}/AmigaVision-Mini.uae
 # Rare ECS builds default to full rebuilds with no retained build caches.
 ECS_INCREMENTAL ?= 0
 ECS_KEEP_CACHE ?= $(ECS_INCREMENTAL)
 ECS_IMAGE_UPDATE_ARGS = $(filter-out --incremental,$(IMAGE_UPDATE_ARGS)) $(if $(filter 1,$(ECS_INCREMENTAL)),--incremental)
-ECS_TEMP ?= $(subst ",,${AGSTEMP})-ECS
+ECS_TEMP ?= $(subst ",,${AVSTEMP})-ECS
 MINI_DISTRO_DIR ?= ./content/distro_mini
-MISTER_DISTRO_DIR ?= ${AGSCONTENT}/distro
+MISTER_DISTRO_DIR ?= ${AVSCONTENT}/distro
 CD32_DISTRO_DIR ?= ./cd32
 DISTRO_PACKAGE = $(PYTHON) build/package_distros.py --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --ecs-hdf "$(subst ",,${ECS_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh"
 DISTRO_PACKAGE_PROMPT = bash build/run_distros.sh --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --ecs-hdf "$(subst ",,${ECS_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh"
@@ -57,13 +57,13 @@ default: help
 IMAGE_UPDATE_ARGS ?= --incremental
 IMAGE_CLONE_ARGS ?=
 BASE_IMAGE_ARGS ?=
-IMAGE_PREP_CMD = pipenv run build/ags_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
-MINI_IMAGE_PREP_CMD = pipenv run build/ags_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists -d ${AGSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AGSDEST}
-TEST_IMAGE_PREP_CMD = pipenv run build/ags_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --auto-lists -o ${AGSDEST}
-TEST_DRY_PREP_CMD = pipenv run build/ags_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --only-ags-tree --auto-lists -o ${AGSDEST}
-ECS_IMAGE_PREP_CMD = pipenv run build/ags_imager.py $(ECS_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AGSCONTENT}/extra_dirs/Music::DH1:Music -o ${AGSDEST}
-MAKE_MANIFESTS_CMD = pipenv run build/ags_index.py --make-manifests --only-missing
-MAKE_LISTINGS_CMD = $(PYTHON) build/generate_listings.py "$(subst ",,${AGSTEMP})/DH1/AGS" "$(subst ",,${DISTRO_LISTINGS_DIR})"
+IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o ${AVSDEST}
+MINI_IMAGE_PREP_CMD = pipenv run build/avs_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists -d ${AVSCONTENT}/extra_dirs/LessMusic::DH1:Music -o ${AVSDEST}
+TEST_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --auto-lists -o ${AVSDEST}
+TEST_DRY_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --only-avs-tree --auto-lists -o ${AVSDEST}
+ECS_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(ECS_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o ${AVSDEST}
+MAKE_MANIFESTS_CMD = pipenv run build/avs_index.py --make-manifests --only-missing
+MAKE_LISTINGS_CMD = $(PYTHON) build/generate_listings.py "$(subst ",,${AVSTEMP})/DH1/AVS" "$(subst ",,${DISTRO_LISTINGS_DIR})"
 FINALIZE_MAIN_IMAGE = test -f "$(subst ",,${AMIGAVISION_HDF})"
 
 help:
@@ -109,7 +109,7 @@ help:
 		'Import repacked non-WHDLoad demo archives from manual-downloads into demo-notwhdl, generate .run launchers, and enrich titles.csv with online Pouet/Demozoo metadata where possible.' \
 		'' \
 		'make index' \
-		'Index canonical WHDLoad archives in the $$AGSCONTENT path, update database references, and write the resulting state back to data/db/titles.csv.' \
+		'Index canonical WHDLoad archives in the $$AVSCONTENT path, update database references, and write the resulting state back to data/db/titles.csv.' \
 		'' \
 		'make index-add-missing' \
 		'Run indexing, write the current SQLite state back to data/db/titles.csv, and then append or backfill missing fields using the current canonical metadata already present in the project.' \
@@ -118,13 +118,13 @@ help:
 		'Clear archive/slave references in the database for rows whose archive_path no longer exists in the titles tree, then write the result back to data/db/titles.csv.' \
 		'' \
 		'make manifests' \
-		'Regenerate all archive manifests under $$AGSCONTENT/manifests.' \
+		'Regenerate all archive manifests under $$AVSCONTENT/manifests.' \
 		'' \
 		'make missing-manifests' \
 		'Generate manifests only for archives that do not already have one.' \
 		'' \
 		'make verify-manifests' \
-		'Verify .lha archive contents against the manifests in $$AGSCONTENT/manifests.' \
+		'Verify .lha archive contents against the manifests in $$AVSCONTENT/manifests.' \
 		'' \
 		'make sync-manifests' \
 		'Generate missing manifests and report stale manifests whose archive no longer exists.' \
@@ -139,7 +139,7 @@ help:
 		'Remove stale manifests whose archive no longer exists.' \
 		'' \
 		'make promote-newer-archives [SOURCE=...]' \
-		'Promote newer .lha archives from the $${AGSCONTENT}/titles/manual-downloads directory into the canonical tree.' \
+		'Promote newer .lha archives from the $${AVSCONTENT}/titles/manual-downloads directory into the canonical tree.' \
 		'' \
 		'make missing-images' \
 		'Print how many titles still lack low-res screenshots.' \
@@ -148,7 +148,7 @@ help:
 		'Preferred image pipeline. Import matching PNGs from data/img_highres/Unprocessed/, fetch missing demo screenshots from Demozoo, Pouet, and Exotica, fetch missing game screenshots from Lemon Amiga in Chrome, then try HoL in Chrome for remaining HoL-linked games, convert staged images into canonical low-res and high-res IFF screenshots, and print the remaining missing count.' \
 		'' \
 		'make listings' \
-		'Generate games.txt and demos.txt from the current AGS2 temp tree for distro packaging.' \
+		'Generate games.txt and demos.txt from the current AVS temp tree for distro packaging.' \
 		'' \
 		'make pi' \
 		'Build the Raspberry Pi / RePlayOS package from the configured base image and output an .img.xz sized to fit typical 16GB SD cards.' \
@@ -203,7 +203,7 @@ update:
 	@pipenv run python build/pull_archives.py --dest "$(SOURCE)"
 	@pipenv run python build/import_notwhdl_demos.py --source-root "$(SOURCE)" --apply
 	@pipenv run python build/promote_newer_archives.py --apply "$(SOURCE)"
-	@pipenv run build/ags_index.py -v --ingest
+	@pipenv run build/avs_index.py -v --ingest
 	@pipenv run python build/sync_missing_images.py --include-missing-highres --fetch-lemon-interactive --apply
 	@pipenv run python build/promote_newer_archives.py --report-pending "$(SOURCE)"
 
@@ -234,44 +234,44 @@ initial-downloads:
 
 index:
 	$(call print-start-time)
-	@pipenv run build/ags_index.py -v
-	@pipenv run build/ags_index.py --make-csv
+	@pipenv run build/avs_index.py -v
+	@pipenv run build/avs_index.py --make-csv
 
 index-add-missing:
 	$(call print-start-time)
-	@pipenv run build/ags_index.py -v --append-missing-csv
+	@pipenv run build/avs_index.py -v --append-missing-csv
 
 prune-missing-archives:
 	$(call print-start-time)
-	@pipenv run build/ags_index.py -v --append-missing-csv --apply
+	@pipenv run build/avs_index.py -v --append-missing-csv --apply
 
 manifests:
 	$(call print-start-time)
-	@pipenv run build/ags_index.py --make-manifests
+	@pipenv run build/avs_index.py --make-manifests
 
 missing-manifests:
 	$(call print-start-time)
-	@pipenv run build/ags_index.py --make-manifests --only-missing
+	@pipenv run build/avs_index.py --make-manifests --only-missing
 
 verify-manifests:
 	$(call print-start-time)
-	@pipenv run build/ags_index.py --verify-manifests
+	@pipenv run build/avs_index.py --verify-manifests
 
 prune-manifests:
 	$(call print-start-time)
-	@pipenv run build/ags_index.py --prune-manifests
+	@pipenv run build/avs_index.py --prune-manifests
 
 prune-manifests-apply:
 	$(call print-start-time)
-	@pipenv run build/ags_index.py --prune-manifests --apply
+	@pipenv run build/avs_index.py --prune-manifests --apply
 
 sync-manifests:
 	$(call print-start-time)
-	@pipenv run build/ags_index.py --sync-manifests
+	@pipenv run build/avs_index.py --sync-manifests
 
 sync-manifests-apply:
 	$(call print-start-time)
-	@pipenv run build/ags_index.py --sync-manifests --apply
+	@pipenv run build/avs_index.py --sync-manifests --apply
 
 promote-newer-archives:
 	$(call print-start-time)
@@ -291,11 +291,11 @@ listings:
 
 sqlite:
 	$(call print-start-time)
-	@pipenv run build/ags_index.py -v --make-sqlite
+	@pipenv run build/avs_index.py -v --make-sqlite
 
 csv:
 	$(call print-start-time)
-	@pipenv run build/ags_index.py -v --make-csv
+	@pipenv run build/avs_index.py -v --make-csv
 
 screenshots:
 	$(call print-start-time)
@@ -323,20 +323,20 @@ ecs-artwork:
 	@pipenv run python build/ecs_artwork.py
 
 ecs-dry: ecs-artwork
-	@mkdir -p "$(ECS_TEMP)" "$(subst ",,${AGSDEST})"
-	@AGSTEMP="$(ECS_TEMP)" AGSCACHEGEN=ecs $(ECS_IMAGE_PREP_CMD) --only-ags-tree
+	@mkdir -p "$(ECS_TEMP)" "$(subst ",,${AVSDEST})"
+	@AVSTEMP="$(ECS_TEMP)" AVSCACHEGEN=ecs $(ECS_IMAGE_PREP_CMD) --only-avs-tree
 
 ecs-image: ecs-artwork
-	@mkdir -p "$(ECS_TEMP)" "$(subst ",,${AGSDEST})"
+	@mkdir -p "$(ECS_TEMP)" "$(subst ",,${AVSDEST})"
 	@$(MAKE_MANIFESTS_CMD)
-	@AGSTEMP="$(ECS_TEMP)" AGSCACHEGEN=ecs $(ECS_IMAGE_PREP_CMD)
-	@$(MAKE) clone-amiberry AGSTEMP="$(ECS_TEMP)"
-	@test -f "$(subst ",,${AGSDEST})/AmigaVision-ECS.hdf"
+	@AVSTEMP="$(ECS_TEMP)" AVSCACHEGEN=ecs $(ECS_IMAGE_PREP_CMD)
+	@$(MAKE) clone-amiberry AVSTEMP="$(ECS_TEMP)"
+	@test -f "$(subst ",,${AVSDEST})/AmigaVision-ECS.hdf"
 	@echo "Removing completed ECS temp workspace..."
 	@rm -rf "$(subst ",,$(ECS_TEMP))"
 	@if [ "$(ECS_KEEP_CACHE)" != "1" ]; then \
 		echo "Removing completed ECS build and image-update caches..."; \
-		pipenv run python build/ags_image_update.py --clear-cache-for "$(subst ",,${AGSDEST})/AmigaVision-ECS.hdf" && \
+		pipenv run python build/avs_image_update.py --clear-cache-for "$(subst ",,${AVSDEST})/AmigaVision-ECS.hdf" && \
 		rm -rf "${HOME}/Library/Caches/AmigaVision/build/ecs"; \
 	fi
 
@@ -344,24 +344,24 @@ clone-amiberry:
 	$(call print-start-time)
 	@echo "Running Amiberry..."
 	@start=$$(date +%s); \
-	if [ ! -d "$(subst ",,${AGSTEMP})" ]; then \
+	if [ ! -d "$(subst ",,${AVSTEMP})" ]; then \
 		echo "Preparing temp build tree..."; \
 		$(MAKE) prepare-image-temp || exit $$?; \
 	fi; \
-	if [ ! -f "$(subst ",,${AGSTEMP})/cfg.uae" ]; then \
-		echo "error: $(subst ",,${AGSTEMP})/cfg.uae not found after preparing the temp build tree."; \
+	if [ ! -f "$(subst ",,${AVSTEMP})/cfg.uae" ]; then \
+		echo "error: $(subst ",,${AVSTEMP})/cfg.uae not found after preparing the temp build tree."; \
 		exit 1; \
 	fi; \
-	if [ ! -f "$(subst ",,${AGSTEMP})/clone" ]; then \
-		echo "error: $(subst ",,${AGSTEMP})/clone not found after preparing the temp build tree."; \
+	if [ ! -f "$(subst ",,${AVSTEMP})/clone" ]; then \
+		echo "error: $(subst ",,${AVSTEMP})/clone not found after preparing the temp build tree."; \
 		exit 1; \
 	fi; \
-	if [ ! -e "$(subst ",,${AGSTEMP})/target.hdf" ] && [ ! -f "$(subst ",,${AGSTEMP})/image-update-plan.json" ]; then \
-		echo "error: $(subst ",,${AGSTEMP})/target.hdf not found after preparing the temp build tree."; \
+	if [ ! -e "$(subst ",,${AVSTEMP})/target.hdf" ] && [ ! -f "$(subst ",,${AVSTEMP})/image-update-plan.json" ]; then \
+		echo "error: $(subst ",,${AVSTEMP})/target.hdf not found after preparing the temp build tree."; \
 		exit 1; \
 	fi; \
-	log="${AGSTEMP}/amiberry-image.log"; \
-	if ! pipenv run python build/ags_image_update.py --workspace "$(subst ",,${AGSTEMP})" --emulator "${AMIBERRYBIN}" $(IMAGE_CLONE_ARGS) >"$$log" 2>&1; then \
+	log="${AVSTEMP}/amiberry-image.log"; \
+	if ! pipenv run python build/avs_image_update.py --workspace "$(subst ",,${AVSTEMP})" --emulator "${AMIBERRYBIN}" $(IMAGE_CLONE_ARGS) >"$$log" 2>&1; then \
 		cat "$$log"; \
 		exit 1; \
 	fi; \
@@ -451,12 +451,12 @@ amiga-ecs:
 clean-temp:
 	$(call print-start-time)
 	@echo "Removing main and ECS temp workspaces..."
-	@rm -rf "$(subst ",,${AGSTEMP})" "$(subst ",,$(ECS_TEMP))"
+	@rm -rf "$(subst ",,${AVSTEMP})" "$(subst ",,$(ECS_TEMP))"
 
 clean-build:
 	$(call print-start-time)
 	@echo "Removing main and ECS temp workspaces, rotating current build cache, and clearing generated HDF outputs..."
-	@rm -rf "$(subst ",,${AGSTEMP})" "$(subst ",,$(ECS_TEMP))"
+	@rm -rf "$(subst ",,${AVSTEMP})" "$(subst ",,$(ECS_TEMP))"
 	@cache_gen="$$(cat "${HOME}/Library/Caches/AmigaVision/build-cache-generation.txt" 2>/dev/null || echo current)"; \
 	cache_dir="${HOME}/Library/Caches/AmigaVision/build/$$cache_gen"; \
 	if [ -d "$$cache_dir" ]; then \
@@ -466,10 +466,10 @@ clean-build:
 		nohup rm -rf "$$trash_dir" >/dev/null 2>&1 & \
 		echo "Rotated build cache to $$trash_dir for background deletion."; \
 	fi
-	@rm -rf "$(subst ",,${AGSDEST})/AmigaVision-Mini"
-	@rm -f "$(subst ",,${AGSDEST})/AmigaVision.hdf" \
-		"$(subst ",,${AGSDEST})/AmigaVision-Mini.hdf" \
-		"$(subst ",,${AGSDEST})/AmigaVision-Mini.uae"
+	@rm -rf "$(subst ",,${AVSDEST})/AmigaVision-Mini"
+	@rm -f "$(subst ",,${AVSDEST})/AmigaVision.hdf" \
+		"$(subst ",,${AVSDEST})/AmigaVision-Mini.hdf" \
+		"$(subst ",,${AVSDEST})/AmigaVision-Mini.uae"
 
 # Keep experimental hardware images out of the normal release bundles.
 pistorm-ecs: PISTORM_MODEL = pistorm

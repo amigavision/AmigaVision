@@ -19,7 +19,7 @@ LOWRES_COLORS = 128
 HIGHRES_CROP = (640, 512)
 HIGHRES_SCALE = (360, 288)
 HIGHRES_RESAMPLE = (360, 288)
-HIGHRES_COLORS = 240  # Leave the last 16 palette entries reserved for the AGS interface.
+HIGHRES_COLORS = 240  # Leave the last 16 palette entries reserved for the AVS interface.
 
 ORDER_RE = re.compile(r"^(?P<index>\d+)(?:[ _.-].*)?$")
 LEMON_SCREENSHOT_RE = re.compile(r"(?P<url>(?:https://www\.lemonamiga\.com)?/uploads/amiga/images/games/screens/[^\"'\s>]+)", re.IGNORECASE)
@@ -940,7 +940,7 @@ def wait_for_page_after_manual_retry(check_fn, attempts=20, interval=1):
 
 
 def write_iff(src_path, out_path, colors, crop, scale, resample):
-    from ags_screenshot import iff_screenshot
+    from avs_screenshot import iff_screenshot
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     iff_data, _ = iff_screenshot(str(src_path), colors, crop, scale, resample)

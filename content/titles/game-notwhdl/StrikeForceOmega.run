@@ -1,9 +1,9 @@
-ags-cd N/StrikeForceOmega
+avs-cd N/StrikeForceOmega
 IF EXISTS WHDSaves:StrikeForceOmega/savedata
   copy WHDSaves:StrikeForceOmega/savedata savedata ALL CLONE QUIET
 ENDIF
 StrikeForceOmega >NIL:
-ags-cd N/StrikeForceOmega
+avs-cd N/StrikeForceOmega
 IF EXISTS savedata
   IF NOT EXISTS WHDSaves:StrikeForceOmega
     makedir WHDSaves:StrikeForceOmega

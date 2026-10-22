@@ -1,4 +1,4 @@
-ags-cd N/HeartOfTheAlienRedux
+avs-cd N/HeartOfTheAlienRedux
 FailAt 21
 IF NOT EXISTS WHDSaves:HeartOfTheAlienRedux
   makedir WHDSaves:HeartOfTheAlienRedux
