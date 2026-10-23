@@ -3,6 +3,7 @@
   - image: { ops: { op: "pi", path: "top/multiplayer.png" }, size: [320, 128], scale: [1, 1] }
   - Best of Multiplayer:
     - note: Our top picks for multiplayer action.
+    - AchtungDieKurve
     - BattleIsle
     - ChaosEngine
     - DogsOfWar
@@ -10,6 +11,7 @@
     - HiredGuns
     - Historyline
     - JaguarXJ220
+    - KnockOut2
     - Lotus
     - Moonstone
     - Nitro
@@ -172,6 +174,7 @@
     - Kikstart2
     - Killerball
     - Klax
+    - KnockOut2
     - LabyrinthDetNyeCOMputerDk
     - LamborghiniAmericanChllng
     - LastDuel
