@@ -6,7 +6,6 @@ from collections import defaultdict
 from pathlib import Path
 
 from avs_artwork import is_nsfw, install_nsfw_thumbnail
-from pull_archives import is_low_memory_archive
 
 
 def make_sanitizer(sanitize):
@@ -14,6 +13,7 @@ def make_sanitizer(sanitize):
     from lhafile import LhaFile
     import avs_paths
     cache = {}
+    chip_memory = {}
     excluded = []
 
     def checked(row):
@@ -33,13 +33,17 @@ def make_sanitizer(sanitize):
                     reason = 'invalid WHDLoad slave header'
                 elif struct.unpack_from('>H', data, signature+10)[0] & 32:
                     reason = 'slave requires AGA despite database metadata'
+                else:
+                    chip_memory[key] = struct.unpack_from('>I', data, signature+12)[0]
             except Exception as exc:
                 reason = str(exc)
             cache[key] = reason
             if reason:
                 excluded.append({'id': entry['id'], 'title': entry['title'], 'status': 'invalid-slave',
                                  'reason': reason, 'selected': None, 'candidates': []})
-        return entry if cache[key] is None else None
+        if cache[key] is not None:
+            return None
+        return dict(entry, _ecs_chip_memory=chip_memory[key])
 
     checked.excluded = excluded
     return checked
@@ -51,14 +55,31 @@ def requires_aga(entry):
                   (entry.get('hardware') or '').upper()))
 
 
-def candidate_rank(entry, root_id):
-    """Expanded-memory versions always outrank low-memory versions."""
+def memory_rank(path):
+    """Prefer explicit 512KB, 1MB, and LowMem variants to unspecified ones."""
+    name = Path(path).name
+    for rank, label in enumerate(['512k(?:b)?', '1mb(?:chip)?', 'lowmem(?:ory)?|lowram']):
+        if re.search(r'(?:^|_)(?:' + label + r')(?:_|\.)', name, re.I):
+            return rank
+    return 3
+
+
+def candidate_rank(entry, root_id, root_entry=None, minimize_chip=True):
+    """Keep language/region/features, then minimize required chip RAM."""
+    root_entry = root_entry or {}
+    memory = memory_rank(entry.get('archive_path') or '')
     return (
-        is_low_memory_archive(entry.get('archive_path') or ''),
-        entry['id'] != root_id,
+        (root_entry.get('language') or 'English').split(',')[0].strip() not in
+        [language.strip() for language in (entry.get('language') or 'English').split(',')],
+        str(entry.get('ntsc') or '0') != str(root_entry.get('ntsc') or '0'),
+        bool(re.search(r'MT.?32|CDTV|Arcadia', entry.get('hardware') or '', re.I)) !=
+        bool(re.search(r'MT.?32|CDTV|Arcadia', root_entry.get('hardware') or '', re.I)),
+        entry.get('_ecs_chip_memory', [524288, 1048576, 1572864, 2097152][memory]) if minimize_chip else 0,
+        memory,
+        re.split(r'_v|_Beta', Path(entry.get('archive_path') or '').name, flags=re.I)[0].lower() !=
+        re.split(r'_v|_Beta', Path(root_entry.get('archive_path') or '').name, flags=re.I)[0].lower(),
         bool(entry.get('issues')),
-        'English' not in (entry.get('language') or 'English'),
-        bool(re.search(r'MT.?32|CDTV|Arcadia', entry.get('hardware') or '', re.I)),
+        entry['id'] != root_id,
     )
 
 
@@ -96,12 +117,17 @@ class ECSSelector:
         for root, members in families.items():
             candidates = [sanitize(r) for r in members if not requires_aga(r)]
             candidates = [r for r in candidates if r]
-            candidates.sort(key=lambda r: (candidate_rank(r, root), r['id']))
+            # Header differences alone must not replace unrelated standard
+            # variants (for example a crunched or speech-free release).
+            minimize_chip = any(memory_rank(r.get('archive_path') or '') < 3 for r in candidates)
+            def rank(entry):
+                return candidate_rank(entry, root, self.rows[root], minimize_chip)
+            candidates.sort(key=lambda r: (rank(r), r['id']))
             winner = None
             status = 'unavailable'
             if candidates:
-                best = candidate_rank(candidates[0], root)
-                tied = [r for r in candidates if candidate_rank(r, root) == best]
+                best = rank(candidates[0])
+                tied = [r for r in candidates if rank(r) == best]
                 if len(tied) == 1:
                     winner = tied[0]
                 else:
@@ -111,9 +137,6 @@ class ECSSelector:
                     match = next((r for r in candidates if r['id'] == override), None)
                     if not match:
                         raise ValueError(f'Invalid/incompatible ECS override for {root}: {override}')
-                    if is_low_memory_archive(match.get('archive_path') or '') and any(
-                            not is_low_memory_archive(r.get('archive_path') or '') for r in candidates):
-                        raise ValueError(f'Low-memory ECS override outranks expanded-memory candidate: {root}')
                     winner = match
                 if winner:
                     winner = dict(winner, _ecs_family=root)

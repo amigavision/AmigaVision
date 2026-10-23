@@ -50,6 +50,12 @@ Use `make ecs-image ECS_INCREMENTAL=1` to opt back into incremental updates and
 cache retention, or `ECS_KEEP_CACHE=1` to retain caches independently. AGA build
 settings and caches are unchanged.
 
+ECS selects lower-memory WHDLoad variants within each title family, preserving
+language and PAL/NTSC preferences. It checks the slave's declared chip RAM first,
+then prefers `512K`/`512KB`, `1MB`, and `LowMem` labels over standard packages.
+Curated choices in `configs/ecs-preferred-versions.json` take precedence. Some
+low-memory slaves reduce audio quality (including Settlers and Space Quest).
+
 Archive opt-outs belong in `data/db/excluded_archives.txt` as case-insensitive
 filename globs. They are skipped by archive downloads, initial downloads and
 ingestion. Use this for titles intentionally absent from local storage; the DB's
