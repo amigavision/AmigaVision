@@ -9,6 +9,11 @@ IF EXISTS ENV:whdlvmode
 ELSE
   IF NOT EXISTS ENV:disable_vadjust
     avs-vadjust s={{VADJUST_SCALE}} v={{VADJUST_VSHIFT}} h={{VADJUST_HSHIFT}} {{VADJUST_NTSC}}
+    ; Ranges: NTSC-5x: -16..9
+    ;         NTSC-6x: -16..45
+    ;         PAL-4x:  -11..5
+    ;         PAL-5x:  -11..59
+    ;         PAL-6x:  -11..95
   ENDIF
   whdload >NIL: "{{SLAVE}}" {{VIDEO_MODE}} {{CUST_ARGS}} SplashDelay={{SPLASH_DELAY}}{{CONFIG_DELAY}} {{QUIT_KEY}}
   IF NOT EXISTS ENV:disable_vadjust
