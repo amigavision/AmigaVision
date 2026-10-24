@@ -1,7 +1,9 @@
 # AmigaVision Windows setup
 
 A small Inno Setup 6 installer for an **existing Windows Amiberry or WinUAE installation**.
-Copperline is intentionally deferred until its AmigaVision configuration is supplied.
+The emulator list shows Amiberry, Copperline (a disabled coming-soon placeholder),
+and WinUAE, each with a download link. Copperline installation is deferred until
+its AmigaVision configuration is supplied.
 The setup does not download or install emulators.
 
 ## Build and distribute
@@ -16,28 +18,41 @@ The workflow compiles the installer, exercises it using synthetic release files,
 and uploads `AmigaVision-Setup.exe` as an artifact. It does not publish a release.
 The optional compiler argument `/DReleaseVersion=2026.10.24` sets its version.
 
-Place the resulting executable beside the extracted emulator package:
+Place the resulting executable beside the downloaded emulator archive:
 
 ```
 AmigaVision-Setup.exe
-Amiberry/
-WinUAE/
-HardDrives/
+AmigaVision-Emulators-2026.10.24.7z
 ```
 
-These are the existing `package-emulators` output folders. No disk images or ROMs
-are embedded in the executable or uploaded by this workflow. Alternatively,
-users can browse to a separately extracted package during setup.
+Setup detects a single `AmigaVision-Emulators*.7z` or `.zip` beside itself and
+extracts it with progress shown. A complete extracted `AmigaVision-Emulators*`
+folder, or the existing loose Amiberry/WinUAE/HardDrives folders beside setup,
+also works. Multiple matches or no match lead to a separate release picker.
+The picker accepts an archive or an extracted folder, including a parent folder
+containing the extracted release. No disk images or ROMs are embedded in the
+executable or uploaded by this workflow.
+
+Archives are extracted to Windows temporary storage before copying to the
+chosen destination. Allow space for the full extracted release on the temporary
+volume as well as the installed files on the destination. Users with limited
+temporary storage can extract the archive elsewhere and choose that folder.
 
 ## User flow
 
 1. Install Amiberry or WinUAE separately and close the emulator.
-2. Extract the complete AmigaVision emulator archive and run setup.
-3. Choose the emulator and release folder. Setup finds the selected emulator automatically.
+2. Put the downloaded release beside setup and run setup.
+3. Choose the emulator. Setup finds the selected emulator automatically.
    If it cannot find it, install it or choose its installation folder.
-4. Choose the data folder.
-5. Optionally make AmigaVision the default configuration or add a desktop shortcut.
-6. Launch using the new Start menu shortcut.
+4. Choose the data folder. Setup checks the selected destination as it changes,
+   showing the backup warning below the folder picker only if the main image
+   already exists, before you click Next. Existing saves/Shared files are
+   identified as being preserved when present.
+5. Click Next. Setup detects the release beside itself; if needed, the next page
+   asks for the release archive or extracted folder. Destination selection never
+   validates the release location.
+6. Optionally make AmigaVision the default configuration or add a desktop shortcut.
+7. Launch using the new Start menu shortcut.
 
 Detection checks Windows App Paths and uninstall records for the current user
 and all users, in both registry views; Program Files and per-user Programs;
@@ -67,7 +82,7 @@ prompt to elevate; otherwise choose writable emulator/data locations.
   games, not files safe for automatic removal. Remove the data and shortcuts
   manually if no longer wanted.
 
-Back up custom changes **inside the main HDF** before upgrading. Do not run the
+If you have made any changes to the main System drive or the Data drive, back those up first. Do not run the
 emulator during setup. Do not move the installed files without rerunning setup,
 because the generated configuration uses absolute media paths. The release
 folder and installed data folder must be separate, nonoverlapping directories.
@@ -87,7 +102,8 @@ On Windows, after compilation:
 The test uses tiny placeholder images and never starts an emulator. It verifies
 fresh installation, upgrading, preserving user data, backing up configurations,
 shader destinations, absolute paths, registered emulator discovery in both
-registry views, 64-bit WinUAE preference and rejection of invalid inputs. Run it in
+registry views, 64-bit WinUAE preference, ZIP/7z extraction, nearby release
+discovery and rejection of ambiguous releases and invalid inputs. Run it in
 a disposable Windows account/runner: it creates and removes AmigaVision Start
 menu shortcuts. A real release still needs boot, shader and input verification
 in both emulators before distribution. Installation tests run on Windows through GitHub Actions; local compilation
@@ -103,3 +119,12 @@ References: [Inno Setup](https://jrsoftware.org/isinfo.php),
 [external files](https://jrsoftware.org/ishelp/topic_filessection.htm).
 
 Amiberry install locations are based on its [Windows packaging settings](https://github.com/BlitterStudio/amiberry/blob/master/packaging/CMakeLists.txt).
+
+## Branding
+
+`assets/AV-avatar.png` is the supplied source artwork. `assets/AmigaVision.ico`
+contains 16, 20, 24, 32, 40, 48, 64, 96, 128 and 256 pixel versions for the
+setup executable and installed shortcuts. The ICO is copied into the data
+folder so shortcuts retain their icon independently of the setup executable.
+The wizard uses the avatar in its header and a matching blue welcome/completion
+sidebar (`assets/wizard.png`), with the complete artwork preserved.

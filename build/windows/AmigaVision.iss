@@ -17,15 +17,22 @@ DisableDirPage=yes
 DisableProgramGroupPage=yes
 UsePreviousTasks=no
 WizardStyle=modern
+SetupIconFile=assets\AmigaVision.ico
+WizardImageFile=assets\wizard.png
+WizardSmallImageFile=assets\AV-avatar.png
+DisableWelcomePage=no
+DisableFinishedPage=no
 OutputDir=output
 OutputBaseFilename=AmigaVision-Setup
 Compression=lzma2
+ArchiveExtraction=full
 
 [Tasks]
 Name: defaultconfig; Description: "Make AmigaVision the emulator's default configuration (backs up the existing file)"; Flags: unchecked
 Name: desktopicon; Description: "Create a desktop shortcut"; Flags: unchecked
 
 [Files]
+Source: "assets\AmigaVision.ico"; DestDir: "{code:DataRoot}"; Flags: ignoreversion
 Source: "{code:Payload}\HardDrives\AmigaVision.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external ignoreversion
 Source: "{code:Payload}\HardDrives\AmigaVision-Saves.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external onlyifdoesntexist
 Source: "{code:Payload}\HardDrives\Shared\*"; DestDir: "{code:DataRoot}\HardDrives\Shared"; Flags: external recursesubdirs createallsubdirs onlyifdoesntexist
@@ -35,23 +42,30 @@ Source: "{code:Payload}\Amiberry\Visuals\*"; DestDir: "{code:DataRoot}\Visuals";
 Source: "{code:Payload}\WinUAE\plugins\*"; DestDir: "{code:ExeRoot}\plugins"; Flags: external recursesubdirs createallsubdirs ignoreversion; Check: IsWinUAE
 
 [Icons]
-Name: "{userprograms}\AmigaVision ({code:Emulator})"; Filename: "{code:ExePath}"; Parameters: "{code:LaunchArgs}"; WorkingDir: "{code:DataRoot}"
-Name: "{userdesktop}\AmigaVision ({code:Emulator})"; Filename: "{code:ExePath}"; Parameters: "{code:LaunchArgs}"; WorkingDir: "{code:DataRoot}"; Tasks: desktopicon
+Name: "{userprograms}\AmigaVision ({code:Emulator})"; Filename: "{code:ExePath}"; Parameters: "{code:LaunchArgs}"; WorkingDir: "{code:DataRoot}"; IconFilename: "{code:DataRoot}\AmigaVision.ico"
+Name: "{userdesktop}\AmigaVision ({code:Emulator})"; Filename: "{code:ExePath}"; Parameters: "{code:LaunchArgs}"; WorkingDir: "{code:DataRoot}"; IconFilename: "{code:DataRoot}\AmigaVision.ico"; Tasks: desktopicon
 
 [Code]
 var
-  TargetPage: TInputOptionWizardPage;
-  SourcePage, DataPage: TInputDirWizardPage;
+  TargetPage: TWizardPage;
+  EmulatorChoices: array[0..2] of TNewRadioButton;
+  SourcePage: TInputFileWizardPage;
+  DataPage: TInputDirWizardPage;
+  ExtractedFolderButton: TNewButton;
+  ResolvedPayload, ResolvedSource: String;
+  ExtractionCount: Integer;
+  ExtractionProgress: TOutputProgressWizardPage;
   ProgramPage: TInputDirWizardPage;
+  DestinationNotice: TNewStaticText;
   SelectedExe: String;
   ConfigText: AnsiString;
 
 function IsAmiberry: Boolean;
 begin
-  if TargetPage = nil then
+  if EmulatorChoices[0] = nil then
     Result := CompareText(ExpandConstant('{param:EMULATOR|Amiberry}'), 'WinUAE') <> 0
   else
-    Result := TargetPage.SelectedValueIndex = 0;
+    Result := EmulatorChoices[0].Checked;
 end;
 
 function IsWinUAE: Boolean;
@@ -66,8 +80,8 @@ end;
 
 function Payload(Param: String): String;
 begin
-  if SourcePage = nil then Result := ExpandConstant('{param:PAYLOAD|{src}}')
-  else Result := SourcePage.Values[0];
+  Result := ResolvedPayload;
+  if Result = '' then Result := ExpandConstant('{param:PAYLOAD|{src}}');
   Result := RemoveBackslashUnlessRoot(Result);
 end;
 
@@ -199,9 +213,153 @@ begin
   else Log('No ' + Emulator('') + ' installation found.');
 end;
 
+function CompleteRelease(Root: String): Boolean;
+var
+  Platform: String;
+begin
+  Platform := AddBackslash(Root) + Emulator('') + '\';
+  Result := (Root <> '') and
+    FileExists(AddBackslash(Root) + 'HardDrives\AmigaVision.hdf') and
+    FileExists(AddBackslash(Root) + 'HardDrives\AmigaVision-Saves.hdf') and
+    DirExists(AddBackslash(Root) + 'HardDrives\Shared') and
+    DirExists(AddBackslash(Root) + 'HardDrives\listings') and
+    FileExists(Platform + 'ROMs\AmigaVision.rom') and
+    FileExists(Platform + 'Configurations\AmigaVision.uae');
+  if Result then begin
+    if IsAmiberry then Result := DirExists(Platform + 'Visuals\Shaders')
+    else Result := DirExists(Platform + 'plugins\filtershaders\direct3d');
+  end;
+end;
+
+function FindReleaseFolder(Root: String): String;
+var
+  Find: TFindRec;
+  Candidate: String;
+begin
+  Result := '';
+  if CompleteRelease(Root) then begin Result := Root; exit; end;
+  if FindFirst(AddBackslash(Root) + 'AmigaVision-Emulators*', Find) then begin
+    try
+      repeat
+        Candidate := AddBackslash(Root) + Find.Name;
+        if ((Find.Attributes and FILE_ATTRIBUTE_DIRECTORY) <> 0) and CompleteRelease(Candidate) then begin
+          Result := Candidate;
+          exit;
+        end;
+      until not FindNext(Find);
+    finally
+      FindClose(Find);
+    end;
+  end;
+end;
+
+function NearbyRelease: String;
+var
+  Find: TFindRec;
+  Root, Candidate, Extension: String;
+  Count: Integer;
+begin
+  Root := ExpandConstant('{src}');
+  Result := '';
+  if CompleteRelease(Root) then begin Result := Root; exit; end;
+  Count := 0;
+  if FindFirst(AddBackslash(Root) + 'AmigaVision-Emulators*', Find) then begin
+    try
+      repeat
+        Candidate := AddBackslash(Root) + Find.Name;
+        Extension := Lowercase(ExtractFileExt(Find.Name));
+        if (((Find.Attributes and FILE_ATTRIBUTE_DIRECTORY) <> 0) and CompleteRelease(Candidate)) or
+           (((Find.Attributes and FILE_ATTRIBUTE_DIRECTORY) = 0) and
+            ((Extension = '.7z') or (Extension = '.zip'))) then begin
+          Count := Count + 1;
+          Result := Candidate;
+        end;
+      until not FindNext(Find);
+    finally
+      FindClose(Find);
+    end;
+  end;
+  // Let the user choose rather than silently selecting among multiple releases.
+  if Count <> 1 then Result := '';
+end;
+
+function ReleaseExtractionProgress(const ArchiveName, FileName: String; const Progress, ProgressMax: Int64): Boolean;
+begin
+  Result := True;
+  if ExtractionProgress <> nil then begin
+    ExtractionProgress.SetText(ExtractFileName(ArchiveName), FileName);
+    if ProgressMax > 0 then ExtractionProgress.SetProgress(Progress * 1000 div ProgressMax, 1000);
+  end;
+end;
+
+function ResolveRelease: String;
+var
+  Source, Extracted, Extension: String;
+begin
+  Result := '';
+  Source := Trim(SourcePage.Values[0]);
+  if (Source = ResolvedSource) and CompleteRelease(ResolvedPayload) then exit;
+  ResolvedPayload := '';
+  if DirExists(Source) then
+    ResolvedPayload := FindReleaseFolder(Source)
+  else if FileExists(Source) then begin
+    Extension := Lowercase(ExtractFileExt(Source));
+    if (Extension <> '.7z') and (Extension <> '.zip') then begin
+      Result := 'Choose an AmigaVision-Emulators .7z or .zip archive, or its extracted folder.';
+      exit;
+    end;
+    ExtractionCount := ExtractionCount + 1;
+    Extracted := ExpandConstant('{tmp}') + '\release-' + IntToStr(ExtractionCount);
+    if ExtractionProgress = nil then ExtractionProgress := CreateOutputProgressPage('Extracting AmigaVision',
+      'Preparing the release files. Large disk images can take several minutes.');
+    try
+      ExtractionProgress.SetText(ExtractFileName(Source), '');
+      ExtractionProgress.Show;
+      try
+        ExtractArchive(Source, Extracted, '', True, @ReleaseExtractionProgress);
+      finally
+        ExtractionProgress.Hide;
+      end;
+      ResolvedPayload := FindReleaseFolder(Extracted);
+    except
+      Result := 'Could not extract the release: ' + GetExceptionMessage;
+      exit;
+    end;
+  end;
+  if ResolvedPayload = '' then
+    Result := 'Choose the AmigaVision-Emulators release archive or a complete extracted release folder.'
+  else begin
+    ResolvedSource := Source;
+    Log('Release files: ' + ResolvedPayload);
+  end;
+end;
+
+procedure ChooseExtractedRelease(Sender: TObject);
+var
+  Folder: String;
+begin
+  Folder := '';
+  if BrowseForFolder('Choose the extracted AmigaVision emulator release', Folder, False) then
+    SourcePage.Values[0] := Folder;
+end;
+
+function ValidateDestination: String;
+begin
+  Result := '';
+  if (DataRoot('') = '') or
+     ((Copy(DataRoot(''), 1, 2) <> '\\') and
+      ((Length(DataRoot('')) < 3) or (Copy(DataRoot(''), 2, 2) <> ':\'))) then
+    Result := 'Choose an absolute data folder path.';
+end;
+
 function ShouldSkipPage(PageID: Integer): Boolean;
 begin
   Result := False;
+  if SourcePage <> nil then
+    if PageID = SourcePage.ID then begin
+      Result := CompleteRelease(ResolvedPayload);
+      exit;
+    end;
   if ProgramPage = nil then exit;
   if PageID = ProgramPage.ID then begin
     DetectEmulator;
@@ -214,33 +372,104 @@ begin
   end;
 end;
 
+procedure DownloadEmulator(Sender: TObject; const Link: String; LinkType: TSysLinkType);
+var
+  ErrorCode: Integer;
+begin
+  if LinkType <> sltURL then exit;
+  if not ShellExecAsOriginalUser('open', Link, '', '', SW_SHOWNORMAL, ewNoWait, ErrorCode) then
+    MsgBox('Could not open the download page. Please visit ' + Link, mbError, MB_OK);
+end;
+
+procedure AddEmulatorChoice(Index: Integer; Caption: String; Available: Boolean);
+var
+  Link: TNewLinkLabel;
+  URL: String;
+begin
+  case Index of
+    0: URL := 'https://github.com/BlitterStudio/amiberry/releases';
+    1: URL := 'https://github.com/CopperlineHQ/Copperline/releases';
+    2: URL := 'https://www.winuae.net/download/';
+  end;
+  EmulatorChoices[Index] := TNewRadioButton.Create(WizardForm);
+  with EmulatorChoices[Index] do begin
+    Parent := TargetPage.Surface;
+    SetBounds(0, ScaleY(16 + Index * 40), ScaleX(240), ScaleY(24));
+    Enabled := Available;
+    TabOrder := Index * 2;
+  end;
+  EmulatorChoices[Index].Caption := Caption;
+  Link := TNewLinkLabel.Create(WizardForm);
+  Link.Parent := TargetPage.Surface;
+  Link.SetBounds(ScaleX(260), ScaleY(20 + Index * 40), ScaleX(120), ScaleY(20));
+  Link.Caption := '<a href="' + URL + '">Download</a>';
+  Link.UseVisualStyle := True;
+  Link.TabStop := True;
+  Link.TabOrder := Index * 2 + 1;
+  Link.Tag := Index;
+  Link.OnLinkClick := @DownloadEmulator;
+end;
+
+procedure UpdateDestinationNotice(Sender: TObject);
+var
+  Root, Notice: String;
+begin
+  if DestinationNotice = nil then exit;
+  Root := Trim(DataRoot(''));
+  Notice := '';
+  if Root <> '' then begin
+    if FileExists(Root + '\HardDrives\AmigaVision.hdf') then
+      Notice := 'An existing AmigaVision installation was found here. The main disk image will be replaced.' + #13#10#13#10 +
+        'If you have made any changes to the main System drive or the Data drive, back those up first.';
+    if FileExists(Root + '\HardDrives\AmigaVision-Saves.hdf') or
+       DirExists(Root + '\HardDrives\Shared') then begin
+      if Notice <> '' then Notice := Notice + #13#10#13#10;
+      Notice := Notice + 'Existing saves and Shared files will be kept.';
+    end;
+  end;
+  DestinationNotice.Caption := Notice;
+  DestinationNotice.AdjustHeight;
+end;
+
 procedure InitializeWizard;
 begin
   Log('Creating AmigaVision setup pages');
-  TargetPage := CreateInputOptionPage(wpWelcome, 'Choose your emulator',
-    'Which emulator should AmigaVision use?',
-    'Install the emulator first. Close it before continuing. Copperline support will follow separately.', True, False);
-  TargetPage.Add('Amiberry');
-  TargetPage.Add('WinUAE');
-  Log('Created emulator choice');
-  TargetPage.SelectedValueIndex := 0;
+  TargetPage := CreateCustomPage(wpWelcome, 'Choose your emulator',
+    'Select an installed emulator. Use its download link if you need to install it first.');
+  AddEmulatorChoice(0, 'Amiberry', True);
+  AddEmulatorChoice(1, 'Copperline (coming soon)', False);
+  AddEmulatorChoice(2, 'WinUAE', True);
+  EmulatorChoices[0].Checked := True;
   if CompareText(ExpandConstant('{param:EMULATOR|Amiberry}'), 'WinUAE') = 0 then
-    TargetPage.SelectedValueIndex := 1;
-  SourcePage := CreateInputDirPage(TargetPage.ID, 'Locate your AmigaVision release',
-    'Select the extracted emulator package.',
-    'Choose the folder containing Amiberry, WinUAE and HardDrives. Extract the complete archive before continuing.', False, '');
-  SourcePage.Add('Release folder:');
-  Log('Created release folder page');
-  SourcePage.Values[0] := ExpandConstant('{param:PAYLOAD|{src}}');
-  ProgramPage := CreateInputDirPage(SourcePage.ID, 'Emulator not found',
+    EmulatorChoices[2].Checked := True;
+  ProgramPage := CreateInputDirPage(TargetPage.ID, 'Emulator not found',
     'Install the selected emulator before continuing, or select its installation folder.',
     'Setup checked installed applications and common system, per-user and portable locations. If you have already installed the emulator elsewhere, choose its folder. Setup will select the correct program automatically.', False, '');
   ProgramPage.Add('Emulator installation folder:');
   DataPage := CreateInputDirPage(ProgramPage.ID, 'Choose the AmigaVision data folder',
     'Where should AmigaVision be installed?',
-    'Existing saves and Shared files are kept. The main disk image is replaced on upgrade. Back up custom changes inside that image first.', False, '');
+    'Choose the folder where you want to install AmigaVision. Setup will check it for an existing installation.', False, '');
   DataPage.Add('Data folder:');
+  DestinationNotice := TNewStaticText.Create(WizardForm);
+  DestinationNotice.Parent := DataPage.Surface;
+  DestinationNotice.Left := 0;
+  DestinationNotice.Top := DataPage.Edits[0].Top + DataPage.Edits[0].Height + ScaleY(20);
+  DestinationNotice.Width := DataPage.SurfaceWidth;
+  DestinationNotice.AutoSize := False;
+  DestinationNotice.WordWrap := True;
+  DataPage.Edits[0].OnChange := @UpdateDestinationNotice;
   DataPage.Values[0] := ExpandConstant('{param:DATA|}');
+  UpdateDestinationNotice(nil);
+  SourcePage := CreateInputFilePage(DataPage.ID, 'Locate your AmigaVision release',
+    'Where is your downloaded release?',
+    'Setup could not automatically select a release beside the installer. Choose an AmigaVision-Emulators archive, or use the button below to choose an extracted release folder.');
+  SourcePage.Add('Release archive or extracted folder:', 'AmigaVision emulator release|AmigaVision-Emulators*.7z;AmigaVision-Emulators*.zip|Archives|*.7z;*.zip', '.7z');
+  SourcePage.Values[0] := ExpandConstant('{param:PAYLOAD|}');
+  ExtractedFolderButton := TNewButton.Create(WizardForm);
+  ExtractedFolderButton.Parent := SourcePage.Surface;
+  ExtractedFolderButton.SetBounds(0, SourcePage.Edits[0].Top + SourcePage.Edits[0].Height + ScaleY(16), ScaleX(220), ScaleY(25));
+  ExtractedFolderButton.Caption := 'Choose extracted folder...';
+  ExtractedFolderButton.OnClick := @ChooseExtractedRelease;
   Log('AmigaVision setup pages ready');
 end;
 
@@ -253,6 +482,7 @@ begin
     else
       DataPage.Values[0] := ExeRoot('');
   end;
+  if CurPageID = DataPage.ID then UpdateDestinationNotice(nil);
 end;
 
 function ValidateInputs: String;
@@ -287,12 +517,8 @@ begin
     Result := Emulator('') + ' was not found. Install it first, or choose its installation folder.';
     exit;
   end;
-  if (DataRoot('') = '') or
-     ((Copy(DataRoot(''), 1, 2) <> '\\') and
-      ((Length(DataRoot('')) < 3) or (Copy(DataRoot(''), 2, 2) <> ':\'))) then begin
-    Result := 'Choose an absolute data folder path.';
-    exit;
-  end;
+  Result := ValidateDestination;
+  if Result <> '' then exit;
   // Reject overlapping release and destination trees: external file copying must not copy onto itself.
   Text := Lowercase(AddBackslash(ExpandFileName(DataRoot(''))));
   Root := Lowercase(AddBackslash(ExpandFileName(Payload(''))));
@@ -326,20 +552,35 @@ begin
       exit;
     end;
   end;
+  Error := '';
   if CurPageID = DataPage.ID then begin
-    Error := ValidateInputs;
-    if Error <> '' then begin
-      Log(Error);
-      if not WizardSilent then MsgBox(Error, mbError, MB_OK);
-      Result := False;
+    Error := ValidateDestination;
+    if Error = '' then begin
+      if SourcePage.Values[0] = '' then SourcePage.Values[0] := NearbyRelease;
+      if SourcePage.Values[0] <> '' then begin
+        // Source errors belong on the following release page, not this destination page.
+        SourcePage.Description := ResolveRelease;
+        if SourcePage.Description = '' then SourcePage.Description := 'Where is your downloaded release?';
+      end;
     end;
+  end;
+  if CurPageID = SourcePage.ID then begin
+    Error := ResolveRelease;
+    if Error = '' then Error := ValidateInputs;
+  end;
+  if Error <> '' then begin
+    Log(Error);
+    if not WizardSilent then MsgBox(Error, mbError, MB_OK);
+    Result := False;
   end;
 end;
 
 function PrepareToInstall(var NeedsRestart: Boolean): String;
 begin
   if SelectedExe = '' then DetectEmulator;
-  Result := ValidateInputs;
+  if SourcePage.Values[0] = '' then SourcePage.Values[0] := NearbyRelease;
+  Result := ResolveRelease;
+  if Result = '' then Result := ValidateInputs;
 end;
 
 procedure WriteConfig(Name: String);

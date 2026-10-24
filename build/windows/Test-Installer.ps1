@@ -14,6 +14,9 @@ function Install($emulator, $payload, $data, $exe, $tasks = '') {
     $arguments = @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/CURRENTUSER',
         "/EMULATOR=$emulator", "`"/PAYLOAD=$payload`"", "`"/DATA=$data`"",
         "`"/EMULATORFILE=$exe`"", "`"/TASKS=$tasks`"", "`"/LOG=$root\$emulator.log`"")
+    if ($payload -eq '') {
+        $arguments = $arguments | Where-Object { $_ -notlike '*PAYLOAD=*' }
+    }
     if ($exe -eq '') {
         $arguments = $arguments | Where-Object { $_ -notlike '*EMULATORFILE=*' }
     }
@@ -73,6 +76,13 @@ try {
         $shader = if ($emulator -eq 'WinUAE') { "$(Split-Path $exe)/plugins/filtershaders/direct3d/example.fx" }
                   else { "$data/Visuals/Shaders/example.glsl" }
         Assert-Content $shader 'shader'
+        $installedIcon = Join-Path $data 'AmigaVision.ico'
+        if ((Get-FileHash $installedIcon).Hash -ne (Get-FileHash "$PSScriptRoot/assets/AmigaVision.ico").Hash) {
+            throw 'The installed AmigaVision icon does not match the bundled artwork'
+        }
+        $shell = New-Object -ComObject WScript.Shell
+        $shortcut = $shell.CreateShortcut("${env:APPDATA}/Microsoft/Windows/Start Menu/Programs/AmigaVision ($emulator).lnk")
+        if ($shortcut.IconLocation -ne "$installedIcon,0") { throw 'Shortcut does not use the AmigaVision icon' }
         if ((Install $emulator $payload $data $exe 'defaultconfig') -ne 0) { throw 'Default configuration install failed' }
         Assert-Content "$data/Configurations/default.uae.backup-1" 'my default'
         Assert-Content "$data/Configurations/default.uae" $config
@@ -80,6 +90,36 @@ try {
         if ((Install $emulator "$root/missing" $data $exe) -eq 0) { throw 'Missing media was accepted' }
         if ((Install $emulator $payload $data "$root/missing.exe") -eq 0) { throw 'Missing executable was accepted' }
     }
+    # Accept downloaded archives directly and discover one beside the installer.
+    $archive = Join-Path $root 'AmigaVision-Emulators-test.zip'
+    Compress-Archive -Path "$payload/*" -DestinationPath $archive
+    $exe = Join-Path $root 'Amiberry bin/amiberry.exe'
+    if ((Install 'Amiberry' $archive "$root/from zip" $exe) -ne 0) { throw 'ZIP release installation failed' }
+    Assert-Content "$root/from zip/HardDrives/AmigaVision.hdf" 'new main'
+    $sevenZip = "$env:ProgramFiles/7-Zip/7z.exe"
+    $archive7z = Join-Path $root 'AmigaVision-Emulators-test.7z'
+    Push-Location $payload
+    try {
+        & $sevenZip a '-t7z' $archive7z '.\*' | Out-Null
+        if ($LASTEXITCODE -ne 0) { throw 'Could not build test 7z release' }
+    } finally { Pop-Location }
+    if ((Install 'Amiberry' $archive7z "$root/from 7z" $exe) -ne 0) { throw '7z release installation failed' }
+    Assert-Content "$root/from 7z/HardDrives/AmigaVision.hdf" 'new main'
+    $originalSetup = $setup
+    $setup = Join-Path $root 'AmigaVision-Setup.exe'
+    Copy-Item $originalSetup $setup
+    try {
+        if ((Install 'Amiberry' '' "$root/ambiguous release" $exe) -eq 0) { throw 'Silently chose among multiple releases' }
+        Remove-Item $archive7z
+        if ((Install 'Amiberry' '' "$root/nearby archive" $exe) -ne 0) { throw 'Nearby archive was not discovered' }
+        Assert-Content "$root/nearby archive/HardDrives/AmigaVision.hdf" 'new main'
+        Remove-Item $archive
+        $nearbyFolder = Join-Path $root 'AmigaVision-Emulators-test'
+        Copy-Item -Recurse $payload $nearbyFolder
+        if ((Install 'Amiberry' '' "$root/nearby extracted" $exe) -ne 0) { throw 'Nearby extracted release was not discovered' }
+        Assert-Content "$root/nearby extracted/HardDrives/AmigaVision.hdf" 'new main'
+    } finally { $setup = $originalSetup }
+
     # Detect installed applications from both registry views without an executable argument.
     foreach ($view in @([Microsoft.Win32.RegistryView]::Registry32, [Microsoft.Win32.RegistryView]::Registry64)) {
         $registry = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::CurrentUser, $view)
