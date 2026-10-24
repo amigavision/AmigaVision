@@ -511,6 +511,10 @@ def package_emulators(args, output_dir, archive_tool):
     require_file(winuae_shader, "WinUAE CRT shader")
     require_file(winuae_install, "WinUAE installation instructions")
 
+    install_guides = [emulator_root / f"Install on {platform}.html"
+                      for platform in ("Mac", "Linux")]
+    for guide in install_guides:
+        require_file(guide, "Installation guide")
     require_file(emulator_root / "Copperline/AmigaVision.toml", "Copperline configuration")
     require_file(emulator_root / "Copperline/INSTALL.txt", "Copperline installation instructions")
     skip_archive = args.skip_emulator_archive
@@ -522,6 +526,8 @@ def package_emulators(args, output_dir, archive_tool):
         installer = resolve_windows_installer(getattr(args, "windows_installer", None), installer_dir, dry_run=args.dry_run)
         if not args.dry_run:
             clone_or_copy_file(installer, Path(tmp_dir) / INSTALLER_NAME)
+        for guide in install_guides:
+            replace_path(guide, Path(tmp_dir) / guide.name)
         stage_root = Path(tmp_dir) / "Amiberry"
         make_amiberry_skeleton(stage_root)
         harddrives_root = stage_root / "HardDrives"

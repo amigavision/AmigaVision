@@ -1,7 +1,7 @@
 """Resolve the checked-in Windows installer or an explicit local override."""
 from pathlib import Path
 
-INSTALLER_NAME = "Install AmigaVision for Windows.exe"
+INSTALLER_NAME = "Install on Windows.exe"
 LOCAL_INSTALLER = Path(__file__).resolve().parent.parent / "content/distro_emulators" / INSTALLER_NAME
 
 

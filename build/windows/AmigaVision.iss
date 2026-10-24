@@ -17,14 +17,14 @@ DisableDirPage=yes
 DisableProgramGroupPage=yes
 UsePreviousTasks=no
 WizardStyle=modern
-WizardSizePercent=120,130
+WizardSizePercent=120,150
 SetupIconFile=assets\AmigaVision.ico
 WizardImageFile=
 WizardSmallImageFile=assets\AV-avatar.png
 DisableWelcomePage=no
 DisableFinishedPage=no
 OutputDir=output
-OutputBaseFilename=Install AmigaVision for Windows
+OutputBaseFilename=Install on Windows
 Compression=lzma2
 
 [Messages]
@@ -354,7 +354,7 @@ begin
   case Index of
     0: begin
       URL := 'https://github.com/BlitterStudio/amiberry/releases';
-      Description := 'The recommended setup. Great integer scaling and autocrop make the most of your Amiga experience without stretching or uneven pixels. Handles NTSC scaling correctly, too. Runs the latest WinUAE code on the back-end, but has better screen rendering.';
+      Description := 'The recommended setup. Great integer scaling and autocrop make the most of your Amiga experience without stretched or uneven pixels. Handles NTSC scaling correctly, too. Runs the latest WinUAE code on the back-end, but has better screen rendering.';
     end;
     1: begin
       URL := 'https://copperline.dev/';
@@ -445,6 +445,12 @@ begin
   DestinationNotice.AdjustHeight;
 end;
 
+function BrandBannerHeight: Integer;
+begin
+  // Use the original welcome banner proportions on every page.
+  Result := WizardForm.WelcomePage.ClientWidth * 300 div 1491;
+end;
+
 function AddBrandBanner(Page: TWinControl): Integer;
 var
   Banner: TBitmapImage;
@@ -453,7 +459,7 @@ begin
   Banner.Parent := Page;
   Banner.Bitmap.LoadFromFile(ExpandConstant('{tmp}\banner.bmp'));
   Banner.Stretch := True;
-  Banner.SetBounds(0, 0, Page.ClientWidth, Page.ClientWidth * 300 div 1491);
+  Banner.SetBounds(0, 0, Page.ClientWidth, BrandBannerHeight);
   Result := Banner.Height + ScaleY(20);
 end;
 
@@ -500,10 +506,10 @@ var
   BannerHeight, ExtraHeight: Integer;
 begin
   // MainPanel is shared by all intermediate built-in and custom pages.
-  // Grow the window first, retaining the existing space for page controls.
-  BannerHeight := WizardForm.MainPanel.ClientWidth * 300 div 1491;
+  // Reserve header space without resizing the live wizard: Inno Setup
+  // also adjusts its layout when the form dimensions change.
+  BannerHeight := BrandBannerHeight;
   ExtraHeight := BannerHeight + ScaleY(16);
-  WizardForm.ClientHeight := WizardForm.ClientHeight + ExtraHeight;
   WizardForm.MainPanel.Height := WizardForm.MainPanel.Height + ExtraHeight;
   WizardForm.Bevel1.Top := WizardForm.Bevel1.Top + ExtraHeight;
   WizardForm.InnerNotebook.Top := WizardForm.InnerNotebook.Top + ExtraHeight;

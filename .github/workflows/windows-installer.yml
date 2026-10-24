@@ -54,7 +54,7 @@ jobs:
       - uses: actions/upload-artifact@v6
         with:
           name: AmigaVision-Windows-Setup
-          path: build/windows/output/Install AmigaVision for Windows.exe
+          path: build/windows/output/Install on Windows.exe
           if-no-files-found: error
       - name: Upload test diagnostics
         if: always()

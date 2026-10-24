@@ -29,9 +29,12 @@ class EmulatorPackageTests(unittest.TestCase):
             )
 
             def check_archive(output_path, stage, archive_tool, dry_run):
-                self.assertEqual({p.name for p in stage.iterdir()}, {"Amiberry", "WinUAE", "Copperline", package_distros.INSTALLER_NAME})
+                self.assertEqual({p.name for p in stage.iterdir()}, {"Amiberry", "WinUAE", "Copperline", package_distros.INSTALLER_NAME, "Install on Mac.html", "Install on Linux.html"})
                 self.assertEqual((stage / package_distros.INSTALLER_NAME).read_bytes(), installer.read_bytes())
                 assets = Path("content/distro_emulators")
+                for platform in ("Mac", "Linux"):
+                    guide = f"Install on {platform}.html"
+                    self.assertEqual((stage / guide).read_bytes(), (assets / guide).read_bytes())
                 import tomllib
                 copper = tomllib.loads((stage / "Copperline/configs/AmigaVision.toml").read_text())
                 for media in (copper["rom"], copper["copperhf"]["unit0"], copper["copperhf"]["unit1"]["path"]):
@@ -76,6 +79,8 @@ class EmulatorPackageTests(unittest.TestCase):
             with patch.object(package_distros, "archive_7z") as archive:
                 output = package_distros.package_emulators(args, root, None)
                 archive.assert_not_called()
+            for platform in ("Mac", "Linux"):
+                self.assertTrue((output / f"Install on {platform}.html").is_file())
             self.assertTrue((output / "WinUAE/INSTALL.txt").is_file())
             self.assertEqual((output / package_distros.INSTALLER_NAME).read_bytes(), installer.read_bytes())
             self.assertTrue((output / "Amiberry/HardDrives/AmigaVision.hdf").is_file())

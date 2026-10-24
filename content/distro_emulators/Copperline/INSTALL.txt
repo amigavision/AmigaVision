@@ -3,7 +3,7 @@ AmigaVision for Copperline
 Use a current Copperline Nightly with relative media paths and CopperHF support:
 https://copperline.dev/
 
-Windows: run “Install AmigaVision for Windows.exe” from the extracted emulator
+Windows: run “Install on Windows.exe” from the extracted emulator
 package and choose Copperline. Setup copies the disks and ROM from Amiberry,
 keeps existing saves and Shared files, and creates an AmigaVision shortcut.
 

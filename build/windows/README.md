@@ -14,14 +14,14 @@ Run the **Windows installer** GitHub Actions workflow, or compile on Windows:
 ```
 
 The workflow compiles the installer, exercises it using synthetic release files,
-and uploads `Install AmigaVision for Windows.exe` as an artifact. It does not publish a release.
+and uploads `Install on Windows.exe` as an artifact. It does not publish a release.
 The optional compiler argument `/DReleaseVersion=2026.10.24` sets its version.
 
 `make emulators` includes the installer in the emulator package:
 
 ```
 AmigaVision-Emulators-<date>/
-  Install AmigaVision for Windows.exe
+  Install on Windows.exe
   Amiberry/
     HardDrives/
     Configurations/
@@ -37,7 +37,7 @@ Setup runs from this extracted folder and reads the sibling Amiberry and
 WinUAE trees directly. There is no archive picker or extraction step.
 
 Packaging includes the checked-in binary at
-`content/distro_emulators/Install AmigaVision for Windows.exe`.
+`content/distro_emulators/Install on Windows.exe`.
 No GitHub login or network download is needed. After changing the installer,
 download and test the Windows Actions artifact, then replace this binary and
 commit it with the updated sources. GitHub releases are not used.
@@ -45,7 +45,7 @@ commit it with the updated sources. GitHub releases are not used.
 To package a different local build:
 
 ```sh
-make emulators WINDOWS_INSTALLER="/path/to/Install AmigaVision for Windows.exe"
+make emulators WINDOWS_INSTALLER="/path/to/Install on Windows.exe"
 ```
 
 A missing or invalid binary stops packaging with instructions.

@@ -1,6 +1,6 @@
 # Exercises the compiled installer with synthetic media, never the real release.
 $ErrorActionPreference = 'Stop'
-$setup = Join-Path $PSScriptRoot 'output/Install AmigaVision for Windows.exe'
+$setup = Join-Path $PSScriptRoot 'output/Install on Windows.exe'
 $registryTestName = 'AmigaVision-emulator-discovery-' + [guid]::NewGuid()
 $root = Join-Path ([IO.Path]::GetTempPath()) ('AmigaVision setup test ' + [guid]::NewGuid())
 function Put($path, $value) {
@@ -257,7 +257,7 @@ try {
 
     # Setup ships inside the extracted package and finds its sibling folders itself.
     $originalSetup = $setup
-    $setup = Join-Path $payload 'Install AmigaVision for Windows.exe'
+    $setup = Join-Path $payload 'Install on Windows.exe'
     Copy-Item $originalSetup $setup
     $exe = Join-Path $root 'Amiberry bin/amiberry.exe'
     try {
@@ -268,7 +268,7 @@ try {
         Assert-Content "$root/packaged WinUAE/HardDrives/AmigaVision.hdf" 'new main'
         if ((Install 'Copperline' '' "$root/packaged Copperline" $copperExe) -ne 0) { throw 'Copperline did not use the packaged media' }
         Assert-Content "$root/packaged Copperline/HardDrives/AmigaVision.hdf" 'new main'
-        $setup = Join-Path $root 'Install AmigaVision for Windows.exe'
+        $setup = Join-Path $root 'Install on Windows.exe'
         Copy-Item $originalSetup $setup
         if ((Install 'Amiberry' '' "$root/detached install" $exe) -eq 0) { throw 'Detached installer should reject missing sibling folders' }
         if (Test-Path "$root/detached install/HardDrives/AmigaVision.hdf") { throw 'Detached setup copied files' }
