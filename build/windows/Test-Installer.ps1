@@ -10,11 +10,41 @@ function Put($path, $value) {
 function Assert-Content($path, $expected) {
     if ([IO.File]::ReadAllText($path) -ne $expected) { throw "Unexpected contents: $path" }
 }
+function Read-Shortcut($path) {
+    $shell = $null
+    $link = $null
+    try {
+        $shell = New-Object -ComObject WScript.Shell
+        $link = $shell.CreateShortcut($path)
+        # Return plain strings; never retain a live Shell COM object between installs.
+        return [pscustomobject]@{
+            TargetPath = [string]$link.TargetPath
+            Arguments = [string]$link.Arguments
+            IconLocation = [string]$link.IconLocation
+        }
+    } finally {
+        if ($null -ne $link) { [void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($link) }
+        if ($null -ne $shell) { [void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($shell) }
+    }
+}
+function Rename-TestShortcut($path, $newName) {
+    $destination = Join-Path (Split-Path $path) $newName
+    for ($attempt = 0; $attempt -lt 10; $attempt++) {
+        try {
+            [IO.File]::Move($path, $destination)
+            return
+        } catch [IO.IOException] {
+            # Shell indexing/antivirus may briefly retain the newly created shortcut.
+            $code = $_.Exception.HResult -band 0xffff
+            if ($code -notin @(32, 33) -or $attempt -eq 9) { throw }
+            Start-Sleep -Milliseconds 200
+        }
+    }
+}
 function Find-EmulatorShortcut($folder, $emulator) {
     $plain = Join-Path $folder 'AmigaVision.lnk'
     if (Test-Path $plain) {
-        $shell = New-Object -ComObject WScript.Shell
-        $target = [IO.Path]::GetFileName($shell.CreateShortcut($plain).TargetPath)
+        $target = [IO.Path]::GetFileName((Read-Shortcut $plain).TargetPath)
         if (($emulator -eq 'Amiberry' -and $target -ieq 'amiberry.exe') -or
             ($emulator -eq 'WinUAE' -and $target -imatch '^winuae(64)?\.exe$')) { return $plain }
     }
@@ -97,8 +127,7 @@ try {
         if ((Get-FileHash $installedIcon).Hash -ne (Get-FileHash "$PSScriptRoot/assets/AmigaVision.ico").Hash) {
             throw 'The installed AmigaVision icon does not match the bundled artwork'
         }
-        $shell = New-Object -ComObject WScript.Shell
-        $shortcut = $shell.CreateShortcut((Find-EmulatorShortcut "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs" $emulator))
+        $shortcut = Read-Shortcut (Find-EmulatorShortcut "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs" $emulator)
         if ($shortcut.IconLocation -ne "$installedIcon,0") { throw 'Shortcut does not use the AmigaVision icon' }
         if ($emulator -eq 'Amiberry') {
             if (!$shortcut.Arguments.Contains('-o "shaders_path=' + $data + '\Visuals\Shaders"')) { throw 'Launcher does not set the application shader directory' }
@@ -158,13 +187,12 @@ try {
     $amiberryExe = Join-Path $root 'Amiberry bin/amiberry.exe'
     $winuaeExe = Join-Path $root 'WinUAE bin/winuae.exe'
     if ((Install 'Amiberry' $payload "$root/shortcut Amiberry" $amiberryExe 'desktopicon') -ne 0) { throw 'Single-emulator install failed' }
-    $shell = New-Object -ComObject WScript.Shell
     foreach ($folder in @($programs, $desktop)) {
         if (!(Test-Path "$folder/AmigaVision.lnk")) { throw 'Single emulator should use the plain AmigaVision name' }
         if (Test-Path "$folder/AmigaVision (Amiberry).lnk") { throw 'Unnecessary emulator suffix' }
     }
     foreach ($folder in @($programs, $desktop)) {
-        Rename-Item "$folder/AmigaVision.lnk" 'AmigaVision (Amiberry).lnk'
+        Rename-TestShortcut "$folder/AmigaVision.lnk" 'AmigaVision (Amiberry).lnk'
     }
     if ((Install 'Amiberry' $payload "$root/shortcut Amiberry" $amiberryExe 'desktopicon') -ne 0) { throw 'Legacy shortcut migration failed' }
     foreach ($folder in @($programs, $desktop)) {
@@ -172,13 +200,13 @@ try {
             throw 'Lone legacy shortcut did not migrate to the plain name'
         }
     }
-    $oldArguments = $shell.CreateShortcut("$programs/AmigaVision.lnk").Arguments
+    $oldArguments = (Read-Shortcut "$programs/AmigaVision.lnk").Arguments
     if ((Install 'WinUAE' $payload "$root/shortcut WinUAE" $winuaeExe 'desktopicon') -ne 0) { throw 'Second-emulator install failed' }
     foreach ($folder in @($programs, $desktop)) {
         if (Test-Path "$folder/AmigaVision.lnk") { throw 'Ambiguous plain shortcut remains' }
-        $old = $shell.CreateShortcut("$folder/AmigaVision (Amiberry).lnk")
+        $old = Read-Shortcut "$folder/AmigaVision (Amiberry).lnk"
         if ($old.TargetPath -ne $amiberryExe -or $old.Arguments -ne $oldArguments) { throw 'Renaming changed the original shortcut configuration' }
-        if ($shell.CreateShortcut("$folder/AmigaVision (WinUAE).lnk").TargetPath -ne $winuaeExe) { throw 'New emulator shortcut is wrong' }
+        if ((Read-Shortcut "$folder/AmigaVision (WinUAE).lnk").TargetPath -ne $winuaeExe) { throw 'New emulator shortcut is wrong' }
     }
     if ((Install 'WinUAE' $payload "$root/shortcut WinUAE" $winuaeExe 'desktopicon') -ne 0) { throw 'Second-emulator upgrade failed' }
     foreach ($folder in @($programs, $desktop)) {
@@ -244,8 +272,7 @@ try {
                 try {
                     $data = Join-Path $root "$emulator detected $view"
                     if ((Install $emulator $payload $data '') -ne 0) { throw "Discovery failed for $emulator in $view" }
-                    $shell = New-Object -ComObject WScript.Shell
-                    $shortcut = $shell.CreateShortcut((Find-EmulatorShortcut "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs" $emulator))
+                    $shortcut = Read-Shortcut (Find-EmulatorShortcut "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs" $emulator)
                     if ($shortcut.TargetPath -ne $expected) { throw "Wrong detected executable: $($shortcut.TargetPath); expected $expected" }
                 } finally { $registry.DeleteSubKeyTree($keyPath, $false) }
             }
