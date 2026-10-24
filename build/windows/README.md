@@ -11,6 +11,7 @@ The setup does not download or install emulators.
 Run the **Windows installer** GitHub Actions workflow, or compile on Windows:
 
 ```powershell
+& 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe' build/windows/WinUAEShader.iss
 & 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe' build/windows/AmigaVision.iss
 ```
 
@@ -68,8 +69,16 @@ WinUAE suggests Public Documents/Amiga Files/WinUAE for data; Amiberry suggests
 the executable's folder. Both can be changed. Media paths in the installed
 configuration are made absolute, and the shortcut sets the working directory.
 WinUAE shaders go beside the executable, not into its data folder. Installing
-into Program Files may require selecting **all users** at setup's initial mode
-prompt to elevate; otherwise choose writable emulator/data locations.
+into a protected WinUAE program folder is handled automatically: setup explains
+why administrator permission is required on the destination page, then asks
+Windows to elevate a small embedded shader helper before copying the main
+installation. Only that helper runs with administrator access; user data and
+shortcuts remain under the original Windows account. Cancelling the permission
+request prevents installation from starting, and the shader cannot be silently
+skipped. Writable WinUAE installations need no elevation. Silent installations
+never display a permission prompt: run those as administrator if the shader
+folder is protected. The helper is built first and embedded in the main setup
+executable, so users still download just one installer.
 
 ## Upgrade behavior
 

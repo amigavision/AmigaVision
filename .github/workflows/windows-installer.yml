@@ -29,6 +29,8 @@ jobs:
         run: |
           $compiler = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
           if (!(Test-Path $compiler)) { throw 'Inno Setup 6 is missing from the runner' }
+          & $compiler build/windows/WinUAEShader.iss
+          if ($LASTEXITCODE -ne 0) { throw 'Shader helper compilation failed' }
           & $compiler build/windows/AmigaVision.iss
           if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed' }
       - name: Verify installation and upgrades

@@ -12,7 +12,7 @@ DefaultDirName={userdocs}\AmigaVision
 CreateAppDir=no
 Uninstallable=no
 PrivilegesRequired=lowest
-PrivilegesRequiredOverridesAllowed=dialog
+PrivilegesRequiredOverridesAllowed=commandline
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 UsePreviousTasks=no
@@ -59,6 +59,7 @@ Name: desktopicon; Description: "Create a desktop shortcut"
 
 [Files]
 Source: "assets\banner.bmp"; Flags: dontcopy
+Source: "output\WinUAEShaderSetup.exe"; Flags: dontcopy
 Source: "assets\AmigaVision.ico"; DestDir: "{code:DataRoot}"; Flags: ignoreversion
 Source: "{code:Payload}\HardDrives\AmigaVision.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external ignoreversion
 Source: "{code:Payload}\HardDrives\AmigaVision-Saves.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external onlyifdoesntexist
@@ -66,7 +67,7 @@ Source: "{code:Payload}\HardDrives\Shared\*"; DestDir: "{code:DataRoot}\HardDriv
 Source: "{code:Payload}\HardDrives\listings\*"; DestDir: "{code:DataRoot}\HardDrives\listings"; Flags: external recursesubdirs createallsubdirs ignoreversion
 Source: "{code:Payload}\{code:Emulator}\ROMs\AmigaVision.rom"; DestDir: "{code:DataRoot}\ROMs"; Flags: external ignoreversion
 Source: "{code:Payload}\Amiberry\Visuals\*"; DestDir: "{code:DataRoot}\Visuals"; Flags: external recursesubdirs createallsubdirs ignoreversion; Check: IsAmiberry
-Source: "{code:Payload}\WinUAE\plugins\*"; DestDir: "{code:ExeRoot}\plugins"; Flags: external recursesubdirs createallsubdirs ignoreversion; Check: IsWinUAE
+Source: "{code:Payload}\WinUAE\plugins\filtershaders\direct3d\CRT-Pi-SmartRes.fx"; DestDir: "{code:ExeRoot}\plugins\filtershaders\direct3d"; Flags: external ignoreversion overwritereadonly; Check: InstallShaderDirectly
 
 [Run]
 Filename: "{code:ExePath}"; Parameters: "{code:LaunchArgs}"; WorkingDir: "{code:DataRoot}"; Description: "Launch AmigaVision"; Flags: postinstall nowait skipifsilent runasoriginaluser
@@ -85,6 +86,7 @@ var
   DestinationNotice: TNewStaticText;
   SelectedExe: String;
   ConfigText: AnsiString;
+  ShaderInstalledWithAdmin: Boolean;
 
 function IsAmiberry: Boolean;
 begin
@@ -127,6 +129,43 @@ end;
 function ExeRoot(Param: String): String;
 begin
   Result := ExtractFileDir(ExePath(''));
+end;
+
+function OpenPathForAccess(const Path: String; Access, ShareMode: LongWord;
+  Security: LongWord; Creation, Attributes: LongWord; Template: THandle): THandle;
+  external 'CreateFileW@kernel32.dll stdcall';
+function CloseAccessHandle(Handle: THandle): Boolean;
+  external 'CloseHandle@kernel32.dll stdcall';
+
+function CanWriteWinUAEShader: Boolean;
+var
+  Folder, Parent, Shader: String;
+  Handle: THandle;
+begin
+  Result := True;
+  if not IsWinUAE or (ExeRoot('') = '') then exit;
+  Folder := ExeRoot('') + '\plugins\filtershaders\direct3d';
+  Shader := Folder + '\CRT-Pi-SmartRes.fx';
+  if FileExists(Shader) then begin
+    Handle := OpenPathForAccess(Shader, $40000000, 7, 0, 3, $80, 0);
+    Result := Handle <> THandle(-1);
+    if not Result then exit;
+    CloseAccessHandle(Handle);
+  end;
+  // A missing plugin directory will inherit access from its nearest existing parent.
+  while not DirExists(Folder) do begin
+    Parent := ExtractFileDir(Folder);
+    if (Parent = '') or (Parent = Folder) then begin Result := False; exit; end;
+    Folder := Parent;
+  end;
+  Handle := OpenPathForAccess(Folder, $00000006, 7, 0, 3, $02000000, 0);
+  Result := Handle <> THandle(-1);
+  if Result then CloseAccessHandle(Handle);
+end;
+
+function InstallShaderDirectly: Boolean;
+begin
+  Result := IsWinUAE and not ShaderInstalledWithAdmin;
 end;
 
 function LaunchArgs(Param: String): String;
@@ -256,7 +295,7 @@ begin
     FileExists(Platform + 'Configurations\AmigaVision.uae');
   if Result then begin
     if IsAmiberry then Result := DirExists(Platform + 'Visuals\Shaders')
-    else Result := DirExists(Platform + 'plugins\filtershaders\direct3d');
+    else Result := FileExists(Platform + 'plugins\filtershaders\direct3d\CRT-Pi-SmartRes.fx');
   end;
 end;
 
@@ -455,6 +494,10 @@ begin
       if Notice <> '' then Notice := Notice + #13#10#13#10;
       Notice := Notice + 'Existing saves and Shared files will be kept.';
     end;
+  end;
+  if IsWinUAE and not CanWriteWinUAEShader then begin
+    if Notice <> '' then Notice := Notice + #13#10#13#10;
+    Notice := Notice + 'WinUAE is installed in a folder that requires administrator access. Windows will ask for permission to install the AmigaVision shader.';
   end;
   DestinationNotice.Caption := Notice;
   DestinationNotice.AdjustHeight;
@@ -666,12 +709,51 @@ begin
   end;
 end;
 
+function InstallProtectedShader: String;
+var
+  Parameters, Source, Destination: String;
+  ExitCode: Integer;
+begin
+  Result := '';
+  if not IsWinUAE or ShaderInstalledWithAdmin or CanWriteWinUAEShader then exit;
+  if WizardSilent then begin
+    Result := 'WinUAE is installed in a folder that requires administrator access. Run setup as administrator to install its AmigaVision shader.';
+    exit;
+  end;
+  ExtractTemporaryFile('WinUAEShaderSetup.exe');
+  Source := Payload('') + '\WinUAE\plugins\filtershaders\direct3d\CRT-Pi-SmartRes.fx';
+  Destination := ExeRoot('') + '\plugins\filtershaders\direct3d\CRT-Pi-SmartRes.fx';
+  Parameters := '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART ' +
+    '/SHADERSOURCE="' + Source + '" /WINUAEDIR="' + ExeRoot('') + '" ' +
+    '/LOG="' + ExpandConstant('{tmp}\WinUAE-shader.log') + '"';
+  Log('Requesting administrator access because the WinUAE shader folder requires it: ' + ExeRoot(''));
+  if not ShellExec('runas', ExpandConstant('{tmp}\WinUAEShaderSetup.exe'), Parameters,
+    '', SW_SHOWNORMAL, ewWaitUntilTerminated, ExitCode) then begin
+    Result := 'Administrator access is needed because WinUAE is installed in a protected folder. Allow the Windows permission request to install its AmigaVision shader.';
+    exit;
+  end;
+  if ExitCode <> 0 then begin
+    Result := 'The AmigaVision shader could not be installed in the protected WinUAE folder. See the setup log at ' + ExpandConstant('{tmp}\WinUAE-shader.log');
+    exit;
+  end;
+  if not FileExists(Destination) then begin
+    Result := 'The AmigaVision shader was not installed in the WinUAE folder.';
+    exit;
+  end;
+  if GetSHA256OfFile(Source) <> GetSHA256OfFile(Destination) then begin
+    Result := 'The installed WinUAE shader does not match the AmigaVision release.';
+    exit;
+  end;
+  ShaderInstalledWithAdmin := True;
+end;
+
 function PrepareToInstall(var NeedsRestart: Boolean): String;
 begin
   if SelectedExe = '' then DetectEmulator;
   if SourcePage.Values[0] = '' then SourcePage.Values[0] := NearbyRelease;
   Result := ResolveRelease;
   if Result = '' then Result := ValidateInputs;
+  if Result = '' then Result := InstallProtectedShader;
 end;
 
 procedure WriteConfig(Name: String);

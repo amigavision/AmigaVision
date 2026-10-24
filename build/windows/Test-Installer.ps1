@@ -60,7 +60,7 @@ try {
         Put "$payload/$emulator/Configurations/AmigaVision.uae" ([IO.File]::ReadAllText($template))
     }
     Put "$payload/Amiberry/Visuals/Shaders/example.glsl" 'shader'
-    Put "$payload/WinUAE/plugins/filtershaders/direct3d/example.fx" 'shader'
+    Put "$payload/WinUAE/plugins/filtershaders/direct3d/CRT-Pi-SmartRes.fx" 'shader'
     foreach ($emulator in @('Amiberry', 'WinUAE')) {
         $data = Join-Path $root "$emulator data"
         $exe = Join-Path $root "$emulator bin/$($emulator.ToLower()).exe"
@@ -86,7 +86,7 @@ try {
         if (!$config.Contains("$data\HardDrives\AmigaVision.hdf") -or ($config.Contains('./ROMs/') -or $config.Contains('.\ROMs\'))) {
             throw 'Media paths were not resolved'
         }
-        $shader = if ($emulator -eq 'WinUAE') { "$(Split-Path $exe)/plugins/filtershaders/direct3d/example.fx" }
+        $shader = if ($emulator -eq 'WinUAE') { "$(Split-Path $exe)/plugins/filtershaders/direct3d/CRT-Pi-SmartRes.fx" }
                   else { "$data/Visuals/Shaders/example.glsl" }
         Assert-Content $shader 'shader'
         $installedIcon = Join-Path $data 'AmigaVision.ico'
@@ -103,6 +103,36 @@ try {
         if ((Install $emulator "$root/missing" $data $exe) -eq 0) { throw 'Missing media was accepted' }
         if ((Install $emulator $payload $data "$root/missing.exe") -eq 0) { throw 'Missing executable was accepted' }
     }
+    # Permission failures must be detected before copying the main image.
+    $protectedBin = Join-Path $root 'protected WinUAE'
+    Put "$protectedBin/winuae64.exe" 'placeholder'
+    $shaderDir = Join-Path $protectedBin 'plugins/filtershaders/direct3d'
+    New-Item -ItemType Directory -Force $shaderDir | Out-Null
+    $acl = Get-Acl $shaderDir
+    $identity = [Security.Principal.WindowsIdentity]::GetCurrent().User
+    $deny = New-Object Security.AccessControl.FileSystemAccessRule($identity, 'Write', 'ContainerInherit,ObjectInherit', 'None', 'Deny')
+    $restricted = Get-Acl $shaderDir
+    $restricted.AddAccessRule($deny)
+    try {
+        Set-Acl $shaderDir $restricted
+        if ((Install 'WinUAE' $payload "$root/protected install" "$protectedBin/winuae64.exe") -eq 0) { throw 'Protected shader installation should require elevation' }
+        if (Test-Path "$root/protected install/HardDrives/AmigaVision.hdf") { throw 'Permission check happened after main-image copying' }
+        if (!(Get-Content -Raw "$root/WinUAE.log").Contains('requires administrator access')) { throw 'Missing explanation of required administrator access' }
+    } finally { Set-Acl $shaderDir $acl }
+    # Exercise the helper directly on the elevated CI runner; no interactive UAC on CI.
+    $helper = Join-Path $PSScriptRoot 'output/WinUAEShaderSetup.exe'
+    $helperArgs = @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART',
+        "`"/SHADERSOURCE=$payload/WinUAE/plugins/filtershaders/direct3d/CRT-Pi-SmartRes.fx`"",
+        "`"/WINUAEDIR=$protectedBin`"", "`"/LOG=$root/shader-helper.log`"")
+    $helperProcess = Start-Process $helper -ArgumentList $helperArgs -PassThru
+    if (!$helperProcess.WaitForExit(120000)) {
+        & taskkill.exe /PID $helperProcess.Id /T /F | Out-Null
+        throw 'Shader helper timed out'
+    }
+    $helperProcess.Refresh()
+    if ($helperProcess.ExitCode -ne 0) { throw 'Shader helper failed' }
+    Assert-Content "$shaderDir/CRT-Pi-SmartRes.fx" 'shader'
+
     # Verify names and original targets survive a second emulator and subsequent upgrades.
     $programs = "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs"
     $desktop = [Environment]::GetFolderPath('Desktop')
