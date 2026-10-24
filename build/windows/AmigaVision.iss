@@ -17,6 +17,7 @@ DisableDirPage=yes
 DisableProgramGroupPage=yes
 UsePreviousTasks=no
 WizardStyle=modern
+WizardSizePercent=120,130
 SetupIconFile=assets\AmigaVision.ico
 WizardImageFile=
 WizardSmallImageFile=assets\AV-avatar.png
@@ -27,7 +28,7 @@ OutputBaseFilename=Install AmigaVision for Windows
 Compression=lzma2
 
 [Messages]
-WelcomeLabel2=AmigaVision is the ultimate Amiga games & demo scene collection for%nMiSTer & Pocket FPGAs, Raspberry Pi + emulators — and Amiga 1200, 4000 & CD32.%n%nLet’s get AmigaVision installed on your Windows computer!
+WelcomeLabel2=AmigaVision is the ultimate Amiga games & demo scene collection for%nMiSTer & Pocket FPGAs, Raspberry Pi + emulators — and%nAmiga 1200, 4000 & CD32.%n%nLet’s get AmigaVision installed on your Windows computer!
 ClickNext=
 FinishedHeadingLabel=AmigaVision Install Completed
 FinishedLabel=
@@ -74,6 +75,7 @@ Filename: "{code:ExePath}"; Parameters: "{code:LaunchArgs}"; WorkingDir: "{code:
 [Code]
 var
   TargetPage: TWizardPage;
+  EmulatorChoiceTop: Integer;
   EmulatorChoices: array[0..2] of TNewRadioButton;
   DataPage: TInputDirWizardPage;
   ProgramPage: TInputDirWizardPage;
@@ -340,30 +342,58 @@ end;
 procedure AddEmulatorChoice(Index: Integer; Caption: String; Available: Boolean);
 var
   Link: TNewLinkLabel;
-  URL: String;
+  Details, NameMeasure: TNewStaticText;
+  URL, Description: String;
 begin
   case Index of
-    0: URL := 'https://github.com/BlitterStudio/amiberry/releases';
-    1: URL := 'https://copperline.dev/';
-    2: URL := 'https://www.winuae.net/download/';
+    0: begin
+      URL := 'https://github.com/BlitterStudio/amiberry/releases';
+      Description := 'The recommended setup. Great integer scaling and autocrop make the most of your screen without stretching or uneven pixels. Handles NTSC scaling correctly, too.';
+    end;
+    1: begin
+      URL := 'https://copperline.dev/';
+      Description := 'The “new kid on the block” — a recent emulator with best-in-class developer tools and great scaling. Choose this if you do Amiga development work.';
+    end;
+    2: begin
+      URL := 'https://www.winuae.net/download/';
+      Description := 'The “standard” Amiga emulator for Windows. More complex to configure, with scaling issues between PAL and NTSC. Choose this only if you need it and are already familiar with it. AmigaVision may have uneven pixels and other scaling issues that may or may not bother you.';
+    end;
   end;
+  NameMeasure := TNewStaticText.Create(WizardForm);
+  NameMeasure.Parent := TargetPage.Surface;
+  NameMeasure.Visible := False;
+  NameMeasure.AutoSize := True;
+  NameMeasure.Font.Style := [fsBold];
+  NameMeasure.Caption := Caption;
   EmulatorChoices[Index] := TNewRadioButton.Create(WizardForm);
   with EmulatorChoices[Index] do begin
     Parent := TargetPage.Surface;
-    SetBounds(0, ScaleY(16 + Index * 40), ScaleX(240), ScaleY(24));
+    SetBounds(0, EmulatorChoiceTop, NameMeasure.Width + ScaleX(24), ScaleY(24));
+    Font.Style := [fsBold];
     Enabled := Available;
     TabOrder := Index * 2;
   end;
   EmulatorChoices[Index].Caption := Caption;
   Link := TNewLinkLabel.Create(WizardForm);
   Link.Parent := TargetPage.Surface;
-  Link.SetBounds(ScaleX(260), ScaleY(20 + Index * 40), ScaleX(120), ScaleY(20));
-  Link.Caption := '<a href="' + URL + '">Download</a>';
+  Link.SetBounds(EmulatorChoices[Index].Width + ScaleX(4),
+    EmulatorChoiceTop + ScaleY(4), ScaleX(120), ScaleY(20));
+  Link.Caption := '— <a href="' + URL + '">Download</a>';
   Link.UseVisualStyle := True;
   Link.TabStop := True;
   Link.TabOrder := Index * 2 + 1;
   Link.Tag := Index;
   Link.OnLinkClick := @DownloadEmulator;
+  NameMeasure.Free;
+  Details := TNewStaticText.Create(WizardForm);
+  Details.Parent := TargetPage.Surface;
+  Details.AutoSize := False;
+  Details.WordWrap := True;
+  Details.SetBounds(ScaleX(22), EmulatorChoiceTop + ScaleY(26),
+    TargetPage.SurfaceWidth - ScaleX(22), ScaleY(20));
+  Details.Caption := Description;
+  Details.AdjustHeight;
+  EmulatorChoiceTop := Details.Top + Details.Height + ScaleY(18);
 end;
 
 procedure UpdateDestinationNotice(Sender: TObject);
@@ -465,7 +495,7 @@ procedure InitializeWizard;
 begin
   Log('Creating AmigaVision setup pages');
   TargetPage := CreateCustomPage(wpWelcome, 'Choose your emulator',
-    'Select an installed emulator. Use its download link if you need to install it first.');
+    'Select which emulator to use. Use its download link if you need to install it first, and then come back here to complete the process. Make sure the emulator is not running when you continue this installation.');
   AddEmulatorChoice(0, 'Amiberry', True);
   AddEmulatorChoice(1, 'Copperline', True);
   AddEmulatorChoice(2, 'WinUAE', True);
