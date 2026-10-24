@@ -28,7 +28,7 @@ OutputBaseFilename=Install AmigaVision for Windows
 Compression=lzma2
 
 [Messages]
-WelcomeLabel2=AmigaVision is the ultimate Amiga games & demo scene collection for%nMiSTer & Pocket FPGAs, Raspberry Pi + emulators — and%nAmiga 1200, 4000 & CD32.%n%nLet’s get AmigaVision installed on your Windows computer!
+WelcomeLabel2=AmigaVision is the ultimate Amiga games & demo scene collection for%nMiSTer & Pocket FPGAs, Raspberry Pi + Windows/Mac/Linux — and%nAmiga 1200, 4000 & CD32.%n%nLet’s get AmigaVision installed on your Windows computer!
 ClickNext=
 FinishedHeadingLabel=AmigaVision Install Completed
 FinishedLabel=
@@ -362,7 +362,7 @@ begin
     end;
     2: begin
       URL := 'https://www.winuae.net/download/';
-      Description := 'The “standard” Amiga emulator for Windows. More complex to configure, with scaling issues between PAL and NTSC. Choose this only if you need it and are already familiar with it. AmigaVision running under WinUAE may have uneven pixels and other scaling issues that may or may not bother you.';
+      Description := 'The “standard” Amiga emulator for Windows. More complex to configure, with scaling issues between PAL and NTSC. Choose this only if you need it and are already familiar with it. AmigaVision running under WinUAE has uneven pixels and other scaling issues that may bother you, this is an emulator limitation.';
     end;
   end;
   IconFile := Lowercase(Caption) + '.bmp';
@@ -496,13 +496,12 @@ end;
 
 procedure BrandIntermediatePages;
 var
-  Strip: TPanel;
   Banner: TBitmapImage;
   BannerHeight, ExtraHeight: Integer;
 begin
   // MainPanel is shared by all intermediate built-in and custom pages.
   // Grow the window first, retaining the existing space for page controls.
-  BannerHeight := ScaleY(60);
+  BannerHeight := WizardForm.MainPanel.ClientWidth * 300 div 1491;
   ExtraHeight := BannerHeight + ScaleY(16);
   WizardForm.ClientHeight := WizardForm.ClientHeight + ExtraHeight;
   WizardForm.MainPanel.Height := WizardForm.MainPanel.Height + ExtraHeight;
@@ -517,19 +516,11 @@ begin
   WizardForm.PageDescriptionLabel.Width := WizardForm.MainPanel.ClientWidth -
     WizardForm.PageDescriptionLabel.Left - ScaleX(24);
   WizardForm.PageDescriptionLabel.Height := WizardForm.PageDescriptionLabel.Height + ScaleY(16);
-  Strip := TPanel.Create(WizardForm);
-  Strip.Parent := WizardForm.MainPanel;
-  Strip.BevelOuter := bvNone;
-  Strip.Color := $DD8051; // AmigaVision blue, #5180DD.
-  Strip.SetBounds(0, 0, WizardForm.MainPanel.ClientWidth, BannerHeight);
   Banner := TBitmapImage.Create(WizardForm);
-  Banner.Parent := Strip;
+  Banner.Parent := WizardForm.MainPanel;
   Banner.Bitmap.LoadFromFile(ExpandConstant('{tmp}\banner.bmp'));
   Banner.Stretch := True;
-  Banner.Height := BannerHeight - ScaleY(12);
-  Banner.Width := Banner.Height * 1491 div 300;
-  Banner.Left := (Strip.ClientWidth - Banner.Width) div 2;
-  Banner.Top := ScaleY(6);
+  Banner.SetBounds(0, 0, WizardForm.MainPanel.ClientWidth, BannerHeight);
 end;
 
 procedure LayoutCompletionOptions;
