@@ -1,9 +1,7 @@
 # AmigaVision Windows setup
 
-A small Inno Setup 6 installer for an **existing Windows Amiberry or WinUAE installation**.
-The emulator list shows Amiberry, Copperline (a disabled coming-soon placeholder),
-and WinUAE, each with a download link. Copperline installation is deferred until
-its AmigaVision configuration is supplied.
+A small Inno Setup 6 installer for an **existing Windows Amiberry, Copperline
+or WinUAE installation**. The emulator list shows all three with download links.
 The setup does not download or install emulators.
 
 ## Build and distribute
@@ -29,6 +27,9 @@ AmigaVision-Emulators-<date>/
     Configurations/
     ROMs/
     Visuals/
+  Copperline/
+    configs/AmigaVision.toml
+    INSTALL.txt
   WinUAE/
 ```
 
@@ -161,3 +162,24 @@ upgrades reuse the existing names.
 The release’s canonical disk payload is `Amiberry/HardDrives`. Both Amiberry
 and WinUAE installations copy it into `HardDrives` under the selected data
 folder. No second copy is packaged under WinUAE or at the archive root.
+
+## Copperline
+
+Copperline is supported using a current Nightly with relative media paths and
+CopperHF support. Download it from https://copperline.dev/ and keep the complete
+Windows download together. Setup detects copperline.exe in the same installed
+and portable locations used for the other emulators.
+
+The package includes Copperline/configs/AmigaVision.toml with relative paths
+to the canonical Amiberry HDFs and ROM. The Windows installer copies these
+assets to the chosen data folder and writes configs/AmigaVision.toml there,
+using absolute forward-slash paths so direct emulator launches also work.
+The shortcut passes --config explicitly. No shader files are required:
+Copperline uses its built-in scanlines shader, matching the reference config.
+
+The startup task backs up and writes default.toml in the user profile’s
+Documents/Copperline/configs, or configs beside copperline.exe when portable.txt
+is present. Leaving it unchecked preserves the existing startup config.
+A named copy is also written to Copperline’s configs folder for its picker.
+Existing copperline.toml files take precedence over the saved default;
+see the packaged Copperline/INSTALL.txt for manual setup in those cases.

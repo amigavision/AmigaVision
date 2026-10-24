@@ -64,7 +64,7 @@ Source: "{code:Payload}\Amiberry\HardDrives\AmigaVision.hdf"; DestDir: "{code:Da
 Source: "{code:Payload}\Amiberry\HardDrives\AmigaVision-Saves.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external onlyifdoesntexist
 Source: "{code:Payload}\Amiberry\HardDrives\Shared\*"; DestDir: "{code:DataRoot}\HardDrives\Shared"; Flags: external recursesubdirs createallsubdirs onlyifdoesntexist
 Source: "{code:Payload}\Amiberry\HardDrives\listings\*"; DestDir: "{code:DataRoot}\HardDrives\listings"; Flags: external recursesubdirs createallsubdirs ignoreversion
-Source: "{code:Payload}\{code:Emulator}\ROMs\AmigaVision.rom"; DestDir: "{code:DataRoot}\ROMs"; Flags: external ignoreversion
+Source: "{code:Payload}\Amiberry\ROMs\AmigaVision.rom"; DestDir: "{code:DataRoot}\ROMs"; Flags: external ignoreversion
 Source: "{code:Payload}\Amiberry\Visuals\*"; DestDir: "{code:DataRoot}\Visuals"; Flags: external recursesubdirs createallsubdirs ignoreversion; Check: IsAmiberry
 Source: "{code:Payload}\WinUAE\plugins\filtershaders\direct3d\CRT-Pi-SmartRes.fx"; DestDir: "{code:ExeRoot}\plugins\filtershaders\direct3d"; Flags: external ignoreversion overwritereadonly; Check: InstallShaderDirectly
 
@@ -86,19 +86,27 @@ var
 function IsAmiberry: Boolean;
 begin
   if EmulatorChoices[0] = nil then
-    Result := CompareText(ExpandConstant('{param:EMULATOR|Amiberry}'), 'WinUAE') <> 0
-  else
-    Result := EmulatorChoices[0].Checked;
+    Result := CompareText(ExpandConstant('{param:EMULATOR|Amiberry}'), 'Amiberry') = 0
+  else Result := EmulatorChoices[0].Checked;
+end;
+
+function IsCopperline: Boolean;
+begin
+  if EmulatorChoices[1] = nil then
+    Result := CompareText(ExpandConstant('{param:EMULATOR|Amiberry}'), 'Copperline') = 0
+  else Result := EmulatorChoices[1].Checked;
 end;
 
 function IsWinUAE: Boolean;
 begin
-  Result := not IsAmiberry;
+  Result := not IsAmiberry and not IsCopperline;
 end;
 
 function Emulator(Param: String): String;
 begin
-  if IsAmiberry then Result := 'Amiberry' else Result := 'WinUAE';
+  if IsAmiberry then Result := 'Amiberry'
+  else if IsCopperline then Result := 'Copperline'
+  else Result := 'WinUAE';
 end;
 
 function Payload(Param: String): String;
@@ -164,6 +172,10 @@ end;
 
 function LaunchArgs(Param: String): String;
 begin
+  if IsCopperline then begin
+    Result := '--config "' + DataRoot('') + '\configs\AmigaVision.toml"';
+    exit;
+  end;
   if IsAmiberry then
     Result := '-o "shaders_path=' + DataRoot('') + '\Visuals\Shaders" -f '
   else Result := '-config=';
@@ -179,6 +191,7 @@ begin
   if Folder = '' then exit;
   Folder := AddBackslash(Folder);
   if IsAmiberry then Candidate := Folder + 'Amiberry.exe'
+  else if IsCopperline then Candidate := Folder + 'copperline.exe'
   else begin
     Candidate := Folder + 'winuae64.exe';
     if not FileExists(Candidate) then Candidate := Folder + 'winuae.exe';
@@ -217,7 +230,9 @@ var
   Key, Name, Value: String;
 begin
   Key := 'Software\Microsoft\Windows\CurrentVersion\App Paths\';
-  if IsAmiberry then Name := 'Amiberry.exe' else Name := 'winuae64.exe';
+  if IsAmiberry then Name := 'Amiberry.exe'
+  else if IsCopperline then Name := 'copperline.exe'
+  else Name := 'winuae64.exe';
   if RegQueryStringValue(RootKey, Key + Name, '', Value) then
     ConsiderFolder(ExtractFileDir(RemoveQuotes(Value)));
   if IsWinUAE and RegQueryStringValue(RootKey, Key + 'winuae.exe', '', Value) then
@@ -452,9 +467,11 @@ begin
   TargetPage := CreateCustomPage(wpWelcome, 'Choose your emulator',
     'Select an installed emulator. Use its download link if you need to install it first.');
   AddEmulatorChoice(0, 'Amiberry', True);
-  AddEmulatorChoice(1, 'Copperline (coming soon)', False);
+  AddEmulatorChoice(1, 'Copperline', True);
   AddEmulatorChoice(2, 'WinUAE', True);
   EmulatorChoices[0].Checked := True;
+  if CompareText(ExpandConstant('{param:EMULATOR|Amiberry}'), 'Copperline') = 0 then
+    EmulatorChoices[1].Checked := True;
   if CompareText(ExpandConstant('{param:EMULATOR|Amiberry}'), 'WinUAE') = 0 then
     EmulatorChoices[2].Checked := True;
   ProgramPage := CreateInputDirPage(TargetPage.ID, 'Emulator not found',
@@ -486,6 +503,8 @@ begin
   if (CurPageID = DataPage.ID) and (DataPage.Values[0] = '') then begin
     if IsWinUAE then
       DataPage.Values[0] := ExpandConstant('{commondocs}\Amiga Files\WinUAE')
+    else if IsCopperline then
+      DataPage.Values[0] := ExpandConstant('{userdocs}\AmigaVision')
     else
       DataPage.Values[0] := ExeRoot('');
   end;
@@ -503,23 +522,26 @@ begin
      not FileExists(Root + '\Amiberry\HardDrives\AmigaVision-Saves.hdf') or
      not DirExists(Root + '\Amiberry\HardDrives\Shared') or
      not DirExists(Root + '\Amiberry\HardDrives\listings') or
-     not FileExists(Root + '\' + Emulator('') + '\ROMs\AmigaVision.rom') then begin
+     not FileExists(Root + '\Amiberry\ROMs\AmigaVision.rom') then begin
     Result := 'The emulator package is incomplete. Extract the complete AmigaVision-Emulators package and run its installer from that folder.';
     exit;
   end;
   if IsAmiberry then Name := 'Amiberry\Visuals\Shaders'
     else Name := 'WinUAE\plugins\filtershaders\direct3d';
-  if not DirExists(Root + '\' + Name) then begin
+  if not IsCopperline and not DirExists(Root + '\' + Name) then begin
     Result := 'The release is missing its shader folder.';
     exit;
   end;
-  if not LoadStringFromFile(Root + '\' + Emulator('') + '\Configurations\AmigaVision.uae', Loaded) then begin
-    Result := 'The release is missing Configurations\AmigaVision.uae.';
+  if IsCopperline then Name := 'Copperline\configs\AmigaVision.toml'
+  else Name := Emulator('') + '\Configurations\AmigaVision.uae';
+  if not LoadStringFromFile(Root + '\' + Name, Loaded) then begin
+    Result := 'The release is missing ' + Name + '.';
     exit;
   end;
   Name := Lowercase(ExtractFileName(ExePath('')));
   if not FileExists(ExePath('')) or
      (IsAmiberry and (Name <> 'amiberry.exe')) or
+     (IsCopperline and (Name <> 'copperline.exe')) or
      (IsWinUAE and (Name <> 'winuae.exe') and (Name <> 'winuae64.exe')) then begin
     Result := Emulator('') + ' was not found. Install it first, or choose its installation folder.';
     exit;
@@ -534,6 +556,14 @@ begin
     exit;
   end;
   Text := UTF8Decode(Loaded);
+  if IsCopperline then begin
+    Root := DataRoot('');
+    StringChangeEx(Root, '\', '/', True);
+    StringChangeEx(Text, '../Amiberry/', Root + '/', True);
+    StringChangeEx(Text, '\', '/', True);
+    ConfigText := UTF8Encode(Text);
+    exit;
+  end;
   StringChangeEx(Text, './HardDrives/', AddBackslash(DataRoot('')) + 'HardDrives\', True);
   StringChangeEx(Text, './ROMs/', AddBackslash(DataRoot('')) + 'ROMs\', True);
   if IsAmiberry then begin
@@ -721,14 +751,33 @@ begin
   if WizardIsTaskSelected('desktopicon') then WriteAmigaVisionShortcut(Desktop, Qualified);
 end;
 
+function CopperlineHome: String;
+begin
+  if FileExists(ExeRoot('') + '\portable.txt') then Result := ExeRoot('')
+  else Result := GetEnv('USERPROFILE') + '\Documents\Copperline';
+end;
+
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if CurStep = ssPostInstall then begin
+    if IsCopperline then begin
+      if not ForceDirectories(DataRoot('') + '\configs') then
+        RaiseException('Could not create the configuration folder.');
+      WriteConfig(DataRoot('') + '\configs\AmigaVision.toml');
+      if not ForceDirectories(CopperlineHome + '\configs') then
+        RaiseException('Could not create the Copperline configuration folder.');
+      if CompareText(DataRoot(''), CopperlineHome) <> 0 then
+        WriteConfig(CopperlineHome + '\configs\AmigaVision.toml');
+      if WizardIsTaskSelected('defaultconfig') then begin
+        WriteConfig(CopperlineHome + '\configs\default.toml');
+      end;
+    end else begin
     if not ForceDirectories(DataRoot('') + '\Configurations') then
       RaiseException('Could not create the configuration folder.');
     WriteConfig(DataRoot('') + '\Configurations\AmigaVision.uae');
     if WizardIsTaskSelected('defaultconfig') then
       WriteConfig(DataRoot('') + '\Configurations\default.uae');
+    end;
     InstallAmigaVisionShortcuts;
   end;
 end;

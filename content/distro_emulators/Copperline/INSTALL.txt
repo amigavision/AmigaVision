@@ -1,0 +1,32 @@
+AmigaVision for Copperline
+
+Use a current Copperline Nightly with relative media paths and CopperHF support:
+https://copperline.dev/
+
+Windows: run “Install AmigaVision for Windows.exe” from the extracted emulator
+package and choose Copperline. Setup copies the disks and ROM from Amiberry,
+keeps existing saves and Shared files, and creates an AmigaVision shortcut.
+
+“Start AmigaVision when the emulator opens” also installs default.toml in
+Copperline’s configs folder. Uncheck it to keep your current startup config;
+the AmigaVision shortcut still launches configs/AmigaVision.toml explicitly.
+Existing configuration files are backed up before replacement.
+
+Manual setup (macOS, Linux or Windows): keep Copperline and Amiberry beside
+each other in the extracted package. From the package’s Copperline directory,
+run your Copperline executable with --config configs/AmigaVision.toml.
+The relative paths in that file refer to ../Amiberry/HardDrives and
+../Amiberry/ROMs, so the HDFs and ROM are not duplicated.
+
+The supplied settings match the reference AmigaVision setup: A1200, 68040
+with FPU and data cache, 8 MB fast RAM, warp boot, automatic launch, integer
+scaling, autocrop, fullscreen, scanlines and a hidden status bar. The saves
+drive uses CopperHF unit1 with boot priority -35.
+
+To use it as your default manually, copy the TOML into Copperline’s configs
+folder as default.toml and update its media paths to absolute paths first.
+Copperline normally stores configs in Documents/Copperline/configs under
+your user profile; portable.txt beside its executable makes it use that
+installation directory instead. An existing copperline.toml beside the
+executable takes precedence over the saved default. The named config is also installed in Copperline’s configs folder so it can
+be selected from the emulator.

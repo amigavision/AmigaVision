@@ -46,7 +46,8 @@ function Find-EmulatorShortcut($folder, $emulator) {
     if (Test-Path $plain) {
         $target = [IO.Path]::GetFileName((Read-Shortcut $plain).TargetPath)
         if (($emulator -eq 'Amiberry' -and $target -ieq 'amiberry.exe') -or
-            ($emulator -eq 'WinUAE' -and $target -imatch '^winuae(64)?\.exe$')) { return $plain }
+            ($emulator -eq 'WinUAE' -and $target -imatch '^winuae(64)?\.exe$') -or
+            ($emulator -eq 'Copperline' -and $target -ieq 'copperline.exe')) { return $plain }
     }
     return Join-Path $folder "AmigaVision ($emulator).lnk"
 }
@@ -93,6 +94,7 @@ try {
     Copy-Item -Recurse -Force "$PSScriptRoot/../../content/distro_emulators/Amiberry/Visuals/*" "$payload/Amiberry/Visuals"
     Put "$payload/WinUAE/plugins/filtershaders/direct3d/CRT-Pi-SmartRes.fx" 'shader'
     # Exercise migration of the shader settings in already published releases.
+    Put "$payload/Copperline/configs/AmigaVision.toml" ([IO.File]::ReadAllText("$PSScriptRoot/../../content/distro_emulators/Copperline/AmigaVision.toml"))
     $legacyConfig = "$payload/Amiberry/Configurations/AmigaVision.uae"
     $legacyText = [IO.File]::ReadAllText($legacyConfig).Replace('amiberry.shader=', 'shader=').Replace('gfx_lores=false', 'gfx_lores=true').Replace('gfx_resolution=hires', 'gfx_resolution=lores').Replace('gfx_linemode=double', 'gfx_linemode=none')
     Put $legacyConfig ($legacyText + "`nshaders_path=Visuals/Shaders`n")
@@ -151,6 +153,34 @@ try {
         if ((Install $emulator $payload $data "$root/missing.exe") -eq 0) { throw 'Missing executable was accepted' }
     }
     # Permission failures must be detected before copying the main image.
+    # Copperline uses the canonical Amiberry media and a separate TOML config.
+    $copperExe = Join-Path $root 'Copperline bin/copperline.exe'
+    $copperHome = Split-Path $copperExe
+    $copperData = Join-Path $root 'Copperline data'
+    Put $copperExe 'placeholder executable; not launched'
+    Put "$copperHome/portable.txt" ''
+    Put "$copperHome/configs/default.toml" 'my Copperline default'
+    if ((Install 'Copperline' $payload $copperData $copperExe) -ne 0) { throw 'Copperline install failed' }
+    Assert-Content "$copperHome/configs/default.toml" 'my Copperline default'
+    Assert-Content "$copperHome/configs/AmigaVision.toml" (Get-Content -Raw "$copperData/configs/AmigaVision.toml")
+    Assert-Content "$copperData/HardDrives/AmigaVision.hdf" 'new main'
+    Assert-Content "$copperData/ROMs/AmigaVision.rom" 'rom'
+    $copperConfig = Get-Content -Raw "$copperData/configs/AmigaVision.toml"
+    $forwardData = $copperData.Replace('\', '/')
+    foreach ($path in @('ROMs/AmigaVision.rom', 'HardDrives/AmigaVision.hdf', 'HardDrives/AmigaVision-Saves.hdf')) {
+        if (!$copperConfig.Contains("$forwardData/$path")) { throw "Copperline media path incorrect: $path" }
+    }
+    if ($copperConfig.Contains('../Amiberry')) { throw 'Copperline media paths were not resolved' }
+    $copperLink = Read-Shortcut (Find-EmulatorShortcut "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs" 'Copperline')
+    if ($copperLink.TargetPath -ne $copperExe -or !$copperLink.Arguments.Contains('--config "' + $copperData + '\configs\AmigaVision.toml"')) { throw 'Copperline shortcut is incorrect' }
+    Put "$copperData/HardDrives/AmigaVision-Saves.hdf" 'my Copperline saves'
+    Put "$copperData/configs/AmigaVision.toml" 'my Copperline config'
+    if ((Install 'Copperline' $payload $copperData $copperExe 'defaultconfig') -ne 0) { throw 'Copperline startup configuration failed' }
+    Assert-Content "$copperHome/configs/default.toml.backup-1" 'my Copperline default'
+    Assert-Content "$copperHome/configs/default.toml" $copperConfig
+    Assert-Content "$copperData/configs/AmigaVision.toml.backup-1" 'my Copperline config'
+    Assert-Content "$copperData/HardDrives/AmigaVision-Saves.hdf" 'my Copperline saves'
+
     $protectedBin = Join-Path $root 'protected WinUAE'
     Put "$protectedBin/winuae64.exe" 'placeholder'
     $shaderDir = Join-Path $protectedBin 'plugins/filtershaders/direct3d'
@@ -184,7 +214,7 @@ try {
     $programs = "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs"
     $desktop = [Environment]::GetFolderPath('Desktop')
     foreach ($folder in @($programs, $desktop)) {
-        foreach ($name in @('AmigaVision', 'AmigaVision (Amiberry)', 'AmigaVision (WinUAE)')) {
+        foreach ($name in @('AmigaVision', 'AmigaVision (Amiberry)', 'AmigaVision (WinUAE)', 'AmigaVision (Copperline)')) {
             Remove-Item "$folder/$name.lnk" -ErrorAction SilentlyContinue
         }
     }
@@ -236,6 +266,8 @@ try {
         $winuae = Join-Path $root 'WinUAE bin/winuae.exe'
         if ((Install 'WinUAE' '' "$root/packaged WinUAE" $winuae) -ne 0) { throw 'WinUAE did not use the canonical Amiberry disk files' }
         Assert-Content "$root/packaged WinUAE/HardDrives/AmigaVision.hdf" 'new main'
+        if ((Install 'Copperline' '' "$root/packaged Copperline" $copperExe) -ne 0) { throw 'Copperline did not use the packaged media' }
+        Assert-Content "$root/packaged Copperline/HardDrives/AmigaVision.hdf" 'new main'
         $setup = Join-Path $root 'Install AmigaVision for Windows.exe'
         Copy-Item $originalSetup $setup
         if ((Install 'Amiberry' '' "$root/detached install" $exe) -eq 0) { throw 'Detached installer should reject missing sibling folders' }
@@ -246,7 +278,7 @@ try {
     foreach ($view in @([Microsoft.Win32.RegistryView]::Registry32, [Microsoft.Win32.RegistryView]::Registry64)) {
         $registry = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::CurrentUser, $view)
         try {
-            foreach ($emulator in @('Amiberry', 'WinUAE')) {
+            foreach ($emulator in @('Amiberry', 'WinUAE', 'Copperline')) {
                 $bin = Join-Path $root "$emulator registered $view"
                 $expected = Join-Path $bin "$($emulator.ToLower()).exe"
                 Put $expected 'placeholder'
@@ -278,7 +310,7 @@ try {
     # The installer has no uninstaller: remove test shortcuts explicitly.
     Remove-Item "$([Environment]::GetFolderPath('Desktop'))/AmigaVision.lnk" -ErrorAction SilentlyContinue
     Remove-Item "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs/AmigaVision.lnk" -ErrorAction SilentlyContinue
-    foreach ($emulator in @('Amiberry', 'WinUAE')) {
+    foreach ($emulator in @('Amiberry', 'WinUAE', 'Copperline')) {
         Remove-Item "$([Environment]::GetFolderPath('Desktop'))/AmigaVision ($emulator).lnk" -ErrorAction SilentlyContinue
         Remove-Item "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs/AmigaVision ($emulator).lnk" -ErrorAction SilentlyContinue
     }

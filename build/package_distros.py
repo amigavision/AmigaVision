@@ -511,6 +511,8 @@ def package_emulators(args, output_dir, archive_tool):
     require_file(winuae_shader, "WinUAE CRT shader")
     require_file(winuae_install, "WinUAE installation instructions")
 
+    require_file(emulator_root / "Copperline/AmigaVision.toml", "Copperline configuration")
+    require_file(emulator_root / "Copperline/INSTALL.txt", "Copperline installation instructions")
     skip_archive = args.skip_emulator_archive
     output_path = output_dir / (f"AmigaVision-Emulators-{args.date_stamp}" + ("" if skip_archive else ".7z"))
     if skip_archive and output_path.exists():
@@ -547,6 +549,8 @@ def package_emulators(args, output_dir, archive_tool):
         clone_or_copy_file(stage_root / "Configurations/default.uae", stage_root / "Configurations/AmigaVision.uae")
         replace_path(winuae_shader, stage_root / "plugins/filtershaders/direct3d" / winuae_shader.name)
         replace_path(winuae_install, stage_root / "INSTALL.txt")
+        replace_path(emulator_root / "Copperline/AmigaVision.toml", Path(tmp_dir) / "Copperline/configs/AmigaVision.toml")
+        replace_path(emulator_root / "Copperline/INSTALL.txt", Path(tmp_dir) / "Copperline/INSTALL.txt")
         if skip_archive:
             if args.dry_run:
                 log_step(f"[dry-run] Would keep emulator folders at {output_path}")

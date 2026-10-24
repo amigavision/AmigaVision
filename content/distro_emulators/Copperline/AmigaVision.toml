@@ -1,0 +1,34 @@
+rom = "../Amiberry/ROMs/AmigaVision.rom"
+
+[cpu]
+model = "68040"
+fpu = true
+clock_mhz = 25.0
+dcache = true
+
+[emulation]
+warp_boot = true
+auto_launch = true
+
+[memory]
+fast = "8M"
+
+[machine]
+profile = "A1200"
+
+[audio]
+stereo_separation = 50
+
+[copperhf]
+unit0 = "../Amiberry/HardDrives/AmigaVision.hdf"
+
+[copperhf.unit1]
+path = "../Amiberry/HardDrives/AmigaVision-Saves.hdf"
+bootpri = -35
+
+[display]
+scaling = "integer"
+autocrop = true
+shader = "scanlines"
+full_screen = true
+status_bar = false
