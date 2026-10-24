@@ -199,7 +199,8 @@ begin
   if CurPageID = DataPage.ID then begin
     Error := ValidateInputs;
     if Error <> '' then begin
-      MsgBox(Error, mbError, MB_OK);
+      Log(Error);
+      if not WizardSilent then MsgBox(Error, mbError, MB_OK);
       Result := False;
     end;
   end;

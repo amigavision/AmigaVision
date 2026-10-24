@@ -10,10 +10,20 @@ function Assert-Content($path, $expected) {
     if ([IO.File]::ReadAllText($path) -ne $expected) { throw "Unexpected contents: $path" }
 }
 function Install($emulator, $payload, $data, $exe, $tasks = '') {
-    $arguments = @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART',
+    $arguments = @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/CURRENTUSER',
         "/EMULATOR=$emulator", "`"/PAYLOAD=$payload`"", "`"/DATA=$data`"",
         "`"/EMULATORFILE=$exe`"", "`"/TASKS=$tasks`"", "`"/LOG=$root\$emulator.log`"")
-    $process = Start-Process $setup -ArgumentList $arguments -Wait -PassThru
+    Write-Host "Testing $emulator, tasks='$tasks', payload='$payload', data='$data'"
+    $process = Start-Process $setup -ArgumentList $arguments -PassThru
+    if (!$process.WaitForExit(120000)) {
+        & taskkill.exe /PID $process.Id /T /F | Out-Null
+        throw "Installer timed out for $emulator. See the saved setup log."
+    }
+    $process.Refresh()
+    Write-Host "Installer exit code: $($process.ExitCode)"
+    if ($process.ExitCode -ne 0 -and (Test-Path "$root/$emulator.log")) {
+        Get-Content "$root/$emulator.log" | Select-Object -Last 30 | Write-Host
+    }
     return $process.ExitCode
 }
 try {
@@ -68,6 +78,10 @@ try {
     }
     Write-Host 'Fresh installation, upgrades, preservation, backups, paths and invalid input passed.'
 } finally {
+    $logs = Join-Path $PSScriptRoot 'output/test-logs'
+    New-Item -ItemType Directory -Force $logs | Out-Null
+    Get-ChildItem $root -Filter '*.log' -ErrorAction SilentlyContinue |
+        Copy-Item -Destination $logs
     # The installer has no uninstaller: remove test shortcuts explicitly.
     foreach ($emulator in @('Amiberry', 'WinUAE')) {
         Remove-Item "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs/AmigaVision ($emulator).lnk" -ErrorAction SilentlyContinue
