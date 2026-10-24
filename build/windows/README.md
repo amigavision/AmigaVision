@@ -15,13 +15,13 @@ Run the **Windows installer** GitHub Actions workflow, or compile on Windows:
 ```
 
 The workflow compiles the installer, exercises it using synthetic release files,
-and uploads `AmigaVision-Setup.exe` as an artifact. It does not publish a release.
+and uploads `Install AmigaVision for Windows.exe` as an artifact. It does not publish a release.
 The optional compiler argument `/DReleaseVersion=2026.10.24` sets its version.
 
 Place the resulting executable beside the downloaded emulator archive:
 
 ```
-AmigaVision-Setup.exe
+Install AmigaVision for Windows.exe
 AmigaVision-Emulators-2026.10.24.7z
 ```
 
@@ -51,8 +51,10 @@ temporary storage can extract the archive elsewhere and choose that folder.
 5. Click Next. Setup detects the release beside itself; if needed, the next page
    asks for the release archive or extracted folder. Destination selection never
    validates the release location.
-6. Optionally make AmigaVision the default configuration or add a desktop shortcut.
-7. Launch using the new Start menu shortcut.
+6. Choose whether to make AmigaVision the default configuration and add a desktop
+   shortcut. Both options are selected by default and can be unchecked.
+7. On “AmigaVision Install Completed”, leave “Launch AmigaVision” checked to
+   launch it when you click Finish. Silent installations never launch an emulator.
 
 Detection checks Windows App Paths and uninstall records for the current user
 and all users, in both registry views; Program Files and per-user Programs;
@@ -126,5 +128,15 @@ Amiberry install locations are based on its [Windows packaging settings](https:/
 contains 16, 20, 24, 32, 40, 48, 64, 96, 128 and 256 pixel versions for the
 setup executable and installed shortcuts. The ICO is copied into the data
 folder so shortcuts retain their icon independently of the setup executable.
-The wizard uses the avatar in its header and a matching blue welcome/completion
-sidebar (`assets/wizard.png`), with the complete artwork preserved.
+The wizard keeps the avatar in its header and uses a full-width blue banner
+on the welcome/completion pages, with the AmigaVision SVG wordmark centered
+above the text. The background is #5180DD, matching the avatar. The SVG source
+is saved as `assets/amigavision.svg`; `assets/banner.bmp` is embedded for the
+Windows bitmap control, and `assets/banner.png` is a preview.
+
+Shortcuts are named “AmigaVision” for a single emulator. If another emulator
+already has an AmigaVision shortcut, setup renames the existing shortcut to
+include its emulator, preserving its target and launch settings, and names the
+new shortcut accordingly (for example, “AmigaVision (Amiberry)” and
+“AmigaVision (WinUAE)”). This applies to Start menu and desktop shortcuts;
+upgrades reuse the existing names.

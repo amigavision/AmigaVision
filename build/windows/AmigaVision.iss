@@ -18,20 +18,47 @@ DisableProgramGroupPage=yes
 UsePreviousTasks=no
 WizardStyle=modern
 SetupIconFile=assets\AmigaVision.ico
-WizardImageFile=assets\wizard.png
+WizardImageFile=
 WizardSmallImageFile=assets\AV-avatar.png
 DisableWelcomePage=no
 DisableFinishedPage=no
 OutputDir=output
-OutputBaseFilename=AmigaVision-Setup
+OutputBaseFilename=Install AmigaVision for Windows
 Compression=lzma2
 ArchiveExtraction=full
 
+[Messages]
+WelcomeLabel2=AmigaVision is the ultimate Amiga games & demo scene collection for MiSTer & Pocket FPGAs, Raspberry Pi + emulators — and Amiga 1200, 4000 & CD32.%n%nLet’s get AmigaVision installed on your Windows computer.
+ClickNext=
+FinishedHeadingLabel=AmigaVision Install Completed
+FinishedLabel=
+FinishedLabelNoIcons=
+ClickFinish=
+WizardSelectTasks=Startup Options
+SelectTasksDesc=Choose how to launch AmigaVision.
+SelectTasksLabel2=
+ErrorCreatingDir=Setup was unable to create the directory “%1”
+ErrorTooManyFilesInDir=Unable to create a file in the directory “%1” because it contains too many files
+SelectStartMenuFolderDesc=Where should Setup place the program’s shortcuts?
+SelectStartMenuFolderLabel3=Setup will create the program’s shortcuts in the following Start Menu folder.
+NoProgramGroupCheck2=&Don’t create a Start Menu folder
+FileNotInDir2=The file “%1” could not be located in “%2”. Please insert the correct disk or select another folder.
+ErrorIniEntry=Error creating INI entry in file “%1”.
+SourceDoesntExist=The source file “%1” does not exist
+VerificationSignatureDoesntExist=The signature file “%1” does not exist
+VerificationSignatureInvalid=The signature file “%1” is invalid
+VerificationKeyNotFound=The signature file “%1” uses an unknown key
+UninstallNotFound=File “%1” does not exist. Cannot uninstall.
+UninstallOpenError=File “%1” could not be opened. Cannot uninstall
+UninstallUnsupportedVer=The uninstall log file “%1” is in a format not recognized by this version of the uninstaller. Cannot uninstall
+UninstallDataCorrupted=“%1” file is corrupted. Cannot uninstall
+
 [Tasks]
-Name: defaultconfig; Description: "Make AmigaVision the emulator's default configuration (backs up the existing file)"; Flags: unchecked
-Name: desktopicon; Description: "Create a desktop shortcut"; Flags: unchecked
+Name: defaultconfig; Description: "Start AmigaVision when the emulator opens"
+Name: desktopicon; Description: "Create a desktop shortcut"
 
 [Files]
+Source: "assets\banner.bmp"; Flags: dontcopy
 Source: "assets\AmigaVision.ico"; DestDir: "{code:DataRoot}"; Flags: ignoreversion
 Source: "{code:Payload}\HardDrives\AmigaVision.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external ignoreversion
 Source: "{code:Payload}\HardDrives\AmigaVision-Saves.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external onlyifdoesntexist
@@ -41,9 +68,8 @@ Source: "{code:Payload}\{code:Emulator}\ROMs\AmigaVision.rom"; DestDir: "{code:D
 Source: "{code:Payload}\Amiberry\Visuals\*"; DestDir: "{code:DataRoot}\Visuals"; Flags: external recursesubdirs createallsubdirs ignoreversion; Check: IsAmiberry
 Source: "{code:Payload}\WinUAE\plugins\*"; DestDir: "{code:ExeRoot}\plugins"; Flags: external recursesubdirs createallsubdirs ignoreversion; Check: IsWinUAE
 
-[Icons]
-Name: "{userprograms}\AmigaVision ({code:Emulator})"; Filename: "{code:ExePath}"; Parameters: "{code:LaunchArgs}"; WorkingDir: "{code:DataRoot}"; IconFilename: "{code:DataRoot}\AmigaVision.ico"
-Name: "{userdesktop}\AmigaVision ({code:Emulator})"; Filename: "{code:ExePath}"; Parameters: "{code:LaunchArgs}"; WorkingDir: "{code:DataRoot}"; IconFilename: "{code:DataRoot}\AmigaVision.ico"; Tasks: desktopicon
+[Run]
+Filename: "{code:ExePath}"; Parameters: "{code:LaunchArgs}"; WorkingDir: "{code:DataRoot}"; Description: "Launch AmigaVision"; Flags: postinstall nowait skipifsilent runasoriginaluser
 
 [Code]
 var
@@ -391,7 +417,7 @@ var
 begin
   case Index of
     0: URL := 'https://github.com/BlitterStudio/amiberry/releases';
-    1: URL := 'https://github.com/CopperlineHQ/Copperline/releases';
+    1: URL := 'https://copperline.dev/';
     2: URL := 'https://www.winuae.net/download/';
   end;
   EmulatorChoices[Index] := TNewRadioButton.Create(WizardForm);
@@ -434,6 +460,66 @@ begin
   DestinationNotice.AdjustHeight;
 end;
 
+function AddBrandBanner(Page: TWinControl): Integer;
+var
+  Banner: TBitmapImage;
+begin
+  Banner := TBitmapImage.Create(WizardForm);
+  Banner.Parent := Page;
+  Banner.Bitmap.LoadFromFile(ExpandConstant('{tmp}\banner.bmp'));
+  Banner.Stretch := True;
+  Banner.SetBounds(0, 0, Page.ClientWidth, Page.ClientWidth * 300 div 1491);
+  Result := Banner.Height + ScaleY(20);
+end;
+
+procedure BrandWelcomeAndFinish;
+var
+  TextTop, Margin, TextWidth: Integer;
+begin
+  ExtractTemporaryFile('banner.bmp');
+  Margin := ScaleX(24);
+  WizardForm.WizardBitmapImage.Visible := False;
+  WizardForm.WizardBitmapImage2.Visible := False;
+  TextTop := AddBrandBanner(WizardForm.WelcomePage);
+  TextWidth := WizardForm.WelcomePage.ClientWidth - 2 * Margin;
+  with WizardForm.WelcomeLabel1 do begin
+    Left := Margin;
+    Top := TextTop;
+    Width := TextWidth;
+    AutoSize := False;
+    WordWrap := True;
+    AdjustHeight;
+  end;
+  with WizardForm.WelcomeLabel2 do begin
+    Left := Margin;
+    Top := WizardForm.WelcomeLabel1.Top + WizardForm.WelcomeLabel1.Height + ScaleY(16);
+    Width := TextWidth;
+    Height := WizardForm.WelcomePage.ClientHeight - Top - ScaleY(16);
+  end;
+  TextTop := AddBrandBanner(WizardForm.FinishedPage);
+  TextWidth := WizardForm.FinishedPage.ClientWidth - 2 * Margin;
+  with WizardForm.FinishedHeadingLabel do begin
+    Left := Margin;
+    Top := TextTop;
+    Width := TextWidth;
+    AutoSize := False;
+    WordWrap := True;
+    AdjustHeight;
+  end;
+  WizardForm.FinishedLabel.Visible := False;
+end;
+
+procedure LayoutCompletionOptions;
+var
+  Top: Integer;
+begin
+  WizardForm.FinishedLabel.Visible := False;
+  Top := WizardForm.FinishedHeadingLabel.Top + WizardForm.FinishedHeadingLabel.Height + ScaleY(16);
+  WizardForm.RunList.SetBounds(ScaleX(24), Top,
+    WizardForm.FinishedPage.ClientWidth - ScaleX(48),
+    WizardForm.FinishedPage.ClientHeight - Top - ScaleY(16));
+end;
+
 procedure InitializeWizard;
 begin
   Log('Creating AmigaVision setup pages');
@@ -473,11 +559,13 @@ begin
   ExtractedFolderButton.SetBounds(0, SourcePage.Edits[0].Top + SourcePage.Edits[0].Height + ScaleY(16), ScaleX(220), ScaleY(25));
   ExtractedFolderButton.Caption := 'Choose extracted folder...';
   ExtractedFolderButton.OnClick := @ChooseExtractedRelease;
+  BrandWelcomeAndFinish;
   Log('AmigaVision setup pages ready');
 end;
 
 procedure CurPageChanged(CurPageID: Integer);
 begin
+  if CurPageID = wpFinished then LayoutCompletionOptions;
   if DataPage = nil then exit;
   if (CurPageID = DataPage.ID) and (DataPage.Values[0] = '') then begin
     if IsWinUAE then
@@ -604,6 +692,90 @@ begin
     RaiseException('Could not write ' + Name);
 end;
 
+function ShortcutEmulator(Path: String): String;
+var
+  Shell, Link: Variant;
+  Name: String;
+begin
+  Result := '';
+  if not FileExists(Path) then exit;
+  try
+    Shell := CreateOleObject('WScript.Shell');
+    Link := Shell.CreateShortcut(Path);
+    Name := Lowercase(ExtractFileName(String(Link.TargetPath)));
+    if Name = 'amiberry.exe' then Result := 'Amiberry'
+    else if (Name = 'winuae.exe') or (Name = 'winuae64.exe') then Result := 'WinUAE'
+    else if Name = 'copperline.exe' then Result := 'Copperline';
+  except
+    Log('Could not identify the emulator used by shortcut: ' + Path);
+  end;
+end;
+
+function HasOtherShortcut(Folder: String): Boolean;
+var
+  Current: String;
+begin
+  Current := Emulator('');
+  Result := (FileExists(Folder + '\AmigaVision.lnk') and
+    (ShortcutEmulator(Folder + '\AmigaVision.lnk') <> Current)) or
+    ((Current <> 'Amiberry') and FileExists(Folder + '\AmigaVision (Amiberry).lnk')) or
+    ((Current <> 'WinUAE') and FileExists(Folder + '\AmigaVision (WinUAE).lnk')) or
+    ((Current <> 'Copperline') and FileExists(Folder + '\AmigaVision (Copperline).lnk'));
+end;
+
+procedure QualifyExistingShortcut(Folder: String);
+var
+  Plain, Qualified, Name: String;
+  Index: Integer;
+begin
+  Plain := Folder + '\AmigaVision.lnk';
+  Name := ShortcutEmulator(Plain);
+  if Name = '' then exit; // Preserve unrecognized shortcuts instead of guessing.
+  Qualified := Folder + '\AmigaVision (' + Name + ').lnk';
+  Index := 2;
+  while FileExists(Qualified) do begin
+    Qualified := Folder + '\AmigaVision (' + Name + ') (' + IntToStr(Index) + ').lnk';
+    Index := Index + 1;
+  end;
+  if not RenameFile(Plain, Qualified) then
+    RaiseException('Could not rename the existing AmigaVision shortcut: ' + Plain);
+end;
+
+procedure WriteAmigaVisionShortcut(Folder: String; Qualified: Boolean);
+var
+  Name, Legacy: String;
+begin
+  Name := Folder + '\AmigaVision';
+  if Qualified then Name := Name + ' (' + Emulator('') + ')';
+  Name := Name + '.lnk';
+  // Migrate a lone shortcut created by earlier setup versions to the plain name.
+  Legacy := Folder + '\AmigaVision (' + Emulator('') + ').lnk';
+  if not Qualified and not FileExists(Name) and FileExists(Legacy) and
+     (ShortcutEmulator(Legacy) = Emulator('')) then
+    if not RenameFile(Legacy, Name) then
+      RaiseException('Could not rename the existing AmigaVision shortcut: ' + Legacy);
+  if not ForceDirectories(Folder) then
+    RaiseException('Could not create the shortcut folder: ' + Folder);
+  CreateShellLink(Name, 'AmigaVision', ExePath(''), LaunchArgs(''), DataRoot(''),
+    DataRoot('') + '\AmigaVision.ico', 0, SW_SHOWNORMAL);
+end;
+
+procedure InstallAmigaVisionShortcuts;
+var
+  Programs, Desktop: String;
+  Qualified: Boolean;
+begin
+  Programs := ExpandConstant('{userprograms}');
+  Desktop := ExpandConstant('{userdesktop}');
+  Qualified := HasOtherShortcut(Programs) or HasOtherShortcut(Desktop);
+  if Qualified then begin
+    QualifyExistingShortcut(Programs);
+    QualifyExistingShortcut(Desktop);
+  end;
+  WriteAmigaVisionShortcut(Programs, Qualified);
+  if WizardIsTaskSelected('desktopicon') then WriteAmigaVisionShortcut(Desktop, Qualified);
+end;
+
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if CurStep = ssPostInstall then begin
@@ -612,5 +784,6 @@ begin
     WriteConfig(DataRoot('') + '\Configurations\AmigaVision.uae');
     if WizardIsTaskSelected('defaultconfig') then
       WriteConfig(DataRoot('') + '\Configurations\default.uae');
+    InstallAmigaVisionShortcuts;
   end;
 end;

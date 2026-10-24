@@ -1,6 +1,6 @@
 # Exercises the compiled installer with synthetic media, never the real release.
 $ErrorActionPreference = 'Stop'
-$setup = Join-Path $PSScriptRoot 'output/AmigaVision-Setup.exe'
+$setup = Join-Path $PSScriptRoot 'output/Install AmigaVision for Windows.exe'
 $registryTestName = 'AmigaVision-emulator-discovery-' + [guid]::NewGuid()
 $root = Join-Path ([IO.Path]::GetTempPath()) ('AmigaVision setup test ' + [guid]::NewGuid())
 function Put($path, $value) {
@@ -10,10 +10,23 @@ function Put($path, $value) {
 function Assert-Content($path, $expected) {
     if ([IO.File]::ReadAllText($path) -ne $expected) { throw "Unexpected contents: $path" }
 }
+function Find-EmulatorShortcut($folder, $emulator) {
+    $plain = Join-Path $folder 'AmigaVision.lnk'
+    if (Test-Path $plain) {
+        $shell = New-Object -ComObject WScript.Shell
+        $target = [IO.Path]::GetFileName($shell.CreateShortcut($plain).TargetPath)
+        if (($emulator -eq 'Amiberry' -and $target -ieq 'amiberry.exe') -or
+            ($emulator -eq 'WinUAE' -and $target -imatch '^winuae(64)?\.exe$')) { return $plain }
+    }
+    return Join-Path $folder "AmigaVision ($emulator).lnk"
+}
 function Install($emulator, $payload, $data, $exe, $tasks = '') {
     $arguments = @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/CURRENTUSER',
         "/EMULATOR=$emulator", "`"/PAYLOAD=$payload`"", "`"/DATA=$data`"",
         "`"/EMULATORFILE=$exe`"", "`"/TASKS=$tasks`"", "`"/LOG=$root\$emulator.log`"")
+    if ($tasks -eq '__defaults__') {
+        $arguments = $arguments | Where-Object { $_ -notlike '*TASKS=*' }
+    }
     if ($payload -eq '') {
         $arguments = $arguments | Where-Object { $_ -notlike '*PAYLOAD=*' }
     }
@@ -81,7 +94,7 @@ try {
             throw 'The installed AmigaVision icon does not match the bundled artwork'
         }
         $shell = New-Object -ComObject WScript.Shell
-        $shortcut = $shell.CreateShortcut("${env:APPDATA}/Microsoft/Windows/Start Menu/Programs/AmigaVision ($emulator).lnk")
+        $shortcut = $shell.CreateShortcut((Find-EmulatorShortcut "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs" $emulator))
         if ($shortcut.IconLocation -ne "$installedIcon,0") { throw 'Shortcut does not use the AmigaVision icon' }
         if ((Install $emulator $payload $data $exe 'defaultconfig') -ne 0) { throw 'Default configuration install failed' }
         Assert-Content "$data/Configurations/default.uae.backup-1" 'my default'
@@ -90,6 +103,52 @@ try {
         if ((Install $emulator "$root/missing" $data $exe) -eq 0) { throw 'Missing media was accepted' }
         if ((Install $emulator $payload $data "$root/missing.exe") -eq 0) { throw 'Missing executable was accepted' }
     }
+    # Verify names and original targets survive a second emulator and subsequent upgrades.
+    $programs = "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs"
+    $desktop = [Environment]::GetFolderPath('Desktop')
+    foreach ($folder in @($programs, $desktop)) {
+        foreach ($name in @('AmigaVision', 'AmigaVision (Amiberry)', 'AmigaVision (WinUAE)')) {
+            Remove-Item "$folder/$name.lnk" -ErrorAction SilentlyContinue
+        }
+    }
+    $amiberryExe = Join-Path $root 'Amiberry bin/amiberry.exe'
+    $winuaeExe = Join-Path $root 'WinUAE bin/winuae.exe'
+    if ((Install 'Amiberry' $payload "$root/shortcut Amiberry" $amiberryExe 'desktopicon') -ne 0) { throw 'Single-emulator install failed' }
+    $shell = New-Object -ComObject WScript.Shell
+    foreach ($folder in @($programs, $desktop)) {
+        if (!(Test-Path "$folder/AmigaVision.lnk")) { throw 'Single emulator should use the plain AmigaVision name' }
+        if (Test-Path "$folder/AmigaVision (Amiberry).lnk") { throw 'Unnecessary emulator suffix' }
+    }
+    foreach ($folder in @($programs, $desktop)) {
+        Rename-Item "$folder/AmigaVision.lnk" 'AmigaVision (Amiberry).lnk'
+    }
+    if ((Install 'Amiberry' $payload "$root/shortcut Amiberry" $amiberryExe 'desktopicon') -ne 0) { throw 'Legacy shortcut migration failed' }
+    foreach ($folder in @($programs, $desktop)) {
+        if (!(Test-Path "$folder/AmigaVision.lnk") -or (Test-Path "$folder/AmigaVision (Amiberry).lnk")) {
+            throw 'Lone legacy shortcut did not migrate to the plain name'
+        }
+    }
+    $oldArguments = $shell.CreateShortcut("$programs/AmigaVision.lnk").Arguments
+    if ((Install 'WinUAE' $payload "$root/shortcut WinUAE" $winuaeExe 'desktopicon') -ne 0) { throw 'Second-emulator install failed' }
+    foreach ($folder in @($programs, $desktop)) {
+        if (Test-Path "$folder/AmigaVision.lnk") { throw 'Ambiguous plain shortcut remains' }
+        $old = $shell.CreateShortcut("$folder/AmigaVision (Amiberry).lnk")
+        if ($old.TargetPath -ne $amiberryExe -or $old.Arguments -ne $oldArguments) { throw 'Renaming changed the original shortcut configuration' }
+        if ($shell.CreateShortcut("$folder/AmigaVision (WinUAE).lnk").TargetPath -ne $winuaeExe) { throw 'New emulator shortcut is wrong' }
+    }
+    if ((Install 'WinUAE' $payload "$root/shortcut WinUAE" $winuaeExe 'desktopicon') -ne 0) { throw 'Second-emulator upgrade failed' }
+    foreach ($folder in @($programs, $desktop)) {
+        if (@(Get-ChildItem $folder -Filter 'AmigaVision*.lnk').Count -ne 2) { throw 'Upgrade created duplicate shortcuts' }
+    }
+
+    # A normal interactive install selects the default configuration and desktop shortcut.
+    $exe = Join-Path $root 'Amiberry bin/amiberry.exe'
+    $defaultData = Join-Path $root 'default choices'
+    if ((Install 'Amiberry' $payload $defaultData $exe '__defaults__') -ne 0) { throw 'Default choices installation failed' }
+    Assert-Content "$defaultData/Configurations/default.uae" (Get-Content -Raw "$defaultData/Configurations/AmigaVision.uae")
+    $desktop = [Environment]::GetFolderPath('Desktop')
+    if (!(Test-Path (Find-EmulatorShortcut $desktop 'Amiberry'))) { throw 'Desktop shortcut was not enabled by default' }
+
     # Accept downloaded archives directly and discover one beside the installer.
     $archive = Join-Path $root 'AmigaVision-Emulators-test.zip'
     Compress-Archive -Path "$payload/*" -DestinationPath $archive
@@ -106,7 +165,7 @@ try {
     if ((Install 'Amiberry' $archive7z "$root/from 7z" $exe) -ne 0) { throw '7z release installation failed' }
     Assert-Content "$root/from 7z/HardDrives/AmigaVision.hdf" 'new main'
     $originalSetup = $setup
-    $setup = Join-Path $root 'AmigaVision-Setup.exe'
+    $setup = Join-Path $root 'Install AmigaVision for Windows.exe'
     Copy-Item $originalSetup $setup
     try {
         if ((Install 'Amiberry' '' "$root/ambiguous release" $exe) -eq 0) { throw 'Silently chose among multiple releases' }
@@ -142,7 +201,7 @@ try {
                     $data = Join-Path $root "$emulator detected $view"
                     if ((Install $emulator $payload $data '') -ne 0) { throw "Discovery failed for $emulator in $view" }
                     $shell = New-Object -ComObject WScript.Shell
-                    $shortcut = $shell.CreateShortcut("${env:APPDATA}/Microsoft/Windows/Start Menu/Programs/AmigaVision ($emulator).lnk")
+                    $shortcut = $shell.CreateShortcut((Find-EmulatorShortcut "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs" $emulator))
                     if ($shortcut.TargetPath -ne $expected) { throw "Wrong detected executable: $($shortcut.TargetPath); expected $expected" }
                 } finally { $registry.DeleteSubKeyTree($keyPath, $false) }
             }
@@ -155,7 +214,10 @@ try {
     Get-ChildItem $root -Filter '*.log' -ErrorAction SilentlyContinue |
         Copy-Item -Destination $logs
     # The installer has no uninstaller: remove test shortcuts explicitly.
+    Remove-Item "$([Environment]::GetFolderPath('Desktop'))/AmigaVision.lnk" -ErrorAction SilentlyContinue
+    Remove-Item "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs/AmigaVision.lnk" -ErrorAction SilentlyContinue
     foreach ($emulator in @('Amiberry', 'WinUAE')) {
+        Remove-Item "$([Environment]::GetFolderPath('Desktop'))/AmigaVision ($emulator).lnk" -ErrorAction SilentlyContinue
         Remove-Item "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs/AmigaVision ($emulator).lnk" -ErrorAction SilentlyContinue
     }
     Remove-Item -Recurse -Force $root -ErrorAction SilentlyContinue
