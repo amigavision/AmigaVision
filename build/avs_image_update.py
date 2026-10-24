@@ -347,7 +347,7 @@ def stage_delta(workspace, selected):
 
 
 def make_script(partitions, remove, copied_volumes, full, token):
-    lines = ['Stack 65536', 'Assign T: RAM:', 'FailAt 21', 'Echo "" >RAM:OK']
+    lines = ['Stack 65536', 'Assign T: tmp:cloner-temp', 'FailAt 21', 'Echo "" >RAM:OK']
     def checked(command):
         name, _, arguments = command.partition(' ')
         logged = name + ' >tmp:image-update-command.log ' + arguments
@@ -532,6 +532,9 @@ def update_locked(workspace, image, plan, emulator, force):
         shutil.copyfile(delete, workspace / 'image-update-delete')
         repo = Path(__file__).resolve().parent.parent
         shutil.copyfile(repo / 'data/cloner/boot.adf', workspace / 'boot.adf')
+        # Execute spools large incremental scripts through T:. Keep those files
+        # on the host filesystem rather than consuming the emulator's RAM disk.
+        (workspace / 'cloner-temp').mkdir(exist_ok=True)
         (workspace / 'clone').write_text(make_script(allocated, remove, volumes, full, token), encoding='latin-1')
         host_log = workspace / 'amiberry-clone-host.log'
         with host_log.open('w') as log:
