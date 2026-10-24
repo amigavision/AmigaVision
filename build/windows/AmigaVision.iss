@@ -61,10 +61,10 @@ Name: desktopicon; Description: "Create a desktop shortcut"
 Source: "assets\banner.bmp"; Flags: dontcopy
 Source: "output\WinUAEShaderSetup.exe"; Flags: dontcopy
 Source: "assets\AmigaVision.ico"; DestDir: "{code:DataRoot}"; Flags: ignoreversion
-Source: "{code:Payload}\HardDrives\AmigaVision.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external ignoreversion
-Source: "{code:Payload}\HardDrives\AmigaVision-Saves.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external onlyifdoesntexist
-Source: "{code:Payload}\HardDrives\Shared\*"; DestDir: "{code:DataRoot}\HardDrives\Shared"; Flags: external recursesubdirs createallsubdirs onlyifdoesntexist
-Source: "{code:Payload}\HardDrives\listings\*"; DestDir: "{code:DataRoot}\HardDrives\listings"; Flags: external recursesubdirs createallsubdirs ignoreversion
+Source: "{code:Payload}\Amiberry\HardDrives\AmigaVision.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external ignoreversion
+Source: "{code:Payload}\Amiberry\HardDrives\AmigaVision-Saves.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external onlyifdoesntexist
+Source: "{code:Payload}\Amiberry\HardDrives\Shared\*"; DestDir: "{code:DataRoot}\HardDrives\Shared"; Flags: external recursesubdirs createallsubdirs onlyifdoesntexist
+Source: "{code:Payload}\Amiberry\HardDrives\listings\*"; DestDir: "{code:DataRoot}\HardDrives\listings"; Flags: external recursesubdirs createallsubdirs ignoreversion
 Source: "{code:Payload}\{code:Emulator}\ROMs\AmigaVision.rom"; DestDir: "{code:DataRoot}\ROMs"; Flags: external ignoreversion
 Source: "{code:Payload}\Amiberry\Visuals\*"; DestDir: "{code:DataRoot}\Visuals"; Flags: external recursesubdirs createallsubdirs ignoreversion; Check: IsAmiberry
 Source: "..\..\content\distro_emulators\Amiberry\Visuals\*"; DestDir: "{code:DataRoot}\Visuals"; Flags: recursesubdirs createallsubdirs ignoreversion; Check: IsAmiberry
@@ -291,10 +291,10 @@ var
 begin
   Platform := AddBackslash(Root) + Emulator('') + '\';
   Result := (Root <> '') and
-    FileExists(AddBackslash(Root) + 'HardDrives\AmigaVision.hdf') and
-    FileExists(AddBackslash(Root) + 'HardDrives\AmigaVision-Saves.hdf') and
-    DirExists(AddBackslash(Root) + 'HardDrives\Shared') and
-    DirExists(AddBackslash(Root) + 'HardDrives\listings') and
+    FileExists(AddBackslash(Root) + 'Amiberry\HardDrives\AmigaVision.hdf') and
+    FileExists(AddBackslash(Root) + 'Amiberry\HardDrives\AmigaVision-Saves.hdf') and
+    DirExists(AddBackslash(Root) + 'Amiberry\HardDrives\Shared') and
+    DirExists(AddBackslash(Root) + 'Amiberry\HardDrives\listings') and
     FileExists(Platform + 'ROMs\AmigaVision.rom') and
     FileExists(Platform + 'Configurations\AmigaVision.uae');
   if Result then begin
@@ -640,10 +640,10 @@ var
 begin
   Result := '';
   Root := Payload('');
-  if not FileExists(Root + '\HardDrives\AmigaVision.hdf') or
-     not FileExists(Root + '\HardDrives\AmigaVision-Saves.hdf') or
-     not DirExists(Root + '\HardDrives\Shared') or
-     not DirExists(Root + '\HardDrives\listings') or
+  if not FileExists(Root + '\Amiberry\HardDrives\AmigaVision.hdf') or
+     not FileExists(Root + '\Amiberry\HardDrives\AmigaVision-Saves.hdf') or
+     not DirExists(Root + '\Amiberry\HardDrives\Shared') or
+     not DirExists(Root + '\Amiberry\HardDrives\listings') or
      not FileExists(Root + '\' + Emulator('') + '\ROMs\AmigaVision.rom') then begin
     Result := 'Select a complete, extracted AmigaVision emulator release.';
     exit;

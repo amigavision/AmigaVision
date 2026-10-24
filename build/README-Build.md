@@ -54,9 +54,9 @@ If you only need a specific packaged output instead of the full release set, use
 - `make amiga`
   Package the real-Amiga hardware release artifact.
 - `make emulators`
-  Package the reusable Amiberry and WinUAE emulator distribution. Each includes
-  The archive ships one shared top-level `HardDrives` folder alongside `Amiberry`
-  and `WinUAE`, avoiding duplicate HDF images. Copy that folder into the chosen
+  Package the reusable Amiberry and WinUAE emulator distribution.
+  The canonical Amiberry tree contains `Amiberry/HardDrives`; WinUAE uses the
+  same disk images from that folder, avoiding duplicate HDF images. Copy it into the chosen
   emulator data folder during installation. Each emulator includes
   identical `Configurations/default.uae` and `Configurations/AmigaVision.uae`
   files and an `INSTALL.txt`. Users can install only `AmigaVision.uae` to keep

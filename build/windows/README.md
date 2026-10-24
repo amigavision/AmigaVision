@@ -28,7 +28,7 @@ AmigaVision-Emulators-2026.10.24.7z
 
 Setup detects a single `AmigaVision-Emulators*.7z` or `.zip` beside itself and
 extracts it with progress shown. A complete extracted `AmigaVision-Emulators*`
-folder, or the existing loose Amiberry/WinUAE/HardDrives folders beside setup,
+folder, or the existing loose Amiberry/WinUAE folders beside setup,
 also works. Multiple matches or no match lead to a separate release picker.
 The picker accepts an archive or an extracted folder, including a parent folder
 containing the extracted release. No disk images or ROMs are embedded in the
@@ -149,3 +149,7 @@ include its emulator, preserving its target and launch settings, and names the
 new shortcut accordingly (for example, “AmigaVision (Amiberry)” and
 “AmigaVision (WinUAE)”). This applies to Start menu and desktop shortcuts;
 upgrades reuse the existing names.
+
+The release’s canonical disk payload is `Amiberry/HardDrives`. Both Amiberry
+and WinUAE installations copy it into `HardDrives` under the selected data
+folder. No second copy is packaged under WinUAE or at the archive root.

@@ -516,7 +516,7 @@ def package_emulators(args, output_dir, archive_tool):
     with make_stage_dir(output_dir, prefix="amigavision-emulators-", dry_run=args.dry_run) as tmp_dir:
         stage_root = Path(tmp_dir) / "Amiberry"
         make_amiberry_skeleton(stage_root)
-        harddrives_root = Path(tmp_dir) / "HardDrives"
+        harddrives_root = stage_root / "HardDrives"
         roms_root = stage_root / "ROMs"
         mac_conf_root = stage_root / "Configurations"
         log_step("Staging reusable Amiberry payload")

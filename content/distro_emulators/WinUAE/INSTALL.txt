@@ -19,8 +19,7 @@ Install WinUAE 6.0.3 or later if you don’t have it already.
 
    C:\Users\Public\Documents\Amiga Files\WinUAE\
 
-3. Copy the top-level HardDrives folder (beside Amiberry and WinUAE in
-   the extracted package) into this WinUAE data folder. The images are shipped
+3. Copy the HardDrives folder from the package’s Amiberry folder into this WinUAE data folder. The images are shipped
    only once in the package; both emulators use these same files.
 
    After copying both parts, the WinUAE folder in Users\Public should include:

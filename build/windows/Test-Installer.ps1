@@ -48,11 +48,11 @@ function Install($emulator, $payload, $data, $exe, $tasks = '') {
 }
 try {
     $payload = Join-Path $root 'release'
-    Put "$payload/HardDrives/AmigaVision.hdf" 'new main'
-    Put "$payload/HardDrives/AmigaVision-Saves.hdf" 'fresh saves'
-    Put "$payload/HardDrives/Shared/user.txt" 'release shared'
-    Put "$payload/HardDrives/Shared/new.txt" 'new shared'
-    Put "$payload/HardDrives/listings/games.txt" 'listings'
+    Put "$payload/Amiberry/HardDrives/AmigaVision.hdf" 'new main'
+    Put "$payload/Amiberry/HardDrives/AmigaVision-Saves.hdf" 'fresh saves'
+    Put "$payload/Amiberry/HardDrives/Shared/user.txt" 'release shared'
+    Put "$payload/Amiberry/HardDrives/Shared/new.txt" 'new shared'
+    Put "$payload/Amiberry/HardDrives/listings/games.txt" 'listings'
     foreach ($emulator in @('Amiberry', 'WinUAE')) {
         Put "$payload/$emulator/ROMs/AmigaVision.rom" 'rom'
         $template = if ($emulator -eq 'WinUAE') { 'WinUAE/default.uae' } else { 'Amiberry/AmigaVision-Amiberry.uae' }

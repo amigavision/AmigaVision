@@ -9,8 +9,7 @@ Install Amiberry if you don’t have it already.
    into your Amiberry data folder, merging folders. Back up any existing
    default.uae before replacing it.
 
-3. Copy the top-level HardDrives folder (beside Amiberry and WinUAE in
-   the extracted package) into this Amiberry data folder. The images are shipped
+3. Copy the HardDrives folder from the package’s Amiberry folder into this Amiberry data folder. The images are shipped
    only once in the package; both emulators use these same files.
 
    After copying both parts, the Amiberry data folder should include:

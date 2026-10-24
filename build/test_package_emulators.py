@@ -26,7 +26,7 @@ class EmulatorPackageTests(unittest.TestCase):
             )
 
             def check_archive(output_path, stage, archive_tool, dry_run):
-                self.assertEqual({p.name for p in stage.iterdir()}, {"Amiberry", "WinUAE", "HardDrives"})
+                self.assertEqual({p.name for p in stage.iterdir()}, {"Amiberry", "WinUAE"})
                 assets = Path("content/distro_emulators")
                 for dest, source in (
                     ("AmigaVision.hdf", "main.hdf"),
@@ -34,11 +34,11 @@ class EmulatorPackageTests(unittest.TestCase):
                     ("Shared/support.txt", "shared/support.txt"),
                     ("listings/games.txt", "listings/games.txt"),
                 ):
-                    self.assertEqual((stage / "HardDrives" / dest).read_bytes(), payloads[source].read_bytes())
+                    self.assertEqual((stage / "Amiberry/HardDrives" / dest).read_bytes(), payloads[source].read_bytes())
                 self.assertEqual(len(list(stage.rglob("*.hdf"))), 2)
                 for emulator in ("Amiberry", "WinUAE"):
                     base = stage / emulator
-                    self.assertFalse((base / "HardDrives").exists())
+                    self.assertEqual((base / "HardDrives").exists(), emulator == "Amiberry")
                     self.assertEqual((base / "ROMs/AmigaVision.rom").read_bytes(), payloads["kick.rom"].read_bytes())
                     config_name = "AmigaVision-Amiberry.uae" if emulator == "Amiberry" else "default.uae"
                     dest_name = "default.uae" if emulator == "Amiberry" else config_name
@@ -67,10 +67,10 @@ class EmulatorPackageTests(unittest.TestCase):
                 output = package_distros.package_emulators(args, root, None)
                 archive.assert_not_called()
             self.assertTrue((output / "WinUAE/INSTALL.txt").is_file())
-            self.assertTrue((output / "HardDrives/AmigaVision.hdf").is_file())
+            self.assertTrue((output / "Amiberry/HardDrives/AmigaVision.hdf").is_file())
             self.assertEqual(len(list(output.rglob("*.hdf"))), 2)
             for emulator in ("Amiberry", "WinUAE"):
-                self.assertFalse((output / emulator / "HardDrives").exists())
+                self.assertEqual((output / emulator / "HardDrives").exists(), emulator == "Amiberry")
                 configs = output / emulator / "Configurations"
                 self.assertEqual((configs / "AmigaVision.uae").read_bytes(), (configs / "default.uae").read_bytes())
             self.assertEqual(output.name, "AmigaVision-Emulators-2026.10.20")
