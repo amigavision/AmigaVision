@@ -54,7 +54,7 @@ UninstallUnsupportedVer=The uninstall log file “%1” is in a format not recog
 UninstallDataCorrupted=“%1” file is corrupted. Cannot uninstall
 
 [Tasks]
-Name: defaultconfig; Description: "Start AmigaVision when the emulator opens"
+Name: defaultconfig; Description: "Set AmigaVision as the default configuraton"
 Name: desktopicon; Description: "Create a desktop shortcut"
 
 [Files]
