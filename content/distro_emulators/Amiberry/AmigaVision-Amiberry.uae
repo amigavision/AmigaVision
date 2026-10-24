@@ -7,9 +7,9 @@ config_version=8.1.5
 config_hardware_path=
 config_host_path=
 config_all_path=
-shader=crt/crt-easymode-halation.glslp
+amiberry.shader=crt/crt-easymode-halation.glslp
 open_gui=F12
-shaders_path=Visuals/Shaders
+; Set the application shaders_path to this package’s Visuals/Shaders directory.
 amiberry.rom_path=./ROMs/
 amiberry.floppy_path=./Floppies/
 amiberry.hardfile_path=./HardDrives/

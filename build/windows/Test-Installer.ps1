@@ -61,6 +61,10 @@ try {
     }
     Put "$payload/Amiberry/Visuals/Shaders/example.glsl" 'shader'
     Put "$payload/WinUAE/plugins/filtershaders/direct3d/CRT-Pi-SmartRes.fx" 'shader'
+    # Exercise migration of the shader settings in already published releases.
+    $legacyConfig = "$payload/Amiberry/Configurations/AmigaVision.uae"
+    $legacyText = [IO.File]::ReadAllText($legacyConfig).Replace('amiberry.shader=', 'shader=')
+    Put $legacyConfig ($legacyText + "`nshaders_path=Visuals/Shaders`n")
     foreach ($emulator in @('Amiberry', 'WinUAE')) {
         $data = Join-Path $root "$emulator data"
         $exe = Join-Path $root "$emulator bin/$($emulator.ToLower()).exe"
@@ -96,6 +100,16 @@ try {
         $shell = New-Object -ComObject WScript.Shell
         $shortcut = $shell.CreateShortcut((Find-EmulatorShortcut "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs" $emulator))
         if ($shortcut.IconLocation -ne "$installedIcon,0") { throw 'Shortcut does not use the AmigaVision icon' }
+        if ($emulator -eq 'Amiberry') {
+            if (!$shortcut.Arguments.Contains('-o "shaders_path=' + $data + '\Visuals\Shaders"')) { throw 'Launcher does not set the application shader directory' }
+            if (!$config.Contains('amiberry.shader=crt/crt-easymode-halation.glslp')) { throw 'Amiberry preset is not configured' }
+            $preset = Join-Path $data 'Visuals/Shaders/crt/crt-easymode-halation.glslp'
+            $passes = [regex]::Matches((Get-Content -Raw $preset), '(?m)^shader\d+\s*=\s*"([^"]+)"')
+            if ($passes.Count -ne 5) { throw 'Incomplete shader preset' }
+            foreach ($pass in $passes) {
+                if (!(Test-Path (Join-Path (Split-Path $preset) $pass.Groups[1].Value))) { throw 'Missing shader pass' }
+            }
+        }
         if ((Install $emulator $payload $data $exe 'defaultconfig') -ne 0) { throw 'Default configuration install failed' }
         Assert-Content "$data/Configurations/default.uae.backup-1" 'my default'
         Assert-Content "$data/Configurations/default.uae" $config

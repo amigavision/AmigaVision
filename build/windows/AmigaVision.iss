@@ -67,6 +67,7 @@ Source: "{code:Payload}\HardDrives\Shared\*"; DestDir: "{code:DataRoot}\HardDriv
 Source: "{code:Payload}\HardDrives\listings\*"; DestDir: "{code:DataRoot}\HardDrives\listings"; Flags: external recursesubdirs createallsubdirs ignoreversion
 Source: "{code:Payload}\{code:Emulator}\ROMs\AmigaVision.rom"; DestDir: "{code:DataRoot}\ROMs"; Flags: external ignoreversion
 Source: "{code:Payload}\Amiberry\Visuals\*"; DestDir: "{code:DataRoot}\Visuals"; Flags: external recursesubdirs createallsubdirs ignoreversion; Check: IsAmiberry
+Source: "..\..\content\distro_emulators\Amiberry\Visuals\*"; DestDir: "{code:DataRoot}\Visuals"; Flags: recursesubdirs createallsubdirs ignoreversion; Check: IsAmiberry
 Source: "{code:Payload}\WinUAE\plugins\filtershaders\direct3d\CRT-Pi-SmartRes.fx"; DestDir: "{code:ExeRoot}\plugins\filtershaders\direct3d"; Flags: external ignoreversion overwritereadonly; Check: InstallShaderDirectly
 
 [Run]
@@ -84,6 +85,7 @@ var
   ExtractionProgress: TOutputProgressWizardPage;
   ProgramPage: TInputDirWizardPage;
   DestinationNotice: TNewStaticText;
+  EmulatorExitHint: TNewStaticText;
   SelectedExe: String;
   ConfigText: AnsiString;
   ShaderInstalledWithAdmin: Boolean;
@@ -170,7 +172,9 @@ end;
 
 function LaunchArgs(Param: String): String;
 begin
-  if IsAmiberry then Result := '-f ' else Result := '-config=';
+  if IsAmiberry then
+    Result := '-o "shaders_path=' + DataRoot('') + '\Visuals\Shaders" -f '
+  else Result := '-config=';
   Result := Result + '"' + DataRoot('') + '\Configurations\AmigaVision.uae"';
 end;
 
@@ -560,7 +564,17 @@ begin
   Top := WizardForm.FinishedHeadingLabel.Top + WizardForm.FinishedHeadingLabel.Height + ScaleY(16);
   WizardForm.RunList.SetBounds(ScaleX(24), Top,
     WizardForm.FinishedPage.ClientWidth - ScaleX(48),
-    WizardForm.FinishedPage.ClientHeight - Top - ScaleY(16));
+    ScaleY(28));
+  if EmulatorExitHint = nil then begin
+    EmulatorExitHint := TNewStaticText.Create(WizardForm);
+    EmulatorExitHint.Parent := WizardForm.FinishedPage;
+    EmulatorExitHint.Caption := 'Press F12 to exit the emulator';
+    EmulatorExitHint.AutoSize := False;
+    EmulatorExitHint.WordWrap := True;
+  end;
+  EmulatorExitHint.SetBounds(ScaleX(24), Top + ScaleY(40),
+    WizardForm.FinishedPage.ClientWidth - ScaleX(48), ScaleY(32));
+  EmulatorExitHint.AdjustHeight;
 end;
 
 procedure InitializeWizard;
@@ -663,7 +677,10 @@ begin
   Text := UTF8Decode(Loaded);
   StringChangeEx(Text, './HardDrives/', AddBackslash(DataRoot('')) + 'HardDrives\', True);
   StringChangeEx(Text, './ROMs/', AddBackslash(DataRoot('')) + 'ROMs\', True);
-  StringChangeEx(Text, 'shaders_path=Visuals/Shaders', 'shaders_path=' + AddBackslash(DataRoot('')) + 'Visuals\Shaders', True);
+  if IsAmiberry then begin
+    StringChangeEx(Text, #10 + 'shader=', #10 + 'amiberry.shader=', True);
+    StringChangeEx(Text, 'shaders_path=Visuals/Shaders', '; Shader directory is set by the AmigaVision launcher.', True);
+  end;
   StringChangeEx(Text, '.\HardDrives\', AddBackslash(DataRoot('')) + 'HardDrives\', True);
   StringChangeEx(Text, '.\ROMs\', AddBackslash(DataRoot('')) + 'ROMs\', True);
   ConfigText := UTF8Encode(Text);

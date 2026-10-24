@@ -527,7 +527,10 @@ def package_emulators(args, output_dir, archive_tool):
         replace_path(listings_dir, harddrives_root / "listings")
         replace_path(visuals_root, stage_root / "Visuals")
         log_step("Applying versioned AmigaVision CRT shader")
-        replace_path(custom_shader, stage_root / "Visuals" / custom_shader_path)
+        canonical_visuals = emulator_root / "Amiberry/Visuals"
+        for shader_asset in sorted(canonical_visuals.rglob("*")):
+            if shader_asset.is_file():
+                replace_path(shader_asset, stage_root / "Visuals" / shader_asset.relative_to(canonical_visuals))
         replace_path(launcher_template, mac_conf_root / "default.uae")
         clone_or_copy_file(mac_conf_root / "default.uae", mac_conf_root / "AmigaVision.uae")
         replace_path(amiberry_install, stage_root / "INSTALL.txt")
