@@ -1,0 +1,40 @@
+name: Windows installer
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'content/distro_emulators/**'
+      - 'build/windows/**'
+      - '.github/workflows/windows-installer.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'content/distro_emulators/**'
+      - 'build/windows/**'
+      - '.github/workflows/windows-installer.yml'
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            build/windows
+            content/distro_emulators
+      - name: Compile setup
+        shell: pwsh
+        run: |
+          $compiler = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (!(Test-Path $compiler)) { throw 'Inno Setup 6 is missing from the runner' }
+          & $compiler build/windows/AmigaVision.iss
+          if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed' }
+      - name: Verify installation and upgrades
+        shell: pwsh
+        run: ./build/windows/Test-Installer.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AmigaVision-Windows-Setup
+          path: build/windows/output/AmigaVision-Setup.exe
+          if-no-files-found: error
