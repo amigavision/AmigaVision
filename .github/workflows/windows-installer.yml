@@ -36,7 +36,7 @@ jobs:
         shell: pwsh
         run: |
           python -m unittest discover -v -s build -p test_fetch_windows_installer.py
-          if ($LASTEXITCODE -ne 0) { throw 'Installer download tests failed' }
+          if ($LASTEXITCODE -ne 0) { throw 'Bundled installer tests failed' }
           python -m unittest discover -v -s build -p test_package_emulators.py
           if ($LASTEXITCODE -ne 0) { throw 'Emulator packaging tests failed' }
       - name: Compile setup
