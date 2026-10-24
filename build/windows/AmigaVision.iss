@@ -28,7 +28,7 @@ Compression=lzma2
 ArchiveExtraction=full
 
 [Messages]
-WelcomeLabel2=AmigaVision is the ultimate Amiga games & demo scene collection for MiSTer & Pocket FPGAs, Raspberry Pi + emulators — and Amiga 1200, 4000 & CD32.%n%nLet’s get AmigaVision installed on your Windows computer.
+WelcomeLabel2=AmigaVision is the ultimate Amiga games & demo scene collection for%nMiSTer & Pocket FPGAs, Raspberry Pi + emulators — and Amiga 1200, 4000 & CD32.%n%nLet’s get AmigaVision installed on your Windows computer.
 ClickNext=
 FinishedHeadingLabel=AmigaVision Install Completed
 FinishedLabel=
@@ -568,7 +568,7 @@ begin
   if EmulatorExitHint = nil then begin
     EmulatorExitHint := TNewStaticText.Create(WizardForm);
     EmulatorExitHint.Parent := WizardForm.FinishedPage;
-    EmulatorExitHint.Caption := 'Press F12 to exit the emulator';
+    EmulatorExitHint.Caption := 'Press F12 to exit the emulator.';
     EmulatorExitHint.AutoSize := False;
     EmulatorExitHint.WordWrap := True;
   end;
@@ -679,6 +679,9 @@ begin
   StringChangeEx(Text, './ROMs/', AddBackslash(DataRoot('')) + 'ROMs\', True);
   if IsAmiberry then begin
     StringChangeEx(Text, #10 + 'shader=', #10 + 'amiberry.shader=', True);
+    StringChangeEx(Text, #10 + 'gfx_lores=true', #10 + 'gfx_lores=false', True);
+    StringChangeEx(Text, #10 + 'gfx_resolution=lores', #10 + 'gfx_resolution=hires', True);
+    StringChangeEx(Text, #10 + 'gfx_linemode=none', #10 + 'gfx_linemode=double', True);
     StringChangeEx(Text, 'shaders_path=Visuals/Shaders', '; Shader directory is set by the AmigaVision launcher.', True);
   end;
   StringChangeEx(Text, '.\HardDrives\', AddBackslash(DataRoot('')) + 'HardDrives\', True);

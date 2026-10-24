@@ -93,7 +93,7 @@ try {
     Put "$payload/WinUAE/plugins/filtershaders/direct3d/CRT-Pi-SmartRes.fx" 'shader'
     # Exercise migration of the shader settings in already published releases.
     $legacyConfig = "$payload/Amiberry/Configurations/AmigaVision.uae"
-    $legacyText = [IO.File]::ReadAllText($legacyConfig).Replace('amiberry.shader=', 'shader=')
+    $legacyText = [IO.File]::ReadAllText($legacyConfig).Replace('amiberry.shader=', 'shader=').Replace('gfx_lores=false', 'gfx_lores=true').Replace('gfx_resolution=hires', 'gfx_resolution=lores').Replace('gfx_linemode=double', 'gfx_linemode=none')
     Put $legacyConfig ($legacyText + "`nshaders_path=Visuals/Shaders`n")
     foreach ($emulator in @('Amiberry', 'WinUAE')) {
         $data = Join-Path $root "$emulator data"
@@ -132,6 +132,9 @@ try {
         if ($emulator -eq 'Amiberry') {
             if (!$shortcut.Arguments.Contains('-o "shaders_path=' + $data + '\Visuals\Shaders"')) { throw 'Launcher does not set the application shader directory' }
             if (!$config.Contains('amiberry.shader=crt/crt-easymode-halation.glslp')) { throw 'Amiberry preset is not configured' }
+            foreach ($setting in @('gfx_lores=false', 'gfx_resolution=hires', 'gfx_linemode=double')) {
+                if (!$config.Contains($setting)) { throw "Amiberry display setting does not match the reference setup: $setting" }
+            }
             $preset = Join-Path $data 'Visuals/Shaders/crt/crt-easymode-halation.glslp'
             $passes = [regex]::Matches((Get-Content -Raw $preset), '(?m)^shader\d+\s*=\s*"([^"]+)"')
             if ($passes.Count -ne 5) { throw 'Incomplete shader preset' }
