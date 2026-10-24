@@ -59,6 +59,9 @@ Name: desktopicon; Description: "Create a desktop shortcut"
 
 [Files]
 Source: "assets\banner.bmp"; Flags: dontcopy
+Source: "assets\amiberry.bmp"; Flags: dontcopy
+Source: "assets\copperline.bmp"; Flags: dontcopy
+Source: "assets\winuae.bmp"; Flags: dontcopy
 Source: "output\WinUAEShaderSetup.exe"; Flags: dontcopy
 Source: "assets\AmigaVision.ico"; DestDir: "{code:DataRoot}"; Flags: ignoreversion
 Source: "{code:Payload}\Amiberry\HardDrives\AmigaVision.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external ignoreversion
@@ -342,13 +345,16 @@ end;
 procedure AddEmulatorChoice(Index: Integer; Caption: String; Available: Boolean);
 var
   Link: TNewLinkLabel;
-  Details, NameMeasure: TNewStaticText;
-  URL, Description: String;
+  Icon: TBitmapImage;
+  Details, Separator: TNewStaticText;
+  TextMeasure: TBitmap;
+  NameWidth, SeparatorWidth: Integer;
+  URL, Description, IconFile: String;
 begin
   case Index of
     0: begin
       URL := 'https://github.com/BlitterStudio/amiberry/releases';
-      Description := 'The recommended setup. Great integer scaling and autocrop make the most of your screen without stretching or uneven pixels. Handles NTSC scaling correctly, too.';
+      Description := 'The recommended setup. Great integer scaling and autocrop make the most of your Amiga experience without stretching or uneven pixels. Handles NTSC scaling correctly, too. Always runs the latest WinUAE code on the back-end, but has better screen rendering';
     end;
     1: begin
       URL := 'https://copperline.dev/';
@@ -356,44 +362,62 @@ begin
     end;
     2: begin
       URL := 'https://www.winuae.net/download/';
-      Description := 'The “standard” Amiga emulator for Windows. More complex to configure, with scaling issues between PAL and NTSC. Choose this only if you need it and are already familiar with it. AmigaVision may have uneven pixels and other scaling issues that may or may not bother you.';
+      Description := 'The “standard” Amiga emulator for Windows. More complex to configure, with scaling issues between PAL and NTSC. Choose this only if you need it and are already familiar with it. AmigaVision running under WinUAE may have uneven pixels and other scaling issues that may or may not bother you.';
     end;
   end;
-  NameMeasure := TNewStaticText.Create(WizardForm);
-  NameMeasure.Parent := TargetPage.Surface;
-  NameMeasure.Visible := False;
-  NameMeasure.AutoSize := True;
-  NameMeasure.Font.Style := [fsBold];
-  NameMeasure.Caption := Caption;
+  IconFile := Lowercase(Caption) + '.bmp';
+  ExtractTemporaryFile(IconFile);
+  Icon := TBitmapImage.Create(WizardForm);
+  Icon.Parent := TargetPage.Surface;
+  Icon.Bitmap.LoadFromFile(ExpandConstant('{tmp}\') + IconFile);
+  Icon.Stretch := True;
+  Icon.SetBounds(0, EmulatorChoiceTop, ScaleX(64), ScaleY(64));
+  TextMeasure := TBitmap.Create;
+  TextMeasure.Canvas.Font.Name := WizardForm.Font.Name;
+  TextMeasure.Canvas.Font.Size := WizardForm.Font.Size;
+  TextMeasure.Canvas.Font.Style := [fsBold];
+  NameWidth := TextMeasure.Canvas.TextWidth(Caption);
+  TextMeasure.Canvas.Font.Style := [];
+  SeparatorWidth := TextMeasure.Canvas.TextWidth(' — ');
+  TextMeasure.Free;
   EmulatorChoices[Index] := TNewRadioButton.Create(WizardForm);
   with EmulatorChoices[Index] do begin
     Parent := TargetPage.Surface;
-    SetBounds(0, EmulatorChoiceTop, NameMeasure.Width + ScaleX(24), ScaleY(24));
+    SetBounds(ScaleX(84), EmulatorChoiceTop, NameWidth + ScaleX(17), ScaleY(24));
     Font.Style := [fsBold];
     Enabled := Available;
     TabOrder := Index * 2;
   end;
   EmulatorChoices[Index].Caption := Caption;
+  Separator := TNewStaticText.Create(WizardForm);
+  Separator.Parent := TargetPage.Surface;
+  Separator.AutoSize := False;
+  Separator.Font.Color := clBlack;
+  Separator.SetBounds(EmulatorChoices[Index].Left + EmulatorChoices[Index].Width, EmulatorChoiceTop + ScaleY(4),
+    SeparatorWidth, ScaleY(20));
+  Separator.Caption := ' — ';
   Link := TNewLinkLabel.Create(WizardForm);
   Link.Parent := TargetPage.Surface;
-  Link.SetBounds(EmulatorChoices[Index].Width + ScaleX(4),
+  Link.SetBounds(Separator.Left + Separator.Width,
     EmulatorChoiceTop + ScaleY(4), ScaleX(120), ScaleY(20));
-  Link.Caption := '— <a href="' + URL + '">Download</a>';
+  Link.Caption := '<a href="' + URL + '">Download</a>';
   Link.UseVisualStyle := True;
   Link.TabStop := True;
   Link.TabOrder := Index * 2 + 1;
   Link.Tag := Index;
   Link.OnLinkClick := @DownloadEmulator;
-  NameMeasure.Free;
   Details := TNewStaticText.Create(WizardForm);
   Details.Parent := TargetPage.Surface;
   Details.AutoSize := False;
   Details.WordWrap := True;
-  Details.SetBounds(ScaleX(22), EmulatorChoiceTop + ScaleY(26),
-    TargetPage.SurfaceWidth - ScaleX(22), ScaleY(20));
+  Details.SetBounds(ScaleX(106), EmulatorChoiceTop + ScaleY(26),
+    TargetPage.SurfaceWidth - ScaleX(106), ScaleY(20));
   Details.Caption := Description;
   Details.AdjustHeight;
-  EmulatorChoiceTop := Details.Top + Details.Height + ScaleY(18);
+  EmulatorChoiceTop := Details.Top + Details.Height;
+  if EmulatorChoiceTop < Icon.Top + Icon.Height then
+    EmulatorChoiceTop := Icon.Top + Icon.Height;
+  EmulatorChoiceTop := EmulatorChoiceTop + ScaleY(18);
 end;
 
 procedure UpdateDestinationNotice(Sender: TObject);
