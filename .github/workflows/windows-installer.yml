@@ -35,9 +35,9 @@ jobs:
       - name: Verify emulator packaging and artifact selection
         shell: pwsh
         run: |
-          python -m unittest discover -s build -p test_fetch_windows_installer.py
+          python -m unittest discover -v -s build -p test_fetch_windows_installer.py
           if ($LASTEXITCODE -ne 0) { throw 'Installer download tests failed' }
-          python -m unittest discover -s build -p test_package_emulators.py
+          python -m unittest discover -v -s build -p test_package_emulators.py
           if ($LASTEXITCODE -ne 0) { throw 'Emulator packaging tests failed' }
       - name: Compile setup
         shell: pwsh
