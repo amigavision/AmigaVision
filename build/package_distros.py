@@ -53,7 +53,7 @@ def parse_args():
     parser.add_argument("--mini-uae")
     parser.add_argument("--pi-script", default="build/pi_image.sh")
     parser.add_argument("--archive-tool")
-    parser.add_argument("--windows-installer", help="Local Windows setup executable; otherwise use the repo copy or latest successful main Actions build")
+    parser.add_argument("--windows-installer", help="Local Windows setup executable; defaults to the checked-in repo copy")
     parser.add_argument("--emulator-archive", action="store_false", dest="skip_emulator_archive",
                         help="Create a 7z archive of the emulator folders.", default=False)
     parser.add_argument("--skip-emulator-archive", action="store_true",

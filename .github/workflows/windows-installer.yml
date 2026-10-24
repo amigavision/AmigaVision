@@ -32,7 +32,7 @@ jobs:
           sparse-checkout: |
             build
             content/distro_emulators
-      - name: Verify emulator packaging and artifact selection
+      - name: Verify emulator packaging and local installer
         shell: pwsh
         run: |
           python -m unittest discover -v -s build -p test_fetch_windows_installer.py

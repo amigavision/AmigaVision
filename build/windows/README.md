@@ -35,25 +35,19 @@ AmigaVision-Emulators-<date>/
 Setup runs from this extracted folder and reads the sibling Amiberry and
 WinUAE trees directly. There is no archive picker or extraction step.
 
-By default, packaging downloads the installer from the newest successful
-`main` run of `windows-installer.yml` with an unexpired installer artifact.
-Failed builds and PR builds are excluded. The run URL is printed in the log.
-No GitHub release is published. Downloads require GitHub authentication: use
-GitHub CLI with `gh auth login`, or set `GH_TOKEN`/`GITHUB_TOKEN` with Actions
-read access.
+Packaging includes the checked-in binary at
+`content/distro_emulators/Install AmigaVision for Windows.exe`.
+No GitHub login or network download is needed. After changing the installer,
+download and test the Windows Actions artifact, then replace this binary and
+commit it with the updated sources. GitHub releases are not used.
 
-For offline/manual packaging:
+To package a different local build:
 
 ```sh
 make emulators WINDOWS_INSTALLER="/path/to/Install AmigaVision for Windows.exe"
 ```
 
-Alternatively put the binary at
-`content/distro_emulators/Install AmigaVision for Windows.exe`; a file there
-is used automatically instead of downloading. An explicit `WINDOWS_INSTALLER`
-takes priority. Download failures stop packaging with instructions rather than
-omitting setup. Push and test installer changes before packaging so the newest
-successful build includes them.
+A missing or invalid binary stops packaging with instructions.
 
 ## User flow
 
