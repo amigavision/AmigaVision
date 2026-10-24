@@ -1,8 +1,8 @@
 # Emulator selection icons
 
 These are existing emulator icons, resized to 192 pixels for a 64 logical pixel
-installer display at up to 300% scaling. The BMPs use the standard Windows
-wizard background, retaining the artwork and its shadows.
+installer display at up to 300% scaling. The BMPs use a white
+background, retaining the artwork and its shadows.
 
 - `amiberry.bmp`: `/Applications/Amiberry Current.app/Contents/Resources/data/icon.icns`
   from the installed macOS Amiberry app (https://github.com/BlitterStudio/amiberry).

@@ -354,7 +354,7 @@ begin
   case Index of
     0: begin
       URL := 'https://github.com/BlitterStudio/amiberry/releases';
-      Description := 'The recommended setup. Great integer scaling and autocrop make the most of your Amiga experience without stretching or uneven pixels. Handles NTSC scaling correctly, too. Always runs the latest WinUAE code on the back-end, but has better screen rendering';
+      Description := 'The recommended setup. Great integer scaling and autocrop make the most of your Amiga experience without stretching or uneven pixels. Handles NTSC scaling correctly, too. Runs the latest WinUAE code on the back-end, but has better screen rendering.';
     end;
     1: begin
       URL := 'https://copperline.dev/';
@@ -494,6 +494,44 @@ begin
   WizardForm.FinishedLabel.Visible := False;
 end;
 
+procedure BrandIntermediatePages;
+var
+  Strip: TPanel;
+  Banner: TBitmapImage;
+  BannerHeight, ExtraHeight: Integer;
+begin
+  // MainPanel is shared by all intermediate built-in and custom pages.
+  // Grow the window first, retaining the existing space for page controls.
+  BannerHeight := ScaleY(60);
+  ExtraHeight := BannerHeight + ScaleY(16);
+  WizardForm.ClientHeight := WizardForm.ClientHeight + ExtraHeight;
+  WizardForm.MainPanel.Height := WizardForm.MainPanel.Height + ExtraHeight;
+  WizardForm.Bevel1.Top := WizardForm.Bevel1.Top + ExtraHeight;
+  WizardForm.InnerNotebook.Top := WizardForm.InnerNotebook.Top + ExtraHeight;
+  WizardForm.InnerNotebook.Height := WizardForm.InnerNotebook.Height - ExtraHeight;
+  WizardForm.WizardSmallBitmapImage.Visible := False;
+  WizardForm.PageNameLabel.Top := WizardForm.PageNameLabel.Top + BannerHeight;
+  WizardForm.PageNameLabel.Width := WizardForm.MainPanel.ClientWidth -
+    WizardForm.PageNameLabel.Left - ScaleX(24);
+  WizardForm.PageDescriptionLabel.Top := WizardForm.PageDescriptionLabel.Top + BannerHeight;
+  WizardForm.PageDescriptionLabel.Width := WizardForm.MainPanel.ClientWidth -
+    WizardForm.PageDescriptionLabel.Left - ScaleX(24);
+  WizardForm.PageDescriptionLabel.Height := WizardForm.PageDescriptionLabel.Height + ScaleY(16);
+  Strip := TPanel.Create(WizardForm);
+  Strip.Parent := WizardForm.MainPanel;
+  Strip.BevelOuter := bvNone;
+  Strip.Color := $DD8051; // AmigaVision blue, #5180DD.
+  Strip.SetBounds(0, 0, WizardForm.MainPanel.ClientWidth, BannerHeight);
+  Banner := TBitmapImage.Create(WizardForm);
+  Banner.Parent := Strip;
+  Banner.Bitmap.LoadFromFile(ExpandConstant('{tmp}\banner.bmp'));
+  Banner.Stretch := True;
+  Banner.Height := BannerHeight - ScaleY(12);
+  Banner.Width := Banner.Height * 1491 div 300;
+  Banner.Left := (Strip.ClientWidth - Banner.Width) div 2;
+  Banner.Top := ScaleY(6);
+end;
+
 procedure LayoutCompletionOptions;
 var
   Top: Integer;
@@ -517,9 +555,11 @@ end;
 
 procedure InitializeWizard;
 begin
+  ExtractTemporaryFile('banner.bmp');
+  BrandIntermediatePages;
   Log('Creating AmigaVision setup pages');
   TargetPage := CreateCustomPage(wpWelcome, 'Choose your emulator',
-    'Select which emulator to use. Use its download link if you need to install it first, and then come back here to complete the process. Make sure the emulator is not running when you continue this installation.');
+    'Select which emulator to use. Use its download link if you need to install it first, and then come back here to complete the process.');
   AddEmulatorChoice(0, 'Amiberry', True);
   AddEmulatorChoice(1, 'Copperline', True);
   AddEmulatorChoice(2, 'WinUAE', True);
