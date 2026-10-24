@@ -207,8 +207,11 @@ begin
   ScanNamedFolders(Payload(''));
   ScanNamedFolders(ExpandConstant('{userdesktop}'));
   ScanNamedFolders(ExpandConstant('{userdocs}'));
-  ScanNamedFolders(ExpandConstant('{userprofile}\Downloads'));
-  ScanNamedFolders(ExpandConstant('{userprofile}'));
+  Folder := GetEnv('USERPROFILE');
+  if Folder <> '' then begin
+    ScanNamedFolders(AddBackslash(Folder) + 'Downloads');
+    ScanNamedFolders(Folder);
+  end;
   if SelectedExe <> '' then Log('Detected ' + Emulator('') + ': ' + SelectedExe)
   else Log('No ' + Emulator('') + ' installation found.');
 end;
