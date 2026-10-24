@@ -19,14 +19,14 @@ jobs:
 
     steps:
       - name: Check out AmigaVision repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: |
             README.md
           sparse-checkout-cone-mode: false
 
       - name: Check out Pages repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: amigavision/amigavision.github.io
           path: pages
