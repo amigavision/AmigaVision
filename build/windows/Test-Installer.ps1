@@ -1,6 +1,7 @@
 # Exercises the compiled installer with synthetic media, never the real release.
 $ErrorActionPreference = 'Stop'
 $setup = Join-Path $PSScriptRoot 'output/AmigaVision-Setup.exe'
+$registryTestName = 'AmigaVision-emulator-discovery-' + [guid]::NewGuid()
 $root = Join-Path ([IO.Path]::GetTempPath()) ('AmigaVision setup test ' + [guid]::NewGuid())
 function Put($path, $value) {
     New-Item -ItemType Directory -Force (Split-Path $path) | Out-Null
@@ -13,6 +14,9 @@ function Install($emulator, $payload, $data, $exe, $tasks = '') {
     $arguments = @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/CURRENTUSER',
         "/EMULATOR=$emulator", "`"/PAYLOAD=$payload`"", "`"/DATA=$data`"",
         "`"/EMULATORFILE=$exe`"", "`"/TASKS=$tasks`"", "`"/LOG=$root\$emulator.log`"")
+    if ($exe -eq '') {
+        $arguments = $arguments | Where-Object { $_ -notlike '*EMULATORFILE=*' }
+    }
     Write-Host "Testing $emulator, tasks='$tasks', payload='$payload', data='$data'"
     $process = Start-Process $setup -ArgumentList $arguments -PassThru
     if (!$process.WaitForExit(120000)) {
@@ -76,7 +80,35 @@ try {
         if ((Install $emulator "$root/missing" $data $exe) -eq 0) { throw 'Missing media was accepted' }
         if ((Install $emulator $payload $data "$root/missing.exe") -eq 0) { throw 'Missing executable was accepted' }
     }
-    Write-Host 'Fresh installation, upgrades, preservation, backups, paths and invalid input passed.'
+    # Detect installed applications from both registry views without an executable argument.
+    foreach ($view in @([Microsoft.Win32.RegistryView]::Registry32, [Microsoft.Win32.RegistryView]::Registry64)) {
+        $registry = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::CurrentUser, $view)
+        try {
+            foreach ($emulator in @('Amiberry', 'WinUAE')) {
+                $bin = Join-Path $root "$emulator registered $view"
+                $expected = Join-Path $bin "$($emulator.ToLower()).exe"
+                Put $expected 'placeholder'
+                if ($emulator -eq 'WinUAE') {
+                    $expected = Join-Path $bin 'winuae64.exe'
+                    Put $expected '64-bit placeholder; must be preferred over winuae.exe'
+                }
+                $keyPath = "Software\Microsoft\Windows\CurrentVersion\Uninstall\$registryTestName"
+                $key = $registry.CreateSubKey($keyPath)
+                try {
+                    $key.SetValue('DisplayName', "$emulator (AmigaVision discovery test)")
+                    $key.SetValue('InstallLocation', $bin)
+                } finally { $key.Dispose() }
+                try {
+                    $data = Join-Path $root "$emulator detected $view"
+                    if ((Install $emulator $payload $data '') -ne 0) { throw "Discovery failed for $emulator in $view" }
+                    $shell = New-Object -ComObject WScript.Shell
+                    $shortcut = $shell.CreateShortcut("${env:APPDATA}/Microsoft/Windows/Start Menu/Programs/AmigaVision ($emulator).lnk")
+                    if ($shortcut.TargetPath -ne $expected) { throw "Wrong detected executable: $($shortcut.TargetPath); expected $expected" }
+                } finally { $registry.DeleteSubKeyTree($keyPath, $false) }
+            }
+        } finally { $registry.Dispose() }
+    }
+    Write-Host 'Installation, upgrades, preservation, backups, paths, discovery in both registry views and WinUAE 64-bit preference passed.'
 } finally {
     $logs = Join-Path $PSScriptRoot 'output/test-logs'
     New-Item -ItemType Directory -Force $logs | Out-Null

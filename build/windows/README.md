@@ -33,9 +33,19 @@ users can browse to a separately extracted package during setup.
 
 1. Install Amiberry or WinUAE separately and close the emulator.
 2. Extract the complete AmigaVision emulator archive and run setup.
-3. Choose the emulator, release folder, emulator executable and data folder.
-4. Optionally make AmigaVision the default configuration or add a desktop shortcut.
-5. Launch using the new Start menu shortcut.
+3. Choose the emulator and release folder. Setup finds the selected emulator automatically.
+   If it cannot find it, install it or choose its installation folder.
+4. Choose the data folder.
+5. Optionally make AmigaVision the default configuration or add a desktop shortcut.
+6. Launch using the new Start menu shortcut.
+
+Detection checks Windows App Paths and uninstall records for the current user
+and all users, in both registry views; Program Files and per-user Programs;
+PATH; and nearby portable folders (beside setup/the release, on the Desktop,
+in Documents, Downloads and the user profile). Portable searches check one
+level of emulator-named folders, not the entire drive. WinUAE prefers
+`winuae64.exe` over `winuae.exe` across all detected locations. The executable
+picker is removed; only a folder fallback is shown if detection fails.
 
 WinUAE suggests Public Documents/Amiga Files/WinUAE for data; Amiberry suggests
 the executable's folder. Both can be changed. Media paths in the installed
@@ -76,16 +86,20 @@ On Windows, after compilation:
 
 The test uses tiny placeholder images and never starts an emulator. It verifies
 fresh installation, upgrading, preserving user data, backing up configurations,
-shader destinations, absolute paths and rejection of invalid inputs. Run it in
+shader destinations, absolute paths, registered emulator discovery in both
+registry views, 64-bit WinUAE preference and rejection of invalid inputs. Run it in
 a disposable Windows account/runner: it creates and removes AmigaVision Start
 menu shortcuts. A real release still needs boot, shader and input verification
-in both emulators before distribution. The current source has not yet been
-compiled or executed on Windows from this Mac session.
+in both emulators before distribution. Installation tests run on Windows through GitHub Actions; local compilation
+alone does not verify the detection behavior on Windows.
 
 For automation/testing the setup accepts `/EMULATOR=Amiberry` (or `WinUAE`),
 `/PAYLOAD="C:\release"`, `/EMULATORFILE="C:\emulator\amiberry.exe"`,
-`/DATA="C:\AmigaVision"`, and standard Inno Setup switches. Supply all paths
-when using `/VERYSILENT`; interactive page defaults are not applied in that mode.
+`/DATA="C:\AmigaVision"`, and standard Inno Setup switches. The executable override is optional: omit it to use detection. Supply the payload
+and data paths when using `/VERYSILENT`; interactive page defaults are not
+applied in that mode.
 
 References: [Inno Setup](https://jrsoftware.org/isinfo.php),
 [external files](https://jrsoftware.org/ishelp/topic_filessection.htm).
+
+Amiberry install locations are based on its [Windows packaging settings](https://github.com/BlitterStudio/amiberry/blob/master/packaging/CMakeLists.txt).

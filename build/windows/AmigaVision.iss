@@ -42,7 +42,8 @@ Name: "{userdesktop}\AmigaVision ({code:Emulator})"; Filename: "{code:ExePath}";
 var
   TargetPage: TInputOptionWizardPage;
   SourcePage, DataPage: TInputDirWizardPage;
-  ProgramPage: TInputFileWizardPage;
+  ProgramPage: TInputDirWizardPage;
+  SelectedExe: String;
   ConfigText: AnsiString;
 
 function IsAmiberry: Boolean;
@@ -79,8 +80,8 @@ end;
 
 function ExePath(Param: String): String;
 begin
-  if ProgramPage = nil then Result := ExpandConstant('{param:EMULATORFILE|}')
-  else Result := ProgramPage.Values[0];
+  Result := SelectedExe;
+  if Result = '' then Result := ExpandConstant('{param:EMULATORFILE|}');
 end;
 
 function ExeRoot(Param: String): String;
@@ -92,6 +93,125 @@ function LaunchArgs(Param: String): String;
 begin
   if IsAmiberry then Result := '-f ' else Result := '-config=';
   Result := Result + '"' + DataRoot('') + '\Configurations\AmigaVision.uae"';
+end;
+
+// Keep the executable choice internal; users only choose a folder as a fallback.
+procedure ConsiderFolder(Folder: String);
+var
+  Candidate: String;
+begin
+  Folder := RemoveQuotes(Trim(Folder));
+  if Folder = '' then exit;
+  Folder := AddBackslash(Folder);
+  if IsAmiberry then Candidate := Folder + 'Amiberry.exe'
+  else begin
+    Candidate := Folder + 'winuae64.exe';
+    if not FileExists(Candidate) then Candidate := Folder + 'winuae.exe';
+  end;
+  if not FileExists(Candidate) then exit;
+  if (SelectedExe = '') or
+     (IsWinUAE and (CompareText(ExtractFileName(Candidate), 'winuae64.exe') = 0) and
+      (CompareText(ExtractFileName(SelectedExe), 'winuae64.exe') <> 0)) then
+    SelectedExe := Candidate;
+end;
+
+procedure ScanNamedFolders(Root: String);
+var
+  Find: TFindRec;
+begin
+  ConsiderFolder(Root);
+  ConsiderFolder(AddBackslash(Root) + Emulator(''));
+  // One level only: catches versioned portable folders without crawling a drive.
+  if FindFirst(AddBackslash(Root) + '*', Find) then begin
+    try
+      repeat
+        if ((Find.Attributes and FILE_ATTRIBUTE_DIRECTORY) <> 0) and
+           (Pos(Lowercase(Emulator('')), Lowercase(Find.Name)) > 0) then
+          ConsiderFolder(AddBackslash(Root) + Find.Name);
+      until not FindNext(Find);
+    finally
+      FindClose(Find);
+    end;
+  end;
+end;
+
+procedure ScanRegistry(RootKey: Integer);
+var
+  Keys: TArrayOfString;
+  I, Comma: Integer;
+  Key, Name, Value: String;
+begin
+  Key := 'Software\Microsoft\Windows\CurrentVersion\App Paths\';
+  if IsAmiberry then Name := 'Amiberry.exe' else Name := 'winuae64.exe';
+  if RegQueryStringValue(RootKey, Key + Name, '', Value) then
+    ConsiderFolder(ExtractFileDir(RemoveQuotes(Value)));
+  if IsWinUAE and RegQueryStringValue(RootKey, Key + 'winuae.exe', '', Value) then
+    ConsiderFolder(ExtractFileDir(RemoveQuotes(Value)));
+  Key := 'Software\Microsoft\Windows\CurrentVersion\Uninstall';
+  if RegGetSubkeyNames(RootKey, Key, Keys) then
+    for I := 0 to GetArrayLength(Keys) - 1 do begin
+      if RegQueryStringValue(RootKey, Key + '\' + Keys[I], 'DisplayName', Name) and
+         (Pos(Lowercase(Emulator('')), Lowercase(Name)) = 1) then begin
+        if RegQueryStringValue(RootKey, Key + '\' + Keys[I], 'InstallLocation', Value) then
+          ConsiderFolder(Value);
+        if RegQueryStringValue(RootKey, Key + '\' + Keys[I], 'DisplayIcon', Value) then begin
+          Comma := Pos(',', Value);
+          if Comma > 0 then Value := Copy(Value, 1, Comma - 1);
+          ConsiderFolder(ExtractFileDir(RemoveQuotes(Value)));
+        end;
+      end;
+    end;
+end;
+
+procedure DetectEmulator;
+var
+  Paths, Folder: String;
+  Split: Integer;
+begin
+  SelectedExe := '';
+  // Retain the command-line override for unattended installations and tests.
+  SelectedExe := ExpandConstant('{param:EMULATORFILE|}');
+  if SelectedExe <> '' then exit;
+  ScanRegistry(HKCU32);
+  if IsWin64 then ScanRegistry(HKCU64);
+  ScanRegistry(HKLM32);
+  if IsWin64 then ScanRegistry(HKLM64);
+  ScanNamedFolders(ExpandConstant('{localappdata}\Programs'));
+  ScanNamedFolders(ExpandConstant('{localappdata}'));
+  ScanNamedFolders(ExpandConstant('{pf32}'));
+  if IsWin64 then ScanNamedFolders(ExpandConstant('{pf64}'));
+  Paths := GetEnv('PATH');
+  while Paths <> '' do begin
+    Split := Pos(';', Paths);
+    if Split = 0 then Split := Length(Paths) + 1;
+    Folder := Copy(Paths, 1, Split - 1);
+    Delete(Paths, 1, Split);
+    ConsiderFolder(Folder);
+  end;
+  ScanNamedFolders(ExpandConstant('{src}'));
+  ScanNamedFolders(ExtractFileDir(Payload('')));
+  ScanNamedFolders(Payload(''));
+  ScanNamedFolders(ExpandConstant('{userdesktop}'));
+  ScanNamedFolders(ExpandConstant('{userdocs}'));
+  ScanNamedFolders(ExpandConstant('{userprofile}\Downloads'));
+  ScanNamedFolders(ExpandConstant('{userprofile}'));
+  if SelectedExe <> '' then Log('Detected ' + Emulator('') + ': ' + SelectedExe)
+  else Log('No ' + Emulator('') + ' installation found.');
+end;
+
+function ShouldSkipPage(PageID: Integer): Boolean;
+begin
+  Result := False;
+  if ProgramPage = nil then exit;
+  if PageID = ProgramPage.ID then begin
+    DetectEmulator;
+    Result := SelectedExe <> '';
+    if not Result then begin
+      ProgramPage.Caption := Emulator('') + ' was not found';
+      ProgramPage.Description := 'Install ' + Emulator('') + ' before continuing, or select its installation folder below.';
+      ProgramPage.Values[0] := '';
+    end;
+  end;
 end;
 
 procedure InitializeWizard;
@@ -112,11 +232,10 @@ begin
   SourcePage.Add('Release folder:');
   Log('Created release folder page');
   SourcePage.Values[0] := ExpandConstant('{param:PAYLOAD|{src}}');
-  ProgramPage := CreateInputFilePage(SourcePage.ID, 'Locate your emulator',
-    'Select the emulator executable.', 'Choose amiberry.exe, winuae.exe or winuae64.exe. The emulator itself is not included.');
-  ProgramPage.Add('Emulator:', 'Windows programs|*.exe', '.exe');
-  Log('Created emulator executable page');
-  ProgramPage.Values[0] := ExpandConstant('{param:EMULATORFILE|}');
+  ProgramPage := CreateInputDirPage(SourcePage.ID, 'Emulator not found',
+    'Install the selected emulator before continuing, or select its installation folder.',
+    'Setup checked installed applications and common system, per-user and portable locations. If you have already installed the emulator elsewhere, choose its folder. Setup will select the correct program automatically.', False, '');
+  ProgramPage.Add('Emulator installation folder:');
   DataPage := CreateInputDirPage(ProgramPage.ID, 'Choose the AmigaVision data folder',
     'Where should AmigaVision be installed?',
     'Existing saves and Shared files are kept. The main disk image is replaced on upgrade. Back up custom changes inside that image first.', False, '');
@@ -165,7 +284,7 @@ begin
   if not FileExists(ExePath('')) or
      (IsAmiberry and (Name <> 'amiberry.exe')) or
      (IsWinUAE and (Name <> 'winuae.exe') and (Name <> 'winuae64.exe')) then begin
-    Result := 'Select the executable for the chosen emulator.';
+    Result := Emulator('') + ' was not found. Install it first, or choose its installation folder.';
     exit;
   end;
   if (DataRoot('') = '') or
@@ -196,6 +315,17 @@ var
 begin
   Result := True;
   if DataPage = nil then exit;
+  if CurPageID = TargetPage.ID then SelectedExe := '';
+  if CurPageID = ProgramPage.ID then begin
+    SelectedExe := '';
+    ConsiderFolder(ProgramPage.Values[0]);
+    if SelectedExe = '' then begin
+      Log('The selected folder does not contain ' + Emulator(''));
+      if not WizardSilent then MsgBox('This folder does not contain ' + Emulator('') + '. Install it first, or choose its installation folder.', mbError, MB_OK);
+      Result := False;
+      exit;
+    end;
+  end;
   if CurPageID = DataPage.ID then begin
     Error := ValidateInputs;
     if Error <> '' then begin
@@ -208,6 +338,7 @@ end;
 
 function PrepareToInstall(var NeedsRestart: Boolean): String;
 begin
+  if SelectedExe = '' then DetectEmulator;
   Result := ValidateInputs;
 end;
 
