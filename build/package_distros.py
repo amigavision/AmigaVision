@@ -14,6 +14,7 @@ from pathlib import Path
 from functools import lru_cache
 
 from artifact_checksums import write_checksums
+from fetch_windows_installer import INSTALLER_NAME, resolve_windows_installer
 
 
 IGNORED_NAMES = {".DS_Store", ".gitignore", "pack", "__pycache__"}
@@ -52,6 +53,7 @@ def parse_args():
     parser.add_argument("--mini-uae")
     parser.add_argument("--pi-script", default="build/pi_image.sh")
     parser.add_argument("--archive-tool")
+    parser.add_argument("--windows-installer", help="Local Windows setup executable; otherwise use the repo copy or latest successful main Actions build")
     parser.add_argument("--emulator-archive", action="store_false", dest="skip_emulator_archive",
                         help="Create a 7z archive of the emulator folders.", default=False)
     parser.add_argument("--skip-emulator-archive", action="store_true",
@@ -513,7 +515,11 @@ def package_emulators(args, output_dir, archive_tool):
     output_path = output_dir / (f"AmigaVision-Emulators-{args.date_stamp}" + ("" if skip_archive else ".7z"))
     if skip_archive and output_path.exists():
         raise FileExistsError(f"Emulator output already exists: {output_path}. Choose another output directory or release date.")
-    with make_stage_dir(output_dir, prefix="amigavision-emulators-", dry_run=args.dry_run) as tmp_dir:
+    with tempfile.TemporaryDirectory(prefix="amigavision-windows-installer-") as installer_dir, \
+            make_stage_dir(output_dir, prefix="amigavision-emulators-", dry_run=args.dry_run) as tmp_dir:
+        installer = resolve_windows_installer(getattr(args, "windows_installer", None), installer_dir, dry_run=args.dry_run)
+        if not args.dry_run:
+            clone_or_copy_file(installer, Path(tmp_dir) / INSTALLER_NAME)
         stage_root = Path(tmp_dir) / "Amiberry"
         make_amiberry_skeleton(stage_root)
         harddrives_root = stage_root / "HardDrives"

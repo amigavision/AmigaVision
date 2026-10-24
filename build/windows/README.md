@@ -19,39 +19,53 @@ The workflow compiles the installer, exercises it using synthetic release files,
 and uploads `Install AmigaVision for Windows.exe` as an artifact. It does not publish a release.
 The optional compiler argument `/DReleaseVersion=2026.10.24` sets its version.
 
-Place the resulting executable beside the downloaded emulator archive:
+`make emulators` includes the installer in the emulator package:
 
 ```
-Install AmigaVision for Windows.exe
-AmigaVision-Emulators-2026.10.24.7z
+AmigaVision-Emulators-<date>/
+  Install AmigaVision for Windows.exe
+  Amiberry/
+    HardDrives/
+    Configurations/
+    ROMs/
+    Visuals/
+  WinUAE/
 ```
 
-Setup detects a single `AmigaVision-Emulators*.7z` or `.zip` beside itself and
-extracts it with progress shown. A complete extracted `AmigaVision-Emulators*`
-folder, or the existing loose Amiberry/WinUAE folders beside setup,
-also works. Multiple matches or no match lead to a separate release picker.
-The picker accepts an archive or an extracted folder, including a parent folder
-containing the extracted release. No disk images or ROMs are embedded in the
-executable or uploaded by this workflow.
+Setup runs from this extracted folder and reads the sibling Amiberry and
+WinUAE trees directly. There is no archive picker or extraction step.
 
-Archives are extracted to Windows temporary storage before copying to the
-chosen destination. Allow space for the full extracted release on the temporary
-volume as well as the installed files on the destination. Users with limited
-temporary storage can extract the archive elsewhere and choose that folder.
+By default, packaging downloads the installer from the newest successful
+`main` run of `windows-installer.yml` with an unexpired installer artifact.
+Failed builds and PR builds are excluded. The run URL is printed in the log.
+No GitHub release is published. Downloads require GitHub authentication: use
+GitHub CLI with `gh auth login`, or set `GH_TOKEN`/`GITHUB_TOKEN` with Actions
+read access.
+
+For offline/manual packaging:
+
+```sh
+make emulators WINDOWS_INSTALLER="/path/to/Install AmigaVision for Windows.exe"
+```
+
+Alternatively put the binary at
+`content/distro_emulators/Install AmigaVision for Windows.exe`; a file there
+is used automatically instead of downloading. An explicit `WINDOWS_INSTALLER`
+takes priority. Download failures stop packaging with instructions rather than
+omitting setup. Push and test installer changes before packaging so the newest
+successful build includes them.
 
 ## User flow
 
 1. Install Amiberry or WinUAE separately and close the emulator.
-2. Put the downloaded release beside setup and run setup.
+2. Extract the emulator package and run its Windows installer.
 3. Choose the emulator. Setup finds the selected emulator automatically.
    If it cannot find it, install it or choose its installation folder.
 4. Choose the data folder. Setup checks the selected destination as it changes,
    showing the backup warning below the folder picker only if the main image
    already exists, before you click Next. Existing saves/Shared files are
    identified as being preserved when present.
-5. Click Next. Setup detects the release beside itself; if needed, the next page
-   asks for the release archive or extracted folder. Destination selection never
-   validates the release location.
+5. Setup uses the Amiberry and WinUAE folders beside the installer automatically.
 6. Choose whether to make AmigaVision the default configuration and add a desktop
    shortcut. Both options are selected by default and can be unchecked.
 7. On “AmigaVision Install Completed”, leave “Launch AmigaVision” checked to
@@ -113,8 +127,8 @@ On Windows, after compilation:
 The test uses tiny placeholder images and never starts an emulator. It verifies
 fresh installation, upgrading, preserving user data, backing up configurations,
 shader destinations, absolute paths, registered emulator discovery in both
-registry views, 64-bit WinUAE preference, ZIP/7z extraction, nearby release
-discovery and rejection of ambiguous releases and invalid inputs. Run it in
+registry views, 64-bit WinUAE preference, the sibling-folder layout, and
+rejection of detached installers and invalid inputs. Run it in
 a disposable Windows account/runner: it creates and removes AmigaVision Start
 menu shortcuts. A real release still needs boot, shader and input verification
 in both emulators before distribution. Installation tests run on Windows through GitHub Actions; local compilation
@@ -122,9 +136,9 @@ alone does not verify the detection behavior on Windows.
 
 For automation/testing the setup accepts `/EMULATOR=Amiberry` (or `WinUAE`),
 `/PAYLOAD="C:\release"`, `/EMULATORFILE="C:\emulator\amiberry.exe"`,
-`/DATA="C:\AmigaVision"`, and standard Inno Setup switches. The executable override is optional: omit it to use detection. Supply the payload
-and data paths when using `/VERYSILENT`; interactive page defaults are not
-applied in that mode.
+`/DATA="C:\AmigaVision"`, and standard Inno Setup switches. The executable override is optional: omit it to use detection. The payload defaults to the installer’s own folder. `/PAYLOAD` is a testing
+override, not a wizard option. Supply `/DATA` when using `/VERYSILENT`;
+interactive page defaults are not applied in that mode.
 
 References: [Inno Setup](https://jrsoftware.org/isinfo.php),
 [external files](https://jrsoftware.org/ishelp/topic_filessection.htm).

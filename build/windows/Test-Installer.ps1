@@ -90,6 +90,7 @@ try {
         Put "$payload/$emulator/Configurations/AmigaVision.uae" ([IO.File]::ReadAllText($template))
     }
     Put "$payload/Amiberry/Visuals/Shaders/example.glsl" 'shader'
+    Copy-Item -Recurse -Force "$PSScriptRoot/../../content/distro_emulators/Amiberry/Visuals/*" "$payload/Amiberry/Visuals"
     Put "$payload/WinUAE/plugins/filtershaders/direct3d/CRT-Pi-SmartRes.fx" 'shader'
     # Exercise migration of the shader settings in already published releases.
     $legacyConfig = "$payload/Amiberry/Configurations/AmigaVision.uae"
@@ -224,34 +225,21 @@ try {
     $desktop = [Environment]::GetFolderPath('Desktop')
     if (!(Test-Path (Find-EmulatorShortcut $desktop 'Amiberry'))) { throw 'Desktop shortcut was not enabled by default' }
 
-    # Accept downloaded archives directly and discover one beside the installer.
-    $archive = Join-Path $root 'AmigaVision-Emulators-test.zip'
-    Compress-Archive -Path "$payload/*" -DestinationPath $archive
-    $exe = Join-Path $root 'Amiberry bin/amiberry.exe'
-    if ((Install 'Amiberry' $archive "$root/from zip" $exe) -ne 0) { throw 'ZIP release installation failed' }
-    Assert-Content "$root/from zip/HardDrives/AmigaVision.hdf" 'new main'
-    $sevenZip = "$env:ProgramFiles/7-Zip/7z.exe"
-    $archive7z = Join-Path $root 'AmigaVision-Emulators-test.7z'
-    Push-Location $payload
-    try {
-        & $sevenZip a '-t7z' $archive7z '.\*' | Out-Null
-        if ($LASTEXITCODE -ne 0) { throw 'Could not build test 7z release' }
-    } finally { Pop-Location }
-    if ((Install 'Amiberry' $archive7z "$root/from 7z" $exe) -ne 0) { throw '7z release installation failed' }
-    Assert-Content "$root/from 7z/HardDrives/AmigaVision.hdf" 'new main'
+    # Setup ships inside the extracted package and finds its sibling folders itself.
     $originalSetup = $setup
-    $setup = Join-Path $root 'Install AmigaVision for Windows.exe'
+    $setup = Join-Path $payload 'Install AmigaVision for Windows.exe'
     Copy-Item $originalSetup $setup
+    $exe = Join-Path $root 'Amiberry bin/amiberry.exe'
     try {
-        if ((Install 'Amiberry' '' "$root/ambiguous release" $exe) -eq 0) { throw 'Silently chose among multiple releases' }
-        Remove-Item $archive7z
-        if ((Install 'Amiberry' '' "$root/nearby archive" $exe) -ne 0) { throw 'Nearby archive was not discovered' }
-        Assert-Content "$root/nearby archive/HardDrives/AmigaVision.hdf" 'new main'
-        Remove-Item $archive
-        $nearbyFolder = Join-Path $root 'AmigaVision-Emulators-test'
-        Copy-Item -Recurse $payload $nearbyFolder
-        if ((Install 'Amiberry' '' "$root/nearby extracted" $exe) -ne 0) { throw 'Nearby extracted release was not discovered' }
-        Assert-Content "$root/nearby extracted/HardDrives/AmigaVision.hdf" 'new main'
+        if ((Install 'Amiberry' '' "$root/packaged install" $exe) -ne 0) { throw 'Packaged installer did not use its sibling Amiberry folder' }
+        Assert-Content "$root/packaged install/HardDrives/AmigaVision.hdf" 'new main'
+        $winuae = Join-Path $root 'WinUAE bin/winuae.exe'
+        if ((Install 'WinUAE' '' "$root/packaged WinUAE" $winuae) -ne 0) { throw 'WinUAE did not use the canonical Amiberry disk files' }
+        Assert-Content "$root/packaged WinUAE/HardDrives/AmigaVision.hdf" 'new main'
+        $setup = Join-Path $root 'Install AmigaVision for Windows.exe'
+        Copy-Item $originalSetup $setup
+        if ((Install 'Amiberry' '' "$root/detached install" $exe) -eq 0) { throw 'Detached installer should reject missing sibling folders' }
+        if (Test-Path "$root/detached install/HardDrives/AmigaVision.hdf") { throw 'Detached setup copied files' }
     } finally { $setup = $originalSetup }
 
     # Detect installed applications from both registry views without an executable argument.
