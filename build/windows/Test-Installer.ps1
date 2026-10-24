@@ -274,12 +274,15 @@ try {
         if (Test-Path "$root/detached install/HardDrives/AmigaVision.hdf") { throw 'Detached setup copied files' }
     } finally { $setup = $originalSetup }
 
+    # Keep registry fixtures below a neutral parent so portable discovery cannot
+    # find them while scanning the release's parent directory one level deep.
+    # Remove each fixture before the next case, including the executable files.
     # Detect installed applications from both registry views without an executable argument.
     foreach ($view in @([Microsoft.Win32.RegistryView]::Registry32, [Microsoft.Win32.RegistryView]::Registry64)) {
         $registry = [Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::CurrentUser, $view)
         try {
             foreach ($emulator in @('Amiberry', 'WinUAE', 'Copperline')) {
-                $bin = Join-Path $root "$emulator registered $view"
+                $bin = Join-Path $root "registry fixtures/$view/$emulator"
                 $expected = Join-Path $bin "$($emulator.ToLower()).exe"
                 Put $expected 'placeholder'
                 if ($emulator -eq 'WinUAE') {
@@ -297,7 +300,10 @@ try {
                     if ((Install $emulator $payload $data '') -ne 0) { throw "Discovery failed for $emulator in $view" }
                     $shortcut = Read-Shortcut (Find-EmulatorShortcut "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs" $emulator)
                     if ($shortcut.TargetPath -ne $expected) { throw "Wrong detected executable: $($shortcut.TargetPath); expected $expected" }
-                } finally { $registry.DeleteSubKeyTree($keyPath, $false) }
+                } finally {
+                    $registry.DeleteSubKeyTree($keyPath, $false)
+                    Remove-Item -Recurse -Force $bin
+                }
             }
         } finally { $registry.Dispose() }
     }
