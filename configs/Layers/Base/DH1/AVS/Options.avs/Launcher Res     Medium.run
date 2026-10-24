@@ -1,5 +1,6 @@
 if exists Data:AVS-MedRes/AVS
   assign AVS: Data:AVS-MedRes
+  assign AGS: Data:AVS-MedRes
   echo "medium" >ENV:AVSLauncherResolution
   echo "medium" >ENVARC:AVSLauncherResolution
   assign >NIL: exists Saves:

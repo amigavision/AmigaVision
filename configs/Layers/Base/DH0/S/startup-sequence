@@ -116,6 +116,7 @@ if not warn
   if exists Data:AVS
     if exists Data:WHD
       assign AVS: Data:AVS
+      assign AGS: Data:AVS
       ; Prefer the saves-volume setting so it survives system-image upgrades.
       assign >NIL: exists Saves:
       if not warn
@@ -127,6 +128,7 @@ if not warn
         if "$AVSLauncherResolution" EQ "medium"
           if exists Data:AVS-MedRes/AVS
             assign AVS: Data:AVS-MedRes
+            assign AGS: Data:AVS-MedRes
           endif
         endif
       endif
