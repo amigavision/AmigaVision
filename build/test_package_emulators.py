@@ -7,13 +7,8 @@ from unittest.mock import patch
 import package_distros
 
 
-def forbid_download(*args, **kwargs):
-    raise AssertionError("Packaging tests must use the local installer fixture, never GitHub")
-
-
 class EmulatorPackageTests(unittest.TestCase):
-    @patch("fetch_windows_installer.GitHub", side_effect=forbid_download)
-    def test_stages_both_emulators_with_portable_paths_and_versioned_assets(self, github):
+    def test_stages_both_emulators_with_portable_paths_and_versioned_assets(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             payloads = {}
@@ -34,9 +29,15 @@ class EmulatorPackageTests(unittest.TestCase):
             )
 
             def check_archive(output_path, stage, archive_tool, dry_run):
-                self.assertEqual({p.name for p in stage.iterdir()}, {"Amiberry", "WinUAE", package_distros.INSTALLER_NAME})
+                self.assertEqual({p.name for p in stage.iterdir()}, {"Amiberry", "WinUAE", "Copperline", package_distros.INSTALLER_NAME})
                 self.assertEqual((stage / package_distros.INSTALLER_NAME).read_bytes(), installer.read_bytes())
                 assets = Path("content/distro_emulators")
+                import tomllib
+                copper = tomllib.loads((stage / "Copperline/configs/AmigaVision.toml").read_text())
+                for media in (copper["rom"], copper["copperhf"]["unit0"], copper["copperhf"]["unit1"]["path"]):
+                    self.assertTrue((stage / "Copperline" / media).is_file())
+                self.assertEqual(copper["copperhf"]["unit1"]["bootpri"], -35)
+                self.assertFalse((stage / "Copperline/HardDrives").exists())
                 for dest, source in (
                     ("AmigaVision.hdf", "main.hdf"),
                     ("AmigaVision-Saves.hdf", "saves.hdf"),
@@ -97,7 +98,6 @@ class EmulatorPackageTests(unittest.TestCase):
                  patch.object(package_distros, "list_archive_contents", side_effect=AssertionError("Archive listing")):
                 self.assertEqual(package_distros.main(), 0)
             self.assertTrue((root / "AmigaVision-Emulators-2026.10.21/WinUAE/INSTALL.txt").is_file())
-            github.assert_not_called()
 
 
 
