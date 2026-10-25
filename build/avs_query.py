@@ -8,6 +8,7 @@ from typing import Tuple
 
 import avs_paths as paths
 import avs_util as util
+from avs_artwork import is_nsfw
 
 # -----------------------------------------------------------------------------
 
@@ -227,7 +228,7 @@ def get_runscript_paths(entry) -> Tuple[str | None, str | None]:
     if entry.get("issues"):
         return (util.path("Run", "Issues"), None)
     elif entry.get("category", "").lower() == "game":
-        return (util.path("Run", "Game"), util.path("RunQuiet", "Game"))
+        return (util.path("Run", "Game"), None if is_nsfw(entry) else util.path("RunQuiet", "Game"))
     elif entry.get("category", "").lower() == "demo":
         sub = entry.get("subcategory", "").lower()
         if sub.startswith("music disk"):
@@ -237,7 +238,7 @@ def get_runscript_paths(entry) -> Tuple[str | None, str | None]:
         elif sub.startswith("slide"):
             return (util.path("Run", "Demo"), None)
         elif sub.startswith("demo") or sub.startswith("intro") or sub.startswith("crack"):
-            return (util.path("Run", "Demo"), util.path("RunQuiet", "Demo"))
+            return (util.path("Run", "Demo"), None if is_nsfw(entry) else util.path("RunQuiet", "Demo"))
         else:
             return (util.path("Run", "Demo"), None)
     else:
