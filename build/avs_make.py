@@ -75,7 +75,10 @@ def directory_cache_entries(path, dirs, files, sort_ranks):
     ranked = []
     unranked = []
     listed_files = set()
-    for name in util.sorted_natural([n for n in files if n.endswith('.menuitem')]):
+    # Compare display stems, not extensions: '.run' makes a base title sort
+    # after its sequels and prevents a trailing Roman numeral being recognized.
+    for stem in util.sorted_natural([n.removesuffix('.menuitem') for n in files if n.endswith('.menuitem')]):
+        name = stem + '.menuitem'
         filename = util.path(path, name)
         prefix = Path(filename).read_text(encoding='ascii').strip()
         label = name.removesuffix('.menuitem')
@@ -90,7 +93,8 @@ def directory_cache_entries(path, dirs, files, sort_ranks):
         else:
             unranked.append(row)
     for names, suffix, prefix in ((dirs, '.avs', 'D'), (files, '.run', 'F')):
-        for name in util.sorted_natural([n for n in names if n.endswith(suffix) and n not in listed_files]):
+        for stem in util.sorted_natural([n.removesuffix(suffix) for n in names if n.endswith(suffix) and n not in listed_files]):
+            name = stem + suffix
             filename = util.path(path, name)
             item = prefix + name.removesuffix(suffix)
             label_path = Path(filename + ".label")
@@ -100,7 +104,8 @@ def directory_cache_entries(path, dirs, files, sort_ranks):
                 ranked.append((item, sort_ranks[filename]))
             else:
                 unranked.append(item)
-    for name in util.sorted_natural([n for n in files if n.endswith('.divider')]):
+    for stem in util.sorted_natural([n.removesuffix('.divider') for n in files if n.endswith('.divider')]):
+        name = stem + '.divider'
         filename = util.path(path, name)
         label = Path(filename).read_text(encoding='latin-1').strip()
         # Amiga E StrCopy(..., 0) leaves the previous label unchanged.
