@@ -10,7 +10,7 @@ HOOKS=(0x5430,0x548e)
 
 def remove_patch(data):
  end=32+struct.unpack_from('>I',data,28)[0]*4
- if data[end-20:end-12]!=b'QRLABEL1':return data
+ if data[end-20:end-12] not in (b'QRLABEL1',b'QRLABEL2'):return data
  base,_,_=struct.unpack_from('>3I',data,end-12)
  result=bytearray(data[:32+base]+data[end:])
  for pos in (20,28):struct.pack_into('>I',result,pos,base//4)
@@ -20,7 +20,9 @@ def remove_patch(data):
 def patch(data,assembler='/tmp/av-vasm/vasmm68k_mot'):
  original=remove_patch(data)
  if hashlib.sha256(original).hexdigest()!=BASELINE:raise ValueError('Unknown QR helper baseline')
- if original!=data:return data
+ end=32+struct.unpack_from('>I',data,28)[0]*4
+ if data[end-20:end-12]==b'QRLABEL2':return data
+ data=original
  base=struct.unpack_from('>I',data,28)[0]*4
  with tempfile.TemporaryDirectory() as temp:
   out=Path(temp)/'toggle.bin'

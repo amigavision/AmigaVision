@@ -1,10 +1,10 @@
 ; AGA experiment: present screenshot + cached QR in one bitmap blit.
-; Fixed screen storage 640x432x8; supported thumbnails 404x280, QR 50x50.
+; Fixed screen storage 640x432x8; supported thumbnails 404x280, QR up to 64x64.
 ; Labels remain optional; enabled labels use the native load/draw path.
  org PATCH_BASE
  dc.l stage_begin-PATCH_BASE,skip_fade-PATCH_BASE,qr_gate-PATCH_BASE
  dc.l qr_loaded-PATCH_BASE,publish-PATCH_BASE,cleanup-PATCH_BASE
- dc.l state-PATCH_BASE
+ dc.l state-PATCH_BASE,clear_bitmap_label-PATCH_BASE
 stage_begin:
  movem.l d0-d7/a0-a6,-(sp)
  lea state(pc),a3
@@ -45,16 +45,16 @@ stage_begin:
  move.w 94(a0),d2
  sub.w d0,d2
  bmi begin_done
- cmpi.w #354,d2
+ cmpi.w #379,d2
  bgt begin_done
  move.w 96(a0),d2
  sub.w d1,d2
  bmi begin_done
- cmpi.w #230,d2
+ cmpi.w #255,d2
  bgt begin_done
  tst.l (a3)
  bne have_memory
- move.l #281088,d0 ; full-screen stage + 64x64x8 QR cache + one-plane mask
+ move.l #281808,d0 ; full-screen stage + 64x64x8 QR cache + one-plane mask
  move.l #$10002,d1 ; MEMF_CLEAR | MEMF_CHIP
  move.l -40(a4),a6
  jsr -198(a6)
@@ -82,6 +82,14 @@ cache_planes:
  add.l #512,d0
  dbra d1,cache_planes
  move.l d0,32(a3)
+ add.l #512,d0
+ move.l d0,44(a3)
+ move.l d0,a1
+ lea label_pixels(pc),a0
+ move.w #179,d1
+copy_label_pixels:
+ move.l (a0)+,(a1)+
+ dbra d1,copy_label_pixels
 have_memory:
  ; Seed only the image rectangle; visible menu/metadata are never copied back.
  move.l 8(a3),a0
@@ -149,8 +157,8 @@ qr_gate:
  beq native_qr
  move.l -60(a5),a0
  move.l 16(a0),a0
- cmpi.w #-1,100(a0)
- bne native_qr ; native caption remains correct when re-enabled
+ tst.w 100(a0)
+ bpl native_qr ; native caption remains correct when re-enabled
  tst.l 24(a3)
  beq native_qr
  tst.l 16(a3)
@@ -181,10 +189,18 @@ qr_loaded:
  tst.l 12(a3)
  beq loaded_done
  move.l -32(a5),a0
- cmpi.w #50,8(a0)
- bne uncacheable
- cmpi.w #50,12(a0)
- bne uncacheable
+ moveq #0,d0
+ move.w 8(a0),d0
+ beq uncacheable
+ cmpi.w #64,d0
+ bhi uncacheable
+ move.l d0,36(a3)
+ moveq #0,d0
+ move.w 12(a0),d0
+ beq uncacheable
+ cmpi.w #64,d0
+ bhi uncacheable
+ move.l d0,40(a3)
  ; Save the final 8-plane colored QR, including its black pixels.
  lea stage_bitmap(pc),a0
  lea cache_bitmap(pc),a1
@@ -235,6 +251,7 @@ publish:
  beq cache_ready
  move.l #1,24(a3)
 cache_ready:
+ bsr draw_bitmap_label
  move.l 4(a3),a2
  move.l 8(a3),4(a2)
  lea stage_bitmap(pc),a0
@@ -299,7 +316,7 @@ cleanup_free:
  jsr -228(a6) ; WaitBlit
  move.l (a3),a1
  clr.l (a3)
- move.l #281088,d0
+ move.l #281808,d0
  move.l -40(a4),a6
  jsr -210(a6) ; FreeMem
 cleanup_done:
@@ -323,8 +340,8 @@ qr_coordinates_source:
  move.w 94(a6),d0
  moveq #0,d1
  move.w 96(a6),d1
- moveq #50,d4
- moveq #50,d5
+ move.l 36(a3),d4
+ move.l 40(a3),d5
  rts
 qr_coordinates_dest:
  move.l -60(a5),a6
@@ -333,15 +350,15 @@ qr_coordinates_dest:
  move.w 94(a6),d2
  moveq #0,d3
  move.w 96(a6),d3
- moveq #50,d4
- moveq #50,d5
+ move.l 36(a3),d4
+ move.l 40(a3),d5
  rts
 label_coordinates:
  moveq #0,d6
  move.l -60(a5),a6
  move.l 16(a6),a6
- cmpi.w #-1,100(a6)
- beq label_region_done
+ tst.w 100(a6)
+ bmi label_region_done
  moveq #0,d0
  move.w 94(a6),d0
  subq.l #8,d0
@@ -358,6 +375,125 @@ label_coordinates:
  moveq #1,d6
 label_region_done:
  rts
+draw_bitmap_label:
+ movem.l d0-d7/a0-a6,-(sp)
+ tst.l 16(a3)
+ beq bitmap_label_done
+ move.l -60(a5),a0
+ move.l 16(a0),a0
+ cmpi.w #-2,100(a0)
+ bne bitmap_label_done
+ move.l 36(a3),d4
+ moveq #12,d5
+ moveq #48,d7
+ move.l 44(a3),d0
+ cmpi.l #25,d4
+ beq bitmap_label_size
+ cmpi.l #50,d4
+ bne bitmap_label_done
+ add.l #144,d0
+ moveq #24,d5
+ move.l #192,d7
+bitmap_label_size:
+ move.l d0,a1
+ moveq #0,d2
+ move.w 94(a0),d2
+ moveq #0,d3
+ move.w 96(a0),d3
+ sub.l d5,d3
+ subq.l #2,d3
+ moveq #0,d0
+ move.w 40(a0),d0
+ cmp.l d0,d3
+ blt bitmap_label_done
+ move.l d2,d0
+ add.l d4,d0
+ cmpi.l #640,d0
+ bgt bitmap_label_done
+ move.l 4(a3),a2
+ moveq #0,d0
+ move.b 24(a2),d0
+ move.l d0,-(sp)
+ move.b 25(a2),d0
+ move.l d0,-(sp)
+ move.b 28(a2),d0
+ move.l d0,-(sp)
+ move.l a1,-(sp)
+ move.b #$ff,24(a2)
+ move.l a2,a1
+ moveq #0,d0
+ move.l -52(a4),a6
+ jsr -354(a6)
+ moveq #0,d6
+bitmap_label_plane:
+ lea label_pens(pc),a0
+ moveq #0,d0
+ move.b (a0,d6.w),d0
+ move.l a2,a1
+ jsr -342(a6)
+ move.l (sp),a0
+ move.l a2,a1
+ moveq #0,d0
+ moveq #4,d1
+ cmpi.l #25,d4
+ beq bitmap_label_stride
+ moveq #8,d1
+bitmap_label_stride:
+ jsr -36(a6)
+ jsr -228(a6)
+ add.l d7,(sp)
+ addq.w #1,d6
+ cmpi.w #3,d6
+ bne bitmap_label_plane
+ ; Remember the displayed image-caption bounds for the old-QR clear path.
+ move.l #1,48(a3)
+ move.l d2,52(a3)
+ move.l d3,56(a3)
+ move.l d4,60(a3)
+ move.l d5,64(a3)
+ addq.l #4,sp
+ move.l a2,a1
+ move.l (sp)+,d0
+ jsr -354(a6)
+ move.l a2,a1
+ move.l (sp)+,d0
+ jsr -342(a6)
+ move.l (sp)+,d0
+ move.b d0,24(a2)
+bitmap_label_done:
+ movem.l (sp)+,d0-d7/a0-a6
+ rts
+clear_bitmap_label:
+ ; Called by the SAME native path which clears the previous QR before a new
+ ; item loads. Negative modes bypass the legacy text caption's geometry.
+ movem.l d0-d7/a0-a6,-(sp)
+ move.l -60(a5),a0
+ move.l 16(a0),a0
+ tst.w 100(a0)
+ bpl clear_legacy_label
+ lea state(pc),a3
+ tst.l 48(a3)
+ beq clear_bitmap_done
+ clr.l 48(a3)
+ move.l -60(a5),a0
+ move.l 8(a0),a1
+ move.l 52(a3),d0
+ move.l 56(a3),d1
+ move.l d0,d2
+ add.l 60(a3),d2
+ subq.l #1,d2
+ move.l d1,d3
+ add.l 64(a3),d3
+ subq.l #1,d3
+ move.l -52(a4),a6
+ bsr.w $51ec ; existing skin restoration, identical to QR erasure
+clear_bitmap_done:
+ movem.l (sp)+,d0-d7/a0-a6
+ rts
+clear_legacy_label:
+ movem.l (sp)+,d0-d7/a0-a6
+ bra.w $5626 ; validated QRLABEL2 legacy text-clear gate
+label_pens: dc.b 242,245,254,0
 replay_qr:
  ; Redraw cached 1-bit modules with a known pen/mode/plane mask.
  movem.l d0-d7/a0-a6,-(sp)
@@ -410,10 +546,12 @@ blit:
  movem.l (sp)+,d0-d7/a0-a6
  rts
  cnop 0,4
-state: dcb.l 9,0 ; allocation, RP, real bitmap, active, cached QR present
+state: dcb.l 17,0 ; allocation, RP, real bitmap, active, cached QR present
 stage_bitmap: dcb.b 40,0
 cache_bitmap: dcb.b 40,0
  cnop 0,4
 saved_palette: dcb.l 256,0 ; rgbcolor has a four-byte E object stride
- dc.b 'QRCOMP03'
+ include 'qr_label_image.i'
+ cnop 0,4
+ dc.b 'QRCOMP06'
  dc.l PATCH_BASE

@@ -1,0 +1,163 @@
+AGA hi-res QR inside-thumbnail experiment, 2026-10-25
+==================================================
+Installed helper: data/avs-highres/AVSHelper. ECS and medium-res are unchanged.
+
+Patch order for the validated historical helpers:
+  patch_qr_thumbnail.py -> patch_qr_label.py -> patch_qr_composite.py
+Each stage validates its input. Do not apply these binary offsets to a newly
+compiled Amiga E executable. Port the behavior into source instead.
+
+Earlier patch made QR redraw on every screenshot by disabling the entry identity
+guard. That fixed screenshot overwrites, but native ordering still loaded/drew QR
+AFTER fade-in, making it appear noticeably late.
+
+Final composition patch restores true entry identity and changes the pipeline:
+  parse screenshot -> native fade-out -> stage bitmap -> native image drawing
+  -> load/draw QR on new entry (or replay cached QR) -> one image-region publish
+  -> native screenshot palette fade-in.
+Only the 404x280 thumbnail region is published; menu and metadata are not copied
+back from a stale screen snapshot. The optional caption has its own seeded region.
+QR remains in the fixed skin palette (currently pen 244, RGB 11/109/134), outside
+screenshot palette fading. Caption toggle remains qrcode_label_y = -1; restore
+400 for the current optional caption layout.
+
+Supported experiment geometry:
+  screen bitmap: 640x432, eight planes, 80 bytes/row, helper RP.Layer == NIL
+  thumbnail: 404x280 within screen, QR: 50x50 entirely inside thumbnail
+  current screenshot origin (236,3), QR origin (582,228)
+  optional caption: current 14px font + 2 leading; 64x32 region around QR center
+Unsupported staging geometry or allocation failure uses native direct rendering
+with QR before fade-in. It does not get the same atomic presentation/cache benefit.
+Enabled captions retain the native QR/caption drawing path each cycle; hidden
+captions allow cached QR replay. Native code handles file loading and failures.
+
+Memory: one reusable MEMF_CHIP|MEMF_CLEAR allocation of 281088 bytes:
+  stage 640*432*8/8 = 276480
+  QR cache 64*64*8/8 = 4096
+  QR mask 64*64/8 = 512
+The QR cache retains the first rendered region, but the replay mask selects ONLY
+pixels whose pen is exactly 244. Replay uses BltTemplate with explicit APen 244,
+JAM1 and all eight writable planes, then restores the prior RP settings. Cached
+background/white/black pixels are not drawn onto later screenshots. The new image
+shows through between QR foreground modules. This avoids reliance on inherited
+RastPort write-mask state and the earlier masked bitmap replay behavior.
+WaitBlit protects cache reuse/freeing. Saved RP bitmap is restored before publish
+and before cleanup. Native E fade code may clobber A2/A3; reload state afterward.
+
+Changed hooks (runtime offsets, file code begins at byte 32):
+  $4276 stage begin, $4370 postpone native fade-in, $53de QR cache gate,
+  $45ac capture successfully decoded QR, $45dc publish/fade, $4660 cleanup.
+  $53a4 restored from BRA to BNE for accurate same-entry detection.
+Footer QRCOMP03 (upgrades QRCOMP01/02) + original code length. Relocation/end tail is retained byte-for-
+byte. Patcher is idempotent; remove_patch recovers the previous validated layer.
+
+Tests: test_qr_composite_68k.py executes actual M68000 gates with modeled planar
+blits and allocation; covers atomic publish before fade, cache replay, transparent
+holes, missing QR, entry invalidation, uncached fallback, OOM, cleanup, enabled
+caption background/path, idempotence and HUNK tail. Earlier layer tests strip this
+layer to test their original contracts. These are not emulator/hardware tests.
+
+User preference: do not launch/navigate Amiberry unsolicited. Ask the user to
+position the launcher for visible testing. Next manual check: enter a game with
+multiple screenshots and a QR; watch two slideshow transitions. Confirm QR and
+image present together, no stale image patch beneath QR, scanability, and no
+regression when moving to a menu item with no QR. Also check optional caption
+if re-enabled. Performance and display timing still need that visible check.
+
+Palette lifetime correction (QRCOMP02):
+The first compositor revision incorrectly used il.colormap after il.close had
+freed it. This caused the bright green corrupted thumbnail seen in testing.
+At the postponed-fade hook, copy up to 256 rgbcolor objects (four-byte E stride)
+into a private 1024-byte ordinary-memory buffer before native image cleanup.
+The later fade must use that retained copy. Clear unused entries so short palettes
+do not overread the original allocation. This adds no Chip RAM. Regression tests
+poison the original palette between close and fade and check exact saved colors.
+
+QR replay correction (QRCOMP03):
+The first render worked but later screenshot QR draws showed colored/white block
+artifacts, including in regions not explained by the preceding screenshot.
+Replaced the general masked color-bitmap copy with explicit one-bit foreground
+redrawing. Regression tests now start replay with RP.Mask=3, FgPen=17, DrawMode=1,
+check correct eight-plane pen-244 output, and verify those settings are restored.
+A cached white pixel (255), black pixel (254), or screenshot pixel must not be
+replayed as QR foreground. Visible slideshow testing is still required.
+
+Half-size QR experiment (QRCOMP04):
+Only AGA-generated entries within Alex Limi's Collection.avs (including its
+multiplayer submenu) are reduced from 50x50 to 25x25 using nearest neighbor, with
+RLE encoding. build/qr_halfsize_experiment.py validates that halving preserves
+the exact QR modules. The 50px masters remain unchanged, as do other collections
+and med-res/ECS outputs. make_hires_tree applies this temporary override on build;
+the build fingerprint includes its code. Current staged tree has 334 reduced QRs.
+AGA config QR position is now (607,253), +25 on each axis, preserving the QR's
+original lower-right edge. Position is a global config setting for this test.
+The compositor cache now stores actual QR width/height, up to 64x64, and uses those
+dimensions for capture/template replay. A 25px QR fits the moved location; the old
+50px assumption would have rejected staging. No extra Chip RAM is allocated.
+Native-code tests cover 25x25 at (607,253) and 50x50 at the old (582,228), mask
+preservation, capture/replay sizes, idempotence and HUNK structure. Other unchanged
+50px QR images do not fit the shifted position fully: this is a collection-only
+layout experiment, not a finalized global QR migration.
+ECS future work must target 1 MiB Chip RAM; avoid carrying over this large AGA
+compositing buffer unchanged.
+
+Half-size build integration correction:
+The active build calls avs_hires_cache.sync_hires_tree, not the old
+make_hires_tree. The first experiment therefore reverted to 50px sources on build,
+and the moved QR wrapped/clipped at the right edge. The active sync plan now
+substitutes content-addressed, transformed 25px sources only for paths beneath
+Alex Limi's Collection.avs. Source and output hashes describe transformed bytes,
+so cache reuse preserves 25px. Fresh-build and second-sync tests verify exact
+nearest-neighbor pixels, nested menu scope, unchanged 50px outside the collection,
+and untouched masters. Existing 334 staged collection QRs were resized again.
+
+Bitmap caption (QRCOMP05 / QRLABEL2), 2026-10-25:
+Artist source is build/launcher/assets/game-manual.png, 25x12 with alpha.
+encode_qr_label.py generates qr_label_image.i: three one-bit masks for fixed
+skin pens 242 (16/135/165), 245 (6/82/101), 254 (opaque black). Transparent
+pixels are omitted. The helper embeds masks for 25x12 and nearest-neighbor 50x24.
+It copies 720 bytes to Chip RAM alongside its existing staging/cache allocation.
+Total allocation becomes 281808 bytes.
+qrcode_label_y = -2 selects the bitmap label; -1 hides all captions; a nonnegative
+Y (400 in the current layout) selects the original two-line text caption.
+Negative sentinel values bypass the original text draw AND clear routines.
+The bitmap aligns with qrcode_x, has the actual QR width (25 or 50), and its bottom
+is two pixels above qrcode_y. It is drawn only for a successfully loaded/cached QR,
+onto the staging bitmap before the thumbnail and QR are presented together.
+At current 25px coordinates, caption is x607,y239,width25,height12; QR starts y253.
+Both source colors and all opaque black/transparent pixels are preserved.
+The caption does not consume a new palette entry. Drawing uses JAM1 with explicit
+pen/mask state and restores the prior RP state. Unsupported sizes or unavailable
+staging omit the image caption rather than drawing beyond the image rectangle.
+Native tests verify actual 68000 draws at both widths, exact generated mask pixels,
+transparency, opaque black, the 2px gap, hidden/no-QR behavior, RP settings and
+bitmap restoration. Old QR cache tests still cover small/full-size capture/replay.
+No unsolicited emulator test was performed.
+
+Bitmap caption cleanup/transparency correction (QRCOMP06):
+All black artwork pixels are now treated as transparent by encode_qr_label.py,
+including the originally opaque enclosed areas of letters. Artist PNG remains
+unchanged; generated masks omit black. The retained third color mask is empty.
+The bitmap renderer records the bounds of the label it actually displayed.
+The existing native clear-label call at runtime $548e now dispatches to image
+caption cleanup in negative modes, restoring that precise rectangle from the
+saved skin through the same restore routine ($51ec) used by QR erasure. This
+removes the caption with the old QR on entry changes; it no longer remains
+visible while the next screenshot/QR loads. Nonnegative legacy text settings
+still delegate to the QRLABEL2 text-clear routine at $5626. The extra hook is
+tracked/restored by the composite patcher; earlier composition formats normalize
+their original label-clear branch appropriately. New state adds five ordinary-
+memory fields (visible, x, y, width, height), with no additional Chip RAM.
+Native tests check exact one-time clear bounds at 25px and 50px, hidden/no-QR
+paths, QR capture/replay, helper structure/idempotence, and rendered pixels against
+the source with all black omitted. Visual timing still requires a user test build.
+
+Production hi-res QR assets, 2026-10-25:
+All 2998 data/img_highres/qr/*.iff masters are now 25x25 ByteRun1 RLE; the launcher
+About QR is also 25x25. The Alex Limi-only build transformation and its temporary
+source cache substitution have been removed from both builder paths. Fresh and
+cached hi-res sync now copy the checked-in 25px assets directly for every menu.
+build/resize_hires_qr.py is the reusable explicit conversion command for future
+50px masters; it verifies lossless 2x QR module reduction. No medium-resolution
+or ECS asset files were changed in this conversion. This supersedes earlier
+notes saying hi-res masters remain 50px or other collections retain full-size QR.
