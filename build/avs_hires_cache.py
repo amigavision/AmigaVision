@@ -42,6 +42,12 @@ def file_plan(medium, collection):
                 source = artwork / key
                 if not source.is_file():
                     raise FileNotFoundError(f'Missing static hi-res artwork: {source}')
+                # Navigation slides can exist only in hi-res artwork; the
+                # medium menu need not carry dummy numbered images for them.
+                for index in range(1, 10):
+                    slide = source.with_name(source.stem + f'-{index}.iff')
+                    if slide.is_file():
+                        plan[(relative / slide.name).as_posix()] = slide
             plan[key] = source
     for source in launcher.rglob('*'):
         if source.is_file() and source.name != '.DS_Store':

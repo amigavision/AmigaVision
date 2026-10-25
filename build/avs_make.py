@@ -1068,6 +1068,11 @@ def make_hires_artwork(avs_path, hires_path, collection):
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(override, destination)
         copied += 1
+        for index in range(1, 10):
+            slide = override.with_name(override.stem + f'-{index}.iff')
+            if slide.is_file():
+                shutil.copyfile(slide, destination.with_name(slide.name))
+                copied += 1
     print(f" > HiRes: copied {copied} static category/navigation images")
 
 
