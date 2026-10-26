@@ -99,7 +99,7 @@ def main():
                for p in sorted(Path('data/img_highres').rglob('*.iff'))]
     sources += [(p, args.launcher_output/p.name, p.name.startswith('skin-'))
                 for p in sorted(Path('data/avs-highres').glob('*.iff'))
-                if p.name != 'skin-bg-highres.iff']
+                if p.name != 'skin-bg-highres.iff' and not p.stem.lower().endswith('-qr2')]
     # The ECS monochrome background is maintained separately; preserve it even
     # when its AGA counterpart changes or the generated artwork is rebuilt.
     for source, dest, skin in sources:

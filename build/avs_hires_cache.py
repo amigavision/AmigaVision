@@ -33,7 +33,7 @@ def file_plan(medium, collection):
         relative = Path(directory).relative_to(medium)
         directories.update((relative / name).as_posix() for name in dirs)
         for name in files:
-            if name == '.DS_Store' or fnmatch.fnmatch(name, 'skin-empty*.iff'):
+            if name == '.DS_Store' or fnmatch.fnmatch(name, 'skin-empty*.iff') or name.lower().endswith('-qr2.iff'):
                 continue
             source = Path(directory) / name
             key = (relative / name).as_posix()
@@ -49,8 +49,13 @@ def file_plan(medium, collection):
                     if slide.is_file():
                         plan[(relative / slide.name).as_posix()] = slide
             plan[key] = source
+    if (launcher/'About-QR2.iff').is_file():
+        # Also retire an active About QR inherited from an older medium cache.
+        for key in list(plan):
+            if key.lower() == 'about-qr.iff':
+                del plan[key]
     for source in launcher.rglob('*'):
-        if source.is_file() and source.name != '.DS_Store':
+        if source.is_file() and source.name != '.DS_Store' and not source.name.lower().endswith('-qr2.iff'):
             plan[source.relative_to(launcher).as_posix()] = source
     plan['AVS.conf.base'] = launcher / 'AVS.conf'
     images = {}

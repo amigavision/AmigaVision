@@ -1056,7 +1056,7 @@ def make_hires_artwork(avs_path, hires_path, collection):
     copied = 0
     for source in Path(avs_path).rglob("*.iff"):
         relpath = source.relative_to(avs_path)
-        if str(relpath) in title_images or source.name.startswith("skin-") or source.stem.lower().endswith("-qr"):
+        if str(relpath) in title_images or source.name.startswith("skin-") or source.stem.lower().endswith(("-qr", "-qr2")):
             continue
         override = Path(util.path("data", "img_highres")) / relpath
         if not override.is_file():
@@ -1110,6 +1110,10 @@ def make_hires_tree(avs_path, hires_path, collection):
     util.copytree(avs_path, hires_path, ignore=ignore_empty)
     make_hires_artwork(avs_path, hires_path, collection)
     util.copytree(util.path("data", "avs-highres"), hires_path)
+    if Path("data/avs-highres/About-QR2.iff").is_file():
+        for artwork in Path(hires_path).glob("*.iff"):
+            if artwork.name.lower() == "about-qr.iff":
+                artwork.unlink()
     shutil.copyfile(util.path(hires_path, "AVS.conf"), util.path(hires_path, "AVS.conf.base"))
     image_root = Path(util.path("data", "img_highres"))
     images = {}

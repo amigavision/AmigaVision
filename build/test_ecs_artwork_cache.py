@@ -14,11 +14,12 @@ class ECSArtworkCacheTests(TestCase):
             for p in (output,static,launcher):p.mkdir()
             (output/'Custom Menu.iff').write_bytes(b'medium placeholder')
             (static/'Custom Menu.iff').write_bytes(b'custom pre-rendered ECS artwork')
-            for name in ('AVSMenu','AVS.conf','skin-bg-highres.iff','AmigaVisionEmpty.iff','About-qr.iff'):
+            for name in ('AVSMenu','AVS.conf','skin-bg-highres.iff','AmigaVisionEmpty.iff','About-QR2.iff'):
                 (launcher/name).write_bytes(name.encode())
             install_launcher(output,SimpleNamespace(image_entries={},by_id={}),static,launcher)
             self.assertEqual((output/'Custom Menu.iff').read_bytes(),b'custom pre-rendered ECS artwork')
             self.assertFalse((static/'manifest.json').exists())
+            self.assertFalse((output/'About-qr.iff').exists())
             self.assertEqual(json.loads((output/'ecs-artwork-report.json').read_text())['missing'],[])
 
     def test_conversion_reuses_local_cache_without_repo_manifest(self):

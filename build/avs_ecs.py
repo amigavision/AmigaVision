@@ -207,7 +207,7 @@ def install_launcher(avs_path, collection, image_root='data/img_ecs', launcher_r
                     for suffix in ['.iff','-QR.iff']+[f'-{i}.iff' for i in range(1,10)]}
     for image in list(root.rglob('*.iff')):
         rel = image.relative_to(root)
-        if str(rel) in title_images or image.name.startswith('skin-') or image.stem.lower().endswith('-qr'):
+        if str(rel) in title_images or image.name.startswith('skin-') or image.stem.lower().endswith(('-qr', '-qr2')):
             image.unlink()
             continue
         copy(rel, image)
@@ -241,8 +241,11 @@ def install_launcher(avs_path, collection, image_root='data/img_ecs', launcher_r
                     break
         if not found:
             missing.append(entry_id)
-    for name in ['skin-bg-highres.iff','AmigaVisionEmpty.iff','About-qr.iff']:
+    for name in ['skin-bg-highres.iff','AmigaVisionEmpty.iff']:
         copy(Path(name), root/name, launcher=True)
+    # About QR is optional; archived About-QR2.iff must not reactivate it.
+    if (Path(launcher_root)/'About-qr.iff').is_file():
+        copy(Path('About-qr.iff'), root/'About-qr.iff', launcher=True)
     config = Path(launcher_root)/'AVS.conf'
     for name in ['AVS.conf','AVS.conf.base']:
         shutil.copyfile(config, root/name)
