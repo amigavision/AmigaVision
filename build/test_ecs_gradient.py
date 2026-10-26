@@ -20,6 +20,17 @@ class ECSGradientTests(unittest.TestCase):
         self.assertEqual(image.getpalette()[39:48], [0,153,187,0,0,0,255,255,255])
         self.assertEqual(image.tobytes(), quantize_ecs(source).tobytes())
 
+    def test_aga_thumbnail_fits_ecs_viewport_with_rle(self):
+        with tempfile.TemporaryDirectory() as temp:
+            destination = Path(temp)/'thumbnail.iff'
+            convert((ROOT/'data/img_highres/About.iff', destination, False))
+            chunks = read_chunks(destination)
+            image, _ = decode(chunks)
+            self.assertEqual(image.size, (360, 288))
+            self.assertEqual(chunks[b"BMHD"][8:11], bytes([4, 0, 1]))
+            self.assertLessEqual(max(image.tobytes()), 12)
+            self.assertEqual(image.getpalette()[39:48], [0,153,187,0,0,0,255,255,255])
+
     def test_skin_roundtrip_avoids_gradient_pen(self):
         with tempfile.TemporaryDirectory() as temp:
             destination = Path(temp)/'skin.iff'

@@ -8,7 +8,7 @@ import struct
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageOps
 import iff_ilbm
 from repair_hires_palettes import decode, read_chunks
 
@@ -24,9 +24,9 @@ def encode_ecs(image, mode):
     for plane in range(4):
         table = bytes(48 + ((value >> plane) & 1) for value in range(256))
         planes.append(int(padded.translate(table), 2).to_bytes(stride * height, 'big'))
-    body = b''.join(planes[p][y*stride:(y+1)*stride] for y in range(height) for p in range(4))
+    body = b''.join(iff_ilbm.packbits(planes[p][y*stride:(y+1)*stride]) for y in range(height) for p in range(4))
     palette = iff_ilbm.palette_data(image.getpalette()[:48])
-    _, bmhd, cmap, camg = iff_ilbm.header(width, height, palette, mode, 0)
+    _, bmhd, cmap, camg = iff_ilbm.header(width, height, palette, mode, 1)
     return iff_ilbm.chunk('FORM', b'ILBM', bmhd, cmap, camg, iff_ilbm.chunk('BODY', body))
 
 
@@ -48,6 +48,13 @@ def convert(job):
     source, dest = Path(source), Path(dest)
     original, mode = decode(read_chunks(source))
     is_qr = source.parent.name.lower() == 'qr' or source.stem.lower().endswith('-qr')
+    # AGA now uses 404x280 thumbnails. Keep the ECS 360x288 viewport: copying
+    # larger bitmaps at screenshot_x=238 can wrap writes past the screen edge.
+    if (not skin and not is_qr and 'img_highres' in source.parts
+            and (original.width > 360 or original.height > 288)):
+        content = ImageOps.contain(original.convert('RGB'), (360, 288), Image.Resampling.LANCZOS)
+        original = Image.new('RGB', (360, 288), 'black')
+        original.paste(content, ((360-content.width)//2, (288-content.height)//2))
     indexed = quantize_ecs(original, skin or is_qr)
     blob = encode_ecs(indexed, mode)
     dest.parent.mkdir(parents=True, exist_ok=True)
