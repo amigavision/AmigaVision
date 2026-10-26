@@ -8,11 +8,11 @@ import struct
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
-from PIL import Image, ImageOps
+from PIL import Image
 import iff_ilbm
 from repair_hires_palettes import decode, read_chunks
 
-VERSION = 'ecs-13-rgb4-v6-copper-ui'
+VERSION = 'ecs-13-rgb4-v8-aga-canonical-404x280-cyan-ui'
 
 
 def encode_ecs(image, mode):
@@ -36,31 +36,57 @@ def quantize_ecs(source, skin=False):
         # Original skin has black, almost-black (1,1,1), and the blue border.
         pixels = bytes(13 if max(color) > 17 else 14 for color in rgb.getdata())
         indexed = Image.frombytes('P', source.size, pixels)
-        # Skin and QR foreground use steady slot 13, never gradient slot 15.
+        # Skin and QR use steady cyan and black; white is reserved for Copper text.
         indexed.putpalette([0]*39 + [0,153,187,0,0,0,255,255,255] + [0]*720)
         return indexed
     from ecs_palette import quantize_perceptual
     return quantize_perceptual(source)
 
 
+def decode_artwork(chunks):
+    """Decode standard planar artwork with vectorized bitplane expansion."""
+    import numpy as np
+    header = chunks[b'BMHD']
+    width, height = struct.unpack_from('>HH', header)
+    depth, masking, compression = header[8:11]
+    mode = struct.unpack('>I', chunks.get(b'CAMG', bytes(4)))[0]
+    if masking or depth > 8 or mode & 0x880:
+        return decode(chunks)
+    body = chunks[b'BODY']
+    if compression == 0:
+        raw = body
+    elif compression == 1:
+        raw = bytearray()
+        pos = 0
+        while pos < len(body):
+            count = body[pos]; pos += 1
+            if count < 128:
+                raw.extend(body[pos:pos+count+1]); pos += count+1
+            elif count > 128:
+                raw.extend(body[pos:pos+1]*(257-count)); pos += 1
+    else:
+        return decode(chunks)
+    stride = ((width+15)//16)*2
+    planes = np.frombuffer(raw, dtype=np.uint8).reshape(height, depth, stride)
+    bits = np.unpackbits(planes, axis=2)[:, :, :width]
+    pixels = np.bitwise_or.reduce(bits << np.arange(depth, dtype=np.uint8)[None, :, None], axis=1)
+    image = Image.frombytes('P', (width,height), pixels.tobytes())
+    image.putpalette(chunks[b'CMAP'])
+    return image, mode
+
+
 def convert(job):
     source, dest, skin = job
     source, dest = Path(source), Path(dest)
-    original, mode = decode(read_chunks(source))
+    original, mode = decode_artwork(read_chunks(source))
     is_qr = source.parent.name.lower() == 'qr' or source.stem.lower().endswith('-qr')
-    # AGA now uses 404x280 thumbnails. Keep the ECS 360x288 viewport: copying
-    # larger bitmaps at screenshot_x=238 can wrap writes past the screen edge.
-    if (not skin and not is_qr and 'img_highres' in source.parts
-            and (original.width > 360 or original.height > 288)):
-        content = ImageOps.contain(original.convert('RGB'), (360, 288), Image.Resampling.LANCZOS)
-        original = Image.new('RGB', (360, 288), 'black')
-        original.paste(content, ((360-content.width)//2, (288-content.height)//2))
+    # Preserve canonical AGA dimensions, including 404x280 thumbnails.
     indexed = quantize_ecs(original, skin or is_qr)
     blob = encode_ecs(indexed, mode)
     dest.parent.mkdir(parents=True, exist_ok=True)
     temporary = dest.with_suffix('.iff.tmp')
     temporary.write_bytes(blob)
-    result, _ = decode(read_chunks(temporary))
+    result, _ = decode_artwork(read_chunks(temporary))
     assert result.tobytes() == indexed.tobytes()
     assert result.getpalette()[39:48] == [0,153,187,0,0,0,255,255,255]
     assert result.getpalette()[:3] == [0,0,0]
@@ -93,13 +119,15 @@ def main():
     except (OSError, ValueError):
         previous = {}
     jobs = []
+    duplicates = []
+    representatives = {}
     manifest = {'version': VERSION, 'sources': {}}
     # Navigation artwork lives alongside the high-resolution title masters.
     sources = [(p, args.output/p.relative_to('data/img_highres'), False)
                for p in sorted(Path('data/img_highres').rglob('*.iff'))]
     sources += [(p, args.launcher_output/p.name, p.name.startswith('skin-'))
                 for p in sorted(Path('data/avs-highres').glob('*.iff'))
-                if p.name != 'skin-bg-highres.iff' and not p.stem.lower().endswith('-qr2')]
+                if p.name not in {'skin-bg-highres.iff', 'AmigaVisionBG.iff'} and not p.stem.lower().endswith('-qr2')]
     # The ECS monochrome background is maintained separately; preserve it even
     # when its AGA counterpart changes or the generated artwork is rebuilt.
     for source, dest, skin in sources:
@@ -115,12 +143,21 @@ def main():
         if (previous.get('version') == VERSION and dest.is_file()
                 and (previous_digest == digest or legacy_skin)):
             continue
-        jobs.append((str(source), str(dest), skin))
-    print(f'Converting {len(jobs)} changed/missing ECS images; reusing {len(sources)-len(jobs)}', flush=True)
+        identity = (digest, skin, source.parent.name.lower() == 'qr' or source.stem.lower().endswith('-qr'))
+        if identity in representatives:
+            duplicates.append((representatives[identity], dest))
+        else:
+            representatives[identity] = dest
+            jobs.append((str(source), str(dest), skin))
+    print(f'Converting {len(jobs)} unique ECS images; copying {len(duplicates)} duplicates; reusing {len(sources)-len(jobs)-len(duplicates)}', flush=True)
     with ProcessPoolExecutor(max_workers=args.jobs) as executor:
         for index, _ in enumerate(executor.map(convert, jobs, chunksize=8), 1):
             if index % 500 == 0:
                 print(f'Converted {index}/{len(jobs)}', flush=True)
+    import shutil
+    for representative, dest in duplicates:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(representative, dest)
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
     temporary = manifest_path.with_suffix('.json.tmp')
     temporary.write_text(json.dumps(manifest, indent=2)+'\n')

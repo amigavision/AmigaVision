@@ -68,6 +68,11 @@ def is_ignored_archive_path(titles_dir, archive_path):
     ignored_dirs = {"retired", "manual-downloads", "imported"}
     return is_excluded_archive(archive_path) or any(part in ignored_dirs for part in rel_parts)
 
+def missing_archive_references(db, titles_dir):
+    return [row for row in db.execute("SELECT id,archive_path FROM titles")
+            if row["archive_path"] and not is_excluded_archive(row["archive_path"])
+            and not util.is_file(util.path(titles_dir, row["archive_path"]))]
+
 def csv_category_fields(archive_path):
     category_dir = Path(archive_path).parts[0]
     if category_dir == "game":
@@ -1136,8 +1141,7 @@ def main():
         correlation_progress.finish(total_archives)
         if sync_csv:
             if args.ingest:
-                unresolved = [row for row in db.execute("SELECT id,archive_path FROM titles")
-                              if row["archive_path"] and not util.is_file(util.path(titles_dir, row["archive_path"]))]
+                unresolved = missing_archive_references(db, titles_dir)
                 print(f"Archive reconciliation: {len(unresolved)} missing reference(s) remain")
                 for row in unresolved:
                     print(f"• Archive reference missing from titles tree: {row['id']} ({row['archive_path']})")

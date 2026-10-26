@@ -84,8 +84,8 @@ try {
     Put "$payload/Amiberry/HardDrives/Shared/user.txt" 'release shared'
     Put "$payload/Amiberry/HardDrives/Shared/new.txt" 'new shared'
     Put "$payload/Amiberry/HardDrives/listings/games.txt" 'listings'
+    Put "$payload/Amiberry/ROMs/AmigaVision.rom" 'rom'
     foreach ($emulator in @('Amiberry', 'WinUAE')) {
-        Put "$payload/$emulator/ROMs/AmigaVision.rom" 'rom'
         $template = if ($emulator -eq 'WinUAE') { 'WinUAE/default.uae' } else { 'Amiberry/AmigaVision-Amiberry.uae' }
         $template = Join-Path $PSScriptRoot "../../content/distro_emulators/$template"
         Put "$payload/$emulator/Configurations/AmigaVision.uae" ([IO.File]::ReadAllText($template))
@@ -104,6 +104,7 @@ try {
         Put $exe 'placeholder executable; not launched'
         # Fresh install creates saves and shared files.
         if ((Install $emulator $payload $data $exe) -ne 0) { throw 'Fresh install failed' }
+        Assert-Content "$data/ROMs/AmigaVision.rom" 'rom'
         Assert-Content "$data/HardDrives/AmigaVision-Saves.hdf" 'fresh saves'
         Assert-Content "$data/HardDrives/Shared/new.txt" 'new shared'
         if (Test-Path "$data/Configurations/default.uae") { throw 'Default was installed without consent' }

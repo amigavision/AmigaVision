@@ -211,6 +211,23 @@ def install_launcher(avs_path, collection, image_root='data/img_ecs', launcher_r
             image.unlink()
             continue
         copy(rel, image)
+    # Include category slides even when the medium tree has no base artwork.
+    for category in root.rglob('*.avs'):
+        if not category.is_dir():
+            continue
+        relative = category.relative_to(root).with_suffix('.iff')
+        base = static/relative
+        available = []
+        for suffix in ['.iff']+[f'-{i}.iff' for i in range(1,10)]:
+            source = base.with_name(base.stem+suffix)
+            if source.is_file():
+                destination = root/relative.parent/source.name
+                copy(source.relative_to(static), destination)
+                available.append(destination)
+        destination = root/relative
+        if available and not destination.is_file():
+            preferred = destination.with_name(destination.stem+'-3.iff')
+            shutil.copyfile(preferred if preferred.is_file() else available[0], destination)
     fallback_artwork = []
     missing = []
     for relpath, entry_id in collection.image_entries.items():

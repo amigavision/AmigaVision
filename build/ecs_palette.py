@@ -54,18 +54,21 @@ def color_histogram(source):
 
 
 def quantize_perceptual(source):
-    """Fit 13 graphics slots, reserving frame, black, and gradient text, with no dithering.
+    """Fit 13 graphics slots, reserving cyan, black and gradient text, with no dithering.
 
     Black occupies graphics slot zero as well as locked UI slot 14 because the
     launcher clears thumbnail padding with pen zero. White occupies graphics
-    slot 1; slots 13, 14, and 15 are reserved for the steady frame, black, and
-    Copper text respectively. Five fixed seeds avoid poor local
-    minima. Every palette update selects an actual ECS color, not a rounded
+    slot 1; slots 13, 14 and 15 are reserved for cyan, black and Copper text. Five fixed
+    seeds avoid poor local minima. Every palette update selects an actual ECS color, not a rounded
     24-bit centroid. Pixel assignment uses the same perceptual metric.
     """
     rgb4, grid = ecs_colors()
     colors, weights, inverse = color_histogram(source)
     values = oklab(colors) * [1, 2, 2]
+    grid_norm = (grid * grid).sum(axis=1)
+    def nearest_color(value):
+        # Squared distance without allocating a 4096x3 temporary per centroid.
+        return int(np.argmin(grid_norm - 2 * (grid @ value)))
     best = None
     for trial in range(5):
         rng = np.random.default_rng(trial)
@@ -77,7 +80,7 @@ def quantize_perceptual(source):
                 break
             index = int(np.argmax(errors)) if trial == 0 else int(
                 rng.choice(len(colors), p=errors / errors.sum()))
-            chosen.append(int(np.argmin(((grid - values[index]) ** 2).sum(axis=1))))
+            chosen.append(nearest_color(values[index]))
         for _ in range(30):
             distance = ((values[:, None] - grid[chosen]) ** 2).sum(axis=2)
             assignment = distance.argmin(axis=1)
@@ -86,7 +89,7 @@ def quantize_perceptual(source):
                 mask = assignment == cluster
                 if mask.any():
                     mean = np.average(values[mask], axis=0, weights=weights[mask])
-                    updated[cluster] = int(np.argmin(((grid - mean) ** 2).sum(axis=1)))
+                    updated[cluster] = nearest_color(mean)
             if updated == chosen:
                 break
             chosen = updated

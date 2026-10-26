@@ -13,14 +13,15 @@ Install WinUAE 6.0.3 or later if you don’t have it already.
 
 1. Make sure WinUAE is not running. 
 
-2. Copy the Configurations and ROMs folders from the WinUAE folder into your
+2. Copy the Configurations folder from the package’s WinUAE folder into your
    WinUAE data folder, merging folders. Back up any existing default.uae 
    before replacing it. The usual destination is:
 
    C:\Users\Public\Documents\Amiga Files\WinUAE\
 
-3. Copy the HardDrives folder from the package’s Amiberry folder into this WinUAE data folder. The images are shipped
-   only once in the package; both emulators use these same files.
+3. Copy the HardDrives and ROMs folders from the package’s Amiberry folder
+   into this WinUAE data folder. The disk images and ROM are shipped only
+   once in the package; both emulators use these same files.
 
    After copying both parts, the WinUAE folder in Users\Public should include:
 

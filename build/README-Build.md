@@ -67,7 +67,9 @@ should also update ECS. Conversion checksums live under
 `$AVSCACHE_ROOT/ecs-artwork/` (default `~/Library/Caches/AmigaVision/ecs-artwork/`),
 not in the repository. They only speed up conversion; image builds do not require
 them. Deleting this local cache makes the next explicit conversion regenerate the
-artwork. ECS has separate geometry and palette requirements in `ecs_artwork.py`;
+artwork. ECS preserves the canonical AGA 404×280 thumbnail geometry, using 13
+graphics colors and three locked UI entries (cyan 13, black 14, white/Copper text 15). Its
+4-bit RGB palette conversion lives in `ecs_artwork.py` and `ecs_palette.py`;
 do not copy AGA bitmaps directly into the ECS launcher. The monochrome ECS
 background remains separately maintained.
 

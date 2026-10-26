@@ -550,7 +550,6 @@ def package_emulators(args, output_dir, archive_tool):
         replace_path(amiberry_install, stage_root / "INSTALL.txt")
         stage_root = Path(tmp_dir) / "WinUAE"
         log_step("Staging reusable WinUAE payload")
-        replace_path(rom_file, stage_root / "ROMs/AmigaVision.rom")
         replace_path(winuae_config, stage_root / "Configurations" / winuae_config.name)
         clone_or_copy_file(stage_root / "Configurations/default.uae", stage_root / "Configurations/AmigaVision.uae")
         replace_path(winuae_shader, stage_root / "plugins/filtershaders/direct3d" / winuae_shader.name)
