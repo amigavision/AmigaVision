@@ -323,11 +323,11 @@ image:
 ecs-artwork:
 	@pipenv run python build/ecs_artwork.py
 
-ecs-dry: ecs-artwork
+ecs-dry:
 	@mkdir -p "$(ECS_TEMP)" "$(subst ",,${AVSDEST})"
 	@AVSTEMP="$(ECS_TEMP)" AVSCACHEGEN=ecs $(ECS_IMAGE_PREP_CMD) --only-avs-tree
 
-ecs-image: ecs-artwork
+ecs-image:
 	@mkdir -p "$(ECS_TEMP)" "$(subst ",,${AVSDEST})"
 	@$(MAKE_MANIFESTS_CMD)
 	@AVSTEMP="$(ECS_TEMP)" AVSCACHEGEN=ecs $(ECS_IMAGE_PREP_CMD)

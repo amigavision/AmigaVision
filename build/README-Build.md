@@ -57,12 +57,19 @@ gameplay slides from `-3`, reserving `-1` for cover art and `-2` for a title scr
 
 Use at most 240 colors, reserving indices 240–255 for the launcher. Color zero
 must be black because the bitmap's word-aligned padding is also displayed.
-Encode high-resolution artwork with `repair_hires_palettes.encode_uncompressed`
-and validate it with `repair_hires_palettes.inspect`; dimension checks alone
-do not catch reserved-color or padding conflicts. Regenerate ECS artwork and
-update its source fingerprints after changing the AGA masters. ECS has separate
-geometry and palette requirements in `ecs_artwork.py`; do not copy AGA bitmaps
-directly into the ECS launcher.
+Encode high-resolution artwork with ByteRun1 RLE. Validate decoded pixels,
+reserved palette indices, and black padding; dimension checks alone do not catch
+palette or padding conflicts.
+
+ECS builds copy the checked-in `data/img_ecs` and `data/avs-ecs` artwork directly.
+After changing AGA masters, run `make ecs-artwork` explicitly when those changes
+should also update ECS. Conversion checksums live under
+`$AVSCACHE_ROOT/ecs-artwork/` (default `~/Library/Caches/AmigaVision/ecs-artwork/`),
+not in the repository. They only speed up conversion; image builds do not require
+them. Deleting this local cache makes the next explicit conversion regenerate the
+artwork. ECS has separate geometry and palette requirements in `ecs_artwork.py`;
+do not copy AGA bitmaps directly into the ECS launcher. The monochrome ECS
+background remains separately maintained.
 
 Standard artwork remains 320×128, prepared at 320×256 before half-height
 resampling.

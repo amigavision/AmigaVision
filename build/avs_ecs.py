@@ -192,27 +192,14 @@ def prepare_menu(avs_path):
 
 def install_launcher(avs_path, collection, image_root='data/img_ecs', launcher_root='data/avs-ecs'):
     """Replace generated menu images with pre-rendered hi-res ECS artwork."""
-    import hashlib
     import shutil
     root = Path(avs_path)
     shutil.copyfile(Path(launcher_root)/'AVSMenu', root/'AVSMenu')
     static = Path(image_root)
-    manifest_path = static/'manifest.json'
-    if not manifest_path.is_file():
-        raise FileNotFoundError('Static ECS artwork missing; run make ecs-artwork first')
-    manifest = json.loads(manifest_path.read_text())
-    from ecs_artwork import VERSION
-    if manifest.get('version') != VERSION:
-        raise ValueError('Static ECS artwork is outdated; run make ecs-artwork')
-
     def copy(relative, destination, launcher=False):
-        original = Path('data/avs-highres' if launcher else 'data/img_highres')/relative
         source = (Path(launcher_root) if launcher else static)/relative
-        expected = manifest['sources'].get(str(original))
-        preserved_background = launcher and relative.name == 'skin-bg-highres.iff'
-        if not source.is_file() or (not preserved_background and (
-                not expected or hashlib.sha256(original.read_bytes()).hexdigest() != expected)):
-            raise FileNotFoundError(f'Missing/stale ECS artwork {source}; run make ecs-artwork')
+        if not source.is_file():
+            raise FileNotFoundError(f'Missing ECS artwork {source}; run make ecs-artwork')
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, destination)
 
@@ -263,6 +250,5 @@ def install_launcher(avs_path, collection, image_root='data/img_ecs', launcher_r
         if path.is_file():
             path.unlink()
     (root/'ecs-artwork-report.json').write_text(json.dumps({
-        'palette_version': manifest['version'],
         'canonical_artwork_fallbacks': fallback_artwork, 'missing': sorted(set(missing))}, indent=2)+'\n')
     print(f' > ECS artwork: {len(set(missing))} missing titles; {len(fallback_artwork)} canonical artwork fallbacks')

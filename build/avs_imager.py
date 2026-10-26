@@ -1480,7 +1480,7 @@ def main():
             os.environ['AVSTEMP'] = paths.tmp() + '-ECS'
         if args.chipset_profile == 'ecs':
             os.environ['AVSCACHEGEN'] = 'ecs'
-            if not Path('data/img_ecs/manifest.json').is_file():
+            if not Path('data/img_ecs').is_dir():
                 raise FileNotFoundError('Static ECS artwork missing; run make ecs-artwork first')
         timings = []
 

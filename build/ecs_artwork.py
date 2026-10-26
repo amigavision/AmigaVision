@@ -70,6 +70,16 @@ def convert(job):
     return str(dest)
 
 
+
+def cache_manifest_path(output, launcher_output):
+    """Conversion state is local bookkeeping, never a checked-in build input."""
+    import avs_paths
+    identity = hashlib.sha256(json.dumps([
+        str(Path(output).resolve()), str(Path(launcher_output).resolve())
+    ]).encode('utf-8')).hexdigest()
+    return Path(avs_paths.cache_root())/'ecs-artwork'/identity/'manifest.json'
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=Path('data/img_ecs'))
@@ -77,8 +87,11 @@ def main():
     parser.add_argument('--jobs', type=int, default=min(4, os.cpu_count() or 1))
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
-    manifest_path = args.output/'manifest.json'
-    previous = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    manifest_path = cache_manifest_path(args.output, args.launcher_output)
+    try:
+        previous = json.loads(manifest_path.read_text())
+    except (OSError, ValueError):
+        previous = {}
     jobs = []
     manifest = {'version': VERSION, 'sources': {}}
     # Navigation artwork lives alongside the high-resolution title masters.
@@ -108,6 +121,7 @@ def main():
         for index, _ in enumerate(executor.map(convert, jobs, chunksize=8), 1):
             if index % 500 == 0:
                 print(f'Converted {index}/{len(jobs)}', flush=True)
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
     temporary = manifest_path.with_suffix('.json.tmp')
     temporary.write_text(json.dumps(manifest, indent=2)+'\n')
     temporary.replace(manifest_path)
