@@ -49,7 +49,7 @@ def chunk(id, *data):
     return bytes(id + struct.pack(">L", length) + blob)
 
 def header(width, height, palette, mode, pack):
-    depth = int(math.ceil(math.log(len(palette), 2)))
+    depth = max(1, int(math.ceil(math.log(len(palette), 2))))
     bmhd = chunk("BMHD", struct.pack(">HHHHBBBxHBBHH",
         width,  # w:INT
         height, # h:INT
@@ -97,7 +97,7 @@ def palette_data(palette):
     p = []
     for i in range(len(palette) // 3):
         p.append((palette[i * 3], palette[i * 3 + 1], palette[i * 3 + 2]))
-    p.extend([(0,0,0)] * (next_pow2(len(p)) - len(p)))
+    p.extend([(0,0,0)] * (max(2, next_pow2(len(p))) - len(p)))
     return p
 
 def ilbm(width, height, pixels, palette, mode=0x29000, pack=1):
