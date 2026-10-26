@@ -17,8 +17,9 @@ LOWRES_RESAMPLE = (320, 128)
 LOWRES_COLORS = 128
 
 HIGHRES_CROP = (640, 512)
-HIGHRES_SCALE = (360, 288)
-HIGHRES_RESAMPLE = (360, 288)
+# Current AGA skin/compositor viewport; 288 rows overlap the frame below it.
+HIGHRES_SCALE = (404, 280)
+HIGHRES_RESAMPLE = (404, 280)
 HIGHRES_COLORS = 240  # Leave the last 16 palette entries reserved for the AVS interface.
 
 ORDER_RE = re.compile(r"^(?P<index>\d+)(?:[ _.-].*)?$")

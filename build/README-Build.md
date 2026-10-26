@@ -47,6 +47,26 @@ Both `1` and `2` select NTSC timing in generated launch scripts. The NTSC pixel-
 
 The field was migrated from the previous numbering: old `4` becomes `1`, old PAL60 `1` becomes `2`, and old World/standard NTSC `2`/`3` are consolidated into NTSC `1`. Use only `0`, `1`, or `2` for new entries.
 
+## Screenshot artwork
+
+The current AGA launcher uses a 404×280 screenshot canvas at (236, 3).
+Do not use the older 360×288 AGA size: its extra rows overlap the frame below
+the screenshot. Fit the entire source with preserved aspect ratio and black
+padding; native arcade pixels can be centered without enlargement. Number
+gameplay slides from `-3`, reserving `-1` for cover art and `-2` for a title screen.
+
+Use at most 240 colors, reserving indices 240–255 for the launcher. Color zero
+must be black because the bitmap's word-aligned padding is also displayed.
+Encode high-resolution artwork with `repair_hires_palettes.encode_uncompressed`
+and validate it with `repair_hires_palettes.inspect`; dimension checks alone
+do not catch reserved-color or padding conflicts. Regenerate ECS artwork and
+update its source fingerprints after changing the AGA masters. ECS has separate
+geometry and palette requirements in `ecs_artwork.py`; do not copy AGA bitmaps
+directly into the ECS launcher.
+
+Standard artwork remains 320×128, prepared at 320×256 before half-height
+resampling.
+
 ## Other Useful Targets
 
 If you only need a specific packaged output instead of the full release set, use:

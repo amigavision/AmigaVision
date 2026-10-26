@@ -1,0 +1,8 @@
+avs-cd N/Tutankham
+IF NOT EXISTS WHDSaves:Tutankham
+  makedir WHDSaves:Tutankham
+  copy #? WHDSaves:Tutankham/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:Tutankham
+stack >NIL: 65536
+Tutankham >NIL:

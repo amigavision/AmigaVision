@@ -1360,6 +1360,7 @@ def get_archive_extract_cache_dir(arc_path: str, entry) -> str | None:
         entry.get("id", ""),
         entry.get("slave_dir", ""),
         "notwhdl" if entry_is_notwhdl(entry) else "whdl",
+        "lha-extract-v2",  # Skip archive root entries; invalidate older extracts.
     ])
     key = hashlib.sha1(key_source.encode("utf-8")).hexdigest()
     return util.path(paths.cache(), "archive-extract", key)

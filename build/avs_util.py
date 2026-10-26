@@ -348,13 +348,20 @@ def lha_extract(arcpath, outpath):
         arc = LhaFile(arcpath)
         for filename in [info.filename for info in arc.infolist()]:
             path = filename.replace("\\", "/")
+            # LhA archives can explicitly list their root as './'. It is
+            # structural metadata, not an Amiga directory named '.'.
+            while path.startswith("./"):
+                path = path[2:]
+            if path in ("", "."):
+                continue
             dirname = convert_filename_a2uae(os.path.dirname(path))
             basename = convert_filename_a2uae(os.path.basename(path))
             if dirname:
                 make_dir(os.path.join(outpath, dirname))
             if basename:
                 make_dir(os.path.join(outpath, dirname))
-                open(os.path.join(outpath, dirname, basename), "wb").write(arc.read(filename))
+                with open(os.path.join(outpath, dirname, basename), "wb") as output:
+                    output.write(arc.read(filename))
     except Exception:
         rm_path(outpath)
         native_lha_extract(arcpath, outpath)

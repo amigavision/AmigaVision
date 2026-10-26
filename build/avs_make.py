@@ -1062,7 +1062,7 @@ def make_hires_artwork(avs_path, hires_path, collection):
         if not override.is_file():
             raise FileNotFoundError(
                 f"Missing static hi-res artwork: {override}. "
-                "Add the pre-rendered 360x288 IFF using at most 240 colors before building."
+                "Add the pre-rendered 404x280 AGA IFF using at most 240 colors before building."
             )
         destination = Path(hires_path) / relpath
         destination.parent.mkdir(parents=True, exist_ok=True)
