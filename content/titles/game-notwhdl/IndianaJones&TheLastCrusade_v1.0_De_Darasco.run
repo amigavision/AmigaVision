@@ -1,0 +1,8 @@
+avs-cd N/IndyLastCrusadeDe
+IF NOT EXISTS WHDSaves:IndyLastCrusadeDe
+  makedir WHDSaves:IndyLastCrusadeDe
+  copy #? WHDSaves:IndyLastCrusadeDe/ ALL CLONE QUIET
+ENDIF
+cd WHDSaves:IndyLastCrusadeDe
+stack >NIL: 65536
+Indy >NIL:
