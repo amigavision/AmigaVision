@@ -1,0 +1,221 @@
+[
+  {
+    "name": "Amiga Addict Top 100",
+    "source": "data/img_src/list/highres/amiga-addict-100.png",
+    "source_size": [
+      978,
+      984
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Charts.avs/Amiga Addict Top 100.iff",
+    "background": [
+      206,
+      212,
+      216
+    ]
+  },
+  {
+    "name": "Amiga Lore Top 100",
+    "source": "data/img_src/list/amigalore.png",
+    "source_size": [
+      800,
+      270
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Charts.avs/Amiga Lore Top 100.iff"
+  },
+  {
+    "name": "Amiga Power Top 100 (1991)",
+    "source": "data/img_src/list/amigapower91.jpg",
+    "source_size": [
+      1238,
+      1752
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Charts.avs/Amiga Power Top 100 (1991).iff"
+  },
+  {
+    "name": "Amiga Power Top 100 (1992)",
+    "source": "data/img_src/list/amigapower92.jpg",
+    "source_size": [
+      910,
+      1178
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Charts.avs/Amiga Power Top 100 (1992).iff"
+  },
+  {
+    "name": "Amiga Power Top 100 (1993)",
+    "source": "data/img_src/list/amigapower93.jpg",
+    "source_size": [
+      910,
+      1178
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Charts.avs/Amiga Power Top 100 (1993).iff"
+  },
+  {
+    "name": "EAB Top 20 Exclusives",
+    "source": "data/img_src/list/eab.png",
+    "source_size": [
+      320,
+      80
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Charts.avs/EAB Top 20 Exclusives.iff"
+  },
+  {
+    "name": "Kim Justice Top 100",
+    "source": "data/img_src/list/highres/kimjustice_top100.jpg",
+    "source_size": [
+      1280,
+      720
+    ],
+    "source_url": "https://www.youtube.com/watch?v=tWQfX-hP1RQ",
+    "crop": null,
+    "output": "data/img_highres/Charts.avs/Kim Justice Top 100.iff"
+  },
+  {
+    "name": "Lemon Amiga Top 30",
+    "source": "data/img_src/list/lemon.png",
+    "source_size": [
+      320,
+      140
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Charts.avs/Lemon Amiga Top 30.iff"
+  },
+  {
+    "name": "Mr Biffo Top 10",
+    "source": "data/img_src/list/digitiser.jpg",
+    "source_size": [
+      750,
+      410
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Charts.avs/Mr Biffo Top 10.iff"
+  },
+  {
+    "name": "retroGAMER Amiga 500 Top 10",
+    "source": "data/img_src/list/retrogamer.jpg",
+    "source_size": [
+      350,
+      453
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Charts.avs/retroGAMER Amiga 500 Top 10.iff"
+  },
+  {
+    "name": "AmiGameJam 2025",
+    "source": "data/img_src/list/highres/amigamejam-banner.png",
+    "source_size": [
+      960,
+      240
+    ],
+    "source_url": "https://itch.io/jam/amigamejam2025",
+    "crop": [
+      242,
+      14,
+      708,
+      140
+    ],
+    "output": "data/img_highres/Curated Content.avs/AmiGameJam 2025.iff"
+  },
+  {
+    "name": "Den of Geek's Underappreciated",
+    "source": "data/img_src/list/denofgeek.jpg",
+    "source_size": [
+      900,
+      900
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Curated Content.avs/Den of Geek's Underappreciated.iff"
+  },
+  {
+    "name": "Kim Justice's Euro Platformers",
+    "source": "data/img_src/list/highres/kimjustice_platformers.jpg",
+    "source_size": [
+      1280,
+      720
+    ],
+    "source_url": "https://www.youtube.com/watch?v=RKmBIUx3-x4",
+    "crop": null,
+    "output": "data/img_highres/Curated Content.avs/Kim Justice's Euro Platformers.iff"
+  },
+  {
+    "name": "Kim Justice's Top 10 Psygnosis",
+    "source": "data/img_src/list/highres/kimjustice_psygnosis.jpg",
+    "source_size": [
+      1280,
+      720
+    ],
+    "source_url": "https://www.youtube.com/watch?v=w9a85IeA888",
+    "crop": null,
+    "output": "data/img_highres/Curated Content.avs/Kim Justice's Top 10 Psygnosis.iff"
+  },
+  {
+    "name": "PIXEL thing's 45 Games",
+    "source": "data/img_src/list/highres/pixelthing_45games.jpg",
+    "source_size": [
+      1280,
+      720
+    ],
+    "source_url": "https://www.youtube.com/watch?v=Mg8IYHJnyvY",
+    "crop": null,
+    "output": "data/img_highres/Curated Content.avs/PIXEL thing's 45 Games.iff"
+  },
+  {
+    "name": "PIXEL thing's 23 Exclusives",
+    "source": "data/img_src/list/highres/pixelthing_23exclusive.jpg",
+    "source_size": [
+      1280,
+      720
+    ],
+    "source_url": "https://www.youtube.com/watch?v=EjyYe8IL0Io",
+    "crop": null,
+    "output": "data/img_highres/Curated Content.avs/PIXEL thing's 23 Exclusives.iff"
+  },
+  {
+    "name": "Racketboy's Shmup Essentials",
+    "source": "data/img_src/list/racketboy_shmups.jpg",
+    "source_size": [
+      1700,
+      700
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Curated Content.avs/Racketboy's Shmup Essentials.iff"
+  },
+  {
+    "name": "v's Recommended Games",
+    "source": "data/img_src/list/vgames.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Curated Content.avs/v's Recommended Games.iff"
+  },
+  {
+    "name": "Wired's Most Influential",
+    "source": "data/img_src/list/wired.png",
+    "source_size": [
+      1025,
+      284
+    ],
+    "source_url": null,
+    "crop": null,
+    "output": "data/img_highres/Curated Content.avs/Wired's Most Influential.iff"
+  }
+]

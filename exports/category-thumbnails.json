@@ -1,0 +1,552 @@
+[
+  {
+    "source": "data/img_highres/game--twintris--twintris-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Best of Multiplayer-3.iff",
+    "title": "Twintris"
+  },
+  {
+    "source": "data/img_highres/game--slamtiltaga2mb--slamtiltaga2mb-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Best of Multiplayer-4.iff",
+    "title": "Slam Tilt: The Pinball Game"
+  },
+  {
+    "source": "data/img_highres/game--supercars2--supercars2-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Best of Multiplayer-5.iff",
+    "title": "Super Cars II"
+  },
+  {
+    "source": "data/img_highres/game--dogsofwar--dogsofwar-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Best of Multiplayer-6.iff",
+    "title": "Dogs of War"
+  },
+  {
+    "source": "data/img_highres/game--chaosengine--chaosengine-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Best of Multiplayer-7.iff",
+    "title": "The Chaos Engine"
+  },
+  {
+    "source": "data/img_highres/game--supertwintris--supertwintris-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Competitive-3.iff",
+    "title": "Super Twintris"
+  },
+  {
+    "source": "data/img_highres/game--prosoccer2190--prosoccer2190-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Competitive-4.iff",
+    "title": "ProSoccer 2190"
+  },
+  {
+    "source": "data/img_highres/game--rampart--rampart-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Competitive-5.iff",
+    "title": "Rampart"
+  },
+  {
+    "source": "data/img_highres/game--battleisle&datadisks--battleisle&datadisks--moon-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Competitive-6.iff",
+    "title": "Battle Isle: The Moon of Chromos"
+  },
+  {
+    "source": "data/img_highres/game--dangerousstreetsaga--dangerousstreetsaga-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Competitive-7.iff",
+    "title": "Dangerous Streets"
+  },
+  {
+    "source": "data/img_highres/game--phobia--phobia-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Cooperative-3.iff",
+    "title": "Phobia"
+  },
+  {
+    "source": "data/img_highres/game--lineoffire--lineoffire-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Cooperative-4.iff",
+    "title": "Line of Fire"
+  },
+  {
+    "source": "data/img_highres/game--crazyseasons--crazyseasons-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Cooperative-5.iff",
+    "title": "Crazy Seasons"
+  },
+  {
+    "source": "data/img_highres/game--aztecchallenge--aztecchallenge-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Cooperative-6.iff",
+    "title": "Aztec Challenge"
+  },
+  {
+    "source": "data/img_highres/game--terminator2arcade--terminator2arcade-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Cooperative-7.iff",
+    "title": "T2: The Arcade Game"
+  },
+  {
+    "source": "data/img_highres/game--fighterduelprontsc--fighterduelprontsc-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Modem or Serial Link-3.iff",
+    "title": "Fighter Duel Pro"
+  },
+  {
+    "source": "data/img_highres/game--stuntcarracer--stuntcarracer-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Modem or Serial Link-4.iff",
+    "title": "Stunt Car Racer"
+  },
+  {
+    "source": "data/img_highres/game--wildwheels--wildwheels-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Modem or Serial Link-5.iff",
+    "title": "Wild Wheels"
+  },
+  {
+    "source": "data/img_highres/game--gravityforce--gravityforce-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Modem or Serial Link-6.iff",
+    "title": "Gravity Force"
+  },
+  {
+    "source": "data/img_highres/game--prince--prince-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Modem or Serial Link-7.iff",
+    "title": "Prince"
+  },
+  {
+    "source": "data/img_highres/game--pgaeuropeantouraga--pgaeuropeantouraga-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Taking Turns-3.iff",
+    "title": "PGA European Tour"
+  },
+  {
+    "source": "data/img_highres/game--computerscrabble--computerscrabble-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Taking Turns-4.iff",
+    "title": "Computer Scrabble"
+  },
+  {
+    "source": "data/img_highres/game--lordsoftherealmagafast--lordsoftherealmagafast-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Taking Turns-5.iff",
+    "title": "Lords of the Realm"
+  },
+  {
+    "source": "data/img_highres/game--arena--arena-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Taking Turns-6.iff",
+    "title": "Arena"
+  },
+  {
+    "source": "data/img_highres/game--playermanager2--playermanager2-3.iff",
+    "destination": "data/img_highres/Multiplayer.avs/Taking Turns-7.iff",
+    "title": "Player Manager 2"
+  },
+  {
+    "source": "data/img_highres/game--superskidmarks+cd--superskidmarks+cd-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Modem or Serial Link-3.iff",
+    "title": "Super Skidmarks Plus"
+  },
+  {
+    "source": "data/img_highres/game--maxrallyaga--maxrallyaga-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Modem or Serial Link-4.iff",
+    "title": "MAX Rally"
+  },
+  {
+    "source": "data/img_highres/game--vroommultiplayer--vroommultiplayer-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Modem or Serial Link-5.iff",
+    "title": "Vroom: Multi-Player"
+  },
+  {
+    "source": "data/img_highres/game--fighterduelprontsc--fighterduelprontsc-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Modem or Serial Link-6.iff",
+    "title": "Fighter Duel Pro"
+  },
+  {
+    "source": "data/img_highres/game--armourgeddon--armourgeddon-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Modem or Serial Link-7.iff",
+    "title": "Armour-Geddon"
+  },
+  {
+    "source": "data/img_highres/game--enforcer--enforcer-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Light Gun-3.iff",
+    "title": "The Enforcer"
+  },
+  {
+    "source": "data/img_highres/game--sideshow--sideshow-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Light Gun-4.iff",
+    "title": "Sideshow"
+  },
+  {
+    "source": "data/img_highres/game--operationwolf--operationwolf-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Light Gun-5.iff",
+    "title": "Operation Wolf"
+  },
+  {
+    "source": "data/img_highres/game--crazyshot--crazyshot-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Light Gun-6.iff",
+    "title": "Crazy Shot"
+  },
+  {
+    "source": "data/img_highres/game--creature--creature-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Light Gun-7.iff",
+    "title": "Creature"
+  },
+  {
+    "source": "data/img_highres/game--kingsquest5--kingsquest5-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Roland MT-32-3.iff",
+    "title": "King's Quest V"
+  },
+  {
+    "source": "data/img_highres/game--kingsquest5rmesmt32--kingsquest5rmesmt32-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Roland MT-32-4.iff",
+    "title": "King's Quest V Remastered"
+  },
+  {
+    "source": "data/img_highres/game--kingsquest5rmitmt32--kingsquest5rmitmt32-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Roland MT-32-5.iff",
+    "title": "King's Quest V Remastered"
+  },
+  {
+    "source": "data/img_highres/game--conquestsofthelongbow--conquestsofthelongbow-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Roland MT-32-6.iff",
+    "title": "Conquests of the Longbow"
+  },
+  {
+    "source": "data/img_highres/game--kingsquestenhanced--kingsquestenhanced--mt32-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Roland MT-32-7.iff",
+    "title": "King's Quest I: Quest for the Crown (Enhanced)"
+  },
+  {
+    "source": "data/img_highres/game--magicjohnsonfstbrkarcadia--magicjohnsonfstbrkarcadia-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Arcadia Systems-3.iff",
+    "title": "Magic Johnson's Fast Break (Arcadia)"
+  },
+  {
+    "source": "data/img_highres/game--spacerangerarcadia--spacerangerarcadia-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Arcadia Systems-4.iff",
+    "title": "Space Ranger (Arcadia)"
+  },
+  {
+    "source": "data/img_highres/game--xenonarcadia--xenonarcadia-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Arcadia Systems-5.iff",
+    "title": "Xenon (Arcadia)"
+  },
+  {
+    "source": "data/img_highres/game--aaargh!arcadia--aaargh!arcadia-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Arcadia Systems-6.iff",
+    "title": "Aaargh! (Arcadia)"
+  },
+  {
+    "source": "data/img_highres/game--leaderboardarcadia--leaderboardarcadia-3.iff",
+    "destination": "data/img_highres/Special Hardware.avs/Arcadia Systems-7.iff",
+    "title": "Leader Board (Arcadia)"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--spaceballs-rubzilla-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Coding Challenges-3.iff",
+    "title": "Rubzilla"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--tek-deadline2018inv-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Coding Challenges-4.iff",
+    "title": "Deadline 2018 Invitation"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--tulou-exclusivegalore-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Coding Challenges-5.iff",
+    "title": "Exclusive Galore"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--loonies-myluckynumber-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Coding Challenges-6.iff",
+    "title": "My Lucky Number"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--spaceballs-dubzilla-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Coding Challenges-7.iff",
+    "title": "Dubzilla"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--flex-martinieffect-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/060 Demos-3.iff",
+    "title": "Martini Effect"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--theblacklotus-rift-060-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/060 Demos-4.iff",
+    "title": "Rift"
+  },
+  {
+    "source": "data/img_highres/demo--lasttraintodanzigaga--lasttraintodanzigaga-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/060 Demos-5.iff",
+    "title": "Last Train to Danzig"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--ghostownrno-metropolice-060-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/060 Demos-6.iff",
+    "title": "Metropolice"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--focusdesign-bekoolfool-060-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/060 Demos-7.iff",
+    "title": "Be Kool Fool"
+  },
+  {
+    "source": "data/img_highres/demo--innervision--innervision-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Title-3.iff",
+    "title": "Inner-Vision"
+  },
+  {
+    "source": "data/img_highres/demo--sequential--sequential-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Title-4.iff",
+    "title": "Sequential"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--spaceballs-noisejesus-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Title-5.iff",
+    "title": "Noisejesus"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--loonies-myluckynumber-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Title-6.iff",
+    "title": "My Lucky Number"
+  },
+  {
+    "source": "data/img_highres/demo--hcopperganghalifax--hcopperganghalifax-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Title-7.iff",
+    "title": "Halifax"
+  },
+  {
+    "source": "data/img_highres/demo--trashcan--trashcan-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Group-3.iff",
+    "title": "Trashcan"
+  },
+  {
+    "source": "data/img_highres/demo--blackshadowintro--blackshadow-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Group-4.iff",
+    "title": "Black Shadow Crack Intro"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--binary-4seasons-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Group-5.iff",
+    "title": "4 Seasons"
+  },
+  {
+    "source": "data/img_highres/demo--nonterraqueous--nonterraqueous-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Group-6.iff",
+    "title": "Nonterraqueous"
+  },
+  {
+    "source": "data/img_highres/demo--dos--dos-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Group-7.iff",
+    "title": "D.O.S"
+  },
+  {
+    "source": "data/img_highres/demo--crayonshinchan--crayonshinchan-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Country-3.iff",
+    "title": "Crayon Shinchan"
+  },
+  {
+    "source": "data/img_highres/demo--ffpunicodeattac--ffpunicodeattac-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Country-4.iff",
+    "title": "Unicode Attac"
+  },
+  {
+    "source": "data/img_highres/demo--stopfascism--stopfascism-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Country-5.iff",
+    "title": "Stop Fascism"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--melon-whereismyconscience-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Country-6.iff",
+    "title": "Where Is My Conscience?"
+  },
+  {
+    "source": "data/img_highres/demo--megademosos--megademosos-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Country-7.iff",
+    "title": "Megademo"
+  },
+  {
+    "source": "data/img_highres/demo--curiosity--curiosity-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Year-3.iff",
+    "title": "Curiosity"
+  },
+  {
+    "source": "data/img_highres/demo--batmanrises--batmanrises-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Year-4.iff",
+    "title": "Batman Rises"
+  },
+  {
+    "source": "data/img_highres/demo--interference--interference-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Year-5.iff",
+    "title": "Interference"
+  },
+  {
+    "source": "data/img_highres/demo--rollingthunderintro--rollingthunderintro-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Year-6.iff",
+    "title": "Rolling Thunder Crack Intro"
+  },
+  {
+    "source": "data/img_highres/demo--megademo8kefrens--megademo8kefrens-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Demos - By Year-7.iff",
+    "title": "Megademo 8"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--melon-tetris-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/1-64KB-3.iff",
+    "title": "The Tetris Intro"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--balance-smalltalk-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/1-64KB-4.iff",
+    "title": "Small Talk"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--melon-kingsongboy-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/1-64KB-5.iff",
+    "title": "King Song Boy"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--stellar-bananamen-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/1-64KB-6.iff",
+    "title": "Bananamen"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--koney-ketamuskolar-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/1-64KB-7.iff",
+    "title": "Ketamuskolar"
+  },
+  {
+    "source": "data/img_highres/demo--interpolflashback--interpolflashback-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Crack Intros-3.iff",
+    "title": "Flashback Crack Intro"
+  },
+  {
+    "source": "data/img_highres/demo--manchesterunitedeurintro--manchesterunitedeur-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Crack Intros-4.iff",
+    "title": "Manchester United Crack Intro"
+  },
+  {
+    "source": "data/img_highres/demo--anotherworldintro--anotherworld-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Crack Intros-5.iff",
+    "title": "Another World Crack Intro"
+  },
+  {
+    "source": "data/img_highres/demo-notwhdl--crystal-steelempire-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Crack Intros-6.iff",
+    "title": "Steel Empire Crack Intro"
+  },
+  {
+    "source": "data/img_highres/demo--worldofwonders crazycars2--worldofwonders-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Crack Intros-7.iff",
+    "title": "Crazy Cars 2 Crack Intro"
+  },
+  {
+    "source": "data/img_highres/mags-notwhdl--oepirristi02-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Disk Mags - By Title-3.iff",
+    "title": "Oepir Risti #02"
+  },
+  {
+    "source": "data/img_highres/mags--crackerjournal09--crackerjournal09-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Disk Mags - By Title-4.iff",
+    "title": "Cracker Journal #9"
+  },
+  {
+    "source": "data/img_highres/mags-notwhdl--eurochart32-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Disk Mags - By Title-5.iff",
+    "title": "Eurochart #32"
+  },
+  {
+    "source": "data/img_highres/mags-notwhdl--stolendata03-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Disk Mags - By Title-6.iff",
+    "title": "Stolen Data #03"
+  },
+  {
+    "source": "data/img_highres/mags--ice6--ice6-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Disk Mags - By Title-7.iff",
+    "title": "I.C.E. #6"
+  },
+  {
+    "source": "data/img_highres/mags-notwhdl--eurochart30-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Disk Mags - By Date-3.iff",
+    "title": "Eurochart #30"
+  },
+  {
+    "source": "data/img_highres/mags--compass1--compass1-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Disk Mags - By Date-4.iff",
+    "title": "Compass #1"
+  },
+  {
+    "source": "data/img_highres/mags--eurochart22--eurochart22-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Disk Mags - By Date-5.iff",
+    "title": "Eurochart #22"
+  },
+  {
+    "source": "data/img_highres/mags--eurochart19--eurochart19-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Disk Mags - By Date-6.iff",
+    "title": "Eurochart #19"
+  },
+  {
+    "source": "data/img_highres/mags--crackerjournal09--crackerjournal09-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Disk Mags - By Date-7.iff",
+    "title": "Cracker Journal #9"
+  },
+  {
+    "source": "data/img_highres/demo--2unlimitednolimit--2unlimitednolimit-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Music Disks - By Title-3.iff",
+    "title": "2 Unlimited: No Limit"
+  },
+  {
+    "source": "data/img_highres/demo--soundtrip--soundtrip-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Music Disks - By Title-4.iff",
+    "title": "Sound Trip"
+  },
+  {
+    "source": "data/img_highres/demo--callitwotyawant--callitwotyawant-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Music Disks - By Title-5.iff",
+    "title": "Call It Wot Ya Want"
+  },
+  {
+    "source": "data/img_highres/demo--musicdisk4vega--musicdisk4vega-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Music Disks - By Title-6.iff",
+    "title": "Music Disk 4"
+  },
+  {
+    "source": "data/img_highres/demo--clappingworld--clappingworld-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Music Disks - By Title-7.iff",
+    "title": "Clapping World"
+  },
+  {
+    "source": "data/img_highres/demo--celebration--celebration-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Music Disks - By Year-3.iff",
+    "title": "Celebration"
+  },
+  {
+    "source": "data/img_highres/demo--soundbox2--soundbox2-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Music Disks - By Year-4.iff",
+    "title": "Soundbox II: The Return"
+  },
+  {
+    "source": "data/img_highres/demo--worldofnoise1--worldofnoise1-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Music Disks - By Year-5.iff",
+    "title": "World of Noise #1"
+  },
+  {
+    "source": "data/img_highres/demo--megablast--megablast-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Music Disks - By Year-6.iff",
+    "title": "Megablast"
+  },
+  {
+    "source": "data/img_highres/demo--numeric2--numeric2-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Music Disks - By Year-7.iff",
+    "title": "Numeric 2"
+  },
+  {
+    "source": "data/img_highres/demo--sevenseas--sevenseas-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Slide Shows-3.iff",
+    "title": "Seven Seas"
+  },
+  {
+    "source": "data/img_highres/demo--gathering93slideshow--gathering93slideshow-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Slide Shows-4.iff",
+    "title": "Gathering 1993 Partyslides"
+  },
+  {
+    "source": "data/img_highres/demo--assembly92slideshow--assembly92slideshow-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Slide Shows-5.iff",
+    "title": "Assembly 1992 Slideshow"
+  },
+  {
+    "source": "data/img_highres/demo--wildaga--wildaga-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Slide Shows-6.iff",
+    "title": "Wild"
+  },
+  {
+    "source": "data/img_highres/demo--bohemian--bohemian-3.iff",
+    "destination": "data/img_highres/Demo Scene.avs/Slide Shows-7.iff",
+    "title": "Bohemian"
+  }
+]

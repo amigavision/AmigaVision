@@ -1,0 +1,26 @@
+[
+  {
+    "file": "data/img_src/list/highres/eab-original.gif",
+    "size": [
+      309,
+      60
+    ],
+    "url": "https://eab.abime.net/gfx/eab.gif"
+  },
+  {
+    "file": "data/img_src/list/highres/lemon-original.gif",
+    "size": [
+      118,
+      54
+    ],
+    "url": "https://www.lemonamiga.com/assets/amiga/images/navigation/signs/logo.gif"
+  },
+  {
+    "file": "data/img_src/list/highres/vgames-site.png",
+    "size": [
+      160,
+      160
+    ],
+    "url": "https://www.gametechwiki.com/logos/Wiki_logo_135.png"
+  }
+]

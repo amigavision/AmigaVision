@@ -1073,6 +1073,27 @@ def make_hires_artwork(avs_path, hires_path, collection):
             if slide.is_file():
                 shutil.copyfile(slide, destination.with_name(slide.name))
                 copied += 1
+    # Some categories have artwork only in the hi-res tree.
+    image_root = Path("data/img_highres")
+    for category in Path(avs_path).rglob("*.avs"):
+        if not category.is_dir():
+            continue
+        relative = category.relative_to(avs_path)
+        base = image_root / relative.with_suffix(".iff")
+        candidates = [base] + [base.with_name(base.stem + f"-{i}.iff") for i in range(1, 10)]
+        available = [source for source in candidates if source.is_file()]
+        if not available:
+            continue
+        destination = Path(hires_path) / relative.with_suffix(".iff")
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        for source in available:
+            target = destination.with_name(source.name)
+            if not target.is_file():
+                shutil.copyfile(source, target)
+                copied += 1
+        if not destination.is_file():
+            shutil.copyfile(available[0], destination)
+            copied += 1
     print(f" > HiRes: copied {copied} static category/navigation images")
 
 
