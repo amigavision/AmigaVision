@@ -3,6 +3,7 @@
 from pathlib import Path
 from io import BytesIO
 import os
+import copy
 from PIL import Image
 import avs_compositor as compositor
 import iff_ilbm
@@ -13,17 +14,29 @@ DIRECTORIES=(Path('data/img_highres/By Year.avs'),
              Path('data/img_highres/Demo Scene.avs/Music Disks - By Year.avs'))
 
 
-def render_year(label):
-    font=Path(os.environ['AVSCONTENT'])/'fonts/display.otf'
-    if not font.is_file():
-        raise FileNotFoundError(font)
+def render_native_card(operations):
+    operations = operations if isinstance(operations,list) else [operations]
+    for operation in operations:
+        if operation.get('op') != 'tx':
+            continue
+        font=Path(os.environ['AVSCONTENT'])/'fonts'/operation.get('font','display.otf')
+        if not font.is_file():
+            raise FileNotFoundError(font)
     # Render the type directly into the final 404x280 canvas. Do not use a
     # 320x128 med-res raster or enlarge its already antialiased glyph pixels.
-    with compositor.compose({'op':'tx','txt':label,'size':112},size=(404,280)) as image:
+    with compositor.compose(copy.deepcopy(operations),size=(404,280)) as image:
         rgb=Image.open(BytesIO(image.make_blob('png'))).convert('RGB')
     indexed=black_padding_palette(rgb.quantize(colors=240,method=Image.Quantize.MEDIANCUT,
                                               kmeans=4,dither=Image.Dither.NONE))
     return iff_ilbm.ilbm(*indexed.size,indexed.load(),indexed.getpalette(),mode=0x19004,pack=1)
+
+
+def render_text_card(operations):
+    return render_native_card(operations)
+
+
+def render_year(label):
+    return render_text_card({'op':'tx','txt':label,'size':112})
 
 
 def main():
