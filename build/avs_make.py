@@ -12,7 +12,7 @@ from pathlib import Path
 from sqlite3 import Connection
 from time import perf_counter
 
-from avs_artwork import is_nsfw, install_nsfw_thumbnail
+from avs_artwork import is_nsfw, install_nsfw_thumbnail, validate_hires_artwork
 from avs_migration import rename_reference
 
 import avs_compositor as compositor
@@ -1126,6 +1126,7 @@ def report_missing_launcher_images(avs_path, hires_path, collection, medium_file
 
 def make_hires_tree(avs_path, hires_path, collection):
     """Clone the completed launcher and replace its configuration and title images."""
+    validate_hires_artwork("data/img_highres")
     util.rm_path(hires_path)
     ignore_empty = shutil.ignore_patterns("skin-empty*.iff")
     util.copytree(avs_path, hires_path, ignore=ignore_empty)

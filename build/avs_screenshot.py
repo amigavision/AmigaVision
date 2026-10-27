@@ -10,8 +10,8 @@
 
 # A CLI interface is also available. Example usage:
 #
-# Convert to 640x200 with center-crop
-# ./build/avs_screenshot.py --crop 640x400 --scale 640x200 --center_crop -i test.png -o test.iff
+# Convert to canonical 404x280 hi-res with center-crop
+# ./build/avs_screenshot.py --crop 640x512 --scale 404x280 --center_crop -i test.png -o test.iff
 #
 # Convert to 320x128 (squished height) with smart-crop, max 128 colors
 # ./build/avs_screenshot.py --crop 640x512 --scale 320x256 --resample 320x128 --colors 128 -i test.png -o test.iff
@@ -22,11 +22,16 @@ import sys
 from PIL import Image
 
 from repair_hires_palettes import black_padding_palette
+from avs_artwork import validate_hires_thumbnail_size
 import iff_ilbm
 
 # -----------------------------------------------------------------------------
 
 def iff_screenshot(path, colors, crop_sz, scale_sz, resample_sz=None, mode_id=0x29000, center_crop=False):
+    resample_sz = resample_sz or scale_sz
+    # Standard thumbnails are squashed to 320x128; all hi-res output is canonical.
+    if tuple(resample_sz) != (320, 128):
+        validate_hires_thumbnail_size(resample_sz, path)
     # Normalize image to full "high-res interlace" resolution before cropping,
     # by doubling size in either dimension if smaller than crop dimension
     img = Image.open(path).convert("RGB")
@@ -73,7 +78,7 @@ def main():
     parser.add_argument("-p", "--out_png", dest="out_png", metavar="FILE", help="output PNG image")
     parser.add_argument("-c", "--colors", dest="colors", type=int, default=240, help="number of colors (maximum 240; last 16 reserved for launcher)")
     parser.add_argument("--crop", dest="crop", type=str, default="640x512", help="crop size (in high-res interlaced point size)")
-    parser.add_argument("--scale", dest="scale", type=str, default="320x256", help="scale size (nearest neighbour)")
+    parser.add_argument("--scale", dest="scale", type=str, default="404x280", help="scale size (nearest neighbour); final output must be 404x280 hi-res or 320x128 standard")
     parser.add_argument("--resample", dest="resample", type=str, default=None, help="resample size (anti aliased)")
     parser.add_argument("--center_crop", dest="center_crop", action="store_true", default=False, help="use center-crop (disable smart-crop)")
     parser.add_argument("--id", dest="screen_id", type=int, default=0x29000, help="set screen mode id")
@@ -98,7 +103,7 @@ def main():
             pil_img.save(args.out_iff + ".png")
         return 0
 
-    except IOError as err:
+    except (IOError, ValueError) as err:
         print("error - {}".format(err))
         sys.exit(1)
 

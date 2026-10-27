@@ -10,6 +10,7 @@ import time
 import urllib.parse
 import urllib.request
 from pathlib import Path
+from avs_artwork import HIRES_THUMBNAIL_SIZE
 
 LOWRES_CROP = (640, 512)
 LOWRES_SCALE = (320, 256)
@@ -18,8 +19,8 @@ LOWRES_COLORS = 128
 
 HIGHRES_CROP = (640, 512)
 # Current AGA skin/compositor viewport; 288 rows overlap the frame below it.
-HIGHRES_SCALE = (404, 280)
-HIGHRES_RESAMPLE = (404, 280)
+HIGHRES_SCALE = HIRES_THUMBNAIL_SIZE
+HIGHRES_RESAMPLE = HIRES_THUMBNAIL_SIZE
 HIGHRES_COLORS = 240  # Leave the last 16 palette entries reserved for the AVS interface.
 
 ORDER_RE = re.compile(r"^(?P<index>\d+)(?:[ _.-].*)?$")
