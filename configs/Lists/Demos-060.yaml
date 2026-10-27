@@ -1,6 +1,6 @@
 - 060 Demos:
   - rank: 6
-  - note: Demo productions that require AGA/060 hardware.
+  - note: Demo productions that require AGA/060 hardware
   - demo-notwhdl--focusdesign-1992-060
   - demo-notwhdl--focusdesign-bekoolfool-060
   - demo-notwhdl--capsule-brutalism-060

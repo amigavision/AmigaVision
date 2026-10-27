@@ -1,4 +1,4 @@
 
- Slide shows and animations from scene groups.
+  Slide shows and animations from scene groups
 
         (Viewer discretion is advised!)

@@ -1,4 +1,4 @@
 
-   Switch the launcher to medium resolution.
+    Switch the launcher to medium resolution
 
-       The selection is remembered after reboot.
+    The selection is remembered after reboot

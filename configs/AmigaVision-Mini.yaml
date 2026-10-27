@@ -21,9 +21,9 @@
 - !include Lists/Mini-Exclusions.yaml
 
 - "Demo Scene":
-  - note: A sample of demo scene releases.
+  - note: A sample of demo scene releases
   - Dealer Demos:
-    - note: Demos by Amiga dealers and hardware developers.
+    - note: Demos by Amiga dealers and hardware developers
     - AmigaDealerDemo
   - !include Lists/Demos.yaml
   - !include Lists/Demos-Curated.yaml

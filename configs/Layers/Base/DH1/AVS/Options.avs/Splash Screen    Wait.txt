@@ -1,2 +1,2 @@
 
-    Show and wait at splash/options window.
+     Show and wait at splash/options window

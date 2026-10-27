@@ -1,7 +1,7 @@
 
    Always use LT+RT+Pause/Play on the gamepad
-                 to quit game.
+                  to quit game
 
 NB! This is not a recommended setting, since it
  will make the CD32 gamepad be recognized as a
- 1-button joystick from the game's perspective.
+ 1-button joystick from the game's perspective

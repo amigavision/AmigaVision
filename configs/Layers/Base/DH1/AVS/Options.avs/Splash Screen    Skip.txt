@@ -1,2 +1,2 @@
 
-       Don't show splash/options window.
+        Don't show splash/options window

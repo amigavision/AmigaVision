@@ -1,5 +1,5 @@
 
-          Always use F10 to quit game.
+          Always use F10 to quit game
 
     Please note that you need to quit before
-       any saved data is written to disk.
+       any saved data is written to disk

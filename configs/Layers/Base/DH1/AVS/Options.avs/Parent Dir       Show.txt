@@ -1,2 +1,2 @@
 
-   Show parent directory (< Back) list item.
+    Show parent directory (< Back) list item

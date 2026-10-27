@@ -1,11 +1,11 @@
 - Curated Content:
-  - note: Curated collections from around the net.
+  - note: Curated collections from around the net
   - image: { ops: { op: "pi", path: "top/curated_content.png" }, size: [320, 128], scale: [1, 1] }
   - AmiGameJam 2025:
     # Explicit numbers preserve the third-place tie and the published gap at 17.
     # https://itch.io/jam/amigamejam2025/results
     - ordering: "ordered"
-    - note: "Return of the Arcade. Public vote results, March 2026."
+    - note: "Return of the Arcade\nPublic vote results, March 2026"
     # Official banner logo, cropped to omit the surrounding sponsors.
     # https://itch.io/jam/amigamejam2025
     - image: { ops: { op: "pi", path: "list/amigamejam2025.png" }, size: [320, 128], scale: [1, 1] }
@@ -29,10 +29,10 @@
     - game-notwhdl--movimientoconstante: { disp_name: "19 Movimiento Constante" }
     - game-notwhdl--cogsnlogs: { disp_name: "20 Cogs N Logs (Demo)" }
   - Alex Limi's Collection:
-    - note: Amiga games worth your time, according to Alex Limi.
+    - note: Amiga games worth your time, according to Alex Limi
     - "[ Multiplayer ]":
       - ordering: "ordered"
-      - note: Show only the multiplayer games.
+      - note: Show only the multiplayer games
       - image: { ops: { op: "pi", path: "top/multiplayer.png" }, size: [320, 128], scale: [1, 1] }
       - AlienBreed2: { disp_name: "[2P] Alien Breed 2" }
       - AlienBreedSpecialEdition: { disp_name: "[2P] Alien Breed Special Edition" }
@@ -429,7 +429,7 @@
     - ZOut
   - Den of Geek's Underappreciated:
     - ordering: "ranked"
-    - note: The Top 50 underappreciated Amiga games according to Den of Geek.
+    - note: The Top 50 underappreciated Amiga games according to Den of Geek
     - image: { op: "pi", path: "list/denofgeek.jpg" }
     - Stardust
     - NoSecondPrize
@@ -482,7 +482,7 @@
     - Alcatraz
     - Resolution101
   - GouldFish's AGA Games to Play:
-    - note: Check out the games that you must play on AGA.
+    - note: Check out the games that you must play on AGA
     - SlamTilt
     - Bograts
     - SkeletonKrew
@@ -492,7 +492,7 @@
     - XTremeRacing
     - SperisLegacy
   - Kim Justice's Euro Platformers:
-    - note: Nine obscure euro platformers that DON'T suck, according to Kim Justice.
+    - note: Nine obscure euro platformers that DON'T suck, according to Kim Justice
     - image: { op: "pi", path: "list/kimjustice_platformers.jpg" }
     - Lionheart
     - Odyssey
@@ -505,7 +505,7 @@
     - TrapsNTreasures
   - Kim Justice's Top 10 Psygnosis:
     - ordering: "ordered"
-    - note: Kim Justice's top 10 favourite Psygnosis games (excluding a few non-Amiga games, including honorable mentions).
+    - note: Kim Justice's top 10 favourite Psygnosis games (excluding a few non-Amiga games, including honorable mentions)
     - image: { op: "pi", path: "list/kimjustice_psygnosis.jpg" }
     - Lemmings
     - BillsTomatoGame
@@ -521,7 +521,7 @@
     - SecondSamurai
   - PIXEL thing's 45 Games:
     - ordering: "ordered"
-    - note: 45 Games That Defined the AMIGA 500,\naccording to It's a P/XEL thing.\n\n(Chronologically ordered.)
+    - note: 45 Games That Defined the AMIGA 500,\naccording to It's a P/XEL thing\n\n(Chronologically ordered.)
     - image: { op: "pi", path: "list/pixelthing_45games.jpg" }
     - IK+
     - CarrierCommand
@@ -570,7 +570,7 @@
     - SWOS9596ECE
   - PIXEL thing's 23 Exclusives:
     - ordering: "ordered"
-    - note: 23 unforgettable Amiga exclusives,\naccording to It's a P/XEL thing.
+    - note: 23 unforgettable Amiga exclusives,\naccording to It's a P/XEL thing
     - image: { op: "pi", path: "list/pixelthing_23exclusive.jpg" }
     - NaughtyOnes
     - WormsDC
@@ -596,7 +596,7 @@
     - Fuzzball
     - Apidya
   - Racketboy's Shmup Essentials:
-    - note: The Commodore Amiga Shmup Library Essentials, according to The Knives and Herr Schatten of Racketboy.com.
+    - note: The Commodore Amiga Shmup Library Essentials, according to The Knives and Herr Schatten of Racketboy.com
     - image: { op: "pi", path: "list/racketboy_shmups.jpg" }
     - Apidya
     - BattleSquadron
@@ -635,7 +635,7 @@
     - Turrican
     - Turrican2
   - Wired's Most Influential:
-    - note: Top 10 most influential Amiga games according to Wired.
+    - note: Top 10 most influential Amiga games according to Wired
     - image: { op: "pi", path: "list/wired.png" }
     - DefenderOfTheCrown
     - SensibleSoccer

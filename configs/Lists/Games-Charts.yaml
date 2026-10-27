@@ -1,5 +1,5 @@
 - Charts:
-  - note: Top games lists compiled or voted by magazines back in the day as well as contemporary outlets.
+  - note: Top games lists compiled or voted by magazines back in the day as well as contemporary outlets
   - image: { ops: { op: "pi", path: "top/charts.png" }, size: [320, 128], scale: [1, 1] }
 
   - Amiga Addict Top 100:
@@ -109,7 +109,7 @@
 
   - Amiga Lore Top 100:
     - ordering: "ranked"
-    - note: Amiga Lore's aggregate review score ranking, taking into account the largest publications of the era from across the continent. A Metacritic equivalent for the platform, if you will.\n\n(Some duplicate entries exist, since rereleases and CD32 versions are considered separately.)
+    - note: Amiga Lore's aggregate review score ranking, taking into account the largest publications of the era from across the continent\\nA Metacritic equivalent for the platform, if you will\n\n(Some duplicate entries exist, since rereleases and CD32 versions are considered separately.)
     - image: { op: "pi", path: "list/amigalore.png" }
     - Populous2&ChallengeGames
     - SWOS9596
@@ -238,7 +238,7 @@
 
   - Amiga Power Top 100 (1991):
     - ordering: "ranked"
-    - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1991.
+    - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1991
     - image: { op: "pi", path: "list/amigapower91.jpg" }
     - RainbowIslands
     - Lemmings
@@ -343,7 +343,7 @@
 
   - Amiga Power Top 100 (1992):
     - ordering: "ranked"
-    - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1992.
+    - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1992
     - image: { op: "pi", path: "list/amigapower92.jpg" }
     - RainbowIslands
     - FormulaOneGrandPrix
@@ -448,7 +448,7 @@
 
   - Amiga Power Top 100 (1993):
     - ordering: "ranked"
-    - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1993.
+    - note: The Top 100 games for the Commodore Amiga according to UK games magazine Amiga Power in 1993
     - image: { op: "pi", path: "list/amigapower93.jpg" }
     - SensibleSoccer
     - FormulaOneGrandPrix
@@ -553,7 +553,7 @@
 
   - EAB Top 20 Exclusives:
     - ordering: "ranked"
-    - note: The best Amiga-exclusive games according to users of the English Amiga Board.
+    - note: The best Amiga-exclusive games according to users of the English Amiga Board
     - image: { op: "pi", path: "list/eab.png" }
     - Wings
     - WormsDC
@@ -578,7 +578,7 @@
 
   - Kim Justice Top 100:
     - ordering: "ranked"
-    - note: Kim Justice's top 100 Amiga games of all time.
+    - note: Kim Justice's top 100 Amiga games of all time
     - image: { op: "pi", path: "list/kimjustice_top100.jpg" }
     - SWOS
     - Syndicate
@@ -683,7 +683,7 @@
 
   - Lemon Amiga Top 30:
     - ordering: "ranked"
-    - note: The best Amiga games, as voted by Lemon Amiga users.
+    - note: The best Amiga games, as voted by Lemon Amiga users
     - image: { op: "pi", path: "list/lemon.png" }
     - SecretOfMonkeyIsland
     - MonkeyIsland2
@@ -717,7 +717,7 @@
     - WormsDC
 
   - Mr Biffo Top 10:
-    - note: The 10 best Amiga games according to Mr Biffo of Digitiser 2000.
+    - note: The 10 best Amiga games according to Mr Biffo of Digitiser 2000
     - image: { op: "pi", path: "list/digitiser.jpg" }
     - CannonFodder
     - SecretOfMonkeyIsland
@@ -731,7 +731,7 @@
     - JimmyWhitesSnooker
 
   - retroGAMER Amiga 500 Top 10:
-    - note: Top 10 from retroGAMER magazine.
+    - note: Top 10 from retroGAMER magazine
     - image: { op: "pi", path: "list/retrogamer.jpg" }
     - Worms
     - JimmyWhitesSnooker

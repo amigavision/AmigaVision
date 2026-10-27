@@ -1,2 +1,2 @@
 
-           Launcher & video options.
+        Launcher, video & audio options

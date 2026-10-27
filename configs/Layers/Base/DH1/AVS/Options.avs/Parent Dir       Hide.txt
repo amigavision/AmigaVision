@@ -1,2 +1,2 @@
 
-Hide parent directory (..) list item (default).
+ Hide parent directory (..) list item (default)

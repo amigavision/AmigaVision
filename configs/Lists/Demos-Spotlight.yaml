@@ -1,6 +1,6 @@
 - Spotlight:
   - rank: 4
-  - note: More great or interesting demos, sorted by year.
+  - note: More great or interesting demos, sorted by year
   - image: { ops: { op: "pi", path: "top/spotlight.png" }, size: [320, 128], scale: [1, 1] }
   - "1988":
     - image: { op: "tx", txt: "’88", size: 190 }

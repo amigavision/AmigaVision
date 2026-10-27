@@ -1,8 +1,8 @@
 - Special Hardware:
-  - note: Games with support for special controllers & peripherals, and arcade hardware.
+  - note: Games with support for special controllers & peripherals, and arcade hardware
   - image: { ops: { op: "pi", path: "top/peripheral.png" }, size: [320, 128], scale: [1, 1] }
   - Modem or Serial Link:
-    - note: Games with local and/or remote multiplayer support.
+    - note: Games with local and/or remote multiplayer support
     - AlienBreed3D2
     - AlienBreed3D
     - ArmourGeddon2
@@ -47,7 +47,7 @@
     - WildWheels
     - XTremeRacing
   - Light Gun:
-    - note: Games with light gun support.\n\n(Not yet available on MiSTer, but most games also feature mouse control.)
+    - note: Games with light gun support\n\n(Not yet available on MiSTer, but most games also feature mouse control.)
     - Aliex
     - Capone
     - CrazyShot
@@ -66,7 +66,7 @@
     - TakeEmOut
     - WestPhaser
   - Roland MT-32:
-    - note: Games with Roland MT-32 MIDI support.
+    - note: Games with Roland MT-32 MIDI support
     - CastleOfDrBrainNTSCMT32
     - ConquestsOfTheLongbowMT32
     - KingsQuest5MT32
@@ -84,7 +84,7 @@
     - SpaceQuest4NTSCMT32
     - SpaceQuestEnhanced--MT32
   - Arcadia Systems:
-    - note: Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500-based multi-game arcade system.
+    - note: Arcadia was an unsuccessful venture by Mastertronic to create an Amiga 500-based multi-game arcade system
     - MagicJohnsonFstbrkArcadia
     - NinjaMissionArcadia
     - XenonArcadia

@@ -1,8 +1,8 @@
 - Multiplayer:
-  - note: Lists of games for more than one player.
+  - note: Lists of games for more than one player
   - image: { ops: { op: "pi", path: "top/multiplayer.png" }, size: [320, 128], scale: [1, 1] }
   - Best of Multiplayer:
-    - note: Our top picks for multiplayer action.
+    - note: Our top picks for multiplayer action
     - AchtungDieKurve
     - BattleIsle
     - ChaosEngine

@@ -1,4 +1,4 @@
 
-    Switch the launcher to high resolution.
+     Switch the launcher to high resolution
 
-       The selection is remembered after reboot.
+    The selection is remembered after reboot

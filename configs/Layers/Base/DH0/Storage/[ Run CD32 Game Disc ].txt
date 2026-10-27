@@ -1,4 +1,4 @@
-   Run CD32 games from CHD or BIN/CUE images.
+   Run CD32 games from CHD or BIN/CUE images
 
    Mount the CD in MiSTer's "Drives" menu as
      Secondary Master, then select "Boot".

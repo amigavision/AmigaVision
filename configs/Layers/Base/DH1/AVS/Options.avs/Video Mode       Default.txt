@@ -1,5 +1,5 @@
 
      Use each title's configured video mode
-                   (default).
-      Clears the saved PAL/NTSC override.
-        This is the recommended setting.
+                   (default)
+       Clears the saved PAL/NTSC override
+        This is the recommended setting

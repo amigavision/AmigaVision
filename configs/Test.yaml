@@ -4,11 +4,11 @@
   - note: 'AmigaVision 202X'
   - Nothing to see here:
     - rank: 1
-    - note: Intentionally left blank.
+    - note: Intentionally left blank
 
 - Hall of Fame:
   - rank: 2
-  - note: Games inducted into the AmigaVision Hall of Fame.\nSorted by genre.
+  - note: Games inducted into the AmigaVision Hall of Fame\nSorted by genre
   - image: { ops: { op: pi, path: "top/hall_of_fame.png" }, size: [320, 128 ], scale: [1, 1] }
   - Action:
     - CannonFodder
@@ -43,7 +43,7 @@
   - Ordered (3):
     - rank: 3
     - ordering: "ordered"
-    - note: 45 Games That Defined the AMIGA 500, according to It's a P/XEL thing.\n\n(Chronologically ordered.)
+    - note: 45 Games That Defined the AMIGA 500, according to It's a P/XEL thing\n\n(Chronologically ordered.)
     - IK+
     - BatmanTheMovie
     - StuntCarRacer: { rank: 0 }
@@ -76,6 +76,6 @@
 - !include Lists/TestInclude/Test.yaml
 
 - "Demo Scene":
-  - note: A sample of demo scene releases.
+  - note: A sample of demo scene releases
   - !include Lists/TestInclude/Demos.yaml
   - Widescreen: !include Lists/TestInclude/DemosWide.yaml

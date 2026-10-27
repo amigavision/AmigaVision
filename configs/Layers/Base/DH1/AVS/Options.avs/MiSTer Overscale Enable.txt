@@ -1,5 +1,5 @@
 
-     Enable MiSTer 1080p/4K Overscale Mode.
-          This is enabled by default.
+     Enable MiSTer 1080p/4K Overscale Mode
+           This is enabled by default
 
-     This setting is saved across reboots.
+      This setting is saved across reboots
