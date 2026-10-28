@@ -54,14 +54,9 @@
   - !include Lists/Demos.yaml
   - !include Lists/Demos-Curated.yaml
   - !include Lists/Demos-Spotlight.yaml
-  - Widescreen: !include Lists/Demos-Widescreen.yaml
-  - !include Lists/Demos-060.yaml
-  - Dealer Demos:
-    - note: Demos by Amiga dealers and hardware developers
-    - AmigaDealerDemo
-    - demo-notwhdl--a1200shopdemoanz
-    - demo-notwhdl--newtek-demoreel1
-    - demo-notwhdl--newtek-demoreel3
+  - ----------------:
+      divider: true
+      label: ""
   - Demos:
       divider: true
   - Demos - By Title:
@@ -76,18 +71,27 @@
     - label: " 1-64KB"
   - Crack Intros:
     - label: " Crack Intros"
+  - ----------------:
+      divider: true
+      label: ""
   - Disk Mags:
       divider: true
   - Disk Mags - By Title:
     - label: " By Title"
   - Disk Mags - By Date:
     - label: " By Date"
+  - ----------------:
+      divider: true
+      label: ""
   - Music Disks:
       divider: true
   - Music Disks - By Title:
     - label: " By Title"
   - Music Disks - By Year:
     - label: " By Year"
+  - ----------------:
+      divider: true
+      label: ""
   - Slide Shows: []
   - ----------------:
       divider: true
