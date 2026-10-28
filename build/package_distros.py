@@ -13,6 +13,7 @@ import zipfile
 from pathlib import Path
 from functools import lru_cache
 
+from user_paths import normalize_path
 from artifact_checksums import write_checksums
 from fetch_windows_installer import INSTALLER_NAME, resolve_windows_installer
 
@@ -650,8 +651,12 @@ def package_amiga(args, output_dir, xz_tool):
 
 def main():
     args = parse_args()
-    output_dir = Path(args.output_dir).expanduser().resolve()
-    output_dir.mkdir(parents=True, exist_ok=True)
+    output_dir = Path(normalize_path(args.output_dir)).resolve()
+    try:
+        output_dir.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:
+        echo(f"Cannot create output directory {output_dir}: {exc.strerror}")
+        return 1
     continue_on_error = args.package == "all"
     packages = (
         ["mister", "cd32-mister", "emulators", "mini", "pi", "amiga"]

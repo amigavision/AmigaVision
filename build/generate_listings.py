@@ -3,6 +3,7 @@
 import re
 import sys
 from pathlib import Path
+from user_paths import normalize_path
 
 
 def main():
@@ -10,7 +11,7 @@ def main():
         raise SystemExit("usage: generate_listings.py <avs-root> <output-dir>")
 
     src = Path(sys.argv[1])
-    dst = Path(sys.argv[2])
+    dst = Path(normalize_path(sys.argv[2]))
     dst.mkdir(parents=True, exist_ok=True)
     for path in dst.glob("*.txt"):
         if path.is_file():

@@ -84,6 +84,8 @@ def argparse_is_file(parser: argparse.ArgumentParser, arg: str):
         return arg
 
 def argparse_is_dir(parser: argparse.ArgumentParser, arg: str):
+    from user_paths import normalize_path
+    arg = normalize_path(arg)
     if not os.path.isdir(arg):
         parser.error("Directory %s does not exist" % arg)
     else:

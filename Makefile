@@ -58,11 +58,11 @@ default: help
 IMAGE_UPDATE_ARGS ?= --incremental
 IMAGE_CLONE_ARGS ?=
 BASE_IMAGE_ARGS ?=
-IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o ${AVSDEST}
+IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o "$(subst ",,${AVSDEST})"
 MINI_IMAGE_PREP_CMD = pipenv run build/avs_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists -d "$(subst ",,${AVSCONTENT})/extra_dirs/LessMusic::DH1:Music" -o "$(subst ",,${AVSDEST})" --temp-dir "$(subst ",,${AVSTEMP})"
-TEST_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --auto-lists -o ${AVSDEST}
-TEST_DRY_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --only-avs-tree --auto-lists -o ${AVSDEST}
-ECS_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(ECS_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o ${AVSDEST}
+TEST_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --auto-lists -o "$(subst ",,${AVSDEST})"
+TEST_DRY_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --only-avs-tree --auto-lists -o "$(subst ",,${AVSDEST})"
+ECS_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(ECS_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o "$(subst ",,${AVSDEST})"
 MAKE_MANIFESTS_CMD = pipenv run build/avs_index.py --make-manifests --only-missing
 MAKE_LISTINGS_CMD = $(PYTHON) build/generate_listings.py "$(subst ",,${AVSTEMP})/DH1/AVS" "$(subst ",,${DISTRO_LISTINGS_DIR})"
 FINALIZE_MAIN_IMAGE = test -f "$(subst ",,${AMIGAVISION_HDF})"
@@ -469,4 +469,4 @@ clean-build:
 pistorm-ecs: PISTORM_MODEL = pistorm
 pistorm pistorm-ecs:
 	$(call print-start-time)
-	@pipenv run python build/pistorm_image.py --model "$(PISTORM_MODEL)" --hdf "$(subst ",,$(PISTORM_HDF))" --rom "$(subst ",,$(PISTORM_ROM))" --prompt --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,$(DISTRO_OUT))" $(if $(strip $(PISTORM_OUTPUT)),--output "$(subst ",,$(PISTORM_OUTPUT))") --amiberry "$(AMIBERRYBIN)"
+	@bash build/run_distros.sh --pistorm --model "$(PISTORM_MODEL)" --hdf "$(subst ",,$(PISTORM_HDF))" --rom "$(subst ",,$(PISTORM_ROM))" --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,$(DISTRO_OUT))" $(if $(strip $(PISTORM_OUTPUT)),--output "$(subst ",,$(PISTORM_OUTPUT))") --amiberry "$(AMIBERRYBIN)"

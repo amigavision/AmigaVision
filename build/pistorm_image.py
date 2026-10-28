@@ -13,6 +13,7 @@ import tempfile
 import urllib.request
 import zipfile
 
+from user_paths import normalize_path
 from artifact_checksums import write_checksums
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -234,21 +235,15 @@ def main():
     p.add_argument('--hdf', type=Path, required=True)
     p.add_argument('--rom', type=Path, required=True)
     p.add_argument('--output', type=Path, help='Optional explicit artifact filename')
-    p.add_argument('--output-dir', type=Path, default=Path(os.environ.get('DISTRO_OUT', str(Path(os.environ.get('AVSDEST', str(Path.home() / 'Developer/AV-Output'))) / 'distros'))))
+    p.add_argument('--output-dir', type=Path, help='Directory selected by run_distros.sh; defaults to DISTRO_OUT or AVSDEST/distros')
     p.add_argument('--date-stamp', default=os.environ.get('DISTRO_DATE', date.today().strftime('%Y.%m.%d')))
-    p.add_argument('--prompt', action='store_true', help='Prompt for release date and output directory when interactive')
     p.add_argument('--amiberry', type=Path, required=True)
     p.add_argument('--cache', type=Path, default=ROOT / 'data/cache/pistorm')
     args = p.parse_args()
-    output_dir = args.output.parent if args.output else args.output_dir
-    if args.prompt and sys.stdin.isatty():
-        print('Preparing distro packaging.')
-        args.date_stamp = input(f'Release date [{args.date_stamp}]: ').strip() or args.date_stamp
-        output_dir = Path(input(f'Output directory [{output_dir}]: ').strip() or str(output_dir))
-        print(f'Using output directory: {output_dir}')
-        print(f'Using release date: {args.date_stamp}\n')
+    default_output_dir = os.environ.get('DISTRO_OUT', str(Path(os.environ.get('AVSDEST', str(Path.home() / 'Developer/AV-Output'))) / 'distros'))
+    output_dir = Path(normalize_path(args.output_dir or (Path(normalize_path(args.output)).parent if args.output else default_output_dir)))
     variant = 'PiStormECS' if args.model == 'pistorm' else 'PiStormAGA'
-    filename = args.output.name if args.output else f'AmigaVision-{variant}-{args.date_stamp}.img.xz'
+    filename = Path(normalize_path(args.output)).name if args.output else f'AmigaVision-{variant}-{args.date_stamp}.img.xz'
     args.output = output_dir / filename
     for key in ('hdf', 'rom', 'output', 'amiberry', 'cache'):
         setattr(args, key, getattr(args, key).expanduser().resolve())
@@ -263,7 +258,10 @@ def main():
     if args.rom.stat().st_size not in (256 * 1024, 512 * 1024, 1024 * 1024):
         p.error('Expected a raw Kickstart ROM (256/512/1024 KiB)')
     args.cache.mkdir(parents=True, exist_ok=True)
-    args.output.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:
+        p.error(f"Cannot create output directory {args.output.parent}: {exc.strerror}")
     # Work alongside output for APFS clones and atomic final publication.
     with tempfile.TemporaryDirectory(prefix='.pistorm-', dir=args.output.parent) as tmp:
         work = Path(tmp)

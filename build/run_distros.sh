@@ -5,6 +5,7 @@ usage() {
   cat <<'EOF'
 Usage:
   run_distros.sh [package_distros.py args...]
+  run_distros.sh --pistorm [pistorm_image.py args...]
 
 Environment:
   DISTRO_DATE            Release version. Defaults to today's date.
@@ -33,12 +34,27 @@ date_stamp="${DISTRO_DATE:-$default_date}"
 
 # Remove the configured output argument so the prompted value is authoritative.
 build_all=false
+pistorm=false
+explicit_output=""
 package_args=()
 emulator_package=false
 archive_choice_explicit=false
 output_dir="${DISTRO_OUT:-${AVSDEST:-$HOME/Developer/AV-Output}/distros}"
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --pistorm)
+      pistorm=true
+      shift
+      ;;
+    --date-stamp)
+      date_stamp="$2"
+      shift 2
+      ;;
+    --output)
+      explicit_output="$2"
+      package_args+=("$1" "$2")
+      shift 2
+      ;;
     --build-all)
       build_all=true
       shift
@@ -69,6 +85,10 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+if [[ "$pistorm" == true && -n "$explicit_output" ]]; then
+  output_dir="$(dirname "$(python3 build/user_paths.py "$explicit_output")")"
+fi
+
 if [[ -t 0 ]]; then
   printf 'Preparing distro packaging.\n'
   printf 'Release version [%s]: ' "$date_stamp"
@@ -82,6 +102,8 @@ if [[ -t 0 ]]; then
   if [[ -n "$input_output" ]]; then
     output_dir="$input_output"
   fi
+
+  output_dir="$(python3 build/user_paths.py "$output_dir")"
 
   if [[ "$build_all" == false && "$emulator_package" == true && "$archive_choice_explicit" == false ]]; then
     while true; do
@@ -102,6 +124,8 @@ if [[ -t 0 ]]; then
   printf 'Using release version: %s\n' "$date_stamp"
   printf '\n'
 fi
+
+output_dir="$(python3 build/user_paths.py "$output_dir")"
 
 if [[ "$build_all" == true ]]; then
   # Resolve once so every child receives the exact same destination, including
@@ -147,4 +171,8 @@ if [[ ! -t 0 && "$emulator_package" == true && "$archive_choice_explicit" == fal
   package_args+=(--skip-emulator-archive)
 fi
 
-DISTRO_DATE="$date_stamp" python3 build/package_distros.py --date-stamp "$date_stamp" --output-dir "$output_dir" "${package_args[@]}"
+if [[ "$pistorm" == true ]]; then
+  python3 build/pistorm_image.py --date-stamp "$date_stamp" --output-dir "$output_dir" "${package_args[@]}"
+else
+  DISTRO_DATE="$date_stamp" python3 build/package_distros.py --date-stamp "$date_stamp" --output-dir "$output_dir" "${package_args[@]}"
+fi
