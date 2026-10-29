@@ -82,7 +82,11 @@ Filename: "{code:ExePath}"; Parameters: "{code:LaunchArgs}"; WorkingDir: "{code:
 var
   TargetPage: TWizardPage;
   EmulatorChoiceTop: Integer;
-  EmulatorChoices: array[0..2] of TNewRadioButton;
+  EmulatorChoices: array[0..2] of TNewButton;
+  EmulatorFrames: array[0..2] of TPanel;
+  EmulatorCards: array[0..2] of TPanel;
+  EmulatorSelectionLabels: array[0..2] of TNewStaticText;
+  SelectedEmulatorIndex: Integer;
   DataPage: TInputDirWizardPage;
   ProgramPage: TInputDirWizardPage;
   DestinationNotice: TNewStaticText;
@@ -95,14 +99,14 @@ function IsAmiberry: Boolean;
 begin
   if EmulatorChoices[0] = nil then
     Result := CompareText(ExpandConstant('{param:EMULATOR|Amiberry}'), 'Amiberry') = 0
-  else Result := EmulatorChoices[0].Checked;
+  else Result := SelectedEmulatorIndex = 0;
 end;
 
 function IsCopperline: Boolean;
 begin
   if EmulatorChoices[1] = nil then
     Result := CompareText(ExpandConstant('{param:EMULATOR|Amiberry}'), 'Copperline') = 0
-  else Result := EmulatorChoices[1].Checked;
+  else Result := SelectedEmulatorIndex = 1;
 end;
 
 function IsWinUAE: Boolean;
@@ -356,13 +360,45 @@ begin
     MsgBox('Could not open the download page. Please visit ' + Link, mbError, MB_OK);
 end;
 
+procedure SelectEmulator(Index: Integer);
+var
+  I: Integer;
+begin
+  if SelectedEmulatorIndex <> Index then SelectedExe := '';
+  SelectedEmulatorIndex := Index;
+  for I := 0 to 2 do begin
+    if EmulatorFrames[I] <> nil then begin
+      if I = Index then begin
+        if HighContrastActive then EmulatorFrames[I].Color := clHighlight
+        else EmulatorFrames[I].Color := $DD8051;
+        EmulatorSelectionLabels[I].Caption := 'Selected';
+      end else begin
+        if HighContrastActive then EmulatorFrames[I].Color := clWindowText
+        else if IsDarkInstallMode then EmulatorFrames[I].Color := $555555
+        else EmulatorFrames[I].Color := $D8D8D8;
+        EmulatorSelectionLabels[I].Caption := '';
+      end;
+    end;
+  end;
+end;
+
+procedure EmulatorRowClick(Sender: TObject);
+var
+  Index: Integer;
+begin
+  Index := TComponent(Sender).Tag;
+  SelectEmulator(Index);
+  // The native name button provides a focus cue and keyboard activation.
+  WizardForm.ActiveControl := EmulatorChoices[Index];
+end;
+
 procedure AddEmulatorChoice(Index: Integer; Caption: String; Available: Boolean);
 var
   Link: TNewLinkLabel;
   Icon: TBitmapImage;
   Details, Separator: TNewStaticText;
   TextMeasure: TBitmap;
-  NameWidth, SeparatorWidth: Integer;
+  NameWidth, SeparatorWidth, RowHeight: Integer;
   URL, Description, IconFile: String;
 begin
   case Index of
@@ -379,17 +415,44 @@ begin
       Description := 'The “standard” Amiga emulator for Windows. More complex to configure, with scaling issues between PAL and NTSC. Choose this only if you need it and are already familiar with it. AmigaVision running under WinUAE has uneven pixels and other scaling issues that may bother you, this is an emulator limitation.';
     end;
   end;
+  EmulatorFrames[Index] := TPanel.Create(WizardForm);
+  with EmulatorFrames[Index] do begin
+    Parent := TargetPage.Surface;
+    StyleElements := [];
+    ParentBackground := False;
+    BevelOuter := bvNone;
+    Caption := '';
+    Tag := Index;
+    TabOrder := Index;
+    OnClick := @EmulatorRowClick;
+    SetBounds(0, EmulatorChoiceTop, TargetPage.SurfaceWidth, ScaleY(100));
+  end;
+  EmulatorCards[Index] := TPanel.Create(WizardForm);
+  with EmulatorCards[Index] do begin
+    Parent := EmulatorFrames[Index];
+    StyleElements := [];
+    ParentBackground := False;
+    BevelOuter := bvNone;
+    Caption := '';
+    if HighContrastActive then Color := clWindow
+    else if IsDarkInstallMode then Color := $202020 else Color := clWhite;
+    Tag := Index;
+    OnClick := @EmulatorRowClick;
+    SetBounds(ScaleX(2), ScaleY(2), EmulatorFrames[Index].Width - ScaleX(4), ScaleY(96));
+  end;
   if IsDarkInstallMode then IconFile := Lowercase(Caption) + '-dark.png'
   else IconFile := Lowercase(Caption) + '.bmp';
   ExtractTemporaryFile(IconFile);
   Icon := TBitmapImage.Create(WizardForm);
-  Icon.Parent := TargetPage.Surface;
+  Icon.Parent := EmulatorCards[Index];
+  Icon.Tag := Index;
+  Icon.OnClick := @EmulatorRowClick;
   if IsDarkInstallMode then begin
     Icon.BackColor := clNone;
     Icon.PngImage.LoadFromFile(ExpandConstant('{tmp}\') + IconFile);
   end else Icon.Bitmap.LoadFromFile(ExpandConstant('{tmp}\') + IconFile);
   Icon.Stretch := True;
-  Icon.SetBounds(0, EmulatorChoiceTop, ScaleX(64), ScaleY(64));
+  Icon.SetBounds(ScaleX(12), ScaleY(12), ScaleX(64), ScaleY(64));
   TextMeasure := TBitmap.Create;
   TextMeasure.Canvas.Font.Name := WizardForm.Font.Name;
   TextMeasure.Canvas.Font.Size := WizardForm.Font.Size;
@@ -398,44 +461,75 @@ begin
   TextMeasure.Canvas.Font.Style := [];
   SeparatorWidth := TextMeasure.Canvas.TextWidth(' — ');
   TextMeasure.Free;
-  EmulatorChoices[Index] := TNewRadioButton.Create(WizardForm);
+  EmulatorChoices[Index] := TNewButton.Create(WizardForm);
   with EmulatorChoices[Index] do begin
-    Parent := TargetPage.Surface;
-    SetBounds(ScaleX(84), EmulatorChoiceTop, NameWidth + ScaleX(17), ScaleY(24));
+    Parent := EmulatorCards[Index];
+    SetBounds(ScaleX(88), ScaleY(10), NameWidth + ScaleX(24), ScaleY(26));
     Font.Style := [fsBold];
     Enabled := Available;
-    TabOrder := Index * 2;
+    TabOrder := 0;
+    Tag := Index;
+    OnClick := @EmulatorRowClick;
   end;
   EmulatorChoices[Index].Caption := Caption;
   Separator := TNewStaticText.Create(WizardForm);
-  Separator.Parent := TargetPage.Surface;
+  Separator.Parent := EmulatorCards[Index];
+  Separator.Tag := Index;
+  Separator.OnClick := @EmulatorRowClick;
   Separator.AutoSize := False;
   Separator.Font.Color := clWindowText;
-  Separator.SetBounds(EmulatorChoices[Index].Left + EmulatorChoices[Index].Width, EmulatorChoiceTop + ScaleY(4),
+  Separator.SetBounds(EmulatorChoices[Index].Left + EmulatorChoices[Index].Width, ScaleY(15),
     SeparatorWidth, ScaleY(20));
   Separator.Caption := ' — ';
   Link := TNewLinkLabel.Create(WizardForm);
-  Link.Parent := TargetPage.Surface;
+  Link.Parent := EmulatorCards[Index];
   Link.SetBounds(Separator.Left + Separator.Width,
-    EmulatorChoiceTop + ScaleY(4), ScaleX(120), ScaleY(20));
+    ScaleY(15), ScaleX(120), ScaleY(20));
   Link.Caption := '<a href="' + URL + '">Download</a>';
   Link.UseVisualStyle := True;
   Link.TabStop := True;
-  Link.TabOrder := Index * 2 + 1;
+  Link.TabOrder := 1;
   Link.Tag := Index;
   Link.OnLinkClick := @DownloadEmulator;
   Details := TNewStaticText.Create(WizardForm);
-  Details.Parent := TargetPage.Surface;
+  Details.Parent := EmulatorCards[Index];
+  Details.Tag := Index;
+  Details.OnClick := @EmulatorRowClick;
   Details.AutoSize := False;
   Details.WordWrap := True;
-  Details.SetBounds(ScaleX(106), EmulatorChoiceTop + ScaleY(26),
-    TargetPage.SurfaceWidth - ScaleX(106), ScaleY(20));
+  Details.SetBounds(ScaleX(88), ScaleY(44),
+    EmulatorCards[Index].Width - ScaleX(104), ScaleY(20));
   Details.Caption := Description;
   Details.AdjustHeight;
-  EmulatorChoiceTop := Details.Top + Details.Height;
-  if EmulatorChoiceTop < Icon.Top + Icon.Height then
-    EmulatorChoiceTop := Icon.Top + Icon.Height;
-  EmulatorChoiceTop := EmulatorChoiceTop + ScaleY(18);
+  RowHeight := Details.Top + Details.Height + ScaleY(12);
+  if RowHeight < ScaleY(88) then RowHeight := ScaleY(88);
+  EmulatorCards[Index].Height := RowHeight;
+  EmulatorFrames[Index].Height := RowHeight + ScaleY(4);
+  EmulatorSelectionLabels[Index] := TNewStaticText.Create(WizardForm);
+  with EmulatorSelectionLabels[Index] do begin
+    Parent := EmulatorCards[Index];
+    AutoSize := False;
+    Alignment := taRightJustify;
+    Font.Style := [fsBold];
+    Tag := Index;
+    OnClick := @EmulatorRowClick;
+    SetBounds(EmulatorCards[Index].Width - ScaleX(86), ScaleY(15), ScaleX(74), ScaleY(20));
+  end;
+  EmulatorChoiceTop := EmulatorFrames[Index].Top + EmulatorFrames[Index].Height + ScaleY(12);
+end;
+
+procedure FitEmulatorRows;
+var
+  ExtraHeight, OriginalWidth: Integer;
+begin
+  ExtraHeight := EmulatorChoiceTop - TargetPage.SurfaceHeight;
+  if ExtraHeight > 0 then begin
+    // Keep all descriptions visible. Preserve the existing width so the
+    // full-width banner keeps exactly the same size and proportions.
+    OriginalWidth := WizardForm.ClientWidth;
+    WizardForm.ClientHeight := WizardForm.ClientHeight + ExtraHeight;
+    WizardForm.ClientWidth := OriginalWidth;
+  end;
 end;
 
 procedure UpdateDestinationNotice(Sender: TObject);
@@ -579,11 +673,12 @@ begin
   AddEmulatorChoice(0, 'Amiberry', True);
   AddEmulatorChoice(1, 'Copperline', True);
   AddEmulatorChoice(2, 'WinUAE', True);
-  EmulatorChoices[0].Checked := True;
+  FitEmulatorRows;
+  SelectEmulator(0);
   if CompareText(ExpandConstant('{param:EMULATOR|Amiberry}'), 'Copperline') = 0 then
-    EmulatorChoices[1].Checked := True;
+    SelectEmulator(1);
   if CompareText(ExpandConstant('{param:EMULATOR|Amiberry}'), 'WinUAE') = 0 then
-    EmulatorChoices[2].Checked := True;
+    SelectEmulator(2);
   ProgramPage := CreateInputDirPage(TargetPage.ID, 'Emulator not found',
     'Install the selected emulator before continuing, or select its installation folder.',
     'Setup checked installed applications and common system, per-user and portable locations. If you have already installed the emulator elsewhere, choose its folder. Setup will select the correct program automatically.', False, '');
