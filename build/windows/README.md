@@ -186,3 +186,17 @@ quit hint for Copperline. No external shader files are required.
 See content/distro_emulators/Copperline/INSTALL.txt for all three platforms.
 Documentation: https://copperline.dev/docs/configuration/ and
 https://copperline.dev/docs/ui/#where-files-go
+
+## Default data destinations
+
+Data-folder choices are remembered separately for each emulator. Switching
+emulators restores that emulator’s choice or fills its own default:
+
+- WinUAE: Public Documents\Amiga Files\WinUAE (normally
+  C:\Users\Public\Documents\Amiga Files\WinUAE).
+- Amiberry: %USERPROFILE%\Amiberry. AMIBERRY_HOME_DIR and an absolute
+  base_content_path in amiberry.conf take precedence. Portable installs use
+  their own folder when no content-root override is configured.
+- Copperline: %USERPROFILE%\Documents\Copperline, or its portable folder.
+
+The executable install location does not determine the normal data location.

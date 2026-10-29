@@ -82,11 +82,12 @@ Filename: "{code:ExePath}"; Parameters: "{code:LaunchArgs}"; WorkingDir: "{code:
 var
   TargetPage: TWizardPage;
   EmulatorChoiceTop: Integer;
-  EmulatorChoices: array[0..2] of TNewButton;
+  EmulatorChoices: array[0..2] of TNewStaticText;
   EmulatorFrames: array[0..2] of TPanel;
   EmulatorCards: array[0..2] of TPanel;
   EmulatorSelectionLabels: array[0..2] of TNewStaticText;
   SelectedEmulatorIndex: Integer;
+  EmulatorDataFolders: array[0..2] of String;
   DataPage: TInputDirWizardPage;
   ProgramPage: TInputDirWizardPage;
   DestinationNotice: TNewStaticText;
@@ -154,6 +155,50 @@ end;
 function ExeRoot(Param: String): String;
 begin
   Result := ExtractFileDir(ExePath(''));
+end;
+
+function DefaultDataFolder: String;
+var
+  ConfigFile, Value: String;
+  Lines: TArrayOfString;
+  I, Separator: Integer;
+begin
+  if IsCopperline then begin Result := CopperlineHome; exit; end;
+  if IsWinUAE then begin
+    Result := ExpandConstant('{commondocs}\Amiga Files\WinUAE');
+    exit;
+  end;
+  // Amiberry's content root is distinct from both its executable and its
+  // bootstrap amiberry.conf. Respect a configured base content folder.
+  Value := Trim(GetEnv('AMIBERRY_HOME_DIR'));
+  if Value <> '' then begin Result := RemoveQuotes(Value); exit; end;
+  if FileExists(ExeRoot('') + '\amiberry.portable') then
+    ConfigFile := ExeRoot('') + '\Settings\amiberry.conf'
+  else ConfigFile := ExpandConstant('{localappdata}\Amiberry\amiberry.conf');
+  if LoadStringsFromFile(ConfigFile, Lines) then
+    for I := 0 to GetArrayLength(Lines) - 1 do begin
+      Separator := Pos('=', Lines[I]);
+      if (Separator > 0) and
+         (CompareText(Trim(Copy(Lines[I], 1, Separator - 1)), 'base_content_path') = 0) then begin
+        Value := RemoveQuotes(Trim(Copy(Lines[I], Separator + 1, Length(Lines[I]))));
+        StringChangeEx(Value, '/', '\', True);
+        if (Copy(Value, 1, 2) = '\\') or
+           ((Length(Value) >= 3) and (Copy(Value, 2, 2) = ':\')) then begin
+          Result := RemoveBackslashUnlessRoot(Value);
+          exit;
+        end;
+      end;
+    end;
+  if FileExists(ExeRoot('') + '\amiberry.portable') then Result := ExeRoot('')
+  else Result := GetEnv('USERPROFILE') + '\Amiberry';
+end;
+
+procedure FillDefaultDataFolder;
+begin
+  if (DataPage <> nil) and (DataPage.Values[0] = '') then begin
+    DataPage.Values[0] := DefaultDataFolder;
+    Log('Default ' + Emulator('') + ' data folder: ' + DataPage.Values[0]);
+  end;
 end;
 
 function OpenPathForAccess(const Path: String; Access, ShareMode: LongWord;
@@ -364,8 +409,13 @@ procedure SelectEmulator(Index: Integer);
 var
   I: Integer;
 begin
-  if SelectedEmulatorIndex <> Index then SelectedExe := '';
-  SelectedEmulatorIndex := Index;
+  if SelectedEmulatorIndex <> Index then begin
+    if DataPage <> nil then
+      EmulatorDataFolders[SelectedEmulatorIndex] := DataPage.Values[0];
+    SelectedExe := '';
+    SelectedEmulatorIndex := Index;
+    if DataPage <> nil then DataPage.Values[0] := EmulatorDataFolders[Index];
+  end;
   for I := 0 to 2 do begin
     if EmulatorFrames[I] <> nil then begin
       if I = Index then begin
@@ -388,8 +438,53 @@ var
 begin
   Index := TComponent(Sender).Tag;
   SelectEmulator(Index);
-  // The native name button provides a focus cue and keyboard activation.
-  WizardForm.ActiveControl := EmulatorChoices[Index];
+  WizardForm.ActiveControl := EmulatorFrames[Index];
+end;
+
+function FocusedEmulatorRow: Integer;
+var
+  I: Integer;
+begin
+  Result := -1;
+  for I := 0 to 2 do
+    if WizardForm.ActiveControl = EmulatorFrames[I] then begin
+      Result := I;
+      exit;
+    end;
+end;
+
+procedure EmulatorSelectionKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+var
+  Index: Integer;
+begin
+  if (TargetPage = nil) or (WizardForm.CurPageID <> TargetPage.ID) then exit;
+  Index := FocusedEmulatorRow;
+  if (Key >= 49) and (Key <= 51) then Index := Key - 49
+  else if Index >= 0 then begin
+    case Key of
+      37, 38: Index := (Index + 2) mod 3;
+      39, 40: Index := (Index + 1) mod 3;
+      36: Index := 0;
+      35: Index := 2;
+      32: ;
+    else exit;
+    end;
+  end else exit;
+  SelectEmulator(Index);
+  WizardForm.ActiveControl := EmulatorFrames[Index];
+  Key := 0;
+end;
+
+procedure EmulatorSelectionKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+var
+  Index: Integer;
+begin
+  if (TargetPage = nil) or (WizardForm.CurPageID <> TargetPage.ID) then exit;
+  // Selection follows keyboard focus, keeping the row outline visible on Tab.
+  if Key = 9 then begin
+    Index := FocusedEmulatorRow;
+    if Index >= 0 then SelectEmulator(Index);
+  end;
 end;
 
 procedure AddEmulatorChoice(Index: Integer; Caption: String; Available: Boolean);
@@ -424,9 +519,11 @@ begin
     Caption := '';
     Tag := Index;
     TabOrder := Index;
+    TabStop := True;
     OnClick := @EmulatorRowClick;
     SetBounds(0, EmulatorChoiceTop, TargetPage.SurfaceWidth, ScaleY(100));
   end;
+  EmulatorFrames[Index].Caption := Caption;
   EmulatorCards[Index] := TPanel.Create(WizardForm);
   with EmulatorCards[Index] do begin
     Parent := EmulatorFrames[Index];
@@ -461,13 +558,14 @@ begin
   TextMeasure.Canvas.Font.Style := [];
   SeparatorWidth := TextMeasure.Canvas.TextWidth(' — ');
   TextMeasure.Free;
-  EmulatorChoices[Index] := TNewButton.Create(WizardForm);
+  EmulatorChoices[Index] := TNewStaticText.Create(WizardForm);
   with EmulatorChoices[Index] do begin
     Parent := EmulatorCards[Index];
-    SetBounds(ScaleX(68), ScaleY(6), NameWidth + ScaleX(24), ScaleY(24));
+    AutoSize := False;
+    SetBounds(ScaleX(68), ScaleY(10), NameWidth, ScaleY(20));
     Font.Style := [fsBold];
     Enabled := Available;
-    TabOrder := 0;
+    TabStop := False;
     Tag := Index;
     OnClick := @EmulatorRowClick;
   end;
@@ -505,6 +603,7 @@ begin
   if RowHeight < ScaleY(64) then RowHeight := ScaleY(64);
   EmulatorCards[Index].Height := RowHeight;
   EmulatorFrames[Index].Height := RowHeight + ScaleY(4);
+  Icon.Top := (RowHeight - Icon.Height) div 2;
   EmulatorSelectionLabels[Index] := TNewStaticText.Create(WizardForm);
   with EmulatorSelectionLabels[Index] do begin
     Parent := EmulatorCards[Index];
@@ -654,6 +753,9 @@ procedure InitializeWizard;
 begin
   ExtractTemporaryFile('banner.bmp');
   BrandIntermediatePages;
+  WizardForm.KeyPreview := True;
+  WizardForm.OnKeyDown := @EmulatorSelectionKeyDown;
+  WizardForm.OnKeyUp := @EmulatorSelectionKeyUp;
   Log('Creating AmigaVision setup pages');
   TargetPage := CreateCustomPage(wpWelcome, 'Choose your emulator',
     'Select which emulator to use. Use its download link if you need to install it first, and then come back here to complete the process.');
@@ -704,12 +806,7 @@ begin
       DataPage.Caption := 'Choose the AmigaVision data folder';
       DataPage.Description := 'Where should AmigaVision be installed?';
       DataPage.SubCaptionLabel.Caption := 'Choose the folder where you want to install AmigaVision. Setup will check it for an existing installation.';
-      if (DataPage.Values[0] = '') or
-         (CompareText(DataPage.Values[0], CopperlineHome) = 0) then begin
-        if IsWinUAE then
-          DataPage.Values[0] := ExpandConstant('{commondocs}\Amiga Files\WinUAE')
-        else DataPage.Values[0] := ExeRoot('');
-      end;
+      FillDefaultDataFolder;
     end;
     UpdateDestinationNotice(nil);
   end;
@@ -847,6 +944,7 @@ end;
 function PrepareToInstall(var NeedsRestart: Boolean): String;
 begin
   if SelectedExe = '' then DetectEmulator;
+  FillDefaultDataFolder;
   Result := ValidateInputs;
   if Result = '' then Result := InstallProtectedShader;
 end;
