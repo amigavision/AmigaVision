@@ -452,7 +452,7 @@ begin
     Icon.PngImage.LoadFromFile(ExpandConstant('{tmp}\') + IconFile);
   end else Icon.Bitmap.LoadFromFile(ExpandConstant('{tmp}\') + IconFile);
   Icon.Stretch := True;
-  Icon.SetBounds(ScaleX(12), ScaleY(12), ScaleX(64), ScaleY(64));
+  Icon.SetBounds(ScaleX(8), ScaleY(8), ScaleX(48), ScaleY(48));
   TextMeasure := TBitmap.Create;
   TextMeasure.Canvas.Font.Name := WizardForm.Font.Name;
   TextMeasure.Canvas.Font.Size := WizardForm.Font.Size;
@@ -464,7 +464,7 @@ begin
   EmulatorChoices[Index] := TNewButton.Create(WizardForm);
   with EmulatorChoices[Index] do begin
     Parent := EmulatorCards[Index];
-    SetBounds(ScaleX(88), ScaleY(10), NameWidth + ScaleX(24), ScaleY(26));
+    SetBounds(ScaleX(68), ScaleY(6), NameWidth + ScaleX(24), ScaleY(24));
     Font.Style := [fsBold];
     Enabled := Available;
     TabOrder := 0;
@@ -478,13 +478,13 @@ begin
   Separator.OnClick := @EmulatorRowClick;
   Separator.AutoSize := False;
   Separator.Font.Color := clWindowText;
-  Separator.SetBounds(EmulatorChoices[Index].Left + EmulatorChoices[Index].Width, ScaleY(15),
+  Separator.SetBounds(EmulatorChoices[Index].Left + EmulatorChoices[Index].Width, ScaleY(10),
     SeparatorWidth, ScaleY(20));
   Separator.Caption := ' — ';
   Link := TNewLinkLabel.Create(WizardForm);
   Link.Parent := EmulatorCards[Index];
   Link.SetBounds(Separator.Left + Separator.Width,
-    ScaleY(15), ScaleX(120), ScaleY(20));
+    ScaleY(10), ScaleX(120), ScaleY(20));
   Link.Caption := '<a href="' + URL + '">Download</a>';
   Link.UseVisualStyle := True;
   Link.TabStop := True;
@@ -497,12 +497,12 @@ begin
   Details.OnClick := @EmulatorRowClick;
   Details.AutoSize := False;
   Details.WordWrap := True;
-  Details.SetBounds(ScaleX(88), ScaleY(44),
-    EmulatorCards[Index].Width - ScaleX(104), ScaleY(20));
+  Details.SetBounds(ScaleX(68), ScaleY(34),
+    EmulatorCards[Index].Width - ScaleX(80), ScaleY(20));
   Details.Caption := Description;
   Details.AdjustHeight;
-  RowHeight := Details.Top + Details.Height + ScaleY(12);
-  if RowHeight < ScaleY(88) then RowHeight := ScaleY(88);
+  RowHeight := Details.Top + Details.Height + ScaleY(8);
+  if RowHeight < ScaleY(64) then RowHeight := ScaleY(64);
   EmulatorCards[Index].Height := RowHeight;
   EmulatorFrames[Index].Height := RowHeight + ScaleY(4);
   EmulatorSelectionLabels[Index] := TNewStaticText.Create(WizardForm);
@@ -513,24 +513,11 @@ begin
     Font.Style := [fsBold];
     Tag := Index;
     OnClick := @EmulatorRowClick;
-    SetBounds(EmulatorCards[Index].Width - ScaleX(86), ScaleY(15), ScaleX(74), ScaleY(20));
+    SetBounds(EmulatorCards[Index].Width - ScaleX(86), ScaleY(10), ScaleX(74), ScaleY(20));
   end;
-  EmulatorChoiceTop := EmulatorFrames[Index].Top + EmulatorFrames[Index].Height + ScaleY(12);
+  EmulatorChoiceTop := EmulatorFrames[Index].Top + EmulatorFrames[Index].Height + ScaleY(6);
 end;
 
-procedure FitEmulatorRows;
-var
-  ExtraHeight, OriginalWidth: Integer;
-begin
-  ExtraHeight := EmulatorChoiceTop - TargetPage.SurfaceHeight;
-  if ExtraHeight > 0 then begin
-    // Keep all descriptions visible. Preserve the existing width so the
-    // full-width banner keeps exactly the same size and proportions.
-    OriginalWidth := WizardForm.ClientWidth;
-    WizardForm.ClientHeight := WizardForm.ClientHeight + ExtraHeight;
-    WizardForm.ClientWidth := OriginalWidth;
-  end;
-end;
 
 procedure UpdateDestinationNotice(Sender: TObject);
 var
@@ -559,8 +546,8 @@ end;
 
 function BrandBannerHeight: Integer;
 begin
-  // Use the original welcome banner proportions on every page.
-  Result := WizardForm.WelcomePage.ClientWidth * 300 div 1491;
+  // The logo is unchanged; half the original top/bottom padding was cropped.
+  Result := WizardForm.WelcomePage.ClientWidth * 212 div 1491;
 end;
 
 function AddBrandBanner(Page: TWinControl): Integer;
@@ -572,7 +559,7 @@ begin
   Banner.Bitmap.LoadFromFile(ExpandConstant('{tmp}\banner.bmp'));
   Banner.Stretch := True;
   Banner.SetBounds(0, 0, Page.ClientWidth, BrandBannerHeight);
-  Result := Banner.Height + ScaleY(20);
+  Result := Banner.Height + ScaleY(10);
 end;
 
 procedure BrandWelcomeAndFinish;
@@ -595,7 +582,7 @@ begin
   end;
   with WizardForm.WelcomeLabel2 do begin
     Left := Margin;
-    Top := WizardForm.WelcomeLabel1.Top + WizardForm.WelcomeLabel1.Height + ScaleY(16);
+    Top := WizardForm.WelcomeLabel1.Top + WizardForm.WelcomeLabel1.Height + ScaleY(8);
     Width := TextWidth;
     Height := WizardForm.WelcomePage.ClientHeight - Top - ScaleY(16);
   end;
@@ -673,7 +660,7 @@ begin
   AddEmulatorChoice(0, 'Amiberry', True);
   AddEmulatorChoice(1, 'Copperline', True);
   AddEmulatorChoice(2, 'WinUAE', True);
-  FitEmulatorRows;
+  Log(Format('Emulator selection layout: rows=%d, available=%d', [EmulatorChoiceTop, TargetPage.SurfaceHeight]));
   SelectEmulator(0);
   if CompareText(ExpandConstant('{param:EMULATOR|Amiberry}'), 'Copperline') = 0 then
     SelectEmulator(1);
