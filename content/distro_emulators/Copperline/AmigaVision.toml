@@ -1,4 +1,5 @@
-rom = "../Amiberry/ROMs/AmigaVision.rom"
+# Copperline looks up these filenames in its roms and harddrives folders.
+rom = "AmigaVision.rom"
 
 [cpu]
 model = "68040"
@@ -20,11 +21,10 @@ profile = "A1200"
 stereo_separation = 50
 
 [copperhf]
-unit0 = "../Amiberry/HardDrives/AmigaVision.hdf"
+unit0 = "AmigaVision.hdf"
 
-[copperhf.unit1]
-path = "../Amiberry/HardDrives/AmigaVision-Saves.hdf"
-bootpri = -35
+# These RDB images supply their own partition names and boot priorities.
+unit1 = "AmigaVision-Saves.hdf"
 
 [display]
 scaling = "integer"

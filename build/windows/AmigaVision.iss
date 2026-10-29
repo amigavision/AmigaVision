@@ -120,9 +120,20 @@ begin
   Result := RemoveBackslashUnlessRoot(Result);
 end;
 
+function CopperlineHome: String;
+var
+  Folder: String;
+begin
+  Folder := ExtractFileDir(SelectedExe);
+  if Folder = '' then Folder := ExtractFileDir(ExpandConstant('{param:EMULATORFILE|}'));
+  if (Folder <> '') and FileExists(Folder + '\portable.txt') then Result := Folder
+  else Result := GetEnv('USERPROFILE') + '\Documents\Copperline';
+end;
+
 function DataRoot(Param: String): String;
 begin
-  if DataPage = nil then Result := ExpandConstant('{param:DATA|{userdocs}\AmigaVision}')
+  if IsCopperline then Result := CopperlineHome
+  else if DataPage = nil then Result := ExpandConstant('{param:DATA|{userdocs}\AmigaVision}')
   else Result := DataPage.Values[0];
   Result := RemoveBackslashUnlessRoot(Result);
 end;
@@ -541,10 +552,11 @@ begin
   if EmulatorExitHint = nil then begin
     EmulatorExitHint := TNewStaticText.Create(WizardForm);
     EmulatorExitHint.Parent := WizardForm.FinishedPage;
-    EmulatorExitHint.Caption := 'Press F12 to exit the emulator.';
     EmulatorExitHint.AutoSize := False;
     EmulatorExitHint.WordWrap := True;
   end;
+  if IsCopperline then EmulatorExitHint.Caption := 'Press Alt+Q to exit the emulator.'
+  else EmulatorExitHint.Caption := 'Press F12 to exit the emulator.';
   EmulatorExitHint.SetBounds(ScaleX(24), Top + ScaleY(40),
     WizardForm.FinishedPage.ClientWidth - ScaleX(48), ScaleY(32));
   EmulatorExitHint.AdjustHeight;
@@ -591,15 +603,27 @@ procedure CurPageChanged(CurPageID: Integer);
 begin
   if CurPageID = wpFinished then LayoutCompletionOptions;
   if DataPage = nil then exit;
-  if (CurPageID = DataPage.ID) and (DataPage.Values[0] = '') then begin
-    if IsWinUAE then
-      DataPage.Values[0] := ExpandConstant('{commondocs}\Amiga Files\WinUAE')
-    else if IsCopperline then
-      DataPage.Values[0] := ExpandConstant('{userdocs}\AmigaVision')
-    else
-      DataPage.Values[0] := ExeRoot('');
+  if CurPageID = DataPage.ID then begin
+    DataPage.Edits[0].ReadOnly := IsCopperline;
+    DataPage.Buttons[0].Enabled := not IsCopperline;
+    if IsCopperline then begin
+      DataPage.Caption := 'AmigaVision data folder';
+      DataPage.Description := 'Copperline uses this folder for its configurations, ROMs and disk images.';
+      DataPage.SubCaptionLabel.Caption := 'Setup uses Copperline’s standard data folder so the same configuration works without path changes. Existing saves and configuration files will be kept or backed up.';
+      DataPage.Values[0] := CopperlineHome;
+    end else begin
+      DataPage.Caption := 'Choose the AmigaVision data folder';
+      DataPage.Description := 'Where should AmigaVision be installed?';
+      DataPage.SubCaptionLabel.Caption := 'Choose the folder where you want to install AmigaVision. Setup will check it for an existing installation.';
+      if (DataPage.Values[0] = '') or
+         (CompareText(DataPage.Values[0], CopperlineHome) = 0) then begin
+        if IsWinUAE then
+          DataPage.Values[0] := ExpandConstant('{commondocs}\Amiga Files\WinUAE')
+        else DataPage.Values[0] := ExeRoot('');
+      end;
+    end;
+    UpdateDestinationNotice(nil);
   end;
-  if CurPageID = DataPage.ID then UpdateDestinationNotice(nil);
 end;
 
 function ValidateInputs: String;
@@ -648,11 +672,9 @@ begin
   end;
   Text := UTF8Decode(Loaded);
   if IsCopperline then begin
-    Root := DataRoot('');
-    StringChangeEx(Root, '\', '/', True);
-    StringChangeEx(Text, '../Amiberry/', Root + '/', True);
-    StringChangeEx(Text, '\', '/', True);
-    ConfigText := UTF8Encode(Text);
+    // Use the exact shared TOML. Copperline resolves bare media filenames
+    // from its own roms and harddrives directories, independent of launch cwd.
+    ConfigText := Loaded;
     exit;
   end;
   StringChangeEx(Text, './HardDrives/', AddBackslash(DataRoot('')) + 'HardDrives\', True);
@@ -842,11 +864,6 @@ begin
   if WizardIsTaskSelected('desktopicon') then WriteAmigaVisionShortcut(Desktop, Qualified);
 end;
 
-function CopperlineHome: String;
-begin
-  if FileExists(ExeRoot('') + '\portable.txt') then Result := ExeRoot('')
-  else Result := GetEnv('USERPROFILE') + '\Documents\Copperline';
-end;
 
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
@@ -857,8 +874,6 @@ begin
       WriteConfig(DataRoot('') + '\configs\AmigaVision.toml');
       if not ForceDirectories(CopperlineHome + '\configs') then
         RaiseException('Could not create the Copperline configuration folder.');
-      if CompareText(DataRoot(''), CopperlineHome) <> 0 then
-        WriteConfig(CopperlineHome + '\configs\AmigaVision.toml');
       if WizardIsTaskSelected('defaultconfig') then begin
         WriteConfig(CopperlineHome + '\configs\default.toml');
       end;

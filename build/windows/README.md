@@ -165,21 +165,24 @@ folder. No second copy is packaged under WinUAE or at the archive root.
 
 ## Copperline
 
-Copperline is supported using a current Nightly with relative media paths and
-CopperHF support. Download it from https://copperline.dev/ and keep the complete
-Windows download together. Setup detects copperline.exe in the same installed
-and portable locations used for the other emulators.
+Setup copies the canonical Amiberry ROM and HDFs into Copperline’s media
+folders under `%USERPROFILE%\Documents\Copperline`, or beside copperline.exe
+when portable.txt is present. This location is fixed on the destination page
+so the shared TOML can work without inserting machine-specific paths.
 
-The package includes Copperline/configs/AmigaVision.toml with relative paths
-to the canonical Amiberry HDFs and ROM. The Windows installer copies these
-assets to the chosen data folder and writes configs/AmigaVision.toml there,
-using absolute forward-slash paths so direct emulator launches also work.
-The shortcut passes --config explicitly. No shader files are required:
-Copperline uses its built-in scanlines shader, matching the reference config.
+The shared configs/AmigaVision.toml is installed unchanged in that folder.
+It uses bare filenames: rom = "AmigaVision.rom", CopperHF unit0 =
+"AmigaVision.hdf" and unit1 = "AmigaVision-Saves.hdf". Copperline’s relative
+lookup searches roms and harddrives independently of the shortcut’s working
+directory. Windows folder lookup is case-insensitive; manual Mac/Linux setups
+must use lowercase roms and harddrives. The Windows shortcut passes --config.
 
-The startup task backs up and writes default.toml in the user profile’s
-Documents/Copperline/configs, or configs beside copperline.exe when portable.txt
-is present. Leaving it unchecked preserves the existing startup config.
-A named copy is also written to Copperline’s configs folder for its picker.
-Existing copperline.toml files take precedence over the saved default;
-see the packaged Copperline/INSTALL.txt for manual setup in those cases.
+The checked startup task also backs up and writes configs/default.toml.
+Leaving it unchecked preserves the previous default. Both configs contain
+[emulation] auto_launch = true. The HDFs supply their own RDB boot priorities;
+no TOML bootpri override is needed. The completion screen uses Alt+Q as the
+quit hint for Copperline. No external shader files are required.
+
+See content/distro_emulators/Copperline/INSTALL.txt for all three platforms.
+Documentation: https://copperline.dev/docs/configuration/ and
+https://copperline.dev/docs/ui/#where-files-go

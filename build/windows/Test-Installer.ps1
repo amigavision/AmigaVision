@@ -157,7 +157,7 @@ try {
     # Copperline uses the canonical Amiberry media and a separate TOML config.
     $copperExe = Join-Path $root 'Copperline bin/copperline.exe'
     $copperHome = Split-Path $copperExe
-    $copperData = Join-Path $root 'Copperline data'
+    $copperData = $copperHome
     Put $copperExe 'placeholder executable; not launched'
     Put "$copperHome/portable.txt" ''
     Put "$copperHome/configs/default.toml" 'my Copperline default'
@@ -167,11 +167,10 @@ try {
     Assert-Content "$copperData/HardDrives/AmigaVision.hdf" 'new main'
     Assert-Content "$copperData/ROMs/AmigaVision.rom" 'rom'
     $copperConfig = Get-Content -Raw "$copperData/configs/AmigaVision.toml"
-    $forwardData = $copperData.Replace('\', '/')
-    foreach ($path in @('ROMs/AmigaVision.rom', 'HardDrives/AmigaVision.hdf', 'HardDrives/AmigaVision-Saves.hdf')) {
-        if (!$copperConfig.Contains("$forwardData/$path")) { throw "Copperline media path incorrect: $path" }
-    }
-    if ($copperConfig.Contains('../Amiberry')) { throw 'Copperline media paths were not resolved' }
+    Assert-Content "$copperData/configs/AmigaVision.toml" ([IO.File]::ReadAllText("$payload/Copperline/configs/AmigaVision.toml"))
+    if (!$copperConfig.Contains('rom = "AmigaVision.rom"') -or
+        !$copperConfig.Contains('unit0 = "AmigaVision.hdf"') -or
+        !$copperConfig.Contains('unit1 = "AmigaVision-Saves.hdf"')) { throw 'Copperline relative media entries are incorrect' }
     $copperLink = Read-Shortcut (Find-EmulatorShortcut "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs" 'Copperline')
     if ($copperLink.TargetPath -ne $copperExe -or !$copperLink.Arguments.Contains('--config "' + $copperData + '\configs\AmigaVision.toml"')) { throw 'Copperline shortcut is incorrect' }
     Put "$copperData/HardDrives/AmigaVision-Saves.hdf" 'my Copperline saves'
@@ -268,7 +267,7 @@ try {
         if ((Install 'WinUAE' '' "$root/packaged WinUAE" $winuae) -ne 0) { throw 'WinUAE did not use the canonical Amiberry disk files' }
         Assert-Content "$root/packaged WinUAE/HardDrives/AmigaVision.hdf" 'new main'
         if ((Install 'Copperline' '' "$root/packaged Copperline" $copperExe) -ne 0) { throw 'Copperline did not use the packaged media' }
-        Assert-Content "$root/packaged Copperline/HardDrives/AmigaVision.hdf" 'new main'
+        Assert-Content "$copperHome/HardDrives/AmigaVision.hdf" 'new main'
         $setup = Join-Path $root 'Install on Windows.exe'
         Copy-Item $originalSetup $setup
         if ((Install 'Amiberry' '' "$root/detached install" $exe) -eq 0) { throw 'Detached installer should reject missing sibling folders' }
@@ -286,6 +285,7 @@ try {
                 $bin = Join-Path $root "registry fixtures/$view/$emulator"
                 $expected = Join-Path $bin "$($emulator.ToLower()).exe"
                 Put $expected 'placeholder'
+                if ($emulator -eq 'Copperline') { Put "$bin/portable.txt" '' }
                 if ($emulator -eq 'WinUAE') {
                     $expected = Join-Path $bin 'winuae64.exe'
                     Put $expected '64-bit placeholder; must be preferred over winuae.exe'

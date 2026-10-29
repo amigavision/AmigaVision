@@ -1,32 +1,56 @@
 AmigaVision for Copperline
 
-Use a current Copperline Nightly with relative media paths and CopperHF support:
-https://copperline.dev/
+Download Copperline: https://copperline.dev/
+Use a build with relative media lookup in its roms and harddrives folders.
 
-Windows: run “Install on Windows.exe” from the extracted emulator
-package and choose Copperline. Setup copies the disks and ROM from Amiberry,
-keeps existing saves and Shared files, and creates an AmigaVision shortcut.
+Windows installer
+-----------------
+Run “Install on Windows.exe” and choose Copperline. Setup copies the ROM
+and disk images from the package’s Amiberry folder to Copperline’s standard
+data folder and installs configs/AmigaVision.toml unchanged.
 
-“Start AmigaVision when the emulator opens” also installs default.toml in
-Copperline’s configs folder. Uncheck it to keep your current startup config;
-the AmigaVision shortcut still launches configs/AmigaVision.toml explicitly.
-Existing configuration files are backed up before replacement.
+The checked “Start AmigaVision when the emulator opens” option also installs
+configs/default.toml. Uncheck it to keep the existing startup config; the
+AmigaVision shortcut still launches the named config with --config.
+Existing configs are backed up, and saves and Shared files are preserved.
 
-Manual setup (macOS, Linux or Windows): keep Copperline and Amiberry beside
-each other in the extracted package. From the package’s Copperline directory,
-run your Copperline executable with --config configs/AmigaVision.toml.
-The relative paths in that file refer to ../Amiberry/HardDrives and
-../Amiberry/ROMs, so the HDFs and ROM are not duplicated.
+Manual setup (Mac, Linux or Windows)
+-----------------------------------
+Copperline’s standard data folder is:
 
-The supplied settings match the reference AmigaVision setup: A1200, 68040
-with FPU and data cache, 8 MB fast RAM, warp boot, automatic launch, integer
-scaling, autocrop, fullscreen, scanlines and a hidden status bar. The saves
-drive uses CopperHF unit1 with boot priority -35.
+Windows: %USERPROFILE%\Documents\Copperline
+Mac:     ~/Documents/Copperline
+Linux:   ~/Documents/Copperline
 
-To use it as your default manually, copy the TOML into Copperline’s configs
-folder as default.toml and update its media paths to absolute paths first.
-Copperline normally stores configs in Documents/Copperline/configs under
-your user profile; portable.txt beside its executable makes it use that
-installation directory instead. An existing copperline.toml beside the
-executable takes precedence over the saved default. The named config is also installed in Copperline’s configs folder so it can
-be selected from the emulator.
+With portable.txt beside the executable or Linux AppImage, use its folder
+instead. Quit Copperline before installing.
+
+1. Copy the contents of this package’s Amiberry/ROMs into roms in that folder.
+2. Copy the contents of Amiberry/HardDrives into harddrives in that folder.
+   Keep existing AmigaVision-Saves.hdf and custom Shared files on upgrades.
+3. Copy Copperline/configs/AmigaVision.toml into configs in that folder.
+   No path edits are needed; use the same file on all three platforms.
+4. To boot AmigaVision automatically, back up any existing configs/default.toml
+   and copy AmigaVision.toml to default.toml. Otherwise load AmigaVision.toml
+   from Copperline, or use copperline --config /path/to/AmigaVision.toml.
+
+The relative entries are:
+
+rom = "AmigaVision.rom"
+
+[copperhf]
+unit0 = "AmigaVision.hdf"
+unit1 = "AmigaVision-Saves.hdf"
+
+Copperline searches for the ROM in roms and for the HDFs in harddrives when
+they are not in the working directory. They are not relative to configs.
+Use lowercase roms and harddrives on case-sensitive systems.
+
+The images contain RDB partition tables and their own boot priorities.
+The supplied [emulation] auto_launch = true starts the machine immediately.
+An explicit --config or a local copperline.toml takes precedence over the
+saved default.
+
+Quit Copperline with Cmd+Q on Mac or Alt+Q on Windows/Linux.
+
+Documentation: https://copperline.dev/docs/
