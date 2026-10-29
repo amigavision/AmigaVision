@@ -16,7 +16,7 @@ PrivilegesRequiredOverridesAllowed=commandline
 DisableDirPage=yes
 DisableProgramGroupPage=yes
 UsePreviousTasks=no
-WizardStyle=modern
+WizardStyle=modern dynamic
 WizardSizePercent=120,150
 SetupIconFile=assets\AmigaVision.ico
 WizardImageFile=
@@ -62,6 +62,9 @@ Source: "assets\banner.bmp"; Flags: dontcopy
 Source: "assets\amiberry.bmp"; Flags: dontcopy
 Source: "assets\copperline.bmp"; Flags: dontcopy
 Source: "assets\winuae.bmp"; Flags: dontcopy
+Source: "assets\amiberry-dark.png"; Flags: dontcopy
+Source: "assets\copperline-dark.png"; Flags: dontcopy
+Source: "assets\winuae-dark.png"; Flags: dontcopy
 Source: "output\WinUAEShaderSetup.exe"; Flags: dontcopy
 Source: "assets\AmigaVision.ico"; DestDir: "{code:DataRoot}"; Flags: ignoreversion
 Source: "{code:Payload}\Amiberry\HardDrives\AmigaVision.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external ignoreversion
@@ -376,11 +379,15 @@ begin
       Description := 'The “standard” Amiga emulator for Windows. More complex to configure, with scaling issues between PAL and NTSC. Choose this only if you need it and are already familiar with it. AmigaVision running under WinUAE has uneven pixels and other scaling issues that may bother you, this is an emulator limitation.';
     end;
   end;
-  IconFile := Lowercase(Caption) + '.bmp';
+  if IsDarkInstallMode then IconFile := Lowercase(Caption) + '-dark.png'
+  else IconFile := Lowercase(Caption) + '.bmp';
   ExtractTemporaryFile(IconFile);
   Icon := TBitmapImage.Create(WizardForm);
   Icon.Parent := TargetPage.Surface;
-  Icon.Bitmap.LoadFromFile(ExpandConstant('{tmp}\') + IconFile);
+  if IsDarkInstallMode then begin
+    Icon.BackColor := clNone;
+    Icon.PngImage.LoadFromFile(ExpandConstant('{tmp}\') + IconFile);
+  end else Icon.Bitmap.LoadFromFile(ExpandConstant('{tmp}\') + IconFile);
   Icon.Stretch := True;
   Icon.SetBounds(0, EmulatorChoiceTop, ScaleX(64), ScaleY(64));
   TextMeasure := TBitmap.Create;
@@ -403,7 +410,7 @@ begin
   Separator := TNewStaticText.Create(WizardForm);
   Separator.Parent := TargetPage.Surface;
   Separator.AutoSize := False;
-  Separator.Font.Color := clBlack;
+  Separator.Font.Color := clWindowText;
   Separator.SetBounds(EmulatorChoices[Index].Left + EmulatorChoices[Index].Width, EmulatorChoiceTop + ScaleY(4),
     SeparatorWidth, ScaleY(20));
   Separator.Caption := ' — ';
