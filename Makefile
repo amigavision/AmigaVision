@@ -49,7 +49,7 @@ MINI_DISTRO_DIR ?= ./content/distro_mini
 MISTER_DISTRO_DIR ?= ${AVSCONTENT}/distro
 CD32_DISTRO_DIR ?= ./cd32
 DISTRO_PACKAGE = $(PYTHON) build/package_distros.py --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --ecs-hdf "$(subst ",,${ECS_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh" $(if $(WINDOWS_INSTALLER),--windows-installer "$(subst ",,${WINDOWS_INSTALLER})")
-DISTRO_PACKAGE_PROMPT = bash build/run_distros.sh --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --ecs-hdf "$(subst ",,${ECS_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh" $(if $(WINDOWS_INSTALLER),--windows-installer "$(subst ",,${WINDOWS_INSTALLER})")
+DISTRO_PACKAGE_PROMPT = bash build/run_distros.sh --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --ecs-hdf "$(subst ",,${ECS_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh" --amiberry "$(AMIBERRYBIN)" --pistorm-rom "$(subst ",,$(PISTORM_ROM))" $(if $(WINDOWS_INSTALLER),--windows-installer "$(subst ",,${WINDOWS_INSTALLER})")
 MINI_FAT32_WARN = $(PYTHON) -c 'import os, sys; path = sys.argv[1]; limit = int(sys.argv[2]); exists = os.path.isfile(path); size = os.path.getsize(path) if exists else 0; gib = size / (1024 ** 3) if exists else 0.0; limit_gib = limit / (1024 ** 3); status = "WARNING" if exists and size > limit else "OK"; msg = f"{status}: Mini HDF size is {size} bytes ({gib:.2f} GiB); FAT32 limit is {limit} bytes ({limit_gib:.2f} GiB)." if exists else f"WARNING: Mini HDF not found at {path}"; print(msg)' "$(subst ",,${MINI_HDF})" "$(FAT32_MAX_FILE_BYTES)"
 
 define print-start-time
@@ -480,7 +480,7 @@ clean-build:
 		"$(subst ",,${AVSDEST})/AmigaVision-Mini.hdf" \
 		"$(subst ",,${AVSDEST})/AmigaVision-Mini.uae"
 
-# Keep experimental hardware images out of the normal release bundles.
+# Standalone PiStorm targets; both variants are also included in distros.
 pistorm-ecs: PISTORM_MODEL = pistorm
 pistorm pistorm-ecs:
 	$(call print-start-time)

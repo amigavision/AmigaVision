@@ -31,7 +31,7 @@ def parse_args():
     )
     parser.add_argument(
         "package",
-        choices=("all", "mister", "cd32-mister", "emulators", "mini", "pi", "amiga", "amiga-ecs"),
+        choices=("all", "mister", "cd32-mister", "emulators", "mini", "pi", "amiga", "amiga-ecs", "pistorm-aga", "pistorm-ecs"),
         help="Package to build.",
     )
     parser.add_argument("--date-stamp", required=True, help="Release date stamp, e.g. 2025.05.05")
@@ -53,6 +53,8 @@ def parse_args():
     parser.add_argument("--mini-hdf")
     parser.add_argument("--mini-uae")
     parser.add_argument("--pi-script", default="build/pi_image.sh")
+    parser.add_argument("--amiberry", default=os.environ.get("AMIBERRYBIN", "/Applications/Amiberry.app/Contents/MacOS/Amiberry"))
+    parser.add_argument("--pistorm-rom", help="Kickstart ROM for PiStorm images; defaults to --rom-file")
     parser.add_argument("--archive-tool")
     parser.add_argument("--windows-installer", help="Local Windows setup executable; defaults to the checked-in repo copy")
     parser.add_argument("--emulator-archive", action="store_false", dest="skip_emulator_archive",
@@ -680,6 +682,27 @@ def package_amiga(args, output_dir, xz_tool):
     return output_path
 
 
+def package_pistorm(args, output_dir, ecs=False):
+    hdf = args.ecs_hdf if ecs else args.main_hdf
+    if not hdf:
+        raise ValueError("--ecs-hdf is required for PiStorm ECS")
+    require_file(Path(hdf), "PiStorm source HDF")
+    variant = "PiStormECS" if ecs else "PiStormAGA"
+    output = output_dir / f"AmigaVision-{variant}-{args.date_stamp}.img.xz"
+    run_command([
+        sys.executable, str(Path(__file__).with_name("pistorm_image.py")),
+        "--model", "pistorm" if ecs else "pistorm32lite",
+        "--hdf", str(hdf), "--rom", str(args.pistorm_rom or args.rom_file),
+        "--amiberry", str(args.amiberry), "--date-stamp", args.date_stamp,
+        "--output", str(output), "--output-dir", str(output_dir),
+        "--cache", str(output_dir / ".build/cache/pistorm"),
+    ], dry_run=args.dry_run,
+       env=None if args.dry_run else compression_environment(output))
+    if not args.dry_run:
+        require_file(output, "PiStorm image")
+    return output
+
+
 def main():
     args = parse_args()
     output_dir = Path(normalize_path(args.output_dir)).resolve()
@@ -691,7 +714,7 @@ def main():
     continue_on_error = args.package == "all"
     packages = (
         # Mini is temporarily standalone until its image fits the 4 GB target.
-        ["mister", "cd32-mister", "emulators", "pi", "amiga"]
+        ["mister", "cd32-mister", "emulators", "pi", "amiga", "pistorm-aga", "pistorm-ecs"]
         if args.package == "all"
         else [args.package]
     )
@@ -701,7 +724,7 @@ def main():
            (package == "emulators" and not args.skip_emulator_archive) for package in packages):
         archive_tool = find_archive_tool(args.archive_tool)
     xz_tool = None
-    if any(package in {"pi", "amiga", "amiga-ecs"} for package in packages):
+    if any(package in {"pi", "amiga", "amiga-ecs", "pistorm-aga", "pistorm-ecs"} for package in packages):
         xz_tool = find_xz_tool()
 
     log_step(f"Writing artifacts to {output_dir}")
@@ -743,6 +766,8 @@ def main():
                     created.append(package_rpi(args, output_dir, xz_tool))
                 elif package in {"amiga", "amiga-ecs"}:
                     created.append(package_amiga(args, output_dir, xz_tool))
+                elif package in {"pistorm-aga", "pistorm-ecs"}:
+                    created.append(package_pistorm(args, output_dir, ecs=package == "pistorm-ecs"))
                 else:
                     raise AssertionError(f"Unhandled package type: {package}")
                 unpacked_emulators = package == "emulators" and args.skip_emulator_archive
