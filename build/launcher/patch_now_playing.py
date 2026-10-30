@@ -8,6 +8,12 @@ BASELINES={
  'avs-ecs':'96e77efcaac5f1bc9f15b6e36bb61e26d0ebfec34338e08958592c9cdace43a0'}
 HOOKS=((0x8344,'70ff2046'),(0x4bee,'4eaefef2'),(0x5656,'7000dffc00000210'),(0x90e6,'295fffa8'),(0x5684,'02800000ffff'),(0x78f6,'280048780008'),(0x79f2,'28002f06'),(0x8124,'48e71800'),(0x8186,'204620280032'))
 def remove_patch(data):
+ # A viewport cache may wrap this layer; normalize it before older tests or
+ # a music-layer rebuild. Reapply the viewport patch last after such edits.
+ end=32+struct.unpack_from('>I',data,28)[0]*4
+ if data[end-12:end-4]==b'AVSVIEW1':
+  from patch_menu_viewport import remove_patch as remove_viewport
+  data=remove_viewport(data)
  end=32+struct.unpack_from('>I',data,28)[0]*4
  tag=data[end-12:end-4]
  if tag not in (b'AVSNOW01',b'AVSNOW02',b'AVSNOW03',b'AVSNOW04'):return data
