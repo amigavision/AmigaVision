@@ -215,6 +215,7 @@ def clone_or_copy_file(src, dest):
             clonefile(src, dest)
         except OSError as exc:
             if exc.errno not in {
+                errno.EEXIST,  # Overlay copies replace an existing template file.
                 errno.EXDEV,
                 errno.ENOTSUP,
                 errno.EPERM,

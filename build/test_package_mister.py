@@ -19,6 +19,9 @@ class MiSTerSourceTests(unittest.TestCase):
             content = root / 'distro_mister'
             content.mkdir()
             (content / 'Extras.7z').write_bytes(b'extras')
+            shared = content / 'games/Amiga/shared'
+            shared.mkdir(parents=True)
+            (shared / 'Disk.info').write_bytes(b'canonical external icon')
             listings = root / 'listings'
             listings.mkdir()
             (listings / 'games.txt').write_text('Games')
@@ -29,6 +32,7 @@ class MiSTerSourceTests(unittest.TestCase):
             def check(artifact, staged, tool, **kwargs):
                 self.assertTrue((staged / '_Computer/Amiga.mgl').is_file())
                 self.assertEqual((staged / 'Extras.7z').read_bytes(), b'extras')
+                self.assertEqual((staged / 'games/Amiga/shared/Disk.info').read_bytes(), b'canonical external icon')
                 self.assertEqual((staged / 'games/Amiga/AmigaVision.hdf').read_bytes(), b'main HDF')
                 self.assertEqual((staged / 'games/Amiga/listings/games.txt').read_text(), 'Games')
                 self.assertFalse((staged / 'games/Amiga/Visuals').exists())

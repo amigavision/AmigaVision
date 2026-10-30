@@ -221,7 +221,7 @@ if [[ ! -t 0 && "$emulator_package" == true && "$archive_choice_explicit" == fal
 fi
 
 if [[ "$pistorm" == true ]]; then
-  python3 build/pistorm_image.py --date-stamp "$date_stamp" --output-dir "$output_dir" "${package_args[@]}"
+  pipenv run python build/pistorm_image.py --date-stamp "$date_stamp" --output-dir "$output_dir" "${package_args[@]}"
 else
-  DISTRO_DATE="$date_stamp" python3 build/package_distros.py --date-stamp "$date_stamp" --output-dir "$output_dir" "${package_args[@]}"
+  DISTRO_DATE="$date_stamp" pipenv run python build/package_distros.py --date-stamp "$date_stamp" --output-dir "$output_dir" "${package_args[@]}"
 fi
