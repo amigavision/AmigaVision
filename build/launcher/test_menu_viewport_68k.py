@@ -10,7 +10,7 @@ class ViewportTests(unittest.TestCase):
   self.m=Machine(CPUType.M68000,4096);self.mem=self.m.mem;self.cpu=self.m.cpu
   self.original=remove_patch((ROOT/'data/avs-highres/AVSMenu').read_bytes());self.data=patch(self.original)
   self.base=struct.unpack_from('>I',self.original,28)[0]*4
-  self.entries=struct.unpack_from('>5I',self.data,32+self.base);self.state=self.base+self.entries[3]
+  self.entries=struct.unpack_from('>6I',self.data,32+self.base);self.state=self.base+self.entries[3]
   self.mem.w_block(0,self.data[32:32+struct.unpack_from('>I',self.data,28)[0]*4])
   self.obj,self.nav,self.conf,self.font=0x90000,0x91000,0x92000,0x93000
   self.rp,self.bm,self.items,self.gfx,self.glob=0x94000,0x95000,0xa0000,0x20000,0xb0000
@@ -117,6 +117,55 @@ class ViewportTests(unittest.TestCase):
   try:self.m.execute(10000)
   except StopIteration:pass
   self.assertEqual(self.cpu.r32_reg(R.D1),23*16)
+ def test_skin_never_overwrites_highlight_during_composition(self):
+  import numpy as np
+  self.initialize();self.mem.w16(self.conf+30,24)
+  displayrp,displaybm=0x96000,0x97000
+  cleanbase,destbase=0x280000,0x300000
+  self.mem.w32(displayrp+4,displaybm)
+  self.mem.w32(0xa690,cleanbase)
+  for bm in (displaybm,0xa6bc):
+   self.mem.w16(bm,80);self.mem.w16(bm+2,432);self.mem.w8(bm+5,8)
+  rng=np.random.default_rng(1030)
+  skin=rng.integers(240,254,size=(432,640),dtype=np.uint8)
+  mask=rng.integers(0,2,size=(385,224),dtype=np.uint8)
+  self.mem.w_block(0x180000,np.packbits(mask,axis=1).tobytes())
+  for plane in range(8):
+   self.mem.w32(0xa6bc+8+plane*4,cleanbase+plane*80*432)
+   self.mem.w32(displaybm+8+plane*4,destbase+plane*80*432)
+   self.mem.w_block(cleanbase+plane*80*432,np.packbits((skin>>plane)&1,axis=1).tobytes())
+  for selected,start,rows,divider in [(23,0,24,False),(10,0,24,False),(10,9,3,False),(10,0,2,False),(10,10,2,False),(10,0,24,True)]:
+   self.mem.w16(self.obj+36,selected)
+   self.mem.w32(self.mem.r32(self.items+selected*4)+8,4 if divider else 2)
+   pixels=skin.copy();top=24+selected*16
+   pixels[top:top+16,4:228]=255-mask[selected*16:selected*16+16]
+   expected=pixels.copy();y=24+start*16;h=rows*16
+   expected[y:y+h,4:228]=skin[y:y+h,4:228]|np.where(mask[start*16:(start+rows)*16],255,0).astype(np.uint8)
+   if not divider and y<top+16 and y+h>top:
+    lo,hi=max(y,top),min(y+h,top+16)
+    expected[lo:hi,4:228]=pixels[lo:hi,4:228]
+   for plane in range(8):self.mem.w_block(destbase+plane*80*432,np.packbits((pixels>>plane)&1,axis=1).tobytes())
+   self.cpu.w_sr(0x2700);self.cpu.w_sp(self.stack);self.mem.w32(self.stack,self.stop);self.mem.w16(self.stop,0x4e71)
+   for r,v in {R.A0:self.bm,R.A1:displayrp,R.A6:self.gfx,R.D0:0,R.D1:start*16,R.D2:4,R.D3:y,R.D4:224,R.D5:h,R.D6:0xc0}.items():self.cpu.w32_reg(r,v)
+   regions=[]
+   def hook(pc):
+    if pc==0x6c98:raise StopIteration()
+    if pc==0xaf3c:regions.append((self.cpu.r32_reg(R.D1),self.cpu.r32_reg(R.D3),self.cpu.r32_reg(R.D5)))
+   self.mem.w16(0x6c98,0x4e71)
+   self.cpu.set_instr_hook_callback(hook);self.cpu.w_pc(0x6c94)
+   try:self.m.execute(10000000)
+   except StopIteration:pass
+   actual=np.zeros((432,640),dtype=np.uint8)
+   for plane in range(8):actual|=np.unpackbits(np.frombuffer(bytes(self.mem.r_block(destbase+plane*80*432,80*432)),dtype=np.uint8)).reshape(432,640)<<plane
+   np.testing.assert_array_equal(actual,expected)
+   self.assertLessEqual(len(regions),2)
+   for sy,dy,height in regions:
+    self.assertEqual(sy,dy-24)
+    if not divider:self.assertTrue(dy+height<=top or dy>=top+16)
+ def test_composition_hook_keeps_native_subroutine_return(self):
+  self.assertEqual(self.data[32+0x6c94:32+0x6c96],bytes.fromhex('6100'))
+  displacement=struct.unpack_from('>h',self.data,32+0x6c96)[0]
+  self.assertEqual(0x6c96+displacement,self.base+self.entries[5])
  def test_idempotent_and_preserves_original_hunk_tail(self):
   self.assertEqual(patch(self.data),self.data);self.assertEqual(remove_patch(self.data),self.original)
   n=struct.unpack_from('>I',self.data,28)[0]*4

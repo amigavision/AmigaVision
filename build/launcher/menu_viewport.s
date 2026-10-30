@@ -1,7 +1,7 @@
 ; Bounded one-bit menu cache. Keep the proven direct AGA display compositor.
  org PATCH_BASE
  dc.l allocate_rows-PATCH_BASE,initial_rows-PATCH_BASE,window_source-PATCH_BASE
- dc.l state-PATCH_BASE,ensure_window-PATCH_BASE
+ dc.l state-PATCH_BASE,ensure_window-PATCH_BASE,stable_composite-PATCH_BASE
 
 allocate_rows:
  movem.l d1-d7/a0-a6,-(sp)
@@ -192,8 +192,82 @@ rendered:
  move.l d7,8(a3)
 ensure_done:
  rts
+; Keep the selected row intact during normal skin/text restoration. The
+; native selection renderer paints it directly afterwards. This avoids a
+; transient dithered skin frame inside the reverse-color highlight.
+stable_composite:
+ movem.l d0-d7/a0-a6,-(sp)
+ lea state(pc),a3
+ move.l (a3),a2
+ move.l a2,d0
+ beq compose_all
+ moveq #0,d0
+ move.w 36(a2),d0
+ moveq #0,d1
+ move.w 42(a2),d1
+ add.l d0,d1
+ move.l 8(a2),a0
+ cmp.l 16(a0),d1
+ bhs compose_all
+ lsl.l #2,d1
+ move.l 20(a0),a0
+ move.l (a0,d1.l),a0
+ cmp.l #4,8(a0)
+ beq compose_all ; divider-only menus deliberately have no highlight
+ move.l 20(a2),a0
+ moveq #0,d2
+ move.w 20(a0),d2
+ move.l 4(a2),a0
+ add.w 26(a0),d2
+ mulu.w d2,d0
+ moveq #0,d1
+ move.w 30(a0),d1
+ add.l d1,d0 ; selected row top
+ add.l d0,d2 ; selected row end, exclusive
+ move.l 12(sp),d3 ; requested destination top
+ move.l d3,d4
+ add.l 20(sp),d4 ; requested end
+ cmp.l d4,d0
+ bge compose_all
+ cmp.l d3,d2
+ ble compose_all
+ sub.l d3,d0
+ bpl upper_ready
+ moveq #0,d0
+upper_ready:
+ move.l d0,28(a3)
+ sub.l d3,d2
+ cmp.l 20(sp),d2
+ ble lower_ready
+ move.l 20(sp),d2
+lower_ready:
+ move.l d2,32(a3)
+ move.l 20(sp),d0
+ sub.l d2,d0
+ move.l d0,36(a3)
+ tst.l 28(a3)
+ beq compose_lower
+ movem.l (sp),d0-d7/a0-a6
+ move.l state+28(pc),d5
+ bsr.w ORIGINAL_COMPOSE
+compose_lower:
+ move.l state+36(pc),d0
+ beq composite_done
+ movem.l (sp),d0-d7/a0-a6
+ move.l state+32(pc),d7
+ add.l d7,d1 ; matching source row offset
+ add.l d7,d3
+ move.l state+36(pc),d5
+ bsr.w ORIGINAL_COMPOSE
+ bra composite_done
+compose_all:
+ movem.l (sp),d0-d7/a0-a6
+ bsr.w ORIGINAL_COMPOSE
+composite_done:
+ movem.l (sp)+,d0-d7/a0-a6
+ rts
  cnop 0,4
-state: dcb.l 7,0
+state: dcb.l 10,0
  cnop 0,4
- dc.b 'AVSVIEW1'
+ dc.b 'AVSVIEW2'
  dc.l PATCH_BASE

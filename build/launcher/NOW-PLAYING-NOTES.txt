@@ -120,3 +120,26 @@ music process or pause mask is safe. New state+64 holds the Play pressed flag.
 25 targeted M68000 tests pass, including held-button debounce, release/repress,
 other button preservation, disabled music and independent keyboard/controller
 release state. No emulator was launched. Source menus for all profiles updated.
+
+AGA hi-res selection stability fix (AVSVIEW2)
+
+Installed in data/avs-highres/AVSMenu for the next build. ECS and med-res unchanged.
+The normal list compositor previously restored the selected row from the skin
+before the native highlight routine repainted it. Dithering was briefly exposed.
+The normal pass now excludes the selected row, updating at most two surrounding
+spans. The existing solid reverse-color renderer then updates the selected row
+using the new cached text. Divider-only lists retain full normal restoration.
+No extra Chip RAM, full-screen buffer or frame wait is added. The 10.5 KB text
+cache and single-row scroll reuse remain, along with music controls and playlist.
+
+Runtime hook $6c94 retains BSR/RTS semantics and calls the existing direct
+compositor for the clipped spans. Original source/destination row offsets match.
+Other viewport hooks and selected-mask local source correction are unchanged.
+15 viewport tests pass, including actual M68000 eight-plane composition against
+a dithered skin, checking the intermediate normal pass never touches the bar;
+bottom/middle/partial draws, divider-only behavior, branch/return convention,
+viewport cache allocation, scroll reuse, labels and HUNK preservation.
+Visual testing on the launcher is still required; no emulator was manipulated.
+
+Rebuild patch: build/launcher/patch_menu_viewport.py (last after Now Playing).
+SHA-256: 3ba65f978dae1615fbf1073bca341c1f7390617e149837881cfd6f6185d75df0

@@ -11,7 +11,7 @@ def remove_patch(data):
  # A viewport cache may wrap this layer; normalize it before older tests or
  # a music-layer rebuild. Reapply the viewport patch last after such edits.
  end=32+struct.unpack_from('>I',data,28)[0]*4
- if data[end-12:end-4]==b'AVSVIEW1':
+ if data[end-12:end-4]in (b'AVSVIEW1',b'AVSVIEW2'):
   from patch_menu_viewport import remove_patch as remove_viewport
   data=remove_viewport(data)
  end=32+struct.unpack_from('>I',data,28)[0]*4
