@@ -29,9 +29,13 @@ The normal end-to-end release process is:
 3. `make image`
    Create the main `AmigaVision.hdf` image using the standard Amiberry-based clone process.
 4. `make distros`
-   Prompt once for the release version (default: today's date) and output directory, then package all platform-specific releases without further prompts. Reuse existing main, ECS, and Mini images from their configured locations, or from a previous distro run's `.build/images` directory. Build each missing image automatically using `image`, `ecs-image`, or `mini-image`. Existing images are reused regardless of age; run those targets explicitly when you want fresh images. Press Enter at either prompt to keep its default. The selected directory holds finished packages and a `.build` subdirectory for generated images, listings, caches, and temporary files, so a large external drive can handle the whole run.
+   Prompt once for the release version (default: today's date) and output directory, then package the supported platform releases without further prompts. Mini building and packaging are temporarily excluded until its image is optimized for the 4 GB target again; use `make mini-image` and `make mini` separately when needed. Reuse existing main and ECS images from their configured locations, or from a previous distro run's `.build/images` directory. Build each missing image automatically using `image` or `ecs-image`. Existing images are reused regardless of age; run those targets explicitly when you want fresh images. Press Enter at either prompt to keep its default. The selected directory holds finished packages and a `.build` subdirectory for generated images, listings, caches, and temporary files, so a large external drive can handle the whole run.
 
 Full distro runs keep the emulator folders by default. Use `make distros EMULATORS_ARCHIVE=1` to create their 7z archive without adding another prompt. Noninteractive runs use `DISTRO_DATE` and `DISTRO_OUT` directly.
+
+Packaging stages payloads and writes compressed artifacts on the selected output storage. Compressor scratch files use its `.build/tmp` directory, including an explicit 7z working-directory setting. This also applies when packaging an individual distribution. CD32 ZIP staging and emulator installer staging use the output storage as well.
+
+Mini builds default to full rebuilds with `--no-build-cache`: menu trees and archives are built directly in the workspace without reading or saving reusable build trees. After success, the separate temporary workspace, any older Mini build cache, and retained image-update data are removed. The finished Mini image remains available for packaging and reuse. For repeated development builds, use `make mini-image MINI_INCREMENTAL=1` to enable and retain the build and image-update caches.
 
 ## Title video modes
 

@@ -27,8 +27,8 @@ def get_base_hdf_cache_dir(base_hdf: str):
     )
     return util.path(cache_root, cache_key)
 
-def extract_base_image(base_hdf: str, dest: str):
-    cache_dir = get_base_hdf_cache_dir(base_hdf)
+def extract_base_image(base_hdf: str, dest: str, use_cache=True):
+    cache_dir = get_base_hdf_cache_dir(base_hdf) if use_cache else None
 
     if cache_dir and util.is_dir(cache_dir):
         util.clone_tree(cache_dir, dest)
@@ -52,6 +52,7 @@ def extract_base_image(base_hdf: str, dest: str):
         os.rename(unpack_dest, cache_dir)
         util.clone_tree(cache_dir, dest)
     else:
+        util.make_dir(dest)
         for f in os.listdir(unpack_dest):
             shutil.move(os.path.join(unpack_dest, f), dest)
         util.rm_path(unpack_dest)

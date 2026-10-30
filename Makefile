@@ -39,6 +39,12 @@ ECS_INCREMENTAL ?= 0
 ECS_KEEP_CACHE ?= $(ECS_INCREMENTAL)
 ECS_IMAGE_UPDATE_ARGS = $(filter-out --incremental,$(IMAGE_UPDATE_ARGS)) $(if $(filter 1,$(ECS_INCREMENTAL)),--incremental)
 ECS_TEMP ?= $(subst ",,${AVSTEMP})-ECS
+# Rare Mini builds use their own disposable workspace and cache generation.
+MINI_INCREMENTAL ?= 0
+MINI_KEEP_CACHE ?= $(MINI_INCREMENTAL)
+MINI_IMAGE_UPDATE_ARGS = $(filter-out --incremental,$(IMAGE_UPDATE_ARGS)) $(if $(filter 1,$(MINI_INCREMENTAL)),--incremental) $(if $(filter 1,$(MINI_KEEP_CACHE)),,--no-build-cache)
+MINI_TEMP ?= $(subst ",,${AVSTEMP})-Mini
+BUILD_CACHE_ROOT = $(if $(strip $(AVSCACHE_ROOT)),$(subst ",,$(AVSCACHE_ROOT)),${HOME}/Library/Caches/AmigaVision)
 MINI_DISTRO_DIR ?= ./content/distro_mini
 MISTER_DISTRO_DIR ?= ${AVSCONTENT}/distro
 CD32_DISTRO_DIR ?= ./cd32
@@ -59,12 +65,12 @@ IMAGE_UPDATE_ARGS ?= --incremental
 IMAGE_CLONE_ARGS ?=
 BASE_IMAGE_ARGS ?=
 IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o "$(subst ",,${AVSDEST})"
-MINI_IMAGE_PREP_CMD = pipenv run build/avs_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists -d "$(subst ",,${AVSCONTENT})/extra_dirs/LessMusic::DH1:Music" -o "$(subst ",,${AVSDEST})" --temp-dir "$(subst ",,${AVSTEMP})"
+MINI_IMAGE_PREP_CMD = pipenv run build/avs_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(MINI_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists -d "$(subst ",,${AVSCONTENT})/extra_dirs/LessMusic::DH1:Music" -o "$(subst ",,${AVSDEST})" --temp-dir "$(MINI_TEMP)"
 TEST_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --auto-lists -o "$(subst ",,${AVSDEST})"
 TEST_DRY_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --only-avs-tree --auto-lists -o "$(subst ",,${AVSDEST})"
 ECS_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(ECS_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o "$(subst ",,${AVSDEST})"
 MAKE_MANIFESTS_CMD = pipenv run build/avs_index.py --make-manifests --only-missing
-MAKE_LISTINGS_CMD = $(PYTHON) build/generate_listings.py "$(subst ",,${AVSTEMP})/DH1/AVS" "$(subst ",,${DISTRO_LISTINGS_DIR})"
+MAKE_LISTINGS_CMD = $(PYTHON) build/generate_listings.py "$(subst ",,${AVSTEMP})/DH1/AVS-MedRes" "$(subst ",,${DISTRO_LISTINGS_DIR})"
 FINALIZE_MAIN_IMAGE = test -f "$(subst ",,${AMIGAVISION_HDF})"
 
 help:
@@ -386,10 +392,19 @@ image-amiberry:
 
 mini-image:
 	$(call print-start-time)
+	@mkdir -p "$(MINI_TEMP)" "$(subst ",,${AVSDEST})"
 	@$(MAKE_MANIFESTS_CMD)
-	@$(MINI_IMAGE_PREP_CMD)
-	@$(MAKE) clone-amiberry
+	@AVSTEMP="$(MINI_TEMP)" AVSCACHEGEN=mini $(MINI_IMAGE_PREP_CMD)
+	@$(MAKE) clone-amiberry AVSTEMP="$(MINI_TEMP)"
+	@test -f "$(subst ",,${MINI_HDF})"
 	@$(MINI_FAT32_WARN)
+	@echo "Removing completed Mini temp workspace..."
+	@rm -rf "$(MINI_TEMP)"
+	@if [ "$(MINI_KEEP_CACHE)" != "1" ]; then \
+		echo "Removing completed Mini build and image-update caches..."; \
+		pipenv run python build/avs_image_update.py --clear-cache-for "$(subst ",,${MINI_HDF})" && \
+		rm -rf "$(BUILD_CACHE_ROOT)/build/mini"; \
+	fi
 	@printf '\a'
 
 test-image:

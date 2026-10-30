@@ -1389,7 +1389,7 @@ def get_archive_extract_cache_keys(entries) -> set[str]:
             keys.add(os.path.basename(cache_dir))
     return keys
 
-def extract_entries(clone_path, entries, verbose=False):
+def extract_entries(clone_path, entries, verbose=False, use_cache=True):
     pending = get_unique_archive_entries(entries)
     total = len(pending)
     if total == 0:
@@ -1400,10 +1400,10 @@ def extract_entries(clone_path, entries, verbose=False):
         for done, entry in enumerate(pending, start=1):
             if verbose:
                 print("\r > Extracting archives [{}/{}]".format(done, total), end="", flush=True)
-            extract_entry(clone_path, entry)
+            extract_entry(clone_path, entry, use_cache=use_cache)
     else:
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            futures = [executor.submit(extract_entry, clone_path, entry) for entry in pending]
+            futures = [executor.submit(extract_entry, clone_path, entry, use_cache=use_cache) for entry in pending]
             done = 0
             for future in as_completed(futures):
                 future.result()
@@ -1413,13 +1413,13 @@ def extract_entries(clone_path, entries, verbose=False):
     if verbose and total > 0:
         print("")
 
-def extract_entry(clone_path, entry):
+def extract_entry(clone_path, entry, use_cache=True):
     arc_path = get_archive_path(entry)
     if not arc_path:
         print(" > WARNING: archive not found for", entry["id"])
     else:
         dest = get_whd_dir(clone_path, entry)
-        cache_dir = get_archive_extract_cache_dir(arc_path, entry)
+        cache_dir = get_archive_extract_cache_dir(arc_path, entry) if use_cache else None
         if cache_dir and util.is_dir(cache_dir):
             util.clone_tree(cache_dir, dest)
             return
@@ -1448,6 +1448,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", dest="config_file", required=True, metavar="FILE", type=lambda x: util.argparse_is_file(parser, x),  help="configuration file")
     parser.add_argument("-o", "--out-dir", dest="out_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="output directory")
+    parser.add_argument("--no-build-cache", action="store_true", help="build directly without reading or saving reusable build trees")
     parser.add_argument("--incremental", action="store_true", help="prepare a transactional incremental Amiberry image update")
     parser.add_argument("--image-size-bytes", type=int, default=15_800_000_000,
                         help="maximum whole-image size in decimal bytes (default: 15.8 GB; 0 sizes to payload)")
@@ -1509,8 +1510,9 @@ def main():
         amiga_data_path = util.path(clone_path, "DH1")
         amiga_avs_path = util.path(amiga_data_path, "AVS" if args.chipset_profile == "ecs" else "AVS-MedRes")
         util.make_dir(clone_path)
-        workspace_state = load_workspace_state(clone_path)
-        prune_interrupted_cache_artifacts()
+        workspace_state = {} if args.no_build_cache else load_workspace_state(clone_path)
+        if not args.no_build_cache:
+            prune_interrupted_cache_artifacts()
 
         data_dir = "data"
         if not util.is_dir(data_dir):
@@ -1577,7 +1579,7 @@ def main():
                     stage_directory(base_directory, amiga_boot_path)
                 else:
                     print("Extracting base HDF image: {}".format(base_hdf))
-                    used_cache = extract_base_image(base_hdf, amiga_boot_path)
+                    used_cache = extract_base_image(base_hdf, amiga_boot_path, use_cache=not args.no_build_cache)
                     if used_cache:
                         print(" > Using cached base HDF unpack")
                 workspace_state["base_hdf"] = base_hdf_state["base_hdf"]
@@ -1619,14 +1621,14 @@ def main():
         with timed_step(timings, "check entry changes"):
             current_append_inputs = append_input_state(db, avs_cache_state, hires_source_trees) if args.chipset_profile == "any" else None
         append_delta = None
-        if workspace_state.get("avs_cache_key") != avs_cache_key and current_append_inputs:
+        if not args.no_build_cache and workspace_state.get("avs_cache_key") != avs_cache_key and current_append_inputs:
             with timed_step(timings, "append launcher entries"):
                 append_delta = try_append_launcher(
                     db, args, menu, workspace_state.get("append_inputs"), current_append_inputs,
                     clone_path, amiga_avs_path, collection, runscript_template, workspace_state)
         used_avs_cache = append_delta is not None
         menu_subtree_cache_keys = []
-        if supports_top_level_menu_cache(menu):
+        if not args.no_build_cache and supports_top_level_menu_cache(menu):
             menu_subtree_cache_keys = get_menu_subtree_cache_keys(
                 menu,
                 db_path,
@@ -1642,14 +1644,17 @@ def main():
         with timed_step(timings, "copy avs base"):
             if used_avs_cache:
                 pass
-            elif workspace_state.get("avs_cache_key") == avs_cache_key and util.is_dir(amiga_avs_path) and (
+            elif not args.no_build_cache and workspace_state.get("avs_cache_key") == avs_cache_key and util.is_dir(amiga_avs_path) and (
                 restore_workspace_avs_collection_snapshot(clone_path, collection)
                 or restore_avs_collection_snapshot(avs_cache_key, collection)
             ):
                 used_avs_cache = True
                 print(" > Reusing cached AVS workspace")
-            elif not restore_avs_tree_cache(avs_cache_key, amiga_avs_path, collection):
-                report_avs_tree_cache_miss(avs_cache_state)
+            elif args.no_build_cache or not restore_avs_tree_cache(avs_cache_key, amiga_avs_path, collection):
+                if args.no_build_cache:
+                    print(" > Build caches disabled")
+                else:
+                    report_avs_tree_cache_miss(avs_cache_state)
                 collection = EntryCollection()
                 util.rm_path(amiga_avs_path)
                 util.copytree(base_avs, amiga_avs_path)
@@ -1667,7 +1672,7 @@ def main():
                 collection.progress_current = 0
                 collection.progress_total = count_tree_entries(menu) + len(collection.by_id)
                 if menu:
-                    if supports_top_level_menu_cache(menu):
+                    if not args.no_build_cache and supports_top_level_menu_cache(menu):
                         build_top_level_menu_with_cache(
                             db,
                             collection,
@@ -1693,25 +1698,27 @@ def main():
                 collection.progress_total = collection.progress_current + len(list(collection.ids()))
                 if args.all_games or args.all_demos or args.all_demoscene or args.auto_lists:
                     autoentries_cache_key = get_autoentries_cache_key(get_autoentries_cache_state(collection, args))
-                    if restore_autoentries_cache(autoentries_cache_key, amiga_avs_path, collection):
+                    if not args.no_build_cache and restore_autoentries_cache(autoentries_cache_key, amiga_avs_path, collection):
                         print(" > Using cached auto entries")
                     else:
                         before_path_ids = set(collection.path_ids)
                         before_sort_rank = dict(collection.path_sort_rank)
                         make_autoentries(collection, amiga_avs_path, games=args.all_games|args.auto_lists, demos=args.all_demos|args.all_demoscene|args.auto_lists)
-                        save_autoentries_cache(
-                            autoentries_cache_key,
-                            amiga_avs_path,
-                            extract_autoentries_collection_delta(amiga_avs_path, before_path_ids, before_sort_rank, collection),
-                        )
+                        if not args.no_build_cache:
+                            save_autoentries_cache(
+                                autoentries_cache_key,
+                                amiga_avs_path,
+                                extract_autoentries_collection_delta(amiga_avs_path, before_path_ids, before_sort_rank, collection),
+                            )
                 if collection.progress_total > 0:
                     print("")
 
             # generate run scripts
             with timed_step(timings, "generate runscripts"):
                 make_runscripts(collection, amiga_avs_path, template=runscript_template)
-            save_avs_tree_cache(avs_cache_key, amiga_avs_path, collection)
-            save_avs_tree_state(avs_cache_state)
+            if not args.no_build_cache:
+                save_avs_tree_cache(avs_cache_key, amiga_avs_path, collection)
+                save_avs_tree_state(avs_cache_state)
             workspace_state["avs_cache_key"] = avs_cache_key
         else:
             timings.append(("collect menu entries", 0.0))
@@ -1744,7 +1751,10 @@ def main():
                 current_archive_entries = archive_entry_states(collection.ids())
                 archive_tree_restored = False
                 workspace_archive_path = util.path(clone_path, "DH1", "WHD")
-                if workspace_state.get("archive_tree_cache_key") == archive_tree_cache_key and util.is_dir(workspace_archive_path):
+                if args.no_build_cache:
+                    util.rm_path(workspace_archive_path)
+                    extract_entries(clone_path, collection.ids(), verbose=True, use_cache=False)
+                elif workspace_state.get("archive_tree_cache_key") == archive_tree_cache_key and util.is_dir(workspace_archive_path):
                     archive_tree_restored = True
                     print(" > Reusing cached archive workspace")
                 elif try_append_archives(clone_path, list(collection.ids()), current_archive_entries, workspace_state):
@@ -1770,7 +1780,8 @@ def main():
                 workspace_state["archive_tree_cache_key"] = archive_tree_cache_key
                 workspace_state["archive_entries"] = current_archive_entries
                 workspace_state["archive_behavior"] = ARCHIVE_TREE_BEHAVIOR_FINGERPRINT
-                archive_extract_cache_keys = get_archive_extract_cache_keys(collection.ids())
+                if not args.no_build_cache:
+                    archive_extract_cache_keys = get_archive_extract_cache_keys(collection.ids())
 
         layers = []
         # DH1/AVS is the shared-layer staging directory for AGA builds. Discard
@@ -1896,18 +1907,19 @@ def main():
                     pfs_cache_state["image_size_bytes"] = args.image_size_bytes
                     pfs_cache_state["boot_extra_bytes"] = args.boot_extra_bytes
                     pfs_partition_cache_key = get_pfs_partition_cache_key(pfs_cache_state)
-                    pfs_partitions = restore_pfs_partition_cache(pfs_partition_cache_key, workspace_state)
+                    pfs_partitions = None if args.no_build_cache else restore_pfs_partition_cache(pfs_partition_cache_key, workspace_state)
                     if pfs_partitions is None:
                         with timed_step(timings, "calculate pfs sizes"):
                             pfs_partitions = calculate_pfs_partitions(clone_path, args.image_size_bytes, args.boot_extra_bytes)
-                        save_pfs_partition_cache(pfs_partition_cache_key, pfs_partitions, workspace_state)
+                        if not args.no_build_cache:
+                            save_pfs_partition_cache(pfs_partition_cache_key, pfs_partitions, workspace_state)
                     else:
                         print(" > Using cached partition sizes")
                     Path(clone_path, PLAN_NAME).unlink(missing_ok=True)
                     build_pfs(output_image, clone_path, True, partitions=list(pfs_partitions))
 
         with timed_step(timings, "prune caches"):
-            if not workspace_state.get("appended_workspace"):
+            if not args.no_build_cache and not workspace_state.get("appended_workspace"):
                 prune_build_caches(
                     base_hdf_state["base_hdf_cache_dir"],
                     avs_cache_key,

@@ -21,7 +21,11 @@ else
   if [ -z "$output_path" ]; then
     output_path="$script_dir/$arc_name"
   fi
-  stage_dir="$(mktemp -d)"
+  mkdir -p "$(dirname "$output_path")"
+  output_parent="$(cd "$(dirname "$output_path")" && pwd)"
+  output_path="$output_parent/$(basename "$output_path")"
+  stage_dir="$(mktemp -d "$output_parent/.cd32-pack.XXXXXX")"
+  export TMPDIR="$stage_dir" TMP="$stage_dir" TEMP="$stage_dir"
   trap 'rm -rf "$stage_dir"' EXIT
   rm -f "$output_path"
   cp -R "$output_dir"/. "$stage_dir/"

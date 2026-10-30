@@ -282,7 +282,8 @@ def main():
         validate(image, candidate, boot)
         candidate.unlink()
         print('Compressing prototype image...', flush=True)
-        subprocess.run(['xz', '-T0', '-1', '-v', str(image)], check=True)
+        subprocess.run(['xz', '-T0', '-1', '-v', str(image)], check=True,
+                       env=dict(os.environ, TMPDIR=str(work), TMP=str(work), TEMP=str(work)))
         compressed = image.with_suffix('.img.xz')
         compressed.replace(args.output)
     checksums = write_checksums(args.output)

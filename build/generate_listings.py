@@ -11,11 +11,20 @@ def main():
         raise SystemExit("usage: generate_listings.py <avs-root> <output-dir>")
 
     src = Path(sys.argv[1])
+    # Prefer the complete hi-res launcher. Incremental preparation temporarily
+    # preserves it outside DH1 and may leave only new entries in AVS-MedRes.
+    if src.name in {"AVS", "AVS-MedRes"}:
+        for candidate in (src.parent / "AVS", src.parent.parent / ".hires-launcher-cache", src.parent / "AVS-MedRes"):
+            if (candidate / "By Title.avs").is_dir():
+                src = candidate
+                break
     dst = Path(normalize_path(sys.argv[2]))
-    dst.mkdir(parents=True, exist_ok=True)
-    for path in dst.glob("*.txt"):
-        if path.is_file():
-            path.unlink()
+    # Shared run scripts may be in the hi-res tree, including its preserved
+    # location while an incremental workspace is being prepared.
+    run_roots = [src]
+    if src.name in {"AVS", "AVS-MedRes"}:
+        run_roots.extend([src.parent / "AVS", src.parent.parent / ".hires-launcher-cache"])
+    run_root = next((root for root in run_roots if (root / "Run/Demo").is_dir()), src)
 
     all_games_root = src / "By Title.avs"
     if not all_games_root.is_dir():
@@ -32,17 +41,19 @@ def main():
         if target is None:
             raise SystemExit(f"Unrecognized game launch script: {path}")
         relative = target.group(1)
-        if not (src / relative).is_file():
+        if not (run_root / relative).is_file():
             raise SystemExit(f"Missing game launch target: {relative}")
         game_names.add(relative.rsplit("/", 1)[1])
     game_names = sorted(game_names, key=str.casefold)
-    (dst / "games.txt").write_text("\n".join(game_names), encoding="latin-1", errors="replace")
 
-    run_demo_root = src / "Run" / "Demo"
+    run_demo_root = run_root / "Run" / "Demo"
     if not run_demo_root.is_dir():
         raise SystemExit(f"Missing demo run directory: {run_demo_root}")
     demo_names = sorted((path.name for path in run_demo_root.iterdir()
                          if path.is_file() and not path.name.endswith(".uaem")), key=str.casefold)
+    # Validate both inputs before replacing any existing release listings.
+    dst.mkdir(parents=True, exist_ok=True)
+    (dst / "games.txt").write_text("\n".join(game_names), encoding="latin-1", errors="replace")
     (dst / "demos.txt").write_text("\n".join(demo_names), encoding="latin-1", errors="replace")
 
 

@@ -173,6 +173,25 @@ def get_clonefile():
     return clonefile
 
 
+def copy_portable_stat(src, dest):
+    try:
+        shutil.copystat(src, dest, follow_symlinks=True)
+    except OSError as exc:
+        if exc.errno not in {errno.EINVAL, errno.ENOTSUP, errno.ENOSYS}:
+            raise
+        # exFAT may reject macOS extended attributes/flags. File contents and
+        # executable permissions matter for the portable packages.
+        for operation in (
+            lambda: shutil.copymode(src, dest),
+            lambda: os.utime(dest, ns=(src.stat().st_atime_ns, src.stat().st_mtime_ns)),
+        ):
+            try:
+                operation()
+            except OSError as metadata_error:
+                if metadata_error.errno not in {errno.EINVAL, errno.ENOTSUP, errno.ENOSYS}:
+                    raise
+
+
 def clone_or_copy_file(src, dest):
     src = Path(src)
     dest = Path(dest)
@@ -192,9 +211,10 @@ def clone_or_copy_file(src, dest):
             }:
                 raise
         else:
-            shutil.copystat(src, dest, follow_symlinks=True)
+            copy_portable_stat(src, dest)
             return
-    shutil.copy2(src, dest)
+    shutil.copyfile(src, dest)
+    copy_portable_stat(src, dest)
 
 
 def clone_or_copy_tree(src, dest, dirs_exist_ok=False):
@@ -334,8 +354,17 @@ def archive_7z(output_path, input_root, archive_tool, dry_run=False):
     output_path.parent.mkdir(parents=True, exist_ok=True)
     if output_path.exists():
         output_path.unlink()
-    cmd = [archive_tool, "a", "-t7z", *SEVENZIP_COMPRESSION_ARGS, "-xr!.*", str(output_path)] + members
-    subprocess.run(cmd, cwd=input_root, check=True)
+    env = compression_environment(output_path)
+    cmd = [archive_tool, "a", "-t7z", *SEVENZIP_COMPRESSION_ARGS,
+           "-w" + env["TMPDIR"], "-xr!.*", str(output_path)] + members
+    subprocess.run(cmd, cwd=input_root, check=True, env=env)
+
+
+def compression_environment(output_path):
+    """Keep compressor scratch files on the artifact's destination filesystem."""
+    scratch = Path(output_path).resolve().parent / '.build' / 'tmp'
+    scratch.mkdir(parents=True, exist_ok=True)
+    return dict(os.environ, TMPDIR=str(scratch), TMP=str(scratch), TEMP=str(scratch))
 
 
 def build_cd32_release(args, output_path, dry_run=False):
@@ -353,7 +382,8 @@ def build_cd32_release(args, output_path, dry_run=False):
         output_path.unlink()
 
     log_step("Packing CD32 release archive")
-    run_command(["bash", str(pack_script), args.date_stamp, str(output_path)], dry_run=dry_run)
+    run_command(["bash", str(pack_script), args.date_stamp, str(output_path)], dry_run=dry_run,
+                env=None if dry_run else compression_environment(output_path))
     if not dry_run:
         require_file(output_path, "Generated CD32 distro archive")
     return output_path
@@ -372,16 +402,17 @@ def compress_xz(src_path, dest_path, xz_tool, dry_run=False, preset=XZ_PRESET):
             [xz_tool, "-T0", f"-{preset}", "-v", "-k", "-c", str(src_path)],
             check=True,
             stdout=dest,
+            env=compression_environment(dest_path),
         )
 
 
-def run_command(cmd, dry_run=False):
+def run_command(cmd, dry_run=False, env=None):
     display = " ".join(map(str, cmd))
     log_step(f"Running command: {display}")
     if dry_run:
         echo(f"[dry-run] Would run: {display}")
         return
-    subprocess.run(cmd, check=True)
+    subprocess.run(cmd, check=True, env=env)
 
 
 def list_archive_contents(artifact_path, archive_tool=None, xz_tool=None, dry_run=False):
@@ -522,7 +553,7 @@ def package_emulators(args, output_dir, archive_tool):
     output_path = output_dir / (f"AmigaVision-Emulators-{args.date_stamp}" + ("" if skip_archive else ".7z"))
     if skip_archive and output_path.exists():
         raise FileExistsError(f"Emulator output already exists: {output_path}. Choose another output directory or release date.")
-    with tempfile.TemporaryDirectory(prefix="amigavision-windows-installer-") as installer_dir, \
+    with make_stage_dir(output_dir, prefix="amigavision-windows-installer-", dry_run=args.dry_run) as installer_dir, \
             make_stage_dir(output_dir, prefix="amigavision-emulators-", dry_run=args.dry_run) as tmp_dir:
         installer = resolve_windows_installer(getattr(args, "windows_installer", None), installer_dir, dry_run=args.dry_run)
         if not args.dry_run:
@@ -659,7 +690,8 @@ def main():
         return 1
     continue_on_error = args.package == "all"
     packages = (
-        ["mister", "cd32-mister", "emulators", "mini", "pi", "amiga"]
+        # Mini is temporarily standalone until its image fits the 4 GB target.
+        ["mister", "cd32-mister", "emulators", "pi", "amiga"]
         if args.package == "all"
         else [args.package]
     )
