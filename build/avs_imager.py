@@ -46,7 +46,7 @@
 # lemon_id: Lemon Amiga ID
 
 import argparse
-from av_base_tree import directory_fingerprint, stage_directory
+from av_base_tree import directory_fingerprint, stage_directory, remove_host_files
 from avs_migration import migrate_staged_base
 from avs_image_update import prepare_plan, PLAN_NAME, format_duration
 import ast
@@ -821,7 +821,12 @@ def build_top_level_menu_with_cache(
             collection.progress_current += count_tree_entries([item])
             update_progress(collection, verbose)
             continue
-        with tempfile.TemporaryDirectory(prefix="avs-subtree-", dir=paths.tmp()) as subtree_root:
+        # Menu subtrees are small and short-lived. Keep them on the native Mac
+        # filesystem: exFAT's macOS driver can leave Unicode entries/AppleDouble
+        # files behind during TemporaryDirectory cleanup. TMPDIR is also on the
+        # selected distro drive, so explicitly bypass it on macOS.
+        subtree_temp_dir = "/private/tmp" if sys.platform == "darwin" else paths.tmp()
+        with tempfile.TemporaryDirectory(prefix="avs-subtree-", dir=subtree_temp_dir) as subtree_root:
             subtree_collection = EntryCollection()
             make_tree(db, subtree_collection, subtree_root, [item], template=runscript_template, verbose=verbose)
             util.clone_tree(subtree_root, amiga_avs_path)
@@ -1034,10 +1039,7 @@ def copy_add_dir_with_progress(src_dir: str, dest: str, verbose: bool) -> None:
         shutil.copy2(src_path, dest_path)
 
 def remove_ignored_host_files(path: str) -> None:
-    for root, _, files in os.walk(path):
-        for name in files:
-            if name == ".DS_Store":
-                os.remove(util.path(root, name))
+    remove_host_files(path)
 
 def get_pfs_partition_cache_path(cache_key: str) -> str:
     return util.path(paths.cache(), "pfs-partitions", cache_key + ".json")

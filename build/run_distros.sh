@@ -12,7 +12,8 @@ Environment:
   DISTRO_OUT             Default output directory.
   EMULATORS_ARCHIVE      Set to 1 to archive emulator folders in a full run.
 
---build-all prepares Mini and listings before packaging all distributions,
+--build-all reuses existing main, ECS, and Mini images, builds missing images,
+and prepares listings before packaging all distributions,
 using the selected drive for generated images, caches, and staging files.
 It asks only for the version and output directory at the start.
 
@@ -39,6 +40,9 @@ explicit_output=""
 package_args=()
 emulator_package=false
 archive_choice_explicit=false
+main_hdf=""
+ecs_hdf=""
+mini_hdf=""
 output_dir="${DISTRO_OUT:-${AVSDEST:-$HOME/Developer/AV-Output}/distros}"
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -58,6 +62,15 @@ while [[ $# -gt 0 ]]; do
     --build-all)
       build_all=true
       shift
+      ;;
+    --main-hdf|--ecs-hdf|--mini-hdf)
+      case "$1" in
+        --main-hdf) main_hdf="$2" ;;
+        --ecs-hdf) ecs_hdf="$2" ;;
+        --mini-hdf) mini_hdf="$2" ;;
+      esac
+      package_args+=("$1" "$2")
+      shift 2
       ;;
     --output-dir)
       if [[ $# -lt 2 || -z "$2" ]]; then
@@ -146,16 +159,42 @@ if [[ "$build_all" == true ]]; then
   export TMPDIR="$work_dir/tmp"
   export AVSCACHE_ROOT="$work_dir/cache"
   export DISTRO_DATE="$date_stamp" DISTRO_OUT="$output_dir"
-  "${MAKE:-make}" mini-image "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir" \
-    "AVSDEST=$work_dir/images" "AVSTEMP=$work_dir/stage" \
-    "MINI_HDF=$work_dir/images/AmigaVision-Mini.hdf" \
-    "MINI_UAE=$work_dir/images/AmigaVision-Mini.uae"
+  # Prefer configured images, then images from an earlier distro run on this
+  # drive. Build only missing images and pass the selected paths to packaging.
+  ensure_image() {
+    local configured="$1" filename="$2" target="$3" variable="$4" selected
+    if [[ -n "$configured" ]]; then
+      configured="$(python3 build/user_paths.py "$configured")"
+    fi
+    selected="$configured"
+    if [[ ! -f "$selected" ]]; then
+      selected="$work_dir/images/$filename"
+    fi
+    if [[ -f "$selected" ]]; then
+      printf 'Reusing image: %s\n' "$selected"
+    else
+      printf 'Building missing image: %s\n' "$selected"
+      "${MAKE:-make}" "$target" "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir" \
+        "AVSDEST=$work_dir/images" "AVSTEMP=$work_dir/stage" \
+        "AMIGAVISION_HDF=$work_dir/images/AmigaVision.hdf" \
+        "ECS_HDF=$work_dir/images/AmigaVision-ECS.hdf" \
+        "MINI_HDF=$work_dir/images/AmigaVision-Mini.hdf" \
+        "MINI_UAE=$work_dir/images/AmigaVision-Mini.uae"
+      if [[ ! -f "$selected" ]]; then
+        printf 'error: %s did not create %s\n' "$target" "$selected" >&2
+        return 1
+      fi
+    fi
+    printf -v "$variable" '%s' "$selected"
+  }
+  ensure_image "$main_hdf" AmigaVision.hdf image main_hdf
+  ensure_image "$ecs_hdf" AmigaVision-ECS.hdf ecs-image ecs_hdf
+  ensure_image "$mini_hdf" AmigaVision-Mini.hdf mini-image mini_hdf
   "${MAKE:-make}" listings "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir" \
     "DISTRO_LISTINGS_DIR=$work_dir/listings"
   # CD32's generator and packer also use AVSDEST for intermediate payloads.
   export AVSDEST="$work_dir/images"
-  package_args+=(--mini-hdf "$work_dir/images/AmigaVision-Mini.hdf"
-                 --mini-uae "$work_dir/images/AmigaVision-Mini.uae"
+  package_args+=(--main-hdf "$main_hdf" --ecs-hdf "$ecs_hdf" --mini-hdf "$mini_hdf"
                  --listings-dir "$work_dir/listings")
   if [[ "$archive_choice_explicit" == false ]]; then
     if [[ "${EMULATORS_ARCHIVE:-auto}" == 1 ]]; then

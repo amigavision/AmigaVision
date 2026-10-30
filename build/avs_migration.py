@@ -4,9 +4,19 @@ The source AV-Base tree stays untouched. MiSTer's core-owned protocol filenames
 remain unchanged so its boot and now-playing integration keeps working.
 """
 from pathlib import Path
+import os
 import re
 
+from av_base_tree import ignored_name
+
 _LEGACY = re.compile(r'(?<![A-Za-z])(?:AGS2?|ags2?)')
+
+def visible_paths(parent):
+    for current, dirs, files in os.walk(parent):
+        dirs[:] = [name for name in dirs if not ignored_name(name)]
+        for name in dirs + files:
+            if not ignored_name(name):
+                yield Path(current) / name
 
 
 def rename_reference(value):
@@ -20,7 +30,7 @@ def migrate_staged_base(root):
     # These are our scripts and environment files, not third-party applications.
     for directory in ('S', 'Prefs/Env-Archive'):
         parent = root / directory
-        for path in parent.rglob('*') if parent.exists() else ():
+        for path in visible_paths(parent):
             if not path.is_file():
                 continue
             data = path.read_bytes()
@@ -35,7 +45,9 @@ def migrate_staged_base(root):
     # Rename bundled commands/fonts and their UAE metadata sidecars as a unit.
     for directory in ('C', 'S', 'Fonts', 'Prefs/Env-Archive'):
         parent = root / directory
-        for path in sorted(parent.rglob('*'), key=lambda p: len(p.parts), reverse=True) if parent.exists() else ():
+        # Renaming on macOS also renames its ._ sidecar. Never process a
+        # snapshot of those host files as if they were launcher commands.
+        for path in sorted(visible_paths(parent), key=lambda p: len(p.parts), reverse=True):
             name = rename_reference(path.name)
             if name == path.name:
                 continue

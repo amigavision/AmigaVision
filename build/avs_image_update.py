@@ -115,7 +115,7 @@ def snapshot(workspace, partitions, cache=None, stats=None, clean=False):
             nodes = {node.name: node for node in scan}
         for name in sorted(nodes):
             node = nodes[name]
-            if name in IGNORED:
+            if name.startswith('.') or name in IGNORED:
                 if clean and name == '.DS_Store' and node.is_file(follow_symlinks=False):
                     os.unlink(node.path)
                 continue

@@ -100,9 +100,13 @@ def rm_path(path: str):
         os.remove(path)
     elif os.path.isdir(path):
         last_error = None
+        def on_remove_error(function, failed_path, exc_info):
+            # macOS can delete a ._ sidecar when its companion is removed.
+            if not isinstance(exc_info[1], FileNotFoundError):
+                raise exc_info[1]
         for _ in range(5):
             try:
-                shutil.rmtree(path)
+                shutil.rmtree(path, onerror=on_remove_error)
                 return
             except OSError as err:
                 last_error = err

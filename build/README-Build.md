@@ -29,7 +29,7 @@ The normal end-to-end release process is:
 3. `make image`
    Create the main `AmigaVision.hdf` image using the standard Amiberry-based clone process.
 4. `make distros`
-   Prompt once for the release version (default: today's date) and output directory, then build the Mini image and package all platform-specific releases without further prompts. Press Enter at either prompt to keep its default. The selected directory holds finished packages and a `.build` subdirectory for generated images, listings, caches, and temporary files, so a large external drive can handle the whole run. Existing main HDF and content sources are read from their configured locations.
+   Prompt once for the release version (default: today's date) and output directory, then package all platform-specific releases without further prompts. Reuse existing main, ECS, and Mini images from their configured locations, or from a previous distro run's `.build/images` directory. Build each missing image automatically using `image`, `ecs-image`, or `mini-image`. Existing images are reused regardless of age; run those targets explicitly when you want fresh images. Press Enter at either prompt to keep its default. The selected directory holds finished packages and a `.build` subdirectory for generated images, listings, caches, and temporary files, so a large external drive can handle the whole run.
 
 Full distro runs keep the emulator folders by default. Use `make distros EMULATORS_ARCHIVE=1` to create their 7z archive without adding another prompt. Noninteractive runs use `DISTRO_DATE` and `DISTRO_OUT` directly.
 
