@@ -10,7 +10,7 @@ class ViewportTests(unittest.TestCase):
   self.m=Machine(CPUType.M68000,4096);self.mem=self.m.mem;self.cpu=self.m.cpu
   self.original=remove_patch((ROOT/'data/avs-highres/AVSMenu').read_bytes());self.data=patch(self.original)
   self.base=struct.unpack_from('>I',self.original,28)[0]*4
-  self.entries=struct.unpack_from('>6I',self.data,32+self.base);self.state=self.base+self.entries[3]
+  self.entries=struct.unpack_from('>13I',self.data,32+self.base);self.state=self.base+self.entries[3]
   self.mem.w_block(0,self.data[32:32+struct.unpack_from('>I',self.data,28)[0]*4])
   self.obj,self.nav,self.conf,self.font=0x90000,0x91000,0x92000,0x93000
   self.rp,self.bm,self.items,self.gfx,self.glob=0x94000,0x95000,0xa0000,0x20000,0xb0000
@@ -23,8 +23,9 @@ class ViewportTests(unittest.TestCase):
   self.mem.w16(self.bm,28);self.mem.w16(self.bm+2,385);self.mem.w8(self.bm+5,1)
   self.mem.w32(self.bm+8,0x180000);self.mem.w32(self.glob-52,self.gfx)
   self.mem.w32(self.frame-12,self.obj)
+  self.now=1000;self.dos=0x30000;self.mem.w32(self.glob-44,self.dos)
   self.draws=[];self.shifts=[];self.rows=[None]*24;self.pen=1
-  self.calls={self.gfx-30:'BltBitMap',self.gfx-228:'WaitBlit',self.gfx-342:'Pen',self.gfx-306:'Rect',self.gfx-240:'Move',self.gfx-60:'Text'}
+  self.calls={self.dos-192:'DateStamp',self.gfx-30:'BltBitMap',self.gfx-228:'WaitBlit',self.gfx-342:'Pen',self.gfx-306:'Rect',self.gfx-240:'Move',self.gfx-60:'Text'}
   for addr in self.calls:self.mem.w16(addr,0x4e75)
   self.set_items(4000)
  def tearDown(self):self.m.cleanup()
@@ -41,7 +42,9 @@ class ViewportTests(unittest.TestCase):
   def hook(pc):
    if pc==stop:raise StopIteration()
    name=self.calls.get(pc);get=self.cpu.r32_reg
-   if name=='Pen':self.pen=get(R.D0)
+   if name=='DateStamp':
+    ds=get(R.D1);self.mem.w32(ds+4,self.now//3000);self.mem.w32(ds+8,self.now%3000)
+   elif name=='Pen':self.pen=get(R.D0)
    elif name=='BltBitMap':
     src,dst,height=get(R.D1)//16,get(R.D3)//16,get(R.D5)//16
     self.assertEqual(get(R.A0),self.bm);self.assertEqual(get(R.A1),self.bm)
@@ -166,6 +169,25 @@ class ViewportTests(unittest.TestCase):
   self.assertEqual(self.data[32+0x6c94:32+0x6c96],bytes.fromhex('6100'))
   displacement=struct.unpack_from('>h',self.data,32+0x6c96)[0]
   self.assertEqual(0x6c96+displacement,self.base+self.entries[5])
+ def hold(self,action,delay):
+  self.execute(6,0x4c0c,{R.D6:action,R.D2:delay})
+  return self.mem.r32(self.state+40)
+ def test_acceleration_starts_at_half_second_and_resets(self):
+  self.assertEqual(self.hold(2,0),1)
+  self.now+=24;self.assertEqual(self.hold(2,20),1)
+  self.now+=1;self.assertEqual(self.hold(2,21),2)
+  self.assertEqual(self.hold(0,0),1)
+  self.assertEqual(self.hold(2,0),1)
+  self.now+=25;self.assertEqual(self.hold(2,30),2)
+  self.assertEqual(self.hold(1,30),1)
+ def test_accelerated_steps_and_list_boundary_clamps(self):
+  self.initialize();self.mem.w32(self.state+40,2)
+  for entry,stop,value,want in [(7,0x4c5a,10,8),(7,0x4c5a,1,0),(8,0x4cb2,1,0),(9,0x4d30,10,12),(9,0x4d30,22,23),(10,0x4da0,3975,3976)]:
+   self.execute(entry,stop,{R.D0:value,R.D4:self.obj});self.assertEqual(self.cpu.r32_reg(R.D0),want)
+ def test_accelerated_dirty_range_includes_previous_highlight(self):
+  self.mem.w32(self.state+40,2)
+  self.execute(11,0x4c74,{R.D0:10});self.assertEqual(self.mem.r32(self.cpu.r_sp()),12)
+  self.execute(12,0x4d40,{R.D0:12});self.assertEqual(self.mem.r32(self.cpu.r_sp()),10)
  def test_idempotent_and_preserves_original_hunk_tail(self):
   self.assertEqual(patch(self.data),self.data);self.assertEqual(remove_patch(self.data),self.original)
   n=struct.unpack_from('>I',self.data,28)[0]*4

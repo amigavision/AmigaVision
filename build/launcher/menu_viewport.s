@@ -2,6 +2,8 @@
  org PATCH_BASE
  dc.l allocate_rows-PATCH_BASE,initial_rows-PATCH_BASE,window_source-PATCH_BASE
  dc.l state-PATCH_BASE,ensure_window-PATCH_BASE,stable_composite-PATCH_BASE
+ dc.l hold_speed-PATCH_BASE,up_row-PATCH_BASE,up_offset-PATCH_BASE
+ dc.l down_row-PATCH_BASE,down_offset-PATCH_BASE,up_dirty-PATCH_BASE,down_dirty-PATCH_BASE
 
 allocate_rows:
  movem.l d1-d7/a0-a6,-(sp)
@@ -266,8 +268,106 @@ compose_all:
 composite_done:
  movem.l (sp)+,d0-d7/a0-a6
  rts
+; Acceleration is time-based, not tied to emulator rendering speed.
+hold_speed:
+ movem.l d0-d7/a0-a6,-(sp)
+ lea state(pc),a3
+ move.l #1,40(a3)
+ cmp.l #1,d6
+ beq arrow_hold
+ cmp.l #2,d6
+ beq arrow_hold
+ clr.l 44(a3)
+ bra hold_done
+arrow_hold:
+ lea hold_stamp(pc),a0
+ move.l a0,d1
+ move.l -44(a4),a6
+ jsr -192(a6)
+ lea hold_stamp(pc),a0
+ move.l 4(a0),d0
+ mulu.w #3000,d0
+ add.l 8(a0),d0
+ ; d2 is the native get_action repeat counter, saved across DateStamp.
+ move.l 8(sp),d2
+ tst.l d2
+ beq hold_reset
+ cmp.l 44(a3),d6
+ bne hold_reset
+ sub.l 48(a3),d0
+ bpl hold_elapsed
+ add.l #4320000,d0
+hold_elapsed:
+ cmp.l #25,d0
+ blo hold_done
+ move.l #2,40(a3)
+ bra hold_done
+hold_reset:
+ move.l d6,44(a3)
+ move.l d0,48(a3)
+hold_done:
+ movem.l (sp)+,d0-d7/a0-a6
+ move.l d2,d5
+ move.l d6,d0
+ bra.w $4c0c
+up_row:
+ sub.l state+40(pc),d0
+ bpl up_row_ok
+ moveq #0,d0
+up_row_ok:
+ move.l d4,a0
+ bra.w $4c5a
+up_offset:
+ sub.l state+40(pc),d0
+ bpl up_offset_ok
+ moveq #0,d0
+up_offset_ok:
+ move.l d4,a0
+ bra.w $4cb2
+down_row:
+ add.l state+40(pc),d0
+ movem.l d1/a1,-(sp)
+ move.l d4,a1
+ moveq #0,d1
+ move.w 38(a1),d1
+ subq.l #1,d1
+ cmp.l d1,d0
+ ble down_row_ok
+ move.l d1,d0
+down_row_ok:
+ movem.l (sp)+,d1/a1
+ move.l d4,a0
+ bra.w $4d30
+down_offset:
+ add.l state+40(pc),d0
+ movem.l d1-d2/a1,-(sp)
+ move.l d4,a1
+ moveq #0,d2
+ move.w 38(a1),d2
+ move.l 8(a1),a1
+ move.l 16(a1),d1
+ sub.l d2,d1
+ cmp.l d1,d0
+ ble down_offset_ok
+ move.l d1,d0
+down_offset_ok:
+ movem.l (sp)+,d1-d2/a1
+ move.l d4,a0
+ bra.w $4da0
+up_dirty:
+ add.l state+40(pc),d0
+ move.l d0,-(sp)
+ bra.w $4c74
+down_dirty:
+ sub.l state+40(pc),d0
+ bpl dirty_nonnegative
+ moveq #0,d0
+dirty_nonnegative:
+ move.l d0,-(sp)
+ bra.w $4d40
  cnop 0,4
-state: dcb.l 10,0
+hold_stamp: dcb.l 3,0
+state: dcb.l 13,0
  cnop 0,4
- dc.b 'AVSVIEW2'
+ dc.b 'AVSVIEW3'
  dc.l PATCH_BASE

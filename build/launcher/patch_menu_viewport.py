@@ -5,23 +5,23 @@ Apply after the validated AVSNOW04 menu. Preserve the original HUNK tail.
 from pathlib import Path
 import argparse,hashlib,struct,subprocess,tempfile
 BASELINE='3d809d1082f75b2f77d89a1ca1ea490ecd4e8c1464ff4d7d907473ae8a214b53'
-HOOKS=((0x6832,'20280010'),(0x699e,'20280010'),(0x6b88,'20463028002a'),(0x6c94,'610042a6'))
+HOOKS=((0x6832,'20280010'),(0x699e,'20280010'),(0x6b88,'20463028002a'),(0x6c94,'610042a6'),(0x4c08,'2a022006'),(0x4c56,'53802044'),(0x4cae,'53802044'),(0x4d2c,'52802044'),(0x4d9c,'52802044'),(0x4c70,'52802f00'),(0x4d3c,'53802f00'))
 SELECT=(0xa4e4,bytes.fromhex('d26b002a'))
 def remove_patch(data):
  end=32+struct.unpack_from('>I',data,28)[0]*4
  tag=data[end-12:end-4]
- if tag not in (b'AVSVIEW1',b'AVSVIEW2'):return data
+ if tag not in (b'AVSVIEW1',b'AVSVIEW2',b'AVSVIEW3'):return data
  base=struct.unpack_from('>I',data,end-4)[0]
  out=bytearray(data[:32+base]+data[end:])
  for off in (20,28):struct.pack_into('>I',out,off,base//4)
- for addr,value in (HOOKS[:3] if tag==b'AVSVIEW1' else HOOKS):out[32+addr:32+addr+len(bytes.fromhex(value))]=bytes.fromhex(value)
+ for addr,value in (HOOKS[:3] if tag==b'AVSVIEW1' else HOOKS[:4] if tag==b'AVSVIEW2' else HOOKS):out[32+addr:32+addr+len(bytes.fromhex(value))]=bytes.fromhex(value)
  out[32+SELECT[0]:32+SELECT[0]+4]=SELECT[1]
  if hashlib.sha256(out).hexdigest()!=BASELINE:raise ValueError('Unknown viewport-patched menu')
  return bytes(out)
 def patch(data,assembler='/tmp/av-vasm/vasmm68k_mot'):
  original=remove_patch(data)
  end=32+struct.unpack_from('>I',data,28)[0]*4
- if data[end-12:end-4]==b'AVSVIEW2':return data
+ if data[end-12:end-4]==b'AVSVIEW3':return data
  data=original
  if hashlib.sha256(data).hexdigest()!=BASELINE:raise ValueError('Unknown AGA hi-res menu; revalidate viewport hooks')
  base=struct.unpack_from('>I',data,28)[0]*4;end=32+base
@@ -31,8 +31,8 @@ def patch(data,assembler='/tmp/av-vasm/vasmm68k_mot'):
   blob=out.read_bytes()
  result=bytearray(data[:end]+blob+data[end:])
  for off in (20,28):struct.pack_into('>I',result,off,(base+len(blob))//4)
- entries=struct.unpack_from('>6I',blob)
- for (addr,expected),entry in zip(HOOKS,entries[:3]+entries[5:6]):
+ entries=struct.unpack_from('>13I',blob)
+ for (addr,expected),entry in zip(HOOKS,entries[:3]+entries[5:]):
   expected=bytes.fromhex(expected);assert data[32+addr:32+addr+len(expected)]==expected
   result[32+addr:32+addr+len(expected)]=struct.pack('>Hh',0x6100 if addr==0x6c94 else 0x6000,base+entry-(addr+2))+bytes.fromhex('4e71')*((len(expected)-4)//2)
  addr,expected=SELECT;assert data[32+addr:32+addr+4]==expected

@@ -143,3 +143,20 @@ Visual testing on the launcher is still required; no emulator was manipulated.
 
 Rebuild patch: build/launcher/patch_menu_viewport.py (last after Now Playing).
 SHA-256: 3ba65f978dae1615fbf1073bca341c1f7390617e149837881cfd6f6185d75df0
+
+AVSVIEW3: AGA hi-res held-arrow acceleration.
+Up/Down moves one entry initially, retaining the native repeat delay. After
+25 DOS ticks (500ms) held in one direction, repeated moves advance two entries
+per redraw. Release or direction change resets this. List/viewport boundaries
+clamp safely. Dirty ranges include the previous selection even when two rows
+are traversed, preserving the stable highlight fix. Existing divider skipping
+and bounded viewport rendering remain. No extra frame wait or Chip allocation.
+This also applies to controller Up/Down through the common navigation path.
+Updated data/avs-highres/AVSMenu for the next build; ECS and med-res unchanged.
+18 viewport tests pass, including exact threshold, resets, boundaries and dirty
+ranges. Target-machine scrolling speed/feel is not established by these tests.
+
+New hooks: $4c08 tracks continuous arrow time via DateStamp; $4c56/$4cae
+subtract the step with zero clamp; $4d2c/$4d9c add with viewport/list clamps;
+$4c70/$4d3c extend partial redraws over the old selected row. All original
+increment/action flow is otherwise retained. Apply viewport patch last.
