@@ -23,6 +23,17 @@ SEVENZIP_CANDIDATES = ("7zz", "7z", "7za")
 SEVENZIP_COMPRESSION_ARGS = ("-mx=5", "-myx=3")
 XZ_PRESET = 6
 FAT32_MAX_FILE_BYTES = (4 * 1024 * 1024 * 1024) - 1
+PLATFORM_DIRECTORIES = {
+    "mister": "AmigaVision-MiSTer",
+    "cd32-mister": "AmigaVision-CD32-MiSTer",
+    "emulators": "AmigaVision-Emulators",
+    "mini": "AmigaVision-Mini",
+    "pi": "AmigaVision-RPi",
+    "amiga": "AmigaVision-Amiga",
+    "amiga-ecs": "AmigaVision-Amiga-ECS",
+    "pistorm-aga": "AmigaVision-PiStormAGA",
+    "pistorm-ecs": "AmigaVision-PiStormECS",
+}
 
 
 def parse_args():
@@ -734,6 +745,9 @@ def main():
     cd32_release_state = {"artifact": None, "error": None, "temp_dir": None}
     try:
         for package in packages:
+            platform_dir = output_dir / PLATFORM_DIRECTORIES[package]
+            if not args.dry_run:
+                platform_dir.mkdir(parents=True, exist_ok=True)
             started_at = time.time()
             log_step(f"Starting package: {package}")
             try:
@@ -743,10 +757,10 @@ def main():
                     if cd32_release_state["artifact"] is None:
                         try:
                             if "cd32-mister" in packages:
-                                cd32_output_path = output_dir / f"!AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
+                                cd32_output_path = platform_dir / f"!AmigaVision-CD32-MiSTer-{args.date_stamp}.zip"
                             else:
                                 cd32_release_state["temp_dir"] = make_stage_dir(
-                                    output_dir,
+                                    platform_dir,
                                     prefix="amigavision-cd32-release-",
                                     dry_run=args.dry_run,
                                 )
@@ -756,19 +770,19 @@ def main():
                             cd32_release_state["error"] = exc
                             raise
                 if package == "mister":
-                    created.append(package_mister(args, output_dir, archive_tool))
+                    created.append(package_mister(args, platform_dir, archive_tool))
                 elif package == "cd32-mister":
-                    created.append(package_cd32_mister(args, output_dir, cd32_release_state["artifact"]))
+                    created.append(package_cd32_mister(args, platform_dir, cd32_release_state["artifact"]))
                 elif package == "emulators":
-                    created.append(package_emulators(args, output_dir, archive_tool))
+                    created.append(package_emulators(args, platform_dir, archive_tool))
                 elif package == "mini":
-                    created.append(package_mini(args, output_dir, archive_tool))
+                    created.append(package_mini(args, platform_dir, archive_tool))
                 elif package == "pi":
-                    created.append(package_rpi(args, output_dir, xz_tool))
+                    created.append(package_rpi(args, platform_dir, xz_tool))
                 elif package in {"amiga", "amiga-ecs"}:
-                    created.append(package_amiga(args, output_dir, xz_tool, ecs=package == "amiga-ecs"))
+                    created.append(package_amiga(args, platform_dir, xz_tool, ecs=package == "amiga-ecs"))
                 elif package in {"pistorm-aga", "pistorm-ecs"}:
-                    created.append(package_pistorm(args, output_dir, ecs=package == "pistorm-ecs"))
+                    created.append(package_pistorm(args, platform_dir, ecs=package == "pistorm-ecs"))
                 else:
                     raise AssertionError(f"Unhandled package type: {package}")
                 unpacked_emulators = package == "emulators" and args.skip_emulator_archive

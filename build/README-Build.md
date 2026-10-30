@@ -37,6 +37,8 @@ Full distro runs also build PiStorm AGA (PiStorm32 Lite, from the main HDF) and 
 
 Both real Amiga archives are included: `AmigaVision-Amiga-<date>.img.xz` from the main HDF and `AmigaVision-Amiga-ECS-<date>.img.xz` from the ECS HDF, with SHA-256 and MD5 checksum files.
 
+Each platform has a dedicated output directory, such as `AmigaVision-Amiga-ECS/`, containing its dated archive and adjacent `.sha256.txt` and `.md5.txt` files. The same layout applies to individual packaging targets. Uncompressed emulator releases live under `AmigaVision-Emulators/` in their dated release folder.
+
 Packaging stages payloads and writes compressed artifacts on the selected output storage. Compressor scratch files use its `.build/tmp` directory, including an explicit 7z working-directory setting. This also applies when packaging an individual distribution. CD32 ZIP staging and emulator installer staging use the output storage as well.
 
 Mini builds default to full rebuilds with `--no-build-cache`: menu trees and archives are built directly in the workspace without reading or saving reusable build trees. After success, the separate temporary workspace, any older Mini build cache, and retained image-update data are removed. The finished Mini image remains available for packaging and reuse. For repeated development builds, use `make mini-image MINI_INCREMENTAL=1` to enable and retain the build and image-update caches.

@@ -243,6 +243,8 @@ def main():
     default_output_dir = os.environ.get('DISTRO_OUT', str(Path(os.environ.get('AVSDEST', str(Path.home() / 'Developer/AV-Output'))) / 'distros'))
     output_dir = Path(normalize_path(args.output_dir or (Path(normalize_path(args.output)).parent if args.output else default_output_dir)))
     variant = 'PiStormECS' if args.model == 'pistorm' else 'PiStormAGA'
+    if not args.output:
+        output_dir = output_dir / f'AmigaVision-{variant}'
     filename = Path(normalize_path(args.output)).name if args.output else f'AmigaVision-{variant}-{args.date_stamp}.img.xz'
     args.output = output_dir / filename
     for key in ('hdf', 'rom', 'output', 'amiberry', 'cache'):
