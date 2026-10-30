@@ -1,0 +1,109 @@
+Now Playing footer — 2026-10-30
+
+Installed in all three repository build sources:
+ data/avs-highres/AVSMenu (AGA hi-res)
+ data/avs-ecs/AVSMenu (ECS hi-res)
+ data/avs/AVSMenu (AGA med-res)
+Each export subdirectory contains the matching menu and previous menu for rollback.
+Do not interchange variants. No AVS.conf changes or helper replacement needed.
+The preceding hi-res AVSHelper quit fix is retained unchanged.
+
+At successful playback startup, the music process publishes the MOD path.
+The menu strips directories and a case-insensitive .mod suffix, prepends
+Now Playing: , centers using actual TextLength/font metrics, blanks the full
+footer width with a fixed black pen and renders using the fixed text pen.
+Long names are clipped to the available width. No image rescaling involved.
+
+The footer is captured before drawing and restored after 250 DOS DateStamp
+50-Hz ticks (5 seconds, including NTSC). A new track refreshes the notification
+and timer. A private cloned RastPort leaves menu/helper drawing settings alone.
+Navigation continues during the overlay. Exit/exception cleanup drains blits and
+restores/frees the strip. Allocation failure skips the overlay without blocking
+playback. The producer never draws and never sleeps on behalf of the overlay.
+
+Transient extra Chip RAM with current fonts: 11520 bytes AGA hi-res,
+5760 bytes ECS, 7040 bytes med-res. Released when the notification disappears.
+
+22 M68000 execution tests with modeled OS/graphics cover names, .MOD, bounds,
+centering, full-width erase, exact restoration, initial/new track timing,
+midnight rollover, OOM, no/failed music, exit and exception cleanup, geometry
+and pens for ECS/med-res, idempotence and HUNK relocation preservation.
+These are not visual hardware tests. No emulator was launched or manipulated.
+
+Patch source: build/launcher/now_playing.s
+Reproducible patcher: build/launcher/patch_now_playing.py
+Tests: build/launcher/test_now_playing_68k.py (requires machine68k)
+Apply this patch LAST after divider/navigation patches. remove_patch recovers
+its exact input binary for upgrading earlier layers. Unknown inputs are rejected.
+
+Manual check: restart the launcher with music enabled; observe the first track,
+then advance a track via the existing music shortcut. Check the original footer
+returns after five seconds and navigation remains responsive. Verify the same
+behavior in ECS and med-res when those variants are next tested.
+
+Binary hook details (runtime offsets; file code begins at byte 32):
+ $8344: producer runs after native PT playback/volume setup, verifies module
+ object at music-context+50, publishes bounded filename, then replays
+ moveq #-1,d0 / movea.l d6,a0 before native playing flag write at $8348.
+ $4bee: replay menu WaitTOF and poll produced/consumed sequence numbers.
+ $5656: normal menu selection exit restores/frees footer and replays native
+ return-value/stack adjustment.
+ $90e6: common main cleanup catches exceptions as well, before fonts/windows
+ are released; replays the native exception-frame pop.
+
+Producer/menu snapshots are protected with short task-context Forbid/Permit;
+no DOS/graphics calls are made while forbidden. There is no new interrupt,
+message port, timer.device request, task or persistent Chip allocation.
+RastPort clone is 100 bytes; saved BitMap supports 1..8 planar bitplanes,
+byte stride <=128, footer height <=64 and native screen height. Unsupported
+geometry skips display. UI black/text pens are (1<<depth)-2 and -1.
+Current dimensions use full 640px width and font height+4 at screen bottom.
+The capture descriptor uses native stride, per-plane allocation and ByteRun1
+image handling is entirely unrelated to this overlay.
+
+Revision AVSNOW02:
+- Popup remains for 250 DOS ticks / five seconds, on PAL and NTSC.
+- F8 (raw $57) toggles pause/resume via the existing music process pause
+  signal; the existing Space shortcut continues working.
+- F9 (raw $58) advances via the music process next-track signal. The mask
+  is captured from the music task frame on successful playback startup.
+  Music keys are consumed before type-to-search and debounce until release.
+- Native Copper generation reserves 64 additional descriptors, then adds
+  a footer band using the existing configured copper_text_colors list,
+  interlace step and color register. The band starts at the popup glyph's
+  first row (screen height minus font height minus 2), horizontal position 0.
+  This uses real Copper coloring of the existing fixed text pen, with no
+  extra palette slots and no changes to the menu or metadata geometry.
+- New runtime hooks: $5684 music key dispatch, $78f6 Copper capacity,
+  $79f2 footer descriptors. Older AVSNOW01 is removed before installing v2.
+- Tests cover the five-second boundary, held-key debounce, aliases, missing
+  music process, original keys, capacity, actual native Copper descriptor
+  generation/positions/palette values, and all three binary profiles.
+
+Revision AVSNOW03 — shuffled playlist:
+The music process retains native directory scanning, RNG seeding, loading,
+playback, end-of-song signals, F8/Space pause and F9 next-track handling.
+Immediately after scanning and RNG seeding, it creates a temporary 4*N-byte
+MEMF_PUBLIC pointer array, Fisher-Yates shuffles it using native Rand(i+1),
+and relinks the existing E filename strings in that order. The array is freed
+immediately; no extra Chip RAM or persistent pointer array is required.
+Every selection advances a cursor through the linked list and wraps to its
+head. The permutation is reused at wrap, so every loadable track is selected
+once per cycle. The order is generated anew on launcher/music-process startup.
+The old per-track random choice and last_mod_index exclusion are bypassed;
+last_mod_index is still written as playlist ordinal for native bookkeeping.
+If the temporary allocation fails, or there are more than 65535 entries,
+a sequential cycle covers every entry instead. Zero/one-entry lists are safe.
+No new directories, configuration files or prebuilt playlist file are needed.
+
+Runtime hooks: $8124 follows the existing RNG seed and initializes/shuffles
+once; $8186 preserves the native already-playing guard, selects the next item
+and advances only when a new module is needed. String linkage is at path-8;
+native head frame offset -60, tail -20, count -88, ordinal -36. State+56 is
+cursor; state+60 is next ordinal. Original strings and their owners are retained.
+Patch remains last in chain and upgrades AVSNOW01/02 by restoring baseline first.
+
+New tests execute Fisher-Yates and native RNG on M68000: coverage without
+repeats, identical repeated cycles, native list-tail invariant, sizes 0,1,2,3,
+4,7,9,17,23,64,101, ordinal wrap, playing-state guard, allocation/free and OOM
+sequential fallback. All 22 targeted tests pass; no unsolicited emulator run.

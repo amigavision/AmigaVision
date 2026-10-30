@@ -3,7 +3,12 @@ from pathlib import Path
 import sys, unittest, os
 from machine68k import Machine, CPUType, Register as R
 sys.path.insert(0,str(Path(__file__).parent))
-from patch_dividers import patch
+from patch_dividers import patch as divider_patch
+from patch_now_playing import remove_patch as remove_now_playing
+
+def patch(data, *args, **kwargs):
+ # Exercise divider wrappers underneath the outer Now Playing layer.
+ return divider_patch(remove_now_playing(data), *args, **kwargs)
 ROOT=Path(__file__).resolve().parents[2]
 
 class Divider68000Tests(unittest.TestCase):
