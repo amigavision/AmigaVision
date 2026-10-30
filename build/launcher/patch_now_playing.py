@@ -10,12 +10,12 @@ HOOKS=((0x8344,'70ff2046'),(0x4bee,'4eaefef2'),(0x5656,'7000dffc00000210'),(0x90
 def remove_patch(data):
  end=32+struct.unpack_from('>I',data,28)[0]*4
  tag=data[end-12:end-4]
- if tag not in (b'AVSNOW01',b'AVSNOW02',b'AVSNOW03'):return data
+ if tag not in (b'AVSNOW01',b'AVSNOW02',b'AVSNOW03',b'AVSNOW04'):return data
  base=struct.unpack_from('>I',data,end-4)[0]
  out=bytearray(data[:32+base]+data[end:])
  for off in (20,28):struct.pack_into('>I',out,off,base//4)
  for addr,original in (HOOKS[:4] if tag==b'AVSNOW01' else HOOKS[:7] if tag==b'AVSNOW02' else HOOKS):out[32+addr:32+addr+len(bytes.fromhex(original))]=bytes.fromhex(original)
- if hashlib.sha256(out).hexdigest() not in BASELINES.values() and tag in (b'AVSNOW02',b'AVSNOW03'):
+ if hashlib.sha256(out).hexdigest() not in BASELINES.values() and tag in (b'AVSNOW02',b'AVSNOW03',b'AVSNOW04'):
   # Original med-res kept its count in d3; the extension returns the used
   # count in d4 for the subsequent sorter, just like the hi-res fixes.
   out[32+0x79f2:32+0x79f4]=bytes.fromhex('2600')
@@ -24,7 +24,7 @@ def remove_patch(data):
 def patch(data,assembler='/tmp/av-vasm/vasmm68k_mot'):
  original=remove_patch(data)
  end=32+struct.unpack_from('>I',data,28)[0]*4
- if data[end-12:end-4]==b'AVSNOW03':return data
+ if data[end-12:end-4]==b'AVSNOW04':return data
  data=original
  if hashlib.sha256(data).hexdigest() not in BASELINES.values():raise ValueError('Unknown menu baseline')
  base=struct.unpack_from('>I',data,28)[0]*4;end=32+base

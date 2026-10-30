@@ -187,6 +187,23 @@ class NowPlayingTests(unittest.TestCase):
    for index in range(count):
     order.append(self.choose());self.assertEqual(self.mem.r32(self.frame-36),index)
    self.assertEqual(set(order),set(nodes));self.assertEqual(self.choose(),order[0])
+ def test_cd32_play_pause_is_edge_triggered_and_consumed(self):
+  self.mem.w32(self.a4-540,0x99000);self.mem.w32(self.a4-536,0x200)
+  for pressed in (True,True,False,True):
+   self.cpu.w32_reg(R.D5,0x20000 if pressed else 0)
+   self.key(0xff)
+   self.assertEqual(self.cpu.r32_reg(R.D5)&0x20000,0)
+  self.assertEqual(self.signals,[(0x99000,0x200),(0x99000,0x200)])
+ def test_cd32_other_buttons_preserved_and_disabled_music_safe(self):
+  self.cpu.w32_reg(R.D5,0x20000|0x400000|4);self.key(0xff)
+  self.assertEqual(self.signals,[])
+  self.assertEqual(self.cpu.r32_reg(R.D5),0x400000|4)
+ def test_cd32_and_keyboard_have_independent_release_state(self):
+  self.mem.w32(self.a4-540,0x99000);self.mem.w32(self.a4-536,0x200)
+  self.cpu.w32_reg(R.D5,0x20000);self.key(0xff)
+  self.cpu.w32_reg(R.D5,0x20000);self.key(0x57)
+  self.cpu.w32_reg(R.D5,0x20000);self.key(0x57)
+  self.assertEqual(len(self.signals),2)
  def test_all_profiles_idempotent_and_tail_unchanged(self):
   for profile in BASELINES:
    original=remove_patch((ROOT/'data'/profile/'AVSMenu').read_bytes());new=patch(original)

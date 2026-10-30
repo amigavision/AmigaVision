@@ -24,7 +24,7 @@ playback. The producer never draws and never sleeps on behalf of the overlay.
 Transient extra Chip RAM with current fonts: 11520 bytes AGA hi-res,
 5760 bytes ECS, 7040 bytes med-res. Released when the notification disappears.
 
-22 M68000 execution tests with modeled OS/graphics cover names, .MOD, bounds,
+25 M68000 execution tests with modeled OS/graphics cover names, .MOD, bounds,
 centering, full-width erase, exact restoration, initial/new track timing,
 midnight rollover, OOM, no/failed music, exit and exception cleanup, geometry
 and pens for ECS/med-res, idempotence and HUNK relocation preservation.
@@ -107,3 +107,16 @@ New tests execute Fisher-Yates and native RNG on M68000: coverage without
 repeats, identical repeated cycles, native list-tail invariant, sizes 0,1,2,3,
 4,7,9,17,23,64,101, ordinal wrap, playing-state guard, allocation/free and OOM
 sequential fallback. All 22 targeted tests pass; no unsolicited emulator run.
+
+Revision AVSNOW04 — CD32 Play/Pause:
+The existing lowlevel ReadJoyPort(1) snapshot in d5 contains Play at bit 17
+(JPF_BUTTON_PLAY=$20000, verified against the local lowlevel.e definitions).
+The key-input wrapper edge-detects this bit independently from F8/F9 and sends
+the same native pause/resume signal as F8. It consumes that bit before native
+controller dispatch, preventing the original ACTION_MUSIC route from also
+sending a second toggle. Other buttons, directions and keyboard input remain
+intact. Holding Play sends one toggle; release/repress sends the next. Missing
+music process or pause mask is safe. New state+64 holds the Play pressed flag.
+25 targeted M68000 tests pass, including held-button debounce, release/repress,
+other button preservation, disabled music and independent keyboard/controller
+release state. No emulator was launched. Source menus for all profiles updated.

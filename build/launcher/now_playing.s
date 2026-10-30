@@ -302,6 +302,26 @@ cleanup:
  bra.w $90ea
 ; F8/F9 are handled once per key press without blocking the menu loop.
 keys:
+ movem.l d0-d7/a0-a6,-(sp)
+ lea state(pc),a0
+ btst #17,d5 ; lowlevel.library JPB_BUTTON_PLAY (CD32 port 1)
+ beq play_released
+ tst.l 64(a0)
+ bne play_checked
+ move.l #1,64(a0)
+ move.l -540(a4),a1
+ move.l a1,d0
+ beq play_checked
+ move.l -536(a4),d0 ; existing pause/resume signal, shared with F8
+ beq play_checked
+ move.l -40(a4),a6
+ jsr -324(a6)
+ bra play_checked
+play_released:
+ clr.l 64(a0)
+play_checked:
+ movem.l (sp)+,d0-d7/a0-a6
+ bclr #17,d5 ; consume native Play action, avoiding a second toggle
  and.l #$ffff,d0
  cmp.w #$57,d0 ; raw F8
  beq music_key
@@ -481,7 +501,7 @@ playlist_empty:
  bra.w $8514
 
  cnop 0,4
-state: dcb.l 16,0
+state: dcb.l 17,0
 path: dcb.b 260,0
 caption: dc.b 'Now Playing: '
  dcb.b 260,0
@@ -490,5 +510,5 @@ overlay_rp: dcb.b 100,0
 saved_bitmap: dcb.b 40,0
 stamp: dcb.l 3,0
  cnop 0,4
- dc.b 'AVSNOW03'
+ dc.b 'AVSNOW04'
  dc.l PATCH_BASE
