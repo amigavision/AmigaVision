@@ -7,14 +7,14 @@ Usage:
   pi_image.sh --hdf <AmigaVision.hdf> --output-img <out.img> [options]
 
 Options:
-  --size <size>        Final raw image size passed to truncate (default: 16g)
   --keep-mounted       Leave image attached and mounted for debugging
   -h, --help           Show this help
 
 Notes:
   - Set REPLAYOS_BASE_IMG in the environment to a RePlayOS image file or a directory
-    containing a RePlayOS*.img image.
-  - This script expects a RePlayOS image that already contains a writable replay partition.
+    containing a RePlayOS*.img.zst, *.img.gz, or *.img image.
+  - The base must already contain a replay partition large enough for the HDF plus 100 MiB.
+  - Compressed bases are unpacked beside the output; the base itself is never mounted or modified.
   - If your base image does not have that partition yet, boot it once on hardware first and
     re-use that initialized image as your base.
 EOF
@@ -26,7 +26,6 @@ OUTPUT_IMG=""
 WORK_IMG=""
 PAYLOAD_DIR="./replay"
 BIOS_DIR="${REPLAYOS_BIOS_DIR:-}"
-IMAGE_SIZE="${REPLAYOS_IMG_SIZE:-16g}"
 KEEP_MOUNTED=0
 BUILD_COMPLETE=0
 
@@ -46,7 +45,6 @@ HDIUTIL_BIN="${HDIUTIL_BIN:-$(resolve_tool /usr/bin/hdiutil hdiutil)}"
 DISKUTIL_BIN="${DISKUTIL_BIN:-$(resolve_tool /usr/sbin/diskutil diskutil)}"
 CP_BIN="${CP_BIN:-$(resolve_tool /bin/cp cp)}"
 RSYNC_BIN="${RSYNC_BIN:-$(resolve_tool /usr/bin/rsync rsync)}"
-TRUNCATE_BIN="${TRUNCATE_BIN:-$(resolve_tool /usr/bin/truncate truncate)}"
 STAT_BIN="${STAT_BIN:-$(resolve_tool /usr/bin/stat stat)}"
 AWK_BIN="${AWK_BIN:-$(resolve_tool /usr/bin/awk awk)}"
 MKTEMP_BIN="${MKTEMP_BIN:-$(resolve_tool /usr/bin/mktemp mktemp)}"
@@ -62,7 +60,7 @@ resolve_base_img() {
   if [[ -d "$input_path" ]]; then
     local candidate newest="" newest_mtime=0 mtime
     shopt -s nullglob
-    for candidate in "$input_path"/RePlayOS*.img; do
+    for candidate in "$input_path"/RePlayOS*.img.zst "$input_path"/RePlayOS*.img.gz "$input_path"/RePlayOS*.img; do
       [[ -f "$candidate" ]] || continue
       mtime="$("$STAT_BIN" -f '%m' "$candidate")"
       if [[ -z "$newest" || "$mtime" -gt "$newest_mtime" ]]; then
@@ -75,7 +73,7 @@ resolve_base_img() {
       printf '%s\n' "$newest"
       return 0
     fi
-    echo "error: no RePlayOS*.img found in: $input_path" >&2
+    echo "error: no RePlayOS image (.img.zst, .img.gz, .img) found in: $input_path" >&2
     return 1
   fi
 
@@ -122,6 +120,18 @@ find_replay_partition() {
 clone_base_img() {
   local source_img="$1"
   local output_img="$2"
+
+  case "$source_img" in
+    *.zst)
+      command -v zstd >/dev/null || { echo "error: zstd is required to unpack $source_img" >&2; return 1; }
+      zstd -d --sparse -q -c "$source_img" >"$output_img"
+      return
+      ;;
+    *.gz)
+      gzip -d -c "$source_img" >"$output_img"
+      return
+      ;;
+  esac
 
   if [[ -n "$CP_BIN" && -x "$CP_BIN" ]]; then
     if "$CP_BIN" -c "$source_img" "$output_img" 2>/dev/null; then
@@ -191,7 +201,6 @@ for required_bin in \
   "$DISKUTIL_BIN" \
   "$CP_BIN" \
   "$RSYNC_BIN" \
-  "$TRUNCATE_BIN" \
   "$STAT_BIN" \
   "$AWK_BIN" \
   "$MKTEMP_BIN"
@@ -222,11 +231,6 @@ fi
 
 mkdir -p "$(dirname "$OUTPUT_IMG")"
 cleanup_stale_output_artifacts "$OUTPUT_IMG"
-WORK_IMG="$OUTPUT_IMG.partial.$$"
-echo "Cloning base image..."
-clone_base_img "$BASE_IMG" "$WORK_IMG"
-"$TRUNCATE_BIN" -s "$IMAGE_SIZE" "$WORK_IMG"
-
 RAW_DISK=""
 MOUNT_POINT=""
 
@@ -250,6 +254,9 @@ cleanup() {
 }
 
 trap cleanup EXIT
+WORK_IMG="$OUTPUT_IMG.partial.$$"
+echo "Preparing temporary RePlayOS image on output storage..."
+clone_base_img "$BASE_IMG" "$WORK_IMG"
 
 ATTACH_OUTPUT="$("$HDIUTIL_BIN" attach -imagekey diskimage-class=CRawDiskImage -nomount "$WORK_IMG")"
 RAW_DISK="$("$AWK_BIN" 'NR==1 {print $1}' <<<"$ATTACH_OUTPUT")"
@@ -277,6 +284,14 @@ if [[ -n "$BIOS_DIR" ]]; then
   rsync_clean -a "$BIOS_DIR"/ "$MOUNT_POINT/bios"/
 fi
 mkdir -p "$MOUNT_POINT/roms/commodore_ami"
+# The filesystem, not just the raw container, must have room for the payload.
+HDF_BYTES="$("$STAT_BIN" -f '%z' "$HDF_PATH")"
+FREE_KB="$(df -Pk "$MOUNT_POINT" | "$AWK_BIN" 'NR==2 {print $4}')"
+REQUIRED_BYTES=$((HDF_BYTES + 100 * 1024 * 1024))
+if [[ $((FREE_KB * 1024)) -lt "$REQUIRED_BYTES" ]]; then
+  echo "error: replay partition needs $REQUIRED_BYTES free bytes for the HDF plus 100 MiB; resize the blank base filesystem first" >&2
+  exit 1
+fi
 echo "Copying AmigaVision.hdf into replay image..."
 COPYFILE_DISABLE=1 "$RSYNC_BIN" -ah --progress --exclude "._*" "$HDF_PATH" "$MOUNT_POINT/roms/commodore_ami/AmigaVision.hdf"
 purge_macos_metadata "$MOUNT_POINT"
@@ -293,6 +308,12 @@ if [[ "$KEEP_MOUNTED" -eq 1 ]]; then
   exit 0
 fi
 
+# Flush and detach before publishing or allowing the caller to compress it.
+"$DISKUTIL_BIN" unmount "$MOUNT_POINT" >/dev/null
+rmdir "$MOUNT_POINT"
+MOUNT_POINT=""
+"$HDIUTIL_BIN" detach "$RAW_DISK" >/dev/null
+RAW_DISK=""
 rm -f "$OUTPUT_IMG"
 mv "$WORK_IMG" "$OUTPUT_IMG"
 BUILD_COMPLETE=1

@@ -39,6 +39,10 @@ Both real Amiga archives are included: `AmigaVision-Amiga-<date>.img.xz` from th
 
 Each platform has a dedicated output directory, such as `AmigaVision-Amiga-ECS/`, containing its dated archive and adjacent `.sha256.txt` and `.md5.txt` files. The same layout applies to individual packaging targets. Uncompressed emulator releases live under `AmigaVision-Emulators/` in their dated release folder.
 
+`make pi` discovers a `RePlayOS*.img.zst` blank base in `REPLAYOS_BASE_IMG` (a file or directory). Fast zstd level 1 is used for the blank at rest: its mostly empty filesystem compresses well and unpacks quickly. Raw `.img` and gzip-compressed bases are also accepted. The prepared blank's `replay` filesystem must already fit the HDF plus at least 100 MiB of free space after copying support files; increasing only the raw container size does not resize that filesystem. The enlarged AmigaVision base has a 16.25 GiB replay partition and a 22.37 GB raw size, requiring a 32 GB or larger card.
+
+Pi packaging unpacks a temporary image on the selected output storage, mounts and populates its replay partition, unmounts and detaches it, then writes `AmigaVision-RPi-<date>.img.xz` with multithreaded xz at preset 1, matching the existing release compression. The temporary raw image is removed after compression, including on failure, and the compressed blank base remains unchanged for the next run. Allow room on the output storage for both the raw working image and the compressed release. Pi releases receive the usual SHA-256 and MD5 checksum files.
+
 Packaging stages payloads and writes compressed artifacts on the selected output storage. Compressor scratch files use its `.build/tmp` directory, including an explicit 7z working-directory setting. This also applies when packaging an individual distribution. CD32 ZIP staging and emulator installer staging use the output storage as well.
 
 Mini builds default to full rebuilds with `--no-build-cache`: menu trees and archives are built directly in the workspace without reading or saving reusable build trees. After success, the separate temporary workspace, any older Mini build cache, and retained image-update data are removed. The finished Mini image remains available for packaging and reuse. For repeated development builds, use `make mini-image MINI_INCREMENTAL=1` to enable and retain the build and image-update caches.
@@ -116,7 +120,7 @@ If you only need a specific packaged output instead of the full release set, use
 - `make cd32`
   Generate the CD32 SD/USB/NAS payloads and build the CD32 MiSTer release artifact.
 - `make pi`
-  Build the Raspberry Pi / RePlayOS `.img.xz` package from the configured base image.
+  Build the Raspberry Pi / RePlayOS `.img.xz` package from the configured compressed blank base image.
 
 For all other targets and maintenance tasks, run:
 

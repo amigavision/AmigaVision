@@ -13,7 +13,6 @@ AMIBERRYBIN ?= /Applications/Amiberry.app/Contents/MacOS/Amiberry
 REPLAYOS_BASE_IMG ?= $(subst ",,${AVSCONTENT})/replay
 REPLAYOS_OUTPUT_IMG ?= $(subst ",,${DISTRO_OUT})/AmigaVision-RPi-$(DISTRO_DATE).img
 REPLAYOS_COMPRESSED_IMG ?= $(subst ",,${REPLAYOS_OUTPUT_IMG}).xz
-REPLAYOS_IMG_SIZE ?= 14900m
 REPLAYOS_BIOS_DIR ?= $(subst ",,${AVSCONTENT})/replay/bios
 AMIGAVISION_HDF ?= ${AVSDEST}/AmigaVision.hdf
 # Experimental native-chipset Emu68 image; classic PiStorm uses the ECS HDF.
@@ -158,7 +157,7 @@ help:
 		'Generate games.txt and demos.txt from the current AVS temp tree for distro packaging.' \
 		'' \
 		'make pi' \
-		'Build the Raspberry Pi / RePlayOS package from the configured base image and output an .img.xz sized to fit typical 16GB SD cards.' \
+		'Unpack the prepared RePlayOS blank base, populate it, and output an .img.xz for 32GB or larger SD cards.' \
 		'' \
 		'make amiga' \
 		'Package the real-Amiga hardware release artifact from the built image.' \

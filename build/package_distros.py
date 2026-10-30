@@ -447,7 +447,7 @@ def list_archive_contents(artifact_path, archive_tool=None, xz_tool=None, dry_ru
                 echo(f"{info.file_size:>10}  {info.filename}")
         return
 
-    if suffixes[-2:] == [".img", ".xz"]:
+    if suffixes[-2:] in ([".img", ".xz"], [".img", ".gz"]):
         listing_tool = archive_tool
         if not listing_tool:
             for candidate in SEVENZIP_CANDIDATES:
@@ -457,6 +457,9 @@ def list_archive_contents(artifact_path, archive_tool=None, xz_tool=None, dry_ru
                     break
         if listing_tool:
             run_command([listing_tool, "l", str(artifact_path)])
+            return
+        if suffixes[-1] == ".gz":
+            run_command(["gzip", "-l", str(artifact_path)])
             return
         if xz_tool:
             run_command([xz_tool, "-lv", str(artifact_path)])
@@ -662,20 +665,23 @@ def package_rpi(args, output_dir, xz_tool):
     raw_output = output_dir / f"AmigaVision-RPi-{args.date_stamp}.img"
     compressed_output = output_dir / f"AmigaVision-RPi-{args.date_stamp}.img.xz"
     log_step("Building Raspberry Pi image from configured RePlayOS base image")
-    run_command(
-        [
-            str(pi_script),
-            "--hdf",
-            str(main_hdf),
-            "--output-img",
-            str(raw_output),
-        ],
-        dry_run=args.dry_run,
-    )
-    compress_xz(raw_output, compressed_output, xz_tool, dry_run=args.dry_run, preset=1)
-    if not args.dry_run and raw_output.exists():
-        log_step(f"Removing intermediate image {raw_output.name}")
-        raw_output.unlink()
+    try:
+        run_command(
+            [
+                str(pi_script),
+                "--hdf",
+                str(main_hdf),
+                "--output-img",
+                str(raw_output),
+            ],
+            dry_run=args.dry_run,
+            env=None if args.dry_run else compression_environment(compressed_output),
+        )
+        compress_xz(raw_output, compressed_output, xz_tool, dry_run=args.dry_run, preset=1)
+    finally:
+        if not args.dry_run and raw_output.exists():
+            log_step(f"Removing intermediate image {raw_output.name}")
+            raw_output.unlink()
     return compressed_output
 
 
