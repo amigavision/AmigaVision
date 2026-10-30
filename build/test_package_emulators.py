@@ -108,7 +108,7 @@ class EmulatorPackageTests(unittest.TestCase):
                  patch.object(package_distros, "write_checksums", side_effect=AssertionError("Directory checksums")), \
                  patch.object(package_distros, "list_archive_contents", side_effect=AssertionError("Archive listing")):
                 self.assertEqual(package_distros.main(), 0)
-            self.assertTrue((root / "AmigaVision-Emulators-2026.10.21/WinUAE/INSTALL.txt").is_file())
+            self.assertTrue((root / "AmigaVision-Emulators/AmigaVision-Emulators-2026.10.21/WinUAE/INSTALL.txt").is_file())
 
 
 

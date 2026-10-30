@@ -399,13 +399,13 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
     content_cd32_root = Path(avscontent).expanduser() / "cd32" if avscontent else None
 
     # Copy distro folders into each preset (SD/USB)
-    # Required copies: ../content/distro/Presets/, ../content/distro/Shadow_Masks/,
-    # ../content/distro/Filters/, and the CD32 runtime assets directory.
+    # Required copies: ../content/distro_mister/Presets/, ../content/distro_mister/Shadow_Masks/,
+    # ../content/distro_mister/Filters/, and the CD32 runtime assets directory.
     try:
         extras_to_copy = [
-            ((root / "../content/distro/Presets").resolve(), "Presets"),
-            ((root / "../content/distro/Shadow_Masks").resolve(), "Shadow_Masks"),
-            ((root / "../content/distro/Filters").resolve(), "Filters"),
+            ((root / "../content/distro_mister/Presets").resolve(), "Presets"),
+            ((root / "../content/distro_mister/Shadow_Masks").resolve(), "Shadow_Masks"),
+            ((root / "../content/distro_mister/Filters").resolve(), "Filters"),
         ]
 
         runtime_assets_src = (root / "./games").resolve()
@@ -430,7 +430,7 @@ def generate_for(variant_name: str, assets_base: str, chd_base: str) -> int:
         return 1
 
     # Location of the extra per-game config templates (relative to the script)
-    extras_src = (root / "../content/distro/config").resolve()
+    extras_src = (root / "../content/distro_mister/config").resolve()
     offsets_dir = (root / "Offsets").resolve()
     extras_templates = [
         ("Amiga_gamma.cfg", "_gamma.cfg"),

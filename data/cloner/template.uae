@@ -4,7 +4,7 @@ config_host=true
 config_version=8.0.0
 amiberry.gfx_auto_crop=true
 amiberry.scaling_method=2
-shaders_path=$AVSCONTENT/distro/games/Amiga/Visuals/Shaders
+shaders_path=$AVSCONTENT/distro_emulators/Amiberry/Visuals/Shaders
 
 use_gui=no
 open_gui=F12

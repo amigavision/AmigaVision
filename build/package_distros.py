@@ -51,7 +51,7 @@ def parse_args():
         required=True,
         help="Directory to write finished artifacts to.",
     )
-    parser.add_argument("--mister-root", default="content/distro")
+    parser.add_argument("--mister-root", default="content/distro_mister")
     parser.add_argument("--cd32-root", default="cd32")
     parser.add_argument("--main-hdf", required=True)
     parser.add_argument("--ecs-hdf", help="Built ECS HDF for the amiga-ecs package")
@@ -472,43 +472,20 @@ def list_archive_contents(artifact_path, archive_tool=None, xz_tool=None, dry_ru
 def package_mister(args, output_dir, archive_tool):
     mister_root = Path(args.mister_root)
     main_hdf = Path(args.main_hdf)
-    built_root = main_hdf.parent.resolve()
     listings_dir = Path(args.listings_dir)
     require_dir(mister_root, "MiSTer distro root")
-    require_dir(built_root, "Built MiSTer output root")
     require_file(main_hdf, "Main AmigaVision HDF")
     require_dir(listings_dir, "Generated listings directory")
 
     output_path = output_dir / f"AmigaVision-MiSTer-{args.date_stamp}.7z"
     with make_stage_dir(output_dir, prefix="amigavision-mister-", dry_run=args.dry_run) as tmp_dir:
         stage_root = Path(tmp_dir)
-        log_step(f"Staging MiSTer payload from built output root {built_root}")
-        copy_tree_contents(
-            built_root,
-            stage_root,
-            excluded_names={
-                "distros",
-                ".build",
-                stage_root.name,
-                output_dir.relative_to(built_root).parts[0]
-                if output_dir.is_relative_to(built_root) and output_dir != built_root else output_path.name,
-                "CD32-Output",
-                "AmigaVision.hdf",
-                "AmigaVision-ECS.hdf",
-                Path(args.ecs_hdf).name if getattr(args, "ecs_hdf", None) else "AmigaVision-ECS.hdf",
-                "AmigaVision-Mini",
-                "AmigaVision-Mini.hdf",
-                "AmigaVision-Mini.uae",
-                "games",
-                "listings",
-            },
-        )
-        log_step(f"Overlaying canonical MiSTer content from {mister_root}")
-        copy_tree_contents(mister_root, stage_root)
-        visuals_dir = stage_root / "games" / "Amiga" / "Visuals"
-        if visuals_dir.exists():
-            log_step("Removing emulator-only Visuals payload from MiSTer package")
-            shutil.rmtree(visuals_dir)
+        template_root = Path(__file__).resolve().parent.parent / "content/distro_mister"
+        log_step(f"Staging MiSTer templates from {template_root}")
+        copy_tree_contents(template_root, stage_root)
+        if mister_root.resolve() != template_root.resolve():
+            log_step(f"Overlaying canonical MiSTer content from {mister_root}")
+            copy_tree_contents(mister_root, stage_root)
         log_step("Injecting built AmigaVision.hdf into MiSTer package")
         replace_path(main_hdf, stage_root / "games" / "Amiga" / "AmigaVision.hdf")
         log_step("Injecting generated listings into MiSTer package")
