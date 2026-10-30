@@ -10,7 +10,7 @@ Usage:
 Environment:
   DISTRO_DATE            Release version. Defaults to today's date.
   DISTRO_OUT             Default output directory.
-  EMULATORS_ARCHIVE      Set to 1 to archive emulator folders in a full run.
+  EMULATORS_ARCHIVE      Standalone emulator archive preference; full runs archive.
 
 --build-all reuses existing main and ECS images, builds missing images,
 and prepares listings before packaging all distributions,
@@ -200,14 +200,9 @@ if [[ "$build_all" == true ]]; then
   export AVSDEST="$work_dir/images"
   package_args+=(--main-hdf "$main_hdf" --ecs-hdf "$ecs_hdf" --mini-hdf "$mini_hdf"
                  --listings-dir "$work_dir/listings")
-  if [[ "$archive_choice_explicit" == false ]]; then
-    if [[ "${EMULATORS_ARCHIVE:-auto}" == 1 ]]; then
-      package_args+=(--emulator-archive)
-    else
-      package_args+=(--skip-emulator-archive)
-    fi
-    archive_choice_explicit=true
-  fi
+  # A complete distro run always publishes an uploadable emulator archive.
+  package_args+=(--emulator-archive)
+  archive_choice_explicit=true
 fi
 
 if [[ ! -t 0 && "$emulator_package" == true && "$archive_choice_explicit" == false ]]; then

@@ -723,6 +723,8 @@ def package_pistorm(args, output_dir, ecs=False):
 
 def main():
     args = parse_args()
+    if args.package == "all":
+        args.skip_emulator_archive = False
     output_dir = Path(normalize_path(args.output_dir)).resolve()
     try:
         output_dir.mkdir(parents=True, exist_ok=True)
