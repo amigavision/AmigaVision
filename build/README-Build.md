@@ -35,6 +35,8 @@ Full distro runs keep the emulator folders by default. Use `make distros EMULATO
 
 Full distro runs also build PiStorm AGA (PiStorm32 Lite, from the main HDF) and PiStorm ECS (classic PiStorm, from the ECS HDF). Both use `PISTORM_ROM` and `AMIBERRYBIN`, write dated `.img.xz` files to the selected output directory, and keep their download cache under its `.build/cache/pistorm` directory.
 
+Both real Amiga archives are included: `AmigaVision-Amiga-<date>.img.xz` from the main HDF and `AmigaVision-Amiga-ECS-<date>.img.xz` from the ECS HDF, with SHA-256 and MD5 checksum files.
+
 Packaging stages payloads and writes compressed artifacts on the selected output storage. Compressor scratch files use its `.build/tmp` directory, including an explicit 7z working-directory setting. This also applies when packaging an individual distribution. CD32 ZIP staging and emulator installer staging use the output storage as well.
 
 Mini builds default to full rebuilds with `--no-build-cache`: menu trees and archives are built directly in the workspace without reading or saving reusable build trees. After success, the separate temporary workspace, any older Mini build cache, and retained image-update data are removed. The finished Mini image remains available for packaging and reuse. For repeated development builds, use `make mini-image MINI_INCREMENTAL=1` to enable and retain the build and image-update caches.

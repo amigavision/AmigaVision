@@ -668,8 +668,9 @@ def package_rpi(args, output_dir, xz_tool):
     return compressed_output
 
 
-def package_amiga(args, output_dir, xz_tool):
-    ecs = args.package == "amiga-ecs"
+def package_amiga(args, output_dir, xz_tool, ecs=None):
+    if ecs is None:
+        ecs = args.package == "amiga-ecs"
     if ecs and not args.ecs_hdf:
         raise ValueError("--ecs-hdf is required for amiga-ecs")
     main_hdf = Path(args.ecs_hdf if ecs else args.main_hdf)
@@ -714,7 +715,7 @@ def main():
     continue_on_error = args.package == "all"
     packages = (
         # Mini is temporarily standalone until its image fits the 4 GB target.
-        ["mister", "cd32-mister", "emulators", "pi", "amiga", "pistorm-aga", "pistorm-ecs"]
+        ["mister", "cd32-mister", "emulators", "pi", "amiga", "amiga-ecs", "pistorm-aga", "pistorm-ecs"]
         if args.package == "all"
         else [args.package]
     )
@@ -765,7 +766,7 @@ def main():
                 elif package == "pi":
                     created.append(package_rpi(args, output_dir, xz_tool))
                 elif package in {"amiga", "amiga-ecs"}:
-                    created.append(package_amiga(args, output_dir, xz_tool))
+                    created.append(package_amiga(args, output_dir, xz_tool, ecs=package == "amiga-ecs"))
                 elif package in {"pistorm-aga", "pistorm-ecs"}:
                     created.append(package_pistorm(args, output_dir, ecs=package == "pistorm-ecs"))
                 else:
