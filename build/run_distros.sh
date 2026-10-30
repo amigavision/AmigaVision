@@ -155,6 +155,17 @@ if [[ "$build_all" == true ]]; then
     exit 1
   fi
   work_dir="$output_dir/.build"
+  cleanup_distro_work() {
+    local status=$?
+    trap - EXIT
+    printf 'Removing distro build workspace: %s\n' "$work_dir"
+    if ! rm -rf -- "$work_dir"; then
+      printf 'error: could not remove distro build workspace: %s\n' "$work_dir" >&2
+      status=1
+    fi
+    exit "$status"
+  }
+  trap cleanup_distro_work EXIT
   mkdir -p "$work_dir/images" "$work_dir/tmp"
   export TMPDIR="$work_dir/tmp"
   export AVSCACHE_ROOT="$work_dir/cache"

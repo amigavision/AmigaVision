@@ -810,6 +810,12 @@ def main():
                 failures.append((package, exc))
                 log_step(f"Failed package: {package} after {duration}")
                 echo(f"  Reason: {exc}")
+            finally:
+                if not args.dry_run:
+                    scratch = platform_dir / ".build"
+                    if scratch.exists():
+                        log_step(f"Removing packaging scratch directory {scratch}")
+                        cleanup_stage_dir(scratch)
 
         echo("")
         if failures:
