@@ -18,6 +18,7 @@ import zipfile
 
 from user_paths import normalize_path
 from artifact_checksums import write_checksums
+import xz_reuse
 
 ROOT = Path(__file__).resolve().parent.parent
 REV = '64839e73a2e9bc694abfa7a3008129296cf8b194'
@@ -325,7 +326,7 @@ def stream_progress(label, total, state, output=None, interval=15):
     report()
 
 
-def compress_streamed_image(prefix, hdf, boot, output, xz_tool='xz'):
+def compress_streamed_image(prefix, hdf, boot, output, xz_tool='xz', reuse_seed=None, reuse_manifest=None):
     """Publish only after an independent decompression matches every input byte."""
     with timed_step('validate PiStorm boot prefix'):
         expected_size = validate(prefix, hdf, boot, prefix_only=True)
@@ -334,6 +335,17 @@ def compress_streamed_image(prefix, hdf, boot, output, xz_tool='xz'):
     padding = expected_size - prefix_before.st_size - before.st_size
     if padding < 0 or padding > 1024 * 1024:
         raise ValueError('Invalid PiStorm partition padding')
+    if reuse_seed and reuse_manifest:
+        try:
+            xz_reuse.reuse(reuse_seed, reuse_manifest, output,
+                           [xz_reuse.Segment(prefix, 0, prefix_before.st_size),
+                            xz_reuse.Segment(hdf, 0, before.st_size, True),
+                            xz_reuse.Segment(None, 0, padding)], label='PiStorm XZ reuse', xz=xz_tool)
+            return
+        except xz_reuse.ReuseUnavailable as error:
+            print(f'PiStorm XZ reuse unavailable; using ordinary compression: {error}', flush=True)
+    else:
+        print('PiStorm: no current-run xz seed; using ordinary compression', flush=True)
     partial = output.with_name(output.name + f'.partial.{os.getpid()}')
     expected = hashlib.sha256()
     env = dict(os.environ, TMPDIR=str(prefix.parent), TMP=str(prefix.parent), TEMP=str(prefix.parent))
@@ -398,7 +410,11 @@ def main():
     p.add_argument('--amiberry', type=Path, required=True)
     p.add_argument('--skip-checksums', action='store_true', help='Let the parent distro packager write checksums once')
     p.add_argument('--cache', type=Path, default=ROOT / 'data/cache/pistorm')
+    p.add_argument('--reuse-seed', type=Path, help='Current-run Amiga HDF xz archive')
+    p.add_argument('--reuse-manifest', type=Path, help='Hashes recorded during seed compression')
     args = p.parse_args()
+    if bool(args.reuse_seed) != bool(args.reuse_manifest):
+        p.error('--reuse-seed and --reuse-manifest must be supplied together')
     default_output_dir = os.environ.get('DISTRO_OUT', str(Path(os.environ.get('AVSDEST', str(Path.home() / 'Developer/AV-Output'))) / 'distros'))
     output_dir = Path(normalize_path(args.output_dir or (Path(normalize_path(args.output)).parent if args.output else default_output_dir)))
     variant = 'PiStormECS' if args.model == 'pistorm' else 'PiStormAGA'
@@ -438,7 +454,8 @@ def main():
         with timed_step('assemble PiStorm boot prefix'):
             subprocess.run([str(converter), str(candidate), '-fatsize', '64', '-fatdir', str(boot),
                             '-output', str(prefix), '-prefix-only'], check=True)
-        compress_streamed_image(prefix, candidate, boot, args.output)
+        compress_streamed_image(prefix, candidate, boot, args.output,
+                                reuse_seed=args.reuse_seed, reuse_manifest=args.reuse_manifest)
     if not args.skip_checksums:
         with timed_step('PiStorm checksums'):
             checksums = write_checksums(args.output)

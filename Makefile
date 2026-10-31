@@ -16,6 +16,8 @@ REPLAYOS_COMPRESSED_IMG ?= $(subst ",,${REPLAYOS_OUTPUT_IMG}).xz
 REPLAYOS_BIOS_DIR ?= $(subst ",,${AVSCONTENT})/replay/bios
 AMIGAVISION_HDF ?= ${AVSDEST}/AmigaVision.hdf
 AMIGA_XZ_PRESET ?= 1
+XZ_REUSE ?= 1
+DISTRO_PACKAGES ?=
 # Experimental native-chipset Emu68 image; classic PiStorm uses the ECS HDF.
 PISTORM_MODEL ?= pistorm32lite
 PISTORM_HDF ?= $(if $(filter pistorm,$(PISTORM_MODEL)),$(ECS_HDF),$(AMIGAVISION_HDF))
@@ -430,8 +432,8 @@ cd32:
 
 distros:
 	$(call print-start-time)
-	@echo "Packaging all distributions; detailed stage timings will be logged."
-	@$(DISTRO_PACKAGE_PROMPT) --build-all all
+	@echo "Packaging $(if $(strip $(DISTRO_PACKAGES)),selected,all) distributions; detailed stage timings will be logged."
+	@$(DISTRO_PACKAGE_PROMPT) --build-all $(if $(strip $(DISTRO_PACKAGES)),--only "$(DISTRO_PACKAGES)") all
 
 make-distros: distros
 

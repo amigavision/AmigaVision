@@ -44,6 +44,7 @@ main_hdf=""
 ecs_hdf=""
 mini_hdf=""
 output_dir="${DISTRO_OUT:-${AVSDEST:-$HOME/Developer/AV-Output}/distros}"
+only_packages=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --pistorm)
@@ -62,6 +63,11 @@ while [[ $# -gt 0 ]]; do
     --build-all)
       build_all=true
       shift
+      ;;
+    --only)
+      only_packages="$2"
+      package_args+=("$1" "$2")
+      shift 2
       ;;
     --main-hdf|--ecs-hdf|--mini-hdf)
       case "$1" in
@@ -198,14 +204,23 @@ if [[ "$build_all" == true ]]; then
     fi
     printf -v "$variable" '%s' "$selected"
   }
-  ensure_image "$main_hdf" AmigaVision.hdf image main_hdf
-  ensure_image "$ecs_hdf" AmigaVision-ECS.hdf ecs-image ecs_hdf
-  if [[ -d "$work_dir/stage/DH1/AVS-MedRes/By Title.avs" ]]; then
-    "${MAKE:-make}" listings "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir" \
-      "DISTRO_LISTINGS_DIR=$work_dir/listings" "AVSTEMP=$work_dir/stage"
-  else
-    "${MAKE:-make}" listings "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir" \
-      "DISTRO_LISTINGS_DIR=$work_dir/listings"
+  wants_package() {
+    [[ -z "$only_packages" || ",$only_packages," == *",$1,"* ]]
+  }
+  if wants_package mister || wants_package emulators || wants_package amiga || wants_package pi || wants_package pistorm-aga; then
+    ensure_image "$main_hdf" AmigaVision.hdf image main_hdf
+  fi
+  if wants_package amiga-ecs || wants_package pistorm-ecs; then
+    ensure_image "$ecs_hdf" AmigaVision-ECS.hdf ecs-image ecs_hdf
+  fi
+  if wants_package mister || wants_package emulators; then
+    if [[ -d "$work_dir/stage/DH1/AVS-MedRes/By Title.avs" ]]; then
+      "${MAKE:-make}" listings "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir" \
+        "DISTRO_LISTINGS_DIR=$work_dir/listings" "AVSTEMP=$work_dir/stage"
+    else
+      "${MAKE:-make}" listings "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir" \
+        "DISTRO_LISTINGS_DIR=$work_dir/listings"
+    fi
   fi
   # CD32's generator and packer also use AVSDEST for intermediate payloads.
   export AVSDEST="$work_dir/images"

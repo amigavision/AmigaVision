@@ -18,6 +18,8 @@ from user_paths import normalize_path
 from artifact_checksums import write_checksums
 from sevenzip_assemble import assemble as assemble_7z
 from fetch_windows_installer import INSTALLER_NAME, resolve_windows_installer
+import xz_reuse
+from exfat_extent import locate_hdf, UnsupportedLayout
 
 
 IGNORED_NAMES = {".DS_Store", ".gitignore", "pack", "__pycache__"}
@@ -36,6 +38,25 @@ PLATFORM_DIRECTORIES = {
     "pistorm-aga": "AmigaVision-PiStormAGA",
     "pistorm-ecs": "AmigaVision-PiStormECS",
 }
+# Complete the large raw-image work before other release archives accumulate.
+# Each consumer still follows the Amiga archive that supplies its xz blocks.
+ALL_PACKAGES = ("amiga", "pi", "pistorm-aga", "amiga-ecs", "pistorm-ecs", "mister", "emulators", "cd32-mister")
+
+
+def selected_packages(args):
+    only = getattr(args, "only", None)
+    if not only:
+        return list(ALL_PACKAGES) if args.package == "all" else [args.package]
+    if args.package != "all":
+        raise ValueError('--only applies to the all/distro target')
+    selected = set(only.split(','))
+    unknown = selected - set(ALL_PACKAGES)
+    if unknown:
+        raise ValueError(f'Unknown distro packages: {", ".join(sorted(unknown))}')
+    if not args.no_xz_reuse:
+        if selected & {"pi", "pistorm-aga"}: selected.add("amiga")
+        if "pistorm-ecs" in selected: selected.add("amiga-ecs")
+    return [package for package in ALL_PACKAGES if package in selected]
 
 
 def parse_args():
@@ -78,7 +99,16 @@ def parse_args():
     parser.add_argument("--skip-emulator-archive", action="store_true",
                         help="Keep the emulator folders instead of creating a 7z archive.")
     parser.add_argument("--dry-run", action="store_true")
-    return parser.parse_args()
+    parser.add_argument("--no-xz-reuse", action="store_true",
+                        default=os.environ.get("XZ_REUSE", "1") == "0",
+                        help="Use ordinary compression instead of shared HDF xz blocks")
+    parser.add_argument("--only", help="Comma-separated distro subset; required xz seed packages are included automatically")
+    args = parser.parse_args()
+    try:
+        selected_packages(args)
+    except ValueError as error:
+        parser.error(str(error))
+    return args
 
 
 def echo(message):
@@ -485,15 +515,18 @@ def compress_xz(src_path, dest_path, xz_tool, dry_run=False, preset=XZ_PRESET):
         echo(f"[dry-run] Would compress {src_path} -> {dest_path}")
         return
     dest_path.parent.mkdir(parents=True, exist_ok=True)
-    if dest_path.exists():
-        dest_path.unlink()
-    with timed_stage(f"{dest_path.name}: compression"), dest_path.open("wb") as dest:
-        subprocess.run(
-            [xz_tool, "-T0", f"-{preset}", "-v", "-k", "-c", str(src_path)],
-            check=True,
-            stdout=dest,
-            env=compression_environment(dest_path),
-        )
+    partial = dest_path.with_name(dest_path.name + f".partial.{os.getpid()}")
+    try:
+        with timed_stage(f"{dest_path.name}: compression"), partial.open("xb") as dest:
+            subprocess.run(
+                [xz_tool, "-T0", f"-{preset}", "-v", "-k", "-c", str(src_path)],
+                check=True,
+                stdout=dest,
+                env=compression_environment(dest_path),
+            )
+        partial.replace(dest_path)
+    finally:
+        partial.unlink(missing_ok=True)
 
 
 def run_command(cmd, dry_run=False, env=None):
@@ -750,7 +783,25 @@ def package_rpi(args, output_dir, xz_tool):
             dry_run=args.dry_run,
             env=None if args.dry_run else compression_environment(compressed_output),
         )
-        compress_xz(raw_output, compressed_output, xz_tool, dry_run=args.dry_run, preset=1)
+        seed = getattr(args, "_xz_seeds", {}).get(False)
+        reused = False
+        if seed and not args.dry_run:
+            try:
+                with timed_stage("RPi locate embedded HDF"):
+                    offset, size = locate_hdf(raw_output)
+                if size != main_hdf.stat().st_size:
+                    raise xz_reuse.ReuseUnavailable("Embedded HDF size differs from source")
+                segments = [xz_reuse.Segment(raw_output, 0, offset),
+                            xz_reuse.Segment(raw_output, offset, size, True),
+                            xz_reuse.Segment(raw_output, offset+size, raw_output.stat().st_size-offset-size)]
+                xz_reuse.reuse(*seed, compressed_output, segments, label="RPi XZ reuse", xz=xz_tool)
+                reused = True
+            except (xz_reuse.ReuseUnavailable, UnsupportedLayout) as error:
+                log_step(f"RPi XZ reuse unavailable; using ordinary compression: {error}")
+        if not reused:
+            if not seed:
+                log_step("RPi: no current-run xz seed; using ordinary compression")
+            compress_xz(raw_output, compressed_output, xz_tool, dry_run=args.dry_run, preset=1)
     finally:
         if not args.dry_run and raw_output.exists():
             log_step(f"Removing intermediate image {raw_output.name}")
@@ -769,8 +820,17 @@ def package_amiga(args, output_dir, xz_tool, ecs=None):
     variant = "Amiga-ECS" if ecs else "Amiga"
     output_path = output_dir / f"AmigaVision-{variant}-{args.date_stamp}.img.xz"
     log_step(f"Compressing {main_hdf.name} for real Amiga hardware")
-    compress_xz(main_hdf, output_path, xz_tool, dry_run=args.dry_run,
-                preset=getattr(args, "amiga_xz_preset", XZ_PRESET))
+    preset = getattr(args, "amiga_xz_preset", XZ_PRESET)
+    manifest_dir = getattr(args, "_xz_manifest_dir", None)
+    if manifest_dir is not None and preset == 1 and not args.dry_run:
+        manifest = manifest_dir / ("ecs.json" if ecs else "main.json")
+        with timed_stage(f"{output_path.name}: compression + block hashes"):
+            xz_reuse.compress_seed(main_hdf, output_path, manifest, xz=xz_tool)
+        args._xz_seeds[bool(ecs)] = (output_path, manifest)
+    else:
+        compress_xz(main_hdf, output_path, xz_tool, dry_run=args.dry_run, preset=preset)
+        if manifest_dir is not None and preset != 1:
+            log_step("XZ reuse disabled for this seed: Amiga preset override preserves ordinary compression")
     return output_path
 
 
@@ -781,7 +841,7 @@ def package_pistorm(args, output_dir, ecs=False):
     require_file(Path(hdf), "PiStorm source HDF")
     variant = "PiStormECS" if ecs else "PiStormAGA"
     output = output_dir / f"AmigaVision-{variant}-{args.date_stamp}.img.xz"
-    run_command([
+    command = [
         sys.executable, str(Path(__file__).with_name("pistorm_image.py")),
         "--model", "pistorm" if ecs else "pistorm32lite",
         "--hdf", str(hdf), "--rom", str(args.pistorm_rom or args.rom_file),
@@ -789,7 +849,11 @@ def package_pistorm(args, output_dir, ecs=False):
         "--output", str(output), "--output-dir", str(output_dir),
         "--cache", str(getattr(args, "_pistorm_cache", output_dir / ".build/cache/pistorm")),
         "--skip-checksums",
-    ], dry_run=args.dry_run,
+    ]
+    seed = getattr(args, "_xz_seeds", {}).get(bool(ecs))
+    if seed:
+        command.extend(["--reuse-seed", str(seed[0]), "--reuse-manifest", str(seed[1])])
+    run_command(command, dry_run=args.dry_run,
        env=None if args.dry_run else compression_environment(output))
     if not args.dry_run:
         require_file(output, "PiStorm image")
@@ -807,12 +871,7 @@ def main():
         echo(f"Cannot create output directory {output_dir}: {exc.strerror}")
         return 1
     continue_on_error = args.package == "all"
-    packages = (
-        # Mini is temporarily standalone until its image fits the 4 GB target.
-        ["mister", "cd32-mister", "emulators", "pi", "amiga", "amiga-ecs", "pistorm-aga", "pistorm-ecs"]
-        if args.package == "all"
-        else [args.package]
-    )
+    packages = selected_packages(args)
 
     archive_tool = None
     if any(package in {"mister", "mini"} or
@@ -838,6 +897,9 @@ def main():
                 session_dir = parent / "packaging-dry-run"
             args._shared_7z = Shared7zPayload(args.main_hdf, session_dir / "shared-7z", archive_tool, args.dry_run, saves=args.saves_hdf)
             args._pistorm_cache = session_dir / "pistorm"
+            args._xz_seeds = {}
+            if not args.no_xz_reuse:
+                args._xz_manifest_dir = session_dir / "xz-manifests"
         for package in packages:
             platform_dir = output_dir / PLATFORM_DIRECTORIES[package]
             if not args.dry_run:
@@ -845,6 +907,11 @@ def main():
             started_at = time.time()
             log_step(f"Starting package: {package}")
             try:
+                if (getattr(args, "only", None) and not args.no_xz_reuse and
+                        getattr(args, "amiga_xz_preset", XZ_PRESET) == 1 and
+                        package in {"pi", "pistorm-aga", "pistorm-ecs"} and
+                        (package == "pistorm-ecs") not in args._xz_seeds):
+                    raise ValueError("Required xz seed was not created; skipping dependent package in selected run")
                 if package == "cd32-mister":
                     if cd32_release_state["error"] is not None:
                         raise cd32_release_state["error"]
