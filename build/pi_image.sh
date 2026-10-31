@@ -29,6 +29,15 @@ BIOS_DIR="${REPLAYOS_BIOS_DIR:-}"
 KEEP_MOUNTED=0
 BUILD_COMPLETE=0
 
+timed_run() {
+  local label="$1"
+  shift
+  local started=$SECONDS status=0
+  "$@" || status=$?
+  printf 'Timing: RPi %s: %ss\n' "$label" "$((SECONDS - started))" >&2
+  return "$status"
+}
+
 resolve_tool() {
   local preferred_path="$1"
   local tool_name="$2"
@@ -256,9 +265,9 @@ cleanup() {
 trap cleanup EXIT
 WORK_IMG="$OUTPUT_IMG.partial.$$"
 echo "Preparing temporary RePlayOS image on output storage..."
-clone_base_img "$BASE_IMG" "$WORK_IMG"
+timed_run "unpack/clone blank base" clone_base_img "$BASE_IMG" "$WORK_IMG"
 
-ATTACH_OUTPUT="$("$HDIUTIL_BIN" attach -imagekey diskimage-class=CRawDiskImage -nomount "$WORK_IMG")"
+ATTACH_OUTPUT="$(timed_run "attach image" "$HDIUTIL_BIN" attach -imagekey diskimage-class=CRawDiskImage -nomount "$WORK_IMG")"
 RAW_DISK="$("$AWK_BIN" 'NR==1 {print $1}' <<<"$ATTACH_OUTPUT")"
 
 if [[ -z "$RAW_DISK" ]]; then
@@ -276,12 +285,12 @@ if [[ -z "$REPLAY_PARTITION" ]]; then
 fi
 
 MOUNT_POINT="$("$MKTEMP_BIN" -d /tmp/amigavision-replay.XXXXXX)"
-"$DISKUTIL_BIN" mount -mountPoint "$MOUNT_POINT" "/dev/$REPLAY_PARTITION" >/dev/null
+timed_run "mount replay partition" "$DISKUTIL_BIN" mount -mountPoint "$MOUNT_POINT" "/dev/$REPLAY_PARTITION" >/dev/null
 
-rsync_clean -a "$PAYLOAD_DIR"/ "$MOUNT_POINT"/
+timed_run "copy support files" rsync_clean -a "$PAYLOAD_DIR"/ "$MOUNT_POINT"/
 if [[ -n "$BIOS_DIR" ]]; then
   mkdir -p "$MOUNT_POINT/bios"
-  rsync_clean -a "$BIOS_DIR"/ "$MOUNT_POINT/bios"/
+  timed_run "copy BIOS files" rsync_clean -a "$BIOS_DIR"/ "$MOUNT_POINT/bios"/
 fi
 mkdir -p "$MOUNT_POINT/roms/commodore_ami"
 # The filesystem, not just the raw container, must have room for the payload.
@@ -293,9 +302,9 @@ if [[ $((FREE_KB * 1024)) -lt "$REQUIRED_BYTES" ]]; then
   exit 1
 fi
 echo "Copying AmigaVision.hdf into replay image..."
-COPYFILE_DISABLE=1 "$RSYNC_BIN" -ah --progress --exclude "._*" "$HDF_PATH" "$MOUNT_POINT/roms/commodore_ami/AmigaVision.hdf"
-purge_macos_metadata "$MOUNT_POINT"
-sync
+COPYFILE_DISABLE=1 timed_run "copy AmigaVision HDF" "$RSYNC_BIN" -ah --progress --exclude "._*" "$HDF_PATH" "$MOUNT_POINT/roms/commodore_ami/AmigaVision.hdf"
+timed_run "remove macOS metadata" purge_macos_metadata "$MOUNT_POINT"
+timed_run "flush filesystem" sync
 
 if [[ "$KEEP_MOUNTED" -eq 1 ]]; then
   BUILD_COMPLETE=1
@@ -309,10 +318,10 @@ if [[ "$KEEP_MOUNTED" -eq 1 ]]; then
 fi
 
 # Flush and detach before publishing or allowing the caller to compress it.
-"$DISKUTIL_BIN" unmount "$MOUNT_POINT" >/dev/null
+timed_run "unmount replay partition" "$DISKUTIL_BIN" unmount "$MOUNT_POINT" >/dev/null
 rmdir "$MOUNT_POINT"
 MOUNT_POINT=""
-"$HDIUTIL_BIN" detach "$RAW_DISK" >/dev/null
+timed_run "detach image" "$HDIUTIL_BIN" detach "$RAW_DISK" >/dev/null
 RAW_DISK=""
 rm -f "$OUTPUT_IMG"
 mv "$WORK_IMG" "$OUTPUT_IMG"

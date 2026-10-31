@@ -12,6 +12,7 @@ import struct
 import subprocess
 import sys
 import tempfile
+import threading
 import urllib.request
 import zipfile
 
@@ -139,9 +140,9 @@ def patch_hdf(args, work, candidate):
         raise
 
 
-def validate(image, hdf, boot):
+def validate(image, hdf, boot, prefix_only=False):
     """Independently verify MBR, embedded RDB image and every FAT32 boot file."""
-    with image.open('r+b') as f:
+    with image.open('rb' if prefix_only else 'r+b') as f:
         mbr = f.read(512)
         if mbr[510:] != b'\x55\xaa':
             raise ValueError('Invalid MBR signature')
@@ -155,17 +156,21 @@ def validate(image, hdf, boot):
         expected_size = (amiga[4] + amiga[5]) * 512
         if image.stat().st_size > expected_size:
             raise ValueError('Unexpected data beyond image partitions')
-        f.truncate(expected_size)
-        f.seek(amiga[4] * 512)
-        remaining, digest = hdf.stat().st_size, hashlib.sha256()
-        while remaining:
-            data = f.read(min(1024 * 1024, remaining))
-            if not data:
-                raise ValueError('Truncated HDF')
-            digest.update(data)
-            remaining -= len(data)
-        if digest.hexdigest() != sha(hdf):
-            raise ValueError('Embedded HDF differs from patched source')
+        if prefix_only:
+            if image.stat().st_size != amiga[4] * 512:
+                raise ValueError('Boot prefix does not end at the HDF partition boundary')
+        else:
+            f.truncate(expected_size)
+            f.seek(amiga[4] * 512)
+            remaining, digest = hdf.stat().st_size, hashlib.sha256()
+            while remaining:
+                data = f.read(min(1024 * 1024, remaining))
+                if not data:
+                    raise ValueError('Truncated HDF')
+                digest.update(data)
+                remaining -= len(data)
+            if digest.hexdigest() != sha(hdf):
+                raise ValueError('Embedded HDF differs from patched source')
         base = fat[4] * 512
         f.seek(base)
         bpb = f.read(512)
@@ -215,7 +220,9 @@ def validate(image, hdf, boot):
         for path in boot.iterdir():
             if not path.is_file() or entries.get(path.name.casefold()) != path.read_bytes():
                 raise ValueError(f'Boot file missing or corrupt: {path.name}')
-    print(f'Validated all boot files and embedded HDF; image size {expected_size:,} bytes.', flush=True)
+    detail = 'boot prefix' if prefix_only else 'embedded HDF'
+    print(f'Validated all boot files and {detail}; image size {expected_size:,} bytes.', flush=True)
+    return expected_size
 
 
 def prepare_converter_source(source):
@@ -229,6 +236,25 @@ def prepare_converter_source(source):
     )
     for old, new, count in fixes:
         if text.count(old) != count:
+            raise ValueError(f'Unexpected pinned converter source: {old!r}')
+        text = text.replace(old, new)
+    # Prefix mode keeps the exact legacy MBR/FAT construction but skips the
+    # multi-gigabyte HDF copy. The Python publisher appends it to the xz stream.
+    additions = (
+        ('  int j;', '  int j;\n  int prefixOnly = 0;'),
+        ('        else if (stricmp("-fatdir", argv[j]) == 0)',
+         '        else if (stricmp("-prefix-only", argv[j]) == 0) { prefixOnly = 1; }\n'
+         '        else if (stricmp("-fatdir", argv[j]) == 0)'),
+        ('  free(diskImage);', '  if (prefixOnly) finalSizeMB = partition1SizeMB + partition2SizeMB + 1;\n  free(diskImage);'),
+        ('  copyFileContent(sourceFile, outputFile, startSector * SECTOR_SIZE);',
+         '  if (prefixOnly) {\n'
+         '    if (fseek(outputFile, startSector * SECTOR_SIZE - 1, SEEK_SET) != 0 || fputc(0, outputFile) == EOF) {\n'
+         '      perror("Could not create boot prefix"); return 1;\n'
+         '    }\n'
+         '  } else { copyFileContent(sourceFile, outputFile, startSector * SECTOR_SIZE); }'),
+    )
+    for old, new in additions:
+        if text.count(old) != 1:
             raise ValueError(f'Unexpected pinned converter source: {old!r}')
         text = text.replace(old, new)
     path.write_text(text)
@@ -268,6 +294,97 @@ def get_converter(cache):
                         str(source / 'fatfs/ffunicode.c'), '-I', str(source / 'fatfs'), '-O3', '-o', str(temporary)], check=True)
         temporary.replace(converter)
     return converter
+
+
+@contextmanager
+def stream_progress(label, total, state, output=None, interval=15):
+    """Keep reporting even when a pipe write or compressor shutdown blocks."""
+    stopped = threading.Event()
+    started = monotonic()
+
+    def report():
+        done = state[0]
+        detail = f'{done / 1024**3:.2f}/{total / 1024**3:.2f} GiB ({done / total:.1%})'
+        if output is not None:
+            detail += f'; compressed output {output.stat().st_size / 1024**3:.2f} GiB'
+        prefix = f'PiStorm {label}: ' if label else ''
+        print(f'{prefix}{detail}; elapsed {monotonic() - started:.0f}s', flush=True)
+
+    def monitor():
+        while not stopped.wait(interval):
+            report()
+
+    report()
+    thread = threading.Thread(target=monitor, daemon=True)
+    thread.start()
+    try:
+        yield
+    finally:
+        stopped.set()
+        thread.join()
+    report()
+
+
+def compress_streamed_image(prefix, hdf, boot, output, xz_tool='xz'):
+    """Publish only after an independent decompression matches every input byte."""
+    with timed_step('validate PiStorm boot prefix'):
+        expected_size = validate(prefix, hdf, boot, prefix_only=True)
+    before = hdf.stat()
+    prefix_before = prefix.stat()
+    padding = expected_size - prefix_before.st_size - before.st_size
+    if padding < 0 or padding > 1024 * 1024:
+        raise ValueError('Invalid PiStorm partition padding')
+    partial = output.with_name(output.name + f'.partial.{os.getpid()}')
+    expected = hashlib.sha256()
+    env = dict(os.environ, TMPDIR=str(prefix.parent), TMP=str(prefix.parent), TEMP=str(prefix.parent))
+    try:
+        supplied = [0]
+        with timed_step('stream and compress PiStorm image'), partial.open('wb') as dest, \
+                stream_progress('', expected_size, supplied, partial):
+            with subprocess.Popen([xz_tool, '-T0', '-1', '-c'], stdin=subprocess.PIPE, stdout=dest, env=env) as process:
+                try:
+                    for source in (prefix, hdf):
+                        with source.open('rb') as file:
+                            while chunk := file.read(4 * 1024 * 1024):
+                                expected.update(chunk)
+                                process.stdin.write(chunk)
+                                supplied[0] += len(chunk)
+                    zeros = bytes(padding)
+                    expected.update(zeros)
+                    process.stdin.write(zeros)
+                    supplied[0] += len(zeros)
+                    process.stdin.close()
+                    if process.wait():
+                        raise subprocess.CalledProcessError(process.returncode, process.args)
+                except BaseException:
+                    process.kill()
+                    process.wait()
+                    raise
+        for source, original in ((hdf, before), (prefix, prefix_before)):
+            after = source.stat()
+            if (original.st_size, original.st_mtime_ns, original.st_ctime_ns) != (after.st_size, after.st_mtime_ns, after.st_ctime_ns):
+                raise ValueError(f'PiStorm stream input changed: {source}')
+        with timed_step('verify compressed PiStorm stream'):
+            actual, size = hashlib.sha256(), 0
+            verified = [0]
+            with subprocess.Popen([xz_tool, '-T0', '-d', '-c', str(partial)], stdout=subprocess.PIPE, env=env) as process, \
+                    stream_progress('verification', expected_size, verified):
+                try:
+                    while chunk := process.stdout.read(4 * 1024 * 1024):
+                        size += len(chunk)
+                        actual.update(chunk)
+                        verified[0] = size
+                    if process.wait():
+                        raise subprocess.CalledProcessError(process.returncode, process.args)
+                finally:
+                    if process.poll() is None:
+                        process.kill()
+                        process.wait()
+            if size != expected_size or actual.digest() != expected.digest():
+                raise ValueError('Compressed PiStorm image differs from boot prefix, patched HDF, or padding')
+        partial.replace(output)
+    finally:
+        partial.unlink(missing_ok=True)
 
 
 def main():
@@ -316,19 +433,12 @@ def main():
         candidate = work / 'patched.hdf'
         with timed_step("copy HDF and install PiStorm overlay"):
             patch_hdf(args, work, candidate)
-        image = work / 'prototype.img'
-        print('Creating Emu68 SD image...', flush=True)
-        with timed_step('assemble PiStorm SD image'):
-            subprocess.run([str(converter), str(candidate), '-fatsize', '64', '-fatdir', str(boot), '-output', str(image)], check=True)
-        with timed_step('validate PiStorm image'):
-            validate(image, candidate, boot)
-        candidate.unlink()
-        print('Compressing prototype image...', flush=True)
-        with timed_step('compress PiStorm image'):
-            subprocess.run(['xz', '-T0', '-1', '-v', str(image)], check=True,
-                           env=dict(os.environ, TMPDIR=str(work), TMP=str(work), TEMP=str(work)))
-        compressed = image.with_suffix('.img.xz')
-        compressed.replace(args.output)
+        prefix = work / 'boot-prefix.img'
+        print('Creating Emu68 boot prefix...', flush=True)
+        with timed_step('assemble PiStorm boot prefix'):
+            subprocess.run([str(converter), str(candidate), '-fatsize', '64', '-fatdir', str(boot),
+                            '-output', str(prefix), '-prefix-only'], check=True)
+        compress_streamed_image(prefix, candidate, boot, args.output)
     if not args.skip_checksums:
         with timed_step('PiStorm checksums'):
             checksums = write_checksums(args.output)

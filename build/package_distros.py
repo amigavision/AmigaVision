@@ -16,13 +16,14 @@ from functools import lru_cache
 
 from user_paths import normalize_path
 from artifact_checksums import write_checksums
+from sevenzip_assemble import assemble as assemble_7z
 from fetch_windows_installer import INSTALLER_NAME, resolve_windows_installer
 
 
 IGNORED_NAMES = {".DS_Store", ".gitignore", "pack", "__pycache__"}
 SEVENZIP_CANDIDATES = ("7zz", "7z", "7za")
 SEVENZIP_COMPRESSION_ARGS = ("-m0=LZMA2", "-mx=3", "-myx=3")
-XZ_PRESET = 6
+XZ_PRESET = 1
 FAT32_MAX_FILE_BYTES = (4 * 1024 * 1024 * 1024) - 1
 PLATFORM_DIRECTORIES = {
     "mister": "AmigaVision-MiSTer",
@@ -56,6 +57,9 @@ def parse_args():
     parser.add_argument("--cd32-root", default="cd32")
     parser.add_argument("--main-hdf", required=True)
     parser.add_argument("--ecs-hdf", help="Built ECS HDF for the amiga-ecs package")
+    parser.add_argument("--amiga-xz-preset", type=int, choices=range(10),
+                        default=os.environ.get("AMIGA_XZ_PRESET", str(XZ_PRESET)),
+                        help="xz preset for Amiga/ECS releases (default: 1)")
     parser.add_argument("--saves-hdf", required=True)
     parser.add_argument("--rom-file", required=True)
     parser.add_argument("--listings-dir", required=True)
@@ -410,23 +414,22 @@ class Shared7zPayload:
             log_step(f"[dry-run] Would reuse shared HDF at {hdf_path} in {output}")
             return
         output.parent.mkdir(parents=True, exist_ok=True)
-        partial = output.with_name(output.name + f".partial.{os.getpid()}.7z")
         env = compression_environment(output)
+        platform_archive = Path(env["TMPDIR"]) / "platform-files.7z"
+        inputs = [(self.seed, dict(mappings))]
         try:
-            with timed_stage(f"{output.name}: copy compressed HDF"):
-                clone_or_copy_file(self.seed, partial)
-            with timed_stage(f"{output.name}: rename and add platform files"):
-                renames = [value for old, new in mappings if old != new for value in (old, new)]
-                if renames:
-                    subprocess.run([self.tool, "rn", "-w" + env["TMPDIR"], str(partial), *renames], check=True, env=env)
-                members = [p.name for p in sorted(stage.iterdir()) if not p.name.startswith('.')]
-                if members:
+            members = [p.name for p in sorted(stage.iterdir()) if not p.name.startswith('.')]
+            if members:
+                platform_archive.unlink(missing_ok=True)
+                with timed_stage(f"{output.name}: compress platform files"):
                     subprocess.run([self.tool, "a", "-t7z", *SEVENZIP_COMPRESSION_ARGS,
-                                    "-ms=off", "-w" + env["TMPDIR"], "-xr!.*", str(partial), *members],
-                                   cwd=stage, check=True, env=env)
-            partial.replace(output)
+                                    "-ms=off", "-mhc=off", "-w" + env["TMPDIR"], "-xr!.*",
+                                    str(platform_archive), *members], cwd=stage, check=True, env=env)
+                inputs.append((platform_archive, {}))
+            with timed_stage(f"{output.name}: single-pass archive assembly"):
+                assemble_7z(output, inputs)
         finally:
-            partial.unlink(missing_ok=True)
+            platform_archive.unlink(missing_ok=True)
 
 
 def archive_7z(output_path, input_root, archive_tool, dry_run=False):
@@ -477,7 +480,7 @@ def build_cd32_release(args, output_path, dry_run=False):
 
 
 def compress_xz(src_path, dest_path, xz_tool, dry_run=False, preset=XZ_PRESET):
-    log_step(f"Compressing {src_path.name} -> {dest_path.name}")
+    log_step(f"Compressing {src_path.name} -> {dest_path.name} (xz preset {preset})")
     if dry_run:
         echo(f"[dry-run] Would compress {src_path} -> {dest_path}")
         return
@@ -766,7 +769,8 @@ def package_amiga(args, output_dir, xz_tool, ecs=None):
     variant = "Amiga-ECS" if ecs else "Amiga"
     output_path = output_dir / f"AmigaVision-{variant}-{args.date_stamp}.img.xz"
     log_step(f"Compressing {main_hdf.name} for real Amiga hardware")
-    compress_xz(main_hdf, output_path, xz_tool, dry_run=args.dry_run)
+    compress_xz(main_hdf, output_path, xz_tool, dry_run=args.dry_run,
+                preset=getattr(args, "amiga_xz_preset", XZ_PRESET))
     return output_path
 
 
