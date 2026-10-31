@@ -2,6 +2,8 @@
 """Experimental native-chipset Emu68 SD image packager (no gameplay emulation)."""
 import argparse
 from datetime import date
+from contextlib import contextmanager
+from time import monotonic
 import hashlib
 import os
 from pathlib import Path, PurePosixPath
@@ -35,6 +37,8 @@ def asset(cache, name):
     path = cache / name
     url, expected = ASSETS[name]
     if not path.exists():
+        print(f'Downloading PiStorm asset: {name}', flush=True)
+        started = monotonic()
         partial = path.with_suffix('.download')
         try:
             urllib.request.urlretrieve(url, partial)
@@ -43,6 +47,7 @@ def asset(cache, name):
             partial.replace(path)
         finally:
             partial.unlink(missing_ok=True)
+            print(f'Timing: download {name}: {monotonic() - started:.1f}s', flush=True)
     if sha(path) != expected:
         raise ValueError(f'Checksum mismatch: {path}; remove it and retry')
     return path
@@ -229,6 +234,42 @@ def prepare_converter_source(source):
     path.write_text(text)
 
 
+@contextmanager
+def timed_step(label):
+    started = monotonic()
+    try:
+        yield
+    finally:
+        print(f"Timing: {label}: {monotonic() - started:.1f}s", flush=True)
+
+
+def get_converter(cache):
+    """Share a compiled converter within the run, keyed by source and toolchain."""
+    cache = Path(cache)
+    cache.mkdir(parents=True, exist_ok=True)
+    compiler = shutil.which('cc')
+    if not compiler:
+        raise FileNotFoundError('A C compiler (cc) is required for PiStorm packaging')
+    identity = (Path(__file__).read_bytes() + REV.encode() + os.uname().machine.encode()
+                + str(Path(compiler).resolve()).encode()
+                + str(Path(compiler).stat().st_mtime_ns).encode())
+    converter = cache / ('hdf2emu68-' + hashlib.sha256(identity).hexdigest()[:16])
+    if converter.is_file() and os.access(converter, os.X_OK):
+        print('Reusing compiled PiStorm converter', flush=True)
+        return converter
+    with timed_step('build PiStorm converter'), tempfile.TemporaryDirectory(prefix='converter-', dir=cache) as tmp:
+        work = Path(tmp)
+        unzip(asset(cache, 'hdf2emu68-source.zip'), work)
+        source = work / f'hdf2emu68-{REV}'
+        prepare_converter_source(source)
+        temporary = work / 'hdf2emu68'
+        subprocess.run([compiler, '-include', 'sys/stat.h', '-include', 'strings.h', '-Dstricmp=strcasecmp',
+                        str(source / 'hdf2emu68.c'), str(source / 'fatfs/diskio.c'), str(source / 'fatfs/ff.c'),
+                        str(source / 'fatfs/ffunicode.c'), '-I', str(source / 'fatfs'), '-O3', '-o', str(temporary)], check=True)
+        temporary.replace(converter)
+    return converter
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('--model', choices=('pistorm', 'pistorm32lite'), default='pistorm32lite')
@@ -238,6 +279,7 @@ def main():
     p.add_argument('--output-dir', type=Path, help='Directory selected by run_distros.sh; defaults to DISTRO_OUT or AVSDEST/distros')
     p.add_argument('--date-stamp', default=os.environ.get('DISTRO_DATE', date.today().strftime('%Y.%m.%d')))
     p.add_argument('--amiberry', type=Path, required=True)
+    p.add_argument('--skip-checksums', action='store_true', help='Let the parent distro packager write checksums once')
     p.add_argument('--cache', type=Path, default=ROOT / 'data/cache/pistorm')
     args = p.parse_args()
     default_output_dir = os.environ.get('DISTRO_OUT', str(Path(os.environ.get('AVSDEST', str(Path.home() / 'Developer/AV-Output'))) / 'distros'))
@@ -270,28 +312,28 @@ def main():
         boot = work / 'boot'
         unzip(asset(args.cache, f'Emu68-{args.model}.zip'), boot)
         shutil.copyfile(args.rom, boot / 'kick.rom')
-        unzip(asset(args.cache, 'hdf2emu68-source.zip'), work / 'converter')
-        source = work / 'converter' / f'hdf2emu68-{REV}'
-        prepare_converter_source(source)
-        converter = work / 'hdf2emu68'
-        # Upstream omits POSIX includes/stricmp mapping and the Unicode object.
-        subprocess.run(['cc', '-include', 'sys/stat.h', '-include', 'strings.h', '-Dstricmp=strcasecmp', str(source / 'hdf2emu68.c'), str(source / 'fatfs/diskio.c'), str(source / 'fatfs/ff.c'), str(source / 'fatfs/ffunicode.c'), '-I', str(source / 'fatfs'), '-O3', '-o', str(converter)], check=True)
+        converter = get_converter(args.cache)
         candidate = work / 'patched.hdf'
-        patch_hdf(args, work, candidate)
+        with timed_step("copy HDF and install PiStorm overlay"):
+            patch_hdf(args, work, candidate)
         image = work / 'prototype.img'
         print('Creating Emu68 SD image...', flush=True)
-        subprocess.run([str(converter), str(candidate), '-fatsize', '64', '-fatdir', str(boot), '-output', str(image)], check=True)
-        validate(image, candidate, boot)
+        with timed_step('assemble PiStorm SD image'):
+            subprocess.run([str(converter), str(candidate), '-fatsize', '64', '-fatdir', str(boot), '-output', str(image)], check=True)
+        with timed_step('validate PiStorm image'):
+            validate(image, candidate, boot)
         candidate.unlink()
         print('Compressing prototype image...', flush=True)
-        subprocess.run(['xz', '-T0', '-1', '-v', str(image)], check=True,
-                       env=dict(os.environ, TMPDIR=str(work), TMP=str(work), TEMP=str(work)))
+        with timed_step('compress PiStorm image'):
+            subprocess.run(['xz', '-T0', '-1', '-v', str(image)], check=True,
+                           env=dict(os.environ, TMPDIR=str(work), TMP=str(work), TEMP=str(work)))
         compressed = image.with_suffix('.img.xz')
         compressed.replace(args.output)
-    checksums = write_checksums(args.output)
-    checksum = checksums['sha256']
-    md5_checksum = checksums['md5']
-    print(f'Created {args.output}\nSHA256 {checksum}\nMD5 {md5_checksum}\nPrototype: hardware testing required.')
+    if not args.skip_checksums:
+        with timed_step('PiStorm checksums'):
+            checksums = write_checksums(args.output)
+        print(f"SHA256 {checksums['sha256']}\nMD5 {checksums['md5']}")
+    print(f'Created {args.output}\nPrototype: hardware testing required.')
 
 
 if __name__ == '__main__':

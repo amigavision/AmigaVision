@@ -11,6 +11,7 @@ import tempfile
 import time
 import zipfile
 from pathlib import Path
+from contextlib import contextmanager
 from functools import lru_cache
 
 from user_paths import normalize_path
@@ -20,7 +21,7 @@ from fetch_windows_installer import INSTALLER_NAME, resolve_windows_installer
 
 IGNORED_NAMES = {".DS_Store", ".gitignore", "pack", "__pycache__"}
 SEVENZIP_CANDIDATES = ("7zz", "7z", "7za")
-SEVENZIP_COMPRESSION_ARGS = ("-mx=5", "-myx=3")
+SEVENZIP_COMPRESSION_ARGS = ("-m0=LZMA2", "-mx=3", "-myx=3")
 XZ_PRESET = 6
 FAT32_MAX_FILE_BYTES = (4 * 1024 * 1024 * 1024) - 1
 PLATFORM_DIRECTORIES = {
@@ -231,19 +232,22 @@ def clone_or_copy_file(src, dest):
     copy_portable_stat(src, dest)
 
 
-def clone_or_copy_tree(src, dest, dirs_exist_ok=False):
-    shutil.copytree(src, dest, dirs_exist_ok=dirs_exist_ok, copy_function=clone_or_copy_file)
+def clone_or_copy_tree(src, dest, dirs_exist_ok=False, ignore=None):
+    shutil.copytree(src, dest, dirs_exist_ok=dirs_exist_ok, copy_function=clone_or_copy_file, ignore=ignore)
 
 
-def copy_tree_contents(src_root, dest_root, excluded_names=None):
+def copy_tree_contents(src_root, dest_root, excluded_names=None, excluded_files=()):
     excluded = set(excluded_names or ())
+    excluded_paths = {Path(p).resolve() for p in excluded_files}
+    def ignore(directory, names):
+        return [name for name in names if (Path(directory) / name).resolve() in excluded_paths]
     dest_root.mkdir(parents=True, exist_ok=True)
     for child in sorted(src_root.iterdir()):
-        if child.name in IGNORED_NAMES or child.name.startswith(".") or child.name in excluded:
+        if child.name in IGNORED_NAMES or child.name.startswith(".") or child.name in excluded or child.resolve() in excluded_paths:
             continue
         dest = dest_root / child.name
         if child.is_dir():
-            clone_or_copy_tree(child, dest, dirs_exist_ok=True)
+            clone_or_copy_tree(child, dest, dirs_exist_ok=True, ignore=ignore if excluded_paths else None)
         else:
             clone_or_copy_file(child, dest)
 
@@ -251,7 +255,7 @@ def copy_tree_contents(src_root, dest_root, excluded_names=None):
 def replace_path(src, dest):
     if dest.exists():
         if dest.is_dir() and not dest.is_symlink():
-            shutil.rmtree(dest)
+            cleanup_stage_dir(dest)
         else:
             dest.unlink()
     if src.is_dir():
@@ -277,10 +281,14 @@ def cleanup_stage_dir(path, attempts=5, delay=0.2):
     if not path.exists():
         return
     last_error = None
+    def ignore_missing(function, failed_path, exc_info):
+        # Removing a directory on macOS can also remove its ._ sidecar.
+        if not isinstance(exc_info[1], FileNotFoundError):
+            raise exc_info[1]
     for _ in range(attempts):
         purge_macos_metadata(path)
         try:
-            shutil.rmtree(path)
+            shutil.rmtree(path, onerror=ignore_missing)
             return
         except FileNotFoundError:
             return
@@ -357,6 +365,70 @@ def make_amiberry_skeleton(stage_root):
         ensure_dir(stage_root / relative)
 
 
+@contextmanager
+def timed_stage(label):
+    started = time.monotonic()
+    try:
+        yield
+    finally:
+        log_step(f"Timing: {label}: {time.monotonic() - started:.1f}s")
+
+
+class Shared7zPayload:
+    """Compress shared HDFs once; reuse their packed blocks in both layouts."""
+    def __init__(self, source, directory, tool, dry_run=False, saves=None):
+        self.source = Path(source).resolve()
+        self.saves = Path(saves).resolve() if saves else None
+        self.sources = [self.source] + ([self.saves] if self.saves else [])
+        if len({p.name for p in self.sources}) != len(self.sources):
+            raise ValueError("Shared HDF input filenames must be distinct")
+        self.seed = Path(directory) / "main-hdf.7z"
+        self.tool = tool
+        self.dry_run = dry_run
+        self.ready = False
+
+    def archive(self, output, stage, hdf_path):
+        output, stage = Path(output), Path(stage)
+        mappings = [(self.source.name, hdf_path)]
+        if self.saves:
+            mappings.append((self.saves.name, (Path(hdf_path).parent / "AmigaVision-Saves.hdf").as_posix()))
+        for _, relative in mappings:
+            if (stage / relative).exists():
+                raise ValueError(f"Shared HDF must not be staged again: {stage / relative}")
+        if not self.ready:
+            log_step("Compressing shared HDFs once for MiSTer and Emulators")
+            if not self.dry_run:
+                self.seed.parent.mkdir(parents=True, exist_ok=True)
+                self.seed.unlink(missing_ok=True)
+                with timed_stage("shared HDF compression"):
+                    subprocess.run([self.tool, "a", "-t7z", *SEVENZIP_COMPRESSION_ARGS,
+                                    "-ms=off", "-mhc=off", "-w" + str(self.seed.parent),
+                                    str(self.seed), *map(str, self.sources)], check=True,
+                                   env=compression_environment(self.seed))
+            self.ready = True
+        if self.dry_run:
+            log_step(f"[dry-run] Would reuse shared HDF at {hdf_path} in {output}")
+            return
+        output.parent.mkdir(parents=True, exist_ok=True)
+        partial = output.with_name(output.name + f".partial.{os.getpid()}.7z")
+        env = compression_environment(output)
+        try:
+            with timed_stage(f"{output.name}: copy compressed HDF"):
+                clone_or_copy_file(self.seed, partial)
+            with timed_stage(f"{output.name}: rename and add platform files"):
+                renames = [value for old, new in mappings if old != new for value in (old, new)]
+                if renames:
+                    subprocess.run([self.tool, "rn", "-w" + env["TMPDIR"], str(partial), *renames], check=True, env=env)
+                members = [p.name for p in sorted(stage.iterdir()) if not p.name.startswith('.')]
+                if members:
+                    subprocess.run([self.tool, "a", "-t7z", *SEVENZIP_COMPRESSION_ARGS,
+                                    "-ms=off", "-w" + env["TMPDIR"], "-xr!.*", str(partial), *members],
+                                   cwd=stage, check=True, env=env)
+            partial.replace(output)
+        finally:
+            partial.unlink(missing_ok=True)
+
+
 def archive_7z(output_path, input_root, archive_tool, dry_run=False):
     members = [child.name for child in sorted(input_root.iterdir()) if not child.name.startswith(".")]
     if not members:
@@ -371,7 +443,8 @@ def archive_7z(output_path, input_root, archive_tool, dry_run=False):
     env = compression_environment(output_path)
     cmd = [archive_tool, "a", "-t7z", *SEVENZIP_COMPRESSION_ARGS,
            "-w" + env["TMPDIR"], "-xr!.*", str(output_path)] + members
-    subprocess.run(cmd, cwd=input_root, check=True, env=env)
+    with timed_stage(f"{output_path.name}: compression"):
+        subprocess.run(cmd, cwd=input_root, check=True, env=env)
 
 
 def compression_environment(output_path):
@@ -411,7 +484,7 @@ def compress_xz(src_path, dest_path, xz_tool, dry_run=False, preset=XZ_PRESET):
     dest_path.parent.mkdir(parents=True, exist_ok=True)
     if dest_path.exists():
         dest_path.unlink()
-    with dest_path.open("wb") as dest:
+    with timed_stage(f"{dest_path.name}: compression"), dest_path.open("wb") as dest:
         subprocess.run(
             [xz_tool, "-T0", f"-{preset}", "-v", "-k", "-c", str(src_path)],
             check=True,
@@ -479,19 +552,31 @@ def package_mister(args, output_dir, archive_tool):
     require_dir(listings_dir, "Generated listings directory")
 
     output_path = output_dir / f"AmigaVision-MiSTer-{args.date_stamp}.7z"
+    staging_started = time.monotonic()
     with make_stage_dir(output_dir, prefix="amigavision-mister-", dry_run=args.dry_run) as tmp_dir:
         stage_root = Path(tmp_dir)
         template_root = Path(__file__).resolve().parent.parent / "content/distro_mister"
+        shared = getattr(args, "_shared_7z", None)
+        excluded_files = shared.sources if shared else ()
         log_step(f"Staging MiSTer templates from {template_root}")
-        copy_tree_contents(template_root, stage_root)
+        copy_tree_contents(template_root, stage_root, excluded_files=excluded_files)
         if mister_root.resolve() != template_root.resolve():
             log_step(f"Overlaying canonical MiSTer content from {mister_root}")
-            copy_tree_contents(mister_root, stage_root)
+            copy_tree_contents(mister_root, stage_root, excluded_files=excluded_files)
         log_step("Injecting built AmigaVision.hdf into MiSTer package")
-        replace_path(main_hdf, stage_root / "games" / "Amiga" / "AmigaVision.hdf")
+        shared = getattr(args, "_shared_7z", None)
+        if shared is None:
+            replace_path(main_hdf, stage_root / "games" / "Amiga" / "AmigaVision.hdf")
+        else:
+            # A canonical source tree can contain an old image; never add it.
+            (stage_root / "games/Amiga/AmigaVision.hdf").unlink(missing_ok=True)
         log_step("Injecting generated listings into MiSTer package")
         replace_path(listings_dir, stage_root / "games" / "Amiga" / "listings")
-        archive_7z(output_path, stage_root, archive_tool, dry_run=args.dry_run)
+        log_step(f"Timing: MiSTer staging: {time.monotonic() - staging_started:.1f}s")
+        if shared is None:
+            archive_7z(output_path, stage_root, archive_tool, dry_run=args.dry_run)
+        else:
+            shared.archive(output_path, stage_root, "games/Amiga/AmigaVision.hdf")
     return output_path
 
 
@@ -547,6 +632,7 @@ def package_emulators(args, output_dir, archive_tool):
     output_path = output_dir / (f"AmigaVision-Emulators-{args.date_stamp}" + ("" if skip_archive else ".7z"))
     if skip_archive and output_path.exists():
         raise FileExistsError(f"Emulator output already exists: {output_path}. Choose another output directory or release date.")
+    staging_started = time.monotonic()
     with make_stage_dir(output_dir, prefix="amigavision-windows-installer-", dry_run=args.dry_run) as installer_dir, \
             make_stage_dir(output_dir, prefix="amigavision-emulators-", dry_run=args.dry_run) as tmp_dir:
         installer = resolve_windows_installer(getattr(args, "windows_installer", None), installer_dir, dry_run=args.dry_run)
@@ -560,8 +646,11 @@ def package_emulators(args, output_dir, archive_tool):
         roms_root = stage_root / "ROMs"
         mac_conf_root = stage_root / "Configurations"
         log_step("Staging reusable Amiberry payload")
-        replace_path(main_hdf, harddrives_root / "AmigaVision.hdf")
-        replace_path(saves_hdf, harddrives_root / "AmigaVision-Saves.hdf")
+        shared = getattr(args, "_shared_7z", None)
+        if shared is None or skip_archive:
+            replace_path(main_hdf, harddrives_root / "AmigaVision.hdf")
+        if shared is None or skip_archive or shared.saves is None:
+            replace_path(saves_hdf, harddrives_root / "AmigaVision-Saves.hdf")
         replace_path(rom_file, roms_root / "AmigaVision.rom")
         replace_path(shared_dir, harddrives_root / "Shared")
         replace_path(listings_dir, harddrives_root / "listings")
@@ -582,12 +671,15 @@ def package_emulators(args, output_dir, archive_tool):
         replace_path(winuae_install, stage_root / "INSTALL.txt")
         replace_path(emulator_root / "Copperline/AmigaVision.toml", Path(tmp_dir) / "Copperline/configs/AmigaVision.toml")
         replace_path(emulator_root / "Copperline/INSTALL.txt", Path(tmp_dir) / "Copperline/INSTALL.txt")
+        log_step(f"Timing: Emulators staging: {time.monotonic() - staging_started:.1f}s")
         if skip_archive:
             if args.dry_run:
                 log_step(f"[dry-run] Would keep emulator folders at {output_path}")
             else:
                 Path(tmp_dir).rename(output_path)
                 log_step(f"Kept emulator folders at {output_path}; skipping 7z compression")
+        elif shared is not None:
+            shared.archive(output_path, Path(tmp_dir), "Amiberry/HardDrives/AmigaVision.hdf")
         else:
             archive_7z(output_path, Path(tmp_dir), archive_tool, dry_run=args.dry_run)
     return output_path
@@ -691,7 +783,8 @@ def package_pistorm(args, output_dir, ecs=False):
         "--hdf", str(hdf), "--rom", str(args.pistorm_rom or args.rom_file),
         "--amiberry", str(args.amiberry), "--date-stamp", args.date_stamp,
         "--output", str(output), "--output-dir", str(output_dir),
-        "--cache", str(output_dir / ".build/cache/pistorm"),
+        "--cache", str(getattr(args, "_pistorm_cache", output_dir / ".build/cache/pistorm")),
+        "--skip-checksums",
     ], dry_run=args.dry_run,
        env=None if args.dry_run else compression_environment(output))
     if not args.dry_run:
@@ -729,7 +822,18 @@ def main():
     created = []
     failures = []
     cd32_release_state = {"artifact": None, "error": None, "temp_dir": None}
+    session = None
     try:
+        if args.package == "all":
+            parent = output_dir / ".build"
+            if not args.dry_run:
+                parent.mkdir(parents=True, exist_ok=True)
+                session = make_stage_dir(parent, prefix="packaging-")
+                session_dir = Path(session.name)
+            else:
+                session_dir = parent / "packaging-dry-run"
+            args._shared_7z = Shared7zPayload(args.main_hdf, session_dir / "shared-7z", archive_tool, args.dry_run, saves=args.saves_hdf)
+            args._pistorm_cache = session_dir / "pistorm"
         for package in packages:
             platform_dir = output_dir / PLATFORM_DIRECTORIES[package]
             if not args.dry_run:
@@ -779,7 +883,8 @@ def main():
                 elif args.dry_run:
                     log_step(f"[dry-run] Would write SHA-256 and MD5 checksums for {created[-1].name}")
                 else:
-                    write_checksums(created[-1])
+                    with timed_stage(f"{package}: checksums"):
+                        write_checksums(created[-1])
                 log_step(f"Finished package: {package} in {format_duration(time.time() - started_at)}")
             except Exception as exc:
                 duration = format_duration(time.time() - started_at)
@@ -794,6 +899,11 @@ def main():
                     if scratch.exists():
                         log_step(f"Removing packaging scratch directory {scratch}")
                         cleanup_stage_dir(scratch)
+                    if package == "emulators" and getattr(args, "_shared_7z", None):
+                        shared_directory = args._shared_7z.seed.parent
+                        if shared_directory.exists():
+                            log_step("Removing shared HDF archive after its last consumer")
+                            cleanup_stage_dir(shared_directory)
 
         echo("")
         if failures:
@@ -811,8 +921,16 @@ def main():
             return 1
         return 0
     finally:
-        if cd32_release_state["temp_dir"] is not None:
-            cd32_release_state["temp_dir"].cleanup()
+        try:
+            if cd32_release_state["temp_dir"] is not None:
+                cd32_release_state["temp_dir"].cleanup()
+        finally:
+            if session is not None:
+                session.cleanup()
+                try:
+                    (output_dir / ".build").rmdir()
+                except OSError:
+                    pass  # The outer distro runner still owns its workspace.
 
 
 if __name__ == "__main__":
