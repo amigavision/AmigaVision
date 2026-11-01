@@ -2,3 +2,7 @@
 # Redundant DB entries alone do not block archive downloads.
 DayOfTheTentacle*.lha
 SimonSorcerer2*.lha
+
+# Redundant variants explicitly declined for inclusion.
+SnowBrosArcadeMod*.lha
+SecretWeaponsOfTheLuftwaffe*.lha
