@@ -12,8 +12,9 @@ import tempfile
 IGNORED = {'.DS_Store', 'Thumbs.db', '__MACOSX', '.git', '.gitignore', '.gitattributes'}
 
 def ignored_name(name):
-    # AVS .dir files are runtime menu data, not host metadata.
-    return (name.startswith('.') and name not in {'.dir', '.dir.uaem'}) or name in IGNORED
+    # Amiga dot-files (.backdrop, .info, AVS .dir, and their .uaem
+    # sidecars) are payload. Only discard known host metadata.
+    return name.startswith('._') or name in IGNORED
 
 def ignore_host_files(directory, names):
     return [name for name in names if ignored_name(name)]

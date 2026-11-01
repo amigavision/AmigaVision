@@ -17,6 +17,7 @@ import stat as stat_module
 from time import perf_counter
 import subprocess
 import uuid
+from av_base_tree import ignored_name
 
 SCHEMA = 1
 PLAN_NAME = 'image-update-plan.json'
@@ -115,8 +116,7 @@ def snapshot(workspace, partitions, cache=None, stats=None, clean=False):
             nodes = {node.name: node for node in scan}
         for name in sorted(nodes):
             node = nodes[name]
-            # Preserve AVS menu caches, including their UAE metadata sidecars.
-            if (name.startswith('.') and name not in {'.dir', '.dir.uaem'}) or name in IGNORED:
+            if ignored_name(name) or name in IGNORED:
                 if clean and name == '.DS_Store' and node.is_file(follow_symlinks=False):
                     os.unlink(node.path)
                 continue
