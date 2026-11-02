@@ -5573,7 +5573,7 @@ game-notwhdl--strikeforceomega;Strike Force Omega: Urban Chaos (Demo);Strike For
 game-notwhdl--santaspresentdrop5;Santa's Present Drop 5: House of the Dead Bunnies;Santa's Present Drop 5;;;OCS;;0;;;;;;1;Mouse or light gun;;;2025;;English;RobSmithDev;RobSmithDev;2 Players;;;;game-notwhdl/SantasPresentDrop5.lha;Game;Shoot'em Up;;;;
 game--arpegio--game;Arpegio;Arpegio;;;AGA;1;0;4;0;;;;;;;;2026;;English;Tedzogh;Tedzogh;1 Player;;v1.0;Arpegio/game.slave;game/Arpegio_v1.0.lha;Game;Action;;;;
 game-notwhdl--submarineattack;Submarine Attack;Submarine Attack;;;AGA;1;0;;;;;;;;;;2025;;English;Camden Town Games;Camden Town Games;1 Player;;;;game-notwhdl/SubmarineAttack.lha;Game;Shoot'em Up;;;;
-game-notwhdl--backflipendless;Backflip Endless;Backflip Endless;;;OCS;;0;5;16;;;;;;;;2026;;English;GameSoul Studio;GameSoul Studio;1 Player;;;;game-notwhdl/BackflipEndless.lha;Game;Platform;;;;
+game-notwhdl--backflipendless;Backflip Endless;Backflip Endless;;;OCS;;0;;;;;;;;;;2026;;English;GameSoul Studio;GameSoul Studio;1 Player;;;;game-notwhdl/BackflipEndless.lha;Game;Platform;;;;
 game-notwhdl--burn;Burn;Burn;;;OCS;;0;4;0;;;;;;;;2026;;English;RiPpEr253;RiPpEr253;2 Players;;;;game-notwhdl/Burn.lha;Game;Platform;;;;
 game-notwhdl--movimientoconstante;Movimiento Constante;Movimiento Constante;;;OCS;;0;;;;;;;;;;2025;;Spanish;DJCaye;DJCaye;1 Player;;;;game-notwhdl/MovimientoConstante.lha;Game;Puzzle;;;;
 game-notwhdl--cogsnlogs;Cogs N Logs (Demo);Cogs N Logs (Demo);;;AGA;1;0;;;;;;;Keyboard: arrows, Space, C;Early prototype;;2025;;English;RetroGamma;RetroGamma;1 Player;;;;game-notwhdl/CogsNLogs.lha;Game;Platform;;;;
