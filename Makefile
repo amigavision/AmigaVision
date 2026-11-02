@@ -432,6 +432,7 @@ cd32:
 
 distros:
 	$(call print-start-time)
+	@$(if $(strip $(DISTRO_PACKAGES)),:,echo "Building all the distros will take about 50 minutes on a MacBook M1.")
 	@echo "Packaging $(if $(strip $(DISTRO_PACKAGES)),selected,all) distributions; detailed stage timings will be logged."
 	@$(DISTRO_PACKAGE_PROMPT) --build-all $(if $(strip $(DISTRO_PACKAGES)),--only "$(DISTRO_PACKAGES)") all
 
