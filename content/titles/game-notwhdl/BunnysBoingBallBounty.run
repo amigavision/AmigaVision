@@ -1,0 +1,10 @@
+avs-cd N/BunnysBoingBallBounty
+IF NOT EXISTS WHDSaves:BunnysBoingBallBounty
+  makedir WHDSaves:BunnysBoingBallBounty
+  copy #? WHDSaves:BunnysBoingBallBounty ALL CLONE QUIET
+ENDIF
+cd WHDSaves:BunnysBoingBallBounty
+stack 65536
+assign LIBS: WHDSaves:BunnysBoingBallBounty/libs ADD
+BunnysBounty >NIL:
+assign LIBS: WHDSaves:BunnysBoingBallBounty/libs REMOVE

@@ -4,6 +4,7 @@
   - note: Curated demo scene collections
   - image: { ops: { op: "pi", path: "top/curated_content.png" }, size: [320, 128], scale: [1, 1] }
   - H0ffman's Modern Picks:
+    - image: { op: "pi", path: "list/h0ffman.png" }
     - note: A hand-picked selection of Amiga demos and intros of modern Amiga demos
     - Abyss-Coda
     - Abyss-Done

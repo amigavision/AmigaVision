@@ -1,0 +1,8 @@
+avs-cd N/DodgyRocks
+IF NOT EXISTS WHDSaves:DodgyRocks
+  makedir WHDSaves:DodgyRocks
+  copy #? WHDSaves:DodgyRocks ALL CLONE QUIET
+ENDIF
+cd WHDSaves:DodgyRocks
+stack 65536
+DodgyRocks >NIL:

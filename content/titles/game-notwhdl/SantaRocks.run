@@ -1,0 +1,8 @@
+avs-cd N/SantaRocks
+IF NOT EXISTS WHDSaves:SantaRocks
+  makedir WHDSaves:SantaRocks
+  copy #? WHDSaves:SantaRocks ALL CLONE QUIET
+ENDIF
+cd WHDSaves:SantaRocks
+stack 65536
+SantaRocks >NIL:

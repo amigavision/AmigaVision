@@ -1,0 +1,8 @@
+avs-cd N/Mirror
+IF NOT EXISTS WHDSaves:Mirror
+  makedir WHDSaves:Mirror
+  copy #? WHDSaves:Mirror ALL CLONE QUIET
+ENDIF
+cd WHDSaves:Mirror
+stack 65536
+Mirror >NIL:

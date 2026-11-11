@@ -1,6 +1,48 @@
 - Curated Games:
   - note: Curated collections from around the net
   - image: { ops: { op: "pi", path: "top/curated_content.png" }, size: [320, 128], scale: [1, 1] }
+  - Amiga Bill's Modern Picks:
+    - image: { op: "pi", path: "list/amigabill.png" }
+    - note: "Modern Amiga games selected by Amiga Bill"
+    - game--cakerushmom--cakerushmom
+    - game--cakerush--cakerush
+    - game--castlevaniaaga--castlevaniaaga
+    - game--wizonk--game
+    - game--echodrome--echodrome
+    - game-notwhdl--doublebaboonninja
+    - game--boom--boom
+    - game-notwhdl--blok
+    - game-notwhdl--pjusk
+    - game-notwhdl--yeet
+    - game--fastfood2--fastfood2
+    - game-notwhdl--battlesquadron2
+    - game--knightmarekonami--knightmarekonami
+    - game--mspacman500--mspacman
+    - game-notwhdl--stardustwars
+    - game-notwhdl--projecthorizon
+    - game--tinypixeladventure--game
+    - game--boxx4--boxx4
+    - game-notwhdl--dodgyrocks
+    - game-notwhdl--santarocks
+    - game-notwhdl--turbosanta
+    - game--outrunamigaeditionaga--outrunamigaeditionaga
+    - game--amigayoomp--yoomp
+    - game--aminer--aminermulti2
+    - game--drdangerous--drdangerous
+    - game-notwhdl--shift
+    - game-notwhdl--revengeofthegrinch
+    # Pending launcher-compatible package: Mad Santa (raw trackdisk release).
+    - game--luma--luma
+    - game-notwhdl--bunnysboingballbounty
+    - game-notwhdl--jarimattirally
+    - game-notwhdl--oozetheescape
+    - game--bombjackbeeredition--bombjackbeeredition
+    - game-notwhdl--mirror
+    - game-notwhdl--skillgrid
+    - game-notwhdl--hoptothetop
+    # Pending launcher-compatible package: Santa's Present Drop (itch.io download points to part 4).
+    - game-notwhdl--ghostlight2
+    - game-notwhdl--santaspresentdrop5
   - AmiGameJam 2025:
     # Explicit numbers preserve the third-place tie and the published gap at 17.
     # https://itch.io/jam/amigamejam2025/results
@@ -13,7 +55,7 @@
     - game-notwhdl--doublebaboonninja: { disp_name: "02 Double Baboon Ninja (Demo)" }
     - game--wingsoffear2--wingsoffear2agademo: { disp_name: "03 Wings of Fear II (Demo)" }
     - game-notwhdl--creepycrawlers: { disp_name: "03 Creepy Crawlers" }
-    - game-notwhdl--cakerush: { disp_name: "05 Cake Rush" }
+    - game--cakerush--cakerush: { disp_name: "05 Cake Rush" }
     - game--blueandred--game: { disp_name: "06 Blue And Red" }
     - game--osirisinfection--osiris_infection: { disp_name: "07 Osiris Infection" }
     - game--microlytetankzone--microlyte: { disp_name: "08 Microlyte Tankzone" }

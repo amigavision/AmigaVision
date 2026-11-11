@@ -1,0 +1,8 @@
+avs-cd N/Shift
+IF NOT EXISTS WHDSaves:Shift
+  makedir WHDSaves:Shift
+  copy #? WHDSaves:Shift ALL CLONE QUIET
+ENDIF
+cd WHDSaves:Shift
+stack 65536
+Shift >NIL:

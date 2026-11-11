@@ -1,0 +1,10 @@
+avs-cd N/HopToTheTop
+IF NOT EXISTS WHDSaves:HopToTheTop
+  makedir WHDSaves:HopToTheTop
+  copy #? WHDSaves:HopToTheTop ALL CLONE QUIET
+ENDIF
+cd WHDSaves:HopToTheTop
+stack 65536
+assign HopToTheTop: WHDSaves:HopToTheTop
+HopToTheTop >NIL:
+assign HopToTheTop: REMOVE

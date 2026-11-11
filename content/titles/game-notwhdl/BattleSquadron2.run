@@ -1,0 +1,8 @@
+avs-cd N/BattleSquadron2
+IF NOT EXISTS WHDSaves:BattleSquadron2
+  makedir WHDSaves:BattleSquadron2
+  copy #? WHDSaves:BattleSquadron2 ALL CLONE QUIET
+ENDIF
+cd WHDSaves:BattleSquadron2
+stack 65536
+bs2.exe >NIL:

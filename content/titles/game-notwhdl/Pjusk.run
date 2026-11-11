@@ -1,0 +1,8 @@
+avs-cd N/Pjusk
+IF NOT EXISTS WHDSaves:Pjusk
+  makedir WHDSaves:Pjusk
+  copy #? WHDSaves:Pjusk ALL CLONE QUIET
+ENDIF
+cd WHDSaves:Pjusk
+stack 65536
+pjusk >NIL:
