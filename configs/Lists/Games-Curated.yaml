@@ -521,7 +521,7 @@
     - SecondSamurai
   - PIXEL thing's 45 Games:
     - ordering: "ordered"
-    - note: 45 Games That Defined the AMIGA 500,\naccording to It's a P/XEL thing\n\n(Chronologically ordered.)
+    - note: 45 Games That Defined the AMIGA 500,\naccording to It's a P/XEL thing\n\n(Chronologically ordered)
     - image: { op: "pi", path: "list/pixelthing_45games.jpg" }
     - IK+
     - CarrierCommand

@@ -1,9 +1,9 @@
 - Gameographies:
-  - note: Notable developer and artist gameographies\n\n(All lists in chronological order.)
+  - note: Notable developer and artist gameographies\n\n(All lists in chronological order)
   - image: { ops: { op: "pi", path: "top/gameographies.png" }, size: [320, 128], scale: [1, 1] }
   - "[ By Composer ]":
     - rank: 1
-    - note: Games with music by notable composers\n\n(Not necessarily complete lists.)
+    - note: Games with music by notable composers\n\n(Not necessarily complete lists)
     - Chris Hülsbeck:
       - ordering: "release"
       - note: Arguably the most loved Amiga composer of all time, and also creator of the quite unique TFMX music software
