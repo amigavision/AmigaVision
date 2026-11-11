@@ -66,18 +66,22 @@ def file_plan(medium, collection):
     for name, entry_id in collection.image_entries.items():
         for suffix in SUFFIXES:
             plan.pop(name + suffix, None)
-        if is_nsfw(collection.by_id.get(entry_id, {})):
+        entry = collection.by_id.get(entry_id, {})
+        if is_nsfw(entry):
             pattern = re.compile(re.escape(name) + r'(?:-\d+|-qr)?\.iff', re.I)
             for key in list(plan):
                 if pattern.fullmatch(key):
                     del plan[key]
             plan[name + '.iff'] = artwork / 'NSFW.iff'
             continue
+        is_game_or_demo = entry.get('category', '').lower() in {'game', 'demo'}
         for key, suffix in [(entry_id, '.iff'), (entry_id + '-qr', '-QR.iff')] + [
                 (entry_id + f'-{i}', f'-{i}.iff') for i in range(1, 10)]:
+            if suffix == '.iff' and is_game_or_demo:
+                continue
             if key in images:
                 plan[name + suffix] = images[key]
-        if name + '.iff' not in plan:
+        if not is_game_or_demo and name + '.iff' not in plan:
             for index in [3, 2, 1, 4, 5, 6, 7, 8, 9]:
                 if name + f'-{index}.iff' in plan:
                     plan[name + '.iff'] = plan[name + f'-{index}.iff']

@@ -194,7 +194,6 @@ def install_launcher(avs_path, collection, image_root='data/img_ecs', launcher_r
     """Replace generated menu images with pre-rendered hi-res ECS artwork."""
     import shutil
     root = Path(avs_path)
-    shutil.copyfile(Path(launcher_root)/'AVSMenu', root/'AVSMenu')
     static = Path(image_root)
     def copy(relative, destination, launcher=False):
         source = (Path(launcher_root) if launcher else static)/relative
@@ -202,6 +201,9 @@ def install_launcher(avs_path, collection, image_root='data/img_ecs', launcher_r
             raise FileNotFoundError(f'Missing ECS artwork {source}; run make ecs-artwork')
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(source, destination)
+
+    for name in ('AVSMenu', 'AVSHelper'):
+        shutil.copyfile(Path(launcher_root)/name, root/name)
 
     title_images = {path+suffix for path in collection.image_entries
                     for suffix in ['.iff','-QR.iff']+[f'-{i}.iff' for i in range(1,10)]}
