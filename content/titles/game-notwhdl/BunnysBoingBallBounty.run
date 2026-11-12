@@ -1,10 +1,6 @@
 avs-cd N/BunnysBoingBallBounty
-IF NOT EXISTS WHDSaves:BunnysBoingBallBounty
-  makedir WHDSaves:BunnysBoingBallBounty
-  copy #? WHDSaves:BunnysBoingBallBounty ALL CLONE QUIET
-ENDIF
-cd WHDSaves:BunnysBoingBallBounty
-stack 65536
-assign LIBS: WHDSaves:BunnysBoingBallBounty/libs ADD
+stack >NIL: 65536
+assign LIBS: libs ADD
 BunnysBounty >NIL:
-assign LIBS: WHDSaves:BunnysBoingBallBounty/libs REMOVE
+avs-cd N/BunnysBoingBallBounty
+assign LIBS: libs REMOVE

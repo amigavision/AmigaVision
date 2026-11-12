@@ -1,9 +1,4 @@
 avs-cd N/PaybackDemoAGA
-IF NOT EXISTS WHDSaves:PaybackDemoAGA
-  makedir WHDSaves:PaybackDemoAGA
-  copy #? WHDSaves:PaybackDemoAGA/ ALL CLONE QUIET
-ENDIF
-cd WHDSaves:PaybackDemoAGA
 IF NOT EXISTS .av-layout-v2
   FailAt 21
   delete >NIL: Saves QUIET
@@ -21,6 +16,35 @@ IF NOT EXISTS .av-layout-v2
   echo >.av-layout-v2 "2"
   FailAt 10
 ENDIF
+IF EXISTS "WHDSaves:PaybackDemoAGA/Payback.config"
+  copy "WHDSaves:PaybackDemoAGA/Payback.config" "Payback.config" CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:PaybackDemoAGA/Saves"
+  IF NOT EXISTS "Saves"
+    makedir "Saves"
+  ENDIF
+  copy "WHDSaves:PaybackDemoAGA/Saves" "Saves" ALL CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:PaybackDemoAGA/Replays"
+  IF NOT EXISTS "Replays"
+    makedir "Replays"
+  ENDIF
+  copy "WHDSaves:PaybackDemoAGA/Replays" "Replays" ALL CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:PaybackDemoAGA/UserMaps"
+  IF NOT EXISTS "UserMaps"
+    makedir "UserMaps"
+  ENDIF
+  copy "WHDSaves:PaybackDemoAGA/UserMaps" "UserMaps" ALL CLONE QUIET
+ENDIF
+FailAt 21
+IF EXISTS "WHDSaves:PaybackDemoAGA"
+  copy >NIL: "WHDSaves:PaybackDemoAGA/#?.scores" "" CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:PaybackDemoAGA/Maps"
+  copy >NIL: "WHDSaves:PaybackDemoAGA/Maps/#?.scores" "Maps" CLONE QUIET
+ENDIF
+FailAt 10
 stack >NIL: 10000
 IF EXISTS Payback.config
   copy Payback.config S:Payback.config QUIET
@@ -33,3 +57,50 @@ IF EXISTS S:Payback.config
   PaybackDemo.exe
   copy S:Payback.config Payback.config QUIET
 ENDIF
+avs-cd N/PaybackDemoAGA
+IF EXISTS "Payback.config"
+  IF NOT EXISTS "WHDSaves:PaybackDemoAGA"
+    makedir "WHDSaves:PaybackDemoAGA"
+  ENDIF
+  copy "Payback.config" "WHDSaves:PaybackDemoAGA/Payback.config" CLONE QUIET
+ENDIF
+IF EXISTS "Saves"
+  IF NOT EXISTS "WHDSaves:PaybackDemoAGA"
+    makedir "WHDSaves:PaybackDemoAGA"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:PaybackDemoAGA/Saves"
+    makedir "WHDSaves:PaybackDemoAGA/Saves"
+  ENDIF
+  copy "Saves" "WHDSaves:PaybackDemoAGA/Saves" ALL CLONE QUIET
+ENDIF
+IF EXISTS "Replays"
+  IF NOT EXISTS "WHDSaves:PaybackDemoAGA"
+    makedir "WHDSaves:PaybackDemoAGA"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:PaybackDemoAGA/Replays"
+    makedir "WHDSaves:PaybackDemoAGA/Replays"
+  ENDIF
+  copy "Replays" "WHDSaves:PaybackDemoAGA/Replays" ALL CLONE QUIET
+ENDIF
+IF EXISTS "UserMaps"
+  IF NOT EXISTS "WHDSaves:PaybackDemoAGA"
+    makedir "WHDSaves:PaybackDemoAGA"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:PaybackDemoAGA/UserMaps"
+    makedir "WHDSaves:PaybackDemoAGA/UserMaps"
+  ENDIF
+  copy "UserMaps" "WHDSaves:PaybackDemoAGA/UserMaps" ALL CLONE QUIET
+ENDIF
+FailAt 21
+IF NOT EXISTS "WHDSaves:PaybackDemoAGA"
+  makedir "WHDSaves:PaybackDemoAGA"
+ENDIF
+copy >NIL: "#?.scores" "WHDSaves:PaybackDemoAGA" CLONE QUIET
+IF NOT EXISTS "WHDSaves:PaybackDemoAGA"
+  makedir "WHDSaves:PaybackDemoAGA"
+ENDIF
+IF NOT EXISTS "WHDSaves:PaybackDemoAGA/Maps"
+  makedir "WHDSaves:PaybackDemoAGA/Maps"
+ENDIF
+copy >NIL: "Maps/#?.scores" "WHDSaves:PaybackDemoAGA/Maps" CLONE QUIET
+FailAt 10

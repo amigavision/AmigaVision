@@ -791,26 +791,29 @@ def metadata_blocks(entry, add_note, system):
 # -----------------------------------------------------------------------------
 # make run scripts
 
-def make_runscripts(collection: EntryCollection, avs_path: str, template=None):
+def make_runscripts(collection: EntryCollection, avs_path: str, template=None, refresh_native=False):
+    """Refresh native scripts on cache hits without rewriting unchanged files."""
+    written = 0
     for _, entry in collection.by_id.items():
+        if refresh_native and not query.entry_is_notwhdl(entry):
+            continue
         name = make_canonical_name(entry)
         dest_paths = query.get_runscript_paths(entry)
-        if dest_paths[0]:
-            script = make_runscript(entry, template, False)
-            dest = util.path(avs_path, dest_paths[0], name)
-            util.make_dir(util.path(avs_path, dest_paths[0]))
+        for quiet, directory in ((False, dest_paths[0]), (True, dest_paths[1])):
+            if not directory:
+                continue
+            script = make_runscript(entry, template, quiet)
+            dest = util.path(avs_path, directory, name)
+            util.make_dir(util.path(avs_path, directory))
             if util.is_file(dest):
-                print(" > WARNING: duplicate script at", dest, entry["id"])
-            else:
-                open(dest, mode="w", encoding="latin-1", errors="replace").write(script)
-        if dest_paths[1]:
-            script = make_runscript(entry, template, True)
-            dest = util.path(avs_path, dest_paths[1], name)
-            util.make_dir(util.path(avs_path, dest_paths[1]))
-            if util.is_file(dest):
-                print(" > WARNING: duplicate script at", dest, entry["id"])
-            else:
-                open(dest, mode="w", encoding="latin-1", errors="replace").write(script)
+                if not refresh_native:
+                    print(" > WARNING: duplicate script at", dest, entry["id"])
+                    continue
+                if Path(dest).read_bytes() == script.encode("latin-1", errors="replace"):
+                    continue
+            Path(dest).write_text(script, encoding="latin-1", errors="replace")
+            written += 1
+    return written
 
 def make_runscript(entry, template, quiet: bool) -> str:
     script = None

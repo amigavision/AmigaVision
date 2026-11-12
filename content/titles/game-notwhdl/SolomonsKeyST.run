@@ -1,9 +1,23 @@
 avs-cd N/SolomonsKeyST
-IF NOT EXISTS WHDSaves:SolomonsKeyST
-  makedir WHDSaves:SolomonsKeyST
-  copy #? WHDSaves:SolomonsKeyST/ ALL CLONE QUIET
+IF EXISTS "WHDSaves:SolomonsKeyST/sk.high"
+  copy "WHDSaves:SolomonsKeyST/sk.high" "sk.high" CLONE QUIET
 ENDIF
-cd WHDSaves:SolomonsKeyST
+IF EXISTS "WHDSaves:SolomonsKeyST/sk.cfg"
+  copy "WHDSaves:SolomonsKeyST/sk.cfg" "sk.cfg" CLONE QUIET
+ENDIF
 stack >NIL: 30000
 ST
 SK
+avs-cd N/SolomonsKeyST
+IF EXISTS "sk.high"
+  IF NOT EXISTS "WHDSaves:SolomonsKeyST"
+    makedir "WHDSaves:SolomonsKeyST"
+  ENDIF
+  copy "sk.high" "WHDSaves:SolomonsKeyST/sk.high" CLONE QUIET
+ENDIF
+IF EXISTS "sk.cfg"
+  IF NOT EXISTS "WHDSaves:SolomonsKeyST"
+    makedir "WHDSaves:SolomonsKeyST"
+  ENDIF
+  copy "sk.cfg" "WHDSaves:SolomonsKeyST/sk.cfg" CLONE QUIET
+ENDIF

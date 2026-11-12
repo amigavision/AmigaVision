@@ -1,12 +1,26 @@
 avs-cd N/FieldsOfGloryAGA
-IF NOT EXISTS WHDSaves:FieldsOfGloryAGA
-  makedir WHDSaves:FieldsOfGloryAGA
-  copy #? WHDSaves:FieldsOfGloryAGA/ ALL CLONE QUIET
+IF EXISTS "WHDSaves:FieldsOfGloryAGA/HISCORE.SAV"
+  copy "WHDSaves:FieldsOfGloryAGA/HISCORE.SAV" "HISCORE.SAV" CLONE QUIET
 ENDIF
-cd WHDSaves:FieldsOfGloryAGA
+IF EXISTS "WHDSaves:FieldsOfGloryAGA/FOG.SAV"
+  copy "WHDSaves:FieldsOfGloryAGA/FOG.SAV" "FOG.SAV" CLONE QUIET
+ENDIF
 stack >NIL: 30000
-assign FOG1: WHDSaves:FieldsOfGloryAGA
-assign FOG2: WHDSaves:FieldsOfGloryAGA
+assign FOG1: ""
+assign FOG2: ""
 FOG >NIL:
 assign FOG1: REMOVE
 assign FOG2: REMOVE
+avs-cd N/FieldsOfGloryAGA
+IF EXISTS "HISCORE.SAV"
+  IF NOT EXISTS "WHDSaves:FieldsOfGloryAGA"
+    makedir "WHDSaves:FieldsOfGloryAGA"
+  ENDIF
+  copy "HISCORE.SAV" "WHDSaves:FieldsOfGloryAGA/HISCORE.SAV" CLONE QUIET
+ENDIF
+IF EXISTS "FOG.SAV"
+  IF NOT EXISTS "WHDSaves:FieldsOfGloryAGA"
+    makedir "WHDSaves:FieldsOfGloryAGA"
+  ENDIF
+  copy "FOG.SAV" "WHDSaves:FieldsOfGloryAGA/FOG.SAV" CLONE QUIET
+ENDIF

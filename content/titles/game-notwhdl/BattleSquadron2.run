@@ -1,8 +1,13 @@
 avs-cd N/BattleSquadron2
-IF NOT EXISTS WHDSaves:BattleSquadron2
-  makedir WHDSaves:BattleSquadron2
-  copy #? WHDSaves:BattleSquadron2 ALL CLONE QUIET
+IF EXISTS WHDSaves:BattleSquadron2/highscore.dat
+  copy WHDSaves:BattleSquadron2/highscore.dat highscore.dat CLONE QUIET
 ENDIF
-cd WHDSaves:BattleSquadron2
-stack 65536
+stack >NIL: 65536
 bs2.exe >NIL:
+avs-cd N/BattleSquadron2
+IF EXISTS highscore.dat
+  IF NOT EXISTS WHDSaves:BattleSquadron2
+    makedir WHDSaves:BattleSquadron2
+  ENDIF
+  copy highscore.dat WHDSaves:BattleSquadron2/highscore.dat CLONE QUIET
+ENDIF

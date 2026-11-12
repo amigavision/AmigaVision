@@ -1,10 +1,6 @@
 avs-cd N/RevengeOfTheGrinch
-IF NOT EXISTS WHDSaves:RevengeOfTheGrinch
-  makedir WHDSaves:RevengeOfTheGrinch
-  copy #? WHDSaves:RevengeOfTheGrinch ALL CLONE QUIET
-ENDIF
-cd WHDSaves:RevengeOfTheGrinch
-stack 65536
-assign LIBS: WHDSaves:RevengeOfTheGrinch/libs ADD
+stack >NIL: 65536
+assign LIBS: libs ADD
 RevengeOfTheGrinch >NIL:
-assign LIBS: WHDSaves:RevengeOfTheGrinch/libs REMOVE
+avs-cd N/RevengeOfTheGrinch
+assign LIBS: libs REMOVE

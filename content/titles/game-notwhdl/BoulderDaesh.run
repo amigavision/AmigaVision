@@ -1,10 +1,5 @@
 avs-cd N/BoulderDaesh
 assign AVBoulderData: ""
-IF NOT EXISTS WHDSaves:BoulderDaesh
-  makedir WHDSaves:BoulderDaesh
-  copy #? WHDSaves:BoulderDaesh/ ALL CLONE QUIET
-ENDIF
-cd WHDSaves:BoulderDaesh
 IF NOT EXISTS .av-layout-v2
   FailAt 21
   delete >NIL: "Caves/User" QUIET
@@ -42,7 +37,164 @@ IF NOT EXISTS .av-layout-v2
   FailAt 10
 ENDIF
 assign AVBoulderData: REMOVE
+IF EXISTS "WHDSaves:BoulderDaesh/Prefs"
+  IF NOT EXISTS "Prefs"
+    makedir "Prefs"
+  ENDIF
+  copy "WHDSaves:BoulderDaesh/Prefs" "Prefs" ALL CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:BoulderDaesh/Scores"
+  IF NOT EXISTS "Scores"
+    makedir "Scores"
+  ENDIF
+  copy "WHDSaves:BoulderDaesh/Scores" "Scores" ALL CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:BoulderDaesh/Caves/User"
+  IF NOT EXISTS "Caves"
+    makedir "Caves"
+  ENDIF
+  IF NOT EXISTS "Caves/User"
+    makedir "Caves/User"
+  ENDIF
+  copy "WHDSaves:BoulderDaesh/Caves/User" "Caves/User" ALL CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:BoulderDaesh/CharacterSets/User"
+  IF NOT EXISTS "CharacterSets"
+    makedir "CharacterSets"
+  ENDIF
+  IF NOT EXISTS "CharacterSets/User"
+    makedir "CharacterSets/User"
+  ENDIF
+  copy "WHDSaves:BoulderDaesh/CharacterSets/User" "CharacterSets/User" ALL CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:BoulderDaesh/Games/User"
+  IF NOT EXISTS "Games"
+    makedir "Games"
+  ENDIF
+  IF NOT EXISTS "Games/User"
+    makedir "Games/User"
+  ENDIF
+  copy "WHDSaves:BoulderDaesh/Games/User" "Games/User" ALL CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:BoulderDaesh/GraphicSets/User"
+  IF NOT EXISTS "GraphicSets"
+    makedir "GraphicSets"
+  ENDIF
+  IF NOT EXISTS "GraphicSets/User"
+    makedir "GraphicSets/User"
+  ENDIF
+  copy "WHDSaves:BoulderDaesh/GraphicSets/User" "GraphicSets/User" ALL CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:BoulderDaesh/MusicSets/User"
+  IF NOT EXISTS "MusicSets"
+    makedir "MusicSets"
+  ENDIF
+  IF NOT EXISTS "MusicSets/User"
+    makedir "MusicSets/User"
+  ENDIF
+  copy "WHDSaves:BoulderDaesh/MusicSets/User" "MusicSets/User" ALL CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:BoulderDaesh/SampleSets/User"
+  IF NOT EXISTS "SampleSets"
+    makedir "SampleSets"
+  ENDIF
+  IF NOT EXISTS "SampleSets/User"
+    makedir "SampleSets/User"
+  ENDIF
+  copy "WHDSaves:BoulderDaesh/SampleSets/User" "SampleSets/User" ALL CLONE QUIET
+ENDIF
 copy "Bin/BoulderDäsh_ChipSet" "BoulderDäsh" QUIET
 stack >NIL: 65536
 setpal
 "BoulderDäsh"
+avs-cd N/BoulderDaesh
+IF EXISTS "Prefs"
+  IF NOT EXISTS "WHDSaves:BoulderDaesh"
+    makedir "WHDSaves:BoulderDaesh"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/Prefs"
+    makedir "WHDSaves:BoulderDaesh/Prefs"
+  ENDIF
+  copy "Prefs" "WHDSaves:BoulderDaesh/Prefs" ALL CLONE QUIET
+ENDIF
+IF EXISTS "Scores"
+  IF NOT EXISTS "WHDSaves:BoulderDaesh"
+    makedir "WHDSaves:BoulderDaesh"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/Scores"
+    makedir "WHDSaves:BoulderDaesh/Scores"
+  ENDIF
+  copy "Scores" "WHDSaves:BoulderDaesh/Scores" ALL CLONE QUIET
+ENDIF
+IF EXISTS "Caves/User"
+  IF NOT EXISTS "WHDSaves:BoulderDaesh"
+    makedir "WHDSaves:BoulderDaesh"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/Caves"
+    makedir "WHDSaves:BoulderDaesh/Caves"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/Caves/User"
+    makedir "WHDSaves:BoulderDaesh/Caves/User"
+  ENDIF
+  copy "Caves/User" "WHDSaves:BoulderDaesh/Caves/User" ALL CLONE QUIET
+ENDIF
+IF EXISTS "CharacterSets/User"
+  IF NOT EXISTS "WHDSaves:BoulderDaesh"
+    makedir "WHDSaves:BoulderDaesh"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/CharacterSets"
+    makedir "WHDSaves:BoulderDaesh/CharacterSets"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/CharacterSets/User"
+    makedir "WHDSaves:BoulderDaesh/CharacterSets/User"
+  ENDIF
+  copy "CharacterSets/User" "WHDSaves:BoulderDaesh/CharacterSets/User" ALL CLONE QUIET
+ENDIF
+IF EXISTS "Games/User"
+  IF NOT EXISTS "WHDSaves:BoulderDaesh"
+    makedir "WHDSaves:BoulderDaesh"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/Games"
+    makedir "WHDSaves:BoulderDaesh/Games"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/Games/User"
+    makedir "WHDSaves:BoulderDaesh/Games/User"
+  ENDIF
+  copy "Games/User" "WHDSaves:BoulderDaesh/Games/User" ALL CLONE QUIET
+ENDIF
+IF EXISTS "GraphicSets/User"
+  IF NOT EXISTS "WHDSaves:BoulderDaesh"
+    makedir "WHDSaves:BoulderDaesh"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/GraphicSets"
+    makedir "WHDSaves:BoulderDaesh/GraphicSets"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/GraphicSets/User"
+    makedir "WHDSaves:BoulderDaesh/GraphicSets/User"
+  ENDIF
+  copy "GraphicSets/User" "WHDSaves:BoulderDaesh/GraphicSets/User" ALL CLONE QUIET
+ENDIF
+IF EXISTS "MusicSets/User"
+  IF NOT EXISTS "WHDSaves:BoulderDaesh"
+    makedir "WHDSaves:BoulderDaesh"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/MusicSets"
+    makedir "WHDSaves:BoulderDaesh/MusicSets"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/MusicSets/User"
+    makedir "WHDSaves:BoulderDaesh/MusicSets/User"
+  ENDIF
+  copy "MusicSets/User" "WHDSaves:BoulderDaesh/MusicSets/User" ALL CLONE QUIET
+ENDIF
+IF EXISTS "SampleSets/User"
+  IF NOT EXISTS "WHDSaves:BoulderDaesh"
+    makedir "WHDSaves:BoulderDaesh"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/SampleSets"
+    makedir "WHDSaves:BoulderDaesh/SampleSets"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:BoulderDaesh/SampleSets/User"
+    makedir "WHDSaves:BoulderDaesh/SampleSets/User"
+  ENDIF
+  copy "SampleSets/User" "WHDSaves:BoulderDaesh/SampleSets/User" ALL CLONE QUIET
+ENDIF

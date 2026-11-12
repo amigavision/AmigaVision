@@ -1,8 +1,13 @@
 avs-cd N/DodgyRocks
-IF NOT EXISTS WHDSaves:DodgyRocks
-  makedir WHDSaves:DodgyRocks
-  copy #? WHDSaves:DodgyRocks ALL CLONE QUIET
+IF EXISTS WHDSaves:DodgyRocks/scores.dat
+  copy WHDSaves:DodgyRocks/scores.dat scores.dat CLONE QUIET
 ENDIF
-cd WHDSaves:DodgyRocks
-stack 65536
+stack >NIL: 65536
 DodgyRocks >NIL:
+avs-cd N/DodgyRocks
+IF EXISTS scores.dat
+  IF NOT EXISTS WHDSaves:DodgyRocks
+    makedir WHDSaves:DodgyRocks
+  ENDIF
+  copy scores.dat WHDSaves:DodgyRocks/scores.dat CLONE QUIET
+ENDIF

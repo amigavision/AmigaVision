@@ -1,8 +1,19 @@
 avs-cd N/StarflightII
-IF NOT EXISTS WHDSaves:StarflightII
-  makedir WHDSaves:StarflightII
-  copy #? WHDSaves:StarflightII/ ALL CLONE QUIET
+IF EXISTS "WHDSaves:StarflightII/Save"
+  IF NOT EXISTS "Save"
+    makedir "Save"
+  ENDIF
+  copy "WHDSaves:StarflightII/Save" "Save" ALL CLONE QUIET
 ENDIF
-cd WHDSaves:StarflightII
 stack >NIL: 30000
 SF2 >NIL:
+avs-cd N/StarflightII
+IF EXISTS "Save"
+  IF NOT EXISTS "WHDSaves:StarflightII"
+    makedir "WHDSaves:StarflightII"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:StarflightII/Save"
+    makedir "WHDSaves:StarflightII/Save"
+  ENDIF
+  copy "Save" "WHDSaves:StarflightII/Save" ALL CLONE QUIET
+ENDIF

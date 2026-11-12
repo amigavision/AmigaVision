@@ -1,8 +1,58 @@
 avs-cd N/BabeAnoid
-IF NOT EXISTS WHDSaves:BabeAnoid
-  makedir WHDSaves:BabeAnoid
-  copy #? WHDSaves:BabeAnoid/ ALL CLONE QUIET
+IF EXISTS "WHDSaves:BabeAnoid/babe.prefs"
+  copy "WHDSaves:BabeAnoid/babe.prefs" "babe.prefs" CLONE QUIET
 ENDIF
-cd WHDSaves:BabeAnoid
+IF EXISTS "WHDSaves:BabeAnoid/hiscore.save"
+  copy "WHDSaves:BabeAnoid/hiscore.save" "hiscore.save" CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:BabeAnoid/babe0.save"
+  copy "WHDSaves:BabeAnoid/babe0.save" "babe0.save" CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:BabeAnoid/babe1.save"
+  copy "WHDSaves:BabeAnoid/babe1.save" "babe1.save" CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:BabeAnoid/babe2.save"
+  copy "WHDSaves:BabeAnoid/babe2.save" "babe2.save" CLONE QUIET
+ENDIF
+IF EXISTS "WHDSaves:BabeAnoid/babe3.save"
+  copy "WHDSaves:BabeAnoid/babe3.save" "babe3.save" CLONE QUIET
+ENDIF
 stack >NIL: 30000
 BabeAnoid.exe
+avs-cd N/BabeAnoid
+IF EXISTS "babe.prefs"
+  IF NOT EXISTS "WHDSaves:BabeAnoid"
+    makedir "WHDSaves:BabeAnoid"
+  ENDIF
+  copy "babe.prefs" "WHDSaves:BabeAnoid/babe.prefs" CLONE QUIET
+ENDIF
+IF EXISTS "hiscore.save"
+  IF NOT EXISTS "WHDSaves:BabeAnoid"
+    makedir "WHDSaves:BabeAnoid"
+  ENDIF
+  copy "hiscore.save" "WHDSaves:BabeAnoid/hiscore.save" CLONE QUIET
+ENDIF
+IF EXISTS "babe0.save"
+  IF NOT EXISTS "WHDSaves:BabeAnoid"
+    makedir "WHDSaves:BabeAnoid"
+  ENDIF
+  copy "babe0.save" "WHDSaves:BabeAnoid/babe0.save" CLONE QUIET
+ENDIF
+IF EXISTS "babe1.save"
+  IF NOT EXISTS "WHDSaves:BabeAnoid"
+    makedir "WHDSaves:BabeAnoid"
+  ENDIF
+  copy "babe1.save" "WHDSaves:BabeAnoid/babe1.save" CLONE QUIET
+ENDIF
+IF EXISTS "babe2.save"
+  IF NOT EXISTS "WHDSaves:BabeAnoid"
+    makedir "WHDSaves:BabeAnoid"
+  ENDIF
+  copy "babe2.save" "WHDSaves:BabeAnoid/babe2.save" CLONE QUIET
+ENDIF
+IF EXISTS "babe3.save"
+  IF NOT EXISTS "WHDSaves:BabeAnoid"
+    makedir "WHDSaves:BabeAnoid"
+  ENDIF
+  copy "babe3.save" "WHDSaves:BabeAnoid/babe3.save" CLONE QUIET
+ENDIF

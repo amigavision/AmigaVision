@@ -410,8 +410,8 @@ def append_only_ids(previous, current, menu, reasons=None):
             reasons.append(reason)
         return None
 
-    # Older caches tracked every .run file globally. Script edits now require
-    # a manual cache clear, and new scripts must not block title additions.
+    # Native scripts are refreshed after cache reuse. Their edits need not
+    # invalidate menu trees or block title additions.
     previous_inputs = {k: v for k, v in (previous or {}).get("inputs", {}).items()
                        if k != "native_runscripts"}
     if not previous or previous_inputs != current["inputs"]:
@@ -1724,7 +1724,11 @@ def main():
             timings.append(("collect menu entries", 0.0))
             timings.append(("collect all entries", 0.0))
             timings.append(("build auto entries", 0.0))
-            timings.append(("generate runscripts", 0.0))
+            with timed_step(timings, "generate runscripts"):
+                refreshed = make_runscripts(collection, amiga_avs_path,
+                                           template=runscript_template, refresh_native=True)
+                if refreshed:
+                    print(f" > Refreshed {refreshed} native launch scripts from current sources")
             save_avs_tree_state(avs_cache_state)
             workspace_state["avs_cache_key"] = avs_cache_key
 

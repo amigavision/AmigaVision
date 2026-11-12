@@ -1,10 +1,6 @@
 avs-cd N/ProjectHorizon
-IF NOT EXISTS WHDSaves:ProjectHorizon
-  makedir WHDSaves:ProjectHorizon
-  copy #? WHDSaves:ProjectHorizon ALL CLONE QUIET
-ENDIF
-cd WHDSaves:ProjectHorizon
 stack 65536
-assign LIBS: WHDSaves:ProjectHorizon/libs ADD
+assign LIBS: libs ADD
 ProjectHorizon >NIL:
-assign LIBS: WHDSaves:ProjectHorizon/libs REMOVE
+avs-cd N/ProjectHorizon
+assign LIBS: libs REMOVE

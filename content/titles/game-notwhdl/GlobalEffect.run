@@ -1,9 +1,22 @@
 avs-cd N/GlobalEffect
-IF NOT EXISTS WHDSaves:GlobalEffect
-  makedir WHDSaves:GlobalEffect
-  copy #? WHDSaves:GlobalEffect/ ALL CLONE QUIET
+IF EXISTS "WHDSaves:GlobalEffect/1/Scenarios1"
+  IF NOT EXISTS "1"
+    makedir "1"
+  ENDIF
+  IF NOT EXISTS "1/Scenarios1"
+    makedir "1/Scenarios1"
+  ENDIF
+  copy "WHDSaves:GlobalEffect/1/Scenarios1" "1/Scenarios1" ALL CLONE QUIET
 ENDIF
-cd WHDSaves:GlobalEffect
+IF EXISTS "WHDSaves:GlobalEffect/2/Scenarios2"
+  IF NOT EXISTS "2"
+    makedir "2"
+  ENDIF
+  IF NOT EXISTS "2/Scenarios2"
+    makedir "2/Scenarios2"
+  ENDIF
+  copy "WHDSaves:GlobalEffect/2/Scenarios2" "2/Scenarios2" ALL CLONE QUIET
+ENDIF
 stack >NIL: 30000
 assign Global_Disk1: 1
 assign Global_Disk2: 2
@@ -11,3 +24,28 @@ execute Run_Game
 path Global_Disk1:c REMOVE
 assign Global_Disk1: REMOVE
 assign Global_Disk2: REMOVE
+avs-cd N/GlobalEffect
+IF EXISTS "1/Scenarios1"
+  IF NOT EXISTS "WHDSaves:GlobalEffect"
+    makedir "WHDSaves:GlobalEffect"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:GlobalEffect/1"
+    makedir "WHDSaves:GlobalEffect/1"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:GlobalEffect/1/Scenarios1"
+    makedir "WHDSaves:GlobalEffect/1/Scenarios1"
+  ENDIF
+  copy "1/Scenarios1" "WHDSaves:GlobalEffect/1/Scenarios1" ALL CLONE QUIET
+ENDIF
+IF EXISTS "2/Scenarios2"
+  IF NOT EXISTS "WHDSaves:GlobalEffect"
+    makedir "WHDSaves:GlobalEffect"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:GlobalEffect/2"
+    makedir "WHDSaves:GlobalEffect/2"
+  ENDIF
+  IF NOT EXISTS "WHDSaves:GlobalEffect/2/Scenarios2"
+    makedir "WHDSaves:GlobalEffect/2/Scenarios2"
+  ENDIF
+  copy "2/Scenarios2" "WHDSaves:GlobalEffect/2/Scenarios2" ALL CLONE QUIET
+ENDIF

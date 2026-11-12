@@ -1,8 +1,33 @@
 avs-cd N/Imperial
-IF NOT EXISTS WHDSaves:Imperial
-  makedir WHDSaves:Imperial
-  copy #? WHDSaves:Imperial/ ALL CLONE QUIET
+IF EXISTS "WHDSaves:Imperial/Imperial.prefs"
+  copy "WHDSaves:Imperial/Imperial.prefs" "Imperial.prefs" CLONE QUIET
 ENDIF
-cd WHDSaves:Imperial
+IF EXISTS "WHDSaves:Imperial/Imperial.high"
+  copy "WHDSaves:Imperial/Imperial.high" "Imperial.high" CLONE QUIET
+ENDIF
+FailAt 21
+IF EXISTS "WHDSaves:Imperial"
+  copy >NIL: "WHDSaves:Imperial/#?.data" "" CLONE QUIET
+ENDIF
+FailAt 10
 stack >NIL: 30000
 Imperial >NIL:
+avs-cd N/Imperial
+IF EXISTS "Imperial.prefs"
+  IF NOT EXISTS "WHDSaves:Imperial"
+    makedir "WHDSaves:Imperial"
+  ENDIF
+  copy "Imperial.prefs" "WHDSaves:Imperial/Imperial.prefs" CLONE QUIET
+ENDIF
+IF EXISTS "Imperial.high"
+  IF NOT EXISTS "WHDSaves:Imperial"
+    makedir "WHDSaves:Imperial"
+  ENDIF
+  copy "Imperial.high" "WHDSaves:Imperial/Imperial.high" CLONE QUIET
+ENDIF
+FailAt 21
+IF NOT EXISTS "WHDSaves:Imperial"
+  makedir "WHDSaves:Imperial"
+ENDIF
+copy >NIL: "#?.data" "WHDSaves:Imperial" CLONE QUIET
+FailAt 10

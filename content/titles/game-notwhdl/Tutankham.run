@@ -1,8 +1,13 @@
 avs-cd N/Tutankham
-IF NOT EXISTS WHDSaves:Tutankham
-  makedir WHDSaves:Tutankham
-  copy #? WHDSaves:Tutankham/ ALL CLONE QUIET
+IF EXISTS "WHDSaves:Tutankham/TopScores"
+  copy "WHDSaves:Tutankham/TopScores" "TopScores" CLONE QUIET
 ENDIF
-cd WHDSaves:Tutankham
 stack >NIL: 65536
 Tutankham >NIL:
+avs-cd N/Tutankham
+IF EXISTS "TopScores"
+  IF NOT EXISTS "WHDSaves:Tutankham"
+    makedir "WHDSaves:Tutankham"
+  ENDIF
+  copy "TopScores" "WHDSaves:Tutankham/TopScores" CLONE QUIET
+ENDIF

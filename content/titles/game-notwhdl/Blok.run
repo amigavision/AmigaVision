@@ -1,8 +1,3 @@
 avs-cd N/Blok
-IF NOT EXISTS WHDSaves:Blok
-  makedir WHDSaves:Blok
-  copy #? WHDSaves:Blok ALL CLONE QUIET
-ENDIF
-cd WHDSaves:Blok
-stack 65536
+stack >NIL: 65536
 blok >NIL:

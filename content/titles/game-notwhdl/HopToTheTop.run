@@ -1,10 +1,15 @@
 avs-cd N/HopToTheTop
-IF NOT EXISTS WHDSaves:HopToTheTop
-  makedir WHDSaves:HopToTheTop
-  copy #? WHDSaves:HopToTheTop ALL CLONE QUIET
+IF EXISTS WHDSaves:HopToTheTop/highscores.dat
+  copy WHDSaves:HopToTheTop/highscores.dat highscores.dat CLONE QUIET
 ENDIF
-cd WHDSaves:HopToTheTop
-stack 65536
-assign HopToTheTop: WHDSaves:HopToTheTop
+stack >NIL: 65536
+assign HopToTheTop: ""
 HopToTheTop >NIL:
+avs-cd N/HopToTheTop
 assign HopToTheTop: REMOVE
+IF EXISTS highscores.dat
+  IF NOT EXISTS WHDSaves:HopToTheTop
+    makedir WHDSaves:HopToTheTop
+  ENDIF
+  copy highscores.dat WHDSaves:HopToTheTop/highscores.dat CLONE QUIET
+ENDIF

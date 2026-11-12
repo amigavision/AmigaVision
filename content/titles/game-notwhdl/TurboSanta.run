@@ -1,8 +1,3 @@
 avs-cd N/TurboSanta
-IF NOT EXISTS WHDSaves:TurboSanta
-  makedir WHDSaves:TurboSanta
-  copy #? WHDSaves:TurboSanta ALL CLONE QUIET
-ENDIF
-cd WHDSaves:TurboSanta
-stack 65536
+stack >NIL: 65536
 TS >NIL:

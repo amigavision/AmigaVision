@@ -34,7 +34,7 @@ Heart of the Alien (#270) is deferred at the user's request. Digger Remastered (
 - Arazok's Tomb, Wolfen, Beetle and Daylight Robbery have explicit, distinct SAVEDIR values to separate their saves despite sharing the generic slave.
 - Gauntlet uses the complete native Atari ST port v0.2, including the author's controls/readme. It requires Kickstart 3.0; a faster CPU is recommended.
 - Starflight II follows its supplied hard-disk installer: SF2 plus DiskA, DiskB and Save directories. The floppy crack intro and OS startup files are excluded.
-- Imperial, Global Effect, Fields of Glory and Starflight II seed complete writable game folders under WHDSaves: on first launch and subsequently run from those persistent folders. This preserves writes without guessing every save/config filename. Existing folders are retained on subsequent launches.
+- Imperial, Global Effect, Fields of Glory and Starflight II now run from their installed folders. Their launchers restore/back up selected scores, settings, layouts/scenarios or save-slot directories under WHDSaves:, rather than copying the complete games. See `data/reports/native-save-copy-fixes-2026-11-12.md` for the current save scope. Existing save folders are retained.
 
 ## Archive sources and SHA-256
 
