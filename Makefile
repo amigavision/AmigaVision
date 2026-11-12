@@ -39,7 +39,7 @@ MINI_UAE ?= ${AVSDEST}/AmigaVision-Mini.uae
 # Rare ECS builds default to full rebuilds with no retained build caches.
 ECS_INCREMENTAL ?= 0
 ECS_KEEP_CACHE ?= $(ECS_INCREMENTAL)
-ECS_IMAGE_UPDATE_ARGS = $(filter-out --incremental,$(IMAGE_UPDATE_ARGS)) $(if $(filter 1,$(ECS_INCREMENTAL)),--incremental)
+ECS_IMAGE_UPDATE_ARGS = $(filter-out --incremental,$(IMAGE_UPDATE_ARGS)) $(if $(filter 1,$(ECS_INCREMENTAL)),--incremental) $(if $(filter 1,$(ECS_KEEP_CACHE)),,--no-build-cache)
 ECS_TEMP ?= $(subst ",,${AVSTEMP})-ECS
 # Rare Mini builds use their own disposable workspace and cache generation.
 MINI_INCREMENTAL ?= 0
@@ -346,7 +346,7 @@ ecs-image:
 	@if [ "$(ECS_KEEP_CACHE)" != "1" ]; then \
 		echo "Removing completed ECS build and image-update caches..."; \
 		pipenv run python build/avs_image_update.py --clear-cache-for "$(subst ",,${AVSDEST})/AmigaVision-ECS.hdf" && \
-		rm -rf "${HOME}/Library/Caches/AmigaVision/build/ecs"; \
+		$(PYTHON) build/remove_build_cache.py "$(BUILD_CACHE_ROOT)/build/ecs"; \
 	fi
 
 clone-amiberry:
@@ -405,7 +405,7 @@ mini-image:
 	@if [ "$(MINI_KEEP_CACHE)" != "1" ]; then \
 		echo "Removing completed Mini build and image-update caches..."; \
 		pipenv run python build/avs_image_update.py --clear-cache-for "$(subst ",,${MINI_HDF})" && \
-		rm -rf "$(BUILD_CACHE_ROOT)/build/mini"; \
+		$(PYTHON) build/remove_build_cache.py "$(BUILD_CACHE_ROOT)/build/mini"; \
 	fi
 	@printf '\a'
 
