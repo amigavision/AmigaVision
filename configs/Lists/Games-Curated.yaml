@@ -70,7 +70,8 @@
     - game-notwhdl--movimientoconstante: { disp_name: "19 Movimiento Constante" }
     - game-notwhdl--cogsnlogs: { disp_name: "20 Cogs N Logs (Demo)" }
   - Alex Limi's Collection:
-    - note: Amiga games worth your time, according to Alex Limi
+    - image: { op: "pi", path: "list/alexlimi.jpg" }
+    - note: Amiga games worth your time, according to AmigaVision's Alex Limi
     - "[ Multiplayer ]":
       - ordering: "ordered"
       - note: Show only the multiplayer games
