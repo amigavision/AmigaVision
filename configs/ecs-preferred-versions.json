@@ -9,5 +9,8 @@
   "game--bodyblowsaga--bodyblowsaga": "game--bodyblows--bodyblows",
   "game--civilizationaga--civilizationaga": "game--civilization--civilization",
   "game--moonpatrolaga--moonpatrolaga": "game--moonpatrolecs--moonpatrolecs",
-  "game--elevatoractionaga--elevatoractionaga": "game--elevatoractionecs--elevatoractionecs"
+  "game--elevatoractionaga--elevatoractionaga": "game--elevatoractionecs--elevatoractionecs",
+  "game--eyeofthebeholderamaga--eyeofthebeholderamaga": "game--eyeofthebeholderam--eyeofthebeholderam",
+  "game--eyeofthebeholder2amaga--eyeofthebeholder2amaga": "game--eyeofthebeholder2am--eyeofthebeholder2am",
+  "game--timepilotagarmj--timepilotagarmj": "game--timepilotrmj--timepilotrmj"
 }
