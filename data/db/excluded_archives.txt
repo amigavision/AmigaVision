@@ -6,3 +6,6 @@ SimonSorcerer2*.lha
 # Redundant variants explicitly declined for inclusion.
 SnowBrosArcadeMod*.lha
 SecretWeaponsOfTheLuftwaffe*.lha
+
+# C64 conversion declined for this release.
+BuggyBoyC64*.lha
