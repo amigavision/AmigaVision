@@ -9,6 +9,10 @@ HOOKS=((0x6832,'20280010'),(0x699e,'20280010'),(0x6b88,'20463028002a'),(0x6c94,'
 SELECT=(0xa4e4,bytes.fromhex('d26b002a'))
 def remove_patch(data):
  end=32+struct.unpack_from('>I',data,28)[0]*4
+ if data[end-12:end-4]==b'AVSCANC1':
+  from patch_navigation_cancel import remove_patch as remove_cancel
+  data=remove_cancel(data,'menu')
+  end=32+struct.unpack_from('>I',data,28)[0]*4
  if data[end-12:end-4]==b'AVSEXIT1':
   from patch_workbench_exit import remove_patch as remove_exit
   data=remove_exit(data)

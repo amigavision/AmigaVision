@@ -17,6 +17,10 @@ ORIGINAL = bytes.fromhex('20060c8000000006')
 
 def remove_patch(data):
     end = 32 + struct.unpack_from('>I', data, 28)[0] * 4
+    if data[end-12:end-4] == b'AVSCANC1':
+        from patch_navigation_cancel import remove_patch as remove_cancel
+        data = remove_cancel(data, 'menu')
+        end = 32 + struct.unpack_from('>I', data, 28)[0] * 4
     if data[end-12:end-4] != TAG:
         return data
     size = struct.unpack_from('>I', data, end-4)[0]

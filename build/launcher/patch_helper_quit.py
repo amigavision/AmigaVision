@@ -21,6 +21,11 @@ HOOKS = ((0x3870, bytes.fromhex('206d0008')),
 def remove_patch(data):
     size = struct.unpack_from('>I', data, 28)[0] * 4
     end = 32 + size
+    if data[end-12:end-4] == b'AVSCANC1':
+        from patch_navigation_cancel import remove_patch as remove_cancel
+        data = remove_cancel(data, 'helper')
+        size = struct.unpack_from('>I', data, 28)[0] * 4
+        end = 32 + size
     if data[end-12:end-4] == TAG:
         original_size = struct.unpack_from('>I', data, end-4)[0]
         restored = bytearray(data[:32+original_size] + data[end:])
