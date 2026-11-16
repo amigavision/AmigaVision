@@ -16,6 +16,8 @@ ORIGINAL = bytes.fromhex('20060c8000000006')
 
 
 def remove_patch(data):
+    from patch_music_resume_title import remove_patch as remove_resume
+    data = remove_resume(data)
     end = 32 + struct.unpack_from('>I', data, 28)[0] * 4
     if data[end-12:end-4] == b'AVSCANC1':
         from patch_navigation_cancel import remove_patch as remove_cancel

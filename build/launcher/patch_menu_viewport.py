@@ -8,6 +8,8 @@ BASELINE='3d809d1082f75b2f77d89a1ca1ea490ecd4e8c1464ff4d7d907473ae8a214b53'
 HOOKS=((0x6832,'20280010'),(0x699e,'20280010'),(0x6b88,'20463028002a'),(0x6c94,'610042a6'),(0x4c08,'2a022006'),(0x4c56,'53802044'),(0x4cae,'53802044'),(0x4d2c,'52802044'),(0x4d9c,'52802044'),(0x4c70,'52802f00'),(0x4d3c,'53802f00'))
 SELECT=(0xa4e4,bytes.fromhex('d26b002a'))
 def remove_patch(data):
+ from patch_music_resume_title import remove_patch as remove_resume
+ data = remove_resume(data)
  end=32+struct.unpack_from('>I',data,28)[0]*4
  if data[end-12:end-4]==b'AVSCANC1':
   from patch_navigation_cancel import remove_patch as remove_cancel
