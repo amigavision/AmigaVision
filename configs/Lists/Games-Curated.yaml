@@ -58,17 +58,14 @@
     - game--blueandred--game: { disp_name: "06 Blue And Red" }
     - game--osirisinfection--osiris_infection: { disp_name: "07 Osiris Infection" }
     - game--microlytetankzone--microlyte: { disp_name: "08 Microlyte Tankzone" }
-    - game-notwhdl--pauldron: { disp_name: "09 Pauldron" }
     - game-notwhdl--glowpoint: { disp_name: "10 GlowPoint" }
-    - game-notwhdl--strikeforceomega: { disp_name: "11 Strike Force Omega (Demo)" }
-    - game--kaboomaniademo--kaboomaniademo: { disp_name: "12 Kaboomania (Demo)" }
+    - game--kaboomaniademoaga--kaboomaniademoaga: { disp_name: "12 Kaboomania" }
     - game-notwhdl--santaspresentdrop5: { disp_name: "13 Santa's Present Drop 5" }
     - game--arpegio--game: { disp_name: "14 Arpegio" }
     - game-notwhdl--submarineattack: { disp_name: "15 Submarine Attack" }
     - game-notwhdl--backflipendless: { disp_name: "16 Backflip Endless" }
     - game-notwhdl--burn: { disp_name: "18 Burn" }
     - game-notwhdl--movimientoconstante: { disp_name: "19 Movimiento Constante" }
-    - game-notwhdl--cogsnlogs: { disp_name: "20 Cogs N Logs (Demo)" }
   - Alex Limi's Collection:
     - image: { op: "pi", path: "list/alexlimi.jpg" }
     - note: Amiga games worth your time, according to AmigaVision's Alex Limi

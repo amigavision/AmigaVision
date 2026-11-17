@@ -9,3 +9,13 @@ SecretWeaponsOfTheLuftwaffe*.lha
 
 # C64 conversion declined for this release.
 BuggyBoyC64*.lha
+
+# Redundant staged Dune II AGA copies.
+Dune2_v1.01_AGA.lha
+Dune2_v1.0_AGA.lha
+
+# Superseded Rolling Thunder AGA preview.
+RollingThunder_v0.4_AGA.lha
+
+# Redundant Indianapolis 500 performance variant.
+Indianapolis500Performance_v1.0_0686.lha
