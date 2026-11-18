@@ -34,6 +34,9 @@ HOOKS = {
 
 
 def remove_patch(data, kind):
+    from patch_slideshow_wrap import remove_patch as remove_wrap
+    if kind == 'helper':
+        data = remove_wrap(data)
     from patch_music_resume_title import remove_patch as remove_resume
     data = remove_resume(data)
     end = 32 + struct.unpack_from('>I', data, 28)[0]*4

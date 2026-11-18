@@ -19,6 +19,8 @@ HOOKS = ((0x3870, bytes.fromhex('206d0008')),
 
 
 def remove_patch(data):
+    from patch_slideshow_wrap import remove_patch as remove_wrap
+    data = remove_wrap(data)
     size = struct.unpack_from('>I', data, 28)[0] * 4
     end = 32 + size
     if data[end-12:end-4] == b'AVSCANC1':
