@@ -56,9 +56,10 @@
   - Dealer Demos:
     - note: Demos by Amiga dealers and hardware developers
     - AmigaDealerDemo
+    - demo-notwhdl--amigavisionintro
+    - demo--boing--generickick13
+    - demo--juggler--juggler
     - demo-notwhdl--a1200shopdemoanz
-    - demo-notwhdl--newtek-demoreel1
-    - demo-notwhdl--newtek-demoreel3
   - !include Demos-060.yaml
   - Coding Challenges:
     - note: Coding challenges posed to the scene
