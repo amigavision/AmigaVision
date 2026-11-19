@@ -927,7 +927,10 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
                 add_timing(c, "auto make_entry", perf_counter() - start)
                 ensure_image(util.path(path, "{}.avs".format(strings["dirs"]["allgames"]), letter + ".iff"), {"op":"tx", "txt": letter})
                 start = perf_counter()
-                make_entry(c, path, entry, util.path(path, "{}.avs".format(strings["dirs"]["allgames_year"]), year + ".avs"))
+                year_path = util.path(path, "{}.avs".format(strings["dirs"]["allgames_year"]), year + ".avs")
+                # Rank year folders newest first; Unknown follows all dated years.
+                c.path_sort_rank[year_path] = -int(year) if year.isdigit() else 0
+                make_entry(c, path, entry, year_path)
                 add_timing(c, "auto make_entry", perf_counter() - start)
                 ensure_image(util.path(path, "{}.avs".format(strings["dirs"]["allgames_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
             languages = query.get_languages(entry)
@@ -998,7 +1001,10 @@ def make_autoentries(c: EntryCollection, path: str, games=False, demos=False):
                     add_timing(c, "auto make_entry", perf_counter() - start)
                     ensure_image(util.path(d_path, "{}.avs".format(strings["dirs"]["demos_group"]), group_letter + ".iff"), {"op":"tx", "txt": group_letter})
                 start = perf_counter()
-                make_entry(c, path, entry, util.path(d_path, "{}.avs".format(strings["dirs"]["demos_year"]), year + ".avs"))
+                year_path = util.path(d_path, "{}.avs".format(strings["dirs"]["demos_year"]), year + ".avs")
+                # Rank year folders newest first; Unknown follows all dated years.
+                c.path_sort_rank[year_path] = -int(year) if year.isdigit() else 0
+                make_entry(c, path, entry, year_path)
                 add_timing(c, "auto make_entry", perf_counter() - start)
                 ensure_image(util.path(d_path, "{}.avs".format(strings["dirs"]["demos_year"]), year + ".iff"), {"op":"tx", "txt": year_img, "size": 112})
                 if sort_country:
