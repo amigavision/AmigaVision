@@ -3,7 +3,7 @@
   - image: { ops: { op: "pi", path: "top/gameographies.png" }, size: [320, 128], scale: [1, 1] }
   - By Composer:
     - rank: 1
-    - note: Games with music by notable composers\n\n(Not necessarily complete lists)
+    - note: Games with music composed or arranged by these artists for the Amiga\n\n(Not necessarily complete lists)
     - Allister Brimble:
       - ordering: "release"
       - note: "Composer behind many Team17 classics, including Alien Breed, Project-X and Superfrog"
@@ -66,21 +66,24 @@
       - image: { op: "pi", path: "chris_hülsbeck.jpg" }
       - AdventuresOfQuik&Silva
       - Apidya
+      - ApidyaSE
       - Apprentice
       - BadCat
       - BattleIsle
-      - BCKid
       - BundesligaMngrHatt
       - CaribbeanDisasterDe
       - CarlLewisChallenge
       - CircusAttractions
       - DangerFreak
       - GemX
+      - GianaSistersSE
+      - GreatGianaSisters
       - GrandMonsterSlam
       - HardNHeavy
       - HexumaDe
       - HollywoodPokerPro
       - JimPower
+      - KaboomaniaDemoAGA
       - Logistic
       - Masterblazer
       - MetalLaw
@@ -89,7 +92,9 @@
       - RockNRoll
       - RType
       - SecretOfMonkeyIsland
+      - SkyFighter
       - Spaceball
+      - SuperGemZ
       - Turrican
       - Turrican2
       - Turrican3
@@ -146,6 +151,7 @@
       - Uridium2
       - Paradroid90
       - RuffNTumble
+      - PuttySquad
       - Simulcra
       - FireAndIceCD32
     - Jochen Hippel:
@@ -155,8 +161,6 @@
       - 5thGear
       - Amberstar
       - Astaroth
-      - Atomix
-      - BCKid
       - BattleValley
       - ChambersOfShaolin
       - Dragonflight
@@ -164,7 +168,6 @@
       - GhostBattle
       - LeavinTeramis
       - LethalXcess
-      - MonsterBusiness
       - NinjaRemix
       - PrehistoricTale
       - RingsOfMedusa
@@ -178,7 +181,9 @@
       - image: { op: "pi", path: "karsten_obarski.png" }
       - Amegas
       - BrandsHatch
+      - Centerbase
       - CrystalHammerV2
+      - Detector
       - Dyter07
       - FateGatesOfDawn
       - FutureTank
@@ -186,7 +191,6 @@
       - OilImperium
       - Project1
       - Sarcophaser
-      - WindowWizard
     - Martin Iveson:
       - ordering: "release"
       - note: "Core Design composer, later known as Atjazz; includes shared and loading-music credits"
@@ -208,9 +212,8 @@
       - SkeletonKrew
     - Richard Joseph:
       - ordering: "release"
-      - note: "Composer, arranger and sound programmer; includes collaborations with Jon Hare, Nation 12 and other artists"
+      - note: "Composer and arranger; includes collaborations with Jon Hare, Nation 12 and other artists"
       - image: { op: "pi", path: "composer/richard_joseph.png" }
-      - BarbarianPalace
       - Barbarian2Palace
       - Cadaver
       - cadaver&thepayoff--cadaver&thepayoff--tpo
@@ -229,14 +232,11 @@
       - CannonFodder2
       - Wizkid
       - Putty
-      - PuttySquad
-      - MythSystem3
       - LureOfTheTemptress
       - legendmindscape--legendmindscape
       - WorldsOfLegend
       - AdventuresOfRobinHood
       - Diggers
-      - DragonsBreath
     - Tim Follin:
       - ordering: "release"
       - note: The Amiga was Tim Follin's least favorite platform, and you can sort of tell... Still, Ghouls 'n Ghosts is a masterpiece
@@ -244,7 +244,9 @@
       - BionicCommando
       - Gauntlet3
       - GhoulsNGhosts
+      - GhoulsNGhostsEnhanced
       - LEDStorm
+      - Puzznic
       - Qix
       - Renegade
       - SlySpySecretAgent

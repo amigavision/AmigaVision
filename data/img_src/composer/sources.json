@@ -51,7 +51,6 @@
     "portrait": "https://www.vgmpf.com/Wiki/images/thumb/7/74/Richard_Joseph.jpg/212px-Richard_Joseph.jpg",
     "credits": "https://www.vgmpf.com/Wiki/index.php?title=Richard_Joseph",
     "games": {
-      "BarbarianPalace": "game--barbarianpalace--barbarianpalace",
       "Barbarian2Palace": "game--barbarian2palace--barbarian2palace",
       "Cadaver": "game--cadaver&thepayoff--cadaver&thepayoff",
       "cadaver&thepayoff--cadaver&thepayoff--tpo": "game--cadaver&thepayoff--cadaver&thepayoff--tpo",
@@ -70,14 +69,11 @@
       "CannonFodder2": "game--cannonfodder2--cannonfodder2",
       "Wizkid": "game--wizkid--wizkid",
       "Putty": "game--putty--putty",
-      "PuttySquad": "game--puttysquadaga--puttysquadaga",
-      "MythSystem3": "game--mythsystem3--mythsystem3",
       "LureOfTheTemptress": "game--lureofthetemptress--lureofthetemptress",
       "legendmindscape--legendmindscape": "game--legendmindscape--legendmindscape",
       "WorldsOfLegend": "game--worldsoflegend--worldsoflegend",
       "AdventuresOfRobinHood": "game--adventuresofrobinhood--adventuresofrobinhood",
-      "Diggers": "game--diggersaga--diggersaga",
-      "DragonsBreath": "game--dragonlordntsc--dragonlordntsc"
+      "Diggers": "game--diggersaga--diggersaga"
     }
   },
   {
@@ -157,7 +153,8 @@
       "Paradroid90": "game--paradroid901mb--paradroid901mb",
       "RuffNTumble": "game--ruffntumble--ruffntumble",
       "Simulcra": "game--simulcra--simulcra",
-      "FireAndIceCD32": "game--fireandicecd32--fireandicecd32"
+      "FireAndIceCD32": "game--fireandicecd32--fireandicecd32",
+      "PuttySquad": "game--puttysquadaga--puttysquadaga"
     }
   },
   {
