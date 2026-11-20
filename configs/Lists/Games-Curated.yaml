@@ -42,6 +42,8 @@
     # Pending launcher-compatible package: Santa's Present Drop (itch.io download points to part 4).
     - game-notwhdl--ghostlight2
     - game-notwhdl--santaspresentdrop5
+    - game--blueandred--game
+    - game--microlytetankzone--microlyte
   - AmiGameJam 2025:
     # Explicit numbers preserve the third-place tie and the published gap at 17.
     # https://itch.io/jam/amigamejam2025/results
