@@ -1,9 +1,65 @@
-- Gameographies:
+- Artists & Publishers:
   - note: Notable developer and artist gameographies\n\n(All lists in chronological order)
   - image: { ops: { op: "pi", path: "top/gameographies.png" }, size: [320, 128], scale: [1, 1] }
-  - "[ By Composer ]":
+  - By Composer:
     - rank: 1
     - note: Games with music by notable composers\n\n(Not necessarily complete lists)
+    - Allister Brimble:
+      - ordering: "release"
+      - note: "Composer behind many Team17 classics, including Alien Breed, Project-X and Superfrog"
+      - image: { op: "pi", path: "composer/allister_brimble.png" }
+      - AlienBreed
+      - AlienBreedSpecialEdition
+      - AlienBreed2
+      - AlienBreedTA
+      - FullContact
+      - Assassin
+      - AssassinSpecialEdition
+      - ProjectXSE
+      - Superfrog
+      - ArcadePool
+      - BodyBlows
+      - BodyBlowsGalactic
+      - UltimateBodyBlows
+      - MortalKombat
+    - Barry Leitch:
+      - ordering: "release"
+      - note: "Prolific composer behind Lotus 2, Harlequin, Utopia and many Gremlin classics"
+      - image: { op: "pi", path: "composer/barry_leitch.png" }
+      - Lotus2
+      - Utopia
+      - Harlequin
+      - HeroQuest
+      - Humans
+      - Impossamole
+      - LethalWeapon
+      - Pegasus
+      - Silkworm
+      - SpaceCrusade
+      - SuperCars2
+      - SuspiciousCargo
+      - Switchblade2
+      - TreasureTrap
+      - Xenophobe
+      - Xiphos
+      - ComboRacer
+      - ButcherHill
+      - AirborneRanger
+      - MicroProseSoccer
+      - Stratego
+    - Bjørn Lynne:
+      - ordering: "release"
+      - note: "Dr. Awesome: demoscene musician and composer of Qwak, Alien Breed 3D and Worms"
+      - image: { op: "pi", path: "composer/bjorn_lynne.png" }
+      - Brat
+      - Cubulus
+      - FantasticVoyage
+      - EscapeFromColditz
+      - Qwak
+      - AlienBreed3D
+      - SuperObliteration
+      - Worms
+      - WormsDC
     - Chris Hülsbeck:
       - ordering: "release"
       - note: Arguably the most loved Amiga composer of all time, and also creator of the quite unique TFMX music software
@@ -39,6 +95,59 @@
       - Turrican3
       - XOut
       - ZOut
+    - David Whittaker:
+      - ordering: "release"
+      - note: "Composer and arranger behind Shadow of the Beast, Xenon and many early Amiga soundtracks"
+      - image: { op: "pi", path: "composer/david_whittaker.png" }
+      - ShadowOfTheBeast
+      - Speedball
+      - Xenon
+      - Xenon2
+      - Obliterator
+      - Menace
+      - Archipelagos
+      - AlienSyndrome
+      - APB
+      - ArmyMoves
+      - BackToTheFuturePart2
+      - BeyondTheIcePalace
+      - BubbleBobble
+      - CarrierCommand
+      - ChipsChallenge
+      - CloudKingdoms
+      - CosmicPirate
+      - Custodian
+      - DogsOfWar
+      - EyeOfHorus
+      - FireAndBrimstone
+      - FrightNight
+      - GoldenAxe
+      - KidGloves
+      - Leatherneck
+      - Lemmings2
+      - Millennium22
+      - Platoon
+      - Quadralien
+      - ReturnToGenesis
+      - Sentinel
+      - SideWinder
+      - SpittingImage
+      - Starblaze
+      - TetrisMirrorsoft
+      - Thundercats
+      - TotalRecall
+      - WeirdDreams
+      - WrathOfTheDemon
+      - Wreckers
+    - Jason Page:
+      - ordering: "release"
+      - note: "Graftgold composer behind Uridium 2, Paradroid 90 and Fire & Ice CD32"
+      - image: { op: "pi", path: "composer/jason_page.png" }
+      - Uridium2
+      - Paradroid90
+      - RuffNTumble
+      - Simulcra
+      - FireAndIceCD32
     - Jochen Hippel:
       - ordering: "release"
       - note: Hippel's music was for the most part primarily composed for Atari ST, but despite that (or even because of it!), his oevre is among the best to ever grace the Amiga
@@ -78,6 +187,56 @@
       - Project1
       - Sarcophaser
       - WindowWizard
+    - Martin Iveson:
+      - ordering: "release"
+      - note: "Core Design composer, later known as Atjazz; includes shared and loading-music credits"
+      - image: { op: "pi", path: "composer/martin_iveson.png" }
+      - JaguarXJ220
+      - Heimdall
+      - Heimdall2
+      - ChuckRock2
+      - Banshee
+      - BubbaNStix
+      - Blastar
+      - Universe
+      - Agony
+      - CurseOfEnchantia
+      - Premiere
+      - Wolfchild
+      - WonderDog
+      - Dragonstone
+      - SkeletonKrew
+    - Richard Joseph:
+      - ordering: "release"
+      - note: "Composer, arranger and sound programmer; includes collaborations with Jon Hare, Nation 12 and other artists"
+      - image: { op: "pi", path: "composer/richard_joseph.png" }
+      - BarbarianPalace
+      - Barbarian2Palace
+      - Cadaver
+      - cadaver&thepayoff--cadaver&thepayoff--tpo
+      - ChaosEngine
+      - ChaosEngine2
+      - JamesPond
+      - JamesPond2
+      - JamesPond3
+      - AquaticGames
+      - Gods
+      - MagicPockets
+      - MegaLoMania
+      - SensibleSoccer
+      - SWOSv11
+      - CannonFodder
+      - CannonFodder2
+      - Wizkid
+      - Putty
+      - PuttySquad
+      - MythSystem3
+      - LureOfTheTemptress
+      - legendmindscape--legendmindscape
+      - WorldsOfLegend
+      - AdventuresOfRobinHood
+      - Diggers
+      - DragonsBreath
     - Tim Follin:
       - ordering: "release"
       - note: The Amiga was Tim Follin's least favorite platform, and you can sort of tell... Still, Ghouls 'n Ghosts is a masterpiece
@@ -89,7 +248,71 @@
       - Qix
       - Renegade
       - SlySpySecretAgent
-  - Assembly Line, The:
+    - Tim Wright:
+      - ordering: "release"
+      - note: "CoLD SToRAGE: music for Shadow of the Beast II and III, Agony and Lemmings; includes shared credits"
+      - image: { op: "pi", path: "composer/tim_wright.png" }
+      - ShadowOfTheBeast2
+      - ShadowOfTheBeast3
+      - Agony
+      - Lemmings
+      - OhNoMoreLemmings
+      - Awesome
+      - Carthage
+      - KillingGameShow
+      - ArmourGeddon
+      - Amnios
+      - Aquaventura
+      - Leander
+  - ----------------:
+      divider: true
+      label: ""
+      rank: 2
+  - Activision:
+    - ordering: "release"
+    - note: Games published by Activision
+    - image: { op: "pi", path: "logo/activision.png" }
+    - HackerNTSC
+    - Mindshadow
+    - BorrowedTime
+    - Hacker2
+    - PortalNTSC
+    - ShanghaiNTSC
+    - TassTimesInTonetown
+    - GeeBeeAirRally
+    - LittleComputerPeopleNTSC
+    - AfterBurner
+    - Mindfighter
+    - NinjaSpirit
+    - AlteredBeast
+    - BeyondDarkCastle
+    - DynamiteDux
+    - FightingSoccerNTSC
+    - PowerDrift
+    - Predator
+    - RType
+    - Rampage
+    - RealGhostbusters
+    - TimeScanner
+    - WonderboyInMonsterland
+    - AtomicRoboKid
+    - DragonBreed
+    - FighterBomber
+    - FighterBomberAM
+    - GalaxyForce2
+    - Ghostbusters2
+    - Ghostbusters2Mod
+    - Hammerfist
+    - HotRod
+    - SonicBoom
+    - TimeMachine
+    - BushBuck
+    - Deuteros
+    - Hunter
+    - RType2
+    - BeastBusters
+    - LostTreasuresOfInfocom
+  - Assembly Line:
     - ordering: "release"
     - note: While most known for helping out the Bitmap Bros on Xenon 2, the awesome and quirky puzzle games represent their finest work
     - image: { op: "pi", path: "logo/assembly_line.png" }
@@ -154,6 +377,25 @@
     - WITUSAIsCarmenSandiego
     - WITWIsCarmenSandiego
     - WingsOfFury
+  - Bullfrog:
+    - ordering: "release"
+    - note: Amiga games developed by Bullfrog
+    - image: { op: "pi", path: "logo/bullfrog.png" }
+    - Enlightenment
+    - Fusion
+    - PopulousCF&DataDisks
+    - populouscf&datadisks--populouscf&datadisks--tff
+    - populouscf&datadisks--populouscf&datadisks--tpl
+    - Flood
+    - Powermonger
+    - Populous2&ChallengeGames
+    - populous2&challengegames--populous2&challengegames--tcg
+    - PopulousWorldEditor
+    - PowermongerWW1Edition
+    - PsychoSanta
+    - Syndicate
+    - SyndicateAmericanRevolt
+    - ThemeParkAGA
   - Cinemaware:
     - ordering: "release"
     - note: Pioneers of cinematic videogame storytelling
@@ -172,6 +414,101 @@
     - TVSportsBoxing
     - TVSportsFootball
     - Wings
+  - Codemasters:
+    - ordering: "release"
+    - note: Budget games, Dizzy adventures and Micro Machines from Codemasters
+    - image: { op: "pi", path: "logo/codemasters.png" }
+    - BMXSimulator
+    - GuardianAngel
+    - LittlePuffInDragonland
+    - NitroBoostChallenge
+    - PubTriviaSimulator
+    - RockStarAteMyHamster
+    - TreasureIslandDizzy
+    - AdvancedSkiSimulator
+    - Italia1990
+    - Kamikaze
+    - MiG29SovietFighter
+    - MiamiChase
+    - ProPowerBoatSimulator
+    - ProTennisSimulatorImage
+    - SASCombatSimulator
+    - SpellfireTheSorcerer
+    - SwordAndTheRose
+    - 1stDivisionManager
+    - AdvFruitMachineSim
+    - CJsElephantAntics
+    - FantasyWorldDizzy
+    - KwikSnax
+    - MagiclandDizzy
+    - MeanMachine
+    - ProBoxingSimulator
+    - SkyHighStuntman
+    - SlightlyMagic
+    - SpikeInTransylvania
+    - SuperGrandPrix
+    - Violator
+    - WackyDarts
+    - BigNoseTheCaveman
+    - BubbleDizzy
+    - CJInTheUSA
+    - Dynamo
+    - DizzyPanic
+    - DizzyPrinceOfTheYolkfolk
+    - FastFood
+    - Hoversprint
+    - QuestOfAgravain
+    - RobinHoodLegendQuest
+    - SeymourGoesToHollywood
+    - SoccerPinball
+    - SpellboundDizzy
+    - StegTheSlug
+    - SuperSeymourSavesPlanet
+    - CosmicSpacehead
+    - CrystalKingdomDizzy
+    - Firehawk
+    - MicroMachines
+    - FantasticDizzyAGA
+  - Core Design:
+    - ordering: "release"
+    - note: Games developed and published by Core Design
+    - image: { op: "pi", path: "logo/core_design.png" }
+    - ActionFighter
+    - AxelsMagicHammer
+    - DynamiteDux
+    - RickDangerous
+    - Saint&Greavsie
+    - Switchblade
+    - Corporation&Missions3Disk
+    - Impossamole
+    - MontyPythonsFlyCir
+    - RickDangerous2
+    - Skidz
+    - TorvakTheWarrior
+    - CarVup
+    - ChuckRock
+    - Frenetic
+    - Heimdall
+    - RickDangerous25
+    - ThunderHawk
+    - WarZoneCoreDesign
+    - CurseOfEnchantiaFast
+    - Doodlebug
+    - JaguarXJ220Files
+    - Wolfchild
+    - Blastar
+    - Blob
+    - ChuckRock2
+    - Cyberpunks
+    - WonderDog
+    - BansheeAGA
+    - BubbaNStix
+    - Darkmere
+    - Dragonstone
+    - Heimdall2AGA
+    - Premiere
+    - Universe
+    - SkeletonKrewAGA
   - Delphine Software:
     - ordering: "release"
     - note: The quintessential French Touch publisher
@@ -206,6 +543,145 @@
     - Menace
     - OhNoMoreLemmings
     - Walker
+  - Domark:
+    - ordering: "release"
+    - note: Games published by Domark
+    - image: { op: "pi", path: "logo/domark.png" }
+    - TrivialPursuit
+    - StarWars
+    - ReturnOfTheJedi
+    - EmpireStrikesBack
+    - TrivialPursuitANB
+    - DragonSpirit
+    - HardDrivin
+    - HardDrivin2
+    - harddrivin2--harddrivin2--editor
+    - LiveAndLetDie
+    - SpittingImage
+    - Vindicators
+    - Xybots
+    - APB
+    - BadLands
+    - CastleMaster
+    - Cyberball
+    - EscapeRobotMonsters
+    - Klax
+    - STUNRunner
+    - SpyWhoLovedMe
+    - Toobin
+    - 3DConstructionKit
+    - Hydra
+    - MiG29Fulcrum
+    - MiG29MSuperFulcrum
+    - Nam19651975
+    - PitFighter
+    - RBI2Baseball
+    - RaceDrivin
+    - racedrivin--racedrivin--intro
+    - RugbyTheWorldCup
+    - Skull&Crossbones
+    - SuperSpaceInvaders
+    - ThunderJawsFiles
+    - AV8BHarrierAssault
+    - EuropeanFootballChamp
+    - Rampart
+    - Shadowlands
+    - ChampionshipManager93
+    - F1
+    - ChampionshipManager94-ESE
+    - F1WorldChampionshipEd
+    - TotalFootball
+  - Dynamix:
+    - ordering: "release"
+    - note: Amiga games developed by Dynamix
+    - image: { op: "pi", path: "logo/dynamix.png" }
+    - ArcticfoxNTSC
+    - GBAChampionshipBB
+    - SkyfoxNTSC
+    - Skyfox2
+    - A10TankKiller3Disk
+    - A10TankKillerEM
+    - Nova9
+    - RiseOfTheDragon
+    - Stellar7NTSC
+    - AdventuresOfWillyBeamish
+    - HeartOfChina
+    - RedBaron
+    - SierraSoccer
+  - Electronic Arts:
+    - ordering: "release"
+    - note: Games published by Electronic Arts
+    - image: { op: "pi", path: "logo/electronic_arts.png" }
+    - ArchonNTSC
+    - OneOnOneNTSC
+    - SevenCitiesOfGoldNTSC
+    - AdvConstructionSetNTSC
+    - ArcticfoxNTSC
+    - BardsTaleNTSC
+    - MarbleMadness
+    - SkyfoxNTSC
+    - EarlWeaverBaseball
+    - TestDrive
+    - Archon2NTSC
+    - BardsTale2
+    - BattleChess
+    - FA18Interceptor
+    - FerrariFormulaOne
+    - Fusion
+    - ReturnToAtlantis
+    - Skyfox2
+    - WorldTourGolf
+    - ZanyGolfNTSC
+    - Budokan
+    - HoundOfShadow
+    - IronLord
+    - KeefTheThiefNTSC
+    - Neuromancer
+    - OneToOneMatch
+    - PopulousCF&DataDisks
+    - populouscf&datadisks--populouscf&datadisks--tff
+    - populouscf&datadisks--populouscf&datadisks--tpl
+    - Powerdrome
+    - Starflight
+    - SwordsOfTwilight
+    - 688AttackSub
+    - ChuckYeagersAFT2
+    - Flood
+    - Immortal
+    - Imperium
+    - Indianapolis500
+    - MagicFly1MB
+    - Powermonger
+    - Projectyle
+    - SkiOrDie
+    - 4DSportsBoxing
+    - BardsTale3
+    - BattleChess2
+    - BirdsOfPrey
+    - CenturionNTSC
+    - Harpoon&Battleset2
+    - PGATourGolf&TourDisk
+    - Populous2&ChallengeGames
+    - PopulousWorldEditor
+    - PowermongerWW1Edition
+    - StarflightII
+    - Strikefleet
+    - ZoneWarrior
+    - BlackCrypt
+    - Harpoon&Battleset3
+    - Harpoon&Battleset4
+    - JohnMaddenFootball
+    - RiskyWoods
+    - RoadRash
+    - RomeAD92
+    - WingCommanderCD32
+    - DesertStrike
+    - SpaceHulk
+    - Syndicate
+    - FIFAInternationalSoccer
+    - JungleStrikeAGA
+    - ThemeParkAGA
+    - ThemeParkXMASDemo
   - Factor 5:
     - ordering: "release"
     - note: Creators of the iconic Amiga ports of the Turrican series
@@ -218,6 +694,51 @@
     - Turrican
     - Turrican2
     - Turrican3
+  - Firebird & Rainbird:
+    - ordering: "release"
+    - note: Games from the Firebird and Rainbird labels
+    - image: { op: "pi", path: "logo/firebird_rainbird.png" }
+    - JewelsOfDarkness
+    - Pawn
+    - GuildOfThieves
+    - KnightOrc
+    - Starglider
+    - ActionFighter
+    - BlackLamp
+    - BubbleBobbleNTSC
+    - CarrierCommand
+    - Corruption
+    - Elite
+    - Enlightenment
+    - Fish
+    - FlyingShark
+    - GoldenPath
+    - Jinxter
+    - LegendOfTheSword
+    - Pandora
+    - Quartz
+    - ReturnToGenesis
+    - Sentinel
+    - SiliconDreamsNTSC
+    - SpacecutterNTSC
+    - Starglider2
+    - Tracker
+    - UMS
+    - UniversalMilitarySim
+    - Virus
+    - Whirligig
+    - 3DPool
+    - MrHeli
+    - RickDangerous
+    - Savage
+    - WeirdDreams
+    - Betrayal
+    - FirstContact
+    - Midwinter
+    - P47Thunderbolt
+    - TowerOfBabel
+    - Midwinter2
+    - UMS2NationsAtWar
   - Graftgold:
     - ordering: "release"
     - note: The studio founded by ZX Spectrum legends Steve Turner and Andrew Braybrook that delivered both original games and arcade conversions of excellent quality
@@ -231,6 +752,69 @@
     - SuperOffRoad
     - Uridium2
     - Virocop
+  - Gremlin:
+    - ordering: "release"
+    - note: Games published by Gremlin
+    - image: { op: "pi", path: "logo/gremlin.png" }
+    - 3DGalax
+    - Deflektor
+    - FederationOfFreeTraders
+    - JohnLowesUltimateDarts
+    - MickeyMouseComputerGame
+    - MiniGolf
+    - MotorMassacre
+    - PinkPanther
+    - Technocop
+    - VampiresEmpire
+    - Artura
+    - AxelsMagicHammer
+    - ButcherHill
+    - ComboRacer
+    - DarkFusion
+    - FootballerOfTheYear2
+    - HATE
+    - Mindbender
+    - SuperScrambleSimulator
+    - Switchblade
+    - ToyotaCelicaGTRally
+    - GaryLinekersHotShot
+    - UltimateGolf
+    - Impossamole
+    - Lotus
+    - Skidz
+    - SuperCars
+    - VenusTheFlytrap
+    - Chrome
+    - Dux
+    - HeroQuest
+    - Lotus2
+    - Pegasus
+    - SpacewreckedNTSC
+    - SuperCars2
+    - SuspiciousCargo
+    - Switchblade2
+    - TeamSuzuki
+    - Utopia&NewWorlds
+    - utopia&newworlds--utopia&newworlds--tnw
+    - Utopia&SecondWave1
+    - Utopia&SecondWave2
+    - Harlequin1MB
+    - Lotus3
+    - NigelMansellsWrldChmp
+    - Plan9FromOuterSpace
+    - PremierManager
+    - SpaceCrusade&VoyageBeyond
+    - spacecrusade&voyagebeyond--spacecrusade&voyagebeyond--vb
+    - VideoKid
+    - Zool
+    - PremierManager2
+    - Zool2AGA
+    - DisposableHero
+    - HeroQuest2
+    - K2401MB
+    - TopGear2AGA
+    - ShadowFighterAGANoJump
+    - PremierManager3Deluxe
   - Horror Soft:
     - ordering: "release"
     - note: The original and best developer specializing in pulp horror
@@ -239,6 +823,48 @@
     - Elvira2
     - PersonalNightmare
     - Waxworks
+  - Infogrames:
+    - ordering: "release"
+    - note: Games published by Infogrames
+    - image: { op: "pi", path: "logo/infogrames.png" }
+    - PassengersOnTheWind
+    - Bobo
+    - BubbleGhost
+    - Hostages
+    - PassengersOnTheWind2
+    - TetrisInfogrames
+    - Wanted
+    - ActionService
+    - Billiards2Simulator
+    - Chicago90
+    - FullMetalPlaneteFiles
+    - MurdersInVenice
+    - NorthAndSouthFiles
+    - OperationNeptune
+    - QuestForTimeBirdFiles
+    - SafariGuns
+    - SimCityNTSC
+    - TintinOnTheMoonFiles
+    - Bubble+
+    - ChessSimulator
+    - DrakkhenFilesNTSC
+    - JumpingJackSon
+    - LightCorridor
+    - MurdersInSpaceFiles
+    - Mystical
+    - ToyottesFiles
+    - Welltris
+    - 7Colors
+    - AdvantageTennis
+    - AlphaWaves
+    - BanditKings
+    - MetalMasters
+    - PopUp
+    - Alcatraz
+    - HareRaisingHavocNTSC
+    - MickeysJigsawPuzzles
+    - MickeysMemoryChallenge
+    - UltimatePinballQuest
   - Llamasoft:
     - note: Jeff Minter is the Yak
     - image: { op: "pi", path: "logo/llamasoft.png" }
@@ -276,6 +902,193 @@
     - SuperCars
     - SuperCars2
     - SuperScrambleSimulator
+  - MicroProse:
+    - ordering: "release"
+    - note: Games published by MicroProse
+    - image: { op: "pi", path: "logo/microprose.png" }
+    - OgreNTSC
+    - SilentService
+    - GunshipNTSC
+    - KennedyApproach
+    - RedStormRising
+    - Ultima4NTSC
+    - AirborneRanger
+    - MicroProseSoccer
+    - F19StealthFighterNTSC
+    - M1TankPlatoon
+    - Midwinter
+    - Pirates
+    - RailroadTycoon
+    - RickDangerous2
+    - Simulcra
+    - F15StrikeEagle2
+    - FormulaOneGrandPrixEnhanced
+    - KnightsOfTheSky
+    - MicroProseGolf
+    - SilentService2NTSC
+    - CovertAction
+    - SpecialForces
+    - SuperTetris
+    - WorldCircuitNTSC
+    - AncientArtOfWarInTheSkies
+    - B17FlyingFortress
+    - Gunship2000
+    - ImpossibleMission2025AGA
+    - F117ANightHawk
+    - CivilizationAGA
+    - FieldsOfGloryAGA
+    - PiratesGoldCD32
+    - Starlord
+    - UFOEnemyUnknownAGA
+    - BloodNetAGA
+    - ColonizationAGA
+    - Subwar2050AGA
+    - F1GP16FPS
+  - Mindscape:
+    - ordering: "release"
+    - note: Games published by Mindscape
+    - image: { op: "pi", path: "logo/mindscape.png" }
+    - BrataccasNTSC
+    - DejaVuNTSC
+    - HalleyProject
+    - Racter
+    - IndoorSports
+    - IntoTheEaglesNest
+    - Plutos
+    - Shadowgate
+    - Uninvited
+    - CaptainBloodNTSC
+    - HarrierCombatSimNTSC
+    - SuperstarIceHockey
+    - ActionService
+    - BalanceOfPower1990Ed
+    - DejaVu2LostInLasVegas
+    - FiendishFreddysBigTopOFun
+    - Gauntlet2
+    - IndianaJonesTempleOfDoom
+    - Paperboy
+    - 4DSportsDriving&MstrTrcks
+    - Captive
+    - Colony
+    - DaysOfThunder
+    - HarleyDavidson
+    - Loopz
+    - UltimateRide
+    - 4DSportsBoxing
+    - BlueMax
+    - CaptainPlanet
+    - BootNTSC
+    - KnightmareMindscape
+    - Life&Death
+    - Moonstone
+    - TVSportsBoxing
+    - Battletoads
+    - DGeneration
+    - FourCrystalsOfTrazereNTSC
+    - OverkillAGA
+    - Paperboy2
+    - TVSportsBaseball
+    - WingCommanderCD32
+    - AlfredChickenAGA
+    - Genesia
+    - genesia--genesia--cfg
+    - LunarCCD32
+    - SimLifeAGA
+    - Syndicate
+    - WorldsOfLegend
+    - FuryOfTheFurries
+    - LiberationCD32
+    - PierreIsOutToLunchAGA
+    - Seek&DestroyAGA
+  - Ocean:
+    - ordering: "release"
+    - note: Games published by Ocean
+    - image: { op: "pi", path: "logo/ocean.png" }
+    - Eco
+    - BatmanCapedCrusader
+    - DaleyThompsonsOC2Disk
+    - OperationWolf
+    - PlatoonNTSC
+    - Wizball
+    - BatmanTheMovie2Disk
+    - BeachVolley
+    - Cabal
+    - ChaseHQ
+    - NewZealandStory
+    - OperationThunderbolt
+    - Rambo3NTSC
+    - RedHeat
+    - RoboCop
+    - RunTheGauntlet
+    - SlySpySecretAgent
+    - Untouchables
+    - Voyager
+    - AdidasChampFootballFiles
+    - BattleCommand
+    - ChaseHQ2
+    - Ivanhoe
+    - LostPatrol
+    - MidnightResistance
+    - Narc
+    - NavySeals
+    - NightBreedAction
+    - NightbreedMovie
+    - Pang
+    - Plotting
+    - Puzznic
+    - RainbowIslands
+    - RoboCop2
+    - ShadowWarriors
+    - TotalRecallFiles
+    - Darkman
+    - ElfOceanEnFrDe
+    - HeadOverHeels
+    - HudsonHawk
+    - LiquidKids
+    - BartVsSpaceMutants2Disk
+    - SmashTV
+    - SnowBros
+    - Terminator2JudgmentDay
+    - Toki
+    - WildWheels
+    - WWFWrestleMania
+    - ATrain&ConstructionSet
+    - AddamsFamilyTBE
+    - CoolWorld
+    - Epic1MB
+    - EspanaTheGames92
+    - Hook
+    - LethalWeapon
+    - ParasolStars
+    - PushOver
+    - RoboCop3
+    - RoboSport
+    - SpaceGun
+    - Wizkid
+    - WWFEuropeanRampageTour
+    - BurningRubberEnhanced
+    - EuropeanChampionsOcean
+    - JurassicParkAGA
+    - LotharMatthausFussball
+    - OneStepBeyond
+    - SleepwalkerAGA
+    - TFXAGA
+    - UniversalMonsters
+    - DennisAGA
+    - JungleStrikeAGA
+    - KidChaos
+    - MrNutz
+    - MutantLeagueHockeyAGA
+    - PGAEuropeanTourAGA
+    - ShaqFu
+    - AlienBreed3DAGA
+    - Worms2MB
+    - AlienBreed3D2AGA
+    - SperisLegacyAGA
+    - WormsDCAGA12MB
+    - WhereTimeStoodStill
+    - UntouchablesSE
+    - WormsDC30AGA12MB
   - Ocean France:
     - ordering: "release"
     - note: Noteworthy for managing to put an unmistakably french touch into arcade conversions
@@ -290,6 +1103,144 @@
     - Plotting
     - SnowBros
     - Toki
+  - Probe:
+    - ordering: "release"
+    - note: Amiga games developed by Probe
+    - image: { op: "pi", path: "logo/probe.png" }
+    - OutRunNTSC
+    - RoadBlasters
+    - 1943
+    - MervTheMerciless
+    - MrHeli
+    - Savage
+    - SideArms
+    - TigerRoad
+    - DanDare3
+    - HarleyDavidson
+    - HeavyMetal
+    - Supremacy
+    - TeenageMtntHeroTurtlesCOp
+    - BackToTheFuturePart3
+    - OutRunEuropa
+    - SmashTV
+    - SuperMonacoGP
+    - Viz
+    - Terminator2Arcade
+    - MortalKombat
+    - MortalKombat2
+    - PrimalRageAGA
+  - Psygnosis:
+    - ordering: "release"
+    - note: Games published by Psygnosis
+    - image: { op: "pi", path: "logo/psygnosis.png" }
+    - ArenaPsygnosis
+    - ArenaDefcom
+    - ArenaPsygnosisNTSC
+    - BrataccasNTSC
+    - DeepSpace
+    - BarbarianPsygnosis
+    - Terrorpods
+    - ChronoQuest
+    - Obliterator
+    - BloodMoney
+    - ShadowOfTheBeast
+    - Awesome
+    - Carthage
+    - ChronoQuest2
+    - Infestation
+    - KillingGameShow
+    - Nitro
+    - ShadowOfTheBeast2
+    - Amnios
+    - ArmourGeddon
+    - Atomino
+    - Barbarian2Psygnosis
+    - Leander
+    - LemmingsXmasDemo1991
+    - Obitus
+    - OhNoMoreLemmings
+    - Ork
+    - Agony
+    - AirSupportNTSC
+    - Aquaventura
+    - BillsTomatoGame
+    - CarlLewisChallenge
+    - Cytron
+    - LemmingsXmasDemo1992
+    - OperationG2Demo
+    - RedZone
+    - ShadowOfTheBeast3
+    - BobsBadDay
+    - CombatAirPatrol
+    - Globdule
+    - HiredGuns
+    - IndigoFiles
+    - LemmingsHoliday1993
+    - Lemmings2
+    - Perihelion
+    - PrimeMover
+    - SecondSamuraiAGA
+    - SuperheroDemo
+    - TheatreOfDeath
+    - Walker
+    - WizNLiz
+    - ArmourGeddon2
+    - Benefactor
+    - BramStokersDracula
+    - BrianTheLion
+    - Cliffhanger
+    - InnocentUntilCaught
+    - LastActionHero
+    - LemmingsHoliday1994
+    - Puggsy
+    - AllNewWorldOfLemmings
+    - FlinkCD32
+    - XIt
+  - Rainbow Arts:
+    - ordering: "release"
+    - note: Games published by Rainbow Arts
+    - image: { op: "pi", path: "logo/rainbow_arts.png" }
+    - BadCat
+    - Garrison
+    - GraffitiMan
+    - SkyFighter
+    - ThunderBoy
+    - Garrison2
+    - Jinks
+    - Katakis
+    - MysteryOfTheMummy
+    - RealmOfTheTrolls2Disk
+    - Sarcophaser
+    - Starball
+    - Wall
+    - Berlin1948
+    - BlockOut
+    - DangerFreak
+    - DayOfThePharaoh
+    - Denaris
+    - OilImperium
+    - RockNRoll
+    - Spaceball
+    - Spherical
+    - 3001OConnorsFight
+    - Apprentice
+    - Conqueror
+    - CurseOfRa
+    - DizzyDice
+    - Globulus
+    - LegendOfFaerghail
+    - Masterblazer
+    - Plague
+    - StarTrash
+    - Turrican
+    - XOut
+    - KhalaanNTSC
+    - Logical
+    - MadTV
+    - Turrican2
+    - ZOut
+    - Turrican3
+    - Lollypop
   - Random Access, Storm:
     - ordering: "release"
     - note: Purveyors of fine arcade conversions
@@ -389,6 +1340,80 @@
     - SpaceQuest2
     - SpaceQuest3
     - SpaceQuest4
+  - Silmarils:
+    - ordering: "release"
+    - note: Amiga games developed by Silmarils
+    - image: { op: "pi", path: "logo/silmarils.png" }
+    - MadShow
+    - OperationCleanstreetsNTSC
+    - WindSurfWilly
+    - MayaFast
+    - Targhan
+    - Colorado
+    - CrystalsOfArboreaFast
+    - Starblade
+    - BostonBombClubFast
+    - MetalMutant
+    - StormMaster
+    - BunnyBricks
+    - IsharAGA
+    - Ishar2AGA
+    - Transarctica
+    - Ishar3AGA
+    - RobinsonsRequiemAGA
+  - SSI:
+    - ordering: "release"
+    - note: Role-playing, strategy and war games from Strategic Simulations
+    - image: { op: "pi", path: "logo/ssi.png" }
+    - Phantasie
+    - Phantasie3
+    - RoadwarEuropa
+    - HeroesOfTheLance
+    - Questron2
+    - DragonsOfFlame
+    - Hillsfar
+    - RedLightningNTSC
+    - StarCommand
+    - Waterloo
+    - CurseOfTheAzureBonds
+    - DragonStrike
+    - PoolOfRadiance
+    - SwordOfAragon
+    - BuckRogersNTSC
+    - DeathKnightsOfKrynn
+    - EyeOfTheBeholder
+    - GatewayToSavageFrontier
+    - SecretSilverBlades
+    - ShadowSorcerer
+    - CyberEmpiresNTSC
+    - DarkQueenOfKrynn
+    - EyeOfTheBeholder2
+    - PoolsOfDarkness
+    - TreasureSavageFrontNTSC
+  - Team 17:
+    - ordering: "release"
+    - note: Amiga games developed by Team 17
+    - image: { op: "pi", path: "logo/team_17.png" }
+    - AlienBreed
+    - AlienBreedStory
+    - AlienBreedSpecialEdition
+    - AlienBreed2AGA
+    - BodyBlowsAGA
+    - ProjectXSE
+    - ProjectXSE2017
+    - SuperfrogCD32
+    - SuperfrogIntroCD32
+    - AlienBreedTAAGA
+    - BodyBlowsGalacticAGA
+    - UltimateBodyBlowsCD32
+    - AlienBreed3DAGA
+    - AllTerrainRacingCD32
+    - AllTerrainRacingXmasDemo
+    - Kingpin1Mb
+    - Worms2MB
+    - AlienBreed3D2AGA
+    - WormsDCAGA12MB
+    - WormsDC30AGA12MB
   - Thalion:
     - ordering: "release"
     - note: The premier Atari ST developer
@@ -414,6 +1439,87 @@
     - image: { op: "pi", path: "logo/travellers_tales.png" }
     - Leander
     - Puggsy
+  - U.S. Gold:
+    - ordering: "release"
+    - note: Games published by U.S. Gold
+    - image: { op: "pi", path: "logo/u_s_gold.png" }
+    - RollingThunder
+    - Deep
+    - HeroesOfTheLance
+    - Nebulus
+    - OutRunNTSC
+    - RoadBlasters
+    - DragonsOfFlame
+    - ForgottenWorlds
+    - Gauntlet2
+    - GhoulsNGhosts
+    - HumanKillingMachine
+    - IndyJonesLastCrusAdv
+    - IndianaJonesLastCrusAct
+    - KnightsOfTheCrystallion
+    - LastDuel
+    - Moonwalker
+    - Strider
+    - ThunderBladeNTSC
+    - Vigilante
+    - BlackTiger
+    - ChipsChallenge
+    - Crackdown
+    - CrimeWave
+    - DynastyWars
+    - EMotion
+    - GoldOfTheAztecs_Kernal1.1
+    - Italy1990
+    - Italy1990WinnersEdition
+    - LineOfFire
+    - MeanStreets
+    - Murder
+    - OperationHarrier
+    - OperationStealth
+    - Rotox
+    - SnowStrike
+    - Strider2
+    - UNSquadron
+    - Vaxine
+    - WildWestWorld
+    - Wizardry6BaneCosmicForg
+    - AdvancedDestroyerSim
+    - AlienStorm
+    - AnotherWorld
+    - BonanzaBros
+    - CruiseForACorpse
+    - Cybercon3
+    - ESWATFiles
+    - FinalFight
+    - Gauntlet3
+    - Godfather
+    - MegaTwins
+    - Mercs
+    - SecretOfMonkeyIsland
+    - OutRunEuropa
+    - ShadowDancer
+    - ShadowSorcerer
+    - SuperMonacoGP
+    - WayneGretzkyHockey2
+    - CaliforniaGames2
+    - GLOCR360
+    - IndianaJonesAtlantisAct
+    - Links&DataDisksNTSC
+    - Manager
+    - MonkeyIsland2
+    - Scrabble
+    - StreetFighter2
+    - SummerGames
+    - SummerGames2
+    - Flashback
+    - IndianaJonesAtlantisAdv
+    - Kingmaker
+    - LegendsOfValour
+    - RealmsOfArkania
+    - WinterOlympics
+    - PowerDrive
+    - WorldCupUSA94
+    - SuperStreetFighter2AGA
   - Vectordean:
     - ordering: "release"
     - note: An incredibly solid list of works by a developer that gained relatively little recognition
@@ -426,6 +1532,54 @@
     - JamesPond2
     - JamesPond3
     - Yolanda
+  - Virgin:
+    - ordering: "release"
+    - note: Games published by Virgin
+    - image: { op: "pi", path: "logo/virgin.png" }
+    - SorceryPlus
+    - KellyX
+    - Silkworm
+    - Corporation&Missions3Disk
+    - Grimblood
+    - MontyPythonsFlyCir
+    - NewYorkWarriors1MB
+    - ChuckRock
+    - ConanTheCimmerian
+    - Heimdall
+    - JimmyWhitesSnooker
+    - Realms
+    - RollingRonny
+    - Shuttle
+    - ThunderHawk
+    - Alien3
+    - ArcherMacLeansPool
+    - Dune
+    - Floor13
+    - KGB
+    - LegendOfKyrandia
+    - LureOfTheTemptress
+    - McDonaldLandV2
+    - Motorhead
+    - VengeanceOfExcalibur
+    - CannonFodder
+    - CoolSpot
+    - Dune2
+    - GlobalGladiators
+    - Goal
+    - KrustysSuperFunHouse
+    - BartVsTheWorld
+    - Terminator2Arcade
+    - AladdinAGA
+    - Apocalypse
+    - BeneathAStlSkyCD32
+    - CannonFodder2
+    - CannonFodder2AlienLevels
+    - IncredibleCrashDummies
+    - MortalKombat
+    - OverlordRowan
+    - LionKingAGA
+    - SensibleGolf
+    - CannonFodderNewCampaign
   - Westwood:
     - ordering: "release"
     - note: An American PC powerhouse that poured commendable effort into the Amiga

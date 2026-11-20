@@ -7,6 +7,7 @@ import avs_util as util
 from render_hires_years import DIRECTORIES,render_native_card
 from repair_hires_palettes import read_chunks,decode
 from ecs_artwork import convert
+from PIL import Image
 
 ROOT=Path('data/img_highres')
 LETTERS=('By Title.avs','Demo Scene.avs/Demos - By Title.avs',
@@ -25,9 +26,19 @@ def specifications():
                     if name=='image':
                         operations=value.get('ops',value) if isinstance(value,dict) else value
                         operations=operations if isinstance(operations,list) else [operations]
-                        if operations and all(op.get('op')=='tx' for op in operations):
+                        is_gameography='Artists & Publishers.avs' in path.parts
+                        if operations and (all(op.get('op')=='tx' for op in operations)
+                                           or is_gameography and all(op.get('op')=='pi' for op in operations)):
                             target=ROOT/(str(path)[:-4]+'.iff')
-                            if target.is_file():result[target]=operations
+                            if target.is_file():
+                                if is_gameography:
+                                    operations=[dict(op) for op in operations]
+                                    for op in operations:
+                                        if op.get('op')=='pi' and op.get('scale','fit')=='fit':
+                                            with Image.open(Path('data/img_src')/op['path']) as source:
+                                                # Center original pixels; only shrink sources that exceed the frame.
+                                                op['scale']=min(1.0,404/source.width,280/source.height)
+                                result[target]=operations
                     elif isinstance(value,list):visit(value,path/(name+'.avs'))
     visit(util.yaml_load('configs/AmigaVision.yaml'),Path(''))
     for directory in DIRECTORIES:
@@ -37,22 +48,18 @@ def specifications():
         for path in (ROOT/directory).glob('*.iff'):
             if len(path.stem)==1:
                 result[path]=[{'op':'tx','txt':path.stem,'size':240}]
-    # These monochrome studio logos also came from half-height med-res cards.
-    # Recompose from their original 320x256/640x480 source artwork.
-    for title,filename in [('Bitmap Brothers','bitmap_brothers.png'),
-                           ('Delphine Software','delphine_software.png'),
-                           ('Magnetic Fields','magnetic_fields.png')]:
-        target=ROOT/'Gameographies.avs'/(title+'.iff')
-        if target.is_file():result[target]=[{'op':'pi','path':'logo/'+filename}]
     return result
 
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--ecs',action='store_true',help='Also refresh changed/missing/older ECS derivatives')
+    parser.add_argument('--gameographies-only',action='store_true',help='Only refresh Artists & Publishers cards')
     args=parser.parse_args()
     os.environ.setdefault('AVSCONTENT',str(Path(__file__).resolve().parents[2]/'AV-Content'))
     changed=[];cache={};specs=specifications()
+    if args.gameographies_only:
+        specs={p:ops for p,ops in specs.items() if 'Artists & Publishers.avs' in p.parts}
     for path,ops in specs.items():
         key=json.dumps(ops,sort_keys=True)
         if key not in cache:cache[key]=render_native_card(ops)
@@ -72,7 +79,7 @@ def main():
         with ProcessPoolExecutor(max_workers=4) as pool:
             for target in pool.map(convert,jobs,chunksize=4):
                 image,_=decode(read_chunks(Path(target)))
-                assert image.size==(360,288) and max(image.tobytes())<=12
+                assert image.size==(404,280) and max(image.tobytes())<=12
                 assert read_chunks(Path(target))[b'BMHD'][10]==1
         print(f'Converted {len(jobs)} updated cards for ECS',flush=True)
 

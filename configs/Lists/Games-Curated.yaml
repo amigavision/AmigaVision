@@ -69,7 +69,8 @@
   - Alex Limi's Collection:
     - image: { op: "pi", path: "list/alexlimi.jpg" }
     - note: Amiga games worth your time, according to AmigaVision's Alex Limi
-    - "[ Multiplayer ]":
+    - Multiplayer:
+      - rank: 1
       - ordering: "ordered"
       - note: Show only the multiplayer games
       - image: { ops: { op: "pi", path: "top/multiplayer.png" }, size: [320, 128], scale: [1, 1] }
@@ -161,6 +162,10 @@
       - AllTerrainRacing: { disp_name: "[6P] All Terrain Racing" }
       - WormsDC: { disp_name: "[8P] Worms Director's Cut" }
       - SensibleGolf: { disp_name: "[72P] Sensible Golf" }
+    - ----------------:
+        divider: true
+        label: ""
+        rank: 2
     - AdventuresOfRobinHood
     - Agony
     - AirborneRanger

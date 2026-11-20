@@ -28,7 +28,11 @@ def render_native_card(operations):
         rgb=Image.open(BytesIO(image.make_blob('png'))).convert('RGB')
     indexed=black_padding_palette(rgb.quantize(colors=240,method=Image.Quantize.MEDIANCUT,
                                               kmeans=4,dither=Image.Dither.NONE))
-    return iff_ilbm.ilbm(*indexed.size,indexed.load(),indexed.getpalette(),mode=0x19004,pack=1)
+    # Keep AGA cards at eight bitplanes even for logos with only two colors.
+    # Removing detail must not silently change the launcher artwork format.
+    palette=indexed.getpalette()
+    palette += [0] * (768-len(palette))
+    return iff_ilbm.ilbm(*indexed.size,indexed.load(),palette,mode=0x19004,pack=1)
 
 
 def render_text_card(operations):

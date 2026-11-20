@@ -1,0 +1,150 @@
+[
+  {
+    "category": "Activision",
+    "path": "logo/activision.png",
+    "source": "https://images.seeklogo.com/logo-png/0/1/activision-logo-png_seeklogo-3006.png",
+    "processing": "Classic rainbow logo, cropped from large source and reduced proportionally once; no enlargement."
+  },
+  {
+    "category": "Bullfrog",
+    "path": "logo/bullfrog.png",
+    "source": "https://thumb.wikimedia.org/wikipedia/en/thumb/b/be/Bullfrog-logo.svg/250px-Bullfrog-logo.svg.png",
+    "processing": "Original logo, centered without enlargement; oversized sources reduced proportionally."
+  },
+  {
+    "category": "Codemasters",
+    "path": "logo/codemasters.png",
+    "source": "https://images.seeklogo.com/logo-png/61/1/codemasters-logo-png_seeklogo-619127.png",
+    "processing": "Original logo, centered without enlargement; oversized sources reduced proportionally."
+  },
+  {
+    "category": "Core Design",
+    "path": "logo/core_design.png",
+    "source": "https://upload.wikimedia.org/wikipedia/en/3/30/Classic_Core_Design_LTD_log.png",
+    "processing": "Original logo, centered without enlargement; oversized sources reduced proportionally."
+  },
+  {
+    "category": "Domark",
+    "path": "logo/domark.png",
+    "source": "https://pixelatedarcade.s3.us-east-005.dream.io/pictures/company-logos/463/Domark-Ltd-Logo.png",
+    "processing": "Historical Domark logo reduced proportionally to fit the frame."
+  },
+  {
+    "category": "Dynamix",
+    "path": "logo/dynamix.png",
+    "source": "https://pixelatedarcade.s3.us-east-005.dream.io/pictures/company-logos/180/Dynamix-Logo.png",
+    "processing": "Lossless larger source, reduced once proportionally; no enlargement or JPEG preview."
+  },
+  {
+    "category": "Electronic Arts",
+    "path": "logo/electronic_arts.png",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/Electronic_Arts_historical_logo_80s.svg/330px-Electronic_Arts_historical_logo_80s.svg.png",
+    "processing": "Original logo, centered without enlargement; oversized sources reduced proportionally."
+  },
+  {
+    "category": "Firebird & Rainbird",
+    "path": "logo/firebird_rainbird.png",
+    "source": [
+      "https://upload.wikimedia.org/wikipedia/en/4/43/Telecomsoft-firebird-software-fair-use-220px.png",
+      "https://upload.wikimedia.org/wikipedia/en/2/26/Telecomsoft-rainbird-software-fair-use-220px.png"
+    ],
+    "processing": "Two historical label logos stacked at original pixel dimensions."
+  },
+  {
+    "category": "Gremlin",
+    "path": "logo/gremlin.png",
+    "source": "https://amiga.lychesis.net/assets/Logos/GremlinGraphics_1990-1991.png",
+    "processing": "2x Amiga capture reduced 2x with nearest-neighbor to native pixels."
+  },
+  {
+    "category": "Infogrames",
+    "path": "logo/infogrames.png",
+    "source": "https://seeklogo.com/images/I/infogrames-logo-F5281E3559-seeklogo.com.png",
+    "processing": "Classic rainbow armadillo logo, reduced proportionally; never enlarged."
+  },
+  {
+    "category": "MicroProse",
+    "path": "logo/microprose.png",
+    "source": "https://www.microprose.com/icons/microprose-logo.svg",
+    "processing": "Official vector rendered at 360px wide; registered-trademark text omitted to avoid font substitution."
+  },
+  {
+    "category": "Mindscape",
+    "path": "logo/mindscape.png",
+    "source": "https://cdn.mobygames.com/logos/304564-mindscape-sa.jpg",
+    "processing": "Original logo, centered without enlargement; oversized sources reduced proportionally."
+  },
+  {
+    "category": "Ocean",
+    "path": "logo/ocean.png",
+    "source": "Existing original Amiga logo source",
+    "processing": "Native 320x256 source preserved."
+  },
+  {
+    "category": "Probe",
+    "path": "logo/probe.png",
+    "source": "https://retrocomputingnews.wordpress.com/wp-content/uploads/2016/02/probe-software-closing-logo.png",
+    "processing": "Original Probe Software logo cropped from historical capture, preserved at native pixel size."
+  },
+  {
+    "category": "Psygnosis",
+    "path": "logo/psygnosis.png",
+    "source": "https://amiga.lychesis.net/assets/Logos/Psygnosis_1990.png",
+    "processing": "Original Amiga logo reduced 2x nearest-neighbor; PRESENTS caption excluded."
+  },
+  {
+    "category": "Rainbow Arts",
+    "path": "logo/rainbow_arts.png",
+    "source": "https://www.c64-wiki.com/images/4/49/Rainbow_Arts_Logo.png",
+    "processing": "Static classic logo at its original dimensions; replaces animation frame with noisy border."
+  },
+  {
+    "category": "SSI",
+    "path": "logo/ssi.png",
+    "source": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/83/Strategic_Simulations.svg/960px-Strategic_Simulations.svg.png",
+    "processing": "High-resolution vector rasterization, reduced once for the final card instead of using the small preview."
+  },
+  {
+    "category": "Silmarils",
+    "path": "logo/silmarils.png",
+    "source": "https://upload.wikimedia.org/wikipedia/en/4/4c/Silmarils_logo.png",
+    "processing": "Original logo, centered without enlargement; oversized sources reduced proportionally."
+  },
+  {
+    "category": "Team 17",
+    "path": "logo/team_17.png",
+    "source": "https://amiga.lychesis.net/assets/RicoHolmes/Team17_1992a.png",
+    "processing": "Native Amiga capture restored from 2x screenshot using nearest-neighbor; centered without further scaling."
+  },
+  {
+    "category": "U.S. Gold",
+    "path": "logo/u_s_gold.png",
+    "source": "https://cdn.mobygames.com/logos/391641-us-gold-ltd.png",
+    "processing": "Classic 1990-1993 mountain-and-stars gold badge: lossless 274x77, 16-color pixel source centered unchanged, replacing the roundel.",
+    "reference": "https://www.avid.wiki/File:U.S._Gold_(1990-95)_-_5.png"
+  },
+  {
+    "category": "Virgin",
+    "path": "logo/virgin.png",
+    "source": "https://cdn.mobygames.com/screenshots/16623464-cool-spot-amiga-virgin-logo-animation.png",
+    "processing": "Native Cool Spot Amiga capture restored from exact 2x screenshot; character colors removed, original red logo pixels preserved unchanged."
+  },
+  {
+    "category": "Lucasfilm",
+    "path": "logo/lucasfilm_games.png",
+    "source": "https://legendofmi.com/images/screenshots/mi1/vga/lucasfilm-intro.png",
+    "processing": "Monkey Island VGA capture: exact 2x pixels restored to native 320x200 with nearest-neighbor."
+  },
+  {
+    "category": "Digital Illusions",
+    "path": "logo/digital_illusions.png",
+    "source": "https://amiga.lychesis.net/assets/Logos/DigitalIllusions_PinballDreams.png",
+    "processing": "Native Amiga capture restored from 2x screenshot using nearest-neighbor; centered without further scaling."
+  },
+  {
+    "category": "Llamasoft",
+    "path": "logo/llamasoft.png",
+    "source": "https://cdn.mobygames.com/logos/116621-llamasoft-ltd.png",
+    "processing": "Documented 1990 classic wordmark; tight 615x172 source reduced once, replacing smaller artwork embedded in a padded source."
+  }
+]
