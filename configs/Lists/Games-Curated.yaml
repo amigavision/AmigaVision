@@ -4,46 +4,46 @@
   - Amiga Bill's Modern Picks:
     - image: { op: "pi", path: "list/amigabill.png" }
     - note: "Modern Amiga games selected by Amiga Bill"
-    - game--cakerushmom--cakerushmom
-    - game--cakerush--cakerush
-    - game--castlevaniaaga--castlevaniaaga
-    - game--wizonk--game
-    - game--echodrome--echodrome
-    - game-notwhdl--doublebaboonninja
-    - game--boom--boom
-    - game-notwhdl--blok
-    - game-notwhdl--pjusk
-    - game-notwhdl--yeet
-    - game--fastfood2--fastfood2
-    - game-notwhdl--battlesquadron2
-    - game--knightmarekonami--knightmarekonami
-    - game--mspacman500--mspacman
-    - game-notwhdl--stardustwars
-    - game-notwhdl--projecthorizon
-    - game--tinypixeladventure--game
-    - game--boxx4--boxx4
-    - game-notwhdl--dodgyrocks
-    - game-notwhdl--santarocks
-    - game-notwhdl--turbosanta
-    - game--outrunamigaeditionaga--outrunamigaeditionaga
-    - game--amigayoomp--yoomp
-    - game--aminer--aminermulti2
-    - game--drdangerous--drdangerous
-    - game-notwhdl--shift
-    - game-notwhdl--revengeofthegrinch
+    - CakeRushMom
+    - CakeRush
+    - CastlevaniaAGA
+    - Wizonk
+    - Echodrome
+    - DoubleBaboonNinja
+    - Boom
+    - Blok
+    - Pjusk
+    - Yeet
+    - FastFood2
+    - BattleSquadron2
+    - KnightmareKonami
+    - MsPacman500
+    - StarDustWars
+    - ProjectHorizon
+    - TinyPixelAdventure
+    - Boxx4
+    - DodgyRocks
+    - SantaRocks
+    - TurboSanta
+    - OutRunAmigaEditionAGA
+    - AmigaYoomp
+    - Aminer
+    - DrDangerous
+    - Shift
+    - RevengeOfTheGrinch
     # Pending launcher-compatible package: Mad Santa (raw trackdisk release).
-    - game--luma--luma
-    - game-notwhdl--bunnysboingballbounty
-    - game-notwhdl--oozetheescape
-    - game--bombjackbeeredition--bombjackbeeredition
-    - game-notwhdl--mirror
-    - game-notwhdl--skillgrid
-    - game-notwhdl--hoptothetop
+    - LUMA
+    - BunnysBoingBallBounty
+    - OozeTheEscape
+    - BombJackBeerEdition
+    - notwhdl--mirror
+    - SkillGrid
+    - HopToTheTop
     # Pending launcher-compatible package: Santa's Present Drop (itch.io download points to part 4).
-    - game-notwhdl--ghostlight2
-    - game-notwhdl--santaspresentdrop5
-    - game--blueandred--game
-    - game--microlytetankzone--microlyte
+    - GhostLight2
+    - SantasPresentDrop5
+    - BlueAndRed
+    - MicrolyteTankzone
   - AmiGameJam 2025:
     # Explicit numbers preserve the third-place tie and the published gap at 17.
     # https://itch.io/jam/amigamejam2025/results
@@ -52,22 +52,22 @@
     # Official banner logo, cropped to omit the surrounding sponsors.
     # https://itch.io/jam/amigamejam2025
     - image: { ops: { op: "pi", path: "list/amigamejam2025.png" }, size: [320, 128], scale: [1, 1] }
-    - game--echodrome--echodrome: { disp_name: "01 Echodrome" }
-    - game-notwhdl--doublebaboonninja: { disp_name: "02 Double Baboon Ninja (Demo)" }
-    - game--wingsoffear2--wingsoffear2agademo: { disp_name: "03 Wings of Fear II (Demo)" }
-    - game-notwhdl--creepycrawlers: { disp_name: "03 Creepy Crawlers" }
-    - game--cakerush--cakerush: { disp_name: "05 Cake Rush" }
-    - game--blueandred--game: { disp_name: "06 Blue And Red" }
-    - game--osirisinfection--osiris_infection: { disp_name: "07 Osiris Infection" }
-    - game--microlytetankzone--microlyte: { disp_name: "08 Microlyte Tankzone" }
-    - game-notwhdl--glowpoint: { disp_name: "10 GlowPoint" }
-    - game--kaboomaniademoaga--kaboomaniademoaga: { disp_name: "12 Kaboomania" }
-    - game-notwhdl--santaspresentdrop5: { disp_name: "13 Santa's Present Drop 5" }
-    - game--arpegio--game: { disp_name: "14 Arpegio" }
-    - game-notwhdl--submarineattack: { disp_name: "15 Submarine Attack" }
-    - game-notwhdl--backflipendless: { disp_name: "16 Backflip Endless" }
-    - game-notwhdl--burn: { disp_name: "18 Burn" }
-    - game-notwhdl--movimientoconstante: { disp_name: "19 Movimiento Constante" }
+    - Echodrome: { disp_name: "01 Echodrome" }
+    - DoubleBaboonNinja: { disp_name: "02 Double Baboon Ninja (Demo)" }
+    - WingsOfFear2: { disp_name: "03 Wings of Fear II (Demo)" }
+    - CreepyCrawlers: { disp_name: "03 Creepy Crawlers" }
+    - CakeRush: { disp_name: "05 Cake Rush" }
+    - BlueAndRed: { disp_name: "06 Blue And Red" }
+    - OsirisInfection: { disp_name: "07 Osiris Infection" }
+    - MicrolyteTankzone: { disp_name: "08 Microlyte Tankzone" }
+    - GlowPoint: { disp_name: "10 GlowPoint" }
+    - KaboomaniaDemoAGA: { disp_name: "12 Kaboomania" }
+    - SantasPresentDrop5: { disp_name: "13 Santa's Present Drop 5" }
+    - Arpegio: { disp_name: "14 Arpegio" }
+    - SubmarineAttack: { disp_name: "15 Submarine Attack" }
+    - BackflipEndless: { disp_name: "16 Backflip Endless" }
+    - Burn: { disp_name: "18 Burn" }
+    - MovimientoConstante: { disp_name: "19 Movimiento Constante" }
   - Alex Limi's Collection:
     - image: { op: "pi", path: "list/alexlimi.jpg" }
     - note: Amiga games worth your time, according to AmigaVision's Alex Limi
