@@ -42,13 +42,16 @@ def file_plan(medium, collection):
                 source = artwork / key
                 if not source.is_file():
                     raise FileNotFoundError(f'Missing static hi-res artwork: {source}')
-                # Navigation slides can exist only in hi-res artwork; the
-                # medium menu need not carry dummy numbered images for them.
-                for index in range(1, 10):
-                    slide = source.with_name(source.stem + f'-{index}.iff')
-                    if slide.is_file():
-                        plan[(relative / slide.name).as_posix()] = slide
             plan[key] = source
+    # Category artwork may exist only in the hi-res tree. Discover it from
+    # menu directories rather than requiring a dummy med-res image.
+    for directory in sorted(directories):
+        if not directory.endswith('.avs'):
+            continue
+        relative = Path(directory).with_suffix('.iff')
+        source = artwork / relative
+        if source.is_file():
+            plan[relative.as_posix()] = source
     if (launcher/'About-QR2.iff').is_file():
         # Also retire an active About QR inherited from an older medium cache.
         for key in list(plan):
