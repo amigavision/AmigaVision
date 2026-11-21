@@ -10,6 +10,8 @@ ORIGINAL = bytes.fromhex('204621400036')
 
 
 def remove_patch(data):
+    from patch_popup_up import remove_patch as remove_popup
+    data = remove_popup(data)
     end = 32 + struct.unpack_from('>I', data, 28)[0]*4
     if data[end-12:end-4] != TAG:
         return data
