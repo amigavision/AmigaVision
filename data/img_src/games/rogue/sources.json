@@ -1,0 +1,38 @@
+[
+  {
+    "slot": 2,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/rogue/rogue_01.png",
+    "source_size": [
+      640,
+      512
+    ],
+    "nearest_neighbour_downscale": 2
+  },
+  {
+    "slot": 3,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/rogue/rogue_02.png",
+    "source_size": [
+      640,
+      512
+    ],
+    "nearest_neighbour_downscale": 2
+  },
+  {
+    "slot": 4,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/rogue/rogue_04.png",
+    "source_size": [
+      640,
+      512
+    ],
+    "nearest_neighbour_downscale": 2
+  },
+  {
+    "slot": 5,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/rogue/rogue_06.png",
+    "source_size": [
+      640,
+      512
+    ],
+    "nearest_neighbour_downscale": 2
+  }
+]
