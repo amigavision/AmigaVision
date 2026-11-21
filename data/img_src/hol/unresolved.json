@@ -1,0 +1,106 @@
+[
+  {
+    "id": "game--3001oconnorsfight--3001oconnorsfight",
+    "title": "3001: O'Connors Fight",
+    "lemon_id": "-2",
+    "hol_id": "-2",
+    "status": "unresolved",
+    "reason": "no_suitable_hol_front_cover_scan"
+  },
+  {
+    "id": "game--megaball1mb--megaball1mb",
+    "title": "MegaBall v4.0",
+    "lemon_id": "1582",
+    "hol_id": "5340",
+    "status": "unresolved",
+    "reason": "no_suitable_hol_front_cover_scan"
+  },
+  {
+    "id": "game--megaball--megaball",
+    "title": "MegaBall v4.0",
+    "lemon_id": "1582",
+    "hol_id": "5340",
+    "status": "unresolved",
+    "reason": "no_suitable_hol_front_cover_scan"
+  },
+  {
+    "id": "game--megaballaga--megaballaga",
+    "title": "MegaBall v4.0",
+    "lemon_id": "1582",
+    "hol_id": "5340",
+    "status": "unresolved",
+    "reason": "no_suitable_hol_front_cover_scan"
+  },
+  {
+    "id": "game--cannonfoddernewcampaign--cannonfoddernewcampaign",
+    "title": "Cannon Fodder: New Campaign",
+    "lemon_id": "-2",
+    "hol_id": "-2",
+    "status": "unresolved",
+    "reason": "no_edition_specific_hol_cover_found"
+  },
+  {
+    "id": "game--leaderboardarcadia--leaderboardarcadia",
+    "title": "Leader Board (Arcadia)",
+    "lemon_id": "1421",
+    "hol_id": "4128",
+    "status": "unresolved",
+    "reason": "no_suitable_hol_front_cover_scan"
+  },
+  {
+    "id": "game--donkeykong--donkeykong",
+    "title": "Donkey Kong",
+    "lemon_id": "",
+    "hol_id": "7281",
+    "status": "unresolved",
+    "reason": "no_cover_for_2024_port_on_hol"
+  },
+  {
+    "id": "game--baddudesvsdragonninjaaga--baddudesvsdragonninjaaga",
+    "title": "Bad Dudes vs Dragon Ninja AGA",
+    "lemon_id": "5155",
+    "hol_id": "",
+    "status": "unresolved",
+    "reason": "no_suitable_hol_front_cover_scan"
+  },
+  {
+    "id": "game--karatekast--karatekast",
+    "title": "Karateka",
+    "lemon_id": "3665",
+    "hol_id": "6123",
+    "status": "unresolved",
+    "reason": "no_suitable_hol_front_cover_scan"
+  },
+  {
+    "id": "game--joustst--joustst",
+    "title": "Joust",
+    "lemon_id": "4299",
+    "hol_id": "5902",
+    "status": "unresolved",
+    "reason": "no_suitable_hol_front_cover_scan"
+  },
+  {
+    "id": "game-notwhdl--knockout2",
+    "title": "Knock Out 2",
+    "lemon_id": "2766",
+    "hol_id": "",
+    "status": "unresolved",
+    "reason": "no_hol_search_match"
+  },
+  {
+    "id": "game-notwhdl--achtungdiekurve",
+    "title": "Achtung! Die Kurve...",
+    "lemon_id": "3717",
+    "hol_id": "",
+    "status": "unresolved",
+    "reason": "no_hol_search_match"
+  },
+  {
+    "id": "game-notwhdl--maniacmansiondeluxeaga",
+    "title": "Maniac Mansion Deluxe",
+    "lemon_id": "",
+    "hol_id": "",
+    "status": "unresolved",
+    "reason": "no_edition_specific_hol_cover_found"
+  }
+]
