@@ -210,6 +210,57 @@ try {
     if ($helperProcess.ExitCode -ne 0) { throw 'Shader helper failed' }
     Assert-Content "$shaderDir/CRT-Pi-SmartRes.fx" 'shader'
 
+    # Protected data must fail before any copies in unattended/non-elevated mode.
+    $deniedData = Join-Path $root 'protected portable data'
+    New-Item -ItemType Directory -Force $deniedData | Out-Null
+    $dataAcl = Get-Acl $deniedData
+    $restrictedData = Get-Acl $deniedData
+    $restrictedData.AddAccessRule($deny)
+    try {
+        Set-Acl $deniedData $restrictedData
+        if ((Install 'Amiberry' $payload $deniedData "$root/Amiberry bin/amiberry.exe") -eq 0) { throw 'Protected data should require interactive elevation' }
+        if (Test-Path "$deniedData/AmigaVision.ico") { throw 'Protected data was copied before permission approval' }
+        if (!(Get-Content -Raw "$root/Amiberry.log").Contains('requires administrator access')) { throw 'Missing protected data explanation' }
+    } finally { Set-Acl $deniedData $dataAcl }
+
+    # Exercise the data-only worker directly, including upgrade preservation and backups.
+    $dataHelper = Join-Path $PSScriptRoot 'output/ProtectedDataSetup.exe'
+    foreach ($kind in @('Amiberry', 'WinUAE', 'Copperline')) {
+        $destination = Join-Path $root "elevated data $kind"
+        $configDirectory = if ($kind -eq 'Copperline') { 'configs' } else { 'Configurations' }
+        $extension = if ($kind -eq 'Copperline') { 'toml' } else { 'uae' }
+        Put "$destination/HardDrives/AmigaVision-Saves.hdf" 'keep saves'
+        Put "$destination/HardDrives/Shared/user.txt" 'keep shared'
+        Put "$destination/$configDirectory/AmigaVision.$extension" 'old named config'
+        Put "$destination/$configDirectory/default.$extension" 'old default config'
+        $configSource = Join-Path $root "prepared $kind.config"
+        Put $configSource 'prepared configuration'
+        $arguments = @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/DEFAULTCONFIG=1',
+            "`"/DATAUSER=$([Security.Principal.WindowsIdentity]::GetCurrent().Name)`"",
+            "`"/EMULATOR=$kind`"", "`"/PAYLOAD=$payload`"", "`"/DATA=$destination`"",
+            "`"/CONFIG=$configSource`"", "`"/LOG=$root/data-helper-$kind.log`"")
+        $process = Start-Process $dataHelper -ArgumentList $arguments -PassThru
+        if (!$process.WaitForExit(120000)) {
+            & taskkill.exe /PID $process.Id /T /F | Out-Null
+            throw 'Data helper timed out'
+        }
+        $process.Refresh()
+        if ($process.ExitCode -ne 0) { throw "Data helper failed for $kind" }
+        Assert-Content "$destination/HardDrives/AmigaVision.hdf" 'new main'
+        Assert-Content "$destination/HardDrives/AmigaVision-Saves.hdf" 'keep saves'
+        Assert-Content "$destination/HardDrives/Shared/user.txt" 'keep shared'
+        Assert-Content "$destination/HardDrives/Shared/new.txt" 'new shared'
+        Assert-Content "$destination/ROMs/AmigaVision.rom" 'rom'
+        Assert-Content "$destination/$configDirectory/AmigaVision.$extension" 'prepared configuration'
+        Assert-Content "$destination/$configDirectory/default.$extension" 'prepared configuration'
+        Assert-Content "$destination/$configDirectory/AmigaVision.$extension.backup-1" 'old named config'
+        Assert-Content "$destination/$configDirectory/default.$extension.backup-1" 'old default config'
+        if (!(Test-Path "$destination/AmigaVision.ico")) { throw 'Missing elevated icon' }
+        if ($kind -eq 'Amiberry') {
+            Assert-Content "$destination/Visuals/Shaders/example.glsl" 'shader'
+        } elseif (Test-Path "$destination/Visuals") { throw 'Unexpected Amiberry visuals' }
+    }
+
     # Verify names and original targets survive a second emulator and subsequent upgrades.
     $programs = "${env:APPDATA}/Microsoft/Windows/Start Menu/Programs"
     $desktop = [Environment]::GetFolderPath('Desktop')

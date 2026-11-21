@@ -66,13 +66,14 @@ Source: "assets\amiberry-dark.png"; Flags: dontcopy
 Source: "assets\copperline-dark.png"; Flags: dontcopy
 Source: "assets\winuae-dark.png"; Flags: dontcopy
 Source: "output\WinUAEShaderSetup.exe"; Flags: dontcopy
-Source: "assets\AmigaVision.ico"; DestDir: "{code:DataRoot}"; Flags: ignoreversion
-Source: "{code:Payload}\Amiberry\HardDrives\AmigaVision.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external ignoreversion
-Source: "{code:Payload}\Amiberry\HardDrives\AmigaVision-Saves.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external onlyifdoesntexist
-Source: "{code:Payload}\Amiberry\HardDrives\Shared\*"; DestDir: "{code:DataRoot}\HardDrives\Shared"; Flags: external recursesubdirs createallsubdirs onlyifdoesntexist
-Source: "{code:Payload}\Amiberry\HardDrives\listings\*"; DestDir: "{code:DataRoot}\HardDrives\listings"; Flags: external recursesubdirs createallsubdirs ignoreversion
-Source: "{code:Payload}\Amiberry\ROMs\AmigaVision.rom"; DestDir: "{code:DataRoot}\ROMs"; Flags: external ignoreversion
-Source: "{code:Payload}\Amiberry\Visuals\*"; DestDir: "{code:DataRoot}\Visuals"; Flags: external recursesubdirs createallsubdirs ignoreversion; Check: IsAmiberry
+Source: "output\ProtectedDataSetup.exe"; Flags: dontcopy
+Source: "assets\AmigaVision.ico"; DestDir: "{code:DataRoot}"; Flags: ignoreversion; Check: InstallDataDirectly
+Source: "{code:Payload}\Amiberry\HardDrives\AmigaVision.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external ignoreversion; Check: InstallDataDirectly
+Source: "{code:Payload}\Amiberry\HardDrives\AmigaVision-Saves.hdf"; DestDir: "{code:DataRoot}\HardDrives"; Flags: external onlyifdoesntexist; Check: InstallDataDirectly
+Source: "{code:Payload}\Amiberry\HardDrives\Shared\*"; DestDir: "{code:DataRoot}\HardDrives\Shared"; Flags: external recursesubdirs createallsubdirs onlyifdoesntexist; Check: InstallDataDirectly
+Source: "{code:Payload}\Amiberry\HardDrives\listings\*"; DestDir: "{code:DataRoot}\HardDrives\listings"; Flags: external recursesubdirs createallsubdirs ignoreversion; Check: InstallDataDirectly
+Source: "{code:Payload}\Amiberry\ROMs\AmigaVision.rom"; DestDir: "{code:DataRoot}\ROMs"; Flags: external ignoreversion; Check: InstallDataDirectly
+Source: "{code:Payload}\Amiberry\Visuals\*"; DestDir: "{code:DataRoot}\Visuals"; Flags: external recursesubdirs createallsubdirs ignoreversion; Check: InstallAmiberryDataDirectly
 Source: "{code:Payload}\WinUAE\plugins\filtershaders\direct3d\CRT-Pi-SmartRes.fx"; DestDir: "{code:ExeRoot}\plugins\filtershaders\direct3d"; Flags: external ignoreversion overwritereadonly; Check: InstallShaderDirectly
 
 [Run]
@@ -95,6 +96,7 @@ var
   SelectedExe: String;
   ConfigText: AnsiString;
   ShaderInstalledWithAdmin: Boolean;
+  DataInstalledWithAdmin: Boolean;
 
 function IsAmiberry: Boolean;
 begin
@@ -372,6 +374,52 @@ begin
     SuppressibleMsgBox('Run this installer from inside the extracted AmigaVision-Emulators folder, with the Amiberry and WinUAE folders beside it. Extract the complete package before starting setup.', mbError, MB_OK, IDOK);
 end;
 
+function CanWriteDataPath(Path: String): Boolean;
+var
+  Parent: String;
+  Handle: THandle;
+  Access, Attributes: LongWord;
+begin
+  // Check permissions without creating folders or changing existing files.
+  if FileExists(Path) then begin
+    Access := $40000000;
+    Attributes := $80;
+  end else begin
+    while not DirExists(Path) do begin
+      Parent := ExtractFileDir(Path);
+      if (Parent = '') or (Parent = Path) then begin Result := False; exit; end;
+      Path := Parent;
+    end;
+    Access := $00000006; // FILE_ADD_FILE and FILE_ADD_SUBDIRECTORY
+    Attributes := $02000000; // FILE_FLAG_BACKUP_SEMANTICS
+  end;
+  Handle := OpenPathForAccess(Path, Access, 7, 0, 3, Attributes, 0);
+  Result := Handle <> THandle(-1);
+  if Result then CloseAccessHandle(Handle);
+end;
+
+function CanWriteDataTree(const Folder: String): Boolean;
+var
+  Entry: TFindRec;
+begin
+  Result := CanWriteDataPath(Folder);
+  if not Result or not DirExists(Folder) then exit;
+  if FindFirst(AddBackslash(Folder) + '*', Entry) then begin
+    try
+      repeat
+        if (Entry.Name <> '.') and (Entry.Name <> '..') then begin
+          if (Entry.Attributes and FILE_ATTRIBUTE_DIRECTORY) <> 0 then
+            Result := CanWriteDataTree(AddBackslash(Folder) + Entry.Name)
+          else Result := CanWriteDataPath(AddBackslash(Folder) + Entry.Name);
+          if not Result then exit;
+        end;
+      until not FindNext(Entry);
+    finally
+      FindClose(Entry);
+    end;
+  end;
+end;
+
 function ValidateDestination: String;
 begin
   Result := '';
@@ -379,6 +427,44 @@ begin
      ((Copy(DataRoot(''), 1, 2) <> '\\') and
       ((Length(DataRoot('')) < 3) or (Copy(DataRoot(''), 2, 2) <> ':\'))) then
     Result := 'Choose an absolute data folder path.';
+end;
+
+function NeedsDataElevation: Boolean;
+var
+  Root, ConfigFolder: String;
+begin
+  Root := DataRoot('');
+  if IsCopperline then ConfigFolder := '\configs'
+  else ConfigFolder := '\Configurations';
+  if not CanWriteDataPath(Root) or
+     not CanWriteDataPath(Root + '\AmigaVision.ico') or
+     not CanWriteDataPath(Root + '\HardDrives') or
+     not CanWriteDataTree(Root + '\HardDrives\listings') or
+     not CanWriteDataPath(Root + '\HardDrives\AmigaVision.hdf') or
+     not CanWriteDataPath(Root + '\ROMs') or
+     not CanWriteDataPath(Root + '\ROMs\AmigaVision.rom') or
+     not CanWriteDataPath(Root + ConfigFolder) or
+     (IsCopperline and
+       (not CanWriteDataPath(Root + '\configs\AmigaVision.toml') or
+        (WizardIsTaskSelected('defaultconfig') and
+         not CanWriteDataPath(Root + '\configs\default.toml')))) or
+     (not IsCopperline and
+       (not CanWriteDataPath(Root + '\Configurations\AmigaVision.uae') or
+        (WizardIsTaskSelected('defaultconfig') and
+         not CanWriteDataPath(Root + '\Configurations\default.uae')))) or
+     (IsAmiberry and not CanWriteDataTree(Root + '\Visuals')) then
+    Result := True
+  else Result := False;
+end;
+
+function InstallDataDirectly: Boolean;
+begin
+  Result := not DataInstalledWithAdmin;
+end;
+
+function InstallAmiberryDataDirectly: Boolean;
+begin
+  Result := IsAmiberry and InstallDataDirectly;
 end;
 
 function ShouldSkipPage(PageID: Integer): Boolean;
@@ -634,6 +720,10 @@ begin
       if Notice <> '' then Notice := Notice + #13#10#13#10;
       Notice := Notice + 'Existing saves and Shared files will be kept.';
     end;
+  end;
+  if NeedsDataElevation then begin
+    if Notice <> '' then Notice := Notice + #13#10#13#10;
+    Notice := Notice + 'This data folder requires administrator access. Windows will ask for permission to install AmigaVision here. The emulator will still run under your normal account.';
   end;
   if IsWinUAE and not CanWriteWinUAEShader then begin
     if Notice <> '' then Notice := Notice + #13#10#13#10;
@@ -941,12 +1031,49 @@ begin
   ShaderInstalledWithAdmin := True;
 end;
 
+function InstallProtectedData: String;
+var
+  Parameters, ConfigFile: String;
+  ExitCode: Integer;
+begin
+  Result := '';
+  if DataInstalledWithAdmin or not NeedsDataElevation then exit;
+  if WizardSilent then begin
+    Result := 'The selected data folder requires administrator access. Run setup interactively to approve installation in this folder, or select a writable data folder.';
+    exit;
+  end;
+  ExtractTemporaryFile('ProtectedDataSetup.exe');
+  ConfigFile := ExpandConstant('{tmp}\AmigaVision-config');
+  if not SaveStringToFile(ConfigFile, ConfigText, False) then begin
+    Result := 'Could not prepare the AmigaVision configuration.';
+    exit;
+  end;
+  Parameters := '/VERYSILENT /SUPPRESSMSGBOXES /NORESTART ' +
+    '/PAYLOAD="' + Payload('') + '" /DATA="' + DataRoot('') +
+    '" /EMULATOR="' + Emulator('') + '" /CONFIG="' + ConfigFile +
+    '" /DATAUSER="' + GetEnv('USERDOMAIN') + '\' + GetUserNameString + '"';
+  if WizardIsTaskSelected('defaultconfig') then Parameters := Parameters + ' /DEFAULTCONFIG=1';
+  Parameters := Parameters + ' /LOG="' + ExpandConstant('{tmp}\AmigaVision-data.log') + '"';
+  Log('Requesting administrator access for the data folder: ' + DataRoot(''));
+  if not ShellExec('runas', ExpandConstant('{tmp}\ProtectedDataSetup.exe'), Parameters,
+    '', SW_SHOWNORMAL, ewWaitUntilTerminated, ExitCode) then begin
+    Result := 'Administrator access is needed to install AmigaVision in this data folder. Allow the Windows permission request, or choose a writable data folder.';
+    exit;
+  end;
+  if ExitCode <> 0 then begin
+    Result := 'AmigaVision could not be installed in the protected data folder. See ' + ExpandConstant('{tmp}\AmigaVision-data.log');
+    exit;
+  end;
+  DataInstalledWithAdmin := True;
+end;
+
 function PrepareToInstall(var NeedsRestart: Boolean): String;
 begin
   if SelectedExe = '' then DetectEmulator;
   FillDefaultDataFolder;
   Result := ValidateInputs;
   if Result = '' then Result := InstallProtectedShader;
+  if Result = '' then Result := InstallProtectedData;
 end;
 
 procedure WriteConfig(Name: String);
@@ -1055,21 +1182,20 @@ end;
 procedure CurStepChanged(CurStep: TSetupStep);
 begin
   if CurStep = ssPostInstall then begin
-    if IsCopperline then begin
-      if not ForceDirectories(DataRoot('') + '\configs') then
-        RaiseException('Could not create the configuration folder.');
-      WriteConfig(DataRoot('') + '\configs\AmigaVision.toml');
-      if not ForceDirectories(CopperlineHome + '\configs') then
-        RaiseException('Could not create the Copperline configuration folder.');
-      if WizardIsTaskSelected('defaultconfig') then begin
-        WriteConfig(CopperlineHome + '\configs\default.toml');
+    if not DataInstalledWithAdmin then begin
+      if IsCopperline then begin
+        if not ForceDirectories(DataRoot('') + '\configs') then
+          RaiseException('Could not create the configuration folder.');
+        WriteConfig(DataRoot('') + '\configs\AmigaVision.toml');
+        if WizardIsTaskSelected('defaultconfig') then
+          WriteConfig(CopperlineHome + '\configs\default.toml');
+      end else begin
+        if not ForceDirectories(DataRoot('') + '\Configurations') then
+          RaiseException('Could not create the configuration folder.');
+        WriteConfig(DataRoot('') + '\Configurations\AmigaVision.uae');
+        if WizardIsTaskSelected('defaultconfig') then
+          WriteConfig(DataRoot('') + '\Configurations\default.uae');
       end;
-    end else begin
-    if not ForceDirectories(DataRoot('') + '\Configurations') then
-      RaiseException('Could not create the configuration folder.');
-    WriteConfig(DataRoot('') + '\Configurations\AmigaVision.uae');
-    if WizardIsTaskSelected('defaultconfig') then
-      WriteConfig(DataRoot('') + '\Configurations\default.uae');
     end;
     InstallAmigaVisionShortcuts;
   end;

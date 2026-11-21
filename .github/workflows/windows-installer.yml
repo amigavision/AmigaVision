@@ -46,6 +46,8 @@ jobs:
           if (!(Test-Path $compiler)) { throw 'Inno Setup 6 is missing from the runner' }
           & $compiler build/windows/WinUAEShader.iss
           if ($LASTEXITCODE -ne 0) { throw 'Shader helper compilation failed' }
+          & $compiler build/windows/ProtectedData.iss
+          if ($LASTEXITCODE -ne 0) { throw 'Protected data helper compilation failed' }
           & $compiler build/windows/AmigaVision.iss
           if ($LASTEXITCODE -ne 0) { throw 'Installer compilation failed' }
       - name: Verify installation and upgrades

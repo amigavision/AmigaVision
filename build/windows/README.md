@@ -10,6 +10,7 @@ Run the **Windows installer** GitHub Actions workflow, or compile on Windows:
 
 ```powershell
 & 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe' build/windows/WinUAEShader.iss
+& 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe' build/windows/ProtectedData.iss
 & 'C:\Program Files (x86)\Inno Setup 6\ISCC.exe' build/windows/AmigaVision.iss
 ```
 
@@ -200,3 +201,5 @@ emulators restores that emulator’s choice or fills its own default:
 - Copperline: %USERPROFILE%\Documents\Copperline, or its portable folder.
 
 The executable install location does not determine the normal data location.
+
+Protected data folders (including portable emulators in Program Files) use a separate elevated data installer. Setup explains the permission request before installation; shortcuts and emulator launch stay under the original account. Silent installs fail before copying if elevation would be required; use an interactive installation to approve the request.
