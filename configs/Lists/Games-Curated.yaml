@@ -4,46 +4,47 @@
   - Amiga Bill's Modern Picks:
     - image: { op: "pi", path: "list/amigabill.png" }
     - note: "Modern Amiga games selected by Amiga Bill"
-    - CakeRushMom
-    - CakeRush
-    - CastlevaniaAGA
-    - Wizonk
-    - Echodrome
-    - DoubleBaboonNinja
-    - Boom
-    - Blok
-    - Pjusk
-    - Yeet
-    - FastFood2
-    - BattleSquadron2
-    - KnightmareKonami
-    - MsPacman500
-    - StarDustWars
-    - ProjectHorizon
-    - TinyPixelAdventure
-    - Boxx4
-    - DodgyRocks
-    - SantaRocks
-    - TurboSanta
-    - OutRunAmigaEditionAGA
     - AmigaYoomp
     - Aminer
-    - DrDangerous
-    - Shift
-    - RevengeOfTheGrinch
-    # Pending launcher-compatible package: Mad Santa (raw trackdisk release).
-    - LUMA
-    - BunnysBoingBallBounty
-    - OozeTheEscape
-    - BombJackBeerEdition
-    - notwhdl--mirror
-    - SkillGrid
-    - HopToTheTop
-    # Pending launcher-compatible package: Santa's Present Drop (itch.io download points to part 4).
-    - GhostLight2
-    - SantasPresentDrop5
+    - BattleSquadron2
+    - Blok
     - BlueAndRed
+    - BombJackBeerEdition
+    - Boom
+    - Boxx4
+    - BunnysBoingBallBounty
+    - CakeRush
+    - CakeRushMom
+    - CastlevaniaAGA
+    - DodgyRocks
+    - DoubleBaboonNinja
+    - DrDangerous
+    - Echodrome
+    - FastFood2
+    - GhostLight2
+    - HopToTheTop
+    - KnightmareKonami
+    - LUMA
     - MicrolyteTankzone
+    - MsPacman500
+    - notwhdl--mirror
+    - OozeTheEscape
+    - OutRunAmigaEditionAGA
+    - Pjusk
+    - ProjectHorizon
+    - RevengeOfTheGrinch
+    - SantaRocks
+    - SantasPresentDrop5
+    - Shift
+    - SkillGrid
+    - StarDustWars
+    - TinyPixelAdventure
+    - TurboSanta
+    - Wizonk
+    - Yeet
+    # Pending launcher-compatible package: Mad Santa (raw trackdisk release).
+    # Pending launcher-compatible package: Santa's Present Drop (itch.io download points to part 4).
+
   - AmiGameJam 2025:
     # Explicit numbers preserve the third-place tie and the published gap at 17.
     # https://itch.io/jam/amigamejam2025/results
