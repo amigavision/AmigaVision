@@ -1,0 +1,489 @@
+[
+  {
+    "key": "4735",
+    "page_url": "https://amiga.abime.net/games/view/1869-history-experience-part-i",
+    "source_url": "https://amiga.abime.net/box/2301-2400/2346_box2.jpg?v=10945",
+    "caption": "German Release (front)",
+    "original_filename": "2346_box2.jpg",
+    "sha256": "92e6d81e61658403f976a24038f12e941c69c5e03a0cb71bc628207b67e180f7",
+    "width": 640,
+    "height": 823,
+    "format": "JPEG",
+    "bytes": 133800,
+    "entries": [
+      "game--1869de--1869de"
+    ]
+  },
+  {
+    "key": "4736",
+    "page_url": "https://amiga.abime.net/games/view/1869-history-experience-part-i",
+    "source_url": "https://amiga.abime.net/box/2301-2400/2347_box2.jpg?v=9732",
+    "caption": "German Release (front)",
+    "original_filename": "2347_box2.jpg",
+    "sha256": "3e45c5189af8086ebbdcabbf6f842f7f8f07178edcf0a1772a630bb2d34f9822",
+    "width": 640,
+    "height": 826,
+    "format": "JPEG",
+    "bytes": 131693,
+    "entries": [
+      "game--1869agade--1869agade"
+    ]
+  },
+  {
+    "key": "4358",
+    "page_url": "https://amiga.abime.net/games/view/magic-johnsons-fast-break",
+    "source_url": "https://amiga.abime.net/box/2301-2400/2382_box0.jpg?v=6046",
+    "caption": "U.S. Release (front); home-version cover for Arcadia variant",
+    "original_filename": "2382_box0.jpg",
+    "sha256": "174938a25634e9eba13189e526b467119102b6441a9e65e2cd8044e01b162030",
+    "width": 640,
+    "height": 825,
+    "format": "JPEG",
+    "bytes": 195914,
+    "entries": [
+      "game--magicjohnsonfstbrkarcadia--magicjohnsonfstbrkarcadia"
+    ]
+  },
+  {
+    "key": "5159",
+    "page_url": "https://amiga.abime.net/games/view/millenium-return-to-earth",
+    "source_url": "https://amiga.abime.net/box/2401-2500/2481_box0.jpg?v=6295",
+    "caption": "Original Release (front)",
+    "original_filename": "2481_box0.jpg",
+    "sha256": "2236513e1d17429bcbd1b3c14d38470ff63bda4ae5c739ef82fbc6ed362e76d4",
+    "width": 1024,
+    "height": 1406,
+    "format": "JPEG",
+    "bytes": 327590,
+    "entries": [
+      "game--milleniumntsc--milleniumntsc"
+    ]
+  },
+  {
+    "key": "4626",
+    "page_url": "https://amiga.abime.net/games/view/ninja-mission",
+    "source_url": "https://amiga.abime.net/box/0901-1000/980_box0.jpg?v=2496",
+    "caption": "First box scan; home-version cover for Arcadia variant",
+    "original_filename": "980_box0.jpg",
+    "sha256": "93aa2532ae2c9ff745e6930a807e22f2afb2972324db85e5ddb3b629ff9de9ae",
+    "width": 640,
+    "height": 667,
+    "format": "JPEG",
+    "bytes": 102464,
+    "entries": [
+      "game--ninjamissionarcadia--ninjamissionarcadia"
+    ]
+  },
+  {
+    "key": "5236",
+    "page_url": "https://amiga.abime.net/games/view/xenon",
+    "source_url": "https://amiga.abime.net/box/1601-1700/1604_box0.jpg?v=4028",
+    "caption": "Original Release (front); home-version cover for Arcadia variant",
+    "original_filename": "1604_box0.jpg",
+    "sha256": "63c147efa4bc4a681ab6b241085277bf890027dc67b8b60b7af255337873bcc7",
+    "width": 640,
+    "height": 896,
+    "format": "JPEG",
+    "bytes": 198308,
+    "entries": [
+      "game--xenonarcadia--xenonarcadia"
+    ]
+  },
+  {
+    "key": "6300",
+    "page_url": "https://amiga.abime.net/games/view/helter-skelter",
+    "source_url": "https://amiga.abime.net/box/0601-0700/694_box0.jpg?v=1711",
+    "caption": "UK Release (front)",
+    "original_filename": "694_box0.jpg",
+    "sha256": "20a7de3d08b6e7de8d3424e9ea63ae43a47854b824df5545b6c07e7f4f1d2c12",
+    "width": 1024,
+    "height": 1237,
+    "format": "JPEG",
+    "bytes": 361538,
+    "entries": [
+      "game--helterskelter--helterskelter"
+    ]
+  },
+  {
+    "key": "4639",
+    "page_url": "https://amiga.abime.net/games/view/sidewinder",
+    "source_url": "https://amiga.abime.net/box/1901-2000/1920_box0.jpg?v=4876",
+    "caption": "First box scan; home-version cover for Arcadia variant",
+    "original_filename": "1920_box0.jpg",
+    "sha256": "f819b39d056a7036c6b8901e2a9a00b1b9d61873a528aa0e06ad7a4a966b768a",
+    "width": 1024,
+    "height": 1063,
+    "format": "JPEG",
+    "bytes": 528472,
+    "entries": [
+      "game--sidewinderarcadia--sidewinderarcadia"
+    ]
+  },
+  {
+    "key": "4633",
+    "page_url": "https://amiga.abime.net/games/view/roadwars",
+    "source_url": "https://amiga.abime.net/box/1201-1300/1251_box0.jpg?v=3250",
+    "caption": "UK Release (front); home-version cover for Arcadia variant",
+    "original_filename": "1251_box0.jpg",
+    "sha256": "c9abd66d5ef3e88d4289eab613898c17a32addf450061eb3130af51067641754",
+    "width": 1024,
+    "height": 1438,
+    "format": "JPEG",
+    "bytes": 510243,
+    "entries": [
+      "game--roadwarsarcadia--roadwarsarcadia"
+    ]
+  },
+  {
+    "key": "1234",
+    "page_url": "https://amiga.abime.net/games/view/revenge-of-the-mutant-camels-ii",
+    "source_url": "https://amiga.abime.net/box/1201-1300/1234_box0.jpg?v=3182",
+    "caption": "First box scan",
+    "original_filename": "1234_box0.jpg",
+    "sha256": "6950033aea6ee21bc29e88d84a7d43afa2d151371794496422988bcda5cd0799",
+    "width": 640,
+    "height": 657,
+    "format": "JPEG",
+    "bytes": 102980,
+    "entries": [
+      "game--revengeofmutantcamels2--revengeofmutantcamels2"
+    ]
+  },
+  {
+    "key": "6118",
+    "page_url": "https://amiga.abime.net/games/view/powerplay-le-jeu-des-dieux",
+    "source_url": "https://amiga.abime.net/box/6101-6200/6118_box0.jpg?v=12373",
+    "caption": "First box scan; shared across language variants",
+    "original_filename": "6118_box0.jpg",
+    "sha256": "9b77a1003cf924ed7c2e5a4608ab75697209345de28568abc61ca86f816e096d",
+    "width": 1024,
+    "height": 1443,
+    "format": "JPEG",
+    "bytes": 390357,
+    "entries": [
+      "game--powerplayes--powerplayes",
+      "game--powerplayfr--powerplayfr",
+      "game--powerplaygr--powerplaygr",
+      "game--powerplay--powerplay",
+      "game--powerplayde--powerplayde"
+    ]
+  },
+  {
+    "key": "1107",
+    "page_url": "https://amiga.abime.net/games/view/populous-ii-the-challenge-games",
+    "source_url": "https://amiga.abime.net/box/1101-1200/1107_box0.jpg?v=2861",
+    "caption": "First box scan",
+    "original_filename": "1107_box0.jpg",
+    "sha256": "127285d7acaec884b0f5881a43be8e323492bacbfa149f6f7da0573b267ab560",
+    "width": 640,
+    "height": 782,
+    "format": "JPEG",
+    "bytes": 144236,
+    "entries": [
+      "game--populous2&challengegames--populous2&challengegames--tcg"
+    ]
+  },
+  {
+    "key": "4595",
+    "page_url": "https://amiga.abime.net/games/view/tubular-worlds",
+    "source_url": "https://amiga.abime.net/box/1501-1600/1523_box0.jpg?v=11098",
+    "caption": "First ECS box scan; shared AGA artwork",
+    "original_filename": "1523_box0.jpg",
+    "sha256": "f99691ddd79fa2b7b221095ba066cfabefb002d5f93f1c724ee20ea23bd947ba",
+    "width": 1024,
+    "height": 1285,
+    "format": "JPEG",
+    "bytes": 365239,
+    "entries": [
+      "game--tubularworldsaga--tubularworldsaga"
+    ]
+  },
+  {
+    "key": "4465",
+    "page_url": "https://amiga.abime.net/games/view/anstoss",
+    "source_url": "https://amiga.abime.net/box/2201-2300/2297_box4.jpg?v=9533",
+    "caption": "French Release (front)",
+    "original_filename": "2297_box4.jpg",
+    "sha256": "89e7b71285fce5447f3babb9bd64c35f0428dc6ad06d436a3c0046d8b5a878e3",
+    "width": 640,
+    "height": 827,
+    "format": "JPEG",
+    "bytes": 162806,
+    "entries": [
+      "game--cartonrougefr--cartonrougefr"
+    ]
+  },
+  {
+    "key": "5235",
+    "page_url": "https://amiga.abime.net/games/view/world-darts",
+    "source_url": "https://amiga.abime.net/box/1701-1800/1769_box0.jpg?v=11100",
+    "caption": "First box scan; home-version cover for Arcadia variant",
+    "original_filename": "1769_box0.jpg",
+    "sha256": "1a120ce1d338fb9dd7016b294b9a4f8047f47f88d2c8a6b02da7e8d7cb33958b",
+    "width": 1024,
+    "height": 1044,
+    "format": "JPEG",
+    "bytes": 454948,
+    "entries": [
+      "game--worlddartsarcadia--worlddartsarcadia"
+    ]
+  },
+  {
+    "key": "3954",
+    "page_url": "https://amiga.abime.net/games/view/street-racer",
+    "source_url": "https://amiga.abime.net/box/3901-4000/3954_box0.jpg?v=9119",
+    "caption": "First box scan for version 3954",
+    "original_filename": "3954_box0.jpg",
+    "sha256": "5736a80bac900493a47ec7a662156e39d50d838014c402434ffc02860c16e789",
+    "width": 640,
+    "height": 813,
+    "format": "JPEG",
+    "bytes": 124233,
+    "entries": [
+      "game--streetraceragacd--streetraceragacd"
+    ]
+  },
+  {
+    "key": "5838",
+    "page_url": "https://amiga.abime.net/games/view/el-arte-de-la-guerra",
+    "source_url": "https://amiga.abime.net/box/3501-3600/3530_box0.jpg?v=8757",
+    "caption": "French Release (front); same game, shared language-variant cover",
+    "original_filename": "3530_box0.jpg",
+    "sha256": "f5cc2c62ba9c5eda6c4a256f7ef7f0c26f3b13082545ac5e4e22241f5b03881c",
+    "width": 640,
+    "height": 757,
+    "format": "JPEG",
+    "bytes": 104267,
+    "entries": [
+      "game--artdelaguerrefr--artdelaguerrefr",
+      "game--artedelaguerraes--artedelaguerraes"
+    ]
+  },
+  {
+    "key": "703",
+    "page_url": "https://amiga.abime.net/games/view/quest-for-glory-i-so-you-want-to-be-a-hero",
+    "source_url": "https://amiga.abime.net/box/0701-0800/703_box0.jpg?v=1744",
+    "caption": "Original Release (front)",
+    "original_filename": "703_box0.jpg",
+    "sha256": "f67b99bdd02e583b9fc8332ac407a489ebd143004d23f6df1976e6d1b4afda8c",
+    "width": 640,
+    "height": 807,
+    "format": "JPEG",
+    "bytes": 191765,
+    "entries": [
+      "game--herosquest--herosquest"
+    ]
+  },
+  {
+    "key": "1825",
+    "page_url": "https://amiga.abime.net/games/view/utopia-the-new-worlds",
+    "source_url": "https://amiga.abime.net/box/1801-1900/1825_box0.jpg?v=4603",
+    "caption": "First box scan",
+    "original_filename": "1825_box0.jpg",
+    "sha256": "e8c5fcc935c129e58e0e2c99911cb9836550fe387dd36c4405e79b80cd72b811",
+    "width": 1024,
+    "height": 1299,
+    "format": "JPEG",
+    "bytes": 414487,
+    "entries": [
+      "game--utopia&secondwave1--utopia",
+      "game--utopia&secondwave2--utopia"
+    ]
+  },
+  {
+    "key": "DUNE",
+    "page_url": "https://amiga.abime.net/games/view/dune-ii-the-battle-for-arrakis",
+    "source_url": "https://amiga.abime.net/box/0401-0500/440_box0.jpg?v=1081",
+    "caption": "U.S. Release (front)",
+    "original_filename": "440_box0.jpg",
+    "sha256": "7c9f43324634d8e68a37f90c0a5c3c9e93166b2d8e0cb10726d9e119066380dd",
+    "width": 1024,
+    "height": 1165,
+    "format": "JPEG",
+    "bytes": 230065,
+    "entries": [
+      "game--dune2--dune2"
+    ]
+  },
+  {
+    "key": "WRATH",
+    "page_url": "https://amiga.abime.net/games/view/wrath-of-the-demon",
+    "source_url": "https://amiga.abime.net/box/1701-1800/1783_box0.jpg?v=4488",
+    "caption": "First ECS box scan",
+    "original_filename": "1783_box0.jpg",
+    "sha256": "4a5888d3dc0e867a16de2ee8d88b566264565a4a15c0cca0b0b8236df360fe85",
+    "width": 640,
+    "height": 848,
+    "format": "JPEG",
+    "bytes": 157258,
+    "entries": [
+      "game--wrathofthedemon--wrathofthedemon"
+    ]
+  },
+  {
+    "key": "WRATHCDTV",
+    "page_url": "https://amiga.abime.net/games/view/wrath-of-the-demon",
+    "source_url": "https://amiga.abime.net/box/1701-1800/1784_box0.jpg?v=4490",
+    "caption": "Original CDTV Release (front)",
+    "original_filename": "1784_box0.jpg",
+    "sha256": "d35225f94b004095267787f484faf1866c63efdb05ba806a4d999d7877e3306c",
+    "width": 640,
+    "height": 637,
+    "format": "JPEG",
+    "bytes": 113278,
+    "entries": [
+      "game--wrathofthedemoncdtv--wrathofthedemoncdtv"
+    ]
+  },
+  {
+    "key": "WALKER",
+    "page_url": "https://amiga.abime.net/games/view/walker",
+    "source_url": "https://amiga.abime.net/box/1601-1700/1655_box0.jpg?v=4167",
+    "caption": "First ECS box scan",
+    "original_filename": "1655_box0.jpg",
+    "sha256": "6601ece79020a1ec232e60cc92a2ec9cacecbfc42e46bdad6e943376717b81d1",
+    "width": 640,
+    "height": 808,
+    "format": "JPEG",
+    "bytes": 71999,
+    "entries": [
+      "game--walkercrunched--walkercrunched",
+      "game--walkercrunchednospeech--walkercrunchednospeech"
+    ]
+  },
+  {
+    "key": "PIZZA",
+    "page_url": "https://amiga.abime.net/games/view/pizza-connection",
+    "source_url": "https://amiga.abime.net/box/1001-1100/1077_box0.jpg?v=2767",
+    "caption": "First ECS box scan",
+    "original_filename": "1077_box0.jpg",
+    "sha256": "ff72fa844f82b1cd0fd116d3532062c19dd198457735832b44923e644b3456d9",
+    "width": 640,
+    "height": 811,
+    "format": "JPEG",
+    "bytes": 180426,
+    "entries": [
+      "game--pizzaconnectionde--pizzaconnectionde"
+    ]
+  },
+  {
+    "key": "HOYLE",
+    "page_url": "https://amiga.abime.net/games/view/hoyle-volume-iii",
+    "source_url": "https://amiga.abime.net/box/0701-0800/751_box0.jpg?v=1855",
+    "caption": "First ECS box scan",
+    "original_filename": "751_box0.jpg",
+    "sha256": "4b375541605fc224e7dacfa65b7e96c5ed3983db3af09436b4766f27dead0ea8",
+    "width": 640,
+    "height": 805,
+    "format": "JPEG",
+    "bytes": 148031,
+    "entries": [
+      "game--hoylevolume3--hoylevolume3"
+    ]
+  },
+  {
+    "key": "WHALES",
+    "page_url": "https://amiga.abime.net/games/view/whales-voyage",
+    "source_url": "https://amiga.abime.net/box/1601-1700/1692_box0.jpg?v=4271",
+    "caption": "German Release (front)",
+    "original_filename": "1692_box0.jpg",
+    "sha256": "d1c36bf2896ab55e771fddc7fe9e65237bfa2c0cd1a65a4ce804989b97050918",
+    "width": 640,
+    "height": 813,
+    "format": "JPEG",
+    "bytes": 136640,
+    "entries": [
+      "game--whalesvoyagede--whalesvoyagede"
+    ]
+  },
+  {
+    "key": "YOOMP",
+    "page_url": "https://amiga.abime.net/games/view/yoompi",
+    "source_url": "https://amiga.abime.net/box/7401-7500/7483_box0.jpg?v=12956",
+    "caption": "First ECS box scan",
+    "original_filename": "7483_box0.jpg",
+    "sha256": "850e1ac876d28b10291abd953af5af7eaed3be316d7952888dfbb0c29439e025",
+    "width": 1024,
+    "height": 1021,
+    "format": "JPEG",
+    "bytes": 579777,
+    "entries": [
+      "game--amigayoomp--yoomp"
+    ]
+  },
+  {
+    "key": "APIDYA",
+    "page_url": "https://amiga.abime.net/games/view/apidya",
+    "source_url": "https://amiga.abime.net/box/3201-3300/3281_box0.jpg?v=8345",
+    "caption": "European Release (front); existing artwork shared with base game",
+    "original_filename": "3281_box0.jpg",
+    "sha256": "6bb7f809ea60c768b29ddcf2d35ae849155efe00e45f40d0a00060b434b0e478",
+    "width": 640,
+    "height": 814,
+    "format": "JPEG",
+    "bytes": 218967,
+    "entries": [
+      "game--apidyaspecialedition--apidyase"
+    ]
+  },
+  {
+    "key": "RUGBY",
+    "page_url": "https://amiga.abime.net/games/view/rugby-the-world-cup",
+    "source_url": "https://amiga.abime.net/box/1201-1300/1296_box0.jpg?v=3373",
+    "caption": "First ECS box scan; existing artwork shared with base game",
+    "original_filename": "1296_box0.jpg",
+    "sha256": "c6a1fd6210dad5fd7a599b5ed6079b22f50fd0b035bf1db759ed8369fd86bd2c",
+    "width": 640,
+    "height": 812,
+    "format": "JPEG",
+    "bytes": 179764,
+    "entries": [
+      "game--rugbytheworldcupearlybuild--rugbytheworldcupearlybld"
+    ]
+  },
+  {
+    "key": "ALIEN",
+    "page_url": "https://amiga.abime.net/games/view/alien-breed",
+    "source_url": "https://amiga.abime.net/box/3201-3300/3230_box0.jpg?v=8229",
+    "caption": "First original Alien Breed box scan; existing artwork shared with base game",
+    "original_filename": "3230_box0.jpg",
+    "sha256": "e969103dea0008fd2b7ad496634b5698f84b076964c40cbce51a53149c34df95",
+    "width": 640,
+    "height": 762,
+    "format": "JPEG",
+    "bytes": 72224,
+    "entries": [
+      "game--alienbreedstory--alienbreedstory"
+    ]
+  },
+  {
+    "key": "WORMS",
+    "page_url": "https://amiga.abime.net/games/view/worms-the-directors-cut",
+    "source_url": "https://amiga.abime.net/box/1701-1800/1781_box0.jpg?v=4484",
+    "caption": "Original AGA Release (front); existing artwork shared with base game",
+    "original_filename": "1781_box0.jpg",
+    "sha256": "6d10e2c944cfa205d7a335ff52139a30736935e89c85be16937099d7192568fc",
+    "width": 640,
+    "height": 816,
+    "format": "JPEG",
+    "bytes": 75296,
+    "entries": [
+      "game--wormsdc30aga12mb--wormsdcaga12mb"
+    ]
+  },
+  {
+    "key": "TD2",
+    "page_url": "https://amiga.abime.net/games/view/test-drive-ii-the-duel",
+    "source_url": "https://amiga.abime.net/box/1301-1400/1350_box0.jpg?v=3481",
+    "caption": "U.S. Release (front); existing artwork shared with base game",
+    "original_filename": "1350_box0.jpg",
+    "sha256": "83d4e39431e61e3fc960d023c7fba0a0846de2d6b30e92828a8e394e7c34beb4",
+    "width": 640,
+    "height": 833,
+    "format": "JPEG",
+    "bytes": 85077,
+    "entries": [
+      "game--testdrive2&datadisksngc--testdrive2&datadisksngc"
+    ]
+  }
+]
