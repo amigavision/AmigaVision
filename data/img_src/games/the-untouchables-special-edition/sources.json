@@ -1,0 +1,41 @@
+[
+  {
+    "slot": 2,
+    "url": "https://earok.net/sites/default/files/0.png",
+    "source_size": [
+      720,
+      568
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      347,
+      230
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "https://earok.net/sites/default/files/2.png",
+    "source_size": [
+      720,
+      568
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      336,
+      216
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "https://earok.net/sites/default/files/3.png",
+    "source_size": [
+      720,
+      568
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      334,
+      215
+    ]
+  }
+]

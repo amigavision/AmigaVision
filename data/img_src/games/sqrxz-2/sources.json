@@ -1,0 +1,41 @@
+[
+  {
+    "slot": 2,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/sqrxz2/sqrxz2_01.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/sqrxz2/sqrxz2_03.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/sqrxz2/sqrxz2_04.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  }
+]

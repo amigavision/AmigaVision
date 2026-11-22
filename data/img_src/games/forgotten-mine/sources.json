@@ -1,0 +1,41 @@
+[
+  {
+    "slot": 3,
+    "url": "https://www.dazeland.com/images/Amiga/F/Forgotten_Mine-2.png",
+    "source_size": [
+      640,
+      422
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      211
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "https://www.dazeland.com/images/Amiga/F/Forgotten_Mine-3.png",
+    "source_size": [
+      640,
+      422
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      211
+    ]
+  },
+  {
+    "slot": 5,
+    "url": "https://www.dazeland.com/images/Amiga/F/Forgotten_Mine-4.png",
+    "source_size": [
+      640,
+      422
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      211
+    ]
+  }
+]

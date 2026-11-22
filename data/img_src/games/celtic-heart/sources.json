@@ -1,0 +1,67 @@
+[
+  {
+    "slot": 2,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/celtic_heart/celtic_heart_01.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/celtic_heart/celtic_heart_05.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/celtic_heart/celtic_heart_07.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 5,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/celtic_heart/celtic_heart_09.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 6,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/celtic_heart/celtic_heart_12.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  }
+]

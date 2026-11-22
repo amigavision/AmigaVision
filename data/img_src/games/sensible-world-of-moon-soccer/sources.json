@@ -1,0 +1,28 @@
+[
+  {
+    "slot": 2,
+    "url": "https://amiga.abime.net/screen/4601-4700/4681_screen0.png?v=9029",
+    "source_size": [
+      640,
+      512
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "https://amiga.abime.net/screen/4601-4700/4681_screen1.png?v=9030",
+    "source_size": [
+      640,
+      512
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      256
+    ]
+  }
+]

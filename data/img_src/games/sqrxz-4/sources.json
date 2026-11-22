@@ -1,0 +1,67 @@
+[
+  {
+    "slot": 2,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/sqrxz_4_cold_cash/sqrxz_4_cold_cash_02.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/sqrxz_4_cold_cash/sqrxz_4_cold_cash_07.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/sqrxz_4_cold_cash/sqrxz_4_cold_cash_08.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 5,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/sqrxz_4_cold_cash/sqrxz_4_cold_cash_09.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 6,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/sqrxz_4_cold_cash/sqrxz_4_cold_cash_11.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "slot": 3,
+    "url": "https://img.itch.zone/aW1hZ2UvMzg3NTc4Mi8yMzEyNDYwNS5wbmc=/original/KFuZcO.png",
+    "source_size": [
+      512,
+      528
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      256,
+      264
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "https://img.itch.zone/aW1hZ2UvMzg3NTc4Mi8yMzEyNDYwNC5wbmc=/original/FcVpDj.png",
+    "source_size": [
+      512,
+      528
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      256,
+      264
+    ]
+  }
+]

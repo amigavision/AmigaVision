@@ -1,0 +1,54 @@
+[
+  {
+    "slot": 2,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/liberation_(cd32)/liberation_(cd32)_01.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/liberation_(cd32)/liberation_(cd32)_10.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/liberation_(cd32)/liberation_(cd32)_11.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 5,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/liberation_(cd32)/liberation_(cd32)_12.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  }
+]

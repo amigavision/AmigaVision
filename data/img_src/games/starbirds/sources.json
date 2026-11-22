@@ -1,0 +1,54 @@
+[
+  {
+    "slot": 2,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/starbirds/starbirds_01.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/starbirds/starbirds_03.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/starbirds/starbirds_04.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 5,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/starbirds/starbirds_05.png",
+    "source_size": [
+      320,
+      256
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      256
+    ]
+  }
+]

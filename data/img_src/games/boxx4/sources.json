@@ -1,0 +1,54 @@
+[
+  {
+    "slot": 2,
+    "url": "https://img.itch.zone/aW1hZ2UvMjAxNzEwNy8xMTg2NDUyNi5wbmc=/original/j7ZbZx.png",
+    "source_size": [
+      512,
+      488
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      256,
+      244
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "https://img.itch.zone/aW1hZ2UvMjAxNzEwNy8xMTg2NDUyOC5wbmc=/original/rbdods.png",
+    "source_size": [
+      512,
+      488
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      256,
+      244
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "https://img.itch.zone/aW1hZ2UvMjAxNzEwNy8xMTg2NDUyNy5wbmc=/original/njuh1D.png",
+    "source_size": [
+      512,
+      488
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      256,
+      244
+    ]
+  },
+  {
+    "slot": 5,
+    "url": "https://img.itch.zone/aW1hZ2UvMjAxNzEwNy8xMTg3MzU5Ny5wbmc=/original/aq%2Be3e.png",
+    "source_size": [
+      512,
+      488
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      256,
+      244
+    ]
+  }
+]

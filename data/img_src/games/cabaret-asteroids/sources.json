@@ -1,0 +1,67 @@
+[
+  {
+    "slot": 2,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/cabaret_asteroids/cabaret_asteroids_01.png",
+    "source_size": [
+      720,
+      576
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      343,
+      266
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/cabaret_asteroids/cabaret_asteroids_03.png",
+    "source_size": [
+      720,
+      576
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      327,
+      280
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/cabaret_asteroids/cabaret_asteroids_04.png",
+    "source_size": [
+      720,
+      576
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      281,
+      280
+    ]
+  },
+  {
+    "slot": 5,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/cabaret_asteroids/cabaret_asteroids_05.png",
+    "source_size": [
+      720,
+      576
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      260,
+      276
+    ]
+  },
+  {
+    "slot": 6,
+    "url": "https://www.lemonamiga.com/uploads/amiga/images/games/screens/cabaret_asteroids/cabaret_asteroids_06.png",
+    "source_size": [
+      720,
+      576
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      303,
+      280
+    ]
+  }
+]

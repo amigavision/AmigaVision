@@ -1,0 +1,54 @@
+[
+  {
+    "slot": 2,
+    "url": "https://amiga.abime.net/screen/4601-4700/4646_screen0.png?v=8969",
+    "source_size": [
+      640,
+      512
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "https://amiga.abime.net/screen/4601-4700/4646_screen1.png?v=8970",
+    "source_size": [
+      640,
+      512
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "https://amiga.abime.net/screen/4601-4700/4646_screen3.png?v=96143",
+    "source_size": [
+      1280,
+      1024
+    ],
+    "integer_downscale": 4,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 5,
+    "url": "https://amiga.abime.net/screen/4601-4700/4646_screen4.png?v=96144",
+    "source_size": [
+      1280,
+      1024
+    ],
+    "integer_downscale": 4,
+    "native_size": [
+      320,
+      256
+    ]
+  }
+]

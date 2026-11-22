@@ -1,0 +1,29 @@
+[
+  {
+    "slot": 2,
+    "url": "/Users/limi/Documents/Copperline/screenshots/copperline-screenshot-20261122081357.png",
+    "source_size": [
+      320,
+      240
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      240
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "/Users/limi/Documents/Copperline/screenshots/copperline-screenshot-20261122081517.png",
+    "source_size": [
+      642,
+      260
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      321,
+      260
+    ],
+    "horizontal_downscale": 2
+  }
+]

@@ -28,6 +28,7 @@ AVS_INFO_HEIGHT = 7
 AVS_LIST_WIDTH = 30
 MAX_FILENAME_LENGTH = 96
 WARNED_MISSING_ARCHIVES = set()
+WARNED_LONG_NAMES = set()
 
 # -----------------------------------------------------------------------------
 
@@ -37,6 +38,14 @@ def print_warning(message: str):
 
 def reset_warning_state():
     WARNED_MISSING_ARCHIVES.clear()
+    WARNED_LONG_NAMES.clear()
+
+def warn_long_name(name: str, entry_id: str):
+    key = (entry_id, name)
+    if len(name) <= AVS_LIST_WIDTH or key in WARNED_LONG_NAMES:
+        return
+    print_warning(f'name exceeds {AVS_LIST_WIDTH} characters ({len(name)}): {name} ({entry_id})')
+    WARNED_LONG_NAMES.add(key)
 
 def warn_missing_archive(name: str, archive_path: str):
     if archive_path in WARNED_MISSING_ARCHIVES:
@@ -519,6 +528,7 @@ def make_entry(collection: EntryCollection, avs_path, entry, path, rank=None, so
 
     # prettify name
     disp_name = entry["disp_name"] if "disp_name" in entry else entry["title_short"]
+    warn_long_name(disp_name, entry["id"])
     title += sanitize_name(disp_name)
 
     # shorten name and prevent name clashes

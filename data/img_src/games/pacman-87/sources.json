@@ -1,0 +1,28 @@
+[
+  {
+    "slot": 2,
+    "url": "https://images.launchbox-app.com/9d88a1bd-0d7e-4159-a5a0-7c60992dc3d3.png",
+    "source_size": [
+      640,
+      400
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      200
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "https://images.launchbox-app.com/647948fe-4bab-4089-8bbe-c241f4993023.png",
+    "source_size": [
+      640,
+      400
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      200
+    ]
+  }
+]

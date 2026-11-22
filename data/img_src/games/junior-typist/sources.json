@@ -1,0 +1,54 @@
+[
+  {
+    "slot": 2,
+    "url": "https://amiga.abime.net/screen/3801-3900/3850_screen0.png?v=7553",
+    "source_size": [
+      640,
+      512
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "https://amiga.abime.net/screen/3801-3900/3850_screen1.png?v=7554",
+    "source_size": [
+      640,
+      512
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "https://amiga.abime.net/screen/3801-3900/3850_screen4.png?v=89589",
+    "source_size": [
+      640,
+      512
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      256
+    ]
+  },
+  {
+    "slot": 5,
+    "url": "https://amiga.abime.net/screen/3801-3900/3850_screen5.png?v=89590",
+    "source_size": [
+      640,
+      512
+    ],
+    "integer_downscale": 2,
+    "native_size": [
+      320,
+      256
+    ]
+  }
+]
