@@ -10,6 +10,8 @@ ORIGINAL = bytes.fromhex('204621400036')
 
 
 def remove_patch(data):
+    from patch_favorite_screenshots import remove_patch as remove_favorites
+    data = remove_favorites(data)
     from patch_popup_up import remove_patch as remove_popup
     data = remove_popup(data)
     end = 32 + struct.unpack_from('>I', data, 28)[0]*4
