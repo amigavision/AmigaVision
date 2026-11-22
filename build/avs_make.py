@@ -40,11 +40,11 @@ def reset_warning_state():
     WARNED_MISSING_ARCHIVES.clear()
     WARNED_LONG_NAMES.clear()
 
-def warn_long_name(name: str, entry_id: str):
-    key = (entry_id, name)
-    if len(name) <= AVS_LIST_WIDTH or key in WARNED_LONG_NAMES:
+def warn_long_name(title_short: str, entry_id: str):
+    key = (entry_id, title_short)
+    if len(title_short) <= AVS_LIST_WIDTH or key in WARNED_LONG_NAMES:
         return
-    print_warning(f'name exceeds {AVS_LIST_WIDTH} characters ({len(name)}): {name} ({entry_id})')
+    print_warning(f'title_short exceeds {AVS_LIST_WIDTH} characters ({len(title_short)}): {title_short} ({entry_id})')
     WARNED_LONG_NAMES.add(key)
 
 def warn_missing_archive(name: str, archive_path: str):
@@ -528,7 +528,7 @@ def make_entry(collection: EntryCollection, avs_path, entry, path, rank=None, so
 
     # prettify name
     disp_name = entry["disp_name"] if "disp_name" in entry else entry["title_short"]
-    warn_long_name(disp_name, entry["id"])
+    warn_long_name(entry.get("title_short") or "", entry["id"])
     title += sanitize_name(disp_name)
 
     # shorten name and prevent name clashes

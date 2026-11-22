@@ -973,6 +973,8 @@ def get_pfs_partition_cache_state(
         "hires_assets": hash_payload([fingerprint_tree("data/avs-highres"), fingerprint_tree("data/img_highres")]),
         "hires_behavior": fingerprint_python_defs("build/avs_make.py", ["make_hires_tree", "make_hires_artwork"]),
         "hires_encoder": [fingerprint_file("build/repair_hires_palettes.py"), fingerprint_file("build/iff_ilbm.py")],
+        "ecs_medres_assets": hash_payload(fingerprint_tree("data/avs-ecs-medres")),
+        "ecs_medres_encoder": [fingerprint_file("build/avs_ecs_medres.py"), fingerprint_file("build/ecs_palette.py")],
         "extra_dirs": extra_dirs,
         "behavior": PFS_PARTITION_BEHAVIOR_FINGERPRINT,
     }
@@ -1880,8 +1882,9 @@ def main():
         with timed_step(timings, "build hi-res launcher"):
             if args.chipset_profile == 'ecs':
                 from avs_ecs import install_launcher
+                from avs_ecs_medres import build_launcher as build_ecs_medres
+                build_ecs_medres(amiga_avs_path, util.path(amiga_data_path, 'AVS-MedRes'))
                 install_launcher(amiga_avs_path, collection)
-                util.rm_path(util.path(amiga_data_path, 'AVS-MedRes'))
             else:
                 build_or_reuse_hires_launcher(amiga_avs_path, util.path(amiga_data_path, "AVS"), collection, workspace_state, append_delta, source_trees=hires_source_trees)
 

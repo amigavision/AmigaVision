@@ -103,7 +103,7 @@ help:
 		'Pre-render changed ECS thumbnails from the existing high-resolution IFF masters, without dithering.' \
 		'' \
 		'make ecs-dry / make ecs-image' \
-		'Build the shared ECS menu or AmigaVision-ECS.hdf using one hi-res interlaced 16-color launcher and a separate workspace.' \
+		'Build the shared ECS menu or AmigaVision-ECS.hdf with hi-res and med-res 16-color launchers in a separate workspace.' \
 		'' \
 		'make backfill-ecs-archives / make backfill-ecs-metadata / make backfill-ecs-metadata-apply' \
 		'Backfill non-AGA WHDLoad archives (excluding JST), preview metadata imports, or apply confirmed redundant variants.' \
