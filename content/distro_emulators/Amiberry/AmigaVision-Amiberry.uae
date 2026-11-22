@@ -157,7 +157,6 @@ gfxcard_zerocopy=false
 chipmem_size=4
 cpu_speed=real
 cpu_throttle=0.0
-cpu_type=68020/68881
 cpu_model=68030
 fpu_model=68881
 cpu_compatible=true

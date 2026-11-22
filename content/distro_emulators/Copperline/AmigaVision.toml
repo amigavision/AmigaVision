@@ -2,7 +2,7 @@
 rom = "AmigaVision.rom"
 
 [cpu]
-model = "68040"
+model = "68030"
 fpu = true
 clock_mhz = 25.0
 dcache = true
