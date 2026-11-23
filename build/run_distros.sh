@@ -192,6 +192,7 @@ if [[ "$build_all" == true ]]; then
     else
       printf 'Building missing image: %s\n' "$selected"
       "${MAKE:-make}" "$target" "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir" \
+        "IMAGE_UPDATE_ARGS=${IMAGE_UPDATE_ARGS:---incremental} --no-build-cache" \
         "AVSDEST=$work_dir/images" "AVSTEMP=$work_dir/stage" \
         "AMIGAVISION_HDF=$work_dir/images/AmigaVision.hdf" \
         "ECS_HDF=$work_dir/images/AmigaVision-ECS.hdf" \

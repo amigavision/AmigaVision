@@ -66,8 +66,8 @@ default: help
 IMAGE_UPDATE_ARGS ?= --incremental
 IMAGE_CLONE_ARGS ?=
 BASE_IMAGE_ARGS ?=
-IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o "$(subst ",,${AVSDEST})"
-MINI_IMAGE_PREP_CMD = pipenv run build/avs_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(MINI_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists --single-image-hires -d "$(subst ",,${AVSCONTENT})/extra_dirs/LessMusic/7 Launcher BGM::DH1:Music/7 Launcher BGM" -o "$(subst ",,${AVSDEST})" --temp-dir "$(MINI_TEMP)"
+IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o "$(subst ",,${AVSDEST})" --temp-dir "$(subst ",,${AVSTEMP})"
+MINI_IMAGE_PREP_CMD = pipenv run build/avs_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(MINI_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists --single-image-hires -d "$(subst ",,${AVSCONTENT})/extra_dirs/LessMusic/7 Launcher BGM::DH1:Music/7 Launcher BGM" -d "$(subst ",,${AVSCONTENT})/extra_dirs/LessMusic/Jan Reinert Karlsen (Interphace) - To the Beach.mod::DH1:Music/Jan Reinert Karlsen (Interphace) - To the Beach.mod" -o "$(subst ",,${AVSDEST})" --temp-dir "$(MINI_TEMP)"
 TEST_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --auto-lists -o "$(subst ",,${AVSDEST})"
 TEST_DRY_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --only-avs-tree --auto-lists -o "$(subst ",,${AVSDEST})"
 ECS_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(ECS_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o "$(subst ",,${AVSDEST})"
@@ -400,7 +400,7 @@ mini-image:
 	@rm -f "$(MINI_TEMP)/mini-bgm.status"
 	@$(MAKE) clone-amiberry AVSTEMP="$(MINI_TEMP)"
 	@if [ "$(MINI_INCREMENTAL)" != "1" ]; then \
-		$(PYTHON) -c 'from pathlib import Path; import sys; p = Path(sys.argv[1]); sys.exit(0 if p.is_file() and p.read_text().strip() == "OK" else "ERROR: Mini HDF is missing the launcher BGM directory")' "$(MINI_TEMP)/mini-bgm.status"; \
+		$(PYTHON) -c 'from pathlib import Path; import sys; p = Path(sys.argv[1]); sys.exit(0 if p.is_file() and p.read_text().strip() == "OK" else "ERROR: Mini HDF is missing required music files")' "$(MINI_TEMP)/mini-bgm.status"; \
 	fi
 	@test -f "$(subst ",,${MINI_HDF})"
 	@$(MINI_FAT32_CHECK)

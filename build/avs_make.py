@@ -71,7 +71,7 @@ def count_tree_entries(node):
 def update_progress(collection: EntryCollection, verbose: bool):
     if verbose and collection.progress_total > 0:
         print(
-            "\r > Building AVS tree [{}/{}]".format(collection.progress_current, collection.progress_total),
+            "\r > {} [{}/{}]".format(collection.progress_label, collection.progress_current, collection.progress_total),
             end="",
             flush=True
         )

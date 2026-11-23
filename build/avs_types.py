@@ -17,6 +17,7 @@ class EntryCollection:
         # AVS tree progress counters
         self.progress_current = 0
         self.progress_total = 0
+        self.progress_label = "Building menu entries"
         # AVS tree timing counters
         self.timing = dict()
 

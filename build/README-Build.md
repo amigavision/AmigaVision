@@ -35,6 +35,12 @@ Full distro runs always create the emulator 7z archive. The optional archive cho
 
 Full distro runs also build PiStorm AGA (PiStorm32 Lite, from the main HDF) and PiStorm ECS (classic PiStorm, from the ECS HDF). Both use `PISTORM_ROM` and `AMIBERRYBIN` and write dated `.img.xz` files to the selected output directory. Full runs share downloads and the compiled converter in a temporary run-local cache.
 
+When distro packaging must create a missing HDF, it stages that build under
+the selected output directory's `.build/stage` and disables reusable image-build
+caches for that disposable build. The main imager receives an explicit
+`--temp-dir` so loading `.env` cannot redirect staging to the internal drive.
+Standalone `make image` retains its normal incremental caching behavior.
+
 Both real Amiga archives are included: `AmigaVision-Amiga-<date>.img.xz` from the main HDF and `AmigaVision-Amiga-ECS-<date>.img.xz` from the ECS HDF, with SHA-256 and MD5 checksum files.
 
 Amiga/ECS compression defaults to xz preset 1. Use `make distros AMIGA_XZ_PRESET=6` to restore the previous compression setting, or choose any preset from 0 to 9. PiStorm and RPi continue to use preset 1. The format remains `.img.xz` for all disk-image releases.
@@ -465,7 +471,9 @@ machine68k and vasm; `AVS_TEST_MENU` can select any of the three binary paths.
 
 `make mini-image` builds a hi-res-only launcher at `Data:AVS`, keeps
 only one numbered screenshot per title (slot 3, with a fallback when absent),
-QR images, and the launcher BGM from the extra music directory. It applies
+QR images, and the launcher BGM from the extra music directory.
+It also includes `Jan Reinert Karlsen (Interphace) - To the Beach.mod` directly
+in `Music/`. It applies
 `configs/Lists/Mini-Exclusions.yaml`.
 The exclusion list removes four particularly large games and twenty large demos
 while keeping the regular Worms Director's Cut. Both the build target and Mini

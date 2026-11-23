@@ -868,7 +868,7 @@ def build_top_level_menu_with_cache(
             built_count += 1
     if verbose:
         print("")
-        print(" > Top-level subtree cache: {} hit, {} rebuilt".format(restored_count, built_count))
+        print(" > Configured-menu sections: {} reused from cache, {} built".format(restored_count, built_count))
 
 # -----------------------------------------------------------------------------
 
@@ -988,7 +988,7 @@ def get_pfs_partition_cache_state(
         extra_dirs.append({
             "src": os.path.abspath(src_dir),
             "dst": dst,
-            "tree": hash_payload(fingerprint_tree(src_dir)),
+            "tree": hash_payload(fingerprint_file(src_dir) if util.is_file(src_dir) else fingerprint_tree(src_dir)),
         })
     return {
         "base_hdf_cache_dir": base_hdf_cache_dir,
@@ -1015,7 +1015,7 @@ def get_add_dirs_cache_state(add_dirs: list[str] | None) -> list[dict]:
         state.append({
             "src": os.path.abspath(src_dir),
             "dst": dst,
-            "tree": hash_payload(fingerprint_tree(src_dir)),
+            "tree": hash_payload(fingerprint_file(src_dir) if util.is_file(src_dir) else fingerprint_tree(src_dir)),
         })
     return state
 
@@ -1033,6 +1033,10 @@ def count_files_in_tree(path: str) -> int:
     return total
 
 def print_add_dir_progress(src_dir: str, verbose: bool, prefix: str = "    > ") -> None:
+    if util.is_file(src_dir):
+        if verbose:
+            print("{}{} (file)".format(prefix, os.path.basename(src_dir)))
+        return
     entries = sorted(os.listdir(src_dir), key=str.casefold)
     top_dirs = [name for name in entries if util.is_dir(util.path(src_dir, name))]
     top_files = [name for name in entries if util.is_file(util.path(src_dir, name)) and name != ".DS_Store"]
@@ -1048,6 +1052,11 @@ def print_add_dir_progress(src_dir: str, verbose: bool, prefix: str = "    > ") 
             print("{}{}. {} (file)".format(prefix, file_offset + index, name))
 
 def copy_add_dir_with_progress(src_dir: str, dest: str, verbose: bool) -> None:
+    if util.is_file(src_dir):
+        util.make_dir(os.path.dirname(dest))
+        shutil.copy2(src_dir, dest)
+        print_add_dir_progress(src_dir, verbose)
+        return
     entries = sorted(os.listdir(src_dir), key=str.casefold)
     top_dirs = [name for name in entries if util.is_dir(util.path(src_dir, name))]
     top_files = [name for name in entries if util.is_file(util.path(src_dir, name)) and name != ".DS_Store"]
@@ -1486,7 +1495,7 @@ def main():
     base_source.add_argument("-b", "--base-hdf", dest="base_hdf", metavar="FILE", help="use a legacy base HDF instead of the native base directory")
     base_source.add_argument("--base-dir", metavar="DIR", help="native base directory (default: AVSBASE or sibling AV-Base checkout)")
     parser.add_argument("-a", "--avs-dir", dest="avs_dir", metavar="FILE", type=lambda x: util.argparse_is_dir(parser, x),  help="AVS configuration directory")
-    parser.add_argument("-d", "--add-dir", dest="add_dirs", action="append", help="add dir to amiga filesystem (example '~/Amiga/Music::DH1:Music')")
+    parser.add_argument("-d", "--add-dir", dest="add_dirs", action="append", help="add a directory or file to the Amiga filesystem (example '~/Amiga/Music::DH1:Music')")
 
     parser.add_argument("--all-games", dest="all_games", action="store_true", default=False, help="include all games")
     parser.add_argument("--all-demos", dest="all_demos", action="store_true", default=False, help="include all demos")
@@ -1646,13 +1655,14 @@ def main():
         util.rm_path(util.path(amiga_data_path, "AVS-HiRes"))
 
         # copy base AVS config
-        print("Building AVS tree...")
+        print("Building AVS menus...")
         base_avs = args.avs_dir
         if not base_avs:
             base_avs = util.path("data", "avs")
         if not util.is_dir(base_avs):
             raise IOError("configuration directory not found ({})".format(base_avs))
-        print(" > Using configuration: {}".format(base_avs))
+        print(" > Launcher assets: {}".format(base_avs))
+        print(" > Menu configuration: {}".format(args.config_file))
 
         avs_cache_state = get_avs_tree_cache_state(menu, db_path, base_avs, runscript_template_path, args.config_file, args)
         avs_cache_key = get_avs_tree_cache_key(avs_cache_state)
@@ -1710,6 +1720,7 @@ def main():
             with timed_step(timings, "collect menu entries"):
                 collection.progress_current = 0
                 collection.progress_total = count_tree_entries(menu) + len(collection.by_id)
+                collection.progress_label = "Building configured menus"
                 if menu:
                     if not args.no_build_cache and supports_top_level_menu_cache(menu):
                         build_top_level_menu_with_cache(
@@ -1734,11 +1745,19 @@ def main():
                 if args.all_demoscene:
                     add_all(db, collection, "Demo")
             with timed_step(timings, "build auto entries"):
-                collection.progress_total = collection.progress_current + len(list(collection.ids()))
                 if args.all_games or args.all_demos or args.all_demoscene or args.auto_lists:
+                    collection.progress_current = 0
+                    collection.progress_total = len(collection.by_id)
+                    collection.progress_label = "Indexing titles for automatic lists"
+                    kinds = []
+                    if args.all_games or args.auto_lists:
+                        kinds.append("games")
+                    if args.all_demos or args.all_demoscene or args.auto_lists:
+                        kinds.append("demos")
+                    print("\n > Building automatic indexes for {}...".format(" and ".join(kinds)))
                     autoentries_cache_key = get_autoentries_cache_key(get_autoentries_cache_state(collection, args))
                     if not args.no_build_cache and restore_autoentries_cache(autoentries_cache_key, amiga_avs_path, collection):
-                        print(" > Using cached auto entries")
+                        print(" > Using cached automatic indexes")
                     else:
                         before_path_ids = set(collection.path_ids)
                         before_sort_rank = dict(collection.path_sort_rank)
@@ -1868,7 +1887,7 @@ def main():
                 add_dirs_cache_state = get_add_dirs_cache_state(args.add_dirs)
                 add_dirs_destinations = get_add_dirs_destinations(args.add_dirs)
                 if workspace_state.get("add_dirs_cache_state") == add_dirs_cache_state and all(
-                    util.is_dir(util.path(clone_path, dst.replace(":", "/"))) for dst in add_dirs_destinations
+                    os.path.exists(util.path(clone_path, dst.replace(":", "/"))) for dst in add_dirs_destinations
                 ):
                     print(" > Reusing staged extra directories")
                     for s in args.add_dirs:
@@ -1883,7 +1902,7 @@ def main():
                         d = s.split("::")
                         if len(d) != 2:
                             raise ValueError("--add-dir parameter malformed ({})".format(s))
-                        elif util.is_dir(d[0]):
+                        elif util.is_dir(d[0]) or util.is_file(d[0]):
                             dest = util.path(clone_path, d[1].replace(":", "/"))
                             util.rm_path(dest)
                             print(" > '{}' -> '{}'".format(d[0], d[1]))
