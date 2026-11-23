@@ -1,0 +1,6 @@
+%YAML 1.2
+---
+KrakoutAGA/KrakoutAGA.slave: a9a512dcc499d45c27fa6f34a41f98914a2b224d97f4fea9d4b5aaa9a6be1fe5
+KrakoutAGA/ReadMe-AmigaVision.txt: 5ecbbe923760bee1de9b630653dc11f6f46b314c251abf35f4036b64a9f564f4
+KrakoutAGA/data/Disk.1: 5bf27e341dfa5af6b5dc1fea9153e2754a5fd8f436ee16377cfb784ad140779c
+KrakoutAGA/loader.asm: efbee0d3079c9f2becfdf3cbe0e7d7916af542121651281255672c5952135856
