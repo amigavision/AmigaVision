@@ -24,7 +24,7 @@ def preserve_hires_tree(hires, saved):
     active.touch()
 
 
-def file_plan(medium, collection):
+def file_plan(medium, collection, single_image=False):
     medium = Path(medium)
     artwork, launcher = Path('data/img_highres'), Path('data/avs-highres')
     plan, directories = {}, set()
@@ -76,6 +76,19 @@ def file_plan(medium, collection):
                 if pattern.fullmatch(key):
                     del plan[key]
             plan[name + '.iff'] = artwork / 'NSFW.iff'
+            continue
+        if single_image:
+            # Keep slot 3 as the display slot even when its source is a fallback.
+            for index in [3, 2, 4, 5, 1, 6, 7, 8, 9]:
+                key = entry_id + f'-{index}'
+                if key in images:
+                    plan[name + '-3.iff'] = images[key]
+                    break
+            else:
+                if entry_id in images:
+                    plan[name + '.iff'] = images[entry_id]
+            if entry_id + '-qr' in images:
+                plan[name + '-QR.iff'] = images[entry_id + '-qr']
             continue
         is_game_or_demo = entry.get('category', '').lower() in {'game', 'demo'}
         for key, suffix in [(entry_id, '.iff'), (entry_id + '-qr', '-QR.iff')] + [
@@ -130,13 +143,18 @@ def content_hash(path):
     return digest.hexdigest()
 
 
-def sync_hires_tree(medium, destination, collection, manifest_path):
+def single_image_config(data):
+    """Select just slot 3 without changing the shared hi-res configuration."""
+    return re.sub(rb'^(slideshow_(?:start|end)_index)\s*=.*$', rb'\1 = 3', data, flags=re.M)
+
+
+def sync_hires_tree(medium, destination, collection, manifest_path, single_image=False):
     """Validate outputs as well as inputs; interrupted runs can safely resume."""
     destination, manifest_path = Path(destination), Path(manifest_path)
-    plan, directories = file_plan(medium, collection)
+    plan, directories = file_plan(medium, collection, single_image=single_image)
     try:
         previous = json.loads(manifest_path.read_text())
-        if previous.get('schema') != 1:
+        if previous.get('schema') != 1 or previous.get('single_image', False) != single_image:
             previous = {}
     except (OSError, ValueError):
         previous = {}
@@ -159,13 +177,15 @@ def sync_hires_tree(medium, destination, collection, manifest_path):
     for key in sorted(directories - existing_dirs):
         (destination / key).mkdir(parents=True, exist_ok=True)
     for key, source in sorted(plan.items()):
+        data = single_image_config(source.read_bytes()) if single_image and key in {'AVS.conf', 'AVS.conf.base'} else None
         source_key = str(source)
         record = sources.get(source_key)
         if record is None:
             source_signature = signature(source)
             old = previous.get('sources', {}).get(source_key, {})
             digest = old.get('hash') if old.get('signature') == source_signature else None
-            record = {'signature': source_signature, 'hash': digest or content_hash(source)}
+            record = {'signature': source_signature,
+                      'hash': hashlib.sha256(data).hexdigest() if data is not None else digest or content_hash(source)}
             sources[source_key] = record
         target = destination / key
         current = existing.get(key)
@@ -181,7 +201,11 @@ def sync_hires_tree(medium, destination, collection, manifest_path):
         else:
             target.parent.mkdir(parents=True, exist_ok=True)
             temporary = target.with_name(target.name + '.hires-tmp')
-            shutil.copy2(source, temporary)
+            if data is None:
+                shutil.copy2(source, temporary)
+            else:
+                temporary.write_bytes(data)
+                shutil.copystat(source, temporary)
             os.replace(temporary, target)
             current = signature(target)
             copied += 1
@@ -193,7 +217,7 @@ def sync_hires_tree(medium, destination, collection, manifest_path):
         except OSError:
             pass
     temporary = manifest_path.with_name(manifest_path.name + '.tmp')
-    temporary.write_text(json.dumps({'schema': 1, 'sources': sources, 'outputs': outputs}))
+    temporary.write_text(json.dumps({'schema': 1, 'single_image': single_image, 'sources': sources, 'outputs': outputs}))
     os.replace(temporary, manifest_path)
     print(f' > HiRes: copied {copied}, reused {reused}, removed {removed} files')
     return outputs

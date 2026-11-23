@@ -52,7 +52,7 @@ MISTER_DISTRO_DIR ?= ${AVSCONTENT}/distro_mister
 CD32_DISTRO_DIR ?= ./cd32
 DISTRO_PACKAGE = $(PYTHON) build/package_distros.py --date-stamp "$(DISTRO_DATE)" --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --ecs-hdf "$(subst ",,${ECS_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh" $(if $(WINDOWS_INSTALLER),--windows-installer "$(subst ",,${WINDOWS_INSTALLER})")
 DISTRO_PACKAGE_PROMPT = bash build/run_distros.sh --output-dir "$(subst ",,${DISTRO_OUT})" --mister-root "$(subst ",,${MISTER_DISTRO_DIR})" --cd32-root "$(subst ",,${CD32_DISTRO_DIR})" --main-hdf "$(subst ",,${AMIGAVISION_HDF})" --ecs-hdf "$(subst ",,${ECS_HDF})" --saves-hdf "$(subst ",,${DISTRO_SAVES_HDF})" --rom-file "$(subst ",,${DISTRO_ROM})" --listings-dir "$(subst ",,${DISTRO_LISTINGS_DIR})" --shared-dir "$(subst ",,${DISTRO_SHARED_DIR})" --visuals-dir "$(subst ",,${DISTRO_VISUALS_DIR})" --mini-root "$(subst ",,${MINI_DISTRO_DIR})" --mini-hdf "$(subst ",,${MINI_HDF})" --mini-uae "$(subst ",,${MINI_UAE})" --pi-script "build/pi_image.sh" --amiberry "$(AMIBERRYBIN)" --pistorm-rom "$(subst ",,$(PISTORM_ROM))" $(if $(WINDOWS_INSTALLER),--windows-installer "$(subst ",,${WINDOWS_INSTALLER})")
-MINI_FAT32_WARN = $(PYTHON) -c 'import os, sys; path = sys.argv[1]; limit = int(sys.argv[2]); exists = os.path.isfile(path); size = os.path.getsize(path) if exists else 0; gib = size / (1024 ** 3) if exists else 0.0; limit_gib = limit / (1024 ** 3); status = "WARNING" if exists and size > limit else "OK"; msg = f"{status}: Mini HDF size is {size} bytes ({gib:.2f} GiB); FAT32 limit is {limit} bytes ({limit_gib:.2f} GiB)." if exists else f"WARNING: Mini HDF not found at {path}"; print(msg)' "$(subst ",,${MINI_HDF})" "$(FAT32_MAX_FILE_BYTES)"
+MINI_FAT32_CHECK = $(PYTHON) -c 'import os, sys; path = sys.argv[1]; limit = int(sys.argv[2]); exists = os.path.isfile(path); size = os.path.getsize(path) if exists else 0; gib = size / (1024 ** 3) if exists else 0.0; limit_gib = limit / (1024 ** 3); status = "ERROR" if not exists or size > limit else "OK"; msg = f"{status}: Mini HDF size is {size} bytes ({gib:.2f} GiB); FAT32 limit is {limit} bytes ({limit_gib:.2f} GiB)." if exists else f"ERROR: Mini HDF not found at {path}"; print(msg); sys.exit(0 if exists and size <= limit else 1)' "$(subst ",,${MINI_HDF})" "$(FAT32_MAX_FILE_BYTES)"
 
 define print-start-time
 	@printf 'Start time: %s\n' "$$(date '+%Y-%m-%d %H:%M:%S')"
@@ -67,7 +67,7 @@ IMAGE_UPDATE_ARGS ?= --incremental
 IMAGE_CLONE_ARGS ?=
 BASE_IMAGE_ARGS ?=
 IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision.yaml --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o "$(subst ",,${AVSDEST})"
-MINI_IMAGE_PREP_CMD = pipenv run build/avs_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(MINI_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists -d "$(subst ",,${AVSCONTENT})/extra_dirs/LessMusic::DH1:Music" -o "$(subst ",,${AVSDEST})" --temp-dir "$(MINI_TEMP)"
+MINI_IMAGE_PREP_CMD = pipenv run build/avs_imager.py --image-size-bytes 0 --boot-extra-bytes 0 $(MINI_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-Mini.yaml --auto-lists --single-image-hires -d "$(subst ",,${AVSCONTENT})/extra_dirs/LessMusic/7 Launcher BGM::DH1:Music/7 Launcher BGM" -o "$(subst ",,${AVSDEST})" --temp-dir "$(MINI_TEMP)"
 TEST_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --auto-lists -o "$(subst ",,${AVSDEST})"
 TEST_DRY_PREP_CMD = pipenv run build/avs_imager.py $(IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/Test.yaml --only-avs-tree --auto-lists -o "$(subst ",,${AVSDEST})"
 ECS_IMAGE_PREP_CMD = pipenv run build/avs_imager.py $(ECS_IMAGE_UPDATE_ARGS) $(BASE_IMAGE_ARGS) -c configs/AmigaVision-ECS.yaml --chipset-profile ecs --temp-dir "$(ECS_TEMP)" --all-games --all-demoscene -d ${AVSCONTENT}/extra_dirs/Music::DH1:Music -o "$(subst ",,${AVSDEST})"
@@ -397,9 +397,13 @@ mini-image:
 	@mkdir -p "$(MINI_TEMP)" "$(subst ",,${AVSDEST})"
 	@$(MAKE_MANIFESTS_CMD)
 	@AVSTEMP="$(MINI_TEMP)" AVSCACHEGEN=mini $(MINI_IMAGE_PREP_CMD)
+	@rm -f "$(MINI_TEMP)/mini-bgm.status"
 	@$(MAKE) clone-amiberry AVSTEMP="$(MINI_TEMP)"
+	@if [ "$(MINI_INCREMENTAL)" != "1" ]; then \
+		$(PYTHON) -c 'from pathlib import Path; import sys; p = Path(sys.argv[1]); sys.exit(0 if p.is_file() and p.read_text().strip() == "OK" else "ERROR: Mini HDF is missing the launcher BGM directory")' "$(MINI_TEMP)/mini-bgm.status"; \
+	fi
 	@test -f "$(subst ",,${MINI_HDF})"
-	@$(MINI_FAT32_WARN)
+	@$(MINI_FAT32_CHECK)
 	@echo "Removing completed Mini temp workspace..."
 	@rm -rf "$(MINI_TEMP)"
 	@if [ "$(MINI_KEEP_CACHE)" != "1" ]; then \

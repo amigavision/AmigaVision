@@ -40,7 +40,7 @@ PLATFORM_DIRECTORIES = {
 }
 # Complete the large raw-image work before other release archives accumulate.
 # Each consumer still follows the Amiga archive that supplies its xz blocks.
-ALL_PACKAGES = ("amiga", "pi", "pistorm-aga", "amiga-ecs", "pistorm-ecs", "mister", "emulators", "cd32-mister")
+ALL_PACKAGES = ("amiga", "pi", "pistorm-aga", "amiga-ecs", "pistorm-ecs", "mister", "emulators", "cd32-mister", "mini")
 
 
 def selected_packages(args):
@@ -731,7 +731,8 @@ def package_mini(args, output_dir, archive_tool):
         raise FileNotFoundError("Mini HDF path not provided")
     require_file(mini_hdf, "Mini AmigaVision HDF")
     require_file(saves_hdf, "AmigaVision saves HDF")
-    warn_if_exceeds_fat32_limit(mini_hdf, "Mini AmigaVision HDF")
+    if mini_hdf.stat().st_size > FAT32_MAX_FILE_BYTES:
+        raise ValueError(f"Mini AmigaVision HDF exceeds the FAT32 file limit of {FAT32_MAX_FILE_BYTES} bytes")
 
     output_path = output_dir / f"AmigaVision-Mini-{args.date_stamp}.7z"
     with make_stage_dir(output_dir, prefix="amigavision-mini-", dry_run=args.dry_run) as tmp_dir:

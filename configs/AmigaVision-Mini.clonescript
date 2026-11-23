@@ -30,8 +30,18 @@ if exists tmp:DH1/WHD
   echo "Cloning DH1: WHD (D/G/M/N)..."
   copy tmp:DH1/WHD/#? DH1:WHD all clone quiet
 endif
-echo "Cloning DH1: Music..."
-copy tmp:DH1/Music/#? DH1:Music all clone quiet
+if exists tmp:DH1/Music
+  echo "Cloning DH1: Music..."
+  copy tmp:DH1/Music DH1:Music all clone quiet
+endif
+; PFS delays writes. The small BGM copy can remain entirely cached at exit.
+; Wait is not on the boot ADF, so run the staged system's command explicitly.
+tmp:DH0/C/Wait 5
+if exists "DH1:Music/7 Launcher BGM"
+  echo "OK" >tmp:mini-bgm.status
+else
+  echo "ERROR: launcher BGM directory was not copied" >tmp:mini-bgm.status
+endif
 echo ""
 echo "Done!"
 UAEquit

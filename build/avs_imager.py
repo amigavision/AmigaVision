@@ -190,7 +190,9 @@ def prune_excluded_titles(menu, excluded_names: set[str], db: Connection, exclud
                 continue
             if isinstance(value, list):
                 nested = prune_excluded_titles(value, excluded_names, db, excluded_ids, match_cache)
-                if nested or key in {"image", "note", "ordering", "rank", "hidden", "label"}:
+                # Explicit empty folders reserve positions for generated indexes
+                # and shared options. Only remove folders emptied by exclusions.
+                if nested or not value or key in {"image", "note", "ordering", "rank", "hidden", "label"}:
                     next_item[key] = nested
                 continue
             next_item[key] = value
@@ -287,18 +289,42 @@ def parallel_tree_inventory(path, workers=4):
 def hash_payload(payload) -> str:
     return hashlib.sha1(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
-def build_or_reuse_hires_launcher(avs_path, hires_path, collection, workspace_state, append_delta=None, source_trees=None):
+def build_or_reuse_hires_launcher(avs_path, hires_path, collection, workspace_state, append_delta=None, source_trees=None, single_image=False):
     from avs_hires_cache import sync_hires_tree
     cache_path = Path(hires_path).parent.parent / '.hires-launcher-cache'
     # The previous tree waits outside DH1 while layers are merged into medium.
     # Publish by rename on the same filesystem, without a second full copy.
-    outputs = sync_hires_tree(avs_path, cache_path, collection, str(cache_path) + '.files.json')
+    outputs = sync_hires_tree(avs_path, cache_path, collection, str(cache_path) + '.files.json', single_image=single_image)
     util.rm_path(hires_path)
     os.replace(cache_path, hires_path)
     Path(str(cache_path) + '.active').unlink(missing_ok=True)
     report_missing_launcher_images(avs_path, hires_path, collection, hires_files=outputs)
     workspace_state.pop('hires_cache_key', None)
     workspace_state.pop('hires_output_fingerprint', None)
+
+
+def remove_launcher_resolution_options(avs_path, collection):
+    """A single-resolution build has no alternate launcher to switch to."""
+    options = Path(avs_path) / 'Options.avs'
+    for label in ('Launcher Res     High', 'Launcher Res     Medium'):
+        for asset in options.glob(label + '.*'):
+            asset.unlink()
+    if options.is_dir():
+        cache = directory_cache_entries(str(options),
+                                        [p.name for p in options.iterdir() if p.is_dir()],
+                                        [p.name for p in options.iterdir() if p.is_file()],
+                                        collection.path_sort_rank)
+        (options / '.dir').write_text(str(len(cache)) + '\n' +
+                                      '\n'.join(convert_filename_uae2a(row) for row in cache) + '\n',
+                                      encoding='latin-1', errors='replace')
+
+
+def publish_medium_only_launcher(avs_path, data_path, collection):
+    """Publish the single launcher at the boot script's canonical AVS path."""
+    remove_launcher_resolution_options(avs_path, collection)
+    destination = Path(data_path) / 'AVS'
+    util.rm_path(str(destination))
+    os.rename(avs_path, destination)
 
 
 def fingerprint_python_defs(path: str, names: list[str]) -> str:
@@ -1468,6 +1494,11 @@ def main():
     parser.add_argument("--auto-lists", dest="auto_lists", action="store_true", default=False, help="create automatic lists")
     parser.add_argument("--only-avs-tree", dest="only_avs_tree", action="store_true", default=False, help="only generate AVS tree")
     parser.add_argument('--chipset-profile', choices=['any', 'ecs'], default='any', help='Select compatible canonical versions for the build')
+    launcher_profile = parser.add_mutually_exclusive_group()
+    launcher_profile.add_argument('--medium-resolution-only', action='store_true',
+                        help='ship only the medium-resolution launcher at Data:AVS (Mini)')
+    launcher_profile.add_argument('--single-image-hires', action='store_true',
+                        help='ship only hi-res AVS with one screenshot per title, preferring slot 3 (Mini)')
     parser.add_argument('--temp-dir', help='Override the temporary workspace after .env has loaded')
 
     
@@ -1479,6 +1510,8 @@ def main():
         args = parser.parse_args()
         if args.image_size_bytes < 0 or args.boot_extra_bytes < 0:
             raise ValueError("Image size and DH0 reserve must be nonnegative")
+        if (args.medium_resolution_only or args.single_image_hires) and args.chipset_profile == 'ecs':
+            raise ValueError('Single-resolution launcher modes cannot be combined with the ECS profile')
         if args.temp_dir:
             os.environ['AVSTEMP'] = os.path.abspath(args.temp_dir)
         elif args.chipset_profile == 'ecs':
@@ -1598,10 +1631,14 @@ def main():
 
         # Preserve the existing hi-res files outside DH1 while shared layers
         # use AVS as their staging name. Subsequent runs only rename this tree.
-        if args.chipset_profile == 'any':
+        if args.chipset_profile == 'any' and not args.medium_resolution_only:
             from avs_hires_cache import preserve_hires_tree
             preserve_hires_tree(Path(amiga_data_path) / 'AVS',
                                 Path(clone_path) / '.hires-launcher-cache')
+        if args.medium_resolution_only:
+            util.rm_path(util.path(clone_path, '.hires-launcher-cache'))
+            for suffix in ('.active', '.files.json'):
+                Path(clone_path, '.hires-launcher-cache' + suffix).unlink(missing_ok=True)
 
         # Remove obsolete destinations before base layers populate AVS again.
         util.rm_path(util.path(amiga_data_path, "AVS"))
@@ -1879,14 +1916,22 @@ def main():
                     for line in cache: cachefile += "{}\n".format(convert_filename_uae2a(line))
                     open(util.path(path, ".dir"), mode="w", encoding="latin-1", errors="replace").write(cachefile)
 
-        with timed_step(timings, "build hi-res launcher"):
-            if args.chipset_profile == 'ecs':
+        with timed_step(timings, "publish medium launcher" if args.medium_resolution_only else "build hi-res launcher"):
+            if args.medium_resolution_only:
+                publish_medium_only_launcher(amiga_avs_path, amiga_data_path, collection)
+                workspace_state.pop('hires_cache_key', None)
+                workspace_state.pop('hires_output_fingerprint', None)
+            elif args.chipset_profile == 'ecs':
                 from avs_ecs import install_launcher
                 from avs_ecs_medres import build_launcher as build_ecs_medres
                 build_ecs_medres(amiga_avs_path, util.path(amiga_data_path, 'AVS-MedRes'))
                 install_launcher(amiga_avs_path, collection)
             else:
-                build_or_reuse_hires_launcher(amiga_avs_path, util.path(amiga_data_path, "AVS"), collection, workspace_state, append_delta, source_trees=hires_source_trees)
+                if args.single_image_hires:
+                    remove_launcher_resolution_options(amiga_avs_path, collection)
+                build_or_reuse_hires_launcher(amiga_avs_path, util.path(amiga_data_path, "AVS"), collection, workspace_state, append_delta, source_trees=hires_source_trees, single_image=args.single_image_hires)
+                if args.single_image_hires:
+                    util.rm_path(amiga_avs_path)
 
         # build PFS container
         if not args.only_avs_tree:
@@ -1913,6 +1958,8 @@ def main():
                     )
                     pfs_cache_state["image_size_bytes"] = args.image_size_bytes
                     pfs_cache_state["boot_extra_bytes"] = args.boot_extra_bytes
+                    pfs_cache_state["medium_resolution_only"] = args.medium_resolution_only
+                    pfs_cache_state["single_image_hires"] = args.single_image_hires
                     pfs_partition_cache_key = get_pfs_partition_cache_key(pfs_cache_state)
                     pfs_partitions = None if args.no_build_cache else restore_pfs_partition_cache(pfs_partition_cache_key, workspace_state)
                     if pfs_partitions is None:

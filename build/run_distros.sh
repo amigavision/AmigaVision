@@ -12,7 +12,7 @@ Environment:
   DISTRO_OUT             Default output directory.
   EMULATORS_ARCHIVE      Standalone emulator archive preference; full runs archive.
 
---build-all reuses existing main and ECS images, builds missing images,
+--build-all reuses existing main, ECS, and Mini images, builds missing images,
 and prepares listings before packaging all distributions,
 using the selected drive for generated images, caches, and staging files.
 It asks only for the version and output directory at the start.
@@ -212,6 +212,9 @@ if [[ "$build_all" == true ]]; then
   fi
   if wants_package amiga-ecs || wants_package pistorm-ecs; then
     ensure_image "$ecs_hdf" AmigaVision-ECS.hdf ecs-image ecs_hdf
+  fi
+  if wants_package mini; then
+    ensure_image "$mini_hdf" AmigaVision-Mini.hdf mini-image mini_hdf
   fi
   if wants_package mister || wants_package emulators; then
     if [[ -d "$work_dir/stage/DH1/AVS-MedRes/By Title.avs" ]]; then

@@ -29,7 +29,7 @@ The normal end-to-end release process is:
 3. `make image`
    Create the main `AmigaVision.hdf` image using the standard Amiberry-based clone process.
 4. `make distros`
-   Prompt once for the release version (default: today's date) and output directory, then package the supported platform releases without further prompts. Mini building and packaging are temporarily excluded until its image is optimized for the 4 GB target again; use `make mini-image` and `make mini` separately when needed. Reuse existing main and ECS images from their configured locations, or from a previous distro run's `.build/images` directory. Build each missing image automatically using `image` or `ecs-image`. Existing images are reused regardless of age; run those targets explicitly when you want fresh images. Press Enter at either prompt to keep its default. The selected directory holds finished packages and a temporary `.build` subdirectory for generated images, listings, caches, and working files, so a large external drive can handle the whole run. This workspace is removed when the run exits, including on failure.
+   Prompt once for the release version (default: today's date) and output directory, then package the supported platform releases without further prompts. Mini is included in the full distro run. Reuse existing main, ECS, and Mini images from their configured locations, or from a previous distro run's `.build/images` directory. Build each missing image automatically using `image`, `ecs-image`, or `mini-image`. Existing images are reused regardless of age; run those targets explicitly when you want fresh images. Press Enter at either prompt to keep its default. The selected directory holds finished packages and a temporary `.build` subdirectory for generated images, listings, caches, and working files, so a large external drive can handle the whole run. This workspace is removed when the run exits, including on failure.
 
 Full distro runs always create the emulator 7z archive. The optional archive choice and `EMULATORS_ARCHIVE` setting apply only to standalone `make emulators` runs. Noninteractive runs use `DISTRO_DATE` and `DISTRO_OUT` directly.
 
@@ -40,7 +40,7 @@ Both real Amiga archives are included: `AmigaVision-Amiga-<date>.img.xz` from th
 Amiga/ECS compression defaults to xz preset 1. Use `make distros AMIGA_XZ_PRESET=6` to restore the previous compression setting, or choose any preset from 0 to 9. PiStorm and RPi continue to use preset 1. The format remains `.img.xz` for all disk-image releases.
 
 Full distro runs package in this order: Amiga, RPi, PiStorm AGA, Amiga ECS,
-PiStorm ECS, MiSTer, Emulators, then CD32. The large temporary RPi/PiStorm
+PiStorm ECS, MiSTer, Emulators, CD32, then Mini. The large temporary RPi/PiStorm
 images are created and removed before the other release archives accumulate;
 each required Amiga xz seed is still built before its consumers. This reduces
 peak storage pressure while preserving compressed-block reuse.
@@ -460,3 +460,16 @@ The committed binaries already include the patch; ordinary image builds do not
 need vasm. Python integration checks are in `build/test_menu_dividers.py`. The
 additional `build/launcher/test_dividers_68k.py` checks execute the wrappers with
 machine68k and vasm; `AVS_TEST_MENU` can select any of the three binary paths.
+
+### Mini size budget
+
+`make mini-image` builds a hi-res-only launcher at `Data:AVS`, keeps
+only one numbered screenshot per title (slot 3, with a fallback when absent),
+QR images, and the launcher BGM from the extra music directory. It applies
+`configs/Lists/Mini-Exclusions.yaml`.
+The exclusion list removes four particularly large games and twenty large demos
+while keeping the regular Worms Director's Cut. Both the build target and Mini
+packaging reject HDF files exceeding FAT32's 4,294,967,295-byte file limit.
+Launcher BGM is enabled by default. Full Mini builds verify that the BGM
+directory exists after waiting for PFS delayed writes, before accepting the image.
+Recheck the finished image after changing shared curated lists or artwork.

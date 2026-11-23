@@ -91,3 +91,52 @@
   - StripPoker3&DataDisks
   - SuperSkidmarks+CD
   - SuprStrtFtr2TrboAGA
+  # Large games and demos omitted to keep the Mini HDF below FAT32's file limit.
+  # Star Dust Wars: Director's Cut (756.5 MiB installed)
+  - game-notwhdl--stardustwars
+  # Wasted Dreams (213.7 MiB installed)
+  - game-notwhdl--wasteddreams
+  # Project Horizon (119.7 MiB installed)
+  - game-notwhdl--projecthorizon
+  # Worms: Director's Cut - 30th Anniversary (69.8 MiB installed)
+  - game--wormsdc30aga12mb--wormsdcaga12mb
+  # Dead Ahead (34.2 MiB installed)
+  - demo-notwhdl--flex-deadahead-060
+  # Martini Effect (33.5 MiB installed)
+  - demo-notwhdl--flex-martinieffect
+  # Knarkzilla (28.7 MiB installed)
+  - demo-notwhdl--ephidrena-knarkzilla-060
+  # Rift (26.9 MiB installed)
+  - demo-notwhdl--theblacklotus-rift-060
+  # Swookie (25.7 MiB installed)
+  - demo-notwhdl--traction-swookie
+  # Human Traffic (24.0 MiB installed)
+  - demo-notwhdl--ghostown-humantraffic
+  # Last Train to Danzig (20.2 MiB installed)
+  - demo--lasttraintodanzigaga--lasttraintodanzigaga
+  # Starstruck (18.8 MiB installed)
+  - demo-notwhdl--theblacklotus-starstruck-060
+  # Hexel (18.5 MiB installed)
+  - demo-notwhdl--ephidrena-hexel-060
+  # Brutalism (16.9 MiB installed)
+  - demo-notwhdl--capsule-brutalism-060
+  # Megamix I (16.3 MiB installed)
+  - demo-notwhdl--uprough-megamix
+  # Metropolice (15.4 MiB installed)
+  - demo-notwhdl--ghostownrno-metropolice-060
+  # The Cure (14.1 MiB installed)
+  - demo-notwhdl--retream-thecure
+  # Last Goat Standing (13.9 MiB installed)
+  - demo-notwhdl--noice-lastgoatstanding-060
+  # Silkcut (12.6 MiB installed)
+  - demo-notwhdl--theblacklotus-silkcut-060
+  # Entropy Chamber (10.9 MiB installed)
+  - demo-notwhdl--logicoma-entropychamber-060
+  # Ocean Machine (9.7 MiB installed)
+  - demo-notwhdl--theblacklotus-oceanmachine-060
+  # Megademo 2000 (9.2 MiB installed)
+  - demo-notwhdl--haujobb-megademo2000-060
+  # Subside (8.8 MiB installed)
+  - demo-notwhdl--unique-subside-060
+  # Singularities (8.5 MiB installed)
+  - demo-notwhdl--unique-singularities
