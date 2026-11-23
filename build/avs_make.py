@@ -69,12 +69,34 @@ def count_tree_entries(node):
 
 
 def update_progress(collection: EntryCollection, verbose: bool):
-    if verbose and collection.progress_total > 0:
-        print(
-            "\r > {} [{}/{}]".format(collection.progress_label, collection.progress_current, collection.progress_total),
-            end="",
-            flush=True
-        )
+    if not verbose or collection.progress_total <= 0:
+        return
+    current, total = collection.progress_current, collection.progress_total
+    label = collection.progress_label
+    terminal = sys.stdout.isatty()
+    now = perf_counter()
+    previous = getattr(collection, '_last_progress', None)
+    new_stage = previous is None or previous[:2] != (label, total) or current < previous[2]
+    if not new_stage:
+        if current == previous[2]:
+            return
+        if current < total and now - previous[3] < (1 if terminal else 10):
+            return
+    collection._last_progress = (label, total, current, now)
+    counts = f'{current}/{total} ({current / total:.0%})'
+    if terminal:
+        # Leave the final column unused so carriage returns never wrap a line.
+        width = max(1, shutil.get_terminal_size(fallback=(80, 24)).columns - 1)
+        available = width - len(counts) - 4
+        if available >= 4:
+            short_label = label if len(label) <= available else label[:available-3] + '...'
+            text = f' > {short_label} {counts}'
+        else:
+            text = counts if len(counts) <= width else f'{current / total:.0%}'[:width]
+        print('\r' + text.ljust(width), end='', flush=True)
+    else:
+        # Captured logs cannot replace a terminal line: emit occasional lines.
+        print(f' > {label} {counts}', flush=True)
 
 def add_timing(collection: EntryCollection, label: str, duration: float):
     collection.timing[label] = collection.timing.get(label, 0.0) + duration

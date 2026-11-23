@@ -495,15 +495,21 @@ def build_cd32_release(args, output_path, dry_run=False):
     require_file(generator, "CD32 config generator")
     require_file(pack_script, "CD32 pack script")
 
+    env = None if dry_run else compression_environment(output_path)
+    if env is not None:
+        # Scope this override to CD32 packaging; image generation must retain
+        # the user's configured AVSDEST and persistent build caches.
+        env["AVSDEST"] = str(Path(env["TMPDIR"]).parent / "cd32")
+
     log_step("Generating CD32 preset variants")
-    run_command([sys.executable, str(generator)], dry_run=dry_run)
+    run_command([sys.executable, str(generator)], dry_run=dry_run, env=env)
 
     if not dry_run and output_path.exists():
         output_path.unlink()
 
     log_step("Packing CD32 release archive")
     run_command(["bash", str(pack_script), args.date_stamp, str(output_path)], dry_run=dry_run,
-                env=None if dry_run else compression_environment(output_path))
+                env=env)
     if not dry_run:
         require_file(output_path, "Generated CD32 distro archive")
     return output_path

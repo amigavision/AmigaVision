@@ -13,8 +13,9 @@ Environment:
   EMULATORS_ARCHIVE      Standalone emulator archive preference; full runs archive.
 
 --build-all reuses existing main, ECS, and Mini images, builds missing images,
-and prepares listings before packaging all distributions,
-using the selected drive for generated images, caches, and staging files.
+and prepares listings before packaging all distributions.
+Image generation uses the configured AVSDEST, AVSTEMP, and build-cache paths.
+Packaging staging, scratch images, and compressed releases use the output drive.
 It asks only for the version and output directory at the start.
 
 If stdin is interactive, the script prompts before packaging starts so the
@@ -172,10 +173,9 @@ if [[ "$build_all" == true ]]; then
     exit "$status"
   }
   trap cleanup_distro_work EXIT
-  mkdir -p "$work_dir/images" "$work_dir/tmp"
-  export TMPDIR="$work_dir/tmp"
-  export AVSCACHE_ROOT="$work_dir/cache"
+  mkdir -p "$work_dir"
   export DISTRO_DATE="$date_stamp" DISTRO_OUT="$output_dir"
+  build_dest="$(python3 build/user_paths.py "${AVSDEST:-$HOME/Developer/AV-Output}")"
   # Prefer configured images, then images from an earlier distro run on this
   # drive. Build only missing images and pass the selected paths to packaging.
   ensure_image() {
@@ -183,21 +183,16 @@ if [[ "$build_all" == true ]]; then
     if [[ -n "$configured" ]]; then
       configured="$(python3 build/user_paths.py "$configured")"
     fi
-    selected="$configured"
-    if [[ ! -f "$selected" ]]; then
+    selected="${configured:-$build_dest/$filename}"
+    if [[ ! -f "$selected" && -f "$work_dir/images/$filename" ]]; then
       selected="$work_dir/images/$filename"
     fi
     if [[ -f "$selected" ]]; then
       printf 'Reusing image: %s\n' "$selected"
     else
-      printf 'Building missing image: %s\n' "$selected"
-      "${MAKE:-make}" "$target" "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir" \
-        "IMAGE_UPDATE_ARGS=${IMAGE_UPDATE_ARGS:---incremental} --no-build-cache" \
-        "AVSDEST=$work_dir/images" "AVSTEMP=$work_dir/stage" \
-        "AMIGAVISION_HDF=$work_dir/images/AmigaVision.hdf" \
-        "ECS_HDF=$work_dir/images/AmigaVision-ECS.hdf" \
-        "MINI_HDF=$work_dir/images/AmigaVision-Mini.hdf" \
-        "MINI_UAE=$work_dir/images/AmigaVision-Mini.uae"
+      printf 'Building missing image in configured AVS locations: %s\n' "$selected"
+      mkdir -p "$build_dest"
+      "${MAKE:-make}" "$target" "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir"
       if [[ ! -f "$selected" ]]; then
         printf 'error: %s did not create %s\n' "$target" "$selected" >&2
         return 1
@@ -218,16 +213,13 @@ if [[ "$build_all" == true ]]; then
     ensure_image "$mini_hdf" AmigaVision-Mini.hdf mini-image mini_hdf
   fi
   if wants_package mister || wants_package emulators; then
-    if [[ -d "$work_dir/stage/DH1/AVS-MedRes/By Title.avs" ]]; then
-      "${MAKE:-make}" listings "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir" \
-        "DISTRO_LISTINGS_DIR=$work_dir/listings" "AVSTEMP=$work_dir/stage"
-    else
-      "${MAKE:-make}" listings "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir" \
-        "DISTRO_LISTINGS_DIR=$work_dir/listings"
-    fi
+    "${MAKE:-make}" listings "DISTRO_DATE=$date_stamp" "DISTRO_OUT=$output_dir" \
+      "DISTRO_LISTINGS_DIR=$work_dir/listings"
   fi
-  # CD32's generator and packer also use AVSDEST for intermediate payloads.
-  export AVSDEST="$work_dir/images"
+  # Image building above keeps its native workspace/cache settings. Only the
+  # packaging phase uses the selected output drive for default scratch files.
+  mkdir -p "$work_dir/tmp"
+  export TMPDIR="$work_dir/tmp" TMP="$work_dir/tmp" TEMP="$work_dir/tmp"
   package_args+=(--main-hdf "$main_hdf" --ecs-hdf "$ecs_hdf" --mini-hdf "$mini_hdf"
                  --listings-dir "$work_dir/listings")
   # A complete distro run always publishes an uploadable emulator archive.

@@ -29,17 +29,23 @@ The normal end-to-end release process is:
 3. `make image`
    Create the main `AmigaVision.hdf` image using the standard Amiberry-based clone process.
 4. `make distros`
-   Prompt once for the release version (default: today's date) and output directory, then package the supported platform releases without further prompts. Mini is included in the full distro run. Reuse existing main, ECS, and Mini images from their configured locations, or from a previous distro run's `.build/images` directory. Build each missing image automatically using `image`, `ecs-image`, or `mini-image`. Existing images are reused regardless of age; run those targets explicitly when you want fresh images. Press Enter at either prompt to keep its default. The selected directory holds finished packages and a temporary `.build` subdirectory for generated images, listings, caches, and working files, so a large external drive can handle the whole run. This workspace is removed when the run exits, including on failure.
+   Prompt once for the release version (default: today's date) and output directory, then package the supported platform releases without further prompts. Mini is included in the full distro run. Reuse existing main, ECS, and Mini images from their configured locations, or from a previous distro run's `.build/images` directory. Build each missing image automatically using `image`, `ecs-image`, or `mini-image` in the configured AVS locations. Existing images are reused regardless of age; run those targets explicitly when you want fresh images. Press Enter at either prompt to keep its default. The selected directory holds finished packages and a temporary `.build` subdirectory for listings, packaging caches, and working files. This packaging workspace is removed when the run exits, including on failure; configured image-build workspaces and reusable caches follow their normal per-target retention settings.
 
 Full distro runs always create the emulator 7z archive. The optional archive choice and `EMULATORS_ARCHIVE` setting apply only to standalone `make emulators` runs. Noninteractive runs use `DISTRO_DATE` and `DISTRO_OUT` directly.
 
 Full distro runs also build PiStorm AGA (PiStorm32 Lite, from the main HDF) and PiStorm ECS (classic PiStorm, from the ECS HDF). Both use `PISTORM_ROM` and `AMIBERRYBIN` and write dated `.img.xz` files to the selected output directory. Full runs share downloads and the compiled converter in a temporary run-local cache.
 
-When distro packaging must create a missing HDF, it stages that build under
-the selected output directory's `.build/stage` and disables reusable image-build
-caches for that disposable build. The main imager receives an explicit
-`--temp-dir` so loading `.env` cannot redirect staging to the internal drive.
-Standalone `make image` retains its normal incremental caching behavior.
+Image generation prioritizes speed by keeping source HDFs in `AVSDEST`, staging
+in `AVSTEMP` (or the configured ECS/Mini workspace), and reusable caches in
+`AVSCACHE_ROOT` or the normal default cache location. A distro run does not
+redirect these paths or disable the image targets' normal caching behavior.
+The main imager receives an explicit `--temp-dir` so command-line Make overrides
+survive `.env` loading.
+
+Packaging uses the supplied output directory for platform staging, temporary
+RPi images, private PiStorm HDF copies, CD32 payload generation, shared compressed
+blocks, download caches, and compressor scratch files. The output-side `.build`
+cleanup does not remove configured source images or persistent image-build caches.
 
 Both real Amiga archives are included: `AmigaVision-Amiga-<date>.img.xz` from the main HDF and `AmigaVision-Amiga-ECS-<date>.img.xz` from the ECS HDF, with SHA-256 and MD5 checksum files.
 

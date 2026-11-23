@@ -1748,7 +1748,7 @@ def main():
                 if args.all_games or args.all_demos or args.all_demoscene or args.auto_lists:
                     collection.progress_current = 0
                     collection.progress_total = len(collection.by_id)
-                    collection.progress_label = "Indexing titles for automatic lists"
+                    collection.progress_label = "Indexing titles"
                     kinds = []
                     if args.all_games or args.auto_lists:
                         kinds.append("games")
@@ -1762,6 +1762,7 @@ def main():
                         before_path_ids = set(collection.path_ids)
                         before_sort_rank = dict(collection.path_sort_rank)
                         make_autoentries(collection, amiga_avs_path, games=args.all_games|args.auto_lists, demos=args.all_demos|args.all_demoscene|args.auto_lists)
+                        update_progress(collection, True)
                         if not args.no_build_cache:
                             save_autoentries_cache(
                                 autoentries_cache_key,
