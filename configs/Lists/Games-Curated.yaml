@@ -9,7 +9,6 @@
     - BattleSquadron2
     - Blok
     - BlueAndRed
-    - BombJackBeerEdition
     - Boom
     - Boxx4
     - BunnysBoingBallBounty
@@ -30,6 +29,7 @@
     - notwhdl--mirror
     - OozeTheEscape
     - OutRunAmigaEditionAGA
+    - OutRunAGA
     - Pjusk
     - ProjectHorizon
     - RevengeOfTheGrinch
@@ -40,18 +40,17 @@
     - StarDustWars
     - TinyPixelAdventure
     - TurboSanta
+    - Windjammers
     - Wizonk
     - Yeet
-    # Pending launcher-compatible package: Mad Santa (raw trackdisk release).
-    # Pending launcher-compatible package: Santa's Present Drop (itch.io download points to part 4).
+    # Pending launcher-compatible package: Mad Santa
+    # Pending launcher-compatible package: Santa's Present Drop
 
   - AmiGameJam 2025:
     # Explicit numbers preserve the third-place tie and the published gap at 17.
     # https://itch.io/jam/amigamejam2025/results
     - ordering: "ordered"
     - note: "Return of the Arcade\nPublic vote results, March 2026"
-    # Official banner logo, cropped to omit the surrounding sponsors.
-    # https://itch.io/jam/amigamejam2025
     - image: { ops: { op: "pi", path: "list/amigamejam2025.png" }, size: [320, 128], scale: [1, 1] }
     - Echodrome: { disp_name: "01 Echodrome" }
     - DoubleBaboonNinja: { disp_name: "02 Double Baboon Ninja (Demo)" }

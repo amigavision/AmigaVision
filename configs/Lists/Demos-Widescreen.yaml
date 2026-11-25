@@ -7,6 +7,8 @@
     Some cropping may occur
     For 4:3, use the other demo listings
 - rank: 5
+- Spreadpoint-PlusEqualsPlus: { scale: 6, vshift: 44 }
+- GhostownHaujobb-TheLoop: { scale: 6, vshift: 44, hshift: 6 }
 - 3LE-Drama: { scale: 6, vshift: 44 }
 - Andromeda-Rule30: { scale: 6, vshift: 62 }
 - Artwork-Dawn: { scale: 6, vshift: 44 }
@@ -25,7 +27,7 @@
 - Extension: { scale: 6, vshift: 40 }
 - FaktoryAGA: { scale: 6, vshift: 40 }
 - FullmoonAGA: { scale: 6, vshift: 22 }
-- demo--lasttraintodanzigaga--lasttraintodanzigaga: { scale: 6, vshift: 45 }
+- LastTrainToDanzig: { scale: 6, vshift: 45 }
 - Ghostown-SushiBoyz: { scale: 6, vshift: 62 }
 - Hardwired: { scale: 6, vshift: 28 }
 - Hologon: { scale: 6, vshift: 45 }
