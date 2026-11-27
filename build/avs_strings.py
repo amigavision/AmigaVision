@@ -22,7 +22,7 @@ strings = {
     "dirs": {
         "allgames": "By Title",
         "allgames_year": "By Year",
-        "allgames_nonenglish": "Non-English",
+        "allgames_nonenglish": "Other Languages",
         "unique_nonenglish": "[ No English Version ]",
         "scene": "Demo Scene",
         "issues": "[ Issues ]",
