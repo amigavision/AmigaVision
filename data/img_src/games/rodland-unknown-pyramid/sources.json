@@ -1,0 +1,54 @@
+[
+  {
+    "slot": 2,
+    "url": "/Users/limi/Desktop/Rod-Land-Unknown-Pyramid/rodland-pyramid-2.png",
+    "source_size": [
+      320,
+      224
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      224
+    ]
+  },
+  {
+    "slot": 3,
+    "url": "/Users/limi/Desktop/Rod-Land-Unknown-Pyramid/rodland-pyramid-3.png",
+    "source_size": [
+      320,
+      224
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      224
+    ]
+  },
+  {
+    "slot": 4,
+    "url": "/Users/limi/Desktop/Rod-Land-Unknown-Pyramid/rodland-pyramid-4.png",
+    "source_size": [
+      320,
+      224
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      224
+    ]
+  },
+  {
+    "slot": 5,
+    "url": "/Users/limi/Desktop/Rod-Land-Unknown-Pyramid/rodland-pyramid-5.png",
+    "source_size": [
+      320,
+      224
+    ],
+    "integer_downscale": 1,
+    "native_size": [
+      320,
+      224
+    ]
+  }
+]
