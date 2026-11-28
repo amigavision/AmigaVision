@@ -166,25 +166,38 @@ class ECSDatabase:
         return getattr(self.db, name)
 
 
-def prepare_menu(avs_path):
-    """Remove empty chipset-only folders; both resolution switches are available."""
+# Explicitly excluded even if a future family fallback populates these lists.
+ECS_EXCLUDED_CATEGORIES = {"GouldFish's AGA Games to Play", "060 Demos"}
+
+
+def prepare_menu(avs_path, collection=None):
+    """Prune excluded/empty ECS categories bottom-up, including note-only shells."""
     import os
     import shutil
     root = Path(avs_path)
+    removed = []
     for directory, _, _ in os.walk(root, topdown=False):
         folder = Path(directory)
         if folder.suffix != '.avs':
             continue
-        # About and other note-only sections are valid selectable entries.
-        # Their content lives beside the directory, not inside it.
-        if folder.with_suffix('.txt').is_file():
+        excluded = folder.stem in ECS_EXCLUDED_CATEGORIES
+        selectable = any(folder.glob('*.run')) or any(folder.glob('*.menuitem')) or any(
+            child.is_dir() for child in folder.glob('*.avs'))
+        if not excluded and selectable:
             continue
-        if not any(folder.glob('*.run')) and not any(folder.glob('*.avs')):
-            shutil.rmtree(folder)
-            for suffix in ['.txt', '.iff']:
-                sibling = folder.with_suffix(suffix)
-                if sibling.is_file():
-                    sibling.unlink()
+        removed.append({'category': folder.relative_to(root).as_posix(),
+                        'reason': 'excluded' if excluded else 'empty'})
+        shutil.rmtree(folder)
+        # Descriptions/artwork do not make an otherwise empty category useful.
+        for sibling in folder.parent.iterdir():
+            if sibling.is_file() and (sibling.name == folder.name + '.label' or
+                    re.fullmatch(re.escape(folder.stem) + r'(?:-[1-9]|-[Qq][Rr])?\.(?:iff|txt)', sibling.name)):
+                sibling.unlink()
+    if collection is not None:
+        prefixes = tuple(row['category'] + '/' for row in removed)
+        collection.image_entries = {path: entry_id for path, entry_id in collection.image_entries.items()
+                                    if not path.startswith(prefixes)}
+    return removed
 
 
 def install_launcher(avs_path, collection, image_root='data/img_ecs', launcher_root='data/avs-ecs'):

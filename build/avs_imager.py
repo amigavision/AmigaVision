@@ -1917,7 +1917,9 @@ def main():
         # Generate after layers so the option covers the final menu filenames.
         if args.chipset_profile == 'ecs':
             from avs_ecs import prepare_menu
-            prepare_menu(amiga_avs_path)
+            removed_categories = prepare_menu(amiga_avs_path, collection)
+            for removed in removed_categories:
+                print(f" > ECS category {removed['reason']}: {removed['category']}")
         make_nsfw_option(db, amiga_avs_path, collection)
 
         # create directory caches
