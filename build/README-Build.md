@@ -477,13 +477,12 @@ machine68k and vasm; `AVS_TEST_MENU` can select any of the three binary paths.
 
 `make mini-image` builds a hi-res-only launcher at `Data:AVS`, keeps
 only one numbered screenshot per title (slot 3, with a fallback when absent),
-QR images, and the launcher BGM from the extra music directory.
-It also includes `Jan Reinert Karlsen (Interphace) - To the Beach.mod` directly
+and QR images. The launcher BGM folder is omitted. Mini includes `Jan Reinert Karlsen (Interphace) - To the Beach.mod` directly
 in `Music/`. It applies
 `configs/Lists/Mini-Exclusions.yaml`.
 The exclusion list removes four particularly large games and twenty large demos
 while keeping the regular Worms Director's Cut. Both the build target and Mini
 packaging reject HDF files exceeding FAT32's 4,294,967,295-byte file limit.
-Launcher BGM is enabled by default. Full Mini builds verify that the BGM
-directory exists after waiting for PFS delayed writes, before accepting the image.
+Launcher BGM is disabled by default. Full Mini builds verify that the standalone
+root Music module exists after waiting for PFS delayed writes, before accepting the image.
 Recheck the finished image after changing shared curated lists or artwork.

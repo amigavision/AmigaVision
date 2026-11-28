@@ -34,15 +34,11 @@ if exists tmp:DH1/Music
   echo "Cloning DH1: Music..."
   copy tmp:DH1/Music DH1:Music all clone quiet
 endif
-; PFS delays writes. The small BGM copy can remain entirely cached at exit.
+; PFS delays writes. The small music copy can remain entirely cached at exit.
 ; Wait is not on the boot ADF, so run the staged system's command explicitly.
 tmp:DH0/C/Wait 5
 if exists "DH1:Music/Jan Reinert Karlsen (Interphace) - To the Beach.mod"
-  if exists "DH1:Music/7 Launcher BGM"
-    echo "OK" >tmp:mini-bgm.status
-  else
-    echo "ERROR: launcher BGM directory was not copied" >tmp:mini-bgm.status
-  endif
+  echo "OK" >tmp:mini-bgm.status
 else
   echo "ERROR: required root Music module was not copied" >tmp:mini-bgm.status
 endif
