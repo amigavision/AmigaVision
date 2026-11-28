@@ -5575,7 +5575,7 @@ game--arpegio--game;Arpegio;Arpegio;;;AGA;1;0;4;0;;;;;;;;2026;;English;Tedzogh;T
 game-notwhdl--submarineattack;Submarine Attack;Submarine Attack;;;AGA;1;0;;;;;;;;;;2025;;English;Camden Town Games;Camden Town Games;1 Player;;;;game-notwhdl/SubmarineAttack.lha;Game;Shoot'em Up;;;;
 game-notwhdl--backflipendless;Backflip Endless;Backflip Endless;;;OCS;;0;5;16;;;;;;;;2026;;English;GameSoul Studio;GameSoul Studio;1 Player;;;;game-notwhdl/BackflipEndless.lha;Game;Platform;;;;
 game-notwhdl--burn;Burn;Burn;;;OCS;;0;4;0;;;;;;;;2026;;English;RiPpEr253;RiPpEr253;2 Players;;;;game-notwhdl/Burn.lha;Game;Platform;;;;
-game-notwhdl--movimientoconstante;Movimiento Constante;Movimiento Constante;;;OCS;;0;4;;;;;;;;;2025;;Spanish;DJCaye;DJCaye;1 Player;;;;game-notwhdl/MovimientoConstante.lha;Game;Puzzle;;;;
+game-notwhdl--movimientoconstante;Movimiento Constante;Movimiento Constante;1;;OCS;;0;4;;;;;;;;;2025;;Spanish;DJCaye;DJCaye;1 Player;;;;game-notwhdl/MovimientoConstante.lha;Game;Puzzle;;;;
 game-notwhdl--cogsnlogs;Cogs N Logs (Demo);Cogs N Logs (Demo);1;;AGA;1;0;;;;;;;Keyboard: arrows, Space, C;Early prototype;;2025;;English;RetroGamma;RetroGamma;1 Player;;;;game-notwhdl/CogsNLogs.lha;Game;Platform;;;;
 game-notwhdl--rastan;Rastan (Demo);Rastan;;;OCS;;0;;;;;;;;;;2026;;English;basementApe;basementApe;1 Player;;;;game-notwhdl/Rastan.lha;Game;Platform;;;;
 game-notwhdl--knockout2;Knock Out 2;Knock Out 2;;;OCS;;0;4;;;;;;;;;1996;;English;Ben Wyatt;;8 Players (Simultaneous);;;;game-notwhdl/KnockOut2.lha;Game;Racing;;2766;;
@@ -5606,7 +5606,7 @@ game--neonworld--neonworld;Neon World;Neon World;;;OCS;;0;4;;;;;;;;;2025;;Englis
 game--mean18--mean18;Mean 18;Mean 18;;;OCS;;1;;;;;;;;;;1986;;English;Microsmiths;Accolade;4 Players (Alternating);SAVEDIR=Mean18;v1.0;Mean18/Mean18.slave;game/Mean18.lha;Game;Sports;;3192;;
 game--jumpnbump--jumpnbump;Jump 'n Bump;Jump 'n Bump;;;OCS;;0;4;;;;;;Multiplayer only, jump over log & go right to start;;;2024;;English;Earok;Earok;4 Players (Simultaneous);CUSTOM=game SAVEDIR=JumpnBump;v1.0;JumpnBump/JumpnBump.slave;game/JumpnBump.lha;Game;Platform;;;;
 game-notwhdl--oozetheescape;Ooze: The Escape;Ooze - The Escape;;;OCS;;0;5;0;;;;;Press 5 to switch music/sound effects. ESC to Exit;;;2023;;English;Haplo, Andy Johns;Haplo;1 Player;;;;game-notwhdl/OozeTheEscape.lha;Game;Platform;;;;
-game-notwhdl--babeanoid;BabeAnoid;BabeAnoid;;;OCS/020;;0;4;0;;;;;"Full v2.0 final release; mouse controls.";;;2003;;English;Richard Fhager;Richard Fhager;1 Player;;;;game-notwhdl/BabeAnoid.lha;Game;Puzzle, NSFW;;;;
+game-notwhdl--babeanoid;BabeAnoid;BabeAnoid;;;OCS/020;;0;;0;;;;;"Full v2.0 final release; mouse controls.";;;2003;;English;Richard Fhager;Richard Fhager;1 Player;;;;game-notwhdl/BabeAnoid.lha;Game;Puzzle, NSFW;;;;
 game-notwhdl--boulderdaesh;Boulder Däsh;Boulder Däsh;;;OCS;;0;5;6;;;;;;;;2008;;English, German, French;Guido Mersmann;Guido Mersmann;1 Player;;;;game-notwhdl/BoulderDaesh.lha;Game;Puzzle;;;;
 game-notwhdl--absolutezeroaga;Absolute Zero;Absolute Zero;;;AGA;1;0;4;0;;;1;;HELP/Play: menu. Progress autosaves.;;;2023;;English, German, Spanish, French, Italian;Zener;GUS Entertainment;1 Player;;;;game-notwhdl/AbsoluteZeroAGA.lha;Game;Platform;;4888;;
 game-notwhdl--bloodfest;Bloodfest;Bloodfest;;;OCS;;0;4;0;;;;;;;;1995;;English;Mellow Chips;Mellow Chips;1 Player;;;;game-notwhdl/Bloodfest.lha;Game;Adventure;;1553;;
