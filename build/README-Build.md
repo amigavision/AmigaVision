@@ -396,7 +396,7 @@ folder's position and lets the generator or base layer populate it:
     favorites: true
 - By Title: []
 - By Year: []
-- Non-English: []
+- Other Languages: []
 - Demo Scene:
   - ordering: declared
   - !include Lists/Demos.yaml
